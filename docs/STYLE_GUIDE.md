@@ -302,13 +302,13 @@ Avoid visual clutter.
 
 ---
 
-## Theme
+# Default Theme
 
-Version 1 uses the approved dark theme.
+The Version 1 default theme is **Forest Journal**.
 
-Dark green is the primary accent color.
+Forest Journal uses muted forest greens, warm earth tones, and copper/gold accents to create the appearance of a modern outdoor field guide.
 
-Future versions may support additional themes without changing component structure.
+Alternative themes may be added in future releases, but all themes must preserve the same layout, spacing, typography, accessibility, and component behavior.
 
 ---
 
@@ -352,16 +352,6 @@ The Companion should:
 - Scale correctly on phones, tablets, and desktops.
 
 Accessibility improvements should not significantly increase interface complexity.
-
----
-
-# Default Theme
-
-The Version 1 default theme is **Forest Journal**.
-
-Forest Journal uses muted forest greens, warm earth tones, and copper/gold accents to create the appearance of a modern outdoor field guide.
-
-Alternative themes may be added in future releases, but all themes must preserve the same layout, spacing, typography, accessibility, and component behavior.
 
 ---
 
