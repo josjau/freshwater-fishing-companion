@@ -1,2 +1,2 @@
 # freshwater-rig-guide
-Interactive freshwater fishing guide for beginners.
+A mobile field guide designed to help new anglers make good decisions on the water
