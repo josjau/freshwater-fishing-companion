@@ -1,10 +1,12 @@
 :root {
-    --background: #f3f5f1;
-    --surface: #ffffff;
-    --text: #1f2a24;
-    --muted: #5f6d64;
-    --accent: #2f6b4f;
-    --border: #d8ded9;
+    color-scheme: dark;
+
+    --background: #0f1713;
+    --surface: #18231d;
+    --text: #f1f5f2;
+    --muted: #a8b5ad;
+    --accent: #72ad86;
+    --border: #314038;
     --radius: 14px;
 }
 
@@ -68,15 +70,4 @@ button {
 
 button:active {
     transform: scale(0.99);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #111713;
-        --surface: #1b241e;
-        --text: #f1f5f2;
-        --muted: #a9b5ac;
-        --accent: #74b98d;
-        --border: #344139;
-    }
 }
