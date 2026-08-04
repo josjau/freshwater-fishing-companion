@@ -355,6 +355,16 @@ Accessibility improvements should not significantly increase interface complexit
 
 ---
 
+# Default Theme
+
+The Version 1 default theme is **Forest Journal**.
+
+Forest Journal uses muted forest greens, warm earth tones, and copper/gold accents to create the appearance of a modern outdoor field guide.
+
+Alternative themes may be added in future releases, but all themes must preserve the same layout, spacing, typography, accessibility, and component behavior.
+
+---
+
 # Documentation Standards
 
 Every document should include:
