@@ -9,19 +9,94 @@
 </head>
 
 <body>
-    <header>
-        <h1>Freshwater Rig Guide</h1>
-        <p>A simple guide for building and fishing freshwater rigs.</p>
+    <header class="app-header">
+        <div class="app-header__content">
+            <h1>Freshwater Fishing Companion</h1>
+            <p>Practical guidance for new freshwater anglers.</p>
+        </div>
     </header>
 
-    <main>
-        <h2>Choose a Section</h2>
+    <main class="app-main" id="app-main">
+        <section class="dashboard" aria-labelledby="dashboard-title">
+            <h2 id="dashboard-title">Choose a Section</h2>
 
-        <button type="button">Find a Rig</button>
-        <button type="button">Learn a Rig</button>
-        <button type="button">Knots</button>
-        <button type="button">My Tackle</button>
+            <div class="dashboard-grid">
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Fish ID</span>
+                    <span class="dashboard-card__description">
+                        Identify and learn about your catch.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Rig Guide</span>
+                    <span class="dashboard-card__description">
+                        Learn how to assemble and fish common rigs.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">What Should I Throw?</span>
+                    <span class="dashboard-card__description">
+                        Find practical options for current conditions.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Knots</span>
+                    <span class="dashboard-card__description">
+                        Follow beginner-friendly knot instructions.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">My Tackle</span>
+                    <span class="dashboard-card__description">
+                        Track equipment and consumable tackle.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Catch Log</span>
+                    <span class="dashboard-card__description">
+                        Record catches, methods, and notes.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Favorites</span>
+                    <span class="dashboard-card__description">
+                        Quickly return to saved reference material.
+                    </span>
+                </button>
+
+                <a
+                    class="dashboard-card"
+                    href="https://www.wildlifedepartment.com/fishing/regs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="dashboard-card__title">Regulations</span>
+                    <span class="dashboard-card__description">
+                        Open current official Oklahoma fishing regulations.
+                    </span>
+                </a>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Settings</span>
+                    <span class="dashboard-card__description">
+                        Manage appearance, preferences, and backups.
+                    </span>
+                </button>
+            </div>
+        </section>
     </main>
-<script src="script.js"></script>
+
+    <footer class="app-footer">
+        <p>Fish responsibly. Verify current regulations before harvesting.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    
 </body>
 </html>
