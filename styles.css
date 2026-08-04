@@ -218,12 +218,13 @@ p {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background:
-        linear-gradient(
-            90deg,
-            var(--accent-soft) 0,
-            transparent 42px
-        ),
-        var(--surface-elevated);
+    linear-gradient(
+        90deg,
+        var(--accent-soft) 0,
+        rgba(185, 130, 69, 0.08) 14px,
+        transparent 26px
+    ),
+    var(--surface-elevated);
     box-shadow: var(--shadow-card);
     color: var(--text);
     text-align: left;
@@ -250,12 +251,13 @@ p {
 .dashboard-card:hover {
     border-color: var(--border-strong);
     background:
-        linear-gradient(
-            90deg,
-            rgba(185, 130, 69, 0.23) 0,
-            transparent 50px
-        ),
-        var(--surface-hover);
+    linear-gradient(
+        90deg,
+        rgba(185, 130, 69, 0.18) 0,
+        rgba(185, 130, 69, 0.08) 16px,
+        transparent 30px
+    ),
+    var(--surface-hover);
     box-shadow: var(--shadow-card-hover);
     transform: translateY(-2px);
 }
