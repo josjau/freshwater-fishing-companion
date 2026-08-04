@@ -69,3 +69,14 @@ button {
 button:active {
     transform: scale(0.99);
 }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #111713;
+        --surface: #1b241e;
+        --text: #f1f5f2;
+        --muted: #a9b5ac;
+        --accent: #74b98d;
+        --border: #344139;
+    }
+}
