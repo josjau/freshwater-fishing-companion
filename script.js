@@ -24,10 +24,10 @@ let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
 
 const VIEW_RENDERERS = Object.freeze({
-   [ROUTES.FISH]: renderFishGuideView,
-   [ROUTES.RIGS]: renderRigGuideView,
-   [ROUTES.RECOMMENDATIONS]: renderRecommendationsView,
-   [ROUTES.TACKLE]: renderTackleView
+    [ROUTES.FISH]: renderFishGuideView,
+    [ROUTES.RIGS]: renderRigGuideView,
+    [ROUTES.RECOMMENDATIONS]: renderRecommendationsView,
+    [ROUTES.TACKLE]: renderTackleView
 });
 
 function showView(route) {
@@ -237,7 +237,6 @@ function renderTackleView(appMain) {
         ]
     });
 }
-
 
 /* ==========================================================
    DASHBOARD ROUTING
