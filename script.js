@@ -25,7 +25,8 @@ let dashboardMarkup = "";
 
 const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView,
-    [ROUTES.RIGS]: renderRigGuideView
+    [ROUTES.RIGS]: renderRigGuideView,
+    [ROUTES.RECOMMENDATIONS]: renderRecommendationsView
 });
 
 function showView(route) {
@@ -163,6 +164,75 @@ function renderRigGuideView(appMain) {
                     </span>
                     <span class="dashboard-card__description">
                         Learn what each hook, weight, swivel, and component does.
+                    </span>
+                </button>
+            </div>
+        </section>
+    `;
+
+    const backButton = appMain.querySelector("[data-back-route]");
+
+    backButton.addEventListener("click", () => {
+        showView(ROUTES.DASHBOARD);
+    });
+}
+
+function renderRecommendationsView(appMain) {
+    appMain.innerHTML = `
+        <section
+            class="content-view"
+            aria-labelledby="recommendations-title"
+        >
+            <button
+                class="view-back-button"
+                type="button"
+                data-back-route="dashboard"
+            >
+                ← Dashboard
+            </button>
+
+            <h2 id="recommendations-title">What Should I Throw?</h2>
+
+            <p>
+                Get lure recommendations based on the fish you are
+                targeting and the conditions you are fishing.
+            </p>
+
+            <div class="dashboard-grid">
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Start a Recommendation
+                    </span>
+                    <span class="dashboard-card__description">
+                        Enter the current fishing conditions and target fish.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Browse by Target Fish
+                    </span>
+                    <span class="dashboard-card__description">
+                        Find lure options for a specific freshwater species.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Browse by Conditions
+                    </span>
+                    <span class="dashboard-card__description">
+                        Explore lures for water clarity, depth, cover,
+                        weather, and season.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        View Lure Families
+                    </span>
+                    <span class="dashboard-card__description">
+                        Learn how major lure types behave and when to use them.
                     </span>
                 </button>
             </div>
