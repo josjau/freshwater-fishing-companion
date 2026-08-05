@@ -1,18 +1,17 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: script.js
-   REPLACEMENT: MS2.2 - APPLICATION COORDINATOR
-   PURPOSE: Owns routes, application views, dashboard routing,
-   and application initialization. Shared rendering and search
-   behavior are maintained in separate source files.
+   REPLACEMENT: MS2.3 - FUNCTIONAL FISH SEARCH
+   PURPOSE: Coordinates routes, application views, dashboard
+   navigation, Fish Guide actions, and functional Fish search.
    ========================================================== */
 
 "use strict";
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "MS2.2",
-    replacement: "Application Coordinator"
+    milestone: "MS2.3",
+    replacement: "Functional Fish Search"
 });
 
 console.info(
@@ -28,6 +27,7 @@ console.info(
 const ROUTES = Object.freeze({
     DASHBOARD: "dashboard",
     FISH: "fish",
+    FISH_SEARCH: "fish-search",
     RIGS: "rigs",
     RECOMMENDATIONS: "recommendations",
     TACKLE: "tackle",
@@ -46,6 +46,7 @@ let dashboardMarkup = "";
 
 const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView,
+    [ROUTES.FISH_SEARCH]: renderFishSearchView,
     [ROUTES.RIGS]: renderRigGuideView,
     [ROUTES.RECOMMENDATIONS]: renderRecommendationsView,
     [ROUTES.TACKLE]: renderTackleView,
@@ -82,7 +83,7 @@ function showView(route) {
 }
 
 /* ==========================================================
-   APPLICATION VIEWS
+   FISH GUIDE
    ========================================================== */
 
 function renderFishGuideView(appMain) {
@@ -117,9 +118,63 @@ function renderFishGuideView(appMain) {
                 description:
                     "View the complete fish guide from A to Z."
             }
-        ]
+        ],
+        onCardSelect: handleFishGuideCardSelect
     });
 }
+
+function handleFishGuideCardSelect(cardId) {
+    if (cardId === "search-fish") {
+        showView(ROUTES.FISH_SEARCH);
+        return;
+    }
+
+    console.info(`Fish Guide action not implemented yet: ${cardId}`);
+}
+
+/* ==========================================================
+   FISH SEARCH
+   ========================================================== */
+
+function renderFishSearchView(appMain) {
+    renderSearchView(appMain, {
+        headingId: "fish-search-title",
+        inputId: "fish-search-input",
+        title: "Search Fish",
+        description:
+            "Search by common name, scientific name, or category.",
+        label: "Fish name or category",
+        placeholder: "Try bass, bluegill, or Micropterus",
+        parentLabel: "Fish Guide",
+        onParent: () => {
+            showView(ROUTES.FISH);
+        },
+        onSearch: (query) => {
+            updateFishSearchResults(appMain, query);
+        }
+    });
+}
+
+function updateFishSearchResults(appMain, query) {
+    const activeFish = FISH_DATA.filter((fish) => fish.isActive);
+    const matches = searchRecords(
+        activeFish,
+        query,
+        ["name", "scientificName", "category"]
+    );
+    const sortedMatches = sortRecordsAlphabetically(matches);
+
+    renderSearchResults(appMain, sortedMatches, {
+        emptyMessage: "No fish matched your search.",
+        onResultSelect: (fishId) => {
+            console.info(`Fish selected: ${fishId}`);
+        }
+    });
+}
+
+/* ==========================================================
+   OTHER APPLICATION VIEWS
+   ========================================================== */
 
 function renderRigGuideView(appMain) {
     renderView(appMain, {
