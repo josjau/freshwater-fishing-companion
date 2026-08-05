@@ -17,6 +17,18 @@ const ROUTES = Object.freeze({
 });
 
 /* ==========================================================
+   VIEW MANAGER
+   ========================================================== */
+
+let currentView = ROUTES.DASHBOARD;
+
+function showView(route) {
+    currentView = route;
+
+    console.log(`Current View: ${currentView}`);
+}
+
+/* ==========================================================
    DASHBOARD ROUTING
    ========================================================== */
 
@@ -36,7 +48,7 @@ function initializeDashboardRouting() {
                 case ROUTES.CATCH_LOG:
                 case ROUTES.FAVORITES:
                 case ROUTES.SETTINGS:
-                    console.log(`Navigate: ${route}`);
+                    showView(route);
                     break;
 
                 default:
