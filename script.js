@@ -1,18 +1,18 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: script.js
-   REPLACEMENT: MS1.7 - COMPLETE APPLICATION SHELL
-   PURPOSE: Provides shared view rendering, Home navigation,
-   stable card identifiers, and working views for every
-   dashboard route.
+   REPLACEMENT: MS2.2 - APPLICATION COORDINATOR
+   PURPOSE: Owns routes, application views, dashboard routing,
+   and application initialization. Shared rendering and search
+   behavior are maintained in separate source files.
    ========================================================== */
 
 "use strict";
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "MS1.7",
-    replacement: "Complete Application Shell"
+    milestone: "MS2.2",
+    replacement: "Application Coordinator"
 });
 
 console.info(
@@ -79,71 +79,6 @@ function showView(route) {
 
     currentView = route;
     viewRenderer(appMain);
-}
-
-/* ==========================================================
-   SHARED VIEW RENDERER
-   ========================================================== */
-
-function renderView(appMain, viewConfig) {
-    const cardsMarkup = viewConfig.cards
-        .map(
-            (card) => `
-                <button
-                    class="dashboard-card"
-                    type="button"
-                    data-card-id="${card.id}"
-                >
-                    <span class="dashboard-card__title">
-                        ${card.title}
-                    </span>
-                    <span class="dashboard-card__description">
-                        ${card.description}
-                    </span>
-                </button>
-            `
-        )
-        .join("");
-
-    appMain.innerHTML = `
-        <section
-            class="content-view"
-            aria-labelledby="${viewConfig.headingId}"
-        >
-            <button
-                class="page-navigation"
-                type="button"
-                data-home-navigation
-            >
-                ← Home
-            </button>
-
-            <h2 id="${viewConfig.headingId}">
-                ${viewConfig.title}
-            </h2>
-
-            <p>${viewConfig.description}</p>
-
-            <div class="dashboard-grid">
-                ${cardsMarkup}
-            </div>
-        </section>
-    `;
-
-    initializeViewNavigation(appMain);
-}
-
-function initializeViewNavigation(appMain) {
-    const homeNavigation = appMain.querySelector("[data-home-navigation]");
-
-    if (!homeNavigation) {
-        console.error("Home navigation control was not created.");
-        return;
-    }
-
-    homeNavigation.addEventListener("click", () => {
-        showView(ROUTES.DASHBOARD);
-    });
 }
 
 /* ==========================================================
