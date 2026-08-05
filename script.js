@@ -24,9 +24,10 @@ let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
 
 const VIEW_RENDERERS = Object.freeze({
-    [ROUTES.FISH]: renderFishGuideView,
-    [ROUTES.RIGS]: renderRigGuideView,
-    [ROUTES.RECOMMENDATIONS]: renderRecommendationsView
+   [ROUTES.FISH]: renderFishGuideView,
+   [ROUTES.RIGS]: renderRigGuideView,
+   [ROUTES.RECOMMENDATIONS]: renderRecommendationsView,
+   [ROUTES.TACKLE]: renderTackleView
 });
 
 function showView(route) {
@@ -233,6 +234,71 @@ function renderRecommendationsView(appMain) {
                     </span>
                     <span class="dashboard-card__description">
                         Learn how major lure types behave and when to use them.
+                    </span>
+                </button>
+            </div>
+        </section>
+    `;
+
+    const backButton = appMain.querySelector("[data-back-route]");
+
+    backButton.addEventListener("click", () => {
+        showView(ROUTES.DASHBOARD);
+    });
+}
+
+function renderTackleView(appMain) {
+    appMain.innerHTML = `
+        <section class="content-view" aria-labelledby="tackle-title">
+            <button
+                class="view-back-button"
+                type="button"
+                data-back-route="dashboard"
+            >
+                ← Dashboard
+            </button>
+
+            <h2 id="tackle-title">My Tackle</h2>
+
+            <p>
+                Identify, organize, and track the fishing equipment
+                and consumable tackle you own.
+            </p>
+
+            <div class="dashboard-grid">
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        View My Inventory
+                    </span>
+                    <span class="dashboard-card__description">
+                        Browse the equipment and tackle currently recorded.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Add Tackle
+                    </span>
+                    <span class="dashboard-card__description">
+                        Record a new piece of equipment or consumable tackle.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Identify Tackle
+                    </span>
+                    <span class="dashboard-card__description">
+                        Use guided characteristics to identify an unknown item.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Check Rig Readiness
+                    </span>
+                    <span class="dashboard-card__description">
+                        See which supported rigs can be built from owned tackle.
                     </span>
                 </button>
             </div>
