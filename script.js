@@ -56,6 +56,59 @@ function showView(route) {
     renderView(appMain);
 }
 
+function renderView(appMain, viewConfig) {
+    const cardsMarkup = viewConfig.cards
+        .map(
+            (card) => `
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        ${card.title}
+                    </span>
+                    <span class="dashboard-card__description">
+                        ${card.description}
+                    </span>
+                </button>
+            `
+        )
+        .join("");
+
+    appMain.innerHTML = `
+        <section
+            class="content-view"
+            aria-labelledby="${viewConfig.headingId}"
+        >
+            <button
+                class="page-navigation"
+                type="button"
+                data-home-navigation
+            >
+                ← Home
+            </button>
+
+            <h2 id="${viewConfig.headingId}">
+                ${viewConfig.title}
+            </h2>
+
+            <p>${viewConfig.description}</p>
+
+            <div class="dashboard-grid">
+                ${cardsMarkup}
+            </div>
+        </section>
+    `;
+
+    const homeNavigation = appMain.querySelector("[data-home-navigation]");
+
+    if (!homeNavigation) {
+        console.error("Home navigation control was not created.");
+        return;
+    }
+
+    homeNavigation.addEventListener("click", () => {
+        showView(ROUTES.DASHBOARD);
+    });
+}
+
 function renderFishGuideView(appMain) {
     renderView(appMain, {
         headingId: "fish-guide-title",
