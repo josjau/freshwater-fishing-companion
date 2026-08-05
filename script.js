@@ -10,6 +10,22 @@ document.addEventListener("DOMContentLoaded", initializeApp);
    DASHBOARD ROUTING
    ========================================================== */
 
+/* ==========================================================
+   APPLICATION ROUTES
+   ========================================================== */
+
+const ROUTES = Object.freeze({
+    DASHBOARD: "dashboard",
+    FISH: "fish",
+    RIGS: "rigs",
+    RECOMMENDATIONS: "recommendations",
+    TACKLE: "tackle",
+    KNOTS: "knots",
+    CATCH_LOG: "catch-log",
+    FAVORITES: "favorites",
+    SETTINGS: "settings"
+});
+
 const dashboardCards = document.querySelectorAll("[data-route]");
 
 dashboardCards.forEach((card) => {
