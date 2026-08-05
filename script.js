@@ -1,17 +1,18 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: script.js
-   REPLACEMENT: MS1.6 - STABLE VIEW CARD IDS
-   PURPOSE: Shared view rendering, Home navigation, and stable
-   identifiers for generated view cards.
+   REPLACEMENT: MS1.7 - COMPLETE APPLICATION SHELL
+   PURPOSE: Provides shared view rendering, Home navigation,
+   stable card identifiers, and working views for every
+   dashboard route.
    ========================================================== */
 
 "use strict";
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "MS1.6",
-    replacement: "Stable View Card IDs"
+    milestone: "MS1.7",
+    replacement: "Complete Application Shell"
 });
 
 console.info(
@@ -47,7 +48,11 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView,
     [ROUTES.RIGS]: renderRigGuideView,
     [ROUTES.RECOMMENDATIONS]: renderRecommendationsView,
-    [ROUTES.TACKLE]: renderTackleView
+    [ROUTES.TACKLE]: renderTackleView,
+    [ROUTES.KNOTS]: renderKnotsView,
+    [ROUTES.CATCH_LOG]: renderCatchLogView,
+    [ROUTES.FAVORITES]: renderFavoritesView,
+    [ROUTES.SETTINGS]: renderSettingsView
 });
 
 function showView(route) {
@@ -58,22 +63,22 @@ function showView(route) {
         return;
     }
 
-    currentView = route;
-
-    if (currentView === ROUTES.DASHBOARD) {
+    if (route === ROUTES.DASHBOARD) {
+        currentView = ROUTES.DASHBOARD;
         appMain.innerHTML = dashboardMarkup;
         initializeDashboardRouting();
         return;
     }
 
-    const renderView = VIEW_RENDERERS[currentView];
+    const viewRenderer = VIEW_RENDERERS[route];
 
-    if (!renderView) {
-        console.warn(`No view renderer is registered for: ${currentView}`);
+    if (!viewRenderer) {
+        console.warn(`No view renderer is registered for: ${route}`);
         return;
     }
 
-    renderView(appMain);
+    currentView = route;
+    viewRenderer(appMain);
 }
 
 /* ==========================================================
@@ -125,6 +130,10 @@ function renderView(appMain, viewConfig) {
         </section>
     `;
 
+    initializeViewNavigation(appMain);
+}
+
+function initializeViewNavigation(appMain) {
     const homeNavigation = appMain.querySelector("[data-home-navigation]");
 
     if (!homeNavigation) {
@@ -286,6 +295,150 @@ function renderTackleView(appMain) {
     });
 }
 
+function renderKnotsView(appMain) {
+    renderView(appMain, {
+        headingId: "knots-title",
+        title: "Knots",
+        description:
+            "Learn dependable fishing knots and choose the right knot " +
+            "for each line, lure, and connection.",
+        cards: [
+            {
+                id: "browse-all-knots",
+                title: "Browse All Knots",
+                description:
+                    "Explore the complete collection of supported knots."
+            },
+            {
+                id: "browse-knots-by-purpose",
+                title: "Browse by Purpose",
+                description:
+                    "Find knots for hooks, lures, leaders, and line joining."
+            },
+            {
+                id: "browse-knots-by-line-type",
+                title: "Browse by Line Type",
+                description:
+                    "Choose knots suited to monofilament, braid, or fluorocarbon."
+            },
+            {
+                id: "compare-knots",
+                title: "Compare Knots",
+                description:
+                    "Compare strength, difficulty, profile, and recommended use."
+            }
+        ]
+    });
+}
+
+function renderCatchLogView(appMain) {
+    renderView(appMain, {
+        headingId: "catch-log-title",
+        title: "Catch Log",
+        description:
+            "Record catches and build a useful history of fish, locations, " +
+            "conditions, tackle, and results.",
+        cards: [
+            {
+                id: "add-catch",
+                title: "Log a Catch",
+                description:
+                    "Record a fish, location, conditions, and tackle used."
+            },
+            {
+                id: "view-catch-history",
+                title: "View Catch History",
+                description:
+                    "Browse previously recorded catches and trip results."
+            },
+            {
+                id: "view-catch-insights",
+                title: "View Insights",
+                description:
+                    "Review patterns across species, locations, and conditions."
+            },
+            {
+                id: "manage-catch-locations",
+                title: "Manage Locations",
+                description:
+                    "Organize the waters and fishing spots used in catch records."
+            }
+        ]
+    });
+}
+
+function renderFavoritesView(appMain) {
+    renderView(appMain, {
+        headingId: "favorites-title",
+        title: "Favorites",
+        description:
+            "Quickly return to saved fish, rigs, knots, tackle, " +
+            "recommendations, and other useful content.",
+        cards: [
+            {
+                id: "view-favorite-fish",
+                title: "Favorite Fish",
+                description:
+                    "Open freshwater fish saved for quick reference."
+            },
+            {
+                id: "view-favorite-rigs",
+                title: "Favorite Rigs",
+                description:
+                    "Review saved rig instructions and component lists."
+            },
+            {
+                id: "view-favorite-knots",
+                title: "Favorite Knots",
+                description:
+                    "Return to frequently used fishing knots."
+            },
+            {
+                id: "view-all-favorites",
+                title: "View All Favorites",
+                description:
+                    "Browse every item saved across the application."
+            }
+        ]
+    });
+}
+
+function renderSettingsView(appMain) {
+    renderView(appMain, {
+        headingId: "settings-title",
+        title: "Settings",
+        description:
+            "Control application preferences, appearance, data, " +
+            "and other user-specific options.",
+        cards: [
+            {
+                id: "manage-profile-settings",
+                title: "Profile",
+                description:
+                    "Manage angler experience, preferences, and home region."
+            },
+            {
+                id: "manage-appearance-settings",
+                title: "Appearance",
+                description:
+                    "Choose the application theme and display preferences."
+            },
+            {
+                id: "manage-data-settings",
+                title: "Data Management",
+                description:
+                    "Review, export, import, or clear user-created data."
+            },
+            {
+                id: "view-about-information",
+                title: "About",
+                description:
+                    "View application version, project information, and notices."
+            }
+        ]
+    });
+}
+
 /* ==========================================================
    DASHBOARD ROUTING
    ========================================================== */
@@ -297,21 +450,12 @@ function initializeDashboardRouting() {
         card.addEventListener("click", () => {
             const route = card.dataset.route;
 
-            switch (route) {
-                case ROUTES.FISH:
-                case ROUTES.RIGS:
-                case ROUTES.RECOMMENDATIONS:
-                case ROUTES.TACKLE:
-                case ROUTES.KNOTS:
-                case ROUTES.CATCH_LOG:
-                case ROUTES.FAVORITES:
-                case ROUTES.SETTINGS:
-                    showView(route);
-                    break;
-
-                default:
-                    console.warn(`Unknown route: ${route}`);
+            if (!VIEW_RENDERERS[route]) {
+                console.warn(`Unknown or unavailable route: ${route}`);
+                return;
             }
+
+            showView(route);
         });
     });
 }
