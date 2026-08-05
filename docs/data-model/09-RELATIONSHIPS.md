@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Version:** 0.1.0  
+**Version:** 0.2.0  
 **Status:** Draft  
 **Decision Baseline:** D013
 
@@ -9,329 +9,124 @@
 
 # Purpose
 
-This document defines how the canonical entities within Freshwater Fishing Companion relate to one another.
+This document defines how canonical entities, decision knowledge, and user-owned data relate within Freshwater Fishing Companion.
 
-The goal is to maintain a normalized, maintainable data model that minimizes duplication while supporting future expansion.
+The relationship model supports:
+
+- Search
+- Related knowledge
+- Recommendations
+- Inventory matching
+- Catch logging
+- Learning paths
+- Navigation
+- Data validation
+
+Relationships connect entities through stable identifiers rather than duplicated content.
 
 ---
 
 # Design Philosophy
 
-Relationships connect entities without duplicating information.
+The Companion is built around connected knowledge.
 
-Whenever practical, entities reference one another using stable identifiers.
+A search result or detail page should not operate as an isolated record. It should help the user understand:
 
-Reference Knowledge, Decision Knowledge, and User Knowledge remain independent while working together through these relationships.
+- What the item is
+- How it is used
+- What works with it
+- What conditions suit it
+- Whether the user owns it
+- Which products are recommended
+- What to learn next
 
----
-
-# Relationship Principles
-
-The Companion follows these principles.
-
-- One source of truth for every fact.
-- Stable identifiers are used for all relationships.
-- Canonical entities are referenced rather than copied.
-- Circular dependencies should be avoided whenever practical.
-- User records reference canonical entities.
-- Relationships should support future expansion without requiring schema redesign.
+Relationships should provide useful next steps without overwhelming the user.
 
 ---
 
-# Relationship Types
+# Knowledge Layers
 
-## One-to-One (1:1)
+The relationship model follows the approved three-layer architecture.
 
-One entity references one related entity.
+## Layer 1 — Reference Knowledge
 
-Example
-
-Equipment
-
-↓
-
-Product Definition
-
----
-
-## One-to-Many (1:N)
-
-One entity references multiple related entities.
-
-Example
-
-Fish
-
-↓
-
-Recommended Rigs
-
----
-
-## Many-to-Many (N:N)
-
-Multiple entities reference one another.
-
-Examples
-
-Fish ↔ Techniques
-
-Rigs ↔ Techniques
-
-Fish ↔ Lures
-
-Recommendations ↔ Products
-
----
-
-# Reference Knowledge Relationships
-
-## Fish
-
-May reference:
-
-- Taxonomy
-- Conditions
-- Techniques
-- Rigs
-- Lures
-- Sources
-- Recommendations
-
----
-
-## Rigs
-
-May reference:
-
-- Techniques
-- Lures
-- Conditions
-- Knots
-- Products
-- Recommendations
-
----
-
-## Techniques
-
-May reference:
-
-- Conditions
-- Fish
-- Rigs
-- Recommendations
-
----
-
-## Knots
-
-May reference:
-
-- Rigs
-- Techniques
-- Products
-
----
-
-## Lures
-
-May reference:
-
-- Fish
-- Rigs
-- Techniques
-- Conditions
-- Products
-- Recommendations
-
----
-
-## Products
-
-May reference:
-
-- Lures
-- Capabilities
-- Sources
-- Recommendations
-
----
-
-## Conditions
-
-May reference:
-
-- Fish
-- Techniques
-- Rigs
-- Recommendations
-
----
-
-## Capabilities
-
-May reference:
-
-- Products
-- Lures
-- Equipment
-- Consumables
-
----
-
-## Recommendations
-
-May reference:
-
-- Fish
-- Rigs
-- Techniques
-- Lures
-- Products
-- Sources
-
----
-
-## Sources
-
-May support:
-
-- Fish
-- Rigs
-- Techniques
-- Knots
-- Products
-- Recommendations
-- Learning Articles
-
----
-
-# User Knowledge Relationships
-
-## Equipment
-
-References:
-
-- Product Definition
-- Inventory Location
-
----
-
-## Consumables
-
-References:
-
-- Product Definition
-- Inventory Location
-
----
-
-## Fishing Setups
-
-References:
-
-- Equipment
-- Consumables
-
----
-
-## Favorites
-
-References canonical entities.
+Curated facts and reusable fishing concepts.
 
 Examples:
 
 - Fish
 - Rigs
-- Knots
 - Techniques
+- Conditions
+- Knots
+- Tackle
 - Lures
+- Products
+- Taxonomies
+- Sources
 
 ---
 
-## Catch Log
+## Layer 2 — Decision Knowledge
 
-May reference:
+Guidance derived from reference knowledge and user context.
 
-- Fish
-- Technique
-- Rig
-- Lure
-- Fishing Setup
+Examples:
 
----
-
-# Relationship Rules
-
-Relationships shall reference identifiers.
-
-Relationships shall not duplicate:
-
-- Fish descriptions
-- Rig instructions
-- Technique guidance
-- Product specifications
-- Source information
-
-Updates to a canonical entity should automatically benefit every entity that references it.
+- Lure recommendations
+- Product recommendations
+- Suggested alternatives
+- Inventory compatibility
+- Search ranking
+- Learning guidance
 
 ---
 
-# Data Integrity
+## Layer 3 — User Knowledge
 
-The Companion should validate that:
+Information owned or maintained by the angler.
 
-- Referenced identifiers exist.
-- Relationships remain valid after updates.
-- Removed reference entities are handled safely.
-- User data is preserved whenever practical.
+Examples:
 
----
-
-# Version Compatibility
-
-Schema changes affecting relationships shall be evaluated for:
-
-- Backup compatibility
-- Migration requirements
-- Validation updates
-- Documentation updates
+- Profiles
+- Preferences
+- Favorites
+- Equipment
+- Consumables
+- Custom tackle
+- Fishing setups
+- Catch records
 
 ---
 
-# Design Notes
+# Relationship Principles
 
-The relationship model is intended to keep the Companion normalized and maintainable.
+The Companion shall follow these relationship rules:
 
-Whenever new features are introduced, they should reuse existing relationships before introducing new ones.
-
----
-
-# Future Enhancements
-
-Potential future additions include:
-
-- Relationship visualization
-- Dependency analysis
-- Schema validation tools
-- Automated integrity reporting
-
-These enhancements are outside the scope of Version 1.
+- Relationships use stable identifiers.
+- Canonical entities are referenced rather than copied.
+- User records reference canonical entities whenever practical.
+- Tackle items are not required to belong to a rig.
+- Rigs act as recipes that reference existing tackle concepts.
+- Relationships should support related knowledge without forcing every possible connection.
+- Required relationships must be validated.
+- Optional relationships must not block use of an otherwise valid entity.
+- Inactive canonical entities remain available for historical references.
+- Circular relationships should be limited and documented when necessary.
+- Search and recommendation relationships should be explainable.
 
 ---
 
-# Related Documents
+# Relationship Classifications
 
-- README.md
-- 00-GLOSSARY.md
-- 01-FOUNDATION.md
-- 02-FISH.md
-- 03-RIGS.md
-- 03A-TECHNIQUES.md
-- 03B-CONDITIONS.md
-- 04-KNOTS.md
-- 05-INVENTORY.md
-- 06-LURES.md
-- 07-USER-DATA.md
-- 08-BACKUP.md
+Every relationship shall use one of the following classifications.
+
+## Required
+
+The source entity cannot function correctly without the relationship.
+
+Example:
+
+```text
+Product Recommendation
+    -> Product Definition
