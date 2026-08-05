@@ -196,6 +196,55 @@ p {
 }
 
 /* =========================================================
+   PAGE NAVIGATION
+   ========================================================= */
+
+.page-navigation {
+    display: inline-flex;
+    align-items: center;
+    min-height: auto;
+    margin: 0 0 var(--space-5);
+    padding: 4px 10px;
+    border: 1px solid color-mix(
+        in srgb,
+        var(--accent) 45%,
+        white 15%
+    );
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: #f8f3e7;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background var(--transition-standard),
+        border-color var(--transition-standard),
+        transform var(--transition-fast);
+}
+
+.page-navigation:hover {
+    border-color: var(--accent);
+    background: color-mix(
+        in srgb,
+        var(--accent) 22%,
+        transparent
+    );
+    transform: translateY(-1px);
+}
+
+.page-navigation:active {
+    transform: scale(0.98);
+}
+
+.page-navigation:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* =========================================================
    DASHBOARD
    ========================================================= */
 
