@@ -1,15 +1,5 @@
 "use strict";
 
-function initializeApp() {
-    console.info("Freshwater Fishing Companion initialized.");
-}
-
-document.addEventListener("DOMContentLoaded", initializeApp);
-
-/* ==========================================================
-   DASHBOARD ROUTING
-   ========================================================== */
-
 /* ==========================================================
    APPLICATION ROUTES
    ========================================================== */
@@ -26,26 +16,44 @@ const ROUTES = Object.freeze({
     SETTINGS: "settings"
 });
 
-const dashboardCards = document.querySelectorAll("[data-route]");
+/* ==========================================================
+   DASHBOARD ROUTING
+   ========================================================== */
 
-dashboardCards.forEach((card) => {
-    card.addEventListener("click", () => {
-        const route = card.dataset.route;
+function initializeDashboardRouting() {
+    const dashboardCards = document.querySelectorAll("[data-route]");
 
-        switch (route) {
-            case ROUTES.FISH:
-            case ROUTES.RIGS:
-            case ROUTES.RECOMMENDATIONS:
-            case ROUTES.TACKLE:
-            case ROUTES.KNOTS:
-            case ROUTES.CATCH_LOG:
-            case ROUTES.FAVORITES:
-            case ROUTES.SETTINGS:
-                console.log(`Navigate: ${route}`);
-                break;
+    dashboardCards.forEach((card) => {
+        card.addEventListener("click", () => {
+            const route = card.dataset.route;
 
-            default:
-                console.warn(`Unknown route: ${route}`);
-        }
+            switch (route) {
+                case ROUTES.FISH:
+                case ROUTES.RIGS:
+                case ROUTES.RECOMMENDATIONS:
+                case ROUTES.TACKLE:
+                case ROUTES.KNOTS:
+                case ROUTES.CATCH_LOG:
+                case ROUTES.FAVORITES:
+                case ROUTES.SETTINGS:
+                    console.log(`Navigate: ${route}`);
+                    break;
+
+                default:
+                    console.warn(`Unknown route: ${route}`);
+            }
+        });
     });
-});
+}
+
+/* ==========================================================
+   APPLICATION INITIALIZATION
+   ========================================================== */
+
+function initializeApp() {
+    console.info("Freshwater Fishing Companion initialized.");
+
+    initializeDashboardRouting();
+}
+
+document.addEventListener("DOMContentLoaded", initializeApp);
