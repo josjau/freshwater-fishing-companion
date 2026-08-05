@@ -25,6 +25,7 @@ let dashboardMarkup = "";
 
 const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView
+    [ROUTES.RIGS]: renderRigGuideView
 });
 
 function showView(route) {
@@ -37,7 +38,7 @@ function showView(route) {
 
     currentView = route;
 
-        if (currentView === ROUTES.DASHBOARD) {
+   if (currentView === ROUTES.DASHBOARD) {
         appMain.innerHTML = dashboardMarkup;
         initializeDashboardRouting();
         return;
@@ -105,12 +106,69 @@ function renderFishGuideView(appMain) {
         </section>
     `;
 
+   function renderRigGuideView(appMain) {
+    appMain.innerHTML = `
+        <section class="content-view" aria-labelledby="rig-guide-title">
+            <button
+                class="view-back-button"
+                type="button"
+                data-back-route="dashboard"
+            >
+                ← Dashboard
+            </button>
+
+            <h2 id="rig-guide-title">Rig Guide</h2>
+
+            <p>
+                Learn how to assemble proven freshwater fishing rigs
+                and understand when to use each one.
+            </p>
+
+            <div class="dashboard-grid">
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Browse All Rigs</span>
+                    <span class="dashboard-card__description">
+                        Explore the complete collection of supported rigs.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Browse by Target Fish
+                    </span>
+                    <span class="dashboard-card__description">
+                        Find rigs suited to the species you want to catch.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Browse by Conditions
+                    </span>
+                    <span class="dashboard-card__description">
+                        Choose rigs based on water, cover, depth, and weather.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Identify Rig Components
+                    </span>
+                    <span class="dashboard-card__description">
+                        Learn what each hook, weight, swivel, and component does.
+                    </span>
+                </button>
+            </div>
+        </section>
+    `;
+
     const backButton = appMain.querySelector("[data-back-route]");
 
     backButton.addEventListener("click", () => {
         showView(ROUTES.DASHBOARD);
     });
 }
+
 
 /* ==========================================================
    DASHBOARD ROUTING
