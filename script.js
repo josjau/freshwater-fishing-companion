@@ -56,11 +56,19 @@ function showView(route) {
     renderView(appMain);
 }
 
+/* ==========================================================
+   SHARED VIEW RENDERER
+   ========================================================== */
+
 function renderView(appMain, viewConfig) {
     const cardsMarkup = viewConfig.cards
         .map(
             (card) => `
-                <button class="dashboard-card" type="button">
+                <button
+                    class="dashboard-card"
+                    type="button"
+                    data-card-id="${card.id}"
+                >
                     <span class="dashboard-card__title">
                         ${card.title}
                     </span>
@@ -109,6 +117,10 @@ function renderView(appMain, viewConfig) {
     });
 }
 
+/* ==========================================================
+   APPLICATION VIEWS
+   ========================================================== */
+
 function renderFishGuideView(appMain) {
     renderView(appMain, {
         headingId: "fish-guide-title",
@@ -118,21 +130,25 @@ function renderFishGuideView(appMain) {
             "beginner-friendly information.",
         cards: [
             {
+                id: "search-fish",
                 title: "Search Fish",
                 description:
                     "Find a fish by its common or scientific name."
             },
             {
+                id: "browse-fish-by-family",
                 title: "Browse by Family",
                 description:
                     "Explore related freshwater fish groups."
             },
             {
+                id: "browse-fish-by-habitat",
                 title: "Browse by Habitat",
                 description:
                     "Find fish by the water and habitat they prefer."
             },
             {
+                id: "browse-fish-alphabetically",
                 title: "Browse Alphabetically",
                 description:
                     "View the complete fish guide from A to Z."
@@ -150,21 +166,25 @@ function renderRigGuideView(appMain) {
             "and understand when to use each one.",
         cards: [
             {
+                id: "browse-all-rigs",
                 title: "Browse All Rigs",
                 description:
                     "Explore the complete collection of supported rigs."
             },
             {
+                id: "browse-rigs-by-target-fish",
                 title: "Browse by Target Fish",
                 description:
                     "Find rigs suited to the species you want to catch."
             },
             {
+                id: "browse-rigs-by-conditions",
                 title: "Browse by Conditions",
                 description:
                     "Choose rigs based on water, cover, depth, and weather."
             },
             {
+                id: "identify-rig-components",
                 title: "Identify Rig Components",
                 description:
                     "Learn what each hook, weight, swivel, and component does."
@@ -182,22 +202,26 @@ function renderRecommendationsView(appMain) {
             "and the conditions you are fishing.",
         cards: [
             {
+                id: "start-lure-recommendation",
                 title: "Start a Recommendation",
                 description:
                     "Enter the current fishing conditions and target fish."
             },
             {
+                id: "browse-lures-by-target-fish",
                 title: "Browse by Target Fish",
                 description:
                     "Find lure options for a specific freshwater species."
             },
             {
+                id: "browse-lures-by-conditions",
                 title: "Browse by Conditions",
                 description:
                     "Explore lures for water clarity, depth, cover, " +
                     "weather, and season."
             },
             {
+                id: "view-lure-families",
                 title: "View Lure Families",
                 description:
                     "Learn how major lure types behave and when to use them."
@@ -215,21 +239,25 @@ function renderTackleView(appMain) {
             "and consumable tackle you own.",
         cards: [
             {
+                id: "view-tackle-inventory",
                 title: "View My Inventory",
                 description:
                     "Browse the equipment and tackle currently recorded."
             },
             {
+                id: "add-tackle",
                 title: "Add Tackle",
                 description:
                     "Record a new piece of equipment or consumable tackle."
             },
             {
+                id: "identify-tackle",
                 title: "Identify Tackle",
                 description:
                     "Use guided characteristics to identify an unknown item."
             },
             {
+                id: "check-rig-readiness",
                 title: "Check Rig Readiness",
                 description:
                     "See which supported rigs can be built from owned tackle."
