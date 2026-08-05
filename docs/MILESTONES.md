@@ -1,176 +1,160 @@
 # Freshwater Fishing Companion
 
-**Document:** MILESTONES.md  
-**Version:** 1.0.0  
-**Status:** Active
+**Document:** ARCHITECTURE.md  
+**Version:** 0.2.0  
+**Status:** Active  
+**Last Updated:** 2026-08-05  
+**Decision Baseline:** D002
 
 ---
 
 # Purpose
 
-This document tracks implementation progress for Freshwater Fishing Companion.
+This document defines the current technical architecture of Freshwater Fishing Companion.
 
-Unlike the roadmap, which describes long-term direction, this document tracks the completion status of development work.
+It is the primary implementation reference for:
 
-Milestones represent working software rather than planning.
+- Application structure
+- Source-file ownership
+- Data ownership
+- Module dependencies
+- Browser load order
+- Navigation architecture
+- Storage architecture
+- Performance and maintenance standards
 
----
-
-# Status Legend
-
-- ☐ Not Started
-- ◐ In Progress
-- ☑ Complete
-
----
-
-# Milestone 1 — Application Foundation
-
-## Project Setup
-
-- ☐ Repository structure finalized
-- ☐ Documentation baseline frozen
-- ☐ Development environment configured
-
-## Application Shell
-
-- ☐ Responsive layout
-- ☐ Header
-- ☐ Navigation
-- ☐ Dashboard
-- ☐ Footer
-- ☐ Dark theme
-
-## Core Framework
-
-- ☐ Router
-- ☐ IndexedDB initialization
-- ☐ Settings manager
-- ☐ Search framework
-- ☐ Error handling
+The architecture must remain lightweight, reliable, local-first, and free of unnecessary complexity.
 
 ---
 
-# Milestone 2 — Reference Library
+# Architectural Priorities
 
-## Fish Guide
+When multiple technical solutions are available, decisions shall follow this priority order:
 
-- ☐ Fish list
-- ☐ Fish details
-- ☐ Search
-- ☐ Favorites
+1. Reliability
+2. Simplicity
+3. Maintainability
+4. Performance
+5. Cost
+6. Expandability
 
-## Rig Guide
+A new abstraction, dependency, service, or source file must provide a measurable implementation or maintenance benefit.
 
-- ☐ Rig list
-- ☐ Rig details
-
-## Technique Guide
-
-- ☐ Technique list
-- ☐ Technique details
-
-## Knot Guide
-
-- ☐ Knot list
-- ☐ Knot details
-
-## Lure Guide
-
-- ☐ Lure list
-- ☐ Lure details
+Premature abstraction is not permitted.
 
 ---
 
-# Milestone 3 — Inventory
+# Hosting and Repository
 
-## Equipment
+## Hosting
 
-- ☐ Equipment list
-- ☐ Equipment details
-- ☐ Add equipment
-- ☐ Edit equipment
+The application is hosted using:
 
-## Consumables
+- GitHub Pages
 
-- ☐ Consumables list
-- ☐ Add consumables
-- ☐ Quantity management
+## Authoritative Source
 
-## Fishing Setups
+GitHub is the authoritative source for all project files.
 
-- ☐ Create setup
-- ☐ Edit setup
-- ☐ Delete setup
+Before modifying an existing source file:
 
----
+1. Retrieve the latest GitHub version.
+2. Review the complete file.
+3. Make the smallest practical change.
+4. Validate the finished file against the current application.
+5. Provide a complete validation copy after all planned edits to that file are finished.
 
-# Milestone 4 — Catch Log
-
-- ☐ Record catch
-- ☐ Catch history
-- ☐ Edit catch
-- ☐ Delete catch
-- ☐ Search catches
+Previously proposed code must never be assumed to have been implemented.
 
 ---
 
-# Milestone 5 — Recommendations
+# Technology Stack
 
-- ☐ Recommendation engine
-- ☐ Fish recommendations
-- ☐ Rig recommendations
-- ☐ Technique recommendations
-- ☐ Inventory matching
+Version 1 uses:
 
----
+- HTML5
+- CSS3
+- JavaScript ES6+
+- IndexedDB
+- GitHub Pages
 
-# Milestone 6 — User Features
+The project does not currently use:
 
-- ☐ Preferences
-- ☐ Favorites
-- ☐ Backup
-- ☐ Restore
+- A JavaScript framework
+- A build system
+- A backend service
+- A user-account service
+- A required cloud service
+- A package manager dependency
 
----
-
-# Milestone 7 — Version 1 Readiness
-
-## Quality
-
-- ☐ Documentation review
-- ☐ Code review
-- ☐ Accessibility review
-- ☐ Performance review
-
-## Testing
-
-- ☐ Functional testing
-- ☐ Mobile testing
-- ☐ Tablet testing
-- ☐ Desktop testing
-
-## Release
-
-- ☐ Version 1.0.0 ready
-- ☐ Release notes
-- ☐ GitHub release
+A framework or external runtime dependency may be introduced only after a documented architectural review demonstrates a clear benefit over native browser capabilities.
 
 ---
 
-# Notes
+# Local-First Architecture
 
-Additional implementation tasks may be added during development.
+Freshwater Fishing Companion is a local-first client-side application.
 
-New features should be evaluated against the project roadmap before being added to a milestone.
+The application should:
 
-Milestones track implementation progress and do not replace the project specification or roadmap.
+- Work without a backend server.
+- Remain usable without an Internet connection except for intentionally external resources.
+- Store user-created data locally.
+- Require no user account.
+- Avoid recurring operating costs.
+- Remain understandable and maintainable by a small development team.
+
+The browser owns:
+
+- Application execution
+- Interface rendering
+- Navigation
+- Reference-data access
+- User-data storage
+- Search and filtering
+- Future offline operation
+
+GitHub Pages owns:
+
+- Static file delivery
+
+The user owns:
+
+- Backup storage
+- Backup restoration decisions
+- Optional external file storage
 
 ---
 
-# Related Documents
+# Three-Layer Knowledge Architecture
 
-- PROJECT.md
-- SPECIFICATION.md
-- ROADMAP.md
-- CHANGELOG.md
+The application uses three permanent knowledge layers.
+
+## Layer 1 — Reference Knowledge
+
+Application-owned canonical data.
+
+Examples:
+
+- Fish
+- Rigs
+- Techniques
+- Conditions
+- Knots
+- Lures
+- Tackle definitions
+- Identification traits
+- Regulation resources
+
+Reference records:
+
+- Exist once.
+- Use stable identifiers.
+- Are maintained by the application.
+- Are referenced by identifier from other records.
+- Are not duplicated inside user records.
+
+Current implementation:
+
+```text
+data/fish.js
