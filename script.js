@@ -57,61 +57,34 @@ function showView(route) {
 }
 
 function renderFishGuideView(appMain) {
-    appMain.innerHTML = `
-        <section class="content-view" aria-labelledby="fish-guide-title">
-            <button
-                class="view-back-button"
-                type="button"
-                data-back-route="dashboard"
-            >
-                ← Dashboard
-            </button>
-
-            <h2 id="fish-guide-title">Fish Guide</h2>
-
-            <p>
-                Learn to identify freshwater fish using clear,
-                beginner-friendly information.
-            </p>
-
-            <div class="dashboard-grid">
-                <button class="dashboard-card" type="button">
-                    <span class="dashboard-card__title">Search Fish</span>
-                    <span class="dashboard-card__description">
-                        Find a fish by its common or scientific name.
-                    </span>
-                </button>
-
-                <button class="dashboard-card" type="button">
-                    <span class="dashboard-card__title">Browse by Family</span>
-                    <span class="dashboard-card__description">
-                        Explore related freshwater fish groups.
-                    </span>
-                </button>
-
-                <button class="dashboard-card" type="button">
-                    <span class="dashboard-card__title">Browse by Habitat</span>
-                    <span class="dashboard-card__description">
-                        Find fish by the water and habitat they prefer.
-                    </span>
-                </button>
-
-                <button class="dashboard-card" type="button">
-                    <span class="dashboard-card__title">
-                        Browse Alphabetically
-                    </span>
-                    <span class="dashboard-card__description">
-                        View the complete fish guide from A to Z.
-                    </span>
-                </button>
-            </div>
-        </section>
-    `;
-
-    const backButton = appMain.querySelector("[data-back-route]");
-
-    backButton.addEventListener("click", () => {
-        showView(ROUTES.DASHBOARD);
+    renderView(appMain, {
+        headingId: "fish-guide-title",
+        title: "Fish Guide",
+        description:
+            "Learn to identify freshwater fish using clear, " +
+            "beginner-friendly information.",
+        cards: [
+            {
+                title: "Search Fish",
+                description:
+                    "Find a fish by its common or scientific name."
+            },
+            {
+                title: "Browse by Family",
+                description:
+                    "Explore related freshwater fish groups."
+            },
+            {
+                title: "Browse by Habitat",
+                description:
+                    "Find fish by the water and habitat they prefer."
+            },
+            {
+                title: "Browse Alphabetically",
+                description:
+                    "View the complete fish guide from A to Z."
+            }
+        ]
     });
 }
 
