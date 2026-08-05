@@ -32,6 +32,20 @@ dashboardCards.forEach((card) => {
     card.addEventListener("click", () => {
         const route = card.dataset.route;
 
-        console.log(`Navigate: ${route}`);
+        switch (route) {
+            case ROUTES.FISH:
+            case ROUTES.RIGS:
+            case ROUTES.RECOMMENDATIONS:
+            case ROUTES.TACKLE:
+            case ROUTES.KNOTS:
+            case ROUTES.CATCH_LOG:
+            case ROUTES.FAVORITES:
+            case ROUTES.SETTINGS:
+                console.log(`Navigate: ${route}`);
+                break;
+
+            default:
+                console.warn(`Unknown route: ${route}`);
+        }
     });
 });
