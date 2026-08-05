@@ -24,7 +24,7 @@ let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
 
 const VIEW_RENDERERS = Object.freeze({
-    [ROUTES.FISH]: renderFishGuideView
+    [ROUTES.FISH]: renderFishGuideView,
     [ROUTES.RIGS]: renderRigGuideView
 });
 
@@ -38,7 +38,7 @@ function showView(route) {
 
     currentView = route;
 
-   if (currentView === ROUTES.DASHBOARD) {
+    if (currentView === ROUTES.DASHBOARD) {
         appMain.innerHTML = dashboardMarkup;
         initializeDashboardRouting();
         return;
@@ -106,7 +106,14 @@ function renderFishGuideView(appMain) {
         </section>
     `;
 
-   function renderRigGuideView(appMain) {
+    const backButton = appMain.querySelector("[data-back-route]");
+
+    backButton.addEventListener("click", () => {
+        showView(ROUTES.DASHBOARD);
+    });
+}
+
+function renderRigGuideView(appMain) {
     appMain.innerHTML = `
         <section class="content-view" aria-labelledby="rig-guide-title">
             <button
@@ -168,7 +175,6 @@ function renderFishGuideView(appMain) {
         showView(ROUTES.DASHBOARD);
     });
 }
-
 
 /* ==========================================================
    DASHBOARD ROUTING
