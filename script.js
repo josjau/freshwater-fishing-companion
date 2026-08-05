@@ -1,4 +1,24 @@
+/* ==========================================================
+   FRESHWATER FISHING COMPANION
+   FILE: script.js
+   REPLACEMENT: MS1.6 - STABLE VIEW CARD IDS
+   PURPOSE: Shared view rendering, Home navigation, and stable
+   identifiers for generated view cards.
+   ========================================================== */
+
 "use strict";
+
+const BUILD_INFO = Object.freeze({
+    file: "script.js",
+    milestone: "MS1.6",
+    replacement: "Stable View Card IDs"
+});
+
+console.info(
+    `[Loaded] ${BUILD_INFO.file} | ` +
+    `${BUILD_INFO.milestone} | ` +
+    `${BUILD_INFO.replacement}`
+);
 
 /* ==========================================================
    APPLICATION ROUTES
