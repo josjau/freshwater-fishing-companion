@@ -21,11 +21,90 @@ const ROUTES = Object.freeze({
    ========================================================== */
 
 let currentView = ROUTES.DASHBOARD;
+let dashboardMarkup = "";
 
 function showView(route) {
+    const appMain = document.querySelector("#app-main");
+
+    if (!appMain) {
+        console.error("Application main content area was not found.");
+        return;
+    }
+
     currentView = route;
 
-    console.log(`Current View: ${currentView}`);
+    switch (currentView) {
+        case ROUTES.DASHBOARD:
+            appMain.innerHTML = dashboardMarkup;
+            initializeDashboardRouting();
+            break;
+
+        case ROUTES.FISH:
+            renderFishGuideView(appMain);
+            break;
+
+        default:
+            console.log(`Current View: ${currentView}`);
+    }
+}
+
+function renderFishGuideView(appMain) {
+    appMain.innerHTML = `
+        <section class="content-view" aria-labelledby="fish-guide-title">
+            <button
+                class="view-back-button"
+                type="button"
+                data-back-route="dashboard"
+            >
+                ← Dashboard
+            </button>
+
+            <h2 id="fish-guide-title">Fish Guide</h2>
+
+            <p>
+                Learn to identify freshwater fish using clear,
+                beginner-friendly information.
+            </p>
+
+            <div class="dashboard-grid">
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Search Fish</span>
+                    <span class="dashboard-card__description">
+                        Find a fish by its common or scientific name.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Browse by Family</span>
+                    <span class="dashboard-card__description">
+                        Explore related freshwater fish groups.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">Browse by Habitat</span>
+                    <span class="dashboard-card__description">
+                        Find fish by the water and habitat they prefer.
+                    </span>
+                </button>
+
+                <button class="dashboard-card" type="button">
+                    <span class="dashboard-card__title">
+                        Browse Alphabetically
+                    </span>
+                    <span class="dashboard-card__description">
+                        View the complete fish guide from A to Z.
+                    </span>
+                </button>
+            </div>
+        </section>
+    `;
+
+    const backButton = appMain.querySelector("[data-back-route]");
+
+    backButton.addEventListener("click", () => {
+        showView(ROUTES.DASHBOARD);
+    });
 }
 
 /* ==========================================================
@@ -63,7 +142,16 @@ function initializeDashboardRouting() {
    ========================================================== */
 
 function initializeApp() {
+    const appMain = document.querySelector("#app-main");
+
     console.info("Freshwater Fishing Companion initialized.");
+
+    if (!appMain) {
+        console.error("Application main content area was not found.");
+        return;
+    }
+
+    dashboardMarkup = appMain.innerHTML;
 
     initializeDashboardRouting();
 }
