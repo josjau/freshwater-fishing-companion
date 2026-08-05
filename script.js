@@ -23,6 +23,10 @@ const ROUTES = Object.freeze({
 let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
 
+const VIEW_RENDERERS = Object.freeze({
+    [ROUTES.FISH]: renderFishGuideView
+});
+
 function showView(route) {
     const appMain = document.querySelector("#app-main");
 
@@ -33,19 +37,20 @@ function showView(route) {
 
     currentView = route;
 
-    switch (currentView) {
-        case ROUTES.DASHBOARD:
-            appMain.innerHTML = dashboardMarkup;
-            initializeDashboardRouting();
-            break;
-
-        case ROUTES.FISH:
-            renderFishGuideView(appMain);
-            break;
-
-        default:
-            console.log(`Current View: ${currentView}`);
+        if (currentView === ROUTES.DASHBOARD) {
+        appMain.innerHTML = dashboardMarkup;
+        initializeDashboardRouting();
+        return;
     }
+
+    const renderView = VIEW_RENDERERS[currentView];
+
+    if (!renderView) {
+        console.warn(`No view renderer is registered for: ${currentView}`);
+        return;
+    }
+
+    renderView(appMain);
 }
 
 function renderFishGuideView(appMain) {
