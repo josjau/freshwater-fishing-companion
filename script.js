@@ -1,17 +1,17 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: script.js
-   REPLACEMENT: MS2.3 - FUNCTIONAL FISH SEARCH
-   PURPOSE: Coordinates routes, application views, dashboard
-   navigation, Fish Guide actions, and functional Fish search.
+   REPLACEMENT: MS2.4 - FUNCTIONAL RIG GUIDE
+   PURPOSE: Coordinates application routes, Fish search, Rig
+   browsing, and step-by-step Rig instructional detail pages.
    ========================================================== */
 
 "use strict";
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "MS2.3",
-    replacement: "Functional Fish Search"
+    milestone: "MS2.4",
+    replacement: "Functional Rig Guide"
 });
 
 console.info(
@@ -20,15 +20,13 @@ console.info(
     `${BUILD_INFO.replacement}`
 );
 
-/* ==========================================================
-   APPLICATION ROUTES
-   ========================================================== */
-
 const ROUTES = Object.freeze({
     DASHBOARD: "dashboard",
     FISH: "fish",
     FISH_SEARCH: "fish-search",
     RIGS: "rigs",
+    RIG_BROWSE: "rig-browse",
+    RIG_DETAIL: "rig-detail",
     RECOMMENDATIONS: "recommendations",
     TACKLE: "tackle",
     KNOTS: "knots",
@@ -37,17 +35,16 @@ const ROUTES = Object.freeze({
     SETTINGS: "settings"
 });
 
-/* ==========================================================
-   VIEW MANAGER
-   ========================================================== */
-
 let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
+let selectedRigId = null;
 
 const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView,
     [ROUTES.FISH_SEARCH]: renderFishSearchView,
     [ROUTES.RIGS]: renderRigGuideView,
+    [ROUTES.RIG_BROWSE]: renderRigBrowseView,
+    [ROUTES.RIG_DETAIL]: renderRigDetailView,
     [ROUTES.RECOMMENDATIONS]: renderRecommendationsView,
     [ROUTES.TACKLE]: renderTackleView,
     [ROUTES.KNOTS]: renderKnotsView,
@@ -81,10 +78,6 @@ function showView(route) {
     currentView = route;
     viewRenderer(appMain);
 }
-
-/* ==========================================================
-   FISH GUIDE
-   ========================================================== */
 
 function renderFishGuideView(appMain) {
     renderView(appMain, {
@@ -132,10 +125,6 @@ function handleFishGuideCardSelect(cardId) {
     console.info(`Fish Guide action not implemented yet: ${cardId}`);
 }
 
-/* ==========================================================
-   FISH SEARCH
-   ========================================================== */
-
 function renderFishSearchView(appMain) {
     renderSearchView(appMain, {
         headingId: "fish-search-title",
@@ -146,35 +135,47 @@ function renderFishSearchView(appMain) {
         label: "Fish name or category",
         placeholder: "Try bass, bluegill, or Micropterus",
         parentLabel: "Fish Guide",
-        onParent: () => {
-            showView(ROUTES.FISH);
-        },
-        onSearch: (query) => {
-            updateFishSearchResults(appMain, query);
-        }
+        onParent: () => showView(ROUTES.FISH),
+        onSearch: (query) => updateFishSearchResults(appMain, query)
     });
 }
 
 function updateFishSearchResults(appMain, query) {
-    const activeFish = FISH_DATA.filter((fish) => fish.isActive);
     const matches = searchRecords(
-        activeFish,
+        FISH_DATA.filter((fish) => fish.isActive),
         query,
         ["name", "scientificName", "category"]
     );
-    const sortedMatches = sortRecordsAlphabetically(matches);
 
-    renderSearchResults(appMain, sortedMatches, {
-        emptyMessage: "No fish matched your search.",
-        onResultSelect: (fishId) => {
-            console.info(`Fish selected: ${fishId}`);
+    renderSearchResults(
+        appMain,
+        sortRecordsAlphabetically(matches),
+        {
+            emptyMessage: "No fish matched your search.",
+            renderRecord: (fish) => `
+                <button
+                    class="search-result-card"
+                    type="button"
+                    data-result-id="${fish.id}"
+                >
+                    <span class="search-result-card__title">${fish.name}</span>
+                    <span class="search-result-card__scientific-name">
+                        ${fish.scientificName}
+                    </span>
+                    <span class="search-result-card__meta">
+                        ${fish.category} · ${fish.family}
+                    </span>
+                    <span class="search-result-card__summary">
+                        ${fish.summary}
+                    </span>
+                </button>
+            `,
+            onResultSelect: (fishId) => {
+                console.info(`Fish selected: ${fishId}`);
+            }
         }
-    });
+    );
 }
-
-/* ==========================================================
-   OTHER APPLICATION VIEWS
-   ========================================================== */
 
 function renderRigGuideView(appMain) {
     renderView(appMain, {
@@ -188,7 +189,7 @@ function renderRigGuideView(appMain) {
                 id: "browse-all-rigs",
                 title: "Browse All Rigs",
                 description:
-                    "Explore the complete collection of supported rigs."
+                    "Open step-by-step instructions for supported rigs."
             },
             {
                 id: "browse-rigs-by-target-fish",
@@ -208,7 +209,86 @@ function renderRigGuideView(appMain) {
                 description:
                     "Learn what each hook, weight, swivel, and component does."
             }
-        ]
+        ],
+        onCardSelect: handleRigGuideCardSelect
+    });
+}
+
+function handleRigGuideCardSelect(cardId) {
+    if (cardId === "browse-all-rigs") {
+        showView(ROUTES.RIG_BROWSE);
+        return;
+    }
+
+    console.info(`Rig Guide action not implemented yet: ${cardId}`);
+}
+
+function renderRigBrowseView(appMain) {
+    renderSearchView(appMain, {
+        headingId: "rig-browse-title",
+        inputId: "rig-search-input",
+        title: "Browse All Rigs",
+        description:
+            "Search by rig name, difficulty, use, or fishing condition.",
+        label: "Search rigs",
+        placeholder: "Try bobber, beginner, shore, or cover",
+        parentLabel: "Rig Guide",
+        onParent: () => showView(ROUTES.RIGS),
+        onSearch: (query) => updateRigBrowseResults(appMain, query)
+    });
+}
+
+function updateRigBrowseResults(appMain, query) {
+    const matches = searchRecords(
+        RIG_DATA.filter((rig) => rig.isActive),
+        query,
+        ["name", "difficulty", "useCases", "conditionTags"]
+    );
+
+    renderSearchResults(
+        appMain,
+        sortRecordsAlphabetically(matches),
+        {
+            emptyMessage: "No rigs matched your search.",
+            renderRecord: (rig) => `
+                <button
+                    class="search-result-card search-result-card--rig"
+                    type="button"
+                    data-result-id="${rig.id}"
+                >
+                    <span class="search-result-card__title">${rig.name}</span>
+                    <span class="search-result-card__meta">
+                        ${rig.difficulty}
+                    </span>
+                    <span class="search-result-card__summary">
+                        ${rig.summary}
+                    </span>
+                    <span class="search-result-card__action">
+                        View instructions →
+                    </span>
+                </button>
+            `,
+            onResultSelect: (rigId) => {
+                selectedRigId = rigId;
+                showView(ROUTES.RIG_DETAIL);
+            }
+        }
+    );
+}
+
+function renderRigDetailView(appMain) {
+    const rig = findRecordById(RIG_DATA, selectedRigId);
+
+    if (!rig) {
+        console.warn(`Rig was not found: ${selectedRigId}`);
+        showView(ROUTES.RIG_BROWSE);
+        return;
+    }
+
+    renderInstructionDetail(appMain, {
+        record: rig,
+        parentLabel: "All Rigs",
+        onParent: () => showView(ROUTES.RIG_BROWSE)
     });
 }
 
@@ -236,8 +316,7 @@ function renderRecommendationsView(appMain) {
                 id: "browse-lures-by-conditions",
                 title: "Browse by Conditions",
                 description:
-                    "Explore lures for water clarity, depth, cover, " +
-                    "weather, and season."
+                    "Explore lures for water clarity, depth, cover, weather, and season."
             },
             {
                 id: "view-lure-families",
@@ -429,14 +508,8 @@ function renderSettingsView(appMain) {
     });
 }
 
-/* ==========================================================
-   DASHBOARD ROUTING
-   ========================================================== */
-
 function initializeDashboardRouting() {
-    const dashboardCards = document.querySelectorAll("[data-route]");
-
-    dashboardCards.forEach((card) => {
+    document.querySelectorAll("[data-route]").forEach((card) => {
         card.addEventListener("click", () => {
             const route = card.dataset.route;
 
@@ -450,10 +523,6 @@ function initializeDashboardRouting() {
     });
 }
 
-/* ==========================================================
-   APPLICATION INITIALIZATION
-   ========================================================== */
-
 function initializeApp() {
     const appMain = document.querySelector("#app-main");
 
@@ -465,7 +534,6 @@ function initializeApp() {
     }
 
     dashboardMarkup = appMain.innerHTML;
-
     initializeDashboardRouting();
 }
 
