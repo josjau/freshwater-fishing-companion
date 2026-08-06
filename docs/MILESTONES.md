@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Version:** 1.2.0  
+**Version:** 1.3.0  
 **Status:** Active  
 **Last Updated:** 2026-08-05
 
@@ -21,56 +21,61 @@
 ### MS2.1 — Fish Data Foundation
 
 - ☑ Canonical Fish data
-- ☑ `data/` directory
 - ☑ Stable Fish IDs
 - ☑ Initial Fish records
 - ☑ Runtime data validation
 
 ### MS2.2 — Shared Search and Rendering Utilities
 
-- ☑ `search.js`
-- ☑ `view-renderer.js`
-- ☑ `script.js` converted into application coordinator
 - ☑ Shared search utilities
 - ☑ Shared rendering utilities
-- ☑ Console validation complete
+- ☑ Application coordinator
+- ☑ Console validation
 
 ### MS2.3 — Functional Fish Search
 
-- ☑ Activate Search Fish card
-- ☑ Render Fish search interface
-- ☑ Search by common name
-- ☑ Search by scientific name
-- ☑ Search by category
-- ☑ Filter inactive Fish records
-- ☑ Sort results alphabetically
-- ☑ Display all active Fish for an empty query
-- ☑ Render reusable Fish result cards
-- ☑ Assign stable result IDs
-- ☑ Render result counts
-- ☑ Render no-results state
-- ☑ Provide Fish Guide return navigation
-- ☑ Preserve Home navigation
-- ☑ Support live input search
-- ☑ Support form submission
-- ☑ Validate keyboard focus behavior
-- ☑ Validate responsive layout
-- ☑ Validate zero Console errors
+- ☑ Functional Fish Search route
+- ☑ Common-name search
+- ☑ Scientific-name search
+- ☑ Category search
+- ☑ Reusable result cards
+- ☑ Parent and Home navigation
+- ☑ Responsive validation
+
+### MS2.4 — Functional Rig Guide
+
+- ☑ Canonical Rig data
+- ☑ Stable Rig IDs
+- ☑ Four beginner-focused Rig records
+- ☑ Rig Guide card integration
+- ☑ Browse All Rigs route
+- ☑ Rig search by name
+- ☑ Rig search by difficulty
+- ☑ Rig search by use case
+- ☑ Rig search by condition
+- ☑ Empty-query display of all active rigs
+- ☑ Alphabetical sorting
+- ☑ Stable Rig result IDs
+- ☑ Rig instructional detail pages
+- ☑ Required and optional component display
+- ☑ Ordered assembly steps
+- ☑ Setup notes
+- ☑ Common mistakes
+- ☑ Safety guidance
+- ☑ Return to All Rigs
+- ☑ Home navigation
+- ☑ Invalid Rig ID handling
+- ☑ Fish Search regression validation
+- ☑ Zero Console errors
 
 ## Active Milestone
 
-MS2.4 — Fish Detail View
+MS2.5 — Lightweight Tackle Readiness
 
 Planned work:
 
-- Open Fish detail from a search result
-- Resolve Fish by stable ID
-- Display common name
-- Display scientific name
-- Display category and family
-- Display summary
-- Display habitat tags
-- Display waterbody types
-- Provide return to Fish Search
-- Preserve Home navigation
-- Handle missing or invalid Fish IDs safely
+- Read Rig component requirements
+- Mark components as available or missing
+- Show Ready / Missing Items status
+- Persist a lightweight checklist locally
+- Avoid full inventory architecture until after the trip
