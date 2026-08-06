@@ -1,26 +1,21 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: view-renderer.js
-   REPLACEMENT: MS2.3 - INTERACTIVE VIEW RENDERER
-   PURPOSE: Owns reusable application view rendering, child-card
-   interaction, search interfaces, result cards, and navigation.
+   REPLACEMENT: MS2.4 - RIG GUIDE RENDERING
+   PURPOSE: Owns reusable application views, search results,
+   instructional detail pages, and navigation behavior.
    ========================================================== */
 
 "use strict";
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "MS2.3",
-    replacement: "Interactive View Renderer"
+    milestone: "MS2.4",
+    replacement: "Rig Guide Rendering"
 });
 
 function renderView(appMain, viewConfig) {
-    if (!appMain) {
-        console.error("A valid application content area is required.");
-        return;
-    }
-
-    if (!viewConfig || !Array.isArray(viewConfig.cards)) {
+    if (!appMain || !viewConfig || !Array.isArray(viewConfig.cards)) {
         console.error("A valid view configuration is required.");
         return;
     }
@@ -33,9 +28,7 @@ function renderView(appMain, viewConfig) {
                     type="button"
                     data-card-id="${card.id}"
                 >
-                    <span class="dashboard-card__title">
-                        ${card.title}
-                    </span>
+                    <span class="dashboard-card__title">${card.title}</span>
                     <span class="dashboard-card__description">
                         ${card.description}
                     </span>
@@ -45,10 +38,7 @@ function renderView(appMain, viewConfig) {
         .join("");
 
     appMain.innerHTML = `
-        <section
-            class="content-view"
-            aria-labelledby="${viewConfig.headingId}"
-        >
+        <section class="content-view" aria-labelledby="${viewConfig.headingId}">
             <button
                 class="page-navigation"
                 type="button"
@@ -57,10 +47,7 @@ function renderView(appMain, viewConfig) {
                 ← Home
             </button>
 
-            <h2 id="${viewConfig.headingId}">
-                ${viewConfig.title}
-            </h2>
-
+            <h2 id="${viewConfig.headingId}">${viewConfig.title}</h2>
             <p>${viewConfig.description}</p>
 
             <div class="dashboard-grid">
@@ -69,19 +56,14 @@ function renderView(appMain, viewConfig) {
         </section>
     `;
 
-    initializeViewNavigation(appMain);
+    initializeHomeNavigation(appMain);
     initializeViewCardActions(appMain, viewConfig.onCardSelect);
 }
 
-function initializeViewNavigation(appMain) {
+function initializeHomeNavigation(appMain) {
     const homeNavigation = appMain.querySelector("[data-home-navigation]");
 
-    if (!homeNavigation) {
-        console.error("Home navigation control was not created.");
-        return;
-    }
-
-    homeNavigation.addEventListener("click", () => {
+    homeNavigation?.addEventListener("click", () => {
         showView(ROUTES.DASHBOARD);
     });
 }
@@ -91,9 +73,7 @@ function initializeViewCardActions(appMain, onCardSelect) {
         return;
     }
 
-    const cards = appMain.querySelectorAll("[data-card-id]");
-
-    cards.forEach((card) => {
+    appMain.querySelectorAll("[data-card-id]").forEach((card) => {
         card.addEventListener("click", () => {
             onCardSelect(card.dataset.cardId);
         });
@@ -107,10 +87,7 @@ function renderSearchView(appMain, searchConfig) {
     }
 
     appMain.innerHTML = `
-        <section
-            class="content-view"
-            aria-labelledby="${searchConfig.headingId}"
-        >
+        <section class="content-view" aria-labelledby="${searchConfig.headingId}">
             <div class="page-navigation-group">
                 <button
                     class="page-navigation"
@@ -129,10 +106,7 @@ function renderSearchView(appMain, searchConfig) {
                 </button>
             </div>
 
-            <h2 id="${searchConfig.headingId}">
-                ${searchConfig.title}
-            </h2>
-
+            <h2 id="${searchConfig.headingId}">${searchConfig.title}</h2>
             <p>${searchConfig.description}</p>
 
             <form class="search-form" data-search-form>
@@ -163,26 +137,18 @@ function renderSearchView(appMain, searchConfig) {
                 aria-live="polite"
             ></p>
 
-            <div
-                class="search-results"
-                data-search-results
-            ></div>
+            <div class="search-results" data-search-results></div>
         </section>
     `;
 
-    const parentNavigation = appMain.querySelector(
-        "[data-parent-navigation]"
-    );
-    const homeNavigation = appMain.querySelector(
-        "[data-home-navigation]"
-    );
     const searchForm = appMain.querySelector("[data-search-form]");
     const searchInput = appMain.querySelector(`#${searchConfig.inputId}`);
 
-    parentNavigation?.addEventListener("click", searchConfig.onParent);
-    homeNavigation?.addEventListener("click", () => {
-        showView(ROUTES.DASHBOARD);
-    });
+    appMain
+        .querySelector("[data-parent-navigation]")
+        ?.addEventListener("click", searchConfig.onParent);
+
+    initializeHomeNavigation(appMain);
 
     searchForm?.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -194,18 +160,11 @@ function renderSearchView(appMain, searchConfig) {
     });
 
     searchInput?.focus();
-
     searchConfig.onSearch("");
 }
 
-function renderSearchResults(
-    appMain,
-    records,
-    resultConfig
-) {
-    const resultsContainer = appMain.querySelector(
-        "[data-search-results]"
-    );
+function renderSearchResults(appMain, records, resultConfig) {
+    const resultsContainer = appMain.querySelector("[data-search-results]");
     const status = appMain.querySelector("[data-search-status]");
 
     if (!resultsContainer || !status) {
@@ -223,31 +182,7 @@ function renderSearchResults(
         `${records.length} ${records.length === 1 ? "result" : "results"}`;
 
     resultsContainer.innerHTML = records
-        .map(
-            (record) => `
-                <button
-                    class="search-result-card"
-                    type="button"
-                    data-result-id="${record.id}"
-                >
-                    <span class="search-result-card__title">
-                        ${record.name}
-                    </span>
-
-                    <span class="search-result-card__scientific-name">
-                        ${record.scientificName}
-                    </span>
-
-                    <span class="search-result-card__meta">
-                        ${record.category} · ${record.family}
-                    </span>
-
-                    <span class="search-result-card__summary">
-                        ${record.summary}
-                    </span>
-                </button>
-            `
-        )
+        .map((record) => resultConfig.renderRecord(record))
         .join("");
 
     if (typeof resultConfig.onResultSelect !== "function") {
@@ -258,11 +193,109 @@ function renderSearchResults(
         .querySelectorAll("[data-result-id]")
         .forEach((resultCard) => {
             resultCard.addEventListener("click", () => {
-                resultConfig.onResultSelect(
-                    resultCard.dataset.resultId
-                );
+                resultConfig.onResultSelect(resultCard.dataset.resultId);
             });
         });
+}
+
+function renderInstructionDetail(appMain, detailConfig) {
+    if (!appMain || !detailConfig?.record) {
+        console.error("A valid instructional detail record is required.");
+        return;
+    }
+
+    const record = detailConfig.record;
+
+    const componentsMarkup = record.componentRequirements
+        .map(
+            (component) => `
+                <li class="detail-list__item">
+                    <strong>${component.name}</strong>
+                    ${component.required ? "" : " <span>(Optional)</span>"}
+                    <p>${component.notes}</p>
+                </li>
+            `
+        )
+        .join("");
+
+    const stepsMarkup = record.assemblySteps
+        .map((step) => `<li>${step}</li>`)
+        .join("");
+
+    const notesMarkup = record.setupNotes
+        .map((note) => `<li>${note}</li>`)
+        .join("");
+
+    const mistakesMarkup = record.commonMistakes
+        .map((mistake) => `<li>${mistake}</li>`)
+        .join("");
+
+    const safetyMarkup = record.safetyNotes
+        .map((note) => `<li>${note}</li>`)
+        .join("");
+
+    appMain.innerHTML = `
+        <article class="detail-view" aria-labelledby="rig-detail-title">
+            <div class="page-navigation-group">
+                <button
+                    class="page-navigation"
+                    type="button"
+                    data-parent-navigation
+                >
+                    ← ${detailConfig.parentLabel}
+                </button>
+
+                <button
+                    class="page-navigation"
+                    type="button"
+                    data-home-navigation
+                >
+                    Home
+                </button>
+            </div>
+
+            <header class="detail-header">
+                <p class="detail-eyebrow">${record.difficulty}</p>
+                <h2 id="rig-detail-title">${record.name}</h2>
+                <p>${record.summary}</p>
+            </header>
+
+            <section class="detail-section">
+                <h3>What You Need</h3>
+                <ul class="detail-list detail-list--components">
+                    ${componentsMarkup}
+                </ul>
+            </section>
+
+            <section class="detail-section">
+                <h3>How to Rig It</h3>
+                <ol class="detail-steps">
+                    ${stepsMarkup}
+                </ol>
+            </section>
+
+            <section class="detail-section">
+                <h3>Setup Notes</h3>
+                <ul class="detail-list">${notesMarkup}</ul>
+            </section>
+
+            <section class="detail-section">
+                <h3>Common Mistakes</h3>
+                <ul class="detail-list">${mistakesMarkup}</ul>
+            </section>
+
+            <section class="detail-section detail-section--safety">
+                <h3>Safety</h3>
+                <ul class="detail-list">${safetyMarkup}</ul>
+            </section>
+        </article>
+    `;
+
+    appMain
+        .querySelector("[data-parent-navigation]")
+        ?.addEventListener("click", detailConfig.onParent);
+
+    initializeHomeNavigation(appMain);
 }
 
 console.info(
