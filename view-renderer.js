@@ -1,17 +1,17 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: view-renderer.js
-   REPLACEMENT: MS2.4 - RIG GUIDE RENDERING
+   REPLACEMENT: MS2.5 - TACKLE READINESS RENDERING
    PURPOSE: Owns reusable application views, search results,
-   instructional detail pages, and navigation behavior.
+   instructional detail pages, and tackle-readiness checklists.
    ========================================================== */
 
 "use strict";
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "MS2.4",
-    replacement: "Rig Guide Rendering"
+    milestone: "MS2.5",
+    replacement: "Tackle Readiness Rendering"
 });
 
 function renderView(appMain, viewConfig) {
@@ -50,9 +50,7 @@ function renderView(appMain, viewConfig) {
             <h2 id="${viewConfig.headingId}">${viewConfig.title}</h2>
             <p>${viewConfig.description}</p>
 
-            <div class="dashboard-grid">
-                ${cardsMarkup}
-            </div>
+            <div class="dashboard-grid">${cardsMarkup}</div>
         </section>
     `;
 
@@ -61,11 +59,11 @@ function renderView(appMain, viewConfig) {
 }
 
 function initializeHomeNavigation(appMain) {
-    const homeNavigation = appMain.querySelector("[data-home-navigation]");
-
-    homeNavigation?.addEventListener("click", () => {
-        showView(ROUTES.DASHBOARD);
-    });
+    appMain
+        .querySelector("[data-home-navigation]")
+        ?.addEventListener("click", () => {
+            showView(ROUTES.DASHBOARD);
+        });
 }
 
 function initializeViewCardActions(appMain, onCardSelect) {
@@ -234,6 +232,19 @@ function renderInstructionDetail(appMain, detailConfig) {
         .map((note) => `<li>${note}</li>`)
         .join("");
 
+    const actionMarkup =
+        typeof detailConfig.onAction === "function"
+            ? `
+                <button
+                    class="detail-primary-action"
+                    type="button"
+                    data-detail-action
+                >
+                    ${detailConfig.actionLabel}
+                </button>
+            `
+            : "";
+
     appMain.innerHTML = `
         <article class="detail-view" aria-labelledby="rig-detail-title">
             <div class="page-navigation-group">
@@ -258,6 +269,7 @@ function renderInstructionDetail(appMain, detailConfig) {
                 <p class="detail-eyebrow">${record.difficulty}</p>
                 <h2 id="rig-detail-title">${record.name}</h2>
                 <p>${record.summary}</p>
+                ${actionMarkup}
             </header>
 
             <section class="detail-section">
@@ -269,9 +281,7 @@ function renderInstructionDetail(appMain, detailConfig) {
 
             <section class="detail-section">
                 <h3>How to Rig It</h3>
-                <ol class="detail-steps">
-                    ${stepsMarkup}
-                </ol>
+                <ol class="detail-steps">${stepsMarkup}</ol>
             </section>
 
             <section class="detail-section">
@@ -295,7 +305,156 @@ function renderInstructionDetail(appMain, detailConfig) {
         .querySelector("[data-parent-navigation]")
         ?.addEventListener("click", detailConfig.onParent);
 
+    appMain
+        .querySelector("[data-detail-action]")
+        ?.addEventListener("click", detailConfig.onAction);
+
     initializeHomeNavigation(appMain);
+}
+
+function renderTackleReadiness(appMain, readinessConfig) {
+    if (!appMain || !readinessConfig?.rig) {
+        console.error("A valid Rig readiness configuration is required.");
+        return;
+    }
+
+    const rig = readinessConfig.rig;
+    const selections = readinessConfig.selections ?? {};
+
+    const checklistMarkup = rig.componentRequirements
+        .map((component) => {
+            const isChecked = selections[component.id] === true;
+
+            return `
+                <label class="readiness-item">
+                    <input
+                        class="readiness-item__checkbox"
+                        type="checkbox"
+                        data-component-id="${component.id}"
+                        ${isChecked ? "checked" : ""}
+                    >
+                    <span class="readiness-item__content">
+                        <span class="readiness-item__name">
+                            ${component.name}
+                            ${
+                                component.required
+                                    ? ""
+                                    : '<span class="readiness-item__optional">(Optional)</span>'
+                            }
+                        </span>
+                        <span class="readiness-item__notes">
+                            ${component.notes}
+                        </span>
+                    </span>
+                </label>
+            `;
+        })
+        .join("");
+
+    appMain.innerHTML = `
+        <section class="readiness-view" aria-labelledby="readiness-title">
+            <div class="page-navigation-group">
+                <button
+                    class="page-navigation"
+                    type="button"
+                    data-parent-navigation
+                >
+                    ← ${readinessConfig.parentLabel}
+                </button>
+
+                <button
+                    class="page-navigation"
+                    type="button"
+                    data-home-navigation
+                >
+                    Home
+                </button>
+            </div>
+
+            <header class="detail-header">
+                <p class="detail-eyebrow">Tackle Check</p>
+                <h2 id="readiness-title">${rig.name}</h2>
+                <p>
+                    Mark each item you have. Your selections are saved on
+                    this device.
+                </p>
+            </header>
+
+            <div class="readiness-status" data-readiness-status></div>
+
+            <div class="readiness-checklist">
+                ${checklistMarkup}
+            </div>
+        </section>
+    `;
+
+    const updateStatus = () => {
+        const checkboxes = Array.from(
+            appMain.querySelectorAll("[data-component-id]")
+        );
+
+        const missingRequired = rig.componentRequirements.filter(
+            (component) => {
+                if (!component.required) {
+                    return false;
+                }
+
+                const checkbox = checkboxes.find(
+                    (item) =>
+                        item.dataset.componentId === component.id
+                );
+
+                return !checkbox?.checked;
+            }
+        );
+
+        const status = appMain.querySelector("[data-readiness-status]");
+
+        if (!status) {
+            return;
+        }
+
+        if (missingRequired.length === 0) {
+            status.className =
+                "readiness-status readiness-status--ready";
+            status.innerHTML = `
+                <strong>Ready to Fish</strong>
+                <span>All required components are marked available.</span>
+            `;
+            return;
+        }
+
+        status.className =
+            "readiness-status readiness-status--missing";
+        status.innerHTML = `
+            <strong>
+                Missing ${missingRequired.length}
+                Required ${missingRequired.length === 1 ? "Item" : "Items"}
+            </strong>
+            <span>
+                ${missingRequired.map((item) => item.name).join(", ")}
+            </span>
+        `;
+    };
+
+    appMain
+        .querySelector("[data-parent-navigation]")
+        ?.addEventListener("click", readinessConfig.onParent);
+
+    appMain
+        .querySelectorAll("[data-component-id]")
+        .forEach((checkbox) => {
+            checkbox.addEventListener("change", () => {
+                readinessConfig.onChange(
+                    checkbox.dataset.componentId,
+                    checkbox.checked
+                );
+                updateStatus();
+            });
+        });
+
+    initializeHomeNavigation(appMain);
+    updateStatus();
 }
 
 console.info(
