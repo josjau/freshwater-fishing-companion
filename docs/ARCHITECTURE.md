@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Version:** 0.2.2  
+**Version:** 0.2.3  
 **Status:** Active  
 **Last Updated:** 2026-08-05
 
-> NOTE: This file reflects the validated MS2.4 functional Rig Guide implementation.
+> NOTE: This file reflects the validated MS2.5 lightweight tackle-readiness implementation.
 
 ## Current Source Structure
 
@@ -50,24 +50,7 @@ Owns canonical Fish reference records and stable Fish IDs.
 
 ### `data/rigs.js`
 
-Owns canonical Rig records and stable Rig IDs.
-
-Validated Rig fields include:
-
-- Foundation metadata
-- Difficulty
-- Use cases
-- Condition tags
-- Component requirements
-- Assembly steps
-- Setup notes
-- Common mistakes
-- Safety notes
-- Technique references
-- Variation references
-- Image references
-
-Rig records do not store user ownership information.
+Owns canonical Rig records, stable Rig IDs, component requirements, assembly steps, setup notes, common mistakes, and safety notes.
 
 ### `search.js`
 
@@ -77,14 +60,14 @@ Owns reusable, non-mutating lookup, search, filter, and sort operations.
 
 Owns reusable page rendering and navigation.
 
-Validated MS2.4 responsibilities include:
+Validated MS2.5 responsibilities include:
 
 - Top-level child-card rendering
-- Stable `data-card-id` attributes
 - Search-page rendering
 - Generic result rendering
-- Stable `data-result-id` attributes
-- Instructional detail rendering
+- Instructional Rig detail rendering
+- Tackle-readiness checklist rendering
+- Required-item readiness status
 - Parent navigation
 - Home navigation
 
@@ -95,12 +78,12 @@ Coordinates:
 - Application routes
 - View registration
 - Dashboard restoration
-- Fish Guide actions
 - Fish search
-- Rig Guide actions
-- Rig browse and search
-- Rig detail selection
-- Application initialization
+- Rig browsing and Rig detail
+- Tackle-readiness routing
+- Local readiness-state loading
+- Local readiness-state persistence
+- Per-Rig component selection
 
 ## Rig Guide Architecture
 
@@ -111,43 +94,34 @@ The validated Rig Guide flow is:
     → Browse All Rigs
     → Select a Rig
     → Instructional Rig Detail
+    → Check My Tackle
+    → Tackle Readiness
 
-Rig browsing supports:
+## Lightweight Tackle Readiness
 
-- Empty-query display of all active rigs
-- Rig-name search
-- Difficulty search
-- Use-case search
-- Condition-tag search
-- Alphabetical sorting
-- Stable Rig selection by ID
-- Clear no-results messaging
+The lightweight readiness feature uses each Rig record's `componentRequirements` as the canonical checklist source.
 
-Rig detail pages display:
+The application stores user selections under:
 
-- Difficulty
-- Summary
-- Required and optional components
-- Ordered assembly steps
-- Setup notes
-- Common mistakes
-- Safety guidance
-- Return to All Rigs
-- Home navigation
+    freshwaterFishingCompanion.tackleReadiness.v1
 
-Invalid or missing Rig IDs return safely to the Rig browse view.
+Storage is implemented with `localStorage`.
 
-## Stable Identifiers
+Saved readiness data is organized by:
 
-Top-level child cards use:
+- Stable Rig ID
+- Stable component ID
+- Boolean availability state
 
-    data-card-id="stable-action-id"
+Readiness evaluation:
 
-Search result cards use:
+- Optional components do not block readiness.
+- All required components must be selected for `Ready to Fish`.
+- Missing required components are listed by name.
+- Each Rig maintains an independent checklist.
+- Invalid or malformed stored data falls back safely to an empty state.
 
-    data-result-id="stable-record-id"
-
-Visible wording may change without changing behavior, provided the stable identifier remains unchanged.
+This storage layer is intentionally lightweight. A future inventory system may replace the lookup source without changing the Rig detail or readiness interfaces.
 
 ## Current Validated Baseline
 
@@ -161,14 +135,18 @@ The current validated baseline includes:
 - Canonical Rig data
 - Functional Fish search
 - Functional Rig browsing
-- Searchable Rig list
 - Instructional Rig detail pages
+- Check My Tackle action
+- Per-Rig readiness checklists
+- Required and optional component handling
+- Persistent local selections
+- Ready and missing-item status
 - Parent and Home navigation
 - Runtime build identifiers
 - GitHub Pages deployment validation
 
 ## Active Priority
 
-The active implementation priority is the field-ready Rig and Tackle MVP.
+The field-ready Rig and Tackle MVP is complete.
 
-The next recommended build is lightweight tackle readiness using Rig component requirements.
+The next feature should be selected based on immediate field needs or the approved roadmap.
