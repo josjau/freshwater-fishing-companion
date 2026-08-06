@@ -1,18 +1,21 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: script.js
-   REPLACEMENT: MS2.4 - FUNCTIONAL RIG GUIDE
+   REPLACEMENT: MS2.5 - LIGHTWEIGHT TACKLE READINESS
    PURPOSE: Coordinates application routes, Fish search, Rig
-   browsing, and step-by-step Rig instructional detail pages.
+   browsing, Rig details, and local tackle-readiness checks.
    ========================================================== */
 
 "use strict";
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "MS2.4",
-    replacement: "Functional Rig Guide"
+    milestone: "MS2.5",
+    replacement: "Lightweight Tackle Readiness"
 });
+
+const TACKLE_READINESS_STORAGE_KEY =
+    "freshwaterFishingCompanion.tackleReadiness.v1";
 
 console.info(
     `[Loaded] ${BUILD_INFO.file} | ` +
@@ -27,6 +30,7 @@ const ROUTES = Object.freeze({
     RIGS: "rigs",
     RIG_BROWSE: "rig-browse",
     RIG_DETAIL: "rig-detail",
+    RIG_READINESS: "rig-readiness",
     RECOMMENDATIONS: "recommendations",
     TACKLE: "tackle",
     KNOTS: "knots",
@@ -45,6 +49,7 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.RIGS]: renderRigGuideView,
     [ROUTES.RIG_BROWSE]: renderRigBrowseView,
     [ROUTES.RIG_DETAIL]: renderRigDetailView,
+    [ROUTES.RIG_READINESS]: renderRigReadinessView,
     [ROUTES.RECOMMENDATIONS]: renderRecommendationsView,
     [ROUTES.TACKLE]: renderTackleView,
     [ROUTES.KNOTS]: renderKnotsView,
@@ -90,14 +95,12 @@ function renderFishGuideView(appMain) {
             {
                 id: "search-fish",
                 title: "Search Fish",
-                description:
-                    "Find a fish by its common or scientific name."
+                description: "Find a fish by its common or scientific name."
             },
             {
                 id: "browse-fish-by-family",
                 title: "Browse by Family",
-                description:
-                    "Explore related freshwater fish groups."
+                description: "Explore related freshwater fish groups."
             },
             {
                 id: "browse-fish-by-habitat",
@@ -108,8 +111,7 @@ function renderFishGuideView(appMain) {
             {
                 id: "browse-fish-alphabetically",
                 title: "Browse Alphabetically",
-                description:
-                    "View the complete fish guide from A to Z."
+                description: "View the complete fish guide from A to Z."
             }
         ],
         onCardSelect: handleFishGuideCardSelect
@@ -288,7 +290,87 @@ function renderRigDetailView(appMain) {
     renderInstructionDetail(appMain, {
         record: rig,
         parentLabel: "All Rigs",
-        onParent: () => showView(ROUTES.RIG_BROWSE)
+        actionLabel: "Check My Tackle",
+        onParent: () => showView(ROUTES.RIG_BROWSE),
+        onAction: () => showView(ROUTES.RIG_READINESS)
+    });
+}
+
+function getReadinessState() {
+    try {
+        const storedValue = localStorage.getItem(
+            TACKLE_READINESS_STORAGE_KEY
+        );
+
+        if (!storedValue) {
+            return {};
+        }
+
+        const parsedValue = JSON.parse(storedValue);
+
+        return parsedValue && typeof parsedValue === "object"
+            ? parsedValue
+            : {};
+    } catch (error) {
+        console.warn("Tackle readiness could not be loaded.", error);
+        return {};
+    }
+}
+
+function saveReadinessState(state) {
+    try {
+        localStorage.setItem(
+            TACKLE_READINESS_STORAGE_KEY,
+            JSON.stringify(state)
+        );
+    } catch (error) {
+        console.warn("Tackle readiness could not be saved.", error);
+    }
+}
+
+function getRigReadinessSelections(rigId) {
+    const state = getReadinessState();
+    const rigState = state[rigId];
+
+    return rigState && typeof rigState === "object"
+        ? rigState
+        : {};
+}
+
+function updateRigReadinessSelection(rigId, componentId, isOwned) {
+    const state = getReadinessState();
+    const rigState =
+        state[rigId] && typeof state[rigId] === "object"
+            ? state[rigId]
+            : {};
+
+    rigState[componentId] = isOwned;
+    state[rigId] = rigState;
+
+    saveReadinessState(state);
+}
+
+function renderRigReadinessView(appMain) {
+    const rig = findRecordById(RIG_DATA, selectedRigId);
+
+    if (!rig) {
+        console.warn(`Rig was not found: ${selectedRigId}`);
+        showView(ROUTES.RIG_BROWSE);
+        return;
+    }
+
+    renderTackleReadiness(appMain, {
+        rig,
+        selections: getRigReadinessSelections(rig.id),
+        parentLabel: rig.name,
+        onParent: () => showView(ROUTES.RIG_DETAIL),
+        onChange: (componentId, isOwned) => {
+            updateRigReadinessSelection(
+                rig.id,
+                componentId,
+                isOwned
+            );
+        }
     });
 }
 
