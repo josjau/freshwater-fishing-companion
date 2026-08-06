@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Version:** 0.2.1  
+**Version:** 0.2.2  
 **Status:** Active  
 **Last Updated:** 2026-08-05
 
-> NOTE: This file supersedes the previous architecture documentation and reflects the validated MS2.3 implementation.
+> NOTE: This file reflects the validated MS2.4 functional Rig Guide implementation.
 
 ## Current Source Structure
 
@@ -17,6 +17,7 @@
 
     data/
         fish.js
+        rigs.js
 
     search.js
     view-renderer.js
@@ -36,6 +37,7 @@ GitHub is the authoritative source for project files.
 The required JavaScript load order is:
 
     data/fish.js
+    data/rigs.js
     search.js
     view-renderer.js
     script.js
@@ -46,6 +48,27 @@ The required JavaScript load order is:
 
 Owns canonical Fish reference records and stable Fish IDs.
 
+### `data/rigs.js`
+
+Owns canonical Rig records and stable Rig IDs.
+
+Validated Rig fields include:
+
+- Foundation metadata
+- Difficulty
+- Use cases
+- Condition tags
+- Component requirements
+- Assembly steps
+- Setup notes
+- Common mistakes
+- Safety notes
+- Technique references
+- Variation references
+- Image references
+
+Rig records do not store user ownership information.
+
 ### `search.js`
 
 Owns reusable, non-mutating lookup, search, filter, and sort operations.
@@ -54,18 +77,15 @@ Owns reusable, non-mutating lookup, search, filter, and sort operations.
 
 Owns reusable page rendering and navigation.
 
-Validated MS2.3 responsibilities include:
+Validated MS2.4 responsibilities include:
 
 - Top-level child-card rendering
 - Stable `data-card-id` attributes
-- Child-card click handling
 - Search-page rendering
-- Search form behavior
-- Live input search
-- Search result rendering
+- Generic result rendering
 - Stable `data-result-id` attributes
-- Result-count and no-results status
-- Parent-page navigation
+- Instructional detail rendering
+- Parent navigation
 - Home navigation
 
 ### `script.js`
@@ -76,48 +96,46 @@ Coordinates:
 - View registration
 - Dashboard restoration
 - Fish Guide actions
-- Fish search configuration
-- Fish search execution
+- Fish search
+- Rig Guide actions
+- Rig browse and search
+- Rig detail selection
 - Application initialization
 
-Feature-specific view behavior remains in the application coordinator until it becomes large enough to justify a focused feature module.
+## Rig Guide Architecture
 
-## Fish Search Architecture
-
-The validated Fish search flow is:
+The validated Rig Guide flow is:
 
     Dashboard
-    → Fish Guide
-    → Search Fish
-    → Fish result selection
+    → Rig Guide
+    → Browse All Rigs
+    → Select a Rig
+    → Instructional Rig Detail
 
-Fish search currently supports:
+Rig browsing supports:
 
-- Common-name matching
-- Scientific-name matching
-- Category matching
-- Live filtering while typing
-- Form submission
-- Active-record filtering
-- Alphabetical result sorting
-- Empty-query display of all active Fish
+- Empty-query display of all active rigs
+- Rig-name search
+- Difficulty search
+- Use-case search
+- Condition-tag search
+- Alphabetical sorting
+- Stable Rig selection by ID
 - Clear no-results messaging
-- Responsive result cards
-- Keyboard-visible focus states
-- Stable Fish selection by ID
 
-Search result selection currently logs the stable Fish ID. Fish Detail will replace that temporary behavior.
+Rig detail pages display:
 
-## Navigation Pattern
+- Difficulty
+- Summary
+- Required and optional components
+- Ordered assembly steps
+- Setup notes
+- Common mistakes
+- Safety guidance
+- Return to All Rigs
+- Home navigation
 
-The Fish Search page provides:
-
-- `← Fish Guide`
-- `Home`
-
-The parent navigation returns to Fish Guide.
-
-Home returns directly to the dashboard.
+Invalid or missing Rig IDs return safely to the Rig browse view.
 
 ## Stable Identifiers
 
@@ -140,15 +158,17 @@ The current validated baseline includes:
 - Shared view renderer
 - Shared search utilities
 - Canonical Fish data
+- Canonical Rig data
 - Functional Fish search
-- Live search behavior
-- Reusable Fish result cards
+- Functional Rig browsing
+- Searchable Rig list
+- Instructional Rig detail pages
 - Parent and Home navigation
 - Runtime build identifiers
 - GitHub Pages deployment validation
 
-## Next Milestone
+## Active Priority
 
-MS2.4 — Fish Detail View
+The active implementation priority is the field-ready Rig and Tackle MVP.
 
-MS2.4 will use the stable Fish ID selected from search results to render a Fish detail page.
+The next recommended build is lightweight tackle readiness using Rig component requirements.
