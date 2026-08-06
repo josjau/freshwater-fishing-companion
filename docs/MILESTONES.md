@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Version:** 1.3.0  
+**Version:** 1.4.0  
 **Status:** Active  
 **Last Updated:** 2026-08-05
 
@@ -45,37 +45,38 @@
 ### MS2.4 — Functional Rig Guide
 
 - ☑ Canonical Rig data
-- ☑ Stable Rig IDs
 - ☑ Four beginner-focused Rig records
-- ☑ Rig Guide card integration
-- ☑ Browse All Rigs route
-- ☑ Rig search by name
-- ☑ Rig search by difficulty
-- ☑ Rig search by use case
-- ☑ Rig search by condition
-- ☑ Empty-query display of all active rigs
-- ☑ Alphabetical sorting
-- ☑ Stable Rig result IDs
+- ☑ Browse All Rigs
+- ☑ Rig search
 - ☑ Rig instructional detail pages
-- ☑ Required and optional component display
+- ☑ Component requirements
 - ☑ Ordered assembly steps
 - ☑ Setup notes
 - ☑ Common mistakes
 - ☑ Safety guidance
-- ☑ Return to All Rigs
+- ☑ Navigation and error handling
+
+### MS2.5 — Lightweight Tackle Readiness
+
+- ☑ Check My Tackle action
+- ☑ Dedicated Rig readiness route
+- ☑ Per-Rig component checklist
+- ☑ Required and optional component handling
+- ☑ Automatic Ready to Fish status
+- ☑ Missing-required-item count
+- ☑ Missing-required-item names
+- ☑ Immediate local persistence
+- ☑ Persistence after refresh
+- ☑ Independent state for each Rig
+- ☑ Safe malformed-storage fallback
+- ☑ Return to Rig detail
 - ☑ Home navigation
-- ☑ Invalid Rig ID handling
 - ☑ Fish Search regression validation
+- ☑ Rig browsing regression validation
 - ☑ Zero Console errors
 
 ## Active Milestone
 
-MS2.5 — Lightweight Tackle Readiness
+To be selected.
 
-Planned work:
-
-- Read Rig component requirements
-- Mark components as available or missing
-- Show Ready / Missing Items status
-- Persist a lightweight checklist locally
-- Avoid full inventory architecture until after the trip
+The field-ready Rig and Tackle MVP is complete.
