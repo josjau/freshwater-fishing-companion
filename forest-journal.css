@@ -538,3 +538,141 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     font-weight: 800;
 }
 
+/* =========================================================
+   MS2.5 - LIGHTWEIGHT TACKLE READINESS
+   APPEND TO forest-journal.css
+   ========================================================= */
+
+.detail-primary-action {
+    min-height: var(--touch-target);
+    margin-top: var(--space-4);
+    padding: 10px 16px;
+    border: 1px solid var(--accent-tackle);
+    border-radius: var(--radius-small);
+    background:
+        color-mix(
+            in srgb,
+            var(--accent-tackle) 24%,
+            var(--surface)
+        );
+    color: var(--text);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.detail-primary-action:hover {
+    background:
+        color-mix(
+            in srgb,
+            var(--accent-tackle) 34%,
+            var(--surface-hover)
+        );
+}
+
+.detail-primary-action:focus-visible {
+    outline: 3px solid var(--accent-tackle);
+    outline-offset: 3px;
+}
+
+.readiness-view {
+    max-width: 760px;
+}
+
+.readiness-status {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-bottom: var(--space-5);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--border);
+    border-left-width: 6px;
+    border-radius: var(--radius);
+    background: var(--surface-elevated);
+}
+
+.readiness-status strong {
+    font-size: 1.05rem;
+}
+
+.readiness-status span {
+    color: var(--text-muted);
+}
+
+.readiness-status--ready {
+    border-left-color: var(--success);
+}
+
+.readiness-status--missing {
+    border-left-color: var(--warning);
+}
+
+.readiness-checklist {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.readiness-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: start;
+    padding: var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    cursor: pointer;
+}
+
+.readiness-item:hover {
+    border-color: var(--border-strong);
+    background: var(--surface-hover);
+}
+
+.readiness-item:has(.readiness-item__checkbox:checked) {
+    border-color:
+        color-mix(
+            in srgb,
+            var(--success) 70%,
+            var(--border)
+        );
+    background:
+        color-mix(
+            in srgb,
+            var(--success) 10%,
+            var(--surface)
+        );
+}
+
+.readiness-item__checkbox {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin: 2px 0 0;
+    accent-color: var(--success);
+}
+
+.readiness-item__checkbox:focus-visible {
+    outline: 3px solid var(--accent-tackle);
+    outline-offset: 3px;
+}
+
+.readiness-item__content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.readiness-item__name {
+    font-weight: 800;
+}
+
+.readiness-item__optional {
+    color: var(--text-subtle);
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.readiness-item__notes {
+    color: var(--text-muted);
+    font-size: 0.93rem;
+}
