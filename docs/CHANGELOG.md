@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Version:** 1.2.0  
+**Version:** 1.3.0  
 **Status:** Active  
 **Last Updated:** 2026-08-05
 
@@ -9,66 +9,74 @@
 
 ## In Progress
 
-### MS2.4 — Fish Detail View
+### MS2.5 — Lightweight Tackle Readiness
 
-- Open a Fish detail page from a search result.
-- Resolve Fish records by stable ID.
-- Display canonical Fish reference information.
+- Compare Rig component requirements with a lightweight local checklist.
+- Show ready and missing component states.
+- Support field preparation without implementing the full inventory system.
+
+---
+
+# Version 0.2.4 — Functional Rig Guide
+
+**Date:** 2026-08-05  
+**Milestone:** MS2.4
+
+## Added
+
+- `data/rigs.js`
+- Four beginner-focused canonical Rig records
+- Browse All Rigs workflow
+- Searchable Rig list
+- Rig search by name, difficulty, use case, and condition
+- Stable `data-result-id` selection
+- Instructional Rig detail renderer
+- Required and optional component lists
+- Ordered assembly steps
+- Setup notes
+- Common mistakes
+- Safety guidance
+- Return to All Rigs navigation
+
+## Changed
+
+- `index.html` now loads `data/rigs.js`.
+- `script.js` now coordinates Rig browsing and Rig detail routes.
+- `view-renderer.js` now renders reusable instructional detail pages.
+- `forest-journal.css` now styles Rig result cards and detail sections.
+- The project priority temporarily shifted from Fish Detail to a field-ready Rig and Tackle MVP.
+
+## Validation
+
+- Confirmed all four rigs display.
+- Confirmed Browse All Rigs opens from the Rig Guide.
+- Confirmed Rig search behavior.
+- Confirmed each Rig opens an instructional detail page.
+- Confirmed components, steps, notes, mistakes, and safety guidance display.
+- Confirmed All Rigs navigation.
+- Confirmed Home navigation.
+- Confirmed Fish Search remains functional.
+- Confirmed expected runtime identifiers.
+- Confirmed zero Console errors.
 
 ---
 
 # Version 0.2.3 — Functional Fish Search
 
-**Date:** 2026-08-05  
-**Milestone:** MS2.3
-
 ## Added
 
-- Functional Search Fish workflow
-- Dedicated Fish Search route
-- Reusable search-page renderer
-- Reusable search-result renderer
-- Live search while typing
-- Search form submission
-- Search result counts
-- No-results state
-- Stable `data-result-id` attributes
-- Parent navigation back to Fish Guide
-- Direct Home navigation from Fish Search
-- Responsive Fish result cards
-- Keyboard-visible search and result focus states
-
-## Changed
-
-- Fish Guide now handles child-card actions.
-- Search Fish now opens a functional search page.
-- `view-renderer.js` now owns reusable search interfaces and result rendering.
-- `script.js` now coordinates Fish search configuration and execution.
-- `forest-journal.css` now includes search form and result-card components.
-
-## Search Behavior
-
-Fish search supports:
-
-- Common names
-- Scientific names
-- Categories
-- Active Fish records only
-- Alphabetical sorting
-- Empty-query display of all active Fish
+- Functional Fish Search workflow
+- Live search
+- Reusable search results
+- Stable Fish result IDs
+- Parent and Home navigation
 
 ## Validation
 
-- Confirmed all 12 active Fish appear for an empty query.
-- Confirmed `bass` returns Largemouth Bass, Smallmouth Bass, and Spotted Bass.
-- Confirmed `Micropterus` returns the three supported black bass records.
-- Confirmed `Sunfish` returns Bluegill and Redear Sunfish.
-- Confirmed invalid searches display a no-results message.
-- Confirmed Fish Guide return navigation.
-- Confirmed Home navigation.
-- Confirmed responsive result layout.
-- Confirmed expected runtime build identifiers.
-- Confirmed zero Console errors.
+- Common-name search validated.
+- Scientific-name search validated.
+- Category search validated.
+- No-results behavior validated.
 
 ---
 
@@ -81,17 +89,6 @@ Fish search supports:
 - Shared search utilities
 - Shared rendering utilities
 
-## Changed
-
-- `script.js` now coordinates the application.
-- JavaScript responsibilities were separated into focused modules.
-
-## Validation
-
-- All dashboard views validated.
-- Home navigation validated.
-- Search utilities validated.
-
 ---
 
 # Version 0.2.1 — Fish Data Foundation
@@ -101,12 +98,3 @@ Fish search supports:
 - Canonical Fish data
 - `data/fish.js`
 - Stable Fish identifiers
-
----
-
-# Version 0.1.7 — Complete Application Shell
-
-## Added
-
-- Complete application shell
-- Eight dashboard destinations
