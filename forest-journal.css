@@ -437,3 +437,103 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
         animation-iteration-count: 1 !important;
     }
 }
+
+/* =========================================================
+   RIG GUIDE DETAIL
+   ========================================================= */
+
+.search-result-card--rig {
+    border-left-color: var(--accent-rigs);
+}
+
+.search-result-card--rig .search-result-card__meta {
+    color: var(--accent-rigs);
+}
+
+.search-result-card__action {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    color: var(--text);
+    font-weight: 700;
+}
+
+.detail-view {
+    max-width: 760px;
+}
+
+.detail-header {
+    margin-bottom: var(--space-6);
+    padding: var(--space-6);
+    border: 1px solid var(--border-strong);
+    border-left: 6px solid var(--accent-rigs);
+    border-radius: var(--radius);
+    background: var(--surface-elevated);
+    box-shadow: var(--shadow-card);
+}
+
+.detail-header h2 {
+    margin-bottom: var(--space-3);
+}
+
+.detail-header p:last-child {
+    margin-bottom: 0;
+    color: var(--text-muted);
+}
+
+.detail-eyebrow {
+    margin-bottom: var(--space-2);
+    color: var(--accent-rigs);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.detail-section {
+    margin-bottom: var(--space-5);
+    padding: var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+.detail-section h3 {
+    margin-bottom: var(--space-4);
+}
+
+.detail-section--safety {
+    border-color: color-mix(in srgb, var(--warning) 55%, var(--border));
+}
+
+.detail-list,
+.detail-steps {
+    margin: 0;
+    padding-left: 1.35rem;
+}
+
+.detail-list li,
+.detail-steps li {
+    margin-bottom: var(--space-3);
+    padding-left: var(--space-2);
+}
+
+.detail-list li:last-child,
+.detail-steps li:last-child {
+    margin-bottom: 0;
+}
+
+.detail-list__item p {
+    margin: var(--space-1) 0 0;
+    color: var(--text-muted);
+}
+
+.detail-list__item span {
+    color: var(--text-subtle);
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.detail-steps li::marker {
+    color: var(--accent-rigs);
+    font-weight: 800;
+}
