@@ -127,9 +127,9 @@ Rigs reference Tackle records through component IDs.
 
 Owns reusable canonical media metadata and stable media IDs.
 
-Older MS2.6 Rig/Tackle media records may remain in the repository for historical continuity until a separate cleanup is approved. The current Rig page does not render those historical Rig images, and current Tackle contextual popovers are text-first.
+The active media catalog for this refresh contains only the approved contextual Tackle reference media. Obsolete generated Rig SVGs and superseded Tackle SVGs are removed as part of this replacement.
 
-Page-specific presentation media, such as the approved Tackle reference imagery, may be configured by the owning view when it is not intended to represent one canonical entity.
+Approved Tackle reference imagery uses optimized transparent WebP files and is displayed only when contextual `Name ⓘ` help is opened.
 
 ## `search.js`
 
@@ -147,7 +147,7 @@ Owns reusable rendering and UI interactions, including:
 - Tackle search result cards
 - Contextual `Name ⓘ` Tackle popovers
 - Related-component popover navigation
-- Tackle-readiness rendering
+- Inline Rig requirements/readiness rendering
 - Parent/Home navigation
 - Modal close behavior and focus restoration
 
@@ -160,7 +160,6 @@ Coordinates:
 - Fish Guide and Fish Search
 - Rig Guide, Rig browsing, Rig details
 - My Tackle
-- Tackle-readiness routing
 - Local readiness-state loading/persistence
 - Per-Rig component selections
 
@@ -176,14 +175,14 @@ Current Rig flow:
         → Best For
         → Good Conditions
         → Verified Rig Examples ↗
-        → What You Need
+        → What You Need + Readiness
+            → Mark owned tackle inline
             → Tackle Reference Popover ⓘ
+            → Ready / missing-required status
         → How to Build It
         → Setup Notes
         → Common Mistakes
         → Safety
-        → Check My Tackle
-    → Tackle Readiness
 
 Rig pages intentionally use authoritative text instructions rather than generated Rig build diagrams.
 
@@ -197,8 +196,13 @@ Canonical Tackle definitions remain Reference Knowledge in `data/tackle.js`. App
 
 Rig `What You Need` lists remain text-first and do not display images by default.
 
-The current lightweight `Check My Tackle` checkbox state is an interim bridge. The planned Inventory implementation will become the authoritative ownership source and Rig readiness will query owned inventory instead of requiring duplicate manual ownership state.
+The current lightweight ownership state is an interim bridge and is shown directly inside each Rig's `What You Need` section. This removes the separate readiness page from the primary Rig workflow. The planned Inventory implementation will become the authoritative ownership source and the same inline readiness UI will query owned inventory instead of requiring duplicate manual ownership state.
 
+
+
+# Interaction Depth
+
+Common field workflows should stay within approximately three intentional interactions from a relevant entry point whenever practical. Do not add a separate page when the same task can be completed clearly in context. The combined Rig requirements/readiness section follows this rule by keeping identification help, ownership marking, and readiness feedback on the Rig detail page.
 
 # Link Semantics
 
@@ -230,7 +234,7 @@ Detailed media rules are authoritative in `MEDIA_GUIDE.md`.
 
 Preferred formats:
 
-- Optimized WebP for photographic/semi-photorealistic boards
+- Optimized transparent WebP for photographic/semi-photorealistic Tackle reference media
 - SVG for technically safe diagrams, line art, and instructional graphics
 
 Entity rules:
@@ -253,9 +257,11 @@ General targets:
 - Fish identification photos: approximately 150–300 KB when diagnostic detail requires it
 - SVG: keep compact and avoid unnecessary embedded raster data
 
-The current approved Tackle board is stored as an optimized WebP.
+Current approved Tackle reference assets are stored as optimized WebP files with alpha transparency so they inherit the surrounding application surface.
 
-# Tackle Readiness
+# Inline Rig Readiness
+
+Rig readiness is integrated into the `What You Need` section so a user can identify a component, mark ownership, and see readiness without navigating to a separate page.
 
 Storage key:
 
@@ -269,7 +275,7 @@ Rules:
 - Each Rig maintains independent state.
 - Malformed stored data falls back safely.
 
-A future inventory system may replace the lookup source without changing the Rig readiness interface.
+A future inventory system may replace the lookup source without changing the inline Rig readiness interface.
 
 # Development Architecture
 
@@ -291,8 +297,8 @@ The current package changes the presentation layer without changing the canonica
 
 Implemented changes include:
 
-- Functional searchable Tackle Guide
-- Approved Tackle reference board
+- My Tackle remains the user-owned inventory domain
+- Approved transparent Tackle recognition media used only in contextual help
 - Text-first Tackle contextual popovers
 - Verified external completed-Rig reference links
 - Text-first Rig assembly instructions
@@ -300,4 +306,4 @@ Implemented changes include:
 - Dashboard `My Tackle` label
 - Existing Fish Search and readiness workflows preserved
 
-Historical MS2.6 media files are intentionally not deleted in this refresh so source cleanup can be handled separately after live validation.
+Obsolete generated Rig SVGs and superseded Tackle SVGs are removed in this refresh after the replacement files are copied locally.

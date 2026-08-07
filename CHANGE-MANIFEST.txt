@@ -1,6 +1,6 @@
-Freshwater Fishing Companion — Corrected Rig + My Tackle Refresh
+Freshwater Fishing Companion - Rig Requirements + Readiness Rebuild
 
-COMPLETE REPLACEMENT FILES:
+REPLACE COMPLETE FILES
 - index.html
 - script.js
 - view-renderer.js
@@ -8,25 +8,27 @@ COMPLETE REPLACEMENT FILES:
 - data/rigs.js
 - data/media.js
 - docs/ARCHITECTURE.md
-- docs/CHANGELOG.md
+- docs/STYLE_GUIDE.md
 - docs/DECISIONS.md
+- docs/CHANGELOG.md
 - docs/DEVELOPMENT_WORKFLOW.md
 - docs/MEDIA_GUIDE.md
 - docs/RIG_REFERENCE_SOURCES.md
-- docs/STYLE_GUIDE.md
 
-ADD:
-- 15 images/tackle/*.webp recognition assets
+REPLACE / ADD IMAGES
+- images/tackle/*.webp (15 transparent Tackle reference assets)
 
-REMOVE FROM REPOSITORY:
-- old images/rigs/*.svg
-- old images/tackle/*.svg
+DELETE AFTER COPYING
+- images/rigs/*.svg
+- images/tackle/*.svg
 
-APPROVED BEHAVIOR:
-- Rig pages contain no local Rig imagery.
-- Verified completed-Rig examples are external links.
-- Build process is canonical text.
-- What You Need is text-first; no image shown by default.
-- Name ⓘ opens Tackle recognition imagery/context.
-- My Tackle remains the user-owned inventory domain.
-- Current checkbox readiness remains an interim bridge until Inventory is implemented.
+BEHAVIOR CHANGES
+- Rig What You Need and readiness are one section.
+- No inline Tackle imagery in Rig component lists.
+- Name + info icon opens the Tackle image/help popover.
+- Ownership is marked inline with I have this checkboxes.
+- Ready/Missing status updates on the same Rig page.
+- Separate Rig readiness page/button is removed from the primary workflow.
+- Best For / Good Conditions spacing matches normal section spacing.
+- My Tackle remains the inventory domain.
+- Tackle WebP assets use alpha transparency.

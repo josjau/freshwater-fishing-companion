@@ -1,16 +1,19 @@
-PRE-UPLOAD CHECKS (package consistency only; repository/webpage validation occurs after push)
+PRE-UPLOAD CONSISTENCY CHECKS
 
-PASS - Dashboard says My Tackle
-PASS - My Tackle is inventory-oriented
-PASS - No standalone Tackle Guide renderer
-PASS - What You Need has no inline image cards
-PASS - Contextual popover still displays tackle image
-PASS - Rig external refs retained
-PASS - Rig imageIds empty
-PASS - No rig media in active media file
-PASS - 15 WebP media records
-PASS - Exactly 15 tackle WebP assets
-PASS - No reference board asset
-PASS - No obsolete SVGs in package
+These checks only verify the replacement package is internally coherent.
+They are NOT repository or deployed-webpage validation.
+Actual validation happens after the user pushes to GitHub.
 
-Total: 12 passed / 0 failed
+Expected checks:
+- JavaScript syntax passes.
+- No RIG_READINESS route remains.
+- No standalone renderTackleReadiness function remains.
+- Rig detail contains inline component ownership controls.
+- Rig detail retains Name info-icon popover triggers.
+- No inline Tackle images appear in What You Need.
+- Ready/Missing status is rendered in What You Need.
+- Best For / Good Conditions use standard section spacing.
+- Dashboard remains My Tackle.
+- 15 active Tackle media records point to WebP files.
+- All 15 WebP files contain alpha transparency.
+- Rig data has no active local Rig image IDs.

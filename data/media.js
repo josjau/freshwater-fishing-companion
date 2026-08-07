@@ -34,7 +34,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -58,7 +58,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -82,7 +82,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -106,7 +106,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -130,7 +130,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -154,7 +154,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -178,7 +178,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -202,7 +202,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -226,7 +226,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -250,7 +250,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -274,7 +274,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -298,7 +298,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -322,7 +322,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -346,7 +346,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true
@@ -370,7 +370,7 @@ const MEDIA_DATA = Object.freeze([
             modificationAllowed: true,
             reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Approved Tackle reference refresh",
+        replacementStatus: "Approved transparent Tackle reference refresh",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.7",
         isActive: true

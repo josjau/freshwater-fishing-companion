@@ -132,5 +132,16 @@ Current Rig detail pages do not bundle generated completed-Rig or build-step ima
 
 # D019 – Tackle Reference Production Format
 
-The approved semi-photorealistic Tackle reference style uses optimized WebP for production assets because it preserves realistic materials, highlights, and shading at very small file sizes. SVG remains preferred for genuine vector diagrams, knots, icons, and instructional line art.
+The approved semi-photorealistic Tackle reference style uses optimized WebP with alpha transparency for production assets because it preserves realistic materials, highlights, and shading at very small file sizes while blending with application surfaces. Tackle reference assets must not bake a white or cream rectangular background into the image. SVG remains preferred for genuine vector diagrams, knots, icons, and instructional line art.
 
+
+
+# D020 – Integrated Rig Requirements and Readiness
+
+A Rig's component requirements and current ownership/readiness state are presented in one `What You Need` section. Each component remains text-first, uses `Name ⓘ` for identification help, and includes an inline ownership control. The page calculates Ready/Missing status from the same component list. A separate Rig readiness page is not part of the primary workflow.
+
+The lightweight local ownership state is transitional. When My Tackle inventory is implemented, inventory becomes the authoritative ownership source without changing the combined Rig-page interaction.
+
+# D021 – Three-Interaction Field Workflow Target
+
+Common field workflows should remain within approximately three intentional interactions from a relevant entry point whenever practical. Intermediate pages should exist only when they provide distinct value. Contextual popovers are preferred for recognition help, and readiness should remain on the Rig detail page rather than requiring a separate navigation step.

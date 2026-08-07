@@ -102,12 +102,11 @@ A Rig detail page should normally present:
 - Best For
 - Good Conditions
 - Verified Rig Examples using external-link semantics (`↗`)
-- What You Need with contextual `Name ⓘ` Tackle references
+- What You Need with contextual `Name ⓘ` Tackle references and inline ownership/readiness controls
 - Numbered text build instructions
 - Setup Notes
 - Common Mistakes
 - Safety
-- Check My Tackle
 
 Do not repeat the same instruction in multiple visual and text sections without a demonstrated accessibility need.
 
@@ -165,7 +164,7 @@ Tackle is recognition-first and is suitable for original semi-photorealistic or 
 
 The approved visual style uses:
 
-- Warm cream/white background
+- Transparent image background so Tackle art inherits the surrounding card or modal surface
 - Clean catalog-like presentation
 - Semi-photorealistic object rendering
 - Forest Journal-compatible green/earth accents
@@ -178,7 +177,7 @@ For mechanically sensitive items, compare the final illustration back to the rea
 
 Tackle imagery is recognition help, not a photo library. It is displayed on demand from contextual `Name ⓘ` interactions.
 
-For the approved semi-photorealistic Tackle style, optimized WebP is the preferred production format. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art. Do not convert semi-photorealistic Tackle art to SVG merely for consistency when doing so increases complexity or file size without improving field usability.
+For the approved semi-photorealistic Tackle style, optimized WebP with alpha transparency is the preferred production format. The Tackle object should not have a baked white or cream rectangular background; transparent media should blend with the current card, modal, and future theme surfaces. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art. Do not convert semi-photorealistic Tackle art to SVG merely for consistency when doing so increases complexity or file size without improving field usability.
 
 # Knot Media
 

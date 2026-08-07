@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Version:** 1.7.0  
+**Version:** 1.8.0  
 **Status:** Active  
 **Last Updated:** 2026-08-07
 
@@ -15,6 +15,7 @@
 - Approved lightweight semi-photorealistic Tackle reference images for contextual help
 - Verified external Rig reference links for all four current Rigs
 - `Best For` and `Good Conditions` summary blocks on Rig detail pages
+- Integrated `What You Need` ownership/readiness controls on Rig detail pages
 - External-reference `↗` convention
 - Permanent command-copy/paste documentation standard
 
@@ -24,9 +25,13 @@
 - Removed superseded Tackle SVG reference assets after replacement with approved WebP references.
 - Rig pages now contain no local Rig imagery; completed-rig visual confirmation uses verified external links.
 - `What You Need` remains text-first; Tackle WebP images appear only after selecting `Name ⓘ`.
+- `What You Need` and the lightweight readiness check are combined so ownership can be marked without leaving the Rig detail page.
+- Removed the separate Rig readiness page/action from the primary Rig workflow.
+- Normalized spacing around `Best For` and `Good Conditions` to match the standard section rhythm.
 - Dashboard remains `My Tackle`; it is the user-owned inventory domain.
 - Rig detail pages use authoritative text build instructions instead of generated Rig overview/assembly imagery.
 - Tackle contextual popovers display the approved recognition image on demand.
+- Tackle WebP reference images now use transparent backgrounds so they blend with the active card/modal surface without a visible white rectangle.
 - Texas Rig assembly wording now explicitly seats the bait nose against the hook offset before measuring the re-entry point.
 - Rig reference imagery policy now prioritizes licensed verified images or authoritative external references over generated diagrams.
 
@@ -36,8 +41,8 @@
 - Rig browsing
 - `Name ⓘ` contextual Tackle interaction
 - Related-component popover navigation
-- Check My Tackle
 - Per-Rig readiness persistence
+- Inline Ready/Missing status
 
 ---
 

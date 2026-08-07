@@ -180,6 +180,8 @@ Expected behavior:
 - Do not shrink wide desktop infographics into unreadable phone images.
 - Desktop multi-column layouts must collapse cleanly.
 - Avoid unnecessary page length caused by repeated content.
+- Keep common field workflows within approximately three intentional interactions from a relevant entry point when practical.
+- Prefer completing a task in the current context over adding an intermediate page that provides no distinct value.
 
 # Accessibility
 

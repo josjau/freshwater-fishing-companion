@@ -3,7 +3,7 @@
    FILE: view-renderer.js
    REPLACEMENT: REFERENCE-FIRST RIG AND TACKLE PAGES
    PURPOSE: Owns reusable views, search results, Rig details,
-   Tackle Guide presentation, contextual references, and readiness.
+   My Tackle presentation, contextual references, and inline Rig readiness.
    ========================================================== */
 
 "use strict";
@@ -258,20 +258,43 @@ function renderInstructionDetail(appMain, detailConfig) {
     }
 
     const record = detailConfig.record;
-    const componentsMarkup = record.componentRequirements.map((component) => `
-        <li class="detail-list__item">
-            <button class="reference-link" type="button" data-reference-id="${component.id}" aria-label="More information about ${component.name}">
-                <span>${component.name}</span>
-                <span class="reference-link__icon" aria-hidden="true">ⓘ</span>
-            </button>
-            ${component.required ? "" : ' <span class="detail-list__optional">(Optional)</span>'}
-            <p>${component.notes}</p>
-        </li>
-    `).join("");
+    const selections = detailConfig.selections ?? {};
+    const componentsMarkup = record.componentRequirements.map((component) => {
+        const isOwned = selections[component.id] === true;
+        const checkboxId = `rig-component-owned-${record.id}-${component.id}`;
 
-    const actionMarkup = typeof detailConfig.onAction === "function" ? `
-        <button class="detail-primary-action" type="button" data-detail-action>${detailConfig.actionLabel}</button>
-    ` : "";
+        return `
+            <li class="rig-component-item">
+                <div class="rig-component-item__heading">
+                    <button
+                        class="reference-link"
+                        type="button"
+                        data-reference-id="${component.id}"
+                        aria-label="More information about ${component.name}"
+                    >
+                        <span>${component.name}</span>
+                        <span class="reference-link__icon" aria-hidden="true">ⓘ</span>
+                    </button>
+                    ${
+                        component.required
+                            ? '<span class="rig-component-item__required">Required</span>'
+                            : '<span class="detail-list__optional">Optional</span>'
+                    }
+                </div>
+                <p>${component.notes}</p>
+                <label class="rig-component-owned" for="${checkboxId}">
+                    <input
+                        id="${checkboxId}"
+                        class="rig-component-owned__checkbox"
+                        type="checkbox"
+                        data-component-owned-id="${component.id}"
+                        ${isOwned ? "checked" : ""}
+                    >
+                    <span>I have this</span>
+                </label>
+            </li>
+        `;
+    }).join("");
 
     appMain.innerHTML = `
         <article class="detail-view" aria-labelledby="rig-detail-title">
@@ -283,16 +306,21 @@ function renderInstructionDetail(appMain, detailConfig) {
                 <p class="detail-eyebrow">${record.difficulty}</p>
                 <h2 id="rig-detail-title">${record.name}</h2>
                 <p>${record.summary}</p>
-                ${actionMarkup}
             </header>
             <div class="rig-quick-grid">
                 <section class="detail-section"><h3>Best For</h3>${buildTagList(record.useCases)}</section>
                 <section class="detail-section"><h3>Good Conditions</h3>${buildTagList(record.conditionTags)}</section>
             </div>
             ${buildRigReferenceLinks(record)}
-            <section class="detail-section">
-                <h3>What You Need</h3>
-                <ul class="detail-list detail-list--components">${componentsMarkup}</ul>
+            <section class="detail-section rig-requirements-section">
+                <div class="rig-requirements-section__header">
+                    <div>
+                        <h3>What You Need</h3>
+                        <p>Mark the tackle you have. Select any item name for identification help.</p>
+                    </div>
+                    <div class="readiness-status" data-readiness-status aria-live="polite"></div>
+                </div>
+                <ul class="rig-component-list">${componentsMarkup}</ul>
             </section>
             <section class="detail-section">
                 <h3>How to Build It</h3>
@@ -304,75 +332,53 @@ function renderInstructionDetail(appMain, detailConfig) {
         </article>
     `;
 
-    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
-    appMain.querySelector("[data-detail-action]")?.addEventListener("click", detailConfig.onAction);
-    initializeReferenceLinks(appMain);
-    initializeHomeNavigation(appMain);
-}
-
-function renderTackleReadiness(appMain, readinessConfig) {
-    if (!appMain || !readinessConfig?.rig) {
-        console.error("A valid Rig readiness configuration is required.");
-        return;
-    }
-
-    const rig = readinessConfig.rig;
-    const selections = readinessConfig.selections ?? {};
-    const checklistMarkup = rig.componentRequirements.map((component) => {
-        const isChecked = selections[component.id] === true;
-        return `
-            <label class="readiness-item">
-                <input class="readiness-item__checkbox" type="checkbox" data-component-id="${component.id}" ${isChecked ? "checked" : ""}>
-                <span class="readiness-item__content">
-                    <span class="readiness-item__name">${component.name}${component.required ? "" : '<span class="readiness-item__optional"> (Optional)</span>'}</span>
-                    <span class="readiness-item__notes">${component.notes}</span>
-                </span>
-            </label>
-        `;
-    }).join("");
-
-    appMain.innerHTML = `
-        <section class="readiness-view" aria-labelledby="readiness-title">
-            <div class="page-navigation-group">
-                <button class="page-navigation" type="button" data-parent-navigation>← ${readinessConfig.parentLabel}</button>
-                <button class="page-navigation" type="button" data-home-navigation>Home</button>
-            </div>
-            <header class="detail-header">
-                <p class="detail-eyebrow">Tackle Check</p>
-                <h2 id="readiness-title">${rig.name}</h2>
-                <p>Mark each item you have. Your selections are saved on this device.</p>
-            </header>
-            <div class="readiness-status" data-readiness-status></div>
-            <div class="readiness-checklist">${checklistMarkup}</div>
-        </section>
-    `;
-
-    const updateStatus = () => {
-        const checkboxes = Array.from(appMain.querySelectorAll("[data-component-id]"));
-        const missingRequired = rig.componentRequirements.filter((component) => {
-            if (!component.required) return false;
-            return !checkboxes.find((item) => item.dataset.componentId === component.id)?.checked;
-        });
+    const updateReadinessStatus = () => {
+        const checkboxes = Array.from(
+            appMain.querySelectorAll("[data-component-owned-id]")
+        );
+        const missingRequired = record.componentRequirements.filter(
+            (component) => {
+                if (!component.required) return false;
+                return !checkboxes.find(
+                    (checkbox) =>
+                        checkbox.dataset.componentOwnedId === component.id
+                )?.checked;
+            }
+        );
         const status = appMain.querySelector("[data-readiness-status]");
         if (!status) return;
+
         if (missingRequired.length === 0) {
             status.className = "readiness-status readiness-status--ready";
-            status.innerHTML = `<strong>Ready to Fish</strong><span>All required components are marked available.</span>`;
+            status.innerHTML = `
+                <strong>Ready to Fish</strong>
+                <span>All required tackle is marked available.</span>
+            `;
             return;
         }
+
         status.className = "readiness-status readiness-status--missing";
-        status.innerHTML = `<strong>Missing ${missingRequired.length} Required ${missingRequired.length === 1 ? "Item" : "Items"}</strong><span>${missingRequired.map((item) => item.name).join(", ")}</span>`;
+        status.innerHTML = `
+            <strong>Missing ${missingRequired.length}</strong>
+            <span>${missingRequired.map((item) => item.name).join(", ")}</span>
+        `;
     };
 
-    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", readinessConfig.onParent);
-    appMain.querySelectorAll("[data-component-id]").forEach((checkbox) => {
+    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
+    appMain.querySelectorAll("[data-component-owned-id]").forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
-            readinessConfig.onChange(checkbox.dataset.componentId, checkbox.checked);
-            updateStatus();
+            detailConfig.onReadinessChange?.(
+                checkbox.dataset.componentOwnedId,
+                checkbox.checked
+            );
+            updateReadinessStatus();
         });
     });
+
+    initializeReferenceLinks(appMain);
     initializeHomeNavigation(appMain);
-    updateStatus();
+    updateReadinessStatus();
 }
+
 
 console.info(`[Loaded] ${VIEW_RENDERER_BUILD_INFO.file} | ${VIEW_RENDERER_BUILD_INFO.milestone} | ${VIEW_RENDERER_BUILD_INFO.replacement}`);

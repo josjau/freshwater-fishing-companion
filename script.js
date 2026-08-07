@@ -3,7 +3,7 @@
    FILE: script.js
    REPLACEMENT: RIG AND TACKLE REFERENCE REFRESH
    PURPOSE: Coordinates routes, Fish search, Rig browsing,
-   My Tackle placeholders, and local tackle-readiness checks.
+   My Tackle placeholders, and inline Rig tackle-readiness checks.
    ========================================================== */
 
 "use strict";
@@ -24,7 +24,6 @@ const ROUTES = Object.freeze({
     RIGS: "rigs",
     RIG_BROWSE: "rig-browse",
     RIG_DETAIL: "rig-detail",
-    RIG_READINESS: "rig-readiness",
     RECOMMENDATIONS: "recommendations",
     TACKLE: "tackle",
     KNOTS: "knots",
@@ -43,7 +42,6 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.RIGS]: renderRigGuideView,
     [ROUTES.RIG_BROWSE]: renderRigBrowseView,
     [ROUTES.RIG_DETAIL]: renderRigDetailView,
-    [ROUTES.RIG_READINESS]: renderRigReadinessView,
     [ROUTES.RECOMMENDATIONS]: renderRecommendationsView,
     [ROUTES.TACKLE]: renderTackleView,
     [ROUTES.KNOTS]: renderKnotsView,
@@ -192,9 +190,10 @@ function renderRigDetailView(appMain) {
     renderInstructionDetail(appMain, {
         record: rig,
         parentLabel: "All Rigs",
-        actionLabel: "Check My Tackle",
+        selections: getRigReadinessSelections(rig.id),
         onParent: () => showView(ROUTES.RIG_BROWSE),
-        onAction: () => showView(ROUTES.RIG_READINESS)
+        onReadinessChange: (componentId, isOwned) =>
+            updateRigReadinessSelection(rig.id, componentId, isOwned)
     });
 }
 
@@ -230,22 +229,6 @@ function updateRigReadinessSelection(rigId, componentId, isOwned) {
     rigState[componentId] = isOwned;
     state[rigId] = rigState;
     saveReadinessState(state);
-}
-
-function renderRigReadinessView(appMain) {
-    const rig = findRecordById(RIG_DATA, selectedRigId);
-    if (!rig) {
-        console.warn(`Rig was not found: ${selectedRigId}`);
-        showView(ROUTES.RIG_BROWSE);
-        return;
-    }
-    renderTackleReadiness(appMain, {
-        rig,
-        selections: getRigReadinessSelections(rig.id),
-        parentLabel: rig.name,
-        onParent: () => showView(ROUTES.RIG_DETAIL),
-        onChange: (componentId, isOwned) => updateRigReadinessSelection(rig.id, componentId, isOwned)
-    });
 }
 
 function renderRecommendationsView(appMain) {
