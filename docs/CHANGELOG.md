@@ -1,15 +1,107 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Version:** 1.4.0  
+**Version:** 1.5.0  
 **Status:** Active  
-**Last Updated:** 2026-08-05
+**Last Updated:** 2026-08-06
 
 # Unreleased
 
 ## Next
 
 - Select the next feature from the approved roadmap.
+
+---
+
+# Version 0.2.6 — Tackle References and Rig Visual Guides
+
+**Date:** 2026-08-06  
+**Milestone:** MS2.6
+
+## Added
+
+- Canonical `data/tackle.js`
+- 15 stable Tackle reference records
+- Centralized `data/media.js`
+- Stable media IDs and licensing metadata
+- Local `images/tackle/` asset library
+- Local `images/rigs/` asset library
+- 15 active Tackle SVG reference illustrations
+- Contextual `Name ⓘ` Tackle reference links
+- In-place Tackle reference modal / bottom-sheet interaction
+- Related-component links inside reference popovers
+- Recognition guidance, aliases, variants, and related-Rig information
+- Completed-Rig overview illustration support
+- Completed-Rig overview illustrations for all four current Rigs
+- Generic Rig media roles:
+  - `overview`
+  - `assembly-step`
+- Sequence-based Rig assembly media ordering
+- Four-step Texas Rig visual assembly guide
+- 23 active media records total
+
+## Changed
+
+- `index.html` now loads `data/tackle.js` and `data/media.js` before shared utilities and application coordination.
+- `data/rigs.js` now links Rig records to stable media IDs.
+- `view-renderer.js` now renders contextual Tackle references, completed-Rig media, and ordered visual assembly media.
+- `forest-journal.css` now styles reference popovers and Rig visual guides.
+- Rig component names now use the permanent `Name ⓘ` contextual-information convention.
+- Reference images are resolved from the centralized media catalog instead of being hard-coded into component records.
+- Rig visual assets use stable media IDs so future asset replacements do not require renderer changes.
+
+## Media
+
+Current media catalog:
+
+- 15 Tackle reference SVGs
+- 4 completed-Rig overview SVGs
+- 4 Texas Rig assembly-step SVGs
+
+Current total:
+
+    23 active media records
+
+Current MS2.6 Tackle and Rig illustrations are bundled local SVG assets recorded as original Freshwater Fishing Companion project assets.
+
+Reference-popover images are created when the popover opens. Rig assembly-step images use browser lazy loading.
+
+## Texas Rig Technical Correction
+
+The initial Texas Rig illustrations were rejected during live validation because the hook orientation and bait relationship were technically incorrect.
+
+The five Texas Rig assets were replaced:
+
+- `images/rigs/texas-rig-overview.svg`
+- `images/rigs/texas-rig-step-1.svg`
+- `images/rigs/texas-rig-step-2.svg`
+- `images/rigs/texas-rig-step-3.svg`
+- `images/rigs/texas-rig-step-4.svg`
+
+The corrected set better represents:
+
+- Sliding bullet-weight orientation
+- Offset worm-hook orientation
+- Soft-plastic placement
+- Hook bend below the bait
+- Hook point returning toward / into the bait for a weed-resistant presentation
+
+## Validation
+
+- Confirmed `TACKLE_DATA.length` reports 15.
+- Confirmed initial `MEDIA_DATA.length` reports 15 before Rig media expansion.
+- Confirmed Tackle reference popovers open from Rig component names.
+- Confirmed Bullet Weight reference illustration renders in the live application.
+- Confirmed Offset Worm Hook reference illustration renders in the live application.
+- Confirmed Soft Plastic reference illustration renders in the live application.
+- Confirmed popover close behavior and focus restoration.
+- Confirmed related Tackle references open from inside the popover.
+- Confirmed completed-Rig visual sections render.
+- Confirmed Texas Rig Visual Assembly Guide renders four ordered steps.
+- Confirmed corrected Texas Rig overview and assembly-step assets render in the live application.
+- Confirmed component popovers remain functional after Rig visual-guide changes.
+- Confirmed Tackle Readiness remains available from Rig detail.
+- Confirmed GitHub commits and live deployment after each completed MS2.6 implementation block.
 
 ---
 
