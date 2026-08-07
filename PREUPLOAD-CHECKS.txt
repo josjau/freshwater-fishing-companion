@@ -1,22 +1,16 @@
-Freshwater Fishing Companion — Pre-Upload Checks
+PRE-UPLOAD CHECKS (package consistency only; repository/webpage validation occurs after push)
 
-These are package/source preflight checks only. They are NOT final project validation.
-Final validation occurs after push against the GitHub repository and deployed webpage.
+PASS - Dashboard says My Tackle
+PASS - My Tackle is inventory-oriented
+PASS - No standalone Tackle Guide renderer
+PASS - What You Need has no inline image cards
+PASS - Contextual popover still displays tackle image
+PASS - Rig external refs retained
+PASS - Rig imageIds empty
+PASS - No rig media in active media file
+PASS - 15 WebP media records
+PASS - Exactly 15 tackle WebP assets
+PASS - No reference board asset
+PASS - No obsolete SVGs in package
 
-Result: 15 passed / 0 failed
-
-[PASS] No active/local Rig image IDs in rigs.js — imageIds empty count=4
-[PASS] No Rig media records remain in media.js
-[PASS] Exactly 15 Tackle media records — count=15
-[PASS] All active Tackle media uses WebP — webp refs=15
-[PASS] Renderer has verified Rig external links
-[PASS] Renderer has no Rig overview/assembly rendering
-[PASS] What You Need includes Tackle imagery
-[PASS] Tackle Guide is functional
-[PASS] Dashboard says Tackle Guide
-[PASS] CSS includes component thumbnails
-[PASS] CSS includes responsive component grid
-[PASS] All media.js WebP paths exist
-[PASS] Tackle board exists
-[PASS] No Rig image directory shipped
-[PASS] No superseded Tackle SVG shipped
+Total: 12 passed / 0 failed

@@ -1,28 +1,6 @@
-DELETE THESE REPOSITORY FILES AFTER COPYING THE REPLACEMENTS
+Delete all existing SVG files under these two folders after copying the replacement package:
 
-Obsolete generated Rig imagery:
-images/rigs/basic-bottom-rig-overview.svg
-images/rigs/fixed-bobber-rig-overview.svg
-images/rigs/slip-bobber-rig-overview.svg
-images/rigs/texas-rig-overview.svg
-images/rigs/texas-rig-step-1.svg
-images/rigs/texas-rig-step-2.svg
-images/rigs/texas-rig-step-3.svg
-images/rigs/texas-rig-step-4.svg
+images/rigs/*.svg
+images/tackle/*.svg
 
-Superseded Tackle SVG imagery:
-images/tackle/bait-reference.svg
-images/tackle/barrel-swivel-reference.svg
-images/tackle/bead-reference.svg
-images/tackle/bobber-stop-reference.svg
-images/tackle/bullet-weight-reference.svg
-images/tackle/fixed-bobber-reference.svg
-images/tackle/hook-reference.svg
-images/tackle/leader-line-reference.svg
-images/tackle/offset-worm-hook-reference.svg
-images/tackle/sliding-sinker-reference.svg
-images/tackle/slip-float-reference.svg
-images/tackle/soft-plastic-reference.svg
-images/tackle/split-shot-reference.svg
-images/tackle/stop-bead-reference.svg
-images/tackle/weight-peg-reference.svg
+Do not delete the new WebP files in images/tackle/.

@@ -258,27 +258,16 @@ function renderInstructionDetail(appMain, detailConfig) {
     }
 
     const record = detailConfig.record;
-    const componentsMarkup = record.componentRequirements.map((component) => {
-        const tackleRecord = findRecordById(TACKLE_DATA, component.id);
-        const thumbnailMarkup = tackleRecord
-            ? buildReferenceImageMarkup(tackleRecord, "component-reference-card__image")
-            : "";
-
-        return `
-            <li class="component-reference-card">
-                <div class="component-reference-card__media">${thumbnailMarkup}</div>
-                <div class="component-reference-card__content">
-                    <div class="component-reference-card__heading">
-                        <button class="reference-link" type="button" data-reference-id="${component.id}" aria-label="More information about ${component.name}">
-                            <span>${component.name}</span><span class="reference-link__icon" aria-hidden="true">ⓘ</span>
-                        </button>
-                        ${component.required ? "" : '<span class="detail-list__optional">Optional</span>'}
-                    </div>
-                    <p>${component.notes}</p>
-                </div>
-            </li>
-        `;
-    }).join("");
+    const componentsMarkup = record.componentRequirements.map((component) => `
+        <li class="detail-list__item">
+            <button class="reference-link" type="button" data-reference-id="${component.id}" aria-label="More information about ${component.name}">
+                <span>${component.name}</span>
+                <span class="reference-link__icon" aria-hidden="true">ⓘ</span>
+            </button>
+            ${component.required ? "" : ' <span class="detail-list__optional">(Optional)</span>'}
+            <p>${component.notes}</p>
+        </li>
+    `).join("");
 
     const actionMarkup = typeof detailConfig.onAction === "function" ? `
         <button class="detail-primary-action" type="button" data-detail-action>${detailConfig.actionLabel}</button>
@@ -303,7 +292,7 @@ function renderInstructionDetail(appMain, detailConfig) {
             ${buildRigReferenceLinks(record)}
             <section class="detail-section">
                 <h3>What You Need</h3>
-                <ul class="component-reference-grid">${componentsMarkup}</ul>
+                <ul class="detail-list detail-list--components">${componentsMarkup}</ul>
             </section>
             <section class="detail-section">
                 <h3>How to Build It</h3>
@@ -319,72 +308,6 @@ function renderInstructionDetail(appMain, detailConfig) {
     appMain.querySelector("[data-detail-action]")?.addEventListener("click", detailConfig.onAction);
     initializeReferenceLinks(appMain);
     initializeHomeNavigation(appMain);
-}
-
-function renderTackleGuide(appMain, guideConfig) {
-    if (!appMain || !guideConfig || !Array.isArray(guideConfig.records)) {
-        console.error("A valid Tackle Guide configuration is required.");
-        return;
-    }
-
-    appMain.innerHTML = `
-        <section class="tackle-guide" aria-labelledby="tackle-guide-title">
-            <button class="page-navigation" type="button" data-home-navigation>← Home</button>
-            <header class="tackle-guide__header">
-                <p class="detail-eyebrow detail-eyebrow--tackle">Reference Guide</p>
-                <h2 id="tackle-guide-title">Tackle Guide</h2>
-                <p>Learn what common freshwater tackle looks like, what it does, and which current rigs use it.</p>
-            </header>
-            <figure class="tackle-board">
-                <img src="${guideConfig.boardFile}" alt="${guideConfig.boardAlt}" decoding="async">
-                <figcaption>Visual reference board. Select any item below for the canonical project description and related rigs.</figcaption>
-            </figure>
-            <form class="search-form" data-tackle-search-form>
-                <label class="search-label" for="tackle-guide-search">Search tackle</label>
-                <div class="search-controls">
-                    <input class="search-input" id="tackle-guide-search" type="search" placeholder="Try bobber, hook, sinker, swivel, or bait" autocomplete="off">
-                    <button class="search-button search-button--tackle" type="submit">Search</button>
-                </div>
-            </form>
-            <p class="search-status" data-tackle-status aria-live="polite"></p>
-            <div class="tackle-reference-grid" data-tackle-results></div>
-        </section>
-    `;
-
-    const input = appMain.querySelector("#tackle-guide-search");
-    const form = appMain.querySelector("[data-tackle-search-form]");
-    const results = appMain.querySelector("[data-tackle-results]");
-    const status = appMain.querySelector("[data-tackle-status]");
-
-    const updateResults = () => {
-        const query = (input?.value ?? "").trim().toLowerCase();
-        const matches = guideConfig.records.filter((record) => {
-            if (!record.isActive) return false;
-            const haystack = [record.name, record.category, record.summary, ...(record.aliases ?? [])].join(" ").toLowerCase();
-            return !query || haystack.includes(query);
-        }).sort((a, b) => a.name.localeCompare(b.name));
-
-        status.textContent = `${matches.length} ${matches.length === 1 ? "item" : "items"}`;
-        results.innerHTML = matches.map((record) => `
-            <button class="tackle-reference-card" type="button" data-reference-id="${record.id}">
-                <span class="tackle-reference-card__media">
-                    ${buildReferenceImageMarkup(record, "tackle-reference-card__image")}
-                </span>
-                <span class="tackle-reference-card__content">
-                    <span class="tackle-reference-card__category">${record.category}</span>
-                    <strong>${record.name}</strong>
-                    <span>${record.summary}</span>
-                    <span class="tackle-reference-card__action">Details ⓘ</span>
-                </span>
-            </button>
-        `).join("");
-        initializeReferenceLinks(results);
-    };
-
-    form?.addEventListener("submit", (event) => { event.preventDefault(); updateResults(); });
-    input?.addEventListener("input", updateResults);
-    initializeHomeNavigation(appMain);
-    updateResults();
 }
 
 function renderTackleReadiness(appMain, readinessConfig) {

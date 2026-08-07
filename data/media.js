@@ -2,8 +2,8 @@
    FRESHWATER FISHING COMPANION
    FILE: data/media.js
    REPLACEMENT: TACKLE REFERENCE MEDIA REFRESH
-   PURPOSE: Owns active Tackle reference imagery and retains
-   deprecated Rig media records for migration history.
+   PURPOSE: Owns active on-demand Tackle reference imagery
+   used by contextual Name ⓘ help interactions.
    ========================================================== */
 
 "use strict";

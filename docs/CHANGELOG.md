@@ -11,8 +11,8 @@
 
 ### Added
 
-- Functional searchable Tackle Guide using the 15 canonical Tackle records
-- Approved lightweight semi-photorealistic Tackle reference board
+- My Tackle remains the ownership/inventory domain; no standalone image-library Tackle Guide is introduced
+- Approved lightweight semi-photorealistic Tackle reference images for contextual help
 - Verified external Rig reference links for all four current Rigs
 - `Best For` and `Good Conditions` summary blocks on Rig detail pages
 - External-reference `↗` convention
@@ -23,10 +23,10 @@
 - Removed obsolete generated Rig overview and assembly-step assets from the active repository state.
 - Removed superseded Tackle SVG reference assets after replacement with approved WebP references.
 - Rig pages now contain no local Rig imagery; completed-rig visual confirmation uses verified external links.
-- `What You Need` uses the approved individual Tackle WebP images inline.
-- Dashboard `My Tackle` entry becomes `Tackle Guide`.
+- `What You Need` remains text-first; Tackle WebP images appear only after selecting `Name ⓘ`.
+- Dashboard remains `My Tackle`; it is the user-owned inventory domain.
 - Rig detail pages use authoritative text build instructions instead of generated Rig overview/assembly imagery.
-- Tackle contextual popovers are text-first so obsolete illustration styles do not appear beside the approved reference board.
+- Tackle contextual popovers display the approved recognition image on demand.
 - Texas Rig assembly wording now explicitly seats the bait nose against the hook offset before measuring the re-entry point.
 - Rig reference imagery policy now prioritizes licensed verified images or authoritative external references over generated diagrams.
 

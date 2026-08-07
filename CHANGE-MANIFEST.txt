@@ -1,6 +1,6 @@
-Freshwater Fishing Companion — Rig + Tackle Reference Refresh
+Freshwater Fishing Companion — Corrected Rig + My Tackle Refresh
 
-COMPLETE REPLACEMENT FILES
+COMPLETE REPLACEMENT FILES:
 - index.html
 - script.js
 - view-renderer.js
@@ -15,24 +15,18 @@ COMPLETE REPLACEMENT FILES
 - docs/RIG_REFERENCE_SOURCES.md
 - docs/STYLE_GUIDE.md
 
-NEW/REPLACEMENT MEDIA
-- images/tackle/tackle-reference-board.webp
-- 15 individual images/tackle/*-reference.webp files
+ADD:
+- 15 images/tackle/*.webp recognition assets
 
-FINAL RIG PAGE POLICY
-- No local completed-Rig imagery.
-- No generated Rig build-step imagery.
-- Verified external Rig examples use ↗ links.
-- Assembly instructions are canonical text.
-- What You Need displays approved Tackle WebP thumbnails with Name ⓘ contextual references.
+REMOVE FROM REPOSITORY:
+- old images/rigs/*.svg
+- old images/tackle/*.svg
 
-FINAL TACKLE PAGE POLICY
-- Functional searchable Tackle Guide.
-- Approved semi-photorealistic Tackle board.
-- Individual Tackle WebP images used in cards, Rig component lists, and popovers.
-
-DELETE
-See DELETE-OLD-FILES.txt for obsolete Rig SVGs and superseded Tackle SVGs.
-
-VALIDATION
-Package checks are pre-upload checks only. Final validation occurs after the user pushes to GitHub and includes repository-state verification and deployed-webpage testing.
+APPROVED BEHAVIOR:
+- Rig pages contain no local Rig imagery.
+- Verified completed-Rig examples are external links.
+- Build process is canonical text.
+- What You Need is text-first; no image shown by default.
+- Name ⓘ opens Tackle recognition imagery/context.
+- My Tackle remains the user-owned inventory domain.
+- Current checkbox readiness remains an interim bridge until Inventory is implemented.

@@ -176,7 +176,7 @@ Before creating a Tackle illustration, use a real photograph, manufacturer produ
 
 For mechanically sensitive items, compare the final illustration back to the real baseline before approval.
 
-A single approved Tackle reference board may be used as the main Tackle Guide visual while canonical item cards and contextual popovers provide the authoritative text.
+Tackle imagery is recognition help, not a photo library. It is displayed on demand from contextual `Name ⓘ` interactions.
 
 For the approved semi-photorealistic Tackle style, optimized WebP is the preferred production format. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art. Do not convert semi-photorealistic Tackle art to SVG merely for consistency when doing so increases complexity or file size without improving field usability.
 
@@ -349,3 +349,12 @@ Before approval, verify:
 - Beginner can recognize the item
 - Key geometry is clear
 - Usage relationships are accurate
+
+# Contextual Tackle Image Rule
+
+Tackle images are recognition assistance, not a default photo gallery.
+
+- Do not show Tackle thumbnails by default in Rig `What You Need` lists.
+- Display the component as `Name ⓘ`.
+- Open the approved Tackle image and reference information only when the user selects that contextual help control.
+- The same principle applies to future My Tackle inventory records: imagery supports identification, while ownership data remains the primary content.

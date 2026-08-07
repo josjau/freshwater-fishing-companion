@@ -3,7 +3,7 @@
    FILE: script.js
    REPLACEMENT: RIG AND TACKLE REFERENCE REFRESH
    PURPOSE: Coordinates routes, Fish search, Rig browsing,
-   Tackle Guide browsing, and local tackle-readiness checks.
+   My Tackle placeholders, and local tackle-readiness checks.
    ========================================================== */
 
 "use strict";
@@ -15,11 +15,6 @@ const BUILD_INFO = Object.freeze({
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
-const TACKLE_REFERENCE_BOARD = Object.freeze({
-    file: "images/tackle/tackle-reference-board.webp",
-    alt: "Fishing tackle reference board showing common bobbers, floats, stops, beads, swivels, sinkers, hooks, line, soft plastics, snaps, and related tackle"
-});
-
 console.info(`[Loaded] ${BUILD_INFO.file} | ${BUILD_INFO.milestone} | ${BUILD_INFO.replacement}`);
 
 const ROUTES = Object.freeze({
@@ -140,7 +135,7 @@ function renderRigGuideView(appMain) {
             { id: "browse-all-rigs", title: "Browse All Rigs", description: "Open text-first instructions for supported rigs." },
             { id: "browse-rigs-by-target-fish", title: "Browse by Target Fish", description: "Find rigs suited to the species you want to catch." },
             { id: "browse-rigs-by-conditions", title: "Browse by Conditions", description: "Choose rigs based on water, cover, depth, and weather." },
-            { id: "identify-rig-components", title: "Identify Rig Components", description: "Open the Tackle Guide for hooks, weights, floats, swivels, and other components." }
+            { id: "identify-rig-components", title: "Identify Rig Components", description: "Learn what each hook, weight, swivel, and component does." }
         ],
         onCardSelect: handleRigGuideCardSelect
     });
@@ -149,10 +144,6 @@ function renderRigGuideView(appMain) {
 function handleRigGuideCardSelect(cardId) {
     if (cardId === "browse-all-rigs") {
         showView(ROUTES.RIG_BROWSE);
-        return;
-    }
-    if (cardId === "identify-rig-components") {
-        showView(ROUTES.TACKLE);
         return;
     }
     console.info(`Rig Guide action not implemented yet: ${cardId}`);
@@ -272,10 +263,16 @@ function renderRecommendationsView(appMain) {
 }
 
 function renderTackleView(appMain) {
-    renderTackleGuide(appMain, {
-        records: TACKLE_DATA,
-        boardFile: TACKLE_REFERENCE_BOARD.file,
-        boardAlt: TACKLE_REFERENCE_BOARD.alt
+    renderView(appMain, {
+        headingId: "tackle-title",
+        title: "My Tackle",
+        description: "Catalog, organize, and track the fishing equipment and consumable tackle you own.",
+        cards: [
+            { id: "view-tackle-inventory", title: "View My Inventory", description: "Browse the equipment and tackle currently recorded." },
+            { id: "add-tackle", title: "Add Tackle", description: "Record a new piece of equipment or consumable tackle." },
+            { id: "identify-tackle", title: "Identify Tackle", description: "Use contextual reference help when you are not sure what an item is." },
+            { id: "check-rig-readiness", title: "Check Rig Readiness", description: "Review whether you have the components needed for supported rigs." }
+        ]
     });
 }
 

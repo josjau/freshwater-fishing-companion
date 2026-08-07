@@ -129,7 +129,7 @@ Owns reusable canonical media metadata and stable media IDs.
 
 Older MS2.6 Rig/Tackle media records may remain in the repository for historical continuity until a separate cleanup is approved. The current Rig page does not render those historical Rig images, and current Tackle contextual popovers are text-first.
 
-Page-specific presentation media, such as the approved Tackle reference board, may be configured by the owning view when it is not intended to represent one canonical entity.
+Page-specific presentation media, such as the approved Tackle reference imagery, may be configured by the owning view when it is not intended to represent one canonical entity.
 
 ## `search.js`
 
@@ -143,7 +143,7 @@ Owns reusable rendering and UI interactions, including:
 - Search pages and result cards
 - Rig detail rendering
 - Rig external-reference links
-- Tackle Guide rendering
+- My Tackle inventory-domain rendering
 - Tackle search result cards
 - Contextual `Name ⓘ` Tackle popovers
 - Related-component popover navigation
@@ -159,7 +159,7 @@ Coordinates:
 - Dashboard restoration
 - Fish Guide and Fish Search
 - Rig Guide, Rig browsing, Rig details
-- Tackle Guide
+- My Tackle
 - Tackle-readiness routing
 - Local readiness-state loading/persistence
 - Per-Rig component selections
@@ -189,20 +189,16 @@ Rig pages intentionally use authoritative text instructions rather than generate
 
 Completed-Rig visual confirmation uses verified external references unless a clearly licensed, technically verified local asset is approved.
 
-# Tackle Guide Architecture
+# My Tackle Architecture
 
-Current Tackle flow:
+`My Tackle` is User Knowledge. Its purpose is to catalog equipment and consumable tackle the angler owns.
 
-    Dashboard
-    → Tackle Guide
-        → Approved Tackle reference board
-        → Search/filter canonical Tackle records
-        → Select Details ⓘ
-            → Contextual Tackle popover
-            → Related Rigs
-            → Related components
+Canonical Tackle definitions remain Reference Knowledge in `data/tackle.js`. Approved Tackle WebP imagery is shown only through contextual `Name ⓘ` help when the user needs recognition assistance.
 
-The approved Tackle reference board is a lightweight WebP presentation asset. It supports recognition but does not replace canonical text in `data/tackle.js`.
+Rig `What You Need` lists remain text-first and do not display images by default.
+
+The current lightweight `Check My Tackle` checkbox state is an interim bridge. The planned Inventory implementation will become the authoritative ownership source and Rig readiness will query owned inventory instead of requiring duplicate manual ownership state.
+
 
 # Link Semantics
 
@@ -301,7 +297,7 @@ Implemented changes include:
 - Verified external completed-Rig reference links
 - Text-first Rig assembly instructions
 - Texas Rig wording corrected for bait seating, rotation, re-entry measurement, and skin-hook finish
-- Dashboard `Tackle Guide` label
+- Dashboard `My Tackle` label
 - Existing Fish Search and readiness workflows preserved
 
 Historical MS2.6 media files are intentionally not deleted in this refresh so source cleanup can be handled separately after live validation.
