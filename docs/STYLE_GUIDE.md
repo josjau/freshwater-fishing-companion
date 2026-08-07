@@ -1,29 +1,19 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Version:** 1.0.0  
-**Status:** Approved
-
----
+**Version:** 1.1.0  
+**Status:** Approved  
+**Last Updated:** 2026-08-07
 
 # Purpose
 
-This document defines the coding, documentation, and user interface standards for Freshwater Fishing Companion.
+This document defines coding, documentation, and interface standards for Freshwater Fishing Companion.
 
-All project contributions should follow these standards unless an approved architectural decision documents an exception.
+Detailed workflow rules are in `DEVELOPMENT_WORKFLOW.md`.
 
-The goals are:
-
-- Consistency
-- Readability
-- Maintainability
-- Simplicity
-
----
+Detailed media rules are in `MEDIA_GUIDE.md`.
 
 # General Principles
-
-The project follows these guiding principles.
 
 - Plan twice. Build once.
 - Keep solutions simple.
@@ -33,64 +23,20 @@ The project follows these guiding principles.
 - Mobile-first design.
 - Offline-first architecture.
 - Local-first data storage.
-
----
+- Documentation is part of the product.
+- Permanent standards belong in GitHub documentation, not only in chat history.
 
 # HTML Standards
 
-## General
-
 - Use semantic HTML whenever practical.
 - Minimize unnecessary nesting.
-- Prefer readability over reducing line count.
 - Avoid inline styles.
 - Avoid inline JavaScript.
+- Prefer purpose-based class names.
 
----
-
-## Semantic Elements
-
-Prefer:
-
-- header
-- nav
-- main
-- section
-- article
-- aside
-- footer
-
-Use generic `div` elements only when no semantic element is appropriate.
-
----
-
-## Naming
-
-IDs should be used only when uniqueness is required.
-
-Classes should describe purpose rather than appearance.
-
-Good
-
-```html
-catch-card
-inventory-grid
-fish-details
-```
-
-Avoid
-
-```html
-green-box
-left-column
-large-text
-```
-
----
+Prefer semantic elements such as `header`, `nav`, `main`, `section`, `article`, `aside`, and `footer`.
 
 # CSS Standards
-
-## Philosophy
 
 CSS should be:
 
@@ -99,32 +45,9 @@ CSS should be:
 - Simple
 - Reusable
 
----
+Use CSS custom properties for colors, spacing, and sizing when practical.
 
-## Variables
-
-Application colors, spacing, and sizing should use CSS custom properties.
-
-Example
-
-```css
-:root {
-    --background: #0f1713;
-    --surface: #18231d;
-    --text: #f1f5f2;
-    --accent: #72ad86;
-    --border: #314038;
-    --radius: 14px;
-}
-```
-
-Hardcoded values should be avoided whenever practical.
-
----
-
-## Organization
-
-Order rules consistently.
+Order rules consistently:
 
 1. Variables
 2. Reset
@@ -133,162 +56,55 @@ Order rules consistently.
 5. Utilities
 6. Responsive rules
 
----
-
-## Class Naming
-
-Use lowercase.
-
-Separate words with hyphens.
-
-Examples
-
-```text
-fish-card
-inventory-table
-primary-button
-```
-
-Avoid abbreviations unless universally understood.
-
----
+Use lowercase hyphenated class names.
 
 # JavaScript Standards
 
-## Philosophy
-
 JavaScript should prioritize clarity.
 
-Small, focused functions are preferred over large multi-purpose functions.
+- Use small focused functions.
+- Use descriptive names.
+- Use clear boolean names.
+- Return early where practical.
+- Avoid deeply nested logic.
+- Comments should explain why, not restate what code does.
 
----
+# Data Standards
 
-## Naming
+Use camelCase property names.
 
-Variables
+Stable IDs use lowercase hyphenated strings.
 
-```javascript
-selectedFish
-inventoryItems
-userPreferences
-```
+Every canonical field must have a documented purpose.
 
-Constants
-
-```javascript
-MAX_RESULTS
-DEFAULT_THEME
-```
-
-Functions
-
-```javascript
-loadInventory()
-savePreferences()
-filterFish()
-```
-
-Boolean variables should clearly express a true/false state.
-
-Examples
-
-```javascript
-isFavorite
-hasInventory
-showBeginnerTips
-```
-
----
-
-## Functions
-
-Functions should perform one primary task.
-
-Avoid deeply nested logic whenever practical.
-
-Return early when appropriate.
-
----
-
-## Comments
-
-Comments should explain **why**, not **what**.
-
-Good
-
-```javascript
-// Preserve the user's selected region between sessions.
-```
-
-Poor
-
-```javascript
-// Increment counter.
-counter++;
-```
-
----
-
-# JSON Standards
-
-Use consistent property names.
-
-Examples
-
-```json
-{
-  "id": "largemouth-bass",
-  "name": "Largemouth Bass",
-  "summary": "...",
-  "isActive": true
-}
-```
-
-Use camelCase for property names.
-
-Stable identifiers use lowercase with hyphens.
-
----
+Do not add fields "just in case."
 
 # File Naming
 
-Documentation
+Documentation:
 
-```text
-PROJECT.md
-STYLE_GUIDE.md
-ROADMAP.md
-```
+    PROJECT.md
+    ARCHITECTURE.md
+    STYLE_GUIDE.md
+    DEVELOPMENT_WORKFLOW.md
+    MEDIA_GUIDE.md
+    DECISIONS.md
+    ROADMAP.md
 
-Data Model
+JavaScript:
 
-```text
-02-FISH.md
-03-RIGS.md
-```
+    search.js
+    storage.js
+    recommendations.js
 
-JavaScript
+CSS:
 
-```text
-search.js
-storage.js
-recommendations.js
-```
-
-CSS
-
-```text
-main.css
-layout.css
-components.css
-themes.css
-```
-
----
+    main.css
+    layout.css
+    components.css
+    themes.css
 
 # User Interface Standards
-
-## Design Goals
 
 The interface should be:
 
@@ -297,81 +113,84 @@ The interface should be:
 - Beginner friendly
 - Fast
 - Easy to navigate
+- Readable outdoors
+- Compact enough for field use
 
-Avoid visual clutter.
+Avoid visual clutter and duplicated instructional content.
 
----
+# Forest Journal
 
-# Default Theme
+Forest Journal is the Version 1 default theme.
 
-The Version 1 default theme is **Forest Journal**.
+It uses muted forest greens, warm earth tones, and copper/gold accents to create a modern outdoor field-guide feel.
 
-Forest Journal uses muted forest greens, warm earth tones, and copper/gold accents to create the appearance of a modern outdoor field guide.
-
-Design goals include:
-
-- Calm and uncluttered presentation
-- Beginner-friendly navigation
-- High readability indoors and outdoors
-- Mobile-first usability
-- Consistent visual hierarchy
-- Warm natural color palette
-
-Alternative themes may be added in future releases, but all themes must preserve:
+Alternative themes may change appearance but must preserve:
 
 - Layout
 - Typography
-- Component behavior
+- Behavior
 - Accessibility
 - Responsive design
 - User experience
 
-Themes should change appearance, not functionality.
+# Unified Field-Guide Presentation
 
----
+Reference and instructional pages should share:
 
-## Cards
+- Information hierarchy
+- Spacing
+- Label conventions
+- Media surfaces
+- Contextual actions
+- Related-knowledge patterns
 
-Cards should be used consistently throughout the application.
+Do not force Fish photos, Rig diagrams, Tackle illustrations, Knot diagrams, and Lure media into the same technical format.
 
-Typical card contents:
+Follow `MEDIA_GUIDE.md`.
 
-- Title
-- Summary
-- Key actions
-- Optional image
+# Contextual Information
 
----
+Permanent convention:
 
-## Buttons
+    Name ⓘ
 
-Primary actions should be visually distinct.
+Meaning:
 
-Avoid placing destructive actions next to primary actions.
+> Open contextual information without leaving the current page.
 
----
+Expected behavior:
 
-## Icons
+- Desktop may use a centered modal.
+- Mobile may use a bottom sheet.
+- Current page remains underneath.
+- Closing restores focus to the original trigger.
+- Related references may open contextually.
 
-Icons should support text, not replace it.
+# Reference-Link Semantics
 
-Every important action should remain understandable without relying solely on icons.
+- `Name ⓘ` opens contextual information without leaving the page.
+- External verified references use `↗` and open in a new tab.
+- Do not use `ⓘ` for an external-navigation action.
 
----
+# Mobile-First Standards
+
+- Important text must remain readable without pinch zoom.
+- Touch targets must remain practical.
+- Media must be legible at phone widths.
+- Do not shrink wide desktop infographics into unreadable phone images.
+- Desktop multi-column layouts must collapse cleanly.
+- Avoid unnecessary page length caused by repeated content.
 
 # Accessibility
 
 The Companion should:
 
 - Support keyboard navigation.
-- Maintain sufficient color contrast.
+- Maintain sufficient contrast.
 - Use descriptive labels.
-- Avoid conveying meaning through color alone.
-- Scale correctly on phones, tablets, and desktops.
-
-Accessibility improvements should not significantly increase interface complexity.
-
----
+- Avoid meaning conveyed by color alone.
+- Scale on phones, tablets, and desktops.
+- Provide useful alt text.
 
 # Documentation Standards
 
@@ -382,61 +201,60 @@ Every document should include:
 - Status
 - Purpose
 
-When applicable, include:
+When relevant, include:
 
+- Last Updated
 - Design Notes
 - Related Documents
-- Future Enhancements
+- Implementation Status
 
-Documentation should describe the current implementation, not speculative ideas.
+Documentation must distinguish between:
 
----
+- Current implementation
+- Approved standards
+- Future implementation work
+
+Do not describe a future design as already implemented.
+
+# Source Replacement Standard
+
+Complete-file replacement is the default project delivery method.
+
+For an existing source file:
+
+1. Fetch the latest GitHub version.
+2. Make only the approved changes.
+3. Return the complete resulting file.
+4. Preserve unrelated current behavior.
+5. Package coherent multi-file updates together when practical.
+
+See `DEVELOPMENT_WORKFLOW.md`.
 
 # Commit Messages
 
-Use concise, descriptive commit messages.
+Use concise descriptive messages, for example:
 
-Examples
+    Create fish guide
+    Add inventory search
+    Fix navigation layout
+    Document development and media standards
 
-```text
-Create fish guide
+Avoid vague messages such as `Update` or `Fix stuff`.
 
-Add inventory search
+# Testing
 
-Implement backup validation
-
-Fix navigation layout
-```
-
-Avoid vague messages such as:
-
-```text
-Update
-
-Fix stuff
-
-Changes
-```
-
----
-
-# Testing Philosophy
-
-Implement features in small increments.
-
-Each completed feature should be:
+A completed feature should be:
 
 - Functional
 - Tested
 - Documented
+- Verified on GitHub
 
-Avoid combining unrelated changes into a single commit.
+Avoid unrelated changes in one commit.
 
----
+A coherent module may include several related source files and media assets in one commit.
 
 # Version 1 Priorities
-
-Priority order:
 
 1. Correctness
 2. Simplicity
@@ -444,15 +262,13 @@ Priority order:
 4. Performance
 5. Visual polish
 
-Premature optimization should be avoided.
-
----
-
 # Related Documents
 
-- PROJECT.md
-- SPECIFICATION.md
-- ARCHITECTURE.md
-- ROADMAP.md
-- DECISIONS.md
-- CHANGELOG.md
+- `PROJECT.md`
+- `SPECIFICATION.md`
+- `ARCHITECTURE.md`
+- `ROADMAP.md`
+- `DECISIONS.md`
+- `DEVELOPMENT_WORKFLOW.md`
+- `MEDIA_GUIDE.md`
+- `CHANGELOG.md`

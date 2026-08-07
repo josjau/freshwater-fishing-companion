@@ -1,13 +1,17 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Version:** 0.2.6  
+**Version:** 0.2.7  
 **Status:** Active  
-**Last Updated:** 2026-08-06
+**Last Updated:** 2026-08-07
 
-> NOTE: This file reflects the validated MS2.6 tackle-reference and Rig visual-guide implementation.
+# Purpose
 
-## Current Source Structure
+This document defines the current application architecture and source ownership for Freshwater Fishing Companion.
+
+GitHub `main` is authoritative for existing project files.
+
+# Current Source Structure
 
     index.html
     forest-journal.css
@@ -30,17 +34,19 @@
     script.js
 
     docs/
-        project documentation
+        ARCHITECTURE.md
+        CHANGELOG.md
+        DECISIONS.md
+        DEVELOPMENT_WORKFLOW.md
+        MEDIA_GUIDE.md
+        MILESTONES.md
+        PROJECT.md
+        ROADMAP.md
+        SPECIFICATION.md
+        STYLE_GUIDE.md
+        data-model/
 
-The application uses a three-layer architecture:
-
-1. Reference Knowledge
-2. Decision Knowledge
-3. User Knowledge
-
-GitHub is the authoritative source for project files.
-
-The required JavaScript load order is:
+Required JavaScript load order:
 
     data/fish.js
     data/rigs.js
@@ -50,312 +56,252 @@ The required JavaScript load order is:
     view-renderer.js
     script.js
 
-## Knowledge-System Principle
+# Knowledge Architecture
 
-Every primary entity or result should act as a gateway to adjacent knowledge that helps the user understand the current item and make the next decision.
+The application uses three layers:
+
+1. Reference Knowledge
+2. Decision Knowledge
+3. User Knowledge
+
+Reference Knowledge owns canonical facts. Decision Knowledge owns recommendations and derived guidance. User Knowledge owns inventory, favorites, catches, preferences, and other user-specific state.
+
+Do not blur these layers without an explicit architectural decision.
+
+# Connected-Knowledge Principle
+
+A primary entity or search result should act as a gateway to useful adjacent knowledge.
 
 Examples:
 
-- Fish → suitable Rigs, lures, conditions, knots, and regulations
-- Rig → target Fish, conditions, components, knots, alternatives, assembly, and tackle readiness
-- Tackle component → definition, recognition guidance, compatible Rigs, alternatives, and related components
-- Knot → purpose, compatible line types, relevant Rigs, and instructional sequence
-- Lure → target Fish, conditions, rigging, retrieval, color guidance, and alternatives
+- Fish → Rigs, lures, conditions, knots, regulations, techniques
+- Rig → target Fish, conditions, components, alternatives, assembly, readiness
+- Tackle → definition, recognition, compatible Rigs, alternatives, related components
+- Knot → purpose, line compatibility, Rigs, instructions
+- Lure → Fish, conditions, rigging, retrieve, color guidance, alternatives
 
-This principle should be implemented without overwhelming the user with unrelated information.
+Avoid information overload.
 
-## Source Ownership
+# Source Ownership
 
-### `data/fish.js`
+## `data/fish.js`
 
-Owns canonical Fish reference records and stable Fish IDs.
+Owns canonical Fish records and stable Fish IDs.
 
-### `data/rigs.js`
+Fish identification media is accuracy-critical and follows `MEDIA_GUIDE.md`.
 
-Owns canonical Rig records, stable Rig IDs, component requirements, assembly steps, setup notes, common mistakes, safety notes, and Rig media references.
+## `data/rigs.js`
 
-Current MS2.6 Rig media support includes:
+Owns canonical Rig records, including:
 
-- One completed-Rig overview media reference for each of the four current Rigs
-- Four ordered Texas Rig assembly-step media references
-
-### `data/tackle.js`
-
-Owns canonical Tackle reference records and stable Tackle IDs.
-
-The current catalog contains 15 active reference records.
-
-Each record may include:
-
-- Stable ID
-- Display name
-- Aliases
-- Category
-- Summary
-- Purpose
-- Recognition notes
-- Common variants
-- Related Rig IDs
-- Related Tackle IDs
-- Media IDs
+- Stable Rig ID
+- Name and summary
+- Difficulty
+- Use cases
+- Condition tags
+- Verified external reference links
+- Component requirements
+- Assembly steps
+- Setup notes
+- Common mistakes
+- Safety notes
+- Relationship IDs
 - Version metadata
 - Active state
 
-Tackle items may exist independently of a Rig. Rig records reference Tackle items; Tackle items do not require Rig membership.
+The text in `assemblySteps` is the authoritative in-app build sequence.
 
-### `data/media.js`
+Rig `referenceLinks` point to verified external fishing references used to visually confirm completed rigs. They are not production-media copies and do not transfer ownership of external content into the project.
 
-Owns centralized media metadata and stable media IDs.
+Historical `imageIds` fields may remain empty while older media records/assets are retained for cleanup or audit history.
 
-The current MS2.6 catalog contains 23 active media records:
+## `data/tackle.js`
 
-- 15 Tackle reference illustrations
-- 4 completed-Rig overview illustrations
-- 4 Texas Rig assembly-step illustrations
+Owns the 15 canonical Tackle reference records and stable Tackle IDs.
 
-Media records may include:
+Tackle may exist independently of a Rig.
 
-- Stable media ID
-- Owner type
-- Owner ID
-- Media role where applicable
-- Sequence where applicable
-- Media type
-- Local file path
-- Alternative text
-- Caption
-- Licensing metadata
-- Replacement status
-- Version metadata
-- Active state
+Rigs reference Tackle records through component IDs.
 
-Current Rig media roles are:
+## `data/media.js`
 
-- `overview`
-- `assembly-step`
+Owns reusable canonical media metadata and stable media IDs.
 
-Assembly-step media uses `sequence` for deterministic ordering.
+Older MS2.6 Rig/Tackle media records may remain in the repository for historical continuity until a separate cleanup is approved. The current Rig page does not render those historical Rig images, and current Tackle contextual popovers are text-first.
 
-### `search.js`
+Page-specific presentation media, such as the approved Tackle reference board, may be configured by the owning view when it is not intended to represent one canonical entity.
 
-Owns reusable, non-mutating lookup, search, filter, and sort operations.
+## `search.js`
 
-### `view-renderer.js`
+Owns reusable, non-mutating lookup, search, filter, and sort helpers.
 
-Owns reusable page rendering and navigation.
+## `view-renderer.js`
 
-Validated MS2.6 responsibilities include:
+Owns reusable rendering and UI interactions, including:
 
-- Top-level child-card rendering
-- Search-page rendering
-- Generic result rendering
-- Instructional Rig detail rendering
-- Completed-Rig media rendering
-- Ordered visual assembly-guide rendering
-- Contextual Tackle reference popovers
-- Related-component links inside reference popovers
-- Tackle-readiness checklist rendering
-- Required-item readiness status
-- Parent navigation
-- Home navigation
+- Child-card views
+- Search pages and result cards
+- Rig detail rendering
+- Rig external-reference links
+- Tackle Guide rendering
+- Tackle search result cards
+- Contextual `Name ⓘ` Tackle popovers
+- Related-component popover navigation
+- Tackle-readiness rendering
+- Parent/Home navigation
 - Modal close behavior and focus restoration
 
-### `script.js`
+## `script.js`
 
 Coordinates:
 
 - Application routes
-- View registration
 - Dashboard restoration
-- Fish search
-- Rig browsing and Rig detail
+- Fish Guide and Fish Search
+- Rig Guide, Rig browsing, Rig details
+- Tackle Guide
 - Tackle-readiness routing
-- Local readiness-state loading
-- Local readiness-state persistence
-- Per-Rig component selection
+- Local readiness-state loading/persistence
+- Per-Rig component selections
 
-Reference-popover behavior remains owned by `view-renderer.js`.
+# Rig Guide Architecture
 
-## Rig Guide Architecture
-
-The validated Rig Guide flow is:
+Current Rig flow:
 
     Dashboard
     → Rig Guide
     → Browse All Rigs
     → Select a Rig
-    → Instructional Rig Detail
-        → Completed Rig
+    → Rig Detail
+        → Best For
+        → Good Conditions
+        → Verified Rig Examples ↗
         → What You Need
-            → Tackle Reference Popover
-        → Visual Assembly Guide, when available
-        → How to Rig It
+            → Tackle Reference Popover ⓘ
+        → How to Build It
         → Setup Notes
         → Common Mistakes
         → Safety
         → Check My Tackle
     → Tackle Readiness
 
-## Contextual Reference Popovers
+Rig pages intentionally use authoritative text instructions rather than generated Rig build diagrams.
 
-Inline contextual references use the permanent interaction convention:
+Completed-Rig visual confirmation uses verified external references unless a clearly licensed, technically verified local asset is approved.
+
+# Tackle Guide Architecture
+
+Current Tackle flow:
+
+    Dashboard
+    → Tackle Guide
+        → Approved Tackle reference board
+        → Search/filter canonical Tackle records
+        → Select Details ⓘ
+            → Contextual Tackle popover
+            → Related Rigs
+            → Related components
+
+The approved Tackle reference board is a lightweight WebP presentation asset. It supports recognition but does not replace canonical text in `data/tackle.js`.
+
+# Link Semantics
+
+## Contextual information
 
     Name ⓘ
 
-Examples:
-
-    Bullet Weight ⓘ
-    Offset Worm Hook ⓘ
-
-The entire name and information symbol are interactive.
+Meaning: open contextual information without leaving the current page.
 
 Behavior:
 
-- Desktop uses a centered modal.
-- Mobile may present the same interaction as a bottom sheet.
-- The current page remains underneath.
-- Closing returns focus to the original `Name ⓘ` trigger.
-- Related Tackle references can be opened from inside the popover.
-- The interaction is contextual and does not navigate away from the current page.
+- Desktop centered modal
+- Mobile bottom-sheet style when appropriate
+- Underlying page remains
+- Close restores focus to the original trigger
+- Related references may open contextually
 
-The `ⓘ` symbol should consistently mean: open contextual information without leaving the current page.
+## External verified reference
 
-## Media Strategy
+    Reference Name ↗
 
-Media is bundled locally. Third-party hotlinking is not part of the production architecture.
+Meaning: open an external source in a new tab.
+
+Do not use `ⓘ` for external navigation.
+
+# Media Architecture
+
+Detailed media rules are authoritative in `MEDIA_GUIDE.md`.
 
 Preferred formats:
 
-- SVG for diagrams, line art, and recognition-focused illustrations
-- Optimized WebP for photographic media when required
+- Optimized WebP for photographic/semi-photorealistic boards
+- SVG for technically safe diagrams, line art, and instructional graphics
 
-Current MS2.6 Tackle and Rig illustrations are SVG assets to minimize storage and preserve sharp rendering.
+Entity rules:
 
-Recommended storage targets:
+- Fish: verified real photographs/scientific illustrations for identification
+- Rigs: verified local completed image only when licensing and technical accuracy are established; otherwise external verified reference links
+- Tackle: recognition-first semi-photorealistic or vector illustration anchored to real geometry
+- Knots: step-by-step diagrams
+- Lures: photography or accurate illustration according to recognition requirements
+- Techniques: instructional media only when it improves understanding
 
-- Tackle reference images: generally 30–100 KB, normal ceiling approximately 150 KB
-- Accuracy-critical Fish images: approximately 150–300 KB when diagnostic detail requires it
-- SVG diagrams: favor compact vector assets whenever practical
+# Storage Strategy
 
-Media should be loaded only when needed:
+GitHub Pages footprint is a design constraint.
 
-- Reference-popover images are created only when the contextual popover opens.
-- Rig assembly-step images use browser lazy loading.
-- Completed-Rig overview images load with the selected Rig detail page.
+General targets:
 
-## Media Accuracy Standard
+- Tackle board/reference imagery: aggressively optimized; avoid unnecessary source resolution
+- Individual Tackle raster imagery: normally below approximately 150 KB
+- Fish identification photos: approximately 150–300 KB when diagnostic detail requires it
+- SVG: keep compact and avoid unnecessary embedded raster data
 
-Media requirements depend on entity type.
+The current approved Tackle board is stored as an optimized WebP.
 
-### Fish
+# Tackle Readiness
 
-Fish identification is accuracy-critical.
-
-Use verified authoritative photographs or scientific illustrations. Do not use approximate look-alike imagery for identification.
-
-### Tackle
-
-Recognition is the priority.
-
-A photograph, diagram, or illustration is acceptable when a beginner can reliably recognize the item in a store or tackle box.
-
-### Rigs
-
-Rig diagrams must accurately represent:
-
-- Component order
-- Hook orientation
-- Weight orientation
-- Leader placement
-- Bait placement
-- Assembly sequence
-
-A technically inaccurate Rig diagram must be corrected even if it is visually polished.
-
-The Texas Rig overview and four assembly-step illustrations were technically corrected during MS2.6 after live validation identified incorrect hook orientation.
-
-### Knots
-
-Prefer step-by-step instructional diagrams first. Animation may be added later when practical.
-
-## Licensing Metadata
-
-Every reusable media record should retain licensing metadata even when attribution is not required.
-
-Current metadata fields support:
-
-- License status
-- License type
-- Creator
-- Source URL
-- License URL
-- Attribution requirement
-- Commercial-use permission
-- Modification permission
-- Review date
-
-Current MS2.6 Tackle and Rig SVG illustrations are recorded as original Freshwater Fishing Companion project assets.
-
-If an external licensed asset is introduced later, its stable media ID should remain independent of the external filename so the underlying asset can be replaced without changing consuming records.
-
-## Lightweight Tackle Readiness
-
-The lightweight readiness feature uses each Rig record's `componentRequirements` as the canonical checklist source.
-
-The application stores user selections under:
+Storage key:
 
     freshwaterFishingCompanion.tackleReadiness.v1
 
-Storage is implemented with `localStorage`.
-
-Saved readiness data is organized by:
-
-- Stable Rig ID
-- Stable component ID
-- Boolean availability state
-
-Readiness evaluation:
+Rules:
 
 - Optional components do not block readiness.
 - All required components must be selected for `Ready to Fish`.
 - Missing required components are listed by name.
-- Each Rig maintains an independent checklist.
-- Invalid or malformed stored data falls back safely to an empty state.
+- Each Rig maintains independent state.
+- Malformed stored data falls back safely.
 
-This storage layer is intentionally lightweight. A future inventory system may replace the lookup source without changing the Rig detail or readiness interfaces.
+A future inventory system may replace the lookup source without changing the Rig readiness interface.
 
-## Current Validated Baseline
+# Development Architecture
 
-The current validated baseline includes:
+`DEVELOPMENT_WORKFLOW.md` is authoritative for implementation procedure.
 
-- Dashboard
-- Eight application views
-- Shared view renderer
-- Shared search utilities
-- Canonical Fish data
-- Canonical Rig data
-- Canonical Tackle reference data
-- Centralized media catalog
-- Functional Fish search
-- Functional Rig browsing
-- Instructional Rig detail pages
-- Contextual `Name ⓘ` Tackle reference popovers
-- Tackle reference illustrations
-- Related-component popover navigation
-- Completed-Rig overview illustrations for all four current Rigs
-- Four-step Texas Rig visual assembly guide
-- Corrected Texas Rig technical geometry
-- Check My Tackle action
-- Per-Rig readiness checklists
-- Required and optional component handling
-- Persistent local selections
-- Ready and missing-item status
-- Parent and Home navigation
-- Runtime build identifiers
-- GitHub Pages deployment validation
+Permanent rules include:
 
-## Active Priority
+- Fetch latest GitHub source before editing.
+- Complete-file replacement is the default delivery method.
+- Coherent multi-file modules may be delivered as ZIP packages.
+- User normally reviews and commits through GitHub Desktop.
+- Verify GitHub after push.
+- Documentation closeout is mandatory.
+- Commands intended for user copy/paste are placed in fenced code blocks.
 
-MS2.6 is complete.
+# Current Reference-Refresh Scope
 
-The next feature should be selected from the approved roadmap based on the next highest-value field workflow while preserving the connected-knowledge architecture.
+The current package changes the presentation layer without changing the canonical 15-item Tackle catalog or Tackle Readiness storage contract.
+
+Implemented changes include:
+
+- Functional searchable Tackle Guide
+- Approved Tackle reference board
+- Text-first Tackle contextual popovers
+- Verified external completed-Rig reference links
+- Text-first Rig assembly instructions
+- Texas Rig wording corrected for bait seating, rotation, re-entry measurement, and skin-hook finish
+- Dashboard `Tackle Guide` label
+- Existing Fish Search and readiness workflows preserved
+
+Historical MS2.6 media files are intentionally not deleted in this refresh so source cleanup can be handled separately after live validation.

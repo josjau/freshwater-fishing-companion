@@ -1,0 +1,43 @@
+Freshwater Fishing Companion — Rig and Tackle Reference Refresh
+
+REPLACE EXISTING FILES
+- index.html
+- forest-journal.css
+- script.js
+- view-renderer.js
+- data/rigs.js
+- docs/ARCHITECTURE.md
+- docs/CHANGELOG.md
+- docs/DECISIONS.md
+- docs/STYLE_GUIDE.md
+
+ADD NEW FILES
+- images/tackle/tackle-reference-board.webp
+- docs/DEVELOPMENT_WORKFLOW.md
+- docs/MEDIA_GUIDE.md
+- docs/RIG_REFERENCE_SOURCES.md
+
+UNCHANGED / DO NOT REPLACE
+- data/tackle.js
+- data/media.js
+- data/fish.js
+- search.js
+- existing images/tackle/*.svg
+- existing images/rigs/*.svg
+
+WHY OLD MEDIA IS NOT DELETED IN THIS PUSH
+The current renderer no longer displays the historical Rig overview/assembly assets or individual Tackle popover images. They remain in the repository for historical continuity until the new pages are live-validated; cleanup can be handled separately without risking broken legacy media references.
+
+PRIMARY BEHAVIOR CHANGES
+- My Tackle dashboard card becomes Tackle Guide.
+- Tackle Guide displays the approved lightweight reference board and searchable canonical Tackle records.
+- Tackle item Details ⓘ opens a text-first contextual popover.
+- Rig pages remove generated Rig imagery from active presentation.
+- Rig pages add Best For and Good Conditions summaries.
+- Rig pages add two verified external references per Rig using ↗.
+- Rig build process is authoritative numbered text.
+- Texas Rig text explicitly seats the bait at the hook offset before measuring the re-entry point.
+- Check My Tackle storage contract remains unchanged.
+
+SUGGESTED COMMIT MESSAGE
+Refresh Rig and Tackle reference pages
