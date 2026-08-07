@@ -1,17 +1,18 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: view-renderer.js
-   REPLACEMENT: MS2.5 - TACKLE READINESS RENDERING
+   REPLACEMENT: MS2.6 - REFERENCE POPOVER RENDERING
    PURPOSE: Owns reusable application views, search results,
-   instructional detail pages, and tackle-readiness checklists.
+   instructional detail pages, tackle-readiness checklists,
+   and contextual reference popovers.
    ========================================================== */
 
 "use strict";
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "MS2.5",
-    replacement: "Tackle Readiness Rendering"
+    milestone: "MS2.6",
+    replacement: "Reference Popover Rendering"
 });
 
 function renderView(appMain, viewConfig) {
@@ -196,6 +197,275 @@ function renderSearchResults(appMain, records, resultConfig) {
         });
 }
 
+function getReferenceMedia(referenceRecord) {
+    if (!referenceRecord?.mediaIds?.length || typeof MEDIA_DATA === "undefined") {
+        return null;
+    }
+
+    return MEDIA_DATA.find(
+        (media) =>
+            referenceRecord.mediaIds.includes(media.id) &&
+            media.isActive === true
+    ) ?? null;
+}
+
+function getRelatedRigNames(rigIds) {
+    if (!Array.isArray(rigIds) || typeof RIG_DATA === "undefined") {
+        return [];
+    }
+
+    return rigIds
+        .map((rigId) => findRecordById(RIG_DATA, rigId))
+        .filter(Boolean)
+        .map((rig) => rig.name);
+}
+
+function buildReferenceMediaMarkup(referenceRecord) {
+    const media = getReferenceMedia(referenceRecord);
+
+    if (!media) {
+        return `
+            <div class="reference-popover__media-placeholder" role="img"
+                aria-label="Reference image not yet available">
+                <span aria-hidden="true">◫</span>
+                <strong>Reference image coming soon</strong>
+            </div>
+        `;
+    }
+
+    return `
+        <figure class="reference-popover__figure">
+            <img
+                class="reference-popover__image"
+                src="${media.file}"
+                alt="${media.alt}"
+                decoding="async"
+            >
+            ${
+                media.caption
+                    ? `<figcaption>${media.caption}</figcaption>`
+                    : ""
+            }
+        </figure>
+    `;
+}
+
+function buildReferenceLicenseMarkup(referenceRecord) {
+    const media = getReferenceMedia(referenceRecord);
+
+    if (!media?.license || media.license.attributionRequired !== true) {
+        return "";
+    }
+
+    const creator = media.license.creator ?? "Unknown creator";
+    const licenseType = media.license.type ?? "Licensed media";
+
+    return `
+        <p class="reference-popover__attribution">
+            Image: ${creator} · ${licenseType}
+        </p>
+    `;
+}
+
+function renderReferencePopover(referenceId, triggerElement) {
+    if (typeof TACKLE_DATA === "undefined") {
+        console.error("Tackle reference data is not available.");
+        return;
+    }
+
+    const referenceRecord = findRecordById(TACKLE_DATA, referenceId);
+
+    if (!referenceRecord || referenceRecord.isActive !== true) {
+        console.warn(`Reference record was not found: ${referenceId}`);
+        return;
+    }
+
+    document.querySelector("[data-reference-popover]")?.remove();
+
+    const aliasesMarkup = referenceRecord.aliases?.length
+        ? `
+            <section class="reference-popover__section">
+                <h3>Also Called</h3>
+                <p>${referenceRecord.aliases.join(", ")}</p>
+            </section>
+        `
+        : "";
+
+    const recognitionMarkup = referenceRecord.recognitionNotes?.length
+        ? `
+            <section class="reference-popover__section">
+                <h3>How to Recognize It</h3>
+                <ul>
+                    ${referenceRecord.recognitionNotes
+                        .map((note) => `<li>${note}</li>`)
+                        .join("")}
+                </ul>
+            </section>
+        `
+        : "";
+
+    const variantsMarkup = referenceRecord.commonVariants?.length
+        ? `
+            <section class="reference-popover__section">
+                <h3>Common Variants</h3>
+                <p>${referenceRecord.commonVariants.join(", ")}</p>
+            </section>
+        `
+        : "";
+
+    const relatedRigNames = getRelatedRigNames(referenceRecord.rigIds);
+    const rigsMarkup = relatedRigNames.length
+        ? `
+            <section class="reference-popover__section">
+                <h3>Used In</h3>
+                <p>${relatedRigNames.join(", ")}</p>
+            </section>
+        `
+        : "";
+
+    const relatedTackleMarkup = referenceRecord.relatedTackleIds?.length
+        ? `
+            <section class="reference-popover__section">
+                <h3>Related Components</h3>
+                <div class="reference-popover__related">
+                    ${referenceRecord.relatedTackleIds
+                        .map((relatedId) => {
+                            const related = findRecordById(
+                                TACKLE_DATA,
+                                relatedId
+                            );
+
+                            if (!related || related.isActive !== true) {
+                                return "";
+                            }
+
+                            return `
+                                <button
+                                    class="reference-popover__related-link"
+                                    type="button"
+                                    data-related-reference-id="${related.id}"
+                                >
+                                    ${related.name}
+                                    <span aria-hidden="true">ⓘ</span>
+                                </button>
+                            `;
+                        })
+                        .join("")}
+                </div>
+            </section>
+        `
+        : "";
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "reference-popover";
+    dialog.dataset.referencePopover = "";
+    dialog.setAttribute("aria-labelledby", "reference-popover-title");
+
+    dialog.innerHTML = `
+        <div class="reference-popover__shell">
+            <header class="reference-popover__header">
+                <div>
+                    <p class="reference-popover__eyebrow">
+                        ${referenceRecord.category}
+                    </p>
+                    <h2 id="reference-popover-title">
+                        ${referenceRecord.name}
+                    </h2>
+                </div>
+
+                <button
+                    class="reference-popover__close"
+                    type="button"
+                    data-reference-close
+                    aria-label="Close ${referenceRecord.name} information"
+                >
+                    ×
+                </button>
+            </header>
+
+            ${buildReferenceMediaMarkup(referenceRecord)}
+
+            <div class="reference-popover__body">
+                <p class="reference-popover__summary">
+                    ${referenceRecord.summary}
+                </p>
+
+                <section class="reference-popover__section">
+                    <h3>What It Does</h3>
+                    <p>${referenceRecord.purpose}</p>
+                </section>
+
+                ${aliasesMarkup}
+                ${recognitionMarkup}
+                ${variantsMarkup}
+                ${rigsMarkup}
+                ${relatedTackleMarkup}
+                ${buildReferenceLicenseMarkup(referenceRecord)}
+            </div>
+        </div>
+    `;
+
+    document.body.append(dialog);
+
+    const closeDialog = () => {
+        if (dialog.open) {
+            dialog.close();
+        }
+    };
+
+    dialog
+        .querySelector("[data-reference-close]")
+        ?.addEventListener("click", closeDialog);
+
+    dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) {
+            closeDialog();
+        }
+    });
+
+    dialog.addEventListener("close", () => {
+        dialog.remove();
+        triggerElement?.focus();
+    });
+
+    dialog
+        .querySelectorAll("[data-related-reference-id]")
+        .forEach((relatedButton) => {
+            relatedButton.addEventListener("click", () => {
+                const nextReferenceId =
+                    relatedButton.dataset.relatedReferenceId;
+
+                dialog.addEventListener(
+                    "close",
+                    () => {
+                        renderReferencePopover(
+                            nextReferenceId,
+                            triggerElement
+                        );
+                    },
+                    { once: true }
+                );
+
+                closeDialog();
+            });
+        });
+
+    dialog.showModal();
+}
+
+function initializeReferenceLinks(appMain) {
+    appMain
+        .querySelectorAll("[data-reference-id]")
+        .forEach((referenceLink) => {
+            referenceLink.addEventListener("click", () => {
+                renderReferencePopover(
+                    referenceLink.dataset.referenceId,
+                    referenceLink
+                );
+            });
+        });
+}
+
 function renderInstructionDetail(appMain, detailConfig) {
     if (!appMain || !detailConfig?.record) {
         console.error("A valid instructional detail record is required.");
@@ -208,8 +478,23 @@ function renderInstructionDetail(appMain, detailConfig) {
         .map(
             (component) => `
                 <li class="detail-list__item">
-                    <strong>${component.name}</strong>
-                    ${component.required ? "" : " <span>(Optional)</span>"}
+                    <button
+                        class="reference-link"
+                        type="button"
+                        data-reference-id="${component.id}"
+                        aria-label="More information about ${component.name}"
+                    >
+                        <span>${component.name}</span>
+                        <span
+                            class="reference-link__icon"
+                            aria-hidden="true"
+                        >ⓘ</span>
+                    </button>
+                    ${
+                        component.required
+                            ? ""
+                            : ' <span class="detail-list__optional">(Optional)</span>'
+                    }
                     <p>${component.notes}</p>
                 </li>
             `
@@ -309,6 +594,7 @@ function renderInstructionDetail(appMain, detailConfig) {
         .querySelector("[data-detail-action]")
         ?.addEventListener("click", detailConfig.onAction);
 
+    initializeReferenceLinks(appMain);
     initializeHomeNavigation(appMain);
 }
 
