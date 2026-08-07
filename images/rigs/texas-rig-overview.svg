@@ -1,11 +1,40 @@
+<!--
+FRESHWATER FISHING COMPANION
+FILE: images/rigs/texas-rig-overview.svg
+REPLACEMENT: MS2.6 - TEXAS RIG TECHNICAL CORRECTION
+PURPOSE: Shows a technically correct completed Texas Rig with the hook bend below the bait and the hook point returned toward the bait body.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
-<title id="title">Texas Rig Overview</title>
-<desc id="desc">Original educational illustration for Freshwater Fishing Companion.</desc>
-<rect width="100%" height="100%" fill="#fff"/>
+  <title id="title">Texas Rig Overview</title>
+  <desc id="desc">Completed Texas Rig with the main line passing through a bullet weight to an offset worm hook. The soft plastic is rigged straight, with the hook bend below the bait and the hook point returned into the bait for a weed-resistant presentation.</desc>
+  <rect width="920" height="360" fill="#ffffff"/>
 
-<line x1="70" y1="180" x2="850" y2="180" stroke="#5d7f9c" stroke-width="6"/>
-<path d="M245 125 C200 140 190 190 205 230 C218 265 235 278 255 278 C275 278 292 265 305 230 C320 190 310 140 265 125 Z" fill="#59636d" stroke="#1f2933" stroke-width="5"/>
-<path d="M560 130 L540 160 L563 185 L538 208 C525 245 513 280 485 296 C455 314 420 295 414 263 C408 231 424 202 452 188" fill="none" stroke="#1f2933" stroke-width="9"/>
-<path d="M500 180 C565 145 650 150 720 190 C758 212 790 225 822 220" fill="none" stroke="#537a4b" stroke-width="36" stroke-linecap="round"/>
+  <!-- Main line: rod side is to the right. -->
+  <line x1="850" y1="180" x2="516" y2="180" stroke="#5d7f9c" stroke-width="6" stroke-linecap="round"/>
 
+  <!-- Bullet weight: pointed end faces the rod/main-line side. -->
+  <path d="M650 180 L592 135 Q568 146 558 180 Q568 214 592 225 Z" fill="#59636d" stroke="#1f2933" stroke-width="5" stroke-linejoin="round"/>
+  <line x1="650" y1="180" x2="558" y2="180" stroke="#5d7f9c" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Soft plastic: nose at the hook eye, body extending away from the weight. -->
+  <path d="M500 180 C455 164 405 166 355 180 C300 196 245 194 195 179 C170 171 145 170 120 180 C146 193 168 207 188 225 C212 247 235 256 254 248 C229 229 214 210 217 195 C257 205 302 207 349 194 C401 180 452 178 500 192 Z" fill="#537a4b" stroke="#365b34" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- Offset worm hook: eye at bait nose, bend below bait, point returns toward bait. -->
+  <circle cx="516" cy="180" r="10" fill="none" stroke="#1f2933" stroke-width="7"/>
+  <path d="M507 181 L487 181 L476 196 L459 196 C444 196 435 208 435 220 C435 251 414 273 382 276 C346 279 318 258 320 228 C322 203 339 187 366 178" fill="none" stroke="#1f2933" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M366 178 L390 166 L381 191 Z" fill="#1f2933"/>
+
+  <!-- Small callouts for beginner recognition. -->
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="18" fill="#263238">
+    <text x="684" y="112">Main line</text>
+    <text x="548" y="262">Bullet weight</text>
+    <text x="284" y="318">Offset worm hook</text>
+    <text x="128" y="112">Soft plastic</text>
+  </g>
+  <g stroke="#7b8790" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M724 120 L756 166"/>
+    <path d="M606 248 L600 222"/>
+    <path d="M365 302 L380 276"/>
+    <path d="M185 120 L212 166"/>
+  </g>
 </svg>

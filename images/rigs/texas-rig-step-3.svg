@@ -1,6 +1,29 @@
+<!--
+FRESHWATER FISHING COMPANION
+FILE: images/rigs/texas-rig-step-3.svg
+REPLACEMENT: MS2.6 - TEXAS RIG TECHNICAL CORRECTION
+PURPOSE: Shows the soft plastic seated on the offset shoulder with the hook rotated into position before the point is reinserted.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
-<title id="title">Texas Rig Step 3</title>
-<desc id="desc">Original educational illustration for Freshwater Fishing Companion.</desc>
-<rect width="100%" height="100%" fill="#fff"/>
-<path d="M330 90 L310 120 L333 145 L308 168 C295 205 283 240 255 256 C225 274 190 255 184 223 C178 191 194 162 222 148" fill="none" stroke="#1f2933" stroke-width="9"/><path d="M350 180 C415 145 500 150 570 190 C608 212 640 225 672 220" fill="none" stroke="#537a4b" stroke-width="36" stroke-linecap="round"/>
+  <title id="title">Texas Rig Step 3</title>
+  <desc id="desc">The nose of the soft plastic is threaded onto the offset worm hook and seated over the offset shoulder. The bait extends straight away from the hook eye while the hook point sits below the body ready to be reinserted.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b04b3f"/>
+    </marker>
+  </defs>
+  <rect width="920" height="360" fill="#ffffff"/>
+
+  <!-- Bait is seated over the offset shoulder, but the point is not yet inserted. -->
+  <path d="M620 170 C560 160 505 163 448 178 C389 194 332 193 278 178 C246 169 211 170 178 183 C205 197 228 212 248 231 C273 253 296 260 316 251 C291 232 276 213 280 197 C332 207 387 207 443 193 C502 178 560 178 620 190 Z" fill="#537a4b" stroke="#365b34" stroke-width="4" stroke-linejoin="round"/>
+
+  <circle cx="638" cy="180" r="10" fill="none" stroke="#1f2933" stroke-width="7"/>
+  <path d="M629 181 L609 181 L598 196 L581 196 C566 196 557 208 557 220 C557 251 536 273 504 276 C468 279 440 258 442 228 C444 216 452 207 470 204" fill="none" stroke="#1f2933" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M470 204 L493 190 L486 216 Z" fill="#1f2933"/>
+
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" fill="#263238">
+    <text x="320" y="105" font-size="20" font-weight="600">Seat the bait on the offset shoulder</text>
+    <text x="342" y="320" font-size="18">Rotate the hook so the point faces the bait</text>
+  </g>
+  <path d="M664 228 C706 205 711 159 681 132" fill="none" stroke="#b04b3f" stroke-width="4" marker-end="url(#arrow)"/>
 </svg>
