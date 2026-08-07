@@ -144,10 +144,9 @@ Owns reusable rendering and UI interactions, including:
 - Rig detail rendering
 - Rig external-reference links
 - My Tackle inventory-domain rendering
-- Tackle search result cards
-- Contextual `Name ⓘ` Tackle popovers
+- Contextual `Name ⓘ` Tackle reference rendering
 - Related-component popover navigation
-- Inline Rig requirements/readiness rendering
+- Combined Rig requirements/readiness rendering
 - Parent/Home navigation
 - Modal close behavior and focus restoration
 
@@ -197,8 +196,6 @@ Canonical Tackle definitions remain Reference Knowledge in `data/tackle.js`. App
 Rig `What You Need` lists remain text-first and do not display images by default.
 
 The current lightweight ownership state is an interim bridge and is shown directly inside each Rig's `What You Need` section. This removes the separate readiness page from the primary Rig workflow. The planned Inventory implementation will become the authoritative ownership source and the same inline readiness UI will query owned inventory instead of requiring duplicate manual ownership state.
-
-
 
 # Interaction Depth
 
@@ -252,7 +249,7 @@ GitHub Pages footprint is a design constraint.
 
 General targets:
 
-- Tackle board/reference imagery: aggressively optimized; avoid unnecessary source resolution
+- Contextual Tackle reference imagery: aggressively optimized; avoid unnecessary source resolution
 - Individual Tackle raster imagery: normally below approximately 150 KB
 - Fish identification photos: approximately 150–300 KB when diagnostic detail requires it
 - SVG: keep compact and avoid unnecessary embedded raster data

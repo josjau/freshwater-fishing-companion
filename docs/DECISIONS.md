@@ -30,6 +30,10 @@ This document records long-term architectural decisions.
 | D015 | Unified Field-Guide Visual System | Approved |
 | D016 | Identification-Safe Fish Media | Approved |
 | D017 | Verified Rig References and Text Instructions | Approved |
+| D018 | Current Rig Media Policy | Approved |
+| D019 | Tackle Reference Production Format | Approved |
+| D020 | Integrated Rig Requirements and Readiness | Approved |
+| D021 | Three-Interaction Field Workflow Target | Approved |
 
 # D001 – Local-First Architecture
 
@@ -126,6 +130,7 @@ The contextual `ⓘ` convention remains reserved for in-app information and must
 # Reference-Link Semantics
 
 External verified reference links use `↗` and open in a new tab. Contextual `ⓘ` remains in-app only.
+
 # D018 – Current Rig Media Policy
 
 Current Rig detail pages do not bundle generated completed-Rig or build-step imagery. Assembly is taught with canonical text steps. `What You Need` is text-first; selecting `Name ⓘ` opens the approved Tackle recognition image and contextual reference. Completed-Rig visual confirmation is provided by verified external references until a technically verified and legally reusable local Rig image is approved.
@@ -133,8 +138,6 @@ Current Rig detail pages do not bundle generated completed-Rig or build-step ima
 # D019 – Tackle Reference Production Format
 
 The approved semi-photorealistic Tackle reference style uses optimized WebP with alpha transparency for production assets because it preserves realistic materials, highlights, and shading at very small file sizes while blending with application surfaces. Tackle reference assets must not bake a white or cream rectangular background into the image. SVG remains preferred for genuine vector diagrams, knots, icons, and instructional line art.
-
-
 
 # D020 – Integrated Rig Requirements and Readiness
 
