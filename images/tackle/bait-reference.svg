@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+<title id="title">Bait on Hook</title>
+<desc id="desc">Original educational illustration for Freshwater Fishing Companion.</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+
+<path d="M150 215 C210 125 330 150 390 210 C430 250 468 260 505 235" fill="none" stroke="#8a4f2a" stroke-width="38" stroke-linecap="round"/>
+<path d="M150 215 C210 125 330 150 390 210 C430 250 468 260 505 235" fill="none" stroke="#b86f3d" stroke-width="18" stroke-linecap="round"/>
+<circle cx="390" cy="78" r="15" fill="none" stroke="#1f2933" stroke-width="8"/>
+<path d="M390 95 C392 150 395 215 375 267 C358 310 308 332 273 301" fill="none" stroke="#1f2933" stroke-width="10" stroke-linecap="round"/>
+
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+<title id="title">Basic Bottom Rig Overview</title>
+<desc id="desc">Original educational illustration for Freshwater Fishing Companion.</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+
+<line x1="70" y1="180" x2="850" y2="180" stroke="#5d7f9c" stroke-width="6"/>
+<path d="M235 125 C190 140 180 190 195 230 C208 265 225 278 245 278 C265 278 282 265 295 230 C310 190 300 140 255 125 Z" fill="#59636d" stroke="#1f2933" stroke-width="5"/>
+<circle cx="345" cy="180" r="20" fill="#d9871c" stroke="#1f2933" stroke-width="4"/>
+<circle cx="465" cy="180" r="30" fill="none" stroke="#1f2933" stroke-width="7"/>
+<circle cx="525" cy="180" r="30" fill="none" stroke="#1f2933" stroke-width="7"/>
+<rect x="478" y="160" width="34" height="40" rx="12" fill="#59636d" stroke="#1f2933" stroke-width="5"/>
+<path d="M760 180 C760 225 735 250 700 240 C670 231 660 197 685 178" fill="none" stroke="#1f2933" stroke-width="9"/>
+
+</svg>

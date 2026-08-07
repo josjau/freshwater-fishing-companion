@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 360" role="img" aria-labelledby="title desc">
+<title id="title">Texas Rig Overview</title>
+<desc id="desc">Original educational illustration for Freshwater Fishing Companion.</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+
+<line x1="70" y1="180" x2="850" y2="180" stroke="#5d7f9c" stroke-width="6"/>
+<path d="M245 125 C200 140 190 190 205 230 C218 265 235 278 255 278 C275 278 292 265 305 230 C320 190 310 140 265 125 Z" fill="#59636d" stroke="#1f2933" stroke-width="5"/>
+<path d="M560 130 L540 160 L563 185 L538 208 C525 245 513 280 485 296 C455 314 420 295 414 263 C408 231 424 202 452 188" fill="none" stroke="#1f2933" stroke-width="9"/>
+<path d="M500 180 C565 145 650 150 720 190 C758 212 790 225 822 220" fill="none" stroke="#537a4b" stroke-width="36" stroke-linecap="round"/>
+
+</svg>

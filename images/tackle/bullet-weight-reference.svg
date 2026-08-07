@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+<title id="title">Bullet Weight</title>
+<desc id="desc">Original educational illustration for Freshwater Fishing Companion.</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+
+<path d="M320 88 C260 100 245 178 255 245 C265 305 286 332 320 332 C354 332 375 305 385 245 C395 178 380 100 320 88 Z" fill="#59636d" stroke="#1f2933" stroke-width="7"/>
+<ellipse cx="320" cy="104" rx="20" ry="9" fill="#fff" stroke="#1f2933" stroke-width="4"/>
+
+</svg>
