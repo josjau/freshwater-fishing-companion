@@ -1,31 +1,30 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/media.js
-   REPLACEMENT: MS2.6 - ACTIVE REFERENCE AND RIG MEDIA
-   PURPOSE: Owns stable media records, local asset paths,
-   accessibility text, licensing, and replacement status.
+   REPLACEMENT: TACKLE REFERENCE MEDIA REFRESH
+   PURPOSE: Owns active Tackle reference imagery and retains
+   deprecated Rig media records for migration history.
    ========================================================== */
 
 "use strict";
 
 const MEDIA_DATA_BUILD_INFO = Object.freeze({
     file: "data/media.js",
-    milestone: "MS2.6",
-    replacement: "Active Reference and Rig Media"
+    milestone: "Reference Refresh",
+    replacement: "Tackle Reference Media Refresh"
 });
 
-const MEDIA_DATA = Object.freeze(
-[
+const MEDIA_DATA = Object.freeze([
     {
         id: "fixed-bobber-reference",
         ownerType: "tackle",
         ownerId: "fixed-bobber",
         type: "image",
-        file: "images/tackle/fixed-bobber-reference.svg",
-        alt: "Educational illustration of clip-on bobber",
+        file: "images/tackle/fixed-bobber-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a clip-on bobber",
         caption: "Clip-on Bobber",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -33,11 +32,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -45,23 +44,23 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "split-shot",
         type: "image",
-        file: "images/tackle/split-shot-reference.svg",
-        alt: "Educational illustration of split shot",
+        file: "images/tackle/split-shot-reference.webp",
+        alt: "Reference image of a removable split-shot sinker",
         caption: "Split Shot",
         license: {
-            status: "Original project asset",
+            status: "Original project asset; geometry checked against CC0 reference",
             type: "Original",
             creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
-            licenseUrl: null,
+            sourceUrl: "https://commons.wikimedia.org/wiki/File:Split_shot_1.jpg",
+            licenseUrl: "https://creativecommons.org/publicdomain/zero/1.0/",
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -69,11 +68,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "hook",
         type: "image",
-        file: "images/tackle/hook-reference.svg",
-        alt: "Educational illustration of fishing hook",
+        file: "images/tackle/hook-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a fishing hook",
         caption: "Fishing Hook",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -81,11 +80,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -93,11 +92,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "bait",
         type: "image",
-        file: "images/tackle/bait-reference.svg",
-        alt: "Educational illustration of bait",
+        file: "images/tackle/bait-reference.webp",
+        alt: "Approved semi-photorealistic reference image of worm bait",
         caption: "Bait",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -105,11 +104,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -117,11 +116,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "bobber-stop",
         type: "image",
-        file: "images/tackle/bobber-stop-reference.svg",
-        alt: "Educational illustration of bobber stop",
+        file: "images/tackle/bobber-stop-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a bobber stop",
         caption: "Bobber Stop",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -129,11 +128,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -141,11 +140,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "stop-bead",
         type: "image",
-        file: "images/tackle/stop-bead-reference.svg",
-        alt: "Educational illustration of bobber stop bead",
+        file: "images/tackle/stop-bead-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a bobber stop bead",
         caption: "Bobber Stop Bead",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -153,11 +152,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -165,11 +164,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "slip-float",
         type: "image",
-        file: "images/tackle/slip-float-reference.svg",
-        alt: "Educational illustration of slip float",
+        file: "images/tackle/slip-float-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a slip float",
         caption: "Slip Float",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -177,11 +176,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -189,11 +188,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "sliding-sinker",
         type: "image",
-        file: "images/tackle/sliding-sinker-reference.svg",
-        alt: "Educational illustration of sliding sinker",
+        file: "images/tackle/sliding-sinker-reference.webp",
+        alt: "Approved semi-photorealistic reference image of an egg-style sliding sinker",
         caption: "Sliding Sinker",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -201,11 +200,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -213,11 +212,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "bead",
         type: "image",
-        file: "images/tackle/bead-reference.svg",
-        alt: "Educational illustration of protective bead",
+        file: "images/tackle/bead-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a protective rig bead",
         caption: "Protective Bead",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -225,11 +224,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -237,11 +236,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "barrel-swivel",
         type: "image",
-        file: "images/tackle/barrel-swivel-reference.svg",
-        alt: "Educational illustration of barrel swivel",
+        file: "images/tackle/barrel-swivel-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a barrel swivel",
         caption: "Barrel Swivel",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -249,11 +248,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -261,11 +260,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "leader-line",
         type: "image",
-        file: "images/tackle/leader-line-reference.svg",
-        alt: "Educational illustration of leader line",
+        file: "images/tackle/leader-line-reference.webp",
+        alt: "Approved semi-photorealistic reference image of leader line",
         caption: "Leader Line",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -273,11 +272,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -285,11 +284,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "bullet-weight",
         type: "image",
-        file: "images/tackle/bullet-weight-reference.svg",
-        alt: "Educational illustration of bullet weight",
+        file: "images/tackle/bullet-weight-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a bullet weight",
         caption: "Bullet Weight",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -297,11 +296,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -309,11 +308,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "offset-worm-hook",
         type: "image",
-        file: "images/tackle/offset-worm-hook-reference.svg",
-        alt: "Educational illustration of offset worm hook",
+        file: "images/tackle/offset-worm-hook-reference.webp",
+        alt: "Approved semi-photorealistic reference image of an offset worm hook",
         caption: "Offset Worm Hook",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -321,11 +320,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -333,11 +332,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "soft-plastic",
         type: "image",
-        file: "images/tackle/soft-plastic-reference.svg",
-        alt: "Educational illustration of soft plastic bait",
+        file: "images/tackle/soft-plastic-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a soft-plastic worm",
         caption: "Soft Plastic Bait",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -345,11 +344,11 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     },
     {
@@ -357,11 +356,11 @@ const MEDIA_DATA = Object.freeze(
         ownerType: "tackle",
         ownerId: "weight-peg",
         type: "image",
-        file: "images/tackle/weight-peg-reference.svg",
-        alt: "Educational illustration of weight peg",
+        file: "images/tackle/weight-peg-reference.webp",
+        alt: "Approved semi-photorealistic reference image of a rubber line stop used to peg a weight",
         caption: "Weight Peg",
         license: {
-            status: "Original project asset",
+            status: "Original project asset derived from approved tackle reference board",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -369,223 +368,14 @@ const MEDIA_DATA = Object.freeze(
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-06"
+            reviewedDate: "2026-08-07"
         },
-        replacementStatus: "Initial canonical illustration",
+        replacementStatus: "Approved Tackle reference refresh",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
-        isActive: true
-    },
-    {
-        id: "fixed-bobber-rig-overview",
-        ownerType: "rig",
-        ownerId: "fixed-bobber-rig",
-        role: "overview",
-        sequence: 0,
-        type: "image",
-        file: "images/rigs/fixed-bobber-rig-overview.svg",
-        alt: "Completed Fixed Bobber Rig showing the bobber, split shot, line, and hook",
-        caption: "Completed Fixed Bobber Rig",
-        license: {
-            status: "Original project asset",
-            type: "Original",
-            creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
-            licenseUrl: null,
-            attributionRequired: false,
-            commercialUseAllowed: true,
-            modificationAllowed: true,
-            reviewedDate: "2026-08-06"
-        },
-        replacementStatus: "Initial canonical rig illustration",
-        createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
-        isActive: true
-    },
-    {
-        id: "slip-bobber-rig-overview",
-        ownerType: "rig",
-        ownerId: "slip-bobber-rig",
-        role: "overview",
-        sequence: 0,
-        type: "image",
-        file: "images/rigs/slip-bobber-rig-overview.svg",
-        alt: "Completed Slip Bobber Rig showing the stop, bead, float, split shot, line, and hook",
-        caption: "Completed Slip Bobber Rig",
-        license: {
-            status: "Original project asset",
-            type: "Original",
-            creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
-            licenseUrl: null,
-            attributionRequired: false,
-            commercialUseAllowed: true,
-            modificationAllowed: true,
-            reviewedDate: "2026-08-06"
-        },
-        replacementStatus: "Initial canonical rig illustration",
-        createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
-        isActive: true
-    },
-    {
-        id: "basic-bottom-rig-overview",
-        ownerType: "rig",
-        ownerId: "basic-bottom-rig",
-        role: "overview",
-        sequence: 0,
-        type: "image",
-        file: "images/rigs/basic-bottom-rig-overview.svg",
-        alt: "Completed Basic Bottom Rig showing the sliding sinker, bead, swivel, leader, and hook",
-        caption: "Completed Basic Bottom Rig",
-        license: {
-            status: "Original project asset",
-            type: "Original",
-            creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
-            licenseUrl: null,
-            attributionRequired: false,
-            commercialUseAllowed: true,
-            modificationAllowed: true,
-            reviewedDate: "2026-08-06"
-        },
-        replacementStatus: "Initial canonical rig illustration",
-        createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
-        isActive: true
-    },
-    {
-        id: "texas-rig-overview",
-        ownerType: "rig",
-        ownerId: "texas-rig",
-        role: "overview",
-        sequence: 0,
-        type: "image",
-        file: "images/rigs/texas-rig-overview.svg",
-        alt: "Completed Texas Rig showing the bullet weight, offset worm hook, and soft plastic bait",
-        caption: "Completed Texas Rig",
-        license: {
-            status: "Original project asset",
-            type: "Original",
-            creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
-            licenseUrl: null,
-            attributionRequired: false,
-            commercialUseAllowed: true,
-            modificationAllowed: true,
-            reviewedDate: "2026-08-06"
-        },
-        replacementStatus: "Initial canonical rig illustration",
-        createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
-        isActive: true
-    },
-    {
-        id: "texas-rig-step-1",
-        ownerType: "rig",
-        ownerId: "texas-rig",
-        role: "assembly-step",
-        sequence: 1,
-        type: "image",
-        file: "images/rigs/texas-rig-step-1.svg",
-        alt: "Texas Rig visual step one showing the bullet weight sliding onto the fishing line",
-        caption: "Slide the bullet weight onto the main line with its pointed end facing the rod.",
-        license: {
-            status: "Original project asset",
-            type: "Original",
-            creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
-            licenseUrl: null,
-            attributionRequired: false,
-            commercialUseAllowed: true,
-            modificationAllowed: true,
-            reviewedDate: "2026-08-06"
-        },
-        replacementStatus: "Initial canonical rig illustration",
-        createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
-        isActive: true
-    },
-    {
-        id: "texas-rig-step-2",
-        ownerType: "rig",
-        ownerId: "texas-rig",
-        role: "assembly-step",
-        sequence: 2,
-        type: "image",
-        file: "images/rigs/texas-rig-step-2.svg",
-        alt: "Texas Rig visual step two showing the offset worm hook attached after the bullet weight",
-        caption: "Tie the offset worm hook to the main line.",
-        license: {
-            status: "Original project asset",
-            type: "Original",
-            creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
-            licenseUrl: null,
-            attributionRequired: false,
-            commercialUseAllowed: true,
-            modificationAllowed: true,
-            reviewedDate: "2026-08-06"
-        },
-        replacementStatus: "Initial canonical rig illustration",
-        createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
-        isActive: true
-    },
-    {
-        id: "texas-rig-step-3",
-        ownerType: "rig",
-        ownerId: "texas-rig",
-        role: "assembly-step",
-        sequence: 3,
-        type: "image",
-        file: "images/rigs/texas-rig-step-3.svg",
-        alt: "Texas Rig visual step three showing the soft plastic threaded onto the offset worm hook",
-        caption: "Thread the soft plastic onto the hook and rotate it around the offset.",
-        license: {
-            status: "Original project asset",
-            type: "Original",
-            creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
-            licenseUrl: null,
-            attributionRequired: false,
-            commercialUseAllowed: true,
-            modificationAllowed: true,
-            reviewedDate: "2026-08-06"
-        },
-        replacementStatus: "Initial canonical rig illustration",
-        createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
-        isActive: true
-    },
-    {
-        id: "texas-rig-step-4",
-        ownerType: "rig",
-        ownerId: "texas-rig",
-        role: "assembly-step",
-        sequence: 4,
-        type: "image",
-        file: "images/rigs/texas-rig-step-4.svg",
-        alt: "Texas Rig visual step four showing the hook point reinserted into the soft plastic",
-        caption: "Reinsert and lightly bury the hook point for a weed-resistant finish.",
-        license: {
-            status: "Original project asset",
-            type: "Original",
-            creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
-            licenseUrl: null,
-            attributionRequired: false,
-            commercialUseAllowed: true,
-            modificationAllowed: true,
-            reviewedDate: "2026-08-06"
-        },
-        replacementStatus: "Initial canonical rig illustration",
-        createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.7",
         isActive: true
     }
-]
-);
+]);
 
 console.info(
     `[Loaded] ${MEDIA_DATA_BUILD_INFO.file} | ` +

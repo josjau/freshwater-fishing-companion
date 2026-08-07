@@ -20,6 +20,10 @@
 
 ### Changed
 
+- Removed obsolete generated Rig overview and assembly-step assets from the active repository state.
+- Removed superseded Tackle SVG reference assets after replacement with approved WebP references.
+- Rig pages now contain no local Rig imagery; completed-rig visual confirmation uses verified external links.
+- `What You Need` uses the approved individual Tackle WebP images inline.
 - Dashboard `My Tackle` entry becomes `Tackle Guide`.
 - Rig detail pages use authoritative text build instructions instead of generated Rig overview/assembly imagery.
 - Tackle contextual popovers are text-first so obsolete illustration styles do not appear beside the approved reference board.

@@ -178,6 +178,8 @@ For mechanically sensitive items, compare the final illustration back to the rea
 
 A single approved Tackle reference board may be used as the main Tackle Guide visual while canonical item cards and contextual popovers provide the authoritative text.
 
+For the approved semi-photorealistic Tackle style, optimized WebP is the preferred production format. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art. Do not convert semi-photorealistic Tackle art to SVG merely for consistency when doing so increases complexity or file size without improving field usability.
+
 # Knot Media
 
 Prefer mobile-readable step-by-step diagrams.

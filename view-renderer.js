@@ -125,6 +125,21 @@ function getRelatedRigNames(rigIds) {
     return rigIds.map((rigId) => findRecordById(RIG_DATA, rigId)).filter(Boolean).map((rig) => rig.name);
 }
 
+function getReferenceMedia(referenceRecord) {
+    if (!referenceRecord?.mediaIds?.length || typeof MEDIA_DATA === "undefined") return null;
+    return MEDIA_DATA.find((media) =>
+        referenceRecord.mediaIds.includes(media.id) &&
+        media.ownerType === "tackle" &&
+        media.isActive === true
+    ) ?? null;
+}
+
+function buildReferenceImageMarkup(referenceRecord, className, loading = "lazy") {
+    const media = getReferenceMedia(referenceRecord);
+    if (!media) return "";
+    return `<img class="${className}" src="${media.file}" alt="${media.alt}" loading="${loading}" decoding="async">`;
+}
+
 function renderReferencePopover(referenceId, triggerElement) {
     if (typeof TACKLE_DATA === "undefined") {
         console.error("Tackle reference data is not available.");
@@ -184,6 +199,7 @@ function renderReferencePopover(referenceId, triggerElement) {
                 </div>
                 <button class="reference-popover__close" type="button" data-reference-close aria-label="Close ${referenceRecord.name} information">×</button>
             </header>
+            ${buildReferenceImageMarkup(referenceRecord, "reference-popover__image", "eager")}
             <div class="reference-popover__body">
                 <p class="reference-popover__summary">${referenceRecord.summary}</p>
                 <section class="reference-popover__section"><h3>What It Does</h3><p>${referenceRecord.purpose}</p></section>
@@ -242,14 +258,27 @@ function renderInstructionDetail(appMain, detailConfig) {
     }
 
     const record = detailConfig.record;
-    const componentsMarkup = record.componentRequirements.map((component) => `
-        <li class="detail-list__item">
-            <button class="reference-link" type="button" data-reference-id="${component.id}" aria-label="More information about ${component.name}">
-                <span>${component.name}</span><span class="reference-link__icon" aria-hidden="true">ⓘ</span>
-            </button>${component.required ? "" : ' <span class="detail-list__optional">(Optional)</span>'}
-            <p>${component.notes}</p>
-        </li>
-    `).join("");
+    const componentsMarkup = record.componentRequirements.map((component) => {
+        const tackleRecord = findRecordById(TACKLE_DATA, component.id);
+        const thumbnailMarkup = tackleRecord
+            ? buildReferenceImageMarkup(tackleRecord, "component-reference-card__image")
+            : "";
+
+        return `
+            <li class="component-reference-card">
+                <div class="component-reference-card__media">${thumbnailMarkup}</div>
+                <div class="component-reference-card__content">
+                    <div class="component-reference-card__heading">
+                        <button class="reference-link" type="button" data-reference-id="${component.id}" aria-label="More information about ${component.name}">
+                            <span>${component.name}</span><span class="reference-link__icon" aria-hidden="true">ⓘ</span>
+                        </button>
+                        ${component.required ? "" : '<span class="detail-list__optional">Optional</span>'}
+                    </div>
+                    <p>${component.notes}</p>
+                </div>
+            </li>
+        `;
+    }).join("");
 
     const actionMarkup = typeof detailConfig.onAction === "function" ? `
         <button class="detail-primary-action" type="button" data-detail-action>${detailConfig.actionLabel}</button>
@@ -274,7 +303,7 @@ function renderInstructionDetail(appMain, detailConfig) {
             ${buildRigReferenceLinks(record)}
             <section class="detail-section">
                 <h3>What You Need</h3>
-                <ul class="detail-list detail-list--components">${componentsMarkup}</ul>
+                <ul class="component-reference-grid">${componentsMarkup}</ul>
             </section>
             <section class="detail-section">
                 <h3>How to Build It</h3>
@@ -338,10 +367,15 @@ function renderTackleGuide(appMain, guideConfig) {
         status.textContent = `${matches.length} ${matches.length === 1 ? "item" : "items"}`;
         results.innerHTML = matches.map((record) => `
             <button class="tackle-reference-card" type="button" data-reference-id="${record.id}">
-                <span class="tackle-reference-card__category">${record.category}</span>
-                <strong>${record.name}</strong>
-                <span>${record.summary}</span>
-                <span class="tackle-reference-card__action">Details ⓘ</span>
+                <span class="tackle-reference-card__media">
+                    ${buildReferenceImageMarkup(record, "tackle-reference-card__image")}
+                </span>
+                <span class="tackle-reference-card__content">
+                    <span class="tackle-reference-card__category">${record.category}</span>
+                    <strong>${record.name}</strong>
+                    <span>${record.summary}</span>
+                    <span class="tackle-reference-card__action">Details ⓘ</span>
+                </span>
             </button>
         `).join("");
         initializeReferenceLinks(results);

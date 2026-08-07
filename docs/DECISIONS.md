@@ -126,3 +126,11 @@ The contextual `ⓘ` convention remains reserved for in-app information and must
 # Reference-Link Semantics
 
 External verified reference links use `↗` and open in a new tab. Contextual `ⓘ` remains in-app only.
+# D018 – Current Rig Media Policy
+
+Current Rig detail pages do not bundle generated completed-Rig or build-step imagery. Assembly is taught with canonical text steps, Tackle components use approved inline reference imagery, and completed-Rig visual confirmation is provided by verified external references until a technically verified and legally reusable local Rig image is approved.
+
+# D019 – Tackle Reference Production Format
+
+The approved semi-photorealistic Tackle reference style uses optimized WebP for production assets because it preserves realistic materials, highlights, and shading at very small file sizes. SVG remains preferred for genuine vector diagrams, knots, icons, and instructional line art.
+
