@@ -925,3 +925,86 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
         max-height: 88vh;
     }
 }
+
+/* =========================================================
+   MS2.6 - RIG VISUAL GUIDES
+   ========================================================= */
+
+.rig-visual-overview__figure,
+.rig-visual-step {
+    margin: 0;
+}
+
+.rig-visual-overview__figure {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: #ffffff;
+}
+
+.rig-visual-overview__image {
+    width: 100%;
+    max-height: 360px;
+    object-fit: contain;
+}
+
+.rig-visual-overview__figure figcaption {
+    padding: var(--space-2) var(--space-4);
+    border-top: 1px solid var(--border);
+    background: var(--surface-elevated);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.rig-visual-guide__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+}
+
+.rig-visual-step {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-elevated);
+}
+
+.rig-visual-step__label {
+    position: absolute;
+    z-index: 1;
+    top: var(--space-3);
+    left: var(--space-3);
+    padding: 4px 9px;
+    border: 1px solid var(--accent-rigs);
+    border-radius: 999px;
+    background: var(--surface-elevated);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.rig-visual-step__image {
+    width: 100%;
+    min-height: 190px;
+    max-height: 280px;
+    object-fit: contain;
+    background: #ffffff;
+}
+
+.rig-visual-step figcaption {
+    min-height: 70px;
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+@media (min-width: 640px) {
+    .rig-visual-guide__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+

@@ -1,17 +1,17 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/rigs.js
-   REPLACEMENT: MS2.4 - RIG DATA FOUNDATION
+   REPLACEMENT: MS2.6 - RIG VISUAL MEDIA
    PURPOSE: Provides canonical beginner-focused Rig records for
-   browsing, instruction, search, and future tackle readiness.
+   browsing, instruction, search, media, and tackle readiness.
    ========================================================== */
 
 "use strict";
 
 const RIG_DATA_BUILD_INFO = Object.freeze({
     file: "data/rigs.js",
-    milestone: "MS2.4",
-    replacement: "Rig Data Foundation"
+    milestone: "MS2.6",
+    replacement: "Rig Visual Media"
 });
 
 const RIG_DATA = Object.freeze(
@@ -21,7 +21,7 @@ const RIG_DATA = Object.freeze(
         "name": "Fixed Bobber Rig",
         "summary": "A simple float rig for presenting bait at a shallow, fixed depth.",
         "createdVersion": "0.2.4",
-        "lastModifiedVersion": "0.2.4",
+        "lastModifiedVersion": "0.2.6",
         "isActive": true,
         "difficulty": "Beginner",
         "useCases": [
@@ -87,14 +87,16 @@ const RIG_DATA = Object.freeze(
         "variationIds": [
             "slip-bobber-rig"
         ],
-        "imageIds": []
+        "imageIds": [
+            "fixed-bobber-rig-overview"
+        ]
     },
     {
         "id": "slip-bobber-rig",
         "name": "Slip Bobber Rig",
         "summary": "A depth-adjustable float rig for presenting bait at a controlled depth.",
         "createdVersion": "0.2.4",
-        "lastModifiedVersion": "0.2.4",
+        "lastModifiedVersion": "0.2.6",
         "isActive": true,
         "difficulty": "Beginner",
         "useCases": [
@@ -178,14 +180,16 @@ const RIG_DATA = Object.freeze(
         "variationIds": [
             "fixed-bobber-rig"
         ],
-        "imageIds": []
+        "imageIds": [
+            "slip-bobber-rig-overview"
+        ]
     },
     {
         "id": "basic-bottom-rig",
         "name": "Basic Bottom Rig",
         "summary": "A straightforward bait rig that holds the offering near the bottom.",
         "createdVersion": "0.2.4",
-        "lastModifiedVersion": "0.2.4",
+        "lastModifiedVersion": "0.2.6",
         "isActive": true,
         "difficulty": "Beginner",
         "useCases": [
@@ -269,14 +273,16 @@ const RIG_DATA = Object.freeze(
         "variationIds": [
             "carolina-rig"
         ],
-        "imageIds": []
+        "imageIds": [
+            "basic-bottom-rig-overview"
+        ]
     },
     {
         "id": "texas-rig",
         "name": "Texas Rig",
         "summary": "A weed-resistant soft-plastic rig built around a bullet weight and offset hook.",
         "createdVersion": "0.2.4",
-        "lastModifiedVersion": "0.2.4",
+        "lastModifiedVersion": "0.2.6",
         "isActive": true,
         "difficulty": "Beginner",
         "useCases": [
@@ -346,7 +352,13 @@ const RIG_DATA = Object.freeze(
         "variationIds": [
             "carolina-rig"
         ],
-        "imageIds": []
+        "imageIds": [
+            "texas-rig-overview",
+            "texas-rig-step-1",
+            "texas-rig-step-2",
+            "texas-rig-step-3",
+            "texas-rig-step-4"
+        ]
     }
 ]
 );

@@ -1,7 +1,7 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/media.js
-   REPLACEMENT: MS2.6 - ACTIVE ORIGINAL REFERENCE MEDIA
+   REPLACEMENT: MS2.6 - ACTIVE REFERENCE AND RIG MEDIA
    PURPOSE: Owns stable media records, local asset paths,
    accessibility text, licensing, and replacement status.
    ========================================================== */
@@ -11,7 +11,7 @@
 const MEDIA_DATA_BUILD_INFO = Object.freeze({
     file: "data/media.js",
     milestone: "MS2.6",
-    replacement: "Active Original Reference Media"
+    replacement: "Active Reference and Rig Media"
 });
 
 const MEDIA_DATA = Object.freeze(
@@ -372,6 +372,214 @@ const MEDIA_DATA = Object.freeze(
             reviewedDate: "2026-08-06"
         },
         replacementStatus: "Initial canonical illustration",
+        createdVersion: "0.2.6",
+        lastModifiedVersion: "0.2.6",
+        isActive: true
+    },
+    {
+        id: "fixed-bobber-rig-overview",
+        ownerType: "rig",
+        ownerId: "fixed-bobber-rig",
+        role: "overview",
+        sequence: 0,
+        type: "image",
+        file: "images/rigs/fixed-bobber-rig-overview.svg",
+        alt: "Completed Fixed Bobber Rig showing the bobber, split shot, line, and hook",
+        caption: "Completed Fixed Bobber Rig",
+        license: {
+            status: "Original project asset",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: null,
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-06"
+        },
+        replacementStatus: "Initial canonical rig illustration",
+        createdVersion: "0.2.6",
+        lastModifiedVersion: "0.2.6",
+        isActive: true
+    },
+    {
+        id: "slip-bobber-rig-overview",
+        ownerType: "rig",
+        ownerId: "slip-bobber-rig",
+        role: "overview",
+        sequence: 0,
+        type: "image",
+        file: "images/rigs/slip-bobber-rig-overview.svg",
+        alt: "Completed Slip Bobber Rig showing the stop, bead, float, split shot, line, and hook",
+        caption: "Completed Slip Bobber Rig",
+        license: {
+            status: "Original project asset",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: null,
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-06"
+        },
+        replacementStatus: "Initial canonical rig illustration",
+        createdVersion: "0.2.6",
+        lastModifiedVersion: "0.2.6",
+        isActive: true
+    },
+    {
+        id: "basic-bottom-rig-overview",
+        ownerType: "rig",
+        ownerId: "basic-bottom-rig",
+        role: "overview",
+        sequence: 0,
+        type: "image",
+        file: "images/rigs/basic-bottom-rig-overview.svg",
+        alt: "Completed Basic Bottom Rig showing the sliding sinker, bead, swivel, leader, and hook",
+        caption: "Completed Basic Bottom Rig",
+        license: {
+            status: "Original project asset",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: null,
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-06"
+        },
+        replacementStatus: "Initial canonical rig illustration",
+        createdVersion: "0.2.6",
+        lastModifiedVersion: "0.2.6",
+        isActive: true
+    },
+    {
+        id: "texas-rig-overview",
+        ownerType: "rig",
+        ownerId: "texas-rig",
+        role: "overview",
+        sequence: 0,
+        type: "image",
+        file: "images/rigs/texas-rig-overview.svg",
+        alt: "Completed Texas Rig showing the bullet weight, offset worm hook, and soft plastic bait",
+        caption: "Completed Texas Rig",
+        license: {
+            status: "Original project asset",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: null,
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-06"
+        },
+        replacementStatus: "Initial canonical rig illustration",
+        createdVersion: "0.2.6",
+        lastModifiedVersion: "0.2.6",
+        isActive: true
+    },
+    {
+        id: "texas-rig-step-1",
+        ownerType: "rig",
+        ownerId: "texas-rig",
+        role: "assembly-step",
+        sequence: 1,
+        type: "image",
+        file: "images/rigs/texas-rig-step-1.svg",
+        alt: "Texas Rig visual step one showing the bullet weight sliding onto the fishing line",
+        caption: "Slide the bullet weight onto the main line with its pointed end facing the rod.",
+        license: {
+            status: "Original project asset",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: null,
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-06"
+        },
+        replacementStatus: "Initial canonical rig illustration",
+        createdVersion: "0.2.6",
+        lastModifiedVersion: "0.2.6",
+        isActive: true
+    },
+    {
+        id: "texas-rig-step-2",
+        ownerType: "rig",
+        ownerId: "texas-rig",
+        role: "assembly-step",
+        sequence: 2,
+        type: "image",
+        file: "images/rigs/texas-rig-step-2.svg",
+        alt: "Texas Rig visual step two showing the offset worm hook attached after the bullet weight",
+        caption: "Tie the offset worm hook to the main line.",
+        license: {
+            status: "Original project asset",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: null,
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-06"
+        },
+        replacementStatus: "Initial canonical rig illustration",
+        createdVersion: "0.2.6",
+        lastModifiedVersion: "0.2.6",
+        isActive: true
+    },
+    {
+        id: "texas-rig-step-3",
+        ownerType: "rig",
+        ownerId: "texas-rig",
+        role: "assembly-step",
+        sequence: 3,
+        type: "image",
+        file: "images/rigs/texas-rig-step-3.svg",
+        alt: "Texas Rig visual step three showing the soft plastic threaded onto the offset worm hook",
+        caption: "Thread the soft plastic onto the hook and rotate it around the offset.",
+        license: {
+            status: "Original project asset",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: null,
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-06"
+        },
+        replacementStatus: "Initial canonical rig illustration",
+        createdVersion: "0.2.6",
+        lastModifiedVersion: "0.2.6",
+        isActive: true
+    },
+    {
+        id: "texas-rig-step-4",
+        ownerType: "rig",
+        ownerId: "texas-rig",
+        role: "assembly-step",
+        sequence: 4,
+        type: "image",
+        file: "images/rigs/texas-rig-step-4.svg",
+        alt: "Texas Rig visual step four showing the hook point reinserted into the soft plastic",
+        caption: "Reinsert and lightly bury the hook point for a weed-resistant finish.",
+        license: {
+            status: "Original project asset",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: null,
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-06"
+        },
+        replacementStatus: "Initial canonical rig illustration",
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true

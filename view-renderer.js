@@ -1,10 +1,10 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: view-renderer.js
-   REPLACEMENT: MS2.6 - REFERENCE POPOVER RENDERING
+   REPLACEMENT: MS2.6 - RIG VISUAL GUIDE RENDERING
    PURPOSE: Owns reusable application views, search results,
-   instructional detail pages, tackle-readiness checklists,
-   and contextual reference popovers.
+   instructional detail pages, Rig visual guides, tackle-readiness
+   checklists, and contextual reference popovers.
    ========================================================== */
 
 "use strict";
@@ -12,7 +12,7 @@
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
     milestone: "MS2.6",
-    replacement: "Reference Popover Rendering"
+    replacement: "Rig Visual Guide Rendering"
 });
 
 function renderView(appMain, viewConfig) {
@@ -466,6 +466,92 @@ function initializeReferenceLinks(appMain) {
         });
 }
 
+function getRecordMedia(record, role = null) {
+    if (!record?.imageIds?.length || typeof MEDIA_DATA === "undefined") {
+        return [];
+    }
+
+    return record.imageIds
+        .map((mediaId) => findRecordById(MEDIA_DATA, mediaId))
+        .filter(
+            (media) =>
+                media?.isActive === true &&
+                (role === null || media.role === role)
+        )
+        .sort(
+            (first, second) =>
+                (first.sequence ?? 0) - (second.sequence ?? 0)
+        );
+}
+
+function buildRigOverviewMarkup(record) {
+    const [overview] = getRecordMedia(record, "overview");
+
+    if (!overview) {
+        return "";
+    }
+
+    return `
+        <section class="detail-section rig-visual-overview">
+            <h3>Completed Rig</h3>
+            <figure class="rig-visual-overview__figure">
+                <img
+                    class="rig-visual-overview__image"
+                    src="${overview.file}"
+                    alt="${overview.alt}"
+                    decoding="async"
+                >
+                ${
+                    overview.caption
+                        ? `<figcaption>${overview.caption}</figcaption>`
+                        : ""
+                }
+            </figure>
+        </section>
+    `;
+}
+
+function buildRigAssemblyMediaMarkup(record) {
+    const assemblyMedia = getRecordMedia(record, "assembly-step");
+
+    if (assemblyMedia.length === 0) {
+        return "";
+    }
+
+    const stepsMarkup = assemblyMedia
+        .map(
+            (media) => `
+                <figure class="rig-visual-step">
+                    <div class="rig-visual-step__label">
+                        Step ${media.sequence}
+                    </div>
+                    <img
+                        class="rig-visual-step__image"
+                        src="${media.file}"
+                        alt="${media.alt}"
+                        loading="lazy"
+                        decoding="async"
+                    >
+                    ${
+                        media.caption
+                            ? `<figcaption>${media.caption}</figcaption>`
+                            : ""
+                    }
+                </figure>
+            `
+        )
+        .join("");
+
+    return `
+        <section class="detail-section rig-visual-guide">
+            <h3>Visual Assembly Guide</h3>
+            <div class="rig-visual-guide__grid">
+                ${stepsMarkup}
+            </div>
+        </section>
+    `;
+}
+
 function renderInstructionDetail(appMain, detailConfig) {
     if (!appMain || !detailConfig?.record) {
         console.error("A valid instructional detail record is required.");
@@ -557,12 +643,16 @@ function renderInstructionDetail(appMain, detailConfig) {
                 ${actionMarkup}
             </header>
 
+            ${buildRigOverviewMarkup(record)}
+
             <section class="detail-section">
                 <h3>What You Need</h3>
                 <ul class="detail-list detail-list--components">
                     ${componentsMarkup}
                 </ul>
             </section>
+
+            ${buildRigAssemblyMediaMarkup(record)}
 
             <section class="detail-section">
                 <h3>How to Rig It</h3>
