@@ -1,7 +1,8 @@
 # Current-State UX Repairs — Validation
 
 **Document Status:** Approved  
-**Implementation Status:** In Progress
+**Implementation Status:** Validated  
+**Validation Baseline:** GitHub `main` at `5da6b1628ff06136eba5bf27994b99cf3be6a500`
 
 # Pre-Push Checks
 
@@ -55,7 +56,7 @@ All child cards under Recommendations, My Tackle, Knots, Catch Log, Favorites, a
 
 ## Forest Journal Dashboard
 
-Confirm:
+Confirmed:
 
 - primary left accent is 6px,
 - primary right accent is 2px,
@@ -68,6 +69,8 @@ Confirm:
 
 ## Regression Checks
 
+Validated:
+
 - Fish Search still searches by common name, scientific name, and category.
 - Rig Browse still searches and opens Rig detail.
 - Rig detail still shows Best For and Good Conditions.
@@ -76,11 +79,11 @@ Confirm:
 - Related Tackle popover navigation still works.
 - Rig readiness checkboxes still persist.
 - Ready/Missing status still updates.
-- No console errors during normal navigation.
+- No console errors occur during normal navigation.
 
 ## Responsive / Accessibility
 
-Validate at phone and desktop widths:
+Validated at phone and desktop widths:
 
 - unavailable cards remain legible,
 - unavailable cards do not show hover lift/pointer cursor,
@@ -91,13 +94,21 @@ Validate at phone and desktop widths:
 
 # Post-Push Validation
 
-After push:
+Completed:
 
-1. fetch current `main`,
-2. confirm all nine package files landed,
-3. compare source SHAs/content against this package,
-4. confirm no unrelated files changed,
-5. validate live/deployed behavior where applicable,
-6. update HANDOFF/MILESTONES/CHANGELOG from In Progress to Validated only after the checks pass.
+1. current `main` was fetched,
+2. implementation files were inspected on GitHub,
+3. intended source behavior was confirmed,
+4. documentation-preservation regressions were corrected,
+5. package-specific root artifacts were removed,
+6. runtime/deployed behavior was validated by the user,
+7. regression checks passed,
+8. responsive/accessibility and console-health checks passed.
+
+# Validation Result
+
+**PASS — Current-State UX Repairs are validated.**
+
+Final documentation closeout must itself be pushed and re-fetched before the segment is considered repository-finalized under D039/D040.
 
 Preflight does not equal validation.

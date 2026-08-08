@@ -1,8 +1,10 @@
 # Current-State UX Repairs
 
 **Document Status:** Approved  
-**Implementation Status:** In Progress  
-**Baseline:** GitHub `main` at `e1447e67b082d67640298829e120a034014dd44e`
+**Implementation Status:** Validated  
+**Baseline:** GitHub `main` at `e1447e67b082d67640298829e120a034014dd44e`  
+**Implementation Commit:** `cf4f8bfa4974d06ada35650dd4e27f9371ee034f`  
+**Validation Baseline:** GitHub `main` at `5da6b1628ff06136eba5bf27994b99cf3be6a500`
 
 # Purpose
 
@@ -84,10 +86,16 @@ Because these source files are deliberately edited, obsolete package-specific `R
 
 # Closeout
 
-This segment is not finalized until:
+This segment is validated and closed.
 
-1. source and documentation are pushed,
-2. actual GitHub files are re-fetched,
-3. runtime behavior is validated,
-4. regression checks pass,
-5. final documentation status is updated and validated.
+Completed closeout checks:
+
+1. source and documentation were pushed,
+2. actual GitHub files were re-fetched,
+3. documentation-preservation regressions were corrected,
+4. package-specific root artifacts were removed,
+5. runtime behavior was validated,
+6. regression checks passed,
+7. responsive/accessibility checks passed,
+8. normal navigation produced no console errors,
+9. final documentation status was prepared for GitHub closeout.

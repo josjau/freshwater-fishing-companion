@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.7.0  
+**Document Revision:** 1.7.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-07
 
@@ -76,19 +76,17 @@ Historical MS2.6 validated canonical Tackle/media infrastructure, contextual ref
 
 **Superseding current architecture:** D017–D019 replaced generated completed-Rig/build-step imagery with authoritative text assembly plus verified external Rig references.
 
-# Active Build Segment
-
 ## Current-State UX Repairs
 
-**Implementation Status: In Progress**
+**Implementation Status: Validated**
 
-Approved scope:
+Validated scope:
 
 - D030: inert child cards use clear `Coming Soon` unavailable semantics.
 - D031: Dashboard Regulations CTA uses `Go to ODWC Regulations ↗`.
-- D032: restore the previously approved Forest Journal Dashboard hierarchy and interaction behavior without redesign.
+- D032: restored the previously approved Forest Journal Dashboard hierarchy and interaction behavior without redesign.
 
-Protected regressions:
+Validated regressions:
 
 - Fish Search
 - Rig browsing/detail
@@ -96,8 +94,10 @@ Protected regressions:
 - Inline Rig readiness
 - Dashboard card order and parent routes
 - Current data/media architecture
+- Responsive/accessibility behavior
+- Normal-navigation console health
 
-The segment is not complete until the source/documentation package is pushed and validated in GitHub and runtime behavior is checked.
+Repository cleanup and documentation-preservation corrections were also completed before closeout.
 
 See:
 
@@ -106,6 +106,4 @@ See:
 
 # Next Segment
 
-Do not select the next build segment until Current-State UX Repairs is finalized and validated.
-
-After validation, the recommended next segment is Rig/Tackle data-integrity cleanup.
+The recommended next segment is Rig/Tackle data-integrity cleanup.

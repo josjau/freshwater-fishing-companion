@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.4.1  
+**Document Revision:** 0.4.2  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `cf4f8bfa4974d06ada35650dd4e27f9371ee034f`  
+**Repository Baseline Reviewed:** `main` at `5da6b1628ff06136eba5bf27994b99cf3be6a500`  
 **Last Updated:** 2026-08-07
 
 # 1. Start Here
@@ -28,11 +28,11 @@ Permanent operating rule:
 
 The repository baseline reviewed for this handoff is commit:
 
-`cf4f8bfa4974d06ada35650dd4e27f9371ee034f`
+`5da6b1628ff06136eba5bf27994b99cf3be6a500`
 
 Commit message:
 
-`Updating UX files to repair drift`
+`Delete README-PACKAGE.txt`
 
 The Batch 1–3 documentation/governance package and cleanup were previously pushed, inspected, and validated.
 
@@ -45,28 +45,40 @@ Validated governance state retained from the prior segment:
 - Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
 - Historical package artifacts and obsolete design-board/preview assets remain preserved in archive paths.
 
-## Active Build Segment — Current-State UX Repairs
+## Current-State UX Repairs
 
-**Implementation Status: In Progress**
+**Implementation Status: Validated**
 
-The UX source implementation was pushed in commit `cf4f8bfa4974d06ada35650dd4e27f9371ee034f` and repository inspection confirms the intended D030–D032 source changes are present:
+The UX source implementation was pushed in commit `cf4f8bfa4974d06ada35650dd4e27f9371ee034f` and repository inspection confirmed the intended D030–D032 source changes:
 
 - inert child cards render with visible `Coming Soon` unavailable semantics,
 - Fish Guide `Search Fish` and Rig Guide `Browse All Rigs` remain actionable,
 - the Dashboard Regulations CTA reads `Go to ODWC Regulations ↗`,
 - the approved Forest Journal Dashboard primary-card styling has been restored.
 
-The segment is **not yet finalized** because the same push introduced documentation-preservation defects and two package-specific root artifacts. Those defects must be corrected and GitHub revalidated before runtime closeout and before any new build segment begins.
+The initial implementation package introduced documentation-preservation defects and two package-specific root artifacts. Those defects were corrected before closeout:
 
-Required corrective cleanup:
+- full historical `docs/CHANGELOG.md` content was restored,
+- full repository-handoff content was restored,
+- root `PACKAGE-MANIFEST.txt` was removed,
+- root `README-PACKAGE.txt` was removed.
 
-1. Restore the full historical content of `docs/CHANGELOG.md` while retaining the new UX repair entry.
-2. Restore the full repository-handoff content of `docs/HANDOFF.md` while retaining the current UX-repair state.
-3. Remove root `PACKAGE-MANIFEST.txt`.
-4. Remove root `README-PACKAGE.txt`.
-5. Re-fetch GitHub after the corrective push.
-6. Complete runtime/regression validation under `docs/workstreams/UX-REPAIRS-VALIDATION.md`.
-7. Only then update the active UX repair segment from In Progress to Validated.
+Runtime/regression validation passed for:
+
+- Dashboard hierarchy and interaction,
+- Fish Guide child-card behavior,
+- Rig Guide child-card behavior,
+- unavailable child cards under Recommendations, My Tackle, Knots, Catch Log, Favorites, and Settings,
+- Regulations external-link behavior,
+- Fish Search,
+- Rig browse/detail,
+- external Rig references,
+- Tackle `Name ⓘ` popovers and related-component navigation,
+- Rig readiness persistence and Ready/Missing updates,
+- responsive/accessibility behavior at phone and desktop widths,
+- normal-navigation console health.
+
+See `workstreams/UX-REPAIRS.md` and `workstreams/UX-REPAIRS-VALIDATION.md`.
 
 The exact current source implementation must always be re-fetched from GitHub before edits. Do not assume any proposed or locally staged change has been implemented until it appears on `main`.
 
@@ -132,8 +144,6 @@ See `DECISIONS.md` D022–D041 and the governing data-model documents.
 - Explicit My Tackle Add/Edit/Remove write authority.
 - Safe User Knowledge rendering rules across future user-entered/imported features.
 
-The D030–D032 UX repairs are no longer in this list because their source implementation has been pushed. They remain **In Progress** until corrective documentation cleanup and runtime validation complete.
-
 These items are settled direction but must not be described as current implementation until they are built, pushed, and validated.
 
 # 6. Known Temporary Bridges
@@ -179,9 +189,9 @@ The following remain intentionally unresolved:
 
 # 8. Next Recommended Work
 
-The active Current-State UX Repairs segment must be corrected and fully validated before another segment begins.
+The Current-State UX Repairs segment is validated. The next recommended segment is Rig/Tackle data-integrity cleanup.
 
-After UX repair validation, recommended sequence:
+Recommended sequence:
 
 1. Rig/Tackle data-integrity cleanup:
    - canonical component display names
@@ -233,7 +243,7 @@ Re-evaluate this sequence after each finalized and validated segment.
 - Preserve mature approved UI behaviors as regression targets.
 - User normally commits and pushes through GitHub Desktop.
 - Preflight is not validation.
-- After push, inspect the actual GitHub commit/files and validate runtime behavior where applicable.
+- After push, inspect the actual repository state and validate runtime behavior where applicable.
 - Permanent project knowledge belongs in repository documentation, not only in chat history.
 - Meaningful design, architecture, workflow, data-model, UI, deferment, or rejection decisions must be documented even if the discussion occurs outside the active build segment.
 - If a substantial off-segment discussion would disrupt clean completion of the current segment, deliberately park it until a coherent stopping point and preserve enough context that it cannot be lost.

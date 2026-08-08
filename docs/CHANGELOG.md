@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.10.1  
+**Document Revision:** 1.10.2  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-07
 
@@ -9,9 +9,9 @@
 
 ## Current-State UX Repairs
 
-**Implementation Status: In Progress**
+**Implementation Status: Validated**
 
-The source implementation was pushed in commit `cf4f8bfa4974d06ada35650dd4e27f9371ee034f`. Repository inspection confirms the intended source changes are present. Final segment validation remains pending corrective documentation cleanup and runtime/regression validation.
+The source implementation was pushed in commit `cf4f8bfa4974d06ada35650dd4e27f9371ee034f`. Repository inspection confirmed the intended source changes are present. Documentation-preservation defects from the initial package were corrected, package-specific root artifacts were removed, and runtime/regression validation passed.
 
 ### Changed
 
@@ -34,10 +34,16 @@ The source implementation was pushed in commit `cf4f8bfa4974d06ada35650dd4e27f93
 
 ### Validation
 
-- Repository source inspection: passed for the intended UX changes.
-- Documentation preservation: corrective update required after the implementation push.
-- Runtime/regression validation: pending.
-- Segment status remains In Progress until corrective cleanup and post-push validation pass.
+- Repository source inspection: passed.
+- Documentation preservation and root cleanup: passed.
+- Dashboard runtime validation: passed.
+- Fish Guide unavailable-card validation: passed.
+- Rig Guide unavailable-card validation: passed.
+- Recommendations, My Tackle, Knots, Catch Log, Favorites, and Settings unavailable-card validation: passed.
+- Regulations external-link behavior: passed.
+- Fish Search, Rig browse/detail, Tackle popovers, related-component navigation, and readiness persistence regressions: passed.
+- Responsive/accessibility checks at phone and desktop widths: passed.
+- Normal-navigation console health and external Rig reference behavior: passed.
 
 See `workstreams/UX-REPAIRS.md` and `workstreams/UX-REPAIRS-VALIDATION.md`.
 
