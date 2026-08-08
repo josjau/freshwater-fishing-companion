@@ -1,201 +1,107 @@
 # Freshwater Fishing Companion
 
 **Document:** DATA MODEL INDEX  
-**Version:** 0.1.0  
-**Status:** Draft  
-**Decision Baseline:** D002
-
----
+**Document Revision:** 0.2.0  
+**Document Status:** Approved  
+**Decision Baseline:** D037
 
 # Purpose
 
-This directory contains the canonical data model for Freshwater Fishing Companion.
+This directory contains the governing data-model documents for Freshwater Fishing Companion. The model is divided by domain ownership so each concept has one authoritative definition without speculative or nonexistent documents being presented as current sources.
 
-Rather than storing the entire data model in a single document, it is divided into focused sections. This improves readability, simplifies maintenance, avoids unnecessary duplication, and allows each section to evolve independently while remaining part of one cohesive architecture.
+# Governing Principles
 
-This directory is considered the authoritative source for all application data structures.
-
----
-
-# Data Model Philosophy
-
-The Companion is built around **knowledge**, not screens.
-
-Every object exists exactly once.
-
-Application pages, search results, recommendations, inventories, catch records, learning articles, and future features reference the same canonical objects rather than maintaining duplicate information.
-
-This philosophy minimizes maintenance while improving consistency and long-term scalability.
-
----
-
-# Design Principles
-
-The data model follows these principles.
-
-- One authoritative definition for every entity.
-- Stable identifiers that never change.
-- Reference data separated from user data.
-- User records reference canonical entities.
-- Local-first storage.
-- Offline-first operation.
-- Versioned backup and restore.
-- Long-term maintainability over short-term convenience.
+- One authoritative definition for every canonical entity.
+- Stable identifiers.
+- Reference Knowledge separated from User Knowledge.
+- User records reference canonical entities whenever practical.
+- Local-first and offline-first.
 - Simplicity before complexity.
-
----
+- Derived inverse relationships are preferred over duplicate stored sources of truth.
+- Documentation structure must match actual domain ownership.
 
 # Document Organization
 
-## 01 - FOUNDATION
+## 00 — GLOSSARY
 
-Defines the global rules governing every data structure.
+Defines project architecture and domain terminology that must remain consistent.
 
-Includes:
+## 01 — FOUNDATION
 
-- Naming standards
-- Identifier standards
-- Versioning
-- General architecture
-- Shared conventions
+Defines global entity, field, search, recommendation-tier, validation, and simplicity standards.
 
----
+## 02 — FISH
 
-## 02 - FISH
+Defines canonical Fish records and identification/reference relationships.
 
-Defines:
+## 03 — RIGS
 
-- Fish species
-- Hybrids
-- Identification traits
-- Habitats
-- Species relationships
-- Regional availability
+Defines canonical Rig records, component requirements, physical assembly ownership, variations, and related references.
 
----
+## 03A — TECHNIQUES
 
-## 03 - RIGS
+Defines reusable presentation behavior separate from Rig physical assembly.
 
-Defines:
+## 03B — CONDITIONS
 
-- Rig records
-- Components
-- Assembly
-- Fishing techniques
-- Required tackle
-- Variations
+Defines reusable environmental and situational fishing conditions.
 
----
+## 04 — KNOTS
 
-## 04 - KNOTS
+Defines canonical Knot records, use, compatibility, and instruction requirements.
 
-Defines:
+## 05 — TACKLE
 
-- Knot records
-- Instructions
-- Line compatibility
-- Difficulty
-- Best uses
+Defines canonical functional Tackle Reference Knowledge.
 
----
+## 05A — INVENTORY
 
-## 05 - TACKLE
+Defines My Tackle/User Knowledge direction for actual owned items, ownership authority, and Rig-readiness integration.
 
-Defines:
+## 06 — LURES
 
-- Tackle types
-- Product definitions
-- Product codes
-- Inventory relationships
-- Ownership
-- Purchase lookup
+Defines artificial lure concepts and related presentation/reference fields.
 
----
+## 07 — USER DATA
 
-## 06 - LURES
+Defines user-owned profile, preference, favorite, catch, and other User Knowledge domains.
 
-Defines:
+## 08 — BACKUP
 
-- Artificial lure definitions
-- Colors
-- Dimensions
-- Actions
-- Presentations
-- Actual-size image support
-- Product relationships
+Defines backup/restore, validation, migration, and schema compatibility.
 
----
+## 09 — RELATIONSHIPS
 
-## 07 - USER DATA
+Defines relationship ownership, inverse derivation, connected knowledge, referential integrity, and cross-layer rules.
 
-Defines:
+# Deferred Model Documents
 
-- Profiles
-- Preferences
-- Favorites
-- Inventory
-- Catch log
-- Display calibration
+A dedicated Recommendations model is intentionally deferred until its schema is mature enough to document without inventing fields.
 
----
-
-## 08 - BACKUP
-
-Defines:
-
-- Backup format
-- Restore workflow
-- Validation
-- Schema versioning
-- Migration
-
----
-
-## 09 - RELATIONSHIPS
-
-Defines:
-
-- Entity relationships
-- Reference rules
-- Validation rules
-- Deferred design decisions
-
----
+A ProductDefinition model is intentionally deferred until an approved commercial-product feature demonstrates the need.
 
 # Reading Order
 
-For new contributors:
-
-1. Foundation
-2. Fish
-3. Rigs
-4. Knots
-5. Tackle
-6. Lures
-7. User Data
-8. Backup
-9. Relationships
-
-The documents build upon one another and should generally be read in this order.
-
----
+1. `00-GLOSSARY.md`
+2. `01-FOUNDATION.md`
+3. Domain document relevant to the active work
+4. `09-RELATIONSHIPS.md`
+5. `../ARCHITECTURE.md` and `../DECISIONS.md` for structural context
 
 # Maintenance Policy
 
-Each document is independently versioned as necessary.
-
-Changes to one document should not require rewriting unrelated documents.
-
-Structural changes shall be recorded in DECISIONS.md and summarized in CHANGELOG.md.
-
----
+- Changes to one domain should not require rewriting unrelated domain documents.
+- Structural changes are recorded in `../DECISIONS.md`.
+- Current implementation and Approved / Not Implemented architecture must remain distinguishable.
+- Nonexistent or speculative documents must not be linked as current authoritative sources.
 
 # Related Documents
 
-- PROJECT.md
-- SPECIFICATION.md
-- ARCHITECTURE.md
-- STYLE_GUIDE.md
-- ROADMAP.md
-- DECISIONS.md
-- CHANGELOG.md
+- `../HANDOFF.md`
+- `../PROJECT.md`
+- `../SPECIFICATION.md`
+- `../ARCHITECTURE.md`
+- `../STYLE_GUIDE.md`
+- `../ROADMAP.md`
+- `../DECISIONS.md`
+- `../CHANGELOG.md`

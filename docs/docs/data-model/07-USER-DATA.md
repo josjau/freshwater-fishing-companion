@@ -1,8 +1,8 @@
 # Freshwater Fishing Companion
 
 **Document:** 07-USER-DATA.md  
-**Document Revision:** 0.2.0
-**Document Status:** Draft
+**Version:** 0.1.0  
+**Status:** Draft  
 **Decision Baseline:** D029
 
 ---
@@ -291,8 +291,7 @@ These enhancements require separate review before implementation.
 - 01-FOUNDATION.md
 - 02-FISH.md
 - 03-RIGS.md
-- 05-TACKLE.md
-- 05A-INVENTORY.md
+- 05-INVENTORY.md
 - 06-LURES.md
 - 08-BACKUP.md
 - 09-RELATIONSHIPS.md

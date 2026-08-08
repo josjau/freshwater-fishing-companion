@@ -1,8 +1,8 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Version:** 1.1.0  
-**Status:** Approved  
+**Document Revision:** 1.2.0
+**Document Status:** Approved
 **Last Updated:** 2026-08-07
 
 # Purpose
@@ -118,13 +118,19 @@ The interface should be:
 
 Avoid visual clutter and duplicated instructional content.
 
+Anything that looks actionable must either perform an action or clearly communicate that it is unavailable.
+
+Unimplemented child cards may remain visible when they help communicate application structure, but they must be clearly marked `Coming Soon` or equivalent. Unavailable cards must not retain hover, pointer, click, or other affordances that imply working navigation and should use appropriate accessible disabled/unavailable semantics.
+
 # Forest Journal
 
 Forest Journal is the Version 1 default theme.
 
 It uses muted forest greens, warm earth tones, and copper/gold accents to create a modern outdoor field-guide feel.
 
-Alternative themes may change appearance but must preserve:
+Forest Journal is the only production-supported Version 1 theme. Forest Copper, Forest Gold, and Legacy Dark are historical/inactive concepts until a shared theme architecture is approved.
+
+Any future production-supported alternative theme may change appearance but must preserve:
 
 - Layout
 - Typography
@@ -132,6 +138,8 @@ Alternative themes may change appearance but must preserve:
 - Accessibility
 - Responsive design
 - User experience
+
+Previously approved Forest Journal behavior should not be altered by unrelated full-file replacements. Confirmed regressions should be restored narrowly without redesign or unrelated cleanup.
 
 # Unified Field-Guide Presentation
 
@@ -170,6 +178,9 @@ Expected behavior:
 
 - `Name ⓘ` opens contextual information without leaving the page.
 - External verified references use `↗` and open in a new tab.
+- External CTA labels should name the destination when practical instead of using generic wording such as `Browse` or `Learn More`.
+- The approved Dashboard Regulations CTA is `Go to ODWC Regulations ↗`.
+- `↗` indicates that the user is leaving the application for an external destination.
 - Do not use `ⓘ` for an external-navigation action.
 
 # Mobile-First Standards
@@ -183,6 +194,12 @@ Expected behavior:
 - Keep common field workflows within approximately three intentional interactions from a relevant entry point when practical.
 - Prefer completing a task in the current context over adding an intermediate page that provides no distinct value.
 
+# Actionable and Unavailable UI
+
+Anything that looks actionable must either perform an action or clearly communicate that it is unavailable.
+
+Unimplemented child cards may remain visible when they help explain application structure, but they must be clearly marked `Coming Soon` or equivalent, must not use misleading hover/pointer/click affordances, and should expose appropriate accessible unavailable/disabled semantics.
+
 # Accessibility
 
 The Companion should:
@@ -193,14 +210,15 @@ The Companion should:
 - Avoid meaning conveyed by color alone.
 - Scale on phones, tablets, and desktops.
 - Provide useful alt text.
+- Ensure unavailable controls or cards are communicated programmatically and do not masquerade as active controls.
 
 # Documentation Standards
 
-Every document should include:
+Every governing document should include:
 
 - Title
-- Version
-- Status
+- Document Revision
+- Document Status
 - Purpose
 
 When relevant, include:
@@ -210,13 +228,9 @@ When relevant, include:
 - Related Documents
 - Implementation Status
 
-Documentation must distinguish between:
+Document Status uses `Draft`, `Approved`, `Superseded`, or `Archived`. Implementation Status uses `Current`, `Approved / Not Implemented`, `In Progress`, or `Validated`. `Document Revision` and `Application Version`/`Application Baseline` are separate concepts.
 
-- Current implementation
-- Approved standards
-- Future implementation work
-
-Do not describe a future design as already implemented.
+Documentation must distinguish current implementation from approved future work. Do not describe a future design as already implemented. `Validated` is used only after actual repository/runtime verification where applicable.
 
 # Source Replacement Standard
 
@@ -228,7 +242,10 @@ For an existing source file:
 2. Make only the approved changes.
 3. Return the complete resulting file.
 4. Preserve unrelated current behavior.
-5. Package coherent multi-file updates together when practical.
+5. Diff the finished replacement against the fetched source; any unrelated diff is a failure unless explicitly authorized.
+6. Package coherent multi-file updates together when practical.
+
+An unrelated diff in a full-file replacement is a failure unless the unrelated change was explicitly authorized.
 
 See `DEVELOPMENT_WORKFLOW.md`.
 

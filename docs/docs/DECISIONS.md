@@ -1,8 +1,8 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.3.0
-**Document Status:** Approved
+**Version:** 0.2.0  
+**Status:** Active  
 **Last Updated:** 2026-08-07
 
 # Purpose
@@ -42,18 +42,6 @@ This document records long-term architectural decisions.
 | D027 | Regional Rig Library and Core Rigs | Approved |
 | D028 | My Tackle Ownership and Rig Readiness Authority | Approved |
 | D029 | User Knowledge Rendering Trust Boundary | Approved |
-| D030 | Clear Unavailable-Feature Affordance | Approved |
-| D031 | Explicit External Destination CTA Semantics | Approved |
-| D032 | Dashboard Regression Restoration | Approved |
-| D033 | Archive Completed Package Artifacts | Approved |
-| D034 | Production Asset Directory Discipline | Approved |
-| D035 | Single Production-Supported Theme | Approved |
-| D036 | Status and Version Semantics | Approved |
-| D037 | Data-Model Documentation Structure | Approved |
-| D038 | Repository Handoff Entrypoint | Approved |
-| D039 | Documentation-Validated Closeout | Approved |
-| D040 | No Unvalidated Build Transition | Approved |
-| D041 | Cross-Segment Decision Capture and Parking | Approved |
 
 # D001 – Local-First Architecture
 
@@ -306,146 +294,3 @@ If formatted user content is later required, sanitization must use one centrally
 Imported data follows the same trust rules as manually entered User Knowledge.
 
 Permanent principle: **User Knowledge is data, not markup.**
-
-# D030 – Clear Unavailable-Feature Affordance
-
-Anything that looks actionable must either perform an action or clearly communicate that it is unavailable.
-
-Unimplemented child cards may remain visible when they help communicate intended application structure, but they must be clearly marked `Coming Soon` or equivalent. They must not use hover, pointer, click, or other affordances that imply working navigation, and they should use appropriate accessible disabled/unavailable semantics.
-
-Implemented cards remain fully interactive. Feature-preview pages, notification behavior, and roadmap detail inside unavailable cards are deferred.
-
-# D031 – Explicit External Destination CTA Semantics
-
-External actions must clearly identify the destination and use `↗` to indicate navigation outside the application. Generic labels such as `Browse` or `Learn More` should be avoided when a specific destination can be named.
-
-The Dashboard Regulations CTA uses:
-
-```text
-Go to ODWC Regulations ↗
-```
-
-External links open outside the application in a new tab/window as supported by the platform. `ⓘ` remains reserved for in-app contextual information.
-
-# D032 – Dashboard Regression Restoration
-
-The current Forest Journal Dashboard styling lost previously approved hierarchy and interaction behavior during an unrelated full-file replacement. This is a confirmed regression, not a redesign opportunity.
-
-The approved repair restores the previously validated Dashboard behavior, including the stronger primary-card treatment, 6px left accent, 2px right accent, primary title emphasis, approved vertical spacing, gradient hover treatment, active behavior, and `overflow: hidden`, while preserving the current pill CTA and all newer Rig/Tackle styling.
-
-The repair must not change Dashboard card order, labels, navigation architecture, content, theme direction, dormant themes, or unrelated CSS.
-
-This decision reinforces the replacement-integrity rule: full-file replacements must preserve unrelated approved behavior; an unrelated diff is a failure unless explicitly authorized.
-
-# D033 – Archive Completed Package Artifacts
-
-Completed, package-specific implementation artifacts do not remain at repository root once their package is no longer active.
-
-Historical package artifacts with continuing audit or handoff value are preserved under a clearly labeled archive path, such as `docs/archive/packages/<date>-<package>/`. Archived package files are historical records and must not override current governing documentation.
-
-Permanent rule: **completed package-specific artifacts belong in Archives, not at repository root.**
-
-# D034 – Production Asset Directory Discipline
-
-Active production asset directories contain current production assets or explicitly approved reusable production assets.
-
-Historical boards, previews, experiments, and superseded design references are moved to a clearly historical/reference archive rather than left in production asset directories. Unreferenced does not automatically mean delete: an asset may be preserved when it has design-lineage, geometry, licensing, or reconstruction value, but it must not masquerade as production media.
-
-The current `tackle-reference-board.webp` and `what-you-need-thumbnail-preview.webp` are approved for archival as historical design/reference assets.
-
-Permanent rule: **production asset directories contain production assets; historical design references belong in Archives.**
-
-# D035 – Single Production-Supported Theme
-
-Forest Journal is the only production-supported Version 1 theme.
-
-`forest-copper.css`, `forest-gold.css`, and `legacy-dark-theme.css` are retained as historical/inactive design concepts. They are not required to remain in behavioral or visual parity with Forest Journal and are not part of the supported production test matrix.
-
-A future shared CSS architecture may separate common base/layout/component behavior from theme tokens and visual overrides before additional themes are promoted to supported status.
-
-Permanent rule: **a CSS file existing in the repository does not make it a supported production theme.**
-
-# D036 – Status and Version Semantics
-
-Decision status, document status, implementation status, and application version are separate concepts and must not be used interchangeably.
-
-Document Status values are:
-
-- `Draft`
-- `Approved`
-- `Superseded`
-- `Archived`
-
-Implementation Status values are:
-
-- `Current`
-- `Approved / Not Implemented`
-- `In Progress`
-- `Validated`
-
-`Document Revision` identifies the revision of a documentation file. `Application Version` or `Application Baseline` identifies the product version or baseline when needed. Ambiguous `Active` is not used as a document-governance status.
-
-`Validated` is reserved for implementation or repository state that has actually been verified after push/runtime validation; documentation approval alone does not make an implementation validated.
-
-Package-specific source-header language such as `REPLACEMENT` should be removed when the relevant permanent source file is next deliberately edited.
-
-# D037 – Data-Model Documentation Structure
-
-The data-model documentation structure must match actual domain ownership and must not present nonexistent or speculative documents as current authoritative sources.
-
-Approved structure:
-
-```text
-00-GLOSSARY.md
-01-FOUNDATION.md
-02-FISH.md
-03-RIGS.md
-03A-TECHNIQUES.md
-03B-CONDITIONS.md
-04-KNOTS.md
-05-TACKLE.md
-05A-INVENTORY.md
-06-LURES.md
-07-USER-DATA.md
-08-BACKUP.md
-09-RELATIONSHIPS.md
-```
-
-Canonical Tackle and My Tackle/Inventory remain separate domains. A dedicated Recommendation model is deferred until its schema is mature. A ProductDefinition model is deferred until a demonstrated commercial-product feature requires it.
-
-# D038 – Repository Handoff Entrypoint
-
-`docs/HANDOFF.md` is the first-read repository entrypoint for future chats and contributors.
-
-It is a current-state map, not a duplicate specification. It must point to the governing documents and clearly distinguish Current, Approved / Not Implemented, In Progress, Validated, temporary bridges, open decisions, and next recommended work.
-
-A future session should be able to begin by reading `docs/HANDOFF.md` and following its referenced governing documents without relying on prior chat history.
-
-# D039 – Documentation-Validated Closeout
-
-A session, module, or section is not finalized until all relevant documentation has been updated, pushed to GitHub, inspected in the actual repository, and validated.
-
-Conversation agreement, locally generated files, staged files, preflight checks, or code implementation alone do not constitute closeout.
-
-Permanent rule: **no session, module, or section is finalized until all relevant documentation is updated and validated in GitHub.**
-
-# D040 – No Unvalidated Build Transition
-
-The project does not begin a new build segment while the current segment remains unfinalized.
-
-Before moving to the next build segment, the current segment must have its decisions settled, required implementation completed when applicable, relevant documentation updated, changes pushed, GitHub state inspected, and runtime/application behavior validated where applicable.
-
-If an area remains open, it must be explicitly resolved or deliberately parked and documented before the project transitions to a new build segment.
-
-Permanent rule: **finish cleanly or deliberately park; do not leave half-finalized project areas behind.**
-
-# D041 – Cross-Segment Decision Capture and Parking
-
-The significance of a project discussion determines whether it must be documented, not whether the discussion occurred inside the currently planned workstream.
-
-A project-wide question raised mid-stream that produces a meaningful architecture, product, data-model, workflow, UI, future-feature, deferment, rejection, or other durable decision is treated with the same documentation discipline as an in-segment decision.
-
-Such outcomes must be classified as appropriate (`Build Now`, `Parking Lot`, `Reject`, or `Open`) and captured in the relevant governing documentation before closeout.
-
-When a substantial off-segment discussion would unnecessarily interrupt a coherent build segment, the technical lead may recommend parking it until a clean stopping point. The topic must be recorded with enough context that it cannot be lost. If the issue materially changes the work currently underway, it is discussed immediately instead.
-

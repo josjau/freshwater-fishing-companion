@@ -1,8 +1,8 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.3.0
-**Document Status:** Approved
+**Version:** 0.2.7  
+**Status:** Active  
 **Last Updated:** 2026-08-07
 
 # Purpose
@@ -37,7 +37,6 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
 
     docs/
         ARCHITECTURE.md
-        HANDOFF.md
         CHANGELOG.md
         DECISIONS.md
         DEVELOPMENT_WORKFLOW.md
@@ -47,7 +46,6 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
         ROADMAP.md
         SPECIFICATION.md
         STYLE_GUIDE.md
-        archive/
         data-model/
 
 Required JavaScript load order:
@@ -59,21 +57,6 @@ Required JavaScript load order:
     search.js
     view-renderer.js
     script.js
-
-
-# Theme Support
-
-**Current:** Forest Journal is the only production-supported Version 1 theme.
-
-`forest-copper.css`, `forest-gold.css`, and `legacy-dark-theme.css` are historical/inactive design concepts. They are not required to maintain parity with current production components and are not part of the supported production validation matrix.
-
-**Approved / Not Implemented:** a future shared CSS architecture may centralize base/layout/component behavior and limit theme files primarily to tokens and theme-specific visual overrides before additional themes are promoted to supported status.
-
-# Archive Architecture
-
-Completed package artifacts and historical design/reference assets are preserved outside active production roots when they retain audit or design value. Archived files are historical and do not override current governing documents or production assets.
-
-Active production asset directories should contain only currently referenced or explicitly approved reusable production assets.
 
 # Knowledge Architecture
 
@@ -314,12 +297,6 @@ If formatted User Knowledge is later required, the application must use one cent
 
 Permanent principle: **User Knowledge is data, not markup.**
 
-# Unavailable Feature Affordance
-
-**Approved / Not Implemented:** child cards for planned features may remain visible when they help communicate application structure, but unavailable cards must be clearly marked `Coming Soon` or equivalent. They must not retain hover, pointer, click, or other affordances that imply working navigation, and should use accessible disabled/unavailable semantics.
-
-Permanent rule: **Anything that looks actionable must either perform an action or clearly communicate that it is unavailable.**
-
 # Interaction Depth
 
 Common field workflows should stay within approximately three intentional interactions from a relevant entry point whenever practical. Do not add a separate page when the same task can be completed clearly in context. The combined Rig requirements/readiness section follows this rule by keeping identification help, availability, and readiness feedback on the Rig detail page.
@@ -346,19 +323,7 @@ Behavior:
 
 Meaning: open an external source in a new tab.
 
-External CTA labels should name the destination when practical rather than use generic wording. The approved Dashboard Regulations label is:
-
-    Go to ODWC Regulations ↗
-
-The `↗` marker indicates that the user is leaving the application for an external destination. Do not use `ⓘ` for external navigation.
-
-# Dashboard Regression Restoration
-
-**Current:** the production Forest Journal Dashboard is missing portions of the previously approved card hierarchy and interaction styling because an unrelated replacement removed approved Dashboard rules.
-
-**Approved / Not Implemented:** restore the previously validated Dashboard behavior without redesign. The repair restores the stronger primary-card treatment, 6px left accent, 2px right accent, primary title emphasis, approved vertical spacing, gradient hover treatment, active behavior, and `overflow: hidden`. Preserve the current pill CTA and all newer Rig/Tackle styling.
-
-The repair must not change card order, labels, navigation, Dashboard content, theme direction, dormant themes, or unrelated CSS.
+Do not use `ⓘ` for external navigation.
 
 # Media Architecture
 
@@ -413,15 +378,6 @@ Rules:
 
 My Tackle will replace the persistent lookup source while preserving the inline Rig Readiness interface. Owned required items are automatically satisfied; a separate temporary session-availability state may satisfy borrowed or newly acquired items without writing ownership back to My Tackle.
 
-
-# Repository Handoff and Closeout
-
-`docs/HANDOFF.md` is the first-read current-state map for future sessions and contributors. It links to governing documents rather than duplicating them.
-
-A session, module, or section is not finalized until all relevant documentation is updated, pushed, inspected on GitHub, and validated. The project does not begin a new build segment while the current segment remains unfinalized.
-
-Meaningful cross-segment discussions receive the same documentation treatment as in-segment decisions. They may be deliberately parked at a clean stopping point when they do not materially change the active work, but the parked context must be preserved.
-
 # Development Architecture
 
 `DEVELOPMENT_WORKFLOW.md` is authoritative for implementation procedure.
@@ -433,9 +389,7 @@ Permanent rules include:
 - Coherent multi-file modules may be delivered as ZIP packages.
 - User normally reviews and commits through GitHub Desktop.
 - Verify GitHub after push.
-- Documentation closeout is mandatory and must be validated in GitHub before a segment is finalized.
-- Do not begin a new build segment while the current one is unfinalized.
-- Capture meaningful cross-segment decisions even when they arise outside the active module.
+- Documentation closeout is mandatory.
 - Commands intended for user copy/paste are placed in fenced code blocks.
 
 # Current Reference-Refresh Scope

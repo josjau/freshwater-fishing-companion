@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.3.0
-**Document Status:** Draft
-**Decision Baseline:** D037
+**Version:** 0.2.0  
+**Status:** Draft  
+**Decision Baseline:** D029
 
 ---
 
@@ -329,8 +329,7 @@ These are deferred until demonstrated by actual need.
 - 03-RIGS.md
 - 03A-TECHNIQUES.md
 - 03B-CONDITIONS.md
-- 05-TACKLE.md
-- 05A-INVENTORY.md
+- 05-INVENTORY.md
 - 06-LURES.md
 - 07-USER-DATA.md
 - 08-BACKUP.md

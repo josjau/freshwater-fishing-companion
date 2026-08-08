@@ -1,0 +1,26 @@
+Freshwater Fishing Companion — Batch 1 + Batch 2 Documentation Package
+Date: 2026-08-07
+GitHub baseline verified before update:
+- docs/DECISIONS.md SHA ae15000133b6c95e0328b84e42c7db4481910ad1
+- docs/ARCHITECTURE.md SHA eb5c8700dd2daeae144d0e6e91fb9b5d1fd819a4
+- docs/STYLE_GUIDE.md SHA 71b46f86acb92af7d05ba21ea4af7e51aae895cb
+
+Package contents:
+- docs/DECISIONS.md — combined Batch 1 decisions plus D030-D032
+- docs/ARCHITECTURE.md — combined Batch 1 architecture plus Batch 2 approved/not-implemented UX/current-state rules
+- docs/STYLE_GUIDE.md — latest GitHub baseline plus Batch 2 permanent interface/link/replacement-integrity standards
+- docs/data-model/01-FOUNDATION.md — unchanged from staged Batch 1 package
+- docs/data-model/03-RIGS.md — unchanged from staged Batch 1 package
+- docs/data-model/05-INVENTORY.md — unchanged from staged Batch 1 package
+- docs/data-model/07-USER-DATA.md — unchanged from staged Batch 1 package
+- docs/data-model/09-RELATIONSHIPS.md — unchanged from staged Batch 1 package
+
+Batch 2 decisions captured:
+- D030 Clear Unavailable-Feature Affordance
+- D031 Explicit External Destination CTA Semantics
+- D032 Dashboard Regression Restoration
+
+Implementation status:
+- Documentation is prepared/staged only.
+- No GitHub write was performed.
+- The Dashboard CSS repair and child-card/Regulations UI changes remain Approved / Not Implemented until source changes are made and validated.

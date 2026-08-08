@@ -1,8 +1,8 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.2.0
-**Document Status:** Draft
+**Version:** 0.1.0  
+**Status:** Draft  
 **Decision Baseline:** D028
 
 ---
@@ -373,6 +373,6 @@ These require separate architectural approval.
 - 02-FISH.md
 - 03A-TECHNIQUES.md
 - 04-KNOTS.md
-- 05A-INVENTORY.md
+- 05-INVENTORY.md
 - 06-LURES.md
 - 09-RELATIONSHIPS.md

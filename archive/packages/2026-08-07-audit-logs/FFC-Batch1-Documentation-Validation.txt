@@ -1,0 +1,32 @@
+Freshwater Fishing Companion — Batch 1 Documentation Package
+
+Base verified GitHub main commit:
+0da997303bb3c3eb1b37905a484d03ca36e4058c
+
+Prepared replacement files:
+- docs/DECISIONS.md
+- docs/ARCHITECTURE.md
+- docs/data-model/01-FOUNDATION.md
+- docs/data-model/03-RIGS.md
+- docs/data-model/05-INVENTORY.md
+- docs/data-model/07-USER-DATA.md
+- docs/data-model/09-RELATIONSHIPS.md
+
+Scope captured:
+D022 Relevance-First Search and Connected Knowledge
+D023 Five Recommendation Tiers
+D024 Rig Assembly and Technique Presentation Ownership
+D025 Single-Owner Rig-to-Tackle Relationships
+D026 Canonical Tackle Identity and Display Names
+D027 Regional 20-Rig Library and Core Rigs
+D028 My Tackle Ownership and Rig Readiness Authority
+D029 User Knowledge Rendering Trust Boundary
+
+Implementation status:
+Documentation only. These files do not claim that approved-but-not-implemented code/data changes are already deployed. Current versus Approved / Not Implemented status is stated explicitly where needed.
+
+Important open item preserved:
+The detailed My Tackle owned-item schema remains open for a dedicated design discussion.
+
+Note on docs/data-model/09-RELATIONSHIPS.md:
+The current GitHub blob ends mid-example after `Product Recommendation -> Product Definition`. The replacement preserves the existing purpose/principles and completes the document with the approved Batch 1 relationship rules.

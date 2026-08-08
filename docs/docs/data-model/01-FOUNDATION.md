@@ -1,8 +1,8 @@
 # Freshwater Fishing Companion
 
 **Document:** 01-FOUNDATION.md  
-**Document Revision:** 0.3.0
-**Document Status:** Draft
+**Version:** 0.2.0  
+**Status:** Draft  
 **Decision Baseline:** D029
 
 ---
@@ -772,10 +772,6 @@ The approved architecture shall be completed before adding new foundational conc
 
 ---
 
-# Documentation Structure Principle
-
-Data-model documentation must reflect actual domain ownership. Nonexistent or speculative documents must not be presented as current authoritative sources. Canonical Tackle and My Tackle/Inventory are documented separately.
-
 # Guiding Principle
 
 > Plan twice. Build once.
@@ -792,8 +788,7 @@ The data model shall evolve through deliberate decisions, verified requirements,
 - 03A-TECHNIQUES.md
 - 03B-CONDITIONS.md
 - 04-KNOTS.md
-- 05-TACKLE.md
-- 05A-INVENTORY.md
+- 05-INVENTORY.md
 - 06-LURES.md
 - 07-USER-DATA.md
 - 08-BACKUP.md

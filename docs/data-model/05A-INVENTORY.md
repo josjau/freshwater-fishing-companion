@@ -1,8 +1,8 @@
 # Freshwater Fishing Companion
 
-**Document:** 05-INVENTORY.md  
-**Version:** 0.1.0  
-**Status:** Draft  
+**Document:** 05A-INVENTORY.md  
+**Document Revision:** 0.2.0  
+**Document Status:** Draft  
 **Decision Baseline:** D028
 
 ---
@@ -271,6 +271,7 @@ These enhancements require separate architectural or schema approval as appropri
 
 - 01-FOUNDATION.md
 - 03-RIGS.md
+- 05-TACKLE.md
 - 06-LURES.md
 - 07-USER-DATA.md
 - 09-RELATIONSHIPS.md

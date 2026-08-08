@@ -1,11 +1,37 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Version:** 1.8.0  
-**Status:** Active  
+**Document Revision:** 1.9.0  
+**Document Status:** Approved  
 **Last Updated:** 2026-08-07
 
 # Unreleased
+
+## Architecture, Data-Model, UX, and Handoff Decisions
+
+### Added / Approved
+
+- Relevance-first Search and connected-knowledge contract.
+- Five recommendation tiers: Best of the Best, Best Bang for the Buck, Best Budget, Best of the Rest, Avoid.
+- Rig assembly vs Technique presentation ownership boundary.
+- Single-owner Rig-to-Tackle relationship architecture and canonical Tackle display-name ownership.
+- Initial 20-Rig regional library plus six Core Rigs.
+- My Tackle ownership/readiness authority and buildability-first readiness principle.
+- User Knowledge safe-rendering trust boundary.
+- Coming Soon/unavailable child-card semantics.
+- Explicit `Go to ODWC Regulations ↗` external CTA semantics.
+- Narrow Dashboard CSS regression restoration plan.
+- Archive rules for completed package artifacts and historical design assets.
+- Forest Journal as the only production-supported Version 1 theme.
+- Separate document-status, implementation-status, document-revision, and application-version semantics.
+- Dedicated `00-GLOSSARY.md`, `05-TACKLE.md`, and `05A-INVENTORY.md` documentation structure.
+- `HANDOFF.md` as the repository current-state entrypoint.
+- Documentation-validated closeout, no-unvalidated-transition, and cross-segment decision-capture rules.
+
+### Documentation Reconciliation
+
+- Historical MS2.5/MS2.6 milestone descriptions are retained as history but explicitly marked as superseded where later approved architecture changed readiness or Rig-media behavior.
+- Detailed Recommendation and ProductDefinition model documents remain deferred until their schemas are mature/required.
 
 ## Rig and Tackle Reference Refresh
 
@@ -51,6 +77,8 @@
 **Date:** 2026-08-06  
 **Milestone:** MS2.6
 
+This release history is retained as a historical implementation record. Later Unreleased architecture supersedes generated Rig media and the dedicated-readiness workflow where noted above and in `MILESTONES.md`.
+
 ## Added
 
 - Canonical `data/tackle.js`
@@ -66,37 +94,14 @@
 - Recognition guidance, aliases, variants, and related-Rig information
 - Completed-Rig overview illustration support
 - Completed-Rig overview illustrations for all four current Rigs
-- Generic Rig media roles:
-  - `overview`
-  - `assembly-step`
+- Generic Rig media roles: `overview`, `assembly-step`
 - Sequence-based Rig assembly media ordering
 - Four-step Texas Rig visual assembly guide
 - 23 active media records total
 
-## Changed
-
-- `index.html` loads `data/tackle.js` and `data/media.js` before shared utilities and coordination.
-- `data/rigs.js` links Rig records to stable media IDs.
-- `view-renderer.js` renders contextual references, Rig overview media, and ordered assembly media.
-- `forest-journal.css` styles reference popovers and Rig visual guides.
-- Rig component names use `Name ⓘ`.
-- Media resolves through stable IDs.
-
-## Texas Rig Technical Correction
-
-The initial Texas Rig illustrations were corrected after live validation found incorrect hook orientation and bait relationship.
-
-Corrected assets:
-
-- `images/rigs/texas-rig-overview.svg`
-- `images/rigs/texas-rig-step-1.svg`
-- `images/rigs/texas-rig-step-2.svg`
-- `images/rigs/texas-rig-step-3.svg`
-- `images/rigs/texas-rig-step-4.svg`
-
 ## Validation
 
-- Tackle data and media counts validated.
+- Tackle data and media counts validated at the time of this historical release.
 - Reference popovers validated.
 - Related Tackle navigation validated.
 - Rig overview sections validated.
@@ -111,24 +116,11 @@ Corrected assets:
 **Date:** 2026-08-05  
 **Milestone:** MS2.5
 
-## Added
-
-- Check My Tackle action
-- Per-Rig readiness checklist
-- Required/optional handling
-- Ready/missing status
-- Local persistence
-- Safe malformed-state fallback
-
-Storage key:
-
-    freshwaterFishingCompanion.tackleReadiness.v1
+Historical release that introduced the local per-Rig readiness checklist and persistence key `freshwaterFishingCompanion.tackleReadiness.v1`. Later architecture integrates readiness into the Rig page and treats this storage as transitional.
 
 ---
 
 # Version 0.2.4 — Functional Rig Guide
-
-## Added
 
 - Canonical Rig data
 - Browse All Rigs
@@ -139,8 +131,6 @@ Storage key:
 ---
 
 # Version 0.2.3 — Functional Fish Search
-
-## Added
 
 - Functional Fish Search
 - Live search

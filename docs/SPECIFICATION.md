@@ -1,18 +1,13 @@
 # Freshwater Fishing Companion
 
 **Document:** SPECIFICATION.md  
-**Version:** 0.1.0  
-**Status:** Draft
-
----
+**Document Revision:** 0.2.0  
+**Document Status:** Draft  
+**Last Updated:** 2026-08-07
 
 # Purpose
 
-This document defines the functional requirements for Version 1 of Freshwater Fishing Companion.
-
-It describes what the application shall do without specifying how it is implemented.
-
----
+This document defines functional requirements for Version 1 of Freshwater Fishing Companion. It describes intended behavior without replacing the authoritative architecture and structural decisions.
 
 # Design Goals
 
@@ -23,168 +18,105 @@ The Companion is designed to:
 - Recommend suitable rigs, techniques, and lures.
 - Record catches.
 - Encourage legal and ethical fishing.
-- Operate completely offline.
+- Operate offline.
 - Remain simple, fast, and easy to use.
-
----
+- Find relevant information quickly and make pertinent adjacent knowledge easy to reach.
 
 # Target Users
 
-Version 1 is designed primarily for:
-
-- New anglers
-- Families
-- Casual freshwater anglers
-- Anglers learning new techniques
-
-Experienced anglers should still find the Companion useful as an organizational and reference tool.
-
----
+Version 1 is designed primarily for new anglers, families, casual freshwater anglers, and anglers learning new techniques. Initial regional content prioritization focuses on northeast Oklahoma and southwest Kansas.
 
 # Core Features
 
-Version 1 includes the following primary features.
-
 ## Fish Guide
 
-Users shall be able to:
-
-- Browse supported fish species.
-- Search for fish.
-- View identification information.
-- View habitat information.
-- View recommended rigs.
-- View recommended lures.
-- Access official regulation resources.
-
----
+Users shall be able to browse/search supported fish species, view identification/habitat information, and move into pertinent related rigs, lures, conditions, techniques, and official regulation resources as those relationships are implemented.
 
 ## Rig Guide
 
 Users shall be able to:
 
-- Browse rigs.
-- Learn when each rig is appropriate.
-- View required components.
-- View compatible techniques.
-- Compare required components with inventory.
+- Browse/search supported Rigs.
+- Learn when each Rig is appropriate.
+- View canonical required components.
+- Follow authoritative physical assembly instructions.
+- View compatible reusable Techniques.
+- Compare Rig requirements with availability/readiness.
 
----
+The approved initial target is a 20-Rig regional library with six Core Rigs used to build confidence before expanding the fishing arsenal.
 
 ## Technique Guide
 
-Users shall be able to:
-
-- Browse fishing techniques.
-- Learn when each technique is appropriate.
-- View beginner guidance.
-- View common mistakes.
-
----
+Users shall be able to browse reusable presentation Techniques, learn when they apply, view beginner guidance, and understand common mistakes. Technique owns reusable presentation behavior; Rig owns physical assembly/configuration.
 
 ## Knot Guide
 
-Users shall be able to:
+Users shall be able to browse Knots, learn recommended uses, view line compatibility, and follow step-by-step instructions.
 
-- Browse knots.
-- Learn recommended uses.
-- View line compatibility.
-- Follow step-by-step instructions.
+## Lure / Tackle Reference
 
----
+Users shall be able to identify canonical lure/tackle concepts and move into relevant related knowledge. Canonical Tackle defines functional tackle type rather than exact user ownership.
 
-## Lure Guide
+## My Tackle / Inventory
 
-Users shall be able to:
+My Tackle records actual items owned by the user. The detailed owned-item schema remains Open.
 
-- Browse lure families.
-- Learn common applications.
-- View compatible rigs.
-- View compatible techniques.
-- View commonly targeted fish.
+Persistent ownership shall only be created/changed through explicit My Tackle ownership-management workflows. Other features may read My Tackle but may not silently write ownership.
 
----
+## Rig Readiness
 
-## Inventory
+When My Tackle becomes authoritative, Rig Readiness shall automatically satisfy required canonical Tackle types that the user owns. A user may mark a missing component temporarily available for the current build/session without creating persistent ownership.
 
-Users shall be able to:
-
-- Record equipment.
-- Record consumables.
-- Update quantities.
-- Track item condition.
-- Record storage location.
-- Create fishing setups.
-
----
+Readiness answers buildability first; it does not require an ideal brand/model combination.
 
 ## Recommendations
 
-The Companion shall provide recommendations using available information such as:
-
-- Fish
-- Conditions
-- Inventory
-- User experience level
-
-Recommendations should explain why they were made whenever practical.
-
----
+Recommendations belong to Decision Knowledge and should explain why they were made whenever practical. Approved product-recommendation tiers are Best of the Best, Best Bang for the Buck, Best Budget, Best of the Rest, and Avoid.
 
 ## Catch Log
 
-Users shall be able to:
-
-- Record catches.
-- Associate catches with fish, rigs, lures, and techniques.
-- Add notes.
-- Record general fishing location.
-- Attach photographs in a future release.
-
----
+Users shall be able to record catches and associate them with relevant canonical entities while adding User Knowledge such as notes and general location.
 
 ## Favorites
 
 Users shall be able to favorite commonly used reference items for quick access.
 
----
-
 ## Search
 
-Users shall be able to search supported reference data.
+Search shall be relevance-first and operate offline. It should identify the strongest intended entity rather than return broad weak matches merely because related wording appears somewhere in a record.
 
-Search should be fast, responsive, and operate offline.
+After a result is selected, connected knowledge should expose pertinent next steps without overwhelming the user.
 
----
+The current substring implementation is a temporary small-dataset implementation; lightweight deterministic relevance ranking is approved before dataset growth makes Search noisy.
 
 ## Backup and Restore
 
-Users shall be able to:
+Users shall be able to export/import/restore backups and validate compatibility as that feature is implemented.
 
-- Export backups.
-- Import backups.
-- Restore backups.
-- Validate backup compatibility.
+# User Knowledge Safety
 
----
+User-entered and imported content is untrusted by default. Rendering paths shall use safe DOM text rendering unless a centrally owned sanitization path is explicitly approved for formatted content.
+
+# External Regulation Links
+
+Official regulations remain external rather than copied into the app. External CTAs should name the destination and use `↗`; the Dashboard uses `Go to ODWC Regulations ↗` for Oklahoma regulations.
 
 # Non-Functional Requirements
 
 The Companion shall:
 
-- Operate offline.
-- Store data locally.
-- Start quickly.
-- Respond quickly.
+- Operate offline for supported Version 1 functions.
+- Store user data locally unless a future approved architecture changes this.
+- Start/respond quickly.
 - Preserve user data.
 - Avoid unnecessary complexity.
-- Require no recurring service costs.
+- Require no recurring service costs for the base architecture.
+- Keep common field workflows within approximately three intentional interactions when practical.
+- Maintain accessible distinction between working and unavailable features.
 
----
+# Version 1 Exclusions / Deferred Sophistication
 
-# Version 1 Exclusions
-
-The following are intentionally excluded from Version 1:
+Deferred unless separately approved by demonstrated need:
 
 - Cloud synchronization
 - User accounts
@@ -194,28 +126,19 @@ The following are intentionally excluded from Version 1:
 - AI fish identification
 - Online product pricing
 - Automatic shopping integration
-
-These features may be considered after Version 1.
-
----
+- Heavy fuzzy/NL Search infrastructure
+- Commercial ProductDefinition catalog architecture
 
 # Success Criteria
 
-Version 1 is considered successful when a new angler can:
-
-- Learn about local fish.
-- Identify common freshwater species.
-- Build basic rigs.
-- Organize fishing equipment.
-- Record catches.
-- Receive understandable recommendations.
-- Back up and restore their data.
-
----
+Version 1 is successful when a new angler can quickly find trustworthy information, build confidence with core fishing methods, understand what is needed for a Rig, determine whether the Rig is buildable, and move into pertinent connected knowledge without unnecessary navigation or noise.
 
 # Related Documents
 
-- PROJECT.md
-- ARCHITECTURE.md
-- ROADMAP.md
-- STYLE_GUIDE.md
+- `HANDOFF.md`
+- `PROJECT.md`
+- `ARCHITECTURE.md`
+- `ROADMAP.md`
+- `STYLE_GUIDE.md`
+- `DECISIONS.md`
+- `data-model/README.md`

@@ -1,122 +1,85 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Version:** 0.1.0  
-**Status:** Draft
-
----
+**Document Revision:** 0.2.0  
+**Document Status:** Draft  
+**Last Updated:** 2026-08-07
 
 # Purpose
 
-This document defines the planned development roadmap for Freshwater Fishing Companion.
+This document defines planned development direction for Freshwater Fishing Companion. It does not override `DECISIONS.md`, `ARCHITECTURE.md`, or the current-state map in `HANDOFF.md`.
 
-The roadmap provides development direction without replacing the functional specification.
-
-Features may move between releases as priorities change.
-
----
+Features may move between releases as priorities change, but a new build segment does not begin until the current segment is finalized and validated.
 
 # Development Philosophy
 
-The Companion will be developed in small, testable milestones.
+- Develop in coherent, testable segments.
+- Plan twice and write/build once.
+- Correctness before polish.
+- Actual need before theoretical scale.
+- One source of truth.
+- Finish and validate the current segment before beginning the next.
 
-Each milestone should produce a working application with measurable improvements.
+# Current Approved Near-Term Direction
 
-Version 1 focuses on a reliable, educational, offline-first experience.
+## Documentation / Governance Closeout
 
----
+Before the next build segment:
 
-# Version 1
+- Push the current documentation package.
+- Verify the actual GitHub files.
+- Validate archive moves and documentation structure.
+- Update `HANDOFF.md` if the resulting repository state differs from the prepared package.
 
-## Goal
+## Current-State UX Repairs
 
-Deliver a complete offline application that helps new anglers learn freshwater fishing while organizing their equipment and recording catches.
+Approved / Not Implemented:
 
----
+- Mark unimplemented child cards `Coming Soon` or equivalent without misleading active affordances.
+- Change the Dashboard Regulations CTA to `Go to ODWC Regulations ↗`.
+- Restore the previously approved Forest Journal Dashboard styling regression without redesign.
 
-## Core Features
+## Rig / Tackle Integrity
 
-### Reference Library
+Approved / Not Implemented:
 
-- Fish Guide
-- Rig Guide
-- Technique Guide
-- Knot Guide
-- Lure Guide
+- Derive Tackle `Used In` relationships from `Rig.componentRequirements`.
+- Resolve Rig component display names from canonical Tackle.
+- Remove duplicate inverse/name sources during the deliberate cleanup.
 
----
+## Regional Rig Expansion
 
-### Inventory
+Approved / Not Implemented:
 
-- Equipment
-- Consumables
-- Fishing Setups
-- Inventory Locations
+- Expand to the approved 20-Rig library for northeast Oklahoma and southwest Kansas.
+- Include Carolina Rig as a canonical record.
+- Present six Core Rigs as the confidence-building starting set.
 
----
+## My Tackle
 
-### Recommendations
+The architecture is approved at a high level, but the detailed owned-item schema remains Open and must be discussed before implementation.
 
-- Fish recommendations
-- Rig recommendations
-- Technique recommendations
-- Inventory matching
+Approved principles:
 
----
-
-### Catch Log
-
-- Record catches
-- View catch history
-- Search catches
-
----
-
-### User Features
-
-- Favorites
-- Preferences
-- Backup
-- Restore
-
----
-
-# Version 1.1
-
-Planned improvements after Version 1.
-
-Examples include:
-
-- Additional fish species
-- Expanded lure library
-- Expanded rig library
-- Expanded knot library
-- Improved search
-- Additional educational content
-
----
-
-# Version 2
-
-Potential future enhancements.
-
-Examples include:
-
-- Catch photographs
-- Fishing statistics
-- Advanced filtering
-- Enhanced recommendation engine
-- Optional barcode scanning
-- Import and export improvements
-
-Items in Version 2 require review before implementation.
-
----
+- Canonical Tackle defines functional type.
+- My Tackle defines actual owned items.
+- Rig Readiness reads My Tackle.
+- My Tackle is the only persistent ownership source.
+- Persistent ownership changes only through explicit My Tackle management workflows.
+- Readiness answers buildability first; optimization comes later.
 
 # Parking Lot
 
-The following ideas have been discussed but are intentionally deferred.
+Intentionally deferred until demonstrated by actual need or a later milestone:
 
+- Heavy fuzzy Search and advanced natural-language intent parsing
+- Global cross-domain result dumps
+- Dedicated Recommendation schema/model document
+- Commercial ProductDefinition architecture
+- Product-level catalog/SKU/retailer modeling
+- Advanced size/style-aware readiness
+- Shared multi-theme CSS architecture and revival of historical themes
+- Automated orphan-asset, broken-ID, and documentation-link validation
 - AI fish identification
 - Actual-size lure calibration
 - Container hierarchy
@@ -129,13 +92,7 @@ The following ideas have been discussed but are intentionally deferred.
 - Family sharing
 - Achievement system
 
-Being listed here does not guarantee implementation.
-
----
-
-# Out of Scope
-
-The following are not planned for Version 1.
+# Out of Scope for Version 1
 
 - Social networking
 - Competitive leaderboards
@@ -143,26 +100,27 @@ The following are not planned for Version 1.
 - Subscription features
 - Advertising
 
----
+# Release / Segment Completion
 
-# Release Philosophy
+A feature or segment is not complete merely because files were generated or staged.
 
-A feature is complete when it is:
+Closeout requires, as applicable:
 
-- Documented
-- Implemented
-- Tested
-- Verified
+- Decisions finalized
+- Implementation completed
+- Testing/preflight completed
+- Files pushed to GitHub
+- Actual GitHub state verified
+- Runtime/deployment validated
+- All relevant documentation updated and validated
 
-Features should not be added simply because they are interesting.
-
-Priority is given to stability, simplicity, and usefulness.
-
----
+See `DEVELOPMENT_WORKFLOW.md`.
 
 # Related Documents
 
-- PROJECT.md
-- SPECIFICATION.md
-- ARCHITECTURE.md
-- DECISIONS.md
+- `HANDOFF.md`
+- `PROJECT.md`
+- `SPECIFICATION.md`
+- `ARCHITECTURE.md`
+- `DECISIONS.md`
+- `DEVELOPMENT_WORKFLOW.md`

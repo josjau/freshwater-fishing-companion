@@ -1,144 +1,83 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Version:** 1.5.0  
-**Status:** Active  
-**Last Updated:** 2026-08-06
+**Document Revision:** 1.6.0  
+**Document Status:** Approved  
+**Last Updated:** 2026-08-07
 
-# Current Status
+# Purpose
 
-## Completed
+This document preserves milestone history. Historical milestone completion records describe what was validated at that time; later approved architecture may supersede the workflow or media approach without rewriting history.
 
-### Milestone 1 — Application Foundation
+When a historical milestone conflicts with current architecture, `DECISIONS.md`, `ARCHITECTURE.md`, and `HANDOFF.md` govern the current state.
 
-- ☑ Dashboard
-- ☑ Navigation
-- ☑ Shared page renderer
-- ☑ Eight application views
-- ☑ Forest Journal theme
-- ☑ Runtime validation
+# Completed
 
-### MS2.1 — Fish Data Foundation
+## Milestone 1 — Application Foundation
 
-- ☑ Canonical Fish data
-- ☑ Stable Fish IDs
-- ☑ Initial Fish records
-- ☑ Runtime data validation
+- Dashboard
+- Navigation
+- Shared page renderer
+- Eight application views
+- Forest Journal theme
+- Runtime validation
 
-### MS2.2 — Shared Search and Rendering Utilities
+## MS2.1 — Fish Data Foundation
 
-- ☑ Shared search utilities
-- ☑ Shared rendering utilities
-- ☑ Application coordinator
-- ☑ Console validation
+- Canonical Fish data
+- Stable Fish IDs
+- Initial Fish records
+- Runtime data validation
 
-### MS2.3 — Functional Fish Search
+## MS2.2 — Shared Search and Rendering Utilities
 
-- ☑ Functional Fish Search route
-- ☑ Common-name search
-- ☑ Scientific-name search
-- ☑ Category search
-- ☑ Reusable result cards
-- ☑ Parent and Home navigation
-- ☑ Responsive validation
+- Shared search utilities
+- Shared rendering utilities
+- Application coordinator
+- Console validation
 
-### MS2.4 — Functional Rig Guide
+## MS2.3 — Functional Fish Search
 
-- ☑ Canonical Rig data
-- ☑ Four beginner-focused Rig records
-- ☑ Browse All Rigs
-- ☑ Rig search
-- ☑ Rig instructional detail pages
-- ☑ Component requirements
-- ☑ Ordered assembly steps
-- ☑ Setup notes
-- ☑ Common mistakes
-- ☑ Safety guidance
-- ☑ Navigation and error handling
+- Functional Fish Search route
+- Common-name search
+- Scientific-name search
+- Category search
+- Reusable result cards
+- Parent/Home navigation
+- Responsive validation
 
-### MS2.5 — Lightweight Tackle Readiness
+**Current note:** the lightweight substring implementation remains current, but D022 establishes relevance-first Search as the permanent quality standard and approves lightweight deterministic ranking before dataset growth makes Search noisy.
 
-- ☑ Check My Tackle action
-- ☑ Dedicated Rig readiness route
-- ☑ Per-Rig component checklist
-- ☑ Required and optional component handling
-- ☑ Automatic Ready to Fish status
-- ☑ Missing-required-item count
-- ☑ Missing-required-item names
-- ☑ Immediate local persistence
-- ☑ Persistence after refresh
-- ☑ Independent state for each Rig
-- ☑ Safe malformed-storage fallback
-- ☑ Return to Rig detail
-- ☑ Home navigation
-- ☑ Fish Search regression validation
-- ☑ Rig browsing regression validation
-- ☑ Zero Console errors
+## MS2.4 — Functional Rig Guide
 
-### MS2.6 — Tackle References and Rig Visual Guides
+- Canonical Rig data
+- Four beginner-focused Rig records
+- Browse All Rigs
+- Rig search
+- Rig instructional detail pages
+- Component requirements
+- Ordered assembly steps
+- Setup notes
+- Common mistakes
+- Safety guidance
+- Navigation and error handling
 
-#### Tackle Reference Foundation
+**Current note:** D027 approves expansion to a 20-Rig regional library with six Core Rigs; that expansion is Approved / Not Implemented.
 
-- ☑ Canonical `data/tackle.js`
-- ☑ 15 stable Tackle reference records
-- ☑ Centralized `data/media.js`
-- ☑ Stable media IDs
-- ☑ Licensing metadata architecture
-- ☑ Local bundled media paths
-- ☑ Correct JavaScript load order
+## MS2.5 — Lightweight Tackle Readiness
 
-#### Contextual Reference Popovers
+Historical MS2.5 validated a dedicated readiness route and per-Rig local checklist.
 
-- ☑ Permanent `Name ⓘ` interaction convention
-- ☑ Entire name and information symbol are interactive
-- ☑ In-place modal / bottom-sheet behavior
-- ☑ Tackle summary and purpose
-- ☑ Aliases
-- ☑ Recognition notes
-- ☑ Common variants
-- ☑ Related Rig names
-- ☑ Related Tackle links
-- ☑ Close button
-- ☑ Backdrop close
-- ☑ Escape-key close
-- ☑ Focus restoration to original trigger
-- ☑ Reference-image rendering
-- ☑ Attribution rendering when required
+**Superseding current architecture:** D020 moved readiness into the Rig `What You Need` section and removed the separate readiness page from the primary workflow. D028 further establishes that future persistent ownership comes only from My Tackle; the current local readiness storage is transitional.
 
-#### Tackle Reference Media
+## MS2.6 — Tackle References and Rig Visual Guides
 
-- ☑ 15 active Tackle SVG reference illustrations
-- ☑ Compact local asset strategy
-- ☑ Original project-asset metadata
-- ☑ Bullet Weight live rendering validation
-- ☑ Offset Worm Hook live rendering validation
-- ☑ Soft Plastic live rendering validation
+Historical MS2.6 validated canonical Tackle/media infrastructure, contextual reference popovers, generated Rig overview/assembly imagery, and a 23-record media catalog.
 
-#### Rig Visual Guides
+**Superseding current architecture:** D017–D019 replaced generated completed-Rig/build-step imagery with authoritative text assembly plus verified external Rig references. Current active Tackle recognition media uses approved transparent WebP assets in contextual `Name ⓘ` help. Generated Rig imagery from MS2.6 is historical, not current production guidance.
 
-- ☑ Completed-Rig overview illustration for Fixed Bobber Rig
-- ☑ Completed-Rig overview illustration for Slip Bobber Rig
-- ☑ Completed-Rig overview illustration for Basic Bottom Rig
-- ☑ Completed-Rig overview illustration for Texas Rig
-- ☑ Generic `overview` media role
-- ☑ Generic `assembly-step` media role
-- ☑ Sequence-based assembly ordering
-- ☑ Four-step Texas Rig visual assembly guide
-- ☑ Lazy loading for assembly-step media
-- ☑ Texas Rig technical geometry correction
-- ☑ Final live validation of Completed Rig and Visual Assembly Guide
-- ☑ Existing component popovers preserved
-- ☑ Existing Tackle Readiness preserved
+# Current / Next Milestone
 
-#### Current Media Catalog
+No new build segment should be declared active until the current documentation/governance closeout is pushed and validated in GitHub. See D039–D041 and `DEVELOPMENT_WORKFLOW.md`.
 
-- ☑ 23 active media records total
-- ☑ 15 Tackle reference records
-- ☑ 4 Rig overview records
-- ☑ 4 Texas Rig assembly-step records
-
-## Active Milestone
-
-To be selected.
-
-MS2.6 is complete and the current Rig workflow now combines instructional text, contextual Tackle references, visual Rig guidance, and Tackle Readiness.
+After closeout, `HANDOFF.md` identifies the recommended next work and must be updated as the active segment changes.
