@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.4.5  
+**Document Revision:** 0.4.6  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `9ef3f32aa9b96f094e841d065d774feef24f4f7e`  
+**Repository Baseline Reviewed:** `main` at `4e1fdd10ae10935039a86959533e59b495cd09a1`  
 **Last Updated:** 2026-08-08
 
 # 1. Start Here
@@ -28,13 +28,15 @@ Permanent operating rule:
 
 The repository baseline reviewed for this handoff is commit:
 
-`9ef3f32aa9b96f094e841d065d774feef24f4f7e`
+`4e1fdd10ae10935039a86959533e59b495cd09a1`
 
 Commit message:
 
-`Delete VALIDATION.txt`
+`Rig Correction`
 
 The Current-State UX Repairs segment is validated and repository-finalized.
+
+The Rig/Tackle Data Integrity — Batch 1 implementation and runtime/regression validation are complete. This closeout documentation package must be pushed and revalidated on GitHub before the segment itself is repository-finalized.
 
 Validated governance state:
 
@@ -45,6 +47,7 @@ Validated governance state:
 - Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
 - Historical package artifacts and obsolete design-board/preview assets remain preserved in archive paths.
 - Root package artifacts from the UX repair package have been removed.
+- `tools/validate_replacement_integrity.py` is present as the repository-side documentation replacement-integrity safeguard.
 
 ## Current-State UX Repairs
 
@@ -76,9 +79,9 @@ See `workstreams/UX-REPAIRS.md` and `workstreams/UX-REPAIRS-VALIDATION.md`.
 
 ## Rig/Tackle Data Integrity — Batch 1
 
-**Implementation Status: In Progress**
+**Implementation Status: Validated**
 
-The current package implements the approved D025–D026 relationship cleanup before Core-6 expansion:
+The approved D025–D026 relationship cleanup is implemented on `main` before Core-6 expansion:
 
 - `Rig.componentRequirements[].tackleId` explicitly references canonical Tackle.
 - duplicated Rig-side component display names are removed,
@@ -88,7 +91,11 @@ The current package implements the approved D025–D026 relationship cleanup bef
 - the transitional readiness storage keeps the same underlying Tackle ID string keys,
 - `script.js` uses `tackleId` naming consistently at the readiness callback boundary.
 
-This segment is not Validated until the source/documentation package is pushed, GitHub is re-inspected, and runtime/regression checks pass.
+Repository/source inspection passed after the corrective documentation commit. Runtime/regression validation then passed for all four current Rigs, canonical component names, contextual Tackle references, required/optional readiness behavior, persistence, derived `Used In`, Fish Search, Rig browse/search, external Rig references, related Tackle navigation, normal-navigation console health, and phone/desktop layout.
+
+The initial documentation replacement defect was corrected before closeout. `tools/validate_replacement_integrity.py` and the corresponding workflow rule now provide a mechanical guard against future accidental documentation truncation.
+
+See `workstreams/RIG-TACKLE-DATA-INTEGRITY.md` and `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`.
 
 The exact current source implementation must always be re-fetched from GitHub before edits. Do not assume any proposed or locally staged change has been implemented until it appears on `main`.
 
@@ -103,6 +110,8 @@ The exact current source implementation must always be re-fetched from GitHub be
 - Fish Guide/Search exists with lightweight shared search helpers.
 - Rig Guide exists with canonical Rig data, searchable/browsable Rig records, text-authoritative assembly, contextual Tackle `Name ⓘ` recognition help, verified external Rig references, and inline readiness.
 - Canonical Tackle Reference Knowledge exists in `data/tackle.js`.
+- Rig component requirements reference canonical Tackle through `tackleId`.
+- Reverse Tackle `Used In` relationships are derived from active Rig requirements.
 - Current Rig readiness uses the transitional local readiness state.
 - Current Search uses lightweight normalized substring matching; it is not the permanent relevance-quality ceiling.
 - Historical Copper, Gold, and Legacy Dark CSS files are retained as inactive design concepts and are not part of the supported production theme matrix.
@@ -211,20 +220,17 @@ The following remain intentionally unresolved:
 
 # 8. Next Recommended Work
 
-The next build segment is Rig/Tackle data-integrity cleanup.
+Rig/Tackle Data Integrity — Batch 1 is functionally validated. After this closeout package is pushed and GitHub-revalidated, the next build segment is the Tackle recognition-image audit followed by Core-6 modeling/build work.
 
 Recommended sequence:
 
-1. Audit and implement Rig/Tackle data-integrity cleanup:
-   - canonical component display names,
-   - derived inverse relationships.
-2. Audit the current Tackle recognition assets and approve a no-shadow, clean-edge replacement treatment before producing replacements.
-3. Resolve Core-6 Rig-vs-setup modeling for Inline Spinner Setup and Jighead + Soft Plastic.
-4. Complete and validate the Core 6, including the approved reusable Core learning-path visual emphasis.
-5. Improve finished-Rig visual references, favoring licensed local assets or direct stable verified visual destinations.
-6. Continue the remaining regional Rig expansion after the Core 6 is validated.
-7. Address the common-knot illustration workstream separately.
-8. Hold the dedicated My Tackle schema discussion before My Tackle implementation.
+1. Audit the current Tackle recognition assets and approve a no-shadow, clean-edge replacement treatment before producing replacements.
+2. Resolve Core-6 Rig-vs-setup modeling for Inline Spinner Setup and Jighead + Soft Plastic.
+3. Complete and validate the Core 6, including the approved reusable Core learning-path visual emphasis.
+4. Improve finished-Rig visual references, favoring licensed local assets or direct stable verified visual destinations.
+5. Continue the remaining regional Rig expansion after the Core 6 is validated.
+6. Address the common-knot illustration workstream separately.
+7. Hold the dedicated My Tackle schema discussion before My Tackle implementation.
 
 Re-evaluate this sequence after each finalized and validated segment.
 
@@ -243,6 +249,8 @@ Re-evaluate this sequence after each finalized and validated segment.
 | Milestone/history status | `MILESTONES.md` / `CHANGELOG.md` |
 | UX repair scope | `workstreams/UX-REPAIRS.md` |
 | UX repair validation | `workstreams/UX-REPAIRS-VALIDATION.md` |
+| Rig/Tackle integrity scope | `workstreams/RIG-TACKLE-DATA-INTEGRITY.md` |
+| Rig/Tackle integrity validation | `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md` |
 | Data-model index | `data-model/README.md` |
 | Data-model terminology | `data-model/00-GLOSSARY.md` |
 | Global data rules | `data-model/01-FOUNDATION.md` |

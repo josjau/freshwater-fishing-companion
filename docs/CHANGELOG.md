@@ -1,11 +1,50 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.10.2  
+**Document Revision:** 1.10.3  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-07
+**Last Updated:** 2026-08-08
 
 # Unreleased
+
+## Rig/Tackle Data Integrity — Batch 1
+
+**Implementation Status: Validated**
+
+### Changed
+
+- Rig component requirements now reference canonical Tackle explicitly through `tackleId`.
+- Removed duplicated Rig-side component display names.
+- Removed manually maintained Tackle `rigIds`.
+- Tackle `Used In` is derived from active Rig component requirements.
+- Rig component and readiness missing-item labels resolve canonical Tackle names.
+- `script.js` uses `tackleId` consistently at the readiness callback boundary.
+- Existing readiness storage remains compatible because stored keys already use canonical Tackle ID strings.
+
+### Documentation Integrity
+
+- Corrected an initial documentation replacement that over-condensed `ARCHITECTURE.md`, `03-RIGS.md`, and `09-RELATIONSHIPS.md`.
+- Restored those documents from their exact pre-change GitHub baselines and reapplied only authorized changes.
+- Added `tools/validate_replacement_integrity.py` and a permanent workflow gate to detect suspicious documentation truncation before future delivery.
+
+### Validation
+
+- GitHub source/data-model inspection: passed.
+- Documentation correction/revalidation: passed.
+- All four current Rig detail/readiness flows: passed.
+- Canonical component-name rendering: passed.
+- Tackle `Name ⓘ` references: passed.
+- Required/optional readiness behavior: passed.
+- Readiness persistence: passed.
+- Derived `Used In` relationships: passed.
+- Fish Search regression: passed.
+- Rig browse/search regression: passed.
+- External Rig references: passed.
+- Related Tackle navigation: passed.
+- Normal-navigation console health: passed.
+- Phone and desktop layout checks: passed.
+
+See `workstreams/RIG-TACKLE-DATA-INTEGRITY.md` and `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`.
 
 ## Current-State UX Repairs
 
@@ -175,3 +214,4 @@ Historical release that introduced the local per-Rig readiness checklist and per
 - Functional Fish Search
 - Live search
 - Reusable result cards
+- Parent/Home navigation

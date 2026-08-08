@@ -1,30 +1,32 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md  
-**Document Revision:** 0.1.1  
+**Document Revision:** 0.1.2  
 **Document Status:** Approved  
-**Implementation Status:** In Progress  
+**Implementation Status:** Validated  
 **Last Updated:** 2026-08-08
 
 # Purpose
 
-Validation checklist for Rig/Tackle Data Integrity Batch 1.
+Validation record for Rig/Tackle Data Integrity Batch 1.
 
 # Replacement-Integrity Validation
 
-Before the corrective ZIP is delivered:
+The corrective documentation package was compared against the exact pre-change GitHub baseline.
 
-- compare corrected documentation against the exact pre-change GitHub baseline,
-- confirm every pre-existing Markdown heading is preserved unless explicitly authorized otherwise,
-- confirm no corrected document shrinks by more than 10 percent,
-- confirm deleted-line volume is below the 10 percent targeted-change threshold,
-- confirm the ZIP contains only intended permanent repository files.
+Passed:
+
+- pre-existing Markdown headings were preserved unless intentionally changed,
+- corrected documents remained within the targeted-change preservation thresholds,
+- the corrective ZIP contained only intended permanent repository files,
+- the repository-side safeguard `tools/validate_replacement_integrity.py` was added,
+- GitHub was revalidated after the correction push.
 
 Future documentation replacement packages must pass the same gate.
 
 # Repository Validation
 
-After push, confirm:
+Passed:
 
 - `data/rigs.js` requirements use `tackleId`.
 - No Rig requirement duplicates canonical Tackle `name`.
@@ -32,13 +34,14 @@ After push, confirm:
 - `view-renderer.js` derives `Used In` from active Rig requirements.
 - `script.js` uses `tackleId` consistently for readiness callbacks.
 - No package-only root artifacts were added.
-- All governing/data-model/workstream documents in this package are present.
+- Required governing/data-model/workstream documents are present.
+- Corrective documentation commit `4e1fdd10ae10935039a86959533e59b495cd09a1` was revalidated before runtime checks continued.
 
 # Data Integrity
 
-Confirm every current Rig component `tackleId` resolves to an active canonical Tackle record.
+Every current Rig component `tackleId` resolves to an active canonical Tackle record.
 
-Expected current distinct Tackle IDs:
+Validated current distinct Tackle IDs:
 
 - fixed-bobber
 - split-shot
@@ -56,16 +59,18 @@ Expected current distinct Tackle IDs:
 - soft-plastic
 - weight-peg
 
+**Result: Passed**
+
 # Runtime Regression
 
-Validate all four current Rigs:
+Validated all four current Rigs:
 
 - Fixed Bobber Rig
 - Slip Bobber Rig
 - Basic Bottom Rig
 - Texas Rig
 
-For each:
+For each, validation confirmed:
 
 - Rig detail opens.
 - `What You Need` displays canonical Tackle names.
@@ -75,34 +80,43 @@ For each:
 - Missing-item status uses canonical Tackle names.
 - Existing readiness selections persist across navigation/reload.
 
+Special optional-component behavior was also confirmed:
+
+- Protective Bead does not block Basic Bottom Rig readiness.
+- Weight Peg does not block Texas Rig readiness.
+
+**Result: Passed**
+
 # Derived Used In
 
-Spot-check:
+Validated:
 
 - Split Shot → Fixed Bobber Rig, Slip Bobber Rig
 - Fishing Hook → Fixed Bobber Rig, Slip Bobber Rig, Basic Bottom Rig
 - Bullet Weight → Texas Rig
 - Offset Worm Hook → Texas Rig
 
-Confirm no stale manual Tackle relationship is required.
+No stale manual Tackle relationship is required.
+
+**Result: Passed**
 
 # Regression Protection
 
-Confirm:
+Validated:
 
-- Fish Search still works.
-- Rig browse/search still works.
-- external Rig reference links still work.
-- related Tackle popover navigation still works.
-- no normal-navigation console errors occur.
-- phone and desktop layouts remain usable.
+- Fish Search by common name, scientific name, and category.
+- Rig browse/search and detail navigation.
+- External Rig reference links.
+- Related Tackle popover navigation.
+- Normal-navigation console health.
+- Phone and desktop Rig-detail layouts.
 
-# Closeout
+**Result: Passed**
 
-When all checks pass:
+# Final Result
 
-- update this document to `Implementation Status: Validated`,
-- update `HANDOFF.md`,
-- update any milestone/changelog status that changes,
-- push and re-fetch GitHub,
-- only then begin the next segment.
+**Rig/Tackle Data Integrity — Batch 1: VALIDATED**
+
+All planned source/data-integrity, repository, runtime, relationship, persistence, and regression checks passed.
+
+This validation record and the corresponding `HANDOFF.md`, `MILESTONES.md`, `CHANGELOG.md`, and workstream status update must be pushed and re-fetched from GitHub before the segment is considered repository-finalized.

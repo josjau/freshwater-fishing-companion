@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.7.1  
+**Document Revision:** 1.7.2  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-07
+**Last Updated:** 2026-08-08
 
 # Purpose
 
@@ -104,6 +104,42 @@ See:
 - `workstreams/UX-REPAIRS.md`
 - `workstreams/UX-REPAIRS-VALIDATION.md`
 
+## Rig/Tackle Data Integrity — Batch 1
+
+**Implementation Status: Validated**
+
+Validated scope:
+
+- explicit `Rig.componentRequirements[].tackleId`,
+- canonical Tackle display-name ownership,
+- removal of duplicated Rig-side component names,
+- removal of manual Tackle `rigIds`,
+- derived Tackle `Used In` relationships,
+- readiness storage compatibility,
+- consistent `tackleId` readiness parameter naming.
+
+Validated runtime/regression coverage:
+
+- all four current Rigs,
+- canonical `What You Need` names,
+- contextual Tackle references,
+- required/optional readiness behavior,
+- readiness persistence,
+- derived `Used In`,
+- Fish Search,
+- Rig browse/search,
+- external Rig references,
+- related Tackle navigation,
+- normal-navigation console health,
+- phone and desktop layouts.
+
+The initial documentation over-condensation defect was corrected before closeout, and a repository-side replacement-integrity safeguard was added.
+
+See:
+
+- `workstreams/RIG-TACKLE-DATA-INTEGRITY.md`
+- `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`
+
 # Next Segment
 
-The recommended next segment is Rig/Tackle data-integrity cleanup.
+After the Rig/Tackle closeout documentation is pushed and revalidated on GitHub, the recommended next segment is the Tackle recognition-image quality audit, followed by resolution of the Core-6 Rig-vs-setup modeling question.
