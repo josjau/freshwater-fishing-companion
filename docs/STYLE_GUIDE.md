@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.2.0
+**Document Revision:** 1.2.1
 **Document Status:** Approved
-**Last Updated:** 2026-08-07
+**Last Updated:** 2026-08-08
 
 # Purpose
 
@@ -140,6 +140,38 @@ Any future production-supported alternative theme may change appearance but must
 - User experience
 
 Previously approved Forest Journal behavior should not be altered by unrelated full-file replacements. Confirmed regressions should be restored narrowly without redesign or unrelated cleanup.
+
+
+# Core Learning Path Visual Emphasis
+
+Curated `Core` learning groups are intentional teaching paths and should receive stronger visual hierarchy than ordinary peer cards.
+
+Examples include:
+
+- **Core Rigs — Master These First**
+- Future **Core Knots**
+- Other explicitly approved `Core` or `Start Here` learning groups.
+
+Use restrained Forest Journal design flairs rather than a separate visual system. Appropriate treatments include:
+
+- stronger accent or border hierarchy,
+- a visible `Core`, `Start Here`, or equivalent badge/eyebrow,
+- modestly stronger title emphasis,
+- subtle surface/inset treatment,
+- section framing or grouping,
+- concise supporting copy explaining the recommended learning path.
+
+Rules:
+
+- Do not rely on color alone to communicate Core status.
+- Preserve contrast, keyboard focus, touch targets, and responsive behavior.
+- Avoid excessive animation, glow, ornamental effects, or novelty styling.
+- Keep the treatment reusable across domains so Core Rigs and Core Knots feel related.
+- Do not add canonical data fields solely for presentation unless a real cross-feature data requirement exists.
+- Core styling indicates instructional priority; it does not imply ownership, completion, recommendation ranking, or feature availability.
+- Unavailable Core items, if ever shown, must still follow the unavailable-feature rules and cannot masquerade as actionable.
+
+The goal is immediate recognition of the recommended starting path while preserving the calm field-guide character of Forest Journal.
 
 # Unified Field-Guide Presentation
 

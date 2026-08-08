@@ -1,7 +1,6 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/rigs.js
-   REPLACEMENT: RIG REFERENCE REFRESH
    PURPOSE: Provides canonical beginner-focused Rig records for
    browsing, instruction, verified references, and tackle readiness.
    ========================================================== */
@@ -10,8 +9,7 @@
 
 const RIG_DATA_BUILD_INFO = Object.freeze({
     file: "data/rigs.js",
-    milestone: "Reference Refresh",
-    replacement: "Verified Rig References"
+    milestone: "Rig/Tackle Data Integrity"
 });
 
 const RIG_DATA = Object.freeze([
@@ -45,29 +43,25 @@ const RIG_DATA = Object.freeze([
         ],
         componentRequirements: [
             {
-                id: "fixed-bobber",
-                name: "Clip-on bobber",
+                tackleId: "fixed-bobber",
                 quantity: 1,
                 required: true,
                 notes: "Attach at the depth you want the bait to hang."
             },
             {
-                id: "split-shot",
-                name: "Split shot",
+                tackleId: "split-shot",
                 quantity: 1,
                 required: false,
                 notes: "Add only if the bait needs help sinking."
             },
             {
-                id: "hook",
-                name: "Hook",
+                tackleId: "hook",
                 quantity: 1,
                 required: true,
                 notes: "Match hook size to the bait."
             },
             {
-                id: "bait",
-                name: "Live bait or small artificial bait",
+                tackleId: "bait",
                 quantity: 1,
                 required: true,
                 notes: "Worms are a simple beginner option."
@@ -127,43 +121,37 @@ const RIG_DATA = Object.freeze([
         ],
         componentRequirements: [
             {
-                id: "bobber-stop",
-                name: "Bobber stop",
+                tackleId: "bobber-stop",
                 quantity: 1,
                 required: true,
                 notes: "Controls the maximum fishing depth."
             },
             {
-                id: "stop-bead",
-                name: "Small bead",
+                tackleId: "stop-bead",
                 quantity: 1,
                 required: true,
                 notes: "Prevents the stop from passing through the float."
             },
             {
-                id: "slip-float",
-                name: "Slip float",
+                tackleId: "slip-float",
                 quantity: 1,
                 required: true,
                 notes: "Choose a float sized for the bait and weight."
             },
             {
-                id: "split-shot",
-                name: "Split shot",
+                tackleId: "split-shot",
                 quantity: 1,
                 required: true,
                 notes: "Use enough weight to balance the float."
             },
             {
-                id: "hook",
-                name: "Hook",
+                tackleId: "hook",
                 quantity: 1,
                 required: true,
                 notes: "Match hook size to the bait."
             },
             {
-                id: "bait",
-                name: "Live bait or small artificial bait",
+                tackleId: "bait",
                 quantity: 1,
                 required: true,
                 notes: "Common choices include worms, minnows, or small jigs."
@@ -226,43 +214,37 @@ const RIG_DATA = Object.freeze([
         ],
         componentRequirements: [
             {
-                id: "sliding-sinker",
-                name: "Sliding sinker",
+                tackleId: "sliding-sinker",
                 quantity: 1,
                 required: true,
                 notes: "An egg or no-roll sinker works well."
             },
             {
-                id: "bead",
-                name: "Protective bead",
+                tackleId: "bead",
                 quantity: 1,
                 required: false,
                 notes: "Protects the knot from the sinker."
             },
             {
-                id: "barrel-swivel",
-                name: "Barrel swivel",
+                tackleId: "barrel-swivel",
                 quantity: 1,
                 required: true,
                 notes: "Stops the sinker and connects the leader."
             },
             {
-                id: "leader-line",
-                name: "Leader line",
+                tackleId: "leader-line",
                 quantity: 1,
                 required: true,
                 notes: "Start with 12 to 24 inches."
             },
             {
-                id: "hook",
-                name: "Hook",
+                tackleId: "hook",
                 quantity: 1,
                 required: true,
                 notes: "Match the hook to the bait."
             },
             {
-                id: "bait",
-                name: "Bait",
+                tackleId: "bait",
                 quantity: 1,
                 required: true,
                 notes: "Use bait appropriate for the water and local rules."
@@ -325,29 +307,25 @@ const RIG_DATA = Object.freeze([
         ],
         componentRequirements: [
             {
-                id: "bullet-weight",
-                name: "Bullet weight",
+                tackleId: "bullet-weight",
                 quantity: 1,
                 required: true,
                 notes: "Use the lightest weight that reaches the target depth."
             },
             {
-                id: "offset-worm-hook",
-                name: "Offset worm hook",
+                tackleId: "offset-worm-hook",
                 quantity: 1,
                 required: true,
                 notes: "Match hook size to the soft plastic."
             },
             {
-                id: "soft-plastic",
-                name: "Soft plastic bait",
+                tackleId: "soft-plastic",
                 quantity: 1,
                 required: true,
                 notes: "Worms and creature baits are common choices."
             },
             {
-                id: "weight-peg",
-                name: "Weight peg",
+                tackleId: "weight-peg",
                 quantity: 1,
                 required: false,
                 notes: "Optional for keeping the weight close to the bait."
@@ -384,6 +362,5 @@ const RIG_DATA = Object.freeze([
 console.info(
     `[Loaded] ${RIG_DATA_BUILD_INFO.file} | ` +
     `${RIG_DATA_BUILD_INFO.milestone} | ` +
-    `${RIG_DATA_BUILD_INFO.replacement} | ` +
     `${RIG_DATA.length} records`
 );

@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.4.3  
+**Document Revision:** 0.4.5  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `b381f89dec6059050a856a2e2974a40864912b17`  
-**Last Updated:** 2026-08-07
+**Repository Baseline Reviewed:** `main` at `9ef3f32aa9b96f094e841d065d774feef24f4f7e`  
+**Last Updated:** 2026-08-08
 
 # 1. Start Here
 
@@ -28,18 +28,18 @@ Permanent operating rule:
 
 The repository baseline reviewed for this handoff is commit:
 
-`b381f89dec6059050a856a2e2974a40864912b17`
+`9ef3f32aa9b96f094e841d065d774feef24f4f7e`
 
 Commit message:
 
-`Merge branch 'main' of https://github.com/josjau/freshwater-fishing-companion`
+`Delete VALIDATION.txt`
 
 The Current-State UX Repairs segment is validated and repository-finalized.
 
 Validated governance state:
 
 - `HANDOFF.md` is present.
-- Decisions D022–D041 are present in `DECISIONS.md`.
+- Decisions D022–D042 are present in `DECISIONS.md`.
 - The canonical Tackle data-model document is present.
 - `docs/data-model/05A-INVENTORY.md` is the active Inventory/My Tackle model document.
 - Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
@@ -73,6 +73,22 @@ Runtime/regression validation passed for:
 - normal-navigation console health.
 
 See `workstreams/UX-REPAIRS.md` and `workstreams/UX-REPAIRS-VALIDATION.md`.
+
+## Rig/Tackle Data Integrity — Batch 1
+
+**Implementation Status: In Progress**
+
+The current package implements the approved D025–D026 relationship cleanup before Core-6 expansion:
+
+- `Rig.componentRequirements[].tackleId` explicitly references canonical Tackle.
+- duplicated Rig-side component display names are removed,
+- Tackle `rigIds` inverse arrays are removed,
+- Tackle `Used In` is derived from active Rig component requirements,
+- visible component names and readiness missing-item labels resolve from canonical Tackle,
+- the transitional readiness storage keeps the same underlying Tackle ID string keys,
+- `script.js` uses `tackleId` naming consistently at the readiness callback boundary.
+
+This segment is not Validated until the source/documentation package is pushed, GitHub is re-inspected, and runtime/regression checks pass.
 
 The exact current source implementation must always be re-fetched from GitHub before edits. Do not assume any proposed or locally staged change has been implemented until it appears on `main`.
 
@@ -112,6 +128,7 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 - Initial regional Rig target is 20 Rigs for northeast Oklahoma and southwest Kansas.
 - Core Rigs — Master These First contains six confidence-building Rigs and is the first Rig-expansion milestone.
 - The Core 6 must be complete, accurate, beginner-ready, and validated before expansion to the remaining fourteen rigs.
+- Approved Core learning groups such as Core Rigs and future Core Knots receive additional restrained Forest Journal visual hierarchy so recommended starting paths are immediately recognizable.
 - Tackle recognition imagery prioritizes clean edges and recognition quality over mandatory alpha transparency.
 - Artificial baked-in drop shadows are not part of the approved Tackle recognition style.
 - A restrained neutral Tackle-image background is acceptable when it produces cleaner recognition than a transparent cutout.
@@ -135,13 +152,9 @@ See `DECISIONS.md` and the governing data-model/media documents.
 **Implementation Status: Approved / Not Implemented**
 
 - Lightweight deterministic relevance ranking before Search becomes noisy.
-- Rig/Tackle data-integrity cleanup:
-  - remove duplicate Rig-side component display names,
-  - resolve canonical Tackle display names at render time,
-  - remove duplicate Tackle `rigIds`,
-  - derive reverse Rig usage from canonical Rig requirements.
 - Tackle recognition-image quality cleanup across the current production asset set.
 - Core 6 completion and validation before remaining regional Rig expansion.
+- Reusable Core learning-path card/section emphasis for Core Rigs, future Core Knots, and other explicitly approved starting-path groups.
 - Direct/shortest-path finished-Rig visual references where trustworthy sources permit.
 - Common fishing-knot step illustrations as a later Knots workstream.
 - Canonical Carolina Rig record to resolve the approved relationship during later expansion.
@@ -207,7 +220,7 @@ Recommended sequence:
    - derived inverse relationships.
 2. Audit the current Tackle recognition assets and approve a no-shadow, clean-edge replacement treatment before producing replacements.
 3. Resolve Core-6 Rig-vs-setup modeling for Inline Spinner Setup and Jighead + Soft Plastic.
-4. Complete and validate the Core 6.
+4. Complete and validate the Core 6, including the approved reusable Core learning-path visual emphasis.
 5. Improve finished-Rig visual references, favoring licensed local assets or direct stable verified visual destinations.
 6. Continue the remaining regional Rig expansion after the Core 6 is validated.
 7. Address the common-knot illustration workstream separately.

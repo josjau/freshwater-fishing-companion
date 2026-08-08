@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Current-State UX Repairs"
+    milestone: "Rig/Tackle Data Integrity"
 });
 
 function renderView(appMain, viewConfig) {
@@ -132,9 +132,22 @@ function renderSearchResults(appMain, records, resultConfig) {
     });
 }
 
-function getRelatedRigNames(rigIds) {
-    if (!Array.isArray(rigIds) || typeof RIG_DATA === "undefined") return [];
-    return rigIds.map((rigId) => findRecordById(RIG_DATA, rigId)).filter(Boolean).map((rig) => rig.name);
+function getTackleRecord(tackleId) {
+    if (!tackleId || typeof TACKLE_DATA === "undefined") return null;
+    const record = findRecordById(TACKLE_DATA, tackleId);
+    return record?.isActive === true ? record : null;
+}
+
+function getRelatedRigNames(tackleId) {
+    if (!tackleId || typeof RIG_DATA === "undefined") return [];
+
+    return RIG_DATA
+        .filter((rig) =>
+            rig.isActive === true &&
+            Array.isArray(rig.componentRequirements) &&
+            rig.componentRequirements.some((requirement) => requirement.tackleId === tackleId)
+        )
+        .map((rig) => rig.name);
 }
 
 function getReferenceMedia(referenceRecord) {
@@ -180,7 +193,7 @@ function renderReferencePopover(referenceId, triggerElement) {
         <section class="reference-popover__section"><h3>Common Variants</h3><p>${referenceRecord.commonVariants.join(", ")}</p></section>
     ` : "";
 
-    const relatedRigNames = getRelatedRigNames(referenceRecord.rigIds);
+    const relatedRigNames = getRelatedRigNames(referenceRecord.id);
     const rigsMarkup = relatedRigNames.length ? `
         <section class="reference-popover__section"><h3>Used In</h3><p>${relatedRigNames.join(", ")}</p></section>
     ` : "";
@@ -272,8 +285,14 @@ function renderInstructionDetail(appMain, detailConfig) {
     const record = detailConfig.record;
     const selections = detailConfig.selections ?? {};
     const componentsMarkup = record.componentRequirements.map((component) => {
-        const isOwned = selections[component.id] === true;
-        const checkboxId = `rig-component-owned-${record.id}-${component.id}`;
+        const tackleRecord = getTackleRecord(component.tackleId);
+        const componentName = tackleRecord?.name ?? component.tackleId;
+        const isOwned = selections[component.tackleId] === true;
+        const checkboxId = `rig-component-owned-${record.id}-${component.tackleId}`;
+
+        if (!tackleRecord) {
+            console.warn(`Canonical Tackle record was not found: ${component.tackleId}`);
+        }
 
         return `
             <li class="rig-component-item">
@@ -281,10 +300,10 @@ function renderInstructionDetail(appMain, detailConfig) {
                     <button
                         class="reference-link"
                         type="button"
-                        data-reference-id="${component.id}"
-                        aria-label="More information about ${component.name}"
+                        data-reference-id="${component.tackleId}"
+                        aria-label="More information about ${componentName}"
                     >
-                        <span>${component.name}</span>
+                        <span>${componentName}</span>
                         <span class="reference-link__icon" aria-hidden="true">ⓘ</span>
                     </button>
                     ${
@@ -299,7 +318,7 @@ function renderInstructionDetail(appMain, detailConfig) {
                         id="${checkboxId}"
                         class="rig-component-owned__checkbox"
                         type="checkbox"
-                        data-component-owned-id="${component.id}"
+                        data-component-owned-id="${component.tackleId}"
                         ${isOwned ? "checked" : ""}
                     >
                     <span>I have this</span>
@@ -353,7 +372,7 @@ function renderInstructionDetail(appMain, detailConfig) {
                 if (!component.required) return false;
                 return !checkboxes.find(
                     (checkbox) =>
-                        checkbox.dataset.componentOwnedId === component.id
+                        checkbox.dataset.componentOwnedId === component.tackleId
                 )?.checked;
             }
         );
@@ -372,7 +391,7 @@ function renderInstructionDetail(appMain, detailConfig) {
         status.className = "readiness-status readiness-status--missing";
         status.innerHTML = `
             <strong>Missing ${missingRequired.length}</strong>
-            <span>${missingRequired.map((item) => item.name).join(", ")}</span>
+            <span>${missingRequired.map((item) => getTackleRecord(item.tackleId)?.name ?? item.tackleId).join(", ")}</span>
         `;
     };
 

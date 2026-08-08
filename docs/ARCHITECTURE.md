@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.3.0
+**Document Revision:** 0.3.1
 **Document Status:** Approved
-**Last Updated:** 2026-08-07
+**Last Updated:** 2026-08-08
 
 # Purpose
 
@@ -49,6 +49,7 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
         STYLE_GUIDE.md
         archive/
         data-model/
+        workstreams/
 
 Required JavaScript load order:
 
@@ -59,7 +60,6 @@ Required JavaScript load order:
     search.js
     view-renderer.js
     script.js
-
 
 # Theme Support
 
@@ -147,9 +147,15 @@ The text in `assemblySteps` is the authoritative in-app build sequence.
 
 Rig owns physical assembly and rig-specific configuration. Reusable presentation behavior belongs to canonical Technique records.
 
-Rig `componentRequirements` is the authoritative source for Rig-to-Tackle usage relationships. Reverse Tackle-to-Rig `Used In` navigation should be derived from Rig requirements rather than stored independently on Tackle.
+Rig `componentRequirements` is the authoritative source for Rig-to-Tackle usage relationships.
 
-A Rig component references canonical Tackle by stable ID. Canonical Tackle owns the display name; Rig data owns only Rig-specific usage context such as required/optional status, quantity, order, size/configuration guidance, assembly role, and setup notes.
+Each requirement references canonical Tackle through:
+
+    componentRequirements[].tackleId
+
+Canonical Tackle owns the user-facing display name. Rig data owns only Rig-specific usage context such as required/optional status, quantity, order, size/configuration guidance, assembly role, and setup notes. Rig requirements do not duplicate canonical Tackle display names.
+
+Reverse Tackle-to-Rig `Used In` navigation is derived from active Rig requirements rather than stored independently on Tackle.
 
 Rig `referenceLinks` point to verified external fishing references used to visually confirm completed rigs. They are not production-media copies and do not transfer ownership of external content into the project.
 
@@ -163,17 +169,15 @@ Canonical Tackle represents functional tackle types rather than a user's exact c
 
 Tackle may exist independently of a Rig.
 
-Rigs reference Tackle records through component IDs.
-
-**Approved / Not Implemented:** manually maintained inverse `rigIds` should be removed during the deliberate Rig/Tackle model cleanup; reverse Rig usage will be derived from `Rig.componentRequirements`.
+Tackle does not store manual inverse `rigIds` for Rig usage. Reverse Rig usage is derived from `Rig.componentRequirements[].tackleId`.
 
 ## `data/media.js`
 
 Owns reusable canonical media metadata and stable media IDs.
 
-The active media catalog for this refresh contains only the approved contextual Tackle reference media. Obsolete generated Rig SVGs and superseded Tackle SVGs are removed as part of this replacement.
+Approved Tackle reference imagery is displayed only when contextual `Name ⓘ` help is opened.
 
-Approved Tackle reference imagery uses optimized transparent WebP files and is displayed only when contextual `Name ⓘ` help is opened.
+The exact Tackle asset treatment is under a separate planned quality cleanup. Clean edges and recognition quality take priority over mandatory transparency, and artificial baked-in drop shadows are not approved.
 
 ## `search.js`
 
@@ -191,6 +195,8 @@ Owns reusable rendering and UI interactions, including:
 - Rig external-reference links
 - My Tackle inventory-domain rendering
 - Contextual `Name ⓘ` Tackle reference rendering
+- Canonical Tackle name resolution for Rig requirements
+- Derived Tackle `Used In` Rig names
 - Related-component popover navigation
 - Combined Rig requirements/readiness rendering
 - Parent/Home navigation
@@ -208,7 +214,9 @@ Coordinates:
 - Rig Guide, Rig browsing, Rig details
 - My Tackle
 - Current local readiness-state loading/persistence
-- Current per-Rig component selections
+- Current per-Rig Tackle availability selections
+
+The transitional readiness state continues to store the same canonical Tackle ID string keys. The data-model field rename from requirement `id` to `tackleId` does not require readiness-state migration.
 
 # Rig Guide Architecture
 
@@ -223,6 +231,7 @@ Current Rig flow:
         → Good Conditions
         → Verified Rig Examples ↗
         → What You Need + Readiness
+            → canonical Tackle name
             → Mark current availability inline
             → Tackle Reference Popover ⓘ
             → Ready / missing-required status
@@ -233,7 +242,7 @@ Current Rig flow:
 
 Rig pages intentionally use authoritative text instructions rather than generated Rig build diagrams.
 
-Completed-Rig visual confirmation uses verified external references unless a clearly licensed, technically verified local asset is approved.
+Completed-Rig visual confirmation uses a technically verified and legally reusable local image when approved; otherwise the most direct stable verified external visual destination available.
 
 ## Approved Rig Library Expansion — Not Implemented
 
@@ -269,9 +278,13 @@ The confidence-building subset **Core Rigs — Master These First** contains:
 - Texas Rig
 - Slip Bobber Rig
 
-The teaching strategy is to build success and confidence with these broadly useful rigs before expanding the user's fishing arsenal.
+The Core 6 are the first Rig-expansion milestone and must be complete, accurate, beginner-ready, and validated before expansion to the remaining fourteen Rigs.
 
-Carolina Rig is approved for the near-term canonical library. The existing `carolina-rig` relationship should be resolved by implementing the canonical Rig during the expansion rather than treating Carolina Rig as an unwanted concept.
+Per D042, Core learning groups receive additional restrained Forest Journal hierarchy so the recommended starting path is immediately recognizable.
+
+Before adding the two currently absent Core entries, resolve whether Inline Spinner Setup and Jighead + Soft Plastic are correctly modeled as canonical Rigs or should be represented as lure/setup combinations.
+
+Carolina Rig remains approved for the later regional expansion and resolves the current forward relationship when its canonical record is implemented.
 
 # My Tackle Architecture
 
@@ -279,13 +292,15 @@ Carolina Rig is approved for the near-term canonical library. The existing `caro
 
 Canonical Tackle definitions remain Reference Knowledge in `data/tackle.js`. Canonical Tackle defines the functional type; My Tackle defines the user's actual possessions.
 
-Approved Tackle WebP imagery is shown only through contextual `Name ⓘ` help when the user needs recognition assistance.
-
 Rig `What You Need` lists remain text-first and do not display images by default.
 
 ## Current
 
-The application uses the transitional local readiness key `freshwaterFishingCompanion.tackleReadiness.v1`. Each Rig maintains independent component selections.
+The application uses the transitional local readiness key:
+
+    freshwaterFishingCompanion.tackleReadiness.v1
+
+Each Rig maintains independent availability selections keyed by canonical Tackle ID.
 
 ## Approved / Not Implemented
 
@@ -316,13 +331,13 @@ Permanent principle: **User Knowledge is data, not markup.**
 
 # Unavailable Feature Affordance
 
-**Approved / Not Implemented:** child cards for planned features may remain visible when they help communicate application structure, but unavailable cards must be clearly marked `Coming Soon` or equivalent. They must not retain hover, pointer, click, or other affordances that imply working navigation, and should use accessible disabled/unavailable semantics.
+Current unavailable child cards use `Coming Soon` semantics and do not retain misleading hover/pointer/click affordances.
 
 Permanent rule: **Anything that looks actionable must either perform an action or clearly communicate that it is unavailable.**
 
 # Interaction Depth
 
-Common field workflows should stay within approximately three intentional interactions from a relevant entry point whenever practical. Do not add a separate page when the same task can be completed clearly in context. The combined Rig requirements/readiness section follows this rule by keeping identification help, availability, and readiness feedback on the Rig detail page.
+Common field workflows should stay within approximately three intentional interactions from a relevant entry point whenever practical. Do not add a separate page when the same task can be completed clearly in context.
 
 # Link Semantics
 
@@ -332,33 +347,13 @@ Common field workflows should stay within approximately three intentional intera
 
 Meaning: open contextual information without leaving the current page.
 
-Behavior:
-
-- Desktop centered modal
-- Mobile bottom-sheet style when appropriate
-- Underlying page remains
-- Close restores focus to the original trigger
-- Related references may open contextually
-
 ## External verified reference
 
     Reference Name ↗
 
 Meaning: open an external source in a new tab.
 
-External CTA labels should name the destination when practical rather than use generic wording. The approved Dashboard Regulations label is:
-
-    Go to ODWC Regulations ↗
-
-The `↗` marker indicates that the user is leaving the application for an external destination. Do not use `ⓘ` for external navigation.
-
-# Dashboard Regression Restoration
-
-**Current:** the production Forest Journal Dashboard is missing portions of the previously approved card hierarchy and interaction styling because an unrelated replacement removed approved Dashboard rules.
-
-**Approved / Not Implemented:** restore the previously validated Dashboard behavior without redesign. The repair restores the stronger primary-card treatment, 6px left accent, 2px right accent, primary title emphasis, approved vertical spacing, gradient hover treatment, active behavior, and `overflow: hidden`. Preserve the current pill CTA and all newer Rig/Tackle styling.
-
-The repair must not change card order, labels, navigation, Dashboard content, theme direction, dormant themes, or unrelated CSS.
+External CTA labels should name the destination when practical rather than use generic wording.
 
 # Media Architecture
 
@@ -366,8 +361,8 @@ Detailed media rules are authoritative in `MEDIA_GUIDE.md`.
 
 Preferred formats:
 
-- Optimized transparent WebP for photographic/semi-photorealistic Tackle reference media
-- SVG for technically safe diagrams, line art, and instructional graphics
+- Optimized WebP for photographic/semi-photorealistic Tackle reference media
+- SVG for technically safe diagrams, line art, knot instruction, and other genuine vector instructional graphics
 
 Entity rules:
 
@@ -378,26 +373,11 @@ Entity rules:
 - Lures: photography or accurate illustration according to recognition requirements
 - Techniques: instructional media only when it improves understanding
 
-# Storage Strategy
-
-GitHub Pages footprint is a design constraint.
-
-General targets:
-
-- Contextual Tackle reference imagery: aggressively optimized; avoid unnecessary source resolution
-- Individual Tackle raster imagery: normally below approximately 150 KB
-- Fish identification photos: approximately 150–300 KB when diagnostic detail requires it
-- SVG: keep compact and avoid unnecessary embedded raster data
-
-Current approved Tackle reference assets are stored as optimized WebP files with alpha transparency so they inherit the surrounding application surface.
-
 # Inline Rig Readiness
 
-Rig readiness is integrated into the `What You Need` section so a user can identify a component and see readiness without navigating to a separate page.
+Rig readiness is integrated into the `What You Need` section.
 
-## Current transitional implementation
-
-Storage key:
+Current transitional storage key:
 
     freshwaterFishingCompanion.tackleReadiness.v1
 
@@ -405,22 +385,17 @@ Rules:
 
 - Optional components do not block readiness.
 - All required components must be selected for `Ready to Fish`.
-- Missing required components are listed by name.
+- Missing required components are listed using canonical Tackle names.
 - Each Rig maintains independent state.
 - Malformed stored data falls back safely.
 
-## Approved ownership implementation — Not Implemented
-
-My Tackle will replace the persistent lookup source while preserving the inline Rig Readiness interface. Owned required items are automatically satisfied; a separate temporary session-availability state may satisfy borrowed or newly acquired items without writing ownership back to My Tackle.
-
-
 # Repository Handoff and Closeout
 
-`docs/HANDOFF.md` is the first-read current-state map for future sessions and contributors. It links to governing documents rather than duplicating them.
+`docs/HANDOFF.md` is the first-read current-state map.
 
-A session, module, or section is not finalized until all relevant documentation is updated, pushed, inspected on GitHub, and validated. The project does not begin a new build segment while the current segment remains unfinalized.
+A session, module, or section is not finalized until all relevant implementation and documentation are updated, pushed, inspected on GitHub, and validated.
 
-Meaningful cross-segment discussions receive the same documentation treatment as in-segment decisions. They may be deliberately parked at a clean stopping point when they do not materially change the active work, but the parked context must be preserved.
+Meaningful cross-segment discussions receive the same documentation treatment as in-segment decisions.
 
 # Development Architecture
 
@@ -430,27 +405,10 @@ Permanent rules include:
 
 - Fetch latest GitHub source before editing.
 - Complete-file replacement is the default delivery method.
-- Coherent multi-file modules may be delivered as ZIP packages.
+- Prefer one coherent ZIP for a coherent multi-file segment whenever practical.
+- Include required documentation with the implementation rather than creating avoidable extra pushes.
+- Do not put temporary package-only artifacts inside the repository ZIP.
 - User normally reviews and commits through GitHub Desktop.
 - Verify GitHub after push.
-- Documentation closeout is mandatory and must be validated in GitHub before a segment is finalized.
+- Documentation closeout is mandatory.
 - Do not begin a new build segment while the current one is unfinalized.
-- Capture meaningful cross-segment decisions even when they arise outside the active module.
-- Commands intended for user copy/paste are placed in fenced code blocks.
-
-# Current Reference-Refresh Scope
-
-The current deployed reference-refresh package changed the presentation layer without changing the canonical 15-item Tackle catalog or the transitional Tackle Readiness storage contract.
-
-Implemented changes include:
-
-- My Tackle remains the user-owned inventory domain
-- Approved transparent Tackle recognition media used only in contextual help
-- Text-first Tackle contextual popovers
-- Verified external completed-Rig reference links
-- Text-first Rig assembly instructions
-- Texas Rig wording corrected for bait seating, rotation, re-entry measurement, and skin-hook finish
-- Dashboard `My Tackle` label
-- Existing Fish Search and transitional readiness workflows preserved
-
-Approved Batch 1 architecture in D022–D029 is documented here but is not automatically implemented by this documentation update.

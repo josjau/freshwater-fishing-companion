@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 05-TACKLE.md  
-**Document Revision:** 0.1.0  
+**Document Revision:** 0.1.1  
 **Document Status:** Approved  
-**Implementation Status:** Current  
-**Decision Baseline:** D026, D028, D037
+**Implementation Status:** In Progress  
+**Decision Baseline:** D025, D026, D028, D037
 
 # Purpose
 
@@ -34,9 +34,17 @@ A future ProductDefinition may describe an exact commercial product if an approv
 
 # Canonical Identity
 
-Canonical Tackle owns its own identity and display name. A Rig that references a Tackle ID must resolve the user-facing Tackle name from the canonical Tackle record rather than maintain an independent display-name source.
+Canonical Tackle owns its own identity and display name.
 
-Core fields should follow `01-FOUNDATION.md` and may include, where required by approved features:
+A Rig requirement references a canonical Tackle record through:
+
+```text
+tackleId
+```
+
+The user-facing component name is resolved from the referenced canonical Tackle record.
+
+Core fields follow `01-FOUNDATION.md` and may include:
 
 ```text
 id
@@ -47,21 +55,21 @@ category
 recognitionNotes
 commonVariants
 relatedTackleIds
-imageIds
+mediaIds
 createdVersion
 lastModifiedVersion
 isActive
 ```
 
-Exact field shape remains governed by the current production data and future approved schema work; fields must not be added speculatively.
+`rigIds` is not part of the canonical Tackle ownership model for Rig usage.
 
 # Rig Relationships
 
-Rigs act as recipes and reference canonical Tackle through `Rig.componentRequirements`.
+Rigs act as recipes and reference canonical Tackle through `Rig.componentRequirements[].tackleId`.
 
-`Rig.componentRequirements` is the authoritative source for Rig-to-Tackle usage. Tackle does not independently maintain an inverse `rigIds` source of truth.
+`Rig.componentRequirements` is the authoritative source for Rig-to-Tackle usage.
 
-The UI may still show:
+The UI may show:
 
 ```text
 Tackle
@@ -69,11 +77,13 @@ Tackle
     -> matching Rigs
 ```
 
-but that inverse is derived from canonical Rig data.
+That inverse is derived by scanning active Rig component requirements.
 
 # Rig-Specific Context
 
-Canonical Tackle owns identity. The Rig owns context specific to its use of that component, including where approved:
+Canonical Tackle owns identity.
+
+The Rig owns context specific to its use of the component, including where approved:
 
 - required/optional status
 - quantity
@@ -86,7 +96,7 @@ Context-specific display labels are not added unless a demonstrated UX need just
 
 # Search and Connected Knowledge
 
-Canonical Tackle may be searchable by deliberate fields such as canonical name, approved aliases, beginner terminology, category, and approved keywords. Incidental descriptive text alone should not create weak Search results.
+Canonical Tackle may be searchable by deliberate fields such as canonical name, approved aliases, beginner terminology, category, and approved keywords.
 
 After a Tackle entity is identified, connected knowledge may expose:
 
@@ -98,13 +108,19 @@ After a Tackle entity is identified, connected knowledge may expose:
 
 # Media
 
-Canonical Tackle recognition imagery follows `../MEDIA_GUIDE.md`. Current approved reference media is intended for recognition help through contextual `Name ⓘ` rather than default inline display in every Rig requirement.
+Canonical Tackle recognition imagery follows `../MEDIA_GUIDE.md`.
+
+Current reference media is intended for recognition help through contextual `Name ⓘ` rather than default inline display in every Rig requirement.
+
+The approved quality direction prioritizes clean edges and recognition quality over mandatory transparency and prohibits artificial baked-in drop shadows.
 
 # Current Implementation
 
-`data/tackle.js` currently owns the production canonical Tackle records and stable IDs.
+`data/tackle.js` owns the production canonical Tackle records and stable IDs.
 
-Some current records still contain manually maintained inverse Rig relationships. Removing that duplication and deriving `Used In` from Rig requirements is **Approved / Not Implemented** until the deliberate Rig/Tackle cleanup is completed and validated.
+The Rig/Tackle Data Integrity Batch 1 implementation removes manually maintained `rigIds` and derives `Used In` from active Rig requirements.
+
+The segment remains **In Progress** until the package is pushed and runtime/regression validation passes.
 
 # Future / Deferred
 

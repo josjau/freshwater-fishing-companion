@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.3.1
+**Document Revision:** 0.3.3
 **Document Status:** Approved
-**Last Updated:** 2026-08-07
+**Last Updated:** 2026-08-08
 
 # Purpose
 
@@ -54,6 +54,7 @@ This document records long-term architectural decisions.
 | D039 | Documentation-Validated Closeout | Approved |
 | D040 | No Unvalidated Build Transition | Approved |
 | D041 | Cross-Segment Decision Capture and Parking | Approved |
+| D042 | Core Learning Path Visual Emphasis | Approved |
 
 # D001 – Local-First Architecture
 
@@ -232,9 +233,13 @@ Tackle may still own genuine Tackle-domain relationships such as related compone
 
 Canonical Tackle data owns Tackle identity and display name.
 
-Rig component requirements reference Tackle by stable ID and own only Rig-specific usage context such as required/optional status, quantity, order, size/configuration guidance, assembly role, and setup notes.
+Rig component requirements reference canonical Tackle explicitly through `tackleId`. The requirement remains a component requirement, while `tackleId` identifies the canonical Tackle concept that satisfies it.
 
-Duplicated Rig component `name` values are non-authoritative and should be removed when the relevant data/rendering cleanup is implemented. The UI should resolve the component display name from canonical Tackle.
+Rig component requirements own only Rig-specific usage context such as required/optional status, quantity, order, size/configuration guidance, assembly role, and setup notes.
+
+Duplicated Rig component `name` values are non-authoritative and are removed by the Rig/Tackle data-integrity implementation. The UI resolves the component display name from canonical Tackle.
+
+A separate requirement-level `id` is not added unless a demonstrated editing, migration, annotation, or persistence need requires independent requirement identity.
 
 Context-specific display labels are deferred unless a demonstrated UX need appears.
 
@@ -297,7 +302,7 @@ When My Tackle is implemented as the authoritative source:
 - Rig Readiness reads ownership from My Tackle.
 - Required canonical Tackle types already owned are automatically satisfied.
 - Missing components may be marked temporarily available for the current build/session when they were borrowed, just purchased, or otherwise available without being recorded as owned.
-- Temporary session availability never writes My Tackle.
+- Temporary session availability never writes to My Tackle.
 - My Tackle is the only persistent ownership source of truth.
 - Persistent My Tackle state may only be changed through explicit My Tackle ownership-management workflows such as Add Tackle, Edit Tackle, or Remove Tackle.
 - Search, Rig Readiness, Recommendations, prior readiness checkmarks, usage inference, and other features may not silently create or modify ownership.
@@ -460,3 +465,40 @@ A project-wide question raised mid-stream that produces a meaningful architectur
 Such outcomes must be classified as appropriate (`Build Now`, `Parking Lot`, `Reject`, or `Open`) and captured in the relevant governing documentation before closeout.
 
 When a substantial off-segment discussion would unnecessarily interrupt a coherent build segment, the technical lead may recommend parking it until a clean stopping point. The topic must be recorded with enough context that it cannot be lost. If the issue materially changes the work currently underway, it is discussed immediately instead.
+
+
+# D042 – Core Learning Path Visual Emphasis
+
+Curated beginner learning paths that the application explicitly recommends as high-priority starting points must receive additional visual hierarchy within the Forest Journal design system.
+
+Examples include:
+
+- **Core Rigs — Master These First**
+- Future **Core Knots**
+- Other future curated `Core` learning groups only when they have been deliberately approved as recommended starting paths.
+
+The purpose of the additional treatment is instructional prioritization, not decoration. A newer angler should be able to identify the recommended starting path quickly without reading every card equally.
+
+Approved treatment may include restrained combinations of:
+
+- stronger accent/border treatment,
+- a `Core`, `Start Here`, or equivalent badge/eyebrow,
+- slightly stronger title hierarchy,
+- subtle surface or inset accent treatment,
+- grouping or section framing,
+- concise supporting copy that explains why the group is important.
+
+Core emphasis must:
+
+- remain consistent with Forest Journal,
+- preserve mobile readability,
+- preserve keyboard/focus behavior,
+- maintain sufficient contrast,
+- avoid meaning conveyed by color alone,
+- avoid excessive animation or decorative clutter,
+- remain visually subordinate to page-level navigation and safety-critical information,
+- not change canonical data ownership merely to create a visual effect.
+
+The same visual language should be reusable across domains rather than inventing unrelated styling for Core Rigs, Core Knots, and future curated learning groups.
+
+Permanent principle: **important recommended learning paths should look important, but still belong to the same field guide.**

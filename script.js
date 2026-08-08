@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Current-State UX Repairs"
+    milestone: "Rig/Tackle Data Integrity"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -190,8 +190,8 @@ function renderRigDetailView(appMain) {
         parentLabel: "All Rigs",
         selections: getRigReadinessSelections(rig.id),
         onParent: () => showView(ROUTES.RIG_BROWSE),
-        onReadinessChange: (componentId, isOwned) =>
-            updateRigReadinessSelection(rig.id, componentId, isOwned)
+        onReadinessChange: (tackleId, isOwned) =>
+            updateRigReadinessSelection(rig.id, tackleId, isOwned)
     });
 }
 
@@ -221,10 +221,10 @@ function getRigReadinessSelections(rigId) {
     return rigState && typeof rigState === "object" ? rigState : {};
 }
 
-function updateRigReadinessSelection(rigId, componentId, isOwned) {
+function updateRigReadinessSelection(rigId, tackleId, isOwned) {
     const state = getReadinessState();
     const rigState = state[rigId] && typeof state[rigId] === "object" ? state[rigId] : {};
-    rigState[componentId] = isOwned;
+    rigState[tackleId] = isOwned;
     state[rigId] = rigState;
     saveReadinessState(state);
 }
