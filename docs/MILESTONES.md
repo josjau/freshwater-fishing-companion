@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.6.0  
+**Document Revision:** 1.7.0  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-07
 
@@ -46,7 +46,7 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 - Parent/Home navigation
 - Responsive validation
 
-**Current note:** the lightweight substring implementation remains current, but D022 establishes relevance-first Search as the permanent quality standard and approves lightweight deterministic ranking before dataset growth makes Search noisy.
+**Current note:** the lightweight substring implementation remains current, while D022 establishes relevance-first Search as the permanent quality standard.
 
 ## MS2.4 — Functional Rig Guide
 
@@ -68,16 +68,44 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 
 Historical MS2.5 validated a dedicated readiness route and per-Rig local checklist.
 
-**Superseding current architecture:** D020 moved readiness into the Rig `What You Need` section and removed the separate readiness page from the primary workflow. D028 further establishes that future persistent ownership comes only from My Tackle; the current local readiness storage is transitional.
+**Superseding current architecture:** D020 moved readiness into the Rig `What You Need` section. D028 establishes future My Tackle ownership authority.
 
 ## MS2.6 — Tackle References and Rig Visual Guides
 
-Historical MS2.6 validated canonical Tackle/media infrastructure, contextual reference popovers, generated Rig overview/assembly imagery, and a 23-record media catalog.
+Historical MS2.6 validated canonical Tackle/media infrastructure, contextual reference popovers, generated Rig imagery, and a 23-record media catalog.
 
-**Superseding current architecture:** D017–D019 replaced generated completed-Rig/build-step imagery with authoritative text assembly plus verified external Rig references. Current active Tackle recognition media uses approved transparent WebP assets in contextual `Name ⓘ` help. Generated Rig imagery from MS2.6 is historical, not current production guidance.
+**Superseding current architecture:** D017–D019 replaced generated completed-Rig/build-step imagery with authoritative text assembly plus verified external Rig references.
 
-# Current / Next Milestone
+# Active Build Segment
 
-No new build segment should be declared active until the current documentation/governance closeout is pushed and validated in GitHub. See D039–D041 and `DEVELOPMENT_WORKFLOW.md`.
+## Current-State UX Repairs
 
-After closeout, `HANDOFF.md` identifies the recommended next work and must be updated as the active segment changes.
+**Implementation Status: In Progress**
+
+Approved scope:
+
+- D030: inert child cards use clear `Coming Soon` unavailable semantics.
+- D031: Dashboard Regulations CTA uses `Go to ODWC Regulations ↗`.
+- D032: restore the previously approved Forest Journal Dashboard hierarchy and interaction behavior without redesign.
+
+Protected regressions:
+
+- Fish Search
+- Rig browsing/detail
+- Tackle contextual popovers
+- Inline Rig readiness
+- Dashboard card order and parent routes
+- Current data/media architecture
+
+The segment is not complete until the source/documentation package is pushed and validated in GitHub and runtime behavior is checked.
+
+See:
+
+- `workstreams/UX-REPAIRS.md`
+- `workstreams/UX-REPAIRS-VALIDATION.md`
+
+# Next Segment
+
+Do not select the next build segment until Current-State UX Repairs is finalized and validated.
+
+After validation, the recommended next segment is Rig/Tackle data-integrity cleanup.

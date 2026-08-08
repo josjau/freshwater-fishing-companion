@@ -1,7 +1,6 @@
 /* =========================================================
    FRESHWATER FISHING COMPANION
    THEME: FOREST JOURNAL
-   REPLACEMENT: RIG AND TACKLE REFERENCE REFRESH
    ========================================================= */
 
 :root {
@@ -109,6 +108,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     justify-content: space-between;
     width: 100%;
     padding: var(--space-5) var(--space-6);
+    overflow: hidden;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: linear-gradient(90deg, color-mix(in srgb, var(--card-accent) 10%, transparent) 0, transparent 25px), var(--surface-elevated);
@@ -119,13 +119,35 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     cursor: pointer;
 }
 .dashboard-card::before { position: absolute; inset-block: 0; left: 0; width: 4px; background: var(--card-accent); content: ""; }
-.dashboard-card--primary { min-height: 146px; border-color: var(--border-strong); }
+.dashboard-card::after { position: absolute; inset-block: 0; right: 0; width: 0; background: var(--card-accent); content: ""; }
+.dashboard-card--primary { min-height: 146px; padding-block: var(--space-6); border-color: var(--border-strong); }
 .dashboard-card--primary::before { width: 6px; }
-.dashboard-card:hover { border-color: var(--border-strong); background: var(--surface-hover); box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+.dashboard-card--primary::after { width: 2px; }
+.dashboard-card:hover {
+    border-color: var(--border-strong);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--card-accent) 15%, transparent) 0, transparent 30px), var(--surface-hover);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+}
+.dashboard-card:active { background: var(--surface-active); transform: scale(0.985); }
 .dashboard-card:focus-visible { outline: 3px solid var(--card-accent); outline-offset: 3px; }
 .dashboard-card__title { display: block; margin-bottom: var(--space-2); font-size: 1.125rem; font-weight: 750; }
+.dashboard-card--primary .dashboard-card__title { font-size: 1.2rem; }
 .dashboard-card__description { display: block; color: var(--text-muted); font-size: 0.95rem; }
 .dashboard-card__action { display: inline-flex; align-self: flex-start; margin-top: var(--space-5); padding: 4px 10px; border: 1px solid color-mix(in srgb, var(--card-accent) 45%, white 15%); border-radius: 999px; background: color-mix(in srgb, var(--card-accent) 12%, transparent); font-weight: 700; }
+.dashboard-card--unavailable {
+    cursor: default;
+}
+.dashboard-card--unavailable:hover,
+.dashboard-card--unavailable:active {
+    border-color: var(--border);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--card-accent) 10%, transparent) 0, transparent 25px), var(--surface-elevated);
+    box-shadow: var(--shadow-card);
+    transform: none;
+}
+.dashboard-card--unavailable .dashboard-card__action {
+    color: var(--text-subtle);
+}
 .dashboard-card:nth-child(1) { --card-accent: var(--accent-fish); }
 .dashboard-card:nth-child(2) { --card-accent: var(--accent-rigs); }
 .dashboard-card:nth-child(3) { --card-accent: var(--accent-recommendations); }
@@ -176,8 +198,6 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .rig-reference-link:hover { border-color: var(--accent-rigs); background: var(--surface-hover); }
 .rig-reference-link:focus-visible { outline: 3px solid var(--accent-rigs); outline-offset: 3px; }
 
-
-
 .reference-link { display: inline-flex; min-height: auto; align-items: center; gap: var(--space-1); margin: 0; padding: 0; border: 0; background: transparent; color: var(--text); font-weight: 800; text-align: left; cursor: pointer; }
 .reference-link:hover { color: var(--accent-hover); }
 .reference-link:focus-visible { border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 3px; }
@@ -199,7 +219,6 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .reference-popover__section ul { margin: 0; padding-left: 1.25rem; }
 .reference-popover__related { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .reference-popover__related-link { display: inline-flex; min-height: 38px; align-items: center; gap: var(--space-1); padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); font-size: 0.9rem; font-weight: 700; cursor: pointer; }
-
 
 .rig-requirements-section__header {
     display: grid;

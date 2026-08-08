@@ -1,7 +1,6 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: view-renderer.js
-   REPLACEMENT: REFERENCE-FIRST RIG AND TACKLE PAGES
    PURPOSE: Owns reusable views, search results, Rig details,
    My Tackle presentation, contextual references, and inline Rig readiness.
    ========================================================== */
@@ -10,8 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Reference Refresh",
-    replacement: "Reference-First Rig and Tackle Pages"
+    milestone: "Current-State UX Repairs"
 });
 
 function renderView(appMain, viewConfig) {
@@ -20,12 +18,26 @@ function renderView(appMain, viewConfig) {
         return;
     }
 
-    const cardsMarkup = viewConfig.cards.map((card) => `
-        <button class="dashboard-card" type="button" data-card-id="${card.id}">
-            <span class="dashboard-card__title">${card.title}</span>
-            <span class="dashboard-card__description">${card.description}</span>
-        </button>
-    `).join("");
+    const cardsMarkup = viewConfig.cards.map((card) => {
+        const isAvailable = card.isAvailable === true && typeof viewConfig.onCardSelect === "function";
+
+        if (!isAvailable) {
+            return `
+                <div class="dashboard-card dashboard-card--unavailable" aria-disabled="true">
+                    <span class="dashboard-card__title">${card.title}</span>
+                    <span class="dashboard-card__description">${card.description}</span>
+                    <span class="dashboard-card__action">Coming Soon</span>
+                </div>
+            `;
+        }
+
+        return `
+            <button class="dashboard-card" type="button" data-card-id="${card.id}">
+                <span class="dashboard-card__title">${card.title}</span>
+                <span class="dashboard-card__description">${card.description}</span>
+            </button>
+        `;
+    }).join("");
 
     appMain.innerHTML = `
         <section class="content-view" aria-labelledby="${viewConfig.headingId}">
@@ -380,5 +392,4 @@ function renderInstructionDetail(appMain, detailConfig) {
     updateReadinessStatus();
 }
 
-
-console.info(`[Loaded] ${VIEW_RENDERER_BUILD_INFO.file} | ${VIEW_RENDERER_BUILD_INFO.milestone} | ${VIEW_RENDERER_BUILD_INFO.replacement}`);
+console.info(`[Loaded] ${VIEW_RENDERER_BUILD_INFO.file} | ${VIEW_RENDERER_BUILD_INFO.milestone}`);

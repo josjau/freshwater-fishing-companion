@@ -1,14 +1,14 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.4.0  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `591a3b2309d1c7c8cf1ff6abdf98f7261735145b`  
+**Repository Baseline Reviewed:** `main` at `e1447e67b082d67640298829e120a034014dd44e`  
 **Last Updated:** 2026-08-07
 
 # 1. Start Here
 
-GitHub `main` is authoritative for existing project files. This document is the repository current-state map, not a duplicate specification. Follow the governing documents linked below before proposing changes.
+GitHub `main` is authoritative for existing project files. This document is the repository current-state map, not a duplicate specification.
 
 Recommended first-read order:
 
@@ -26,260 +26,120 @@ Permanent operating rule:
 
 # 2. Current Repository / Milestone State
 
-The repository baseline reviewed for this handoff is commit:
+The last fully validated governance baseline is `main` at:
 
-`591a3b2309d1c7c8cf1ff6abdf98f7261735145b`
+`e1447e67b082d67640298829e120a034014dd44e`
 
-Commit message:
+The Batch 1–3 documentation/governance segment is validated and closed.
 
-`Delete _PACKAGE-VALIDATION.txt`
+## Active Build Segment
 
-The Batch 1–3 documentation/governance package and cleanup have been pushed to GitHub and inspected.
+**Current-State UX Repairs**
 
-Validated repository state:
+**Implementation Status: In Progress**
 
-- `HANDOFF.md` is present.
-- Decisions D022–D041 are present in `DECISIONS.md`.
-- The canonical Tackle data-model document is present.
-- `docs/data-model/05A-INVENTORY.md` is the active Inventory/My Tackle model document.
-- Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
-- Root `_PACKAGE-VALIDATION.txt` has been removed.
-- Historical package artifacts and obsolete design-board/preview assets remain preserved in archive paths.
-- The documentation/governance cleanup identified during validation is complete.
+This coherent segment contains three previously approved repairs:
 
-**Current Segment Status: Validated**
+1. Clear `Coming Soon` semantics for inert child cards.
+2. Dashboard Regulations CTA: `Go to ODWC Regulations ↗`.
+3. Narrow restoration of the approved Forest Journal Dashboard styling regression.
 
-The Batch 1–3 documentation/governance segment is complete once this updated handoff is itself pushed and revalidated on GitHub.
+The implementation package is prepared from the latest verified GitHub source files. It is not considered validated until the source and documentation package is pushed, GitHub is re-fetched, and runtime behavior is checked.
 
-The exact current source implementation must always be re-fetched from GitHub before edits. Do not assume any proposed or locally staged change has been implemented until it appears on `main`.
-
-`MILESTONES.md` preserves historical milestone detail while current architecture in `ARCHITECTURE.md` and structural decisions in `DECISIONS.md` govern present and planned behavior.
+See `workstreams/UX-REPAIRS.md` and `workstreams/UX-REPAIRS-VALIDATION.md`.
 
 # 3. Current Production Architecture
 
-**Implementation Status: Current**
-
 - Three knowledge layers: Reference Knowledge, Decision Knowledge, User Knowledge.
 - Forest Journal is the only production-supported Version 1 theme.
-- Fish Guide/Search exists with lightweight shared search helpers.
-- Rig Guide exists with canonical Rig data, searchable/browsable Rig records, text-authoritative assembly, contextual Tackle `Name ⓘ` recognition help, verified external Rig references, and inline readiness.
+- Fish Guide/Search and Rig Guide are current implemented reference workflows.
+- Current Rig readiness remains the transitional local readiness state.
 - Canonical Tackle Reference Knowledge exists in `data/tackle.js`.
-- Current Rig readiness uses the transitional local readiness state.
-- Current Search uses lightweight normalized substring matching; it is not the permanent relevance-quality ceiling.
-- Historical Copper, Gold, and Legacy Dark CSS files are retained as inactive design concepts and are not part of the supported production theme matrix.
-- Completed package artifacts and obsolete design-board/preview assets have been moved out of active production locations into archive paths.
-
-See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinctions.
+- Current Search remains lightweight normalized substring matching.
+- Historical Copper, Gold, and Legacy Dark CSS files are inactive design concepts, not supported production themes.
 
 # 4. Approved Product Direction
 
-**Decision Status: Approved**
+See `DECISIONS.md` D022–D041.
 
-- Search is relevance-first; connected knowledge is breadth-first.
-- Recommendation tiers are:
-  - Best of the Best
-  - Best Bang for the Buck
-  - Best Budget
-  - Best of the Rest
-  - Avoid
-- Rig owns physical assembly and rig-specific configuration.
-- Technique owns reusable presentation behavior.
-- `Rig.componentRequirements` owns Rig-to-Tackle usage; reverse `Used In` relationships are derived.
-- Canonical Tackle owns Tackle identity/display name.
-- Initial regional Rig target is 20 Rigs for northeast Oklahoma and southwest Kansas.
-- Core Rigs — Master These First contains six confidence-building Rigs.
-- Canonical Tackle defines functional type; My Tackle defines actual owned items.
-- Rig Readiness answers buildability first; optimization comes later.
-- My Tackle will be the only persistent ownership source of truth.
-- Nothing outside explicit My Tackle ownership-management workflows may silently create or modify persistent ownership.
-- User Knowledge is untrusted text by default and must be rendered safely.
-- Unimplemented UI controls must clearly communicate that they are unavailable.
-- External CTAs must identify their destination and use `↗`.
-- Forest Journal Dashboard regressions are approved for narrow restoration rather than redesign.
-- Document status, implementation status, decision status, and application version are separate concepts.
-- Repository handoff and continuous decision documentation are mandatory project-governance requirements.
-
-See `DECISIONS.md` D022–D041 and the governing data-model documents.
+Key settled direction includes relevance-first Search, the five recommendation tiers, Rig/Technique ownership boundaries, single-owner Rig-to-Tackle relationships, canonical Tackle naming, the 20-Rig regional target, My Tackle ownership authority, safe User Knowledge rendering, unavailable-feature affordances, external CTA semantics, and Dashboard regression restoration.
 
 # 5. Approved but Not Yet Implemented
 
-**Implementation Status: Approved / Not Implemented**
+Outside the active UX-repair segment:
 
-- Lightweight deterministic relevance ranking before Search becomes noisy.
+- Lightweight deterministic Search ranking.
 - 20-Rig canonical regional library and Core-6 presentation.
-- Canonical Carolina Rig record to resolve the approved relationship.
+- Canonical Carolina Rig record.
 - Remove duplicate Tackle `rigIds`; derive reverse Rig usage.
 - Resolve Rig component display names from canonical Tackle.
-- My Tackle as the persistent ownership source for Rig Readiness.
-- Temporary per-build/session availability that does not write ownership.
+- My Tackle as persistent Rig Readiness ownership source.
+- Temporary per-build/session availability separate from ownership.
 - Explicit My Tackle Add/Edit/Remove write authority.
-- Safe User Knowledge rendering rules across future user-entered/imported features.
-- `Coming Soon`/unavailable semantics for currently inert child cards.
-- Dashboard Regulations CTA: `Go to ODWC Regulations ↗`.
-- Narrow restoration of the approved Forest Journal Dashboard styling regression.
-
-These items are settled direction but must not be described as current implementation until they are built, pushed, and validated.
+- Safe User Knowledge rendering across future user-entered/imported features.
 
 # 6. Known Temporary Bridges
 
-## Rig readiness
-
-Current storage key:
+Current Rig readiness storage key:
 
     freshwaterFishingCompanion.tackleReadiness.v1
 
-This is a temporary bridge.
-
-It does not become permanent My Tackle ownership, and existing readiness checkmarks are not automatically migrated into Inventory.
-
-When My Tackle becomes authoritative:
-
-- owned canonical Tackle types satisfy Rig requirements automatically,
-- missing components may be temporarily marked available for the current build/session,
-- temporary availability never writes My Tackle,
-- only explicit My Tackle ownership-management actions write persistent ownership.
+This is temporary. Existing readiness checkmarks do not become My Tackle ownership.
 
 # 7. Open Decisions
 
-The following remain intentionally unresolved:
+- Detailed My Tackle owned-item schema.
+- Commercial/branded name resolution such as `Rooster Tail`.
+- Exact Recommendation model schema.
+- ProductDefinition architecture beyond MVP readiness needs.
+- Whether some planned 20-Rig entries are permanently Rigs versus lure/setup combinations.
+- Future automated relationship, asset, and documentation validators.
+- Other audit findings not yet discussed to completion.
 
-- Detailed My Tackle owned-item schema:
-  - brand
-  - model
-  - size
-  - color
-  - quantity
-  - condition
-  - notes
-  - durable-vs-consumable MVP treatment
-  - custom/unmapped items
-  - exact compatibility constraints
-- Commercial/branded name resolution such as `Rooster Tail` between a canonical lure/tackle concept and any future commercial ProductDefinition.
-- Exact Recommendation model schema; a dedicated Recommendations model document remains deferred until mature.
-- ProductDefinition architecture beyond the approved rule that it is not required for My Tackle MVP/readiness.
-- Whether some entries in the planned 20-Rig library, especially items such as Inline Spinner Setup or Jighead + Soft Plastic, are best modeled permanently as canonical Rigs versus lure/setup combinations.
-- Future automated relationship, asset, document-link, and other repository validators.
-- Other audit findings not yet discussed to completion must remain visible and must not be silently treated as decided.
+# 8. Active UX Repair Boundaries
 
-# 8. Next Recommended Work
+The active segment may change only what is required to implement D030–D032 and the already-approved source-header cleanup triggered by deliberate edits.
 
-The Batch 1–3 documentation/governance segment has passed repository cleanup validation.
+Protected behavior includes:
 
-After this handoff revision is pushed and revalidated, the next implementation segment should be selected from already approved Build Now work rather than opening a new area prematurely.
+- Dashboard order and parent navigation.
+- Fish Search behavior.
+- Rig browse/detail behavior.
+- Tackle `Name ⓘ` popovers.
+- Inline Rig readiness.
+- Current data and media.
+- Forest Journal as the sole supported production theme.
+- No dormant-theme parity work.
 
-Recommended sequence:
+# 9. Next Recommended Work After UX Repair Validation
 
-1. Current-state UX repairs:
-   - Coming Soon affordances
-   - ODWC Regulations CTA
-   - Dashboard CSS regression restoration
-2. Rig/Tackle data-integrity cleanup:
-   - canonical component display names
-   - derived inverse relationships
-3. Regional 20-Rig expansion:
-   - Carolina Rig
-   - Core Rigs organization
-4. Dedicated My Tackle schema discussion before My Tackle implementation
+1. Rig/Tackle data-integrity cleanup.
+2. Regional 20-Rig expansion.
+3. Dedicated My Tackle schema discussion before implementation.
 
-Re-evaluate this sequence after each finalized and validated segment.
+Do not begin item 1 until this UX-repair segment is fully documented and validated.
 
-# 9. Governing Documents
+# 10. Governing Documents
 
 | Topic | Governing document |
 |---|---|
-| Repository current-state entrypoint | `HANDOFF.md` |
-| Long-term structural decisions | `DECISIONS.md` |
-| Current source ownership / architecture | `ARCHITECTURE.md` |
-| Editing, validation, closeout, scope control | `DEVELOPMENT_WORKFLOW.md` |
-| UI, coding, and documentation conventions | `STYLE_GUIDE.md` |
-| Media requirements | `MEDIA_GUIDE.md` |
-| Project direction | `PROJECT.md` / `ROADMAP.md` |
-| Functional requirements | `SPECIFICATION.md` |
-| Milestone/history status | `MILESTONES.md` / `CHANGELOG.md` |
-| Data-model index | `data-model/README.md` |
-| Data-model terminology | `data-model/00-GLOSSARY.md` |
-| Global data rules | `data-model/01-FOUNDATION.md` |
-| Rig model | `data-model/03-RIGS.md` |
-| Technique model | `data-model/03A-TECHNIQUES.md` |
-| Conditions model | `data-model/03B-CONDITIONS.md` |
-| Canonical Tackle | `data-model/05-TACKLE.md` |
-| My Tackle / Inventory | `data-model/05A-INVENTORY.md` |
-| User Knowledge | `data-model/07-USER-DATA.md` |
-| Relationships | `data-model/09-RELATIONSHIPS.md` |
+| Current-state entrypoint | `HANDOFF.md` |
+| Structural decisions | `DECISIONS.md` |
+| Architecture | `ARCHITECTURE.md` |
+| Workflow / closeout | `DEVELOPMENT_WORKFLOW.md` |
+| UI and code conventions | `STYLE_GUIDE.md` |
+| Media | `MEDIA_GUIDE.md` |
+| UX repair scope | `workstreams/UX-REPAIRS.md` |
+| UX repair validation | `workstreams/UX-REPAIRS-VALIDATION.md` |
 
-# 10. Source-of-Truth / Editing Rules
+# 11. Source-of-Truth / Editing Rules
 
-- GitHub `main` is authoritative for existing project files.
-- Fetch latest GitHub contents before proposing edits to an existing source file.
-- Do not assume a prior proposal, package, or staged file was implemented.
-- Make targeted edits by default.
-- Full-file replacement is the default final artifact.
-- A replacement file must be derived from the latest verified GitHub file, not reconstructed from memory, an old package, or a template.
-- Make only authorized changes.
-- Diff the completed replacement against the fetched source.
-- Any unrelated diff is a failure unless explicitly authorized.
-- Preserve mature approved UI behaviors as regression targets.
-- User normally commits and pushes through GitHub Desktop.
+- GitHub `main` is authoritative.
+- Fetch latest GitHub source before edits.
+- Make targeted edits.
+- Full-file replacements are the default delivery artifact.
+- Diff replacements against fetched source; unrelated diffs are failures unless authorized.
 - Preflight is not validation.
-- After push, inspect the actual GitHub commit/files and validate runtime behavior where applicable.
-- Permanent project knowledge belongs in repository documentation, not only in chat history.
-- Meaningful design, architecture, workflow, data-model, UI, deferment, or rejection decisions must be documented even if the discussion occurs outside the active build segment.
-- If a substantial off-segment discussion would disrupt clean completion of the current segment, deliberately park it until a coherent stopping point and preserve enough context that it cannot be lost.
-- No session, module, section, or build segment is finalized until all relevant documentation is updated and validated in GitHub.
+- After push, inspect GitHub and validate runtime behavior where applicable.
+- Meaningful cross-segment decisions must be documented.
 - Do not move into a new build segment while the current one remains unfinalized.
-
-# 11. Decision-Making Operating Model
-
-New ideas do not override established architecture merely because they are newer.
-
-Evaluate meaningful changes against:
-
-- existing architecture,
-- established standards,
-- validated workflows,
-- current milestone,
-- implementation cost,
-- regression risk,
-- affected files/modules,
-- simpler alternatives,
-- expected benefit versus rework.
-
-Classify proposals as:
-
-- **Build Now** — required for correctness/current implementation, foundational architecture/data, prevention of foreseeable rework, or material simplification/value.
-- **Parking Lot** — valuable, preserved, but not required by the current milestone.
-- **Reject** — conflicts with the mission/architecture, duplicates capability, or adds disproportionate complexity.
-
-Before materially disruptive change, document:
-
-- old approach,
-- proposed approach,
-- expected gain,
-- rework required,
-- affected flows,
-- regression risk,
-- simpler alternatives.
-
-Permanent principle:
-
-> Plan twice and write once.
-
-# 12. Session / Module Closeout Rule
-
-At the end of every meaningful session, module, section, or build segment:
-
-1. Identify decisions made.
-2. Identify files and documentation affected.
-3. Record approved but unimplemented work explicitly.
-4. Record unresolved questions explicitly.
-5. Record rejected/deferred ideas when forgetting them would cause repeated re-discussion.
-6. Update the correct governing documents.
-7. Update `HANDOFF.md` if project state, open work, or next steps changed.
-8. Push through GitHub.
-9. Inspect the actual repository state.
-10. Validate runtime behavior where applicable.
-11. Only then declare the area finalized and move on.
-
-Permanent principle:
-
-> Finish cleanly or deliberately park; do not leave half-finalized project areas behind.

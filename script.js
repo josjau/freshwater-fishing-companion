@@ -1,7 +1,6 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: script.js
-   REPLACEMENT: RIG AND TACKLE REFERENCE REFRESH
    PURPOSE: Coordinates routes, Fish search, Rig browsing,
    My Tackle placeholders, and inline Rig tackle-readiness checks.
    ========================================================== */
@@ -10,12 +9,11 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Reference Refresh",
-    replacement: "Rig and Tackle Reference Refresh"
+    milestone: "Current-State UX Repairs"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
-console.info(`[Loaded] ${BUILD_INFO.file} | ${BUILD_INFO.milestone} | ${BUILD_INFO.replacement}`);
+console.info(`[Loaded] ${BUILD_INFO.file} | ${BUILD_INFO.milestone}`);
 
 const ROUTES = Object.freeze({
     DASHBOARD: "dashboard",
@@ -77,7 +75,7 @@ function renderFishGuideView(appMain) {
         title: "Fish Guide",
         description: "Learn to identify freshwater fish using clear, beginner-friendly information.",
         cards: [
-            { id: "search-fish", title: "Search Fish", description: "Find a fish by its common or scientific name." },
+            { id: "search-fish", title: "Search Fish", description: "Find a fish by its common or scientific name.", isAvailable: true },
             { id: "browse-fish-by-family", title: "Browse by Family", description: "Explore related freshwater fish groups." },
             { id: "browse-fish-by-habitat", title: "Browse by Habitat", description: "Find fish by the water and habitat they prefer." },
             { id: "browse-fish-alphabetically", title: "Browse Alphabetically", description: "View the complete fish guide from A to Z." }
@@ -130,7 +128,7 @@ function renderRigGuideView(appMain) {
         title: "Rig Guide",
         description: "Learn how to assemble proven freshwater fishing rigs and verify completed examples from trusted fishing references.",
         cards: [
-            { id: "browse-all-rigs", title: "Browse All Rigs", description: "Open text-first instructions for supported rigs." },
+            { id: "browse-all-rigs", title: "Browse All Rigs", description: "Open text-first instructions for supported rigs.", isAvailable: true },
             { id: "browse-rigs-by-target-fish", title: "Browse by Target Fish", description: "Find rigs suited to the species you want to catch." },
             { id: "browse-rigs-by-conditions", title: "Browse by Conditions", description: "Choose rigs based on water, cover, depth, and weather." },
             { id: "identify-rig-components", title: "Identify Rig Components", description: "Learn what each hook, weight, swivel, and component does." }
