@@ -33,7 +33,9 @@ A Rig defines the physical setup, assembly, and Rig-specific configuration.
 
 A Technique defines reusable presentation behavior used to fish a compatible setup.
 
-Rig is the canonical owner of its component requirements. Tackle does not independently restate which Rigs use it solely to support inverse navigation.
+This separation minimizes duplicated instructional content and improves long-term maintainability.
+
+Rig is also the canonical owner of its component requirements. Tackle does not independently restate which Rigs use it solely to support inverse navigation.
 
 ---
 
@@ -56,6 +58,8 @@ Required base fields:
 
 ## difficulty
 
+Purpose
+
 Recommended experience level for assembling and fishing the Rig correctly.
 
 Allowed values:
@@ -64,11 +68,27 @@ Allowed values:
 - Intermediate
 - Advanced
 
+Ownership
+
+Application.
+
+---
+
 ## targetFishIds
+
+Purpose
 
 Fish commonly targeted.
 
+Ownership
+
+Application.
+
+---
+
 ## conditionTags
+
+Purpose
 
 Fishing conditions where the Rig performs well.
 
@@ -83,15 +103,19 @@ Examples:
 - Stained Water
 - Muddy Water
 
+Ownership
+
+Application.
+
+---
+
 ## componentRequirements
+
+Purpose
 
 Authoritative references to canonical Tackle required or optionally used to build the Rig.
 
-Each requirement references Tackle explicitly through:
-
-```text
-tackleId
-```
+Each requirement references Tackle explicitly through `tackleId`.
 
 Example:
 
@@ -106,7 +130,7 @@ Example:
 
 The requirement remains a component requirement; `tackleId` identifies the canonical Tackle concept that satisfies it.
 
-Canonical Tackle owns component identity and display name. The Rig owns only context specific to this setup, such as:
+Canonical Tackle owns component identity and display name. The Rig owns only context that is specific to this setup, such as:
 
 - Required or optional status
 - Quantity
@@ -115,49 +139,109 @@ Canonical Tackle owns component identity and display name. The Rig owns only con
 - Assembly role
 - Setup-specific notes
 
-A Rig requirement does not duplicate canonical Tackle `name`.
+A Rig requirement shall not duplicate the full Tackle definition or canonical Tackle `name`.
 
 A separate requirement-level `id` is not added unless a demonstrated editing, migration, annotation, or persistence need requires independent requirement identity.
 
+Ownership
+
+Application.
+
+---
+
 ## assemblySteps
+
+Purpose
 
 Authoritative ordered instructions for physically constructing the Rig.
 
+Ownership
+
+Application.
+
 Assembly instructions belong to Rig rather than Technique.
+
+---
 
 ## setupNotes
 
+Purpose
+
 Rig-specific configuration or usage guidance that does not generalize cleanly to a reusable Technique.
+
+Ownership
+
+Application.
+
+---
 
 ## techniqueIds
 
+Purpose
+
 References one or more canonical fishing Techniques that describe reusable presentation behavior compatible with the Rig.
+
+Ownership
+
+Application.
+
+---
 
 ## variationIds
 
+Purpose
+
 References existing related canonical Rigs.
 
-Ordinary relationship fields are not planning placeholders. Once the relevant production dataset is complete, referenced Rig IDs must resolve to canonical Rig records.
+Example:
+
+Texas Rig
+
+↓
+
+Weightless Texas Rig
+
+Ordinary relationship fields are not planning placeholders. Once the relevant production dataset is complete for a planned expansion, referenced Rig IDs must resolve to canonical Rig records.
+
+Ownership
+
+Application.
+
+---
 
 ## imageIds
+
+Purpose
 
 References approved Rig media when technically verified and legally reusable media exists.
 
 Current Rig pages may leave this field empty and use authoritative text instructions plus verified external references.
 
+Ownership
+
+Application.
+
 ---
 
 # Rig Components and Tackle Ownership
 
-Every component requirement references canonical Tackle through `tackleId`.
+Every required component references canonical Tackle through `tackleId`.
+
+Example:
+
+Texas Rig
+
+Requires
+
+- Offset Hook
+- Bullet Weight
+- Soft Plastic
 
 `Rig.componentRequirements` is the authoritative Rig-to-Tackle relationship.
 
-The inverse question — for example, which Rigs use an Offset Worm Hook — is derived by scanning active Rig requirements for the corresponding `tackleId`.
+The inverse question — for example, which Rigs use an Offset Hook — is derived by scanning Rig requirements. Tackle records should not separately maintain manual `rigIds` solely to answer `Used In`.
 
-Tackle records do not maintain manual `rigIds` solely to answer `Used In`.
-
-The displayed component name is resolved from canonical Tackle.
+The displayed component name is resolved from canonical Tackle. Duplicated component names are not stored inside Rig requirements. The inverse `Used In` relationship is derived from active Rig requirements by matching `tackleId`.
 
 ---
 
@@ -187,6 +271,8 @@ Technique owns reusable presentation behavior such as:
 - Retrieve cadence
 - Rod and reel movement
 - Strike guidance
+
+Shared presentation instructions should not be copied into multiple Rigs.
 
 Practical ownership test:
 
@@ -219,9 +305,9 @@ The approved initial canonical target is 20 Rigs selected for practical freshwat
 19. Double-Jig Crappie Rig
 20. Bottom-Bouncer / Spinner Rig
 
-The list is an approved implementation target, not a claim that all 20 records currently exist.
+The list is an approved implementation target, not a claim that all 20 records currently exist in `data/rigs.js`.
 
-Carolina Rig is approved for the later expansion and resolves the current forward relationship when its canonical record is added.
+Carolina Rig is specifically approved for this near-term expansion. The existing `carolina-rig` relationship should be resolved by adding the canonical Carolina Rig record during the expansion.
 
 ---
 
@@ -236,11 +322,20 @@ The approved confidence-building subset contains six Rigs:
 5. Texas Rig
 6. Slip Bobber Rig
 
-The Core 6 are the first Rig-expansion milestone.
+The Core 6 are the first Rig-expansion milestone and must be complete, accurate, beginner-ready, and validated before expansion proceeds to the remaining fourteen Rigs.
 
 Before adding the two currently absent Core entries, resolve whether Inline Spinner Setup and Jighead + Soft Plastic are correctly modeled as canonical Rigs or should be represented as lure/setup combinations.
 
 Core learning-path presentation follows D042 and `STYLE_GUIDE.md`: important curated starting paths receive additional restrained Forest Journal hierarchy.
+
+Purpose:
+
+- Give a newer angler a small set of broadly successful rigs.
+- Cover multiple common species and water-column situations.
+- Build confidence before encouraging a larger fishing arsenal.
+- Teach progressively useful skills such as bite detection, depth control, cast-and-retrieve, bottom contact, and fishing cover.
+
+Rigs beyond the approved initial 20, specialized sonar-driven rigs, and niche tournament presentations remain deferred.
 
 ---
 
@@ -248,9 +343,7 @@ Core learning-path presentation follows D042 and `STYLE_GUIDE.md`: important cur
 
 A Rig itself never stores persistent ownership information.
 
-**Current:** the application uses transitional per-Rig local readiness selections keyed by canonical Tackle ID strings.
-
-The change from requirement `id` to `tackleId` does not change those stored key values and does not require a readiness-state migration.
+**Current:** the application uses transitional per-Rig local readiness selections keyed by canonical Tackle ID strings. The change from requirement `id` to `tackleId` does not change those stored key values and does not require a readiness-state migration.
 
 **Approved / Not Implemented:** My Tackle becomes the only persistent ownership source of truth.
 
@@ -260,9 +353,11 @@ Rig Readiness will:
 - Automatically satisfy required canonical Tackle types the user owns.
 - Allow a missing item to be marked temporarily available for the current build/session.
 - Never write temporary availability back into My Tackle.
-- Determine whether all required component types are available.
+- Determine whether all required component types are available so the user knows whether the Rig can be built.
 
 Basic readiness answers buildability, not whether the user owns the ideal brand/model combination.
+
+Persistent ownership may only be changed through explicit My Tackle ownership-management workflows such as Add Tackle, Edit Tackle, or Remove Tackle.
 
 ---
 

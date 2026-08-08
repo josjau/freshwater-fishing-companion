@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md  
-**Document Revision:** 0.1.0  
+**Document Revision:** 0.1.1  
 **Document Status:** Approved  
 **Implementation Status:** In Progress  
 **Last Updated:** 2026-08-08
@@ -9,6 +9,18 @@
 # Purpose
 
 Validation checklist for Rig/Tackle Data Integrity Batch 1.
+
+# Replacement-Integrity Validation
+
+Before the corrective ZIP is delivered:
+
+- compare corrected documentation against the exact pre-change GitHub baseline,
+- confirm every pre-existing Markdown heading is preserved unless explicitly authorized otherwise,
+- confirm no corrected document shrinks by more than 10 percent,
+- confirm deleted-line volume is below the 10 percent targeted-change threshold,
+- confirm the ZIP contains only intended permanent repository files.
+
+Future documentation replacement packages must pass the same gate.
 
 # Repository Validation
 

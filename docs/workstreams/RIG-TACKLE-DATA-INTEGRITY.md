@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-TACKLE-DATA-INTEGRITY.md  
-**Document Revision:** 0.1.0  
+**Document Revision:** 0.1.1  
 **Document Status:** Approved  
 **Implementation Status:** In Progress  
 **Last Updated:** 2026-08-08
@@ -63,6 +63,12 @@ freshwaterFishingCompanion.tackleReadiness.v1
 ```
 
 Existing per-Rig stored keys such as `bullet-weight`, `hook`, or `split-shot` remain valid because they already contain canonical Tackle ID strings.
+
+# Corrective Documentation Action
+
+The first Batch 1 documentation package over-condensed `ARCHITECTURE.md`, `03-RIGS.md`, and `09-RELATIONSHIPS.md`, removing unrelated baseline content. That documentation state is not accepted as final.
+
+The corrective package restores those three files from their exact pre-change GitHub baselines and reapplies only the authorized Rig/Tackle changes. A permanent replacement-integrity gate is added to `DEVELOPMENT_WORKFLOW.md` together with `tools/validate_replacement_integrity.py` so accidental truncation is mechanically blocked or flagged before future package delivery.
 
 # Completion Rule
 

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.1.1  
+**Document Revision:** 1.1.2  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-08
 
@@ -78,6 +78,24 @@ For an existing file:
 7. Do not silently fold unrelated cleanup, optimization, or redesign into the replacement.
 
 Mature approved UI behavior is a protected regression target.
+
+# Replacement-Integrity Gate
+
+Before any replacement package containing an existing documentation file is delivered, a mechanical preservation check is mandatory.
+
+The gate must compare each replacement against the exact GitHub baseline used to create it and must fail the package before delivery if any of the following occurs without explicit authorization:
+
+- an existing Markdown heading disappears,
+- the replacement shrinks by more than 10 percent of baseline line count,
+- deleted lines exceed 10 percent of baseline line count,
+- a large rewrite is detected even though the authorized scope is targeted,
+- a package-only artifact appears in the repository payload.
+
+A deliberate large documentation rewrite may bypass the size thresholds only when the user explicitly approves that rewrite before the file is generated. Heading removal still requires explicit authorization.
+
+For repository-side checking, `tools/validate_replacement_integrity.py` provides the same conservative guard against accidental document truncation by comparing working-tree Markdown files with `HEAD`. This validator is a safety net, not a substitute for deriving replacements from the latest verified GitHub contents.
+
+For assistant-generated packages, the equivalent baseline comparison must be run before the ZIP is created. A package that fails the gate must not be delivered.
 
 # User Repository Workflow
 
