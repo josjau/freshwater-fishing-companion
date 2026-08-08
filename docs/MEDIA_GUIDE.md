@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Version:** 1.0.0  
+**Version:** 1.0.1  
 **Status:** Approved  
 **Last Updated:** 2026-08-07
 
@@ -89,8 +89,11 @@ Do not generate a completed Rig image merely to maintain visual consistency. A t
 Preferred order for completed-Rig visual reference:
 
 1. A clearly licensed, technically verified completed-Rig image that may be bundled locally.
-2. A verified external reference link to an authoritative fishing source when local reuse rights are unclear or unavailable.
-3. Text-only instructions if no trustworthy visual reference is available.
+2. A stable direct visual destination or dedicated media/file page from a verified external source when local reuse rights are unclear or unavailable.
+3. A verified authoritative article or instructional reference when a direct visual destination is unavailable or unsuitable.
+4. Text-only instructions if no trustworthy visual reference is available.
+
+A direct external visual link is a navigation aid, not an embedded production asset. Do not hotlink third-party media into the application.
 
 Current Rig pages use verified external reference links and text build instructions instead of generated Rig diagrams.
 
@@ -115,6 +118,8 @@ Do not repeat the same instruction in multiple visual and text sections without 
 The `ⓘ` symbol remains reserved for contextual information that does not leave the current page.
 
 External Rig references use `↗` and open in a new tab.
+
+When a trustworthy direct image, dedicated media page, or file page is available, prefer that destination for visual confirmation so the user does not have to search through a long article for the relevant Rig image.
 
 ## Texas Rig Technical Standard
 
@@ -164,12 +169,15 @@ Tackle is recognition-first and is suitable for original semi-photorealistic or 
 
 The approved visual style uses:
 
-- Transparent image background so Tackle art inherits the surrounding card or modal surface
 - Clean catalog-like presentation
 - Semi-photorealistic object rendering
+- Clean object edges at normal mobile display sizes
 - Forest Journal-compatible green/earth accents
 - Consistent lighting and scale
 - Minimal decorative branding
+- No artificial baked-in drop shadow
+
+Transparency is optional rather than mandatory. Use alpha transparency only when the object can be isolated cleanly without rough halos, jagged edges, fringing, or degraded fine geometry. A restrained neutral background is acceptable when it produces a cleaner and more recognizable reference image.
 
 Before creating a Tackle illustration, use a real photograph, manufacturer product image, or authoritative technical image as the geometry baseline. Do not invent hook, float, swivel, sinker, stop, or connector geometry from memory.
 
@@ -177,9 +185,11 @@ For mechanically sensitive items, compare the final illustration back to the rea
 
 Tackle imagery is recognition help, not a photo library. It is displayed on demand from contextual `Name ⓘ` interactions.
 
-For the approved semi-photorealistic Tackle style, optimized WebP with alpha transparency is the preferred production format. The Tackle object should not have a baked white or cream rectangular background; transparent media should blend with the current card, modal, and future theme surfaces. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art. Do not convert semi-photorealistic Tackle art to SVG merely for consistency when doing so increases complexity or file size without improving field usability.
+For the approved semi-photorealistic Tackle style, optimized WebP is the preferred production format. Alpha transparency may be used when it preserves clean edges and realistic materials; otherwise use a restrained neutral background. Do not add a white or cream rectangle merely for consistency, and do not preserve a transparent cutout when its edge quality is visibly worse than a well-composed background treatment. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art. Do not convert semi-photorealistic Tackle art to SVG merely for consistency when doing so increases complexity or file size without improving field usability.
 
 # Knot Media
+
+Common fishing knots are approved future instructional-media work.
 
 Prefer mobile-readable step-by-step diagrams.
 
@@ -190,9 +200,14 @@ Use:
 - Direction arrows
 - Short in-image instructions
 - Final knot state
+- Clear distinction between standing line, tag end, hook/eye, and loops
 - Color coding only when useful and accessible
 
 Static diagrams must remain sufficient even if animation is added later.
+
+Knot illustrations should be designed as reusable canonical instructional assets so future Rig pages can reference the appropriate Knot without duplicating the full tying sequence inside each Rig.
+
+The exact initial knot set and Rig-to-Knot relationship model remain open until the Knots segment.
 
 # Lure Media
 
@@ -265,7 +280,7 @@ Do not hotlink production assets.
 Prefer:
 
 - SVG for diagrams, labels, line art, instructional plates
-- Optimized WebP for photographs
+- Optimized WebP for photographs and semi-photorealistic Tackle recognition images
 
 Use PNG only when source/tooling requires it.
 
@@ -335,6 +350,7 @@ Before approval, verify:
 - Correct bait relationship
 - Correct weight orientation
 - Correct sequence
+- External visual destination opens directly to the useful visual or the shortest trustworthy path to it when practical
 
 ## Fish
 
@@ -348,6 +364,9 @@ Before approval, verify:
 - Beginner can recognize the item
 - Key geometry is clear
 - Usage relationships are accurate
+- No artificial drop shadow is baked into the asset
+- Edge quality is clean at normal phone display size
+- Transparency, when used, does not introduce halos, jagged edges, or visible fringing
 
 # Contextual Tackle Image Rule
 

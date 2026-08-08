@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.3.0
+**Document Revision:** 0.3.1
 **Document Status:** Approved
 **Last Updated:** 2026-08-07
 
@@ -143,6 +143,8 @@ Rig accuracy takes priority over having locally generated completed-rig imagery.
 
 Rig detail pages use text build instructions as the authoritative assembly method. Completed-rig visuals are provided only when a technically verified image can be reused legally; otherwise the page links to verified external fishing references using `↗`.
 
+When an external visual reference is used, prefer a stable direct visual destination or dedicated media/file page when available and appropriate, rather than forcing the user through a long article to locate the relevant Rig image. This is external reference navigation, not permission to hotlink third-party media into the production UI.
+
 Generated completed-rig images are not used by default because small orientation and connection errors can teach incorrect assembly.
 
 The contextual `ⓘ` convention remains reserved for in-app information and must not be reused to imply external navigation.
@@ -153,11 +155,17 @@ External verified reference links use `↗` and open in a new tab. Contextual `�
 
 # D018 – Current Rig Media Policy
 
-Current Rig detail pages do not bundle generated completed-Rig or build-step imagery. Assembly is taught with canonical text steps. `What You Need` is text-first; selecting `Name ⓘ` opens the approved Tackle recognition image and contextual reference. Completed-Rig visual confirmation is provided by verified external references until a technically verified and legally reusable local Rig image is approved.
+Current Rig detail pages do not bundle generated completed-Rig or build-step imagery. Assembly is taught with canonical text steps. `What You Need` is text-first; selecting `Name ⓘ` opens the approved Tackle recognition image and contextual reference. Completed-Rig visual confirmation is provided by a technically verified and legally reusable local image when one is approved; otherwise use the most direct stable verified external visual reference available, with a conventional authoritative article reference as fallback.
 
 # D019 – Tackle Reference Production Format
 
-The approved semi-photorealistic Tackle reference style uses optimized WebP with alpha transparency for production assets because it preserves realistic materials, highlights, and shading at very small file sizes while blending with application surfaces. Tackle reference assets must not bake a white or cream rectangular background into the image. SVG remains preferred for genuine vector diagrams, knots, icons, and instructional line art.
+The approved semi-photorealistic Tackle reference style uses optimized WebP production assets. Recognition quality, clean object edges, and technically faithful geometry take priority over mandatory alpha transparency.
+
+Alpha transparency is optional rather than required. Use it only when the object can be isolated with clean edges at normal mobile display sizes. A restrained neutral background is acceptable when it materially improves edge quality and recognition.
+
+Tackle reference assets must not contain artificial baked-in drop shadows or other effects that make the object look detached from the application surface. If a shadow exists in a source rendering, it must be removed unless it is necessary to represent real object geometry.
+
+SVG remains preferred for genuine vector diagrams, knots, icons, and instructional line art.
 
 # D020 – Integrated Rig Requirements and Readiness
 
@@ -266,9 +274,13 @@ A six-rig confidence-building subset is presented as **Core Rigs — Master Thes
 - Texas Rig
 - Slip Bobber Rig
 
+The Core 6 are the first Rig-expansion milestone. They should be complete, accurate, beginner-ready, and validated before expansion proceeds to the remaining fourteen rigs.
+
+Before creating new canonical records for the Core 6, resolve the open modeling question for entries such as Inline Spinner Setup and Jighead + Soft Plastic if they blur the boundary between a canonical Rig and a lure/setup combination. Do not create new records merely to satisfy the list if doing so would encode the wrong domain model.
+
 The product teaching principle is to help a newer angler become successful with a small set of broadly productive rigs before expanding the fishing arsenal.
 
-Canonical relationship IDs must resolve to real canonical entities. Carolina Rig is approved for the near-term library, so the correct repair for the current `carolina-rig` forward reference is to create the canonical Carolina Rig record during the Rig expansion rather than treat the concept as unwanted. Production relationships should not depend on unresolved placeholder IDs once the expansion is implemented.
+Canonical relationship IDs must resolve to real canonical entities. Carolina Rig is approved for the near-term library, so the correct repair for the current `carolina-rig` forward reference is to create the canonical Carolina Rig record during the later Rig expansion rather than treat the concept as unwanted. Production relationships should not depend on unresolved placeholder IDs once the expansion is implemented.
 
 Rigs beyond the initial 20, specialized sonar-driven rigs, and niche tournament presentations remain deferred.
 
@@ -285,7 +297,7 @@ When My Tackle is implemented as the authoritative source:
 - Rig Readiness reads ownership from My Tackle.
 - Required canonical Tackle types already owned are automatically satisfied.
 - Missing components may be marked temporarily available for the current build/session when they were borrowed, just purchased, or otherwise available without being recorded as owned.
-- Temporary session availability never writes to My Tackle.
+- Temporary session availability never writes My Tackle.
 - My Tackle is the only persistent ownership source of truth.
 - Persistent My Tackle state may only be changed through explicit My Tackle ownership-management workflows such as Add Tackle, Edit Tackle, or Remove Tackle.
 - Search, Rig Readiness, Recommendations, prior readiness checkmarks, usage inference, and other features may not silently create or modify ownership.
@@ -448,4 +460,3 @@ A project-wide question raised mid-stream that produces a meaningful architectur
 Such outcomes must be classified as appropriate (`Build Now`, `Parking Lot`, `Reject`, or `Open`) and captured in the relevant governing documentation before closeout.
 
 When a substantial off-segment discussion would unnecessarily interrupt a coherent build segment, the technical lead may recommend parking it until a clean stopping point. The topic must be recorded with enough context that it cannot be lost. If the issue materially changes the work currently underway, it is discussed immediately instead.
-

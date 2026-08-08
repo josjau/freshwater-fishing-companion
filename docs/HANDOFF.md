@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.4.2  
+**Document Revision:** 0.4.3  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `5da6b1628ff06136eba5bf27994b99cf3be6a500`  
+**Repository Baseline Reviewed:** `main` at `b381f89dec6059050a856a2e2974a40864912b17`  
 **Last Updated:** 2026-08-07
 
 # 1. Start Here
@@ -28,15 +28,15 @@ Permanent operating rule:
 
 The repository baseline reviewed for this handoff is commit:
 
-`5da6b1628ff06136eba5bf27994b99cf3be6a500`
+`b381f89dec6059050a856a2e2974a40864912b17`
 
 Commit message:
 
-`Delete README-PACKAGE.txt`
+`Merge branch 'main' of https://github.com/josjau/freshwater-fishing-companion`
 
-The Batch 1–3 documentation/governance package and cleanup were previously pushed, inspected, and validated.
+The Current-State UX Repairs segment is validated and repository-finalized.
 
-Validated governance state retained from the prior segment:
+Validated governance state:
 
 - `HANDOFF.md` is present.
 - Decisions D022–D041 are present in `DECISIONS.md`.
@@ -44,6 +44,7 @@ Validated governance state retained from the prior segment:
 - `docs/data-model/05A-INVENTORY.md` is the active Inventory/My Tackle model document.
 - Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
 - Historical package artifacts and obsolete design-board/preview assets remain preserved in archive paths.
+- Root package artifacts from the UX repair package have been removed.
 
 ## Current-State UX Repairs
 
@@ -55,13 +56,6 @@ The UX source implementation was pushed in commit `cf4f8bfa4974d06ada35650dd4e27
 - Fish Guide `Search Fish` and Rig Guide `Browse All Rigs` remain actionable,
 - the Dashboard Regulations CTA reads `Go to ODWC Regulations ↗`,
 - the approved Forest Journal Dashboard primary-card styling has been restored.
-
-The initial implementation package introduced documentation-preservation defects and two package-specific root artifacts. Those defects were corrected before closeout:
-
-- full historical `docs/CHANGELOG.md` content was restored,
-- full repository-handoff content was restored,
-- root `PACKAGE-MANIFEST.txt` was removed,
-- root `README-PACKAGE.txt` was removed.
 
 Runtime/regression validation passed for:
 
@@ -116,7 +110,13 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 - `Rig.componentRequirements` owns Rig-to-Tackle usage; reverse `Used In` relationships are derived.
 - Canonical Tackle owns Tackle identity/display name.
 - Initial regional Rig target is 20 Rigs for northeast Oklahoma and southwest Kansas.
-- Core Rigs — Master These First contains six confidence-building Rigs.
+- Core Rigs — Master These First contains six confidence-building Rigs and is the first Rig-expansion milestone.
+- The Core 6 must be complete, accurate, beginner-ready, and validated before expansion to the remaining fourteen rigs.
+- Tackle recognition imagery prioritizes clean edges and recognition quality over mandatory alpha transparency.
+- Artificial baked-in drop shadows are not part of the approved Tackle recognition style.
+- A restrained neutral Tackle-image background is acceptable when it produces cleaner recognition than a transparent cutout.
+- Completed-Rig visual confirmation prefers a licensed local image; otherwise prefer the most direct stable verified external visual destination available.
+- Common fishing-knot step illustrations are approved future work, but remain outside the immediate Rig/Tackle cleanup segment.
 - Canonical Tackle defines functional type; My Tackle defines actual owned items.
 - Rig Readiness answers buildability first; optimization comes later.
 - My Tackle will be the only persistent ownership source of truth.
@@ -128,17 +128,23 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 - Document status, implementation status, decision status, and application version are separate concepts.
 - Repository handoff and continuous decision documentation are mandatory project-governance requirements.
 
-See `DECISIONS.md` D022–D041 and the governing data-model documents.
+See `DECISIONS.md` and the governing data-model/media documents.
 
 # 5. Approved but Not Yet Implemented
 
 **Implementation Status: Approved / Not Implemented**
 
 - Lightweight deterministic relevance ranking before Search becomes noisy.
-- 20-Rig canonical regional library and Core-6 presentation.
-- Canonical Carolina Rig record to resolve the approved relationship.
-- Remove duplicate Tackle `rigIds`; derive reverse Rig usage.
-- Resolve Rig component display names from canonical Tackle.
+- Rig/Tackle data-integrity cleanup:
+  - remove duplicate Rig-side component display names,
+  - resolve canonical Tackle display names at render time,
+  - remove duplicate Tackle `rigIds`,
+  - derive reverse Rig usage from canonical Rig requirements.
+- Tackle recognition-image quality cleanup across the current production asset set.
+- Core 6 completion and validation before remaining regional Rig expansion.
+- Direct/shortest-path finished-Rig visual references where trustworthy sources permit.
+- Common fishing-knot step illustrations as a later Knots workstream.
+- Canonical Carolina Rig record to resolve the approved relationship during later expansion.
 - My Tackle as the persistent ownership source for Rig Readiness.
 - Temporary per-build/session availability that does not write ownership.
 - Explicit My Tackle Add/Edit/Remove write authority.
@@ -183,23 +189,29 @@ The following remain intentionally unresolved:
 - Commercial/branded name resolution such as `Rooster Tail` between a canonical lure/tackle concept and any future commercial ProductDefinition.
 - Exact Recommendation model schema; a dedicated Recommendations model document remains deferred until mature.
 - ProductDefinition architecture beyond the approved rule that it is not required for My Tackle MVP/readiness.
-- Whether some entries in the planned 20-Rig library, especially items such as Inline Spinner Setup or Jighead + Soft Plastic, are best modeled permanently as canonical Rigs versus lure/setup combinations.
+- Whether Inline Spinner Setup and Jighead + Soft Plastic should remain canonical Rigs versus lure/setup combinations; resolve before creating new Core-6 canonical records.
+- Exact replacement treatment for the current Tackle recognition assets: clean alpha cutout versus restrained neutral background on an asset-by-asset or batch basis.
+- Exact source/licensing choices for Core-Rig finished visual references.
+- Exact initial common-knot set and the future Rig-to-Knot relationship model.
 - Future automated relationship, asset, document-link, and other repository validators.
 - Other audit findings not yet discussed to completion must remain visible and must not be silently treated as decided.
 
 # 8. Next Recommended Work
 
-The Current-State UX Repairs segment is validated. The next recommended segment is Rig/Tackle data-integrity cleanup.
+The next build segment is Rig/Tackle data-integrity cleanup.
 
 Recommended sequence:
 
-1. Rig/Tackle data-integrity cleanup:
-   - canonical component display names
-   - derived inverse relationships
-2. Regional 20-Rig expansion:
-   - Carolina Rig
-   - Core Rigs organization
-3. Dedicated My Tackle schema discussion before My Tackle implementation
+1. Audit and implement Rig/Tackle data-integrity cleanup:
+   - canonical component display names,
+   - derived inverse relationships.
+2. Audit the current Tackle recognition assets and approve a no-shadow, clean-edge replacement treatment before producing replacements.
+3. Resolve Core-6 Rig-vs-setup modeling for Inline Spinner Setup and Jighead + Soft Plastic.
+4. Complete and validate the Core 6.
+5. Improve finished-Rig visual references, favoring licensed local assets or direct stable verified visual destinations.
+6. Continue the remaining regional Rig expansion after the Core 6 is validated.
+7. Address the common-knot illustration workstream separately.
+8. Hold the dedicated My Tackle schema discussion before My Tackle implementation.
 
 Re-evaluate this sequence after each finalized and validated segment.
 

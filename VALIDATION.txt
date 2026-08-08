@@ -1,0 +1,28 @@
+Freshwater Fishing Companion — Rig/Tackle Planning Documentation Update
+
+GitHub baseline verified before edits:
+b381f89dec6059050a856a2e2974a40864912b17
+
+Files included:
+- docs/DECISIONS.md
+- docs/MEDIA_GUIDE.md
+- docs/HANDOFF.md
+
+Authorized changes:
+- Tackle recognition images: clean edges and recognition quality over mandatory transparency.
+- Artificial baked-in drop shadows prohibited for Tackle recognition assets.
+- Neutral background allowed when cleaner than alpha isolation.
+- Core 6 promoted to first Rig-expansion milestone.
+- Resolve Rig-vs-setup modeling before creating ambiguous Core-6 records.
+- Finished-Rig visual confirmation prefers licensed local media; otherwise shortest trustworthy direct visual destination.
+- Common fishing-knot step illustrations preserved as approved future work.
+- Handoff updated with open decisions and revised next-work sequence.
+
+No source/application files are included.
+No implementation is claimed by this package.
+
+After push:
+1. Re-fetch these three files from GitHub main.
+2. Confirm only the authorized documentation changes landed.
+3. Confirm repository status/history remains intact.
+4. Then begin the Rig/Tackle data-integrity audit.
