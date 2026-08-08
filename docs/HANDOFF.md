@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.2.0  
+**Document Revision:** 0.3.0  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `41cb261eb99b54aff746e3b8401b0949cd6fee05`  
+**Repository Baseline Reviewed:** `main` at `591a3b2309d1c7c8cf1ff6abdf98f7261735145b`  
 **Last Updated:** 2026-08-07
 
 # 1. Start Here
@@ -28,20 +28,28 @@ Permanent operating rule:
 
 The repository baseline reviewed for this handoff is commit:
 
-`41cb261eb99b54aff746e3b8401b0949cd6fee05`
+`591a3b2309d1c7c8cf1ff6abdf98f7261735145b`
 
 Commit message:
 
-`File updates after audit`
+`Delete _PACKAGE-VALIDATION.txt`
 
-The Batch 1–3 documentation/governance package has been pushed to GitHub and inspected. The new governing documentation, `HANDOFF.md`, Decisions D022–D041, the canonical Tackle data-model document, the new `05A-INVENTORY.md`, and the archive moves are present on `main`.
+The Batch 1–3 documentation/governance package and cleanup have been pushed to GitHub and inspected.
 
-The current documentation/governance segment is **not yet finalized** because two repository-cleanup defects remain:
+Validated repository state:
 
-1. `docs/data-model/05-INVENTORY.md` still exists alongside its approved replacement `docs/data-model/05A-INVENTORY.md`.
-2. `_PACKAGE-VALIDATION.txt` still exists at repository root even though the archive copy is present.
+- `HANDOFF.md` is present.
+- Decisions D022–D041 are present in `DECISIONS.md`.
+- The canonical Tackle data-model document is present.
+- `docs/data-model/05A-INVENTORY.md` is the active Inventory/My Tackle model document.
+- Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
+- Root `_PACKAGE-VALIDATION.txt` has been removed.
+- Historical package artifacts and obsolete design-board/preview assets remain preserved in archive paths.
+- The documentation/governance cleanup identified during validation is complete.
 
-These two files must be removed, the cleanup pushed, and GitHub revalidated before a new build segment begins.
+**Current Segment Status: Validated**
+
+The Batch 1–3 documentation/governance segment is complete once this updated handoff is itself pushed and revalidated on GitHub.
 
 The exact current source implementation must always be re-fetched from GitHub before edits. Do not assume any proposed or locally staged change has been implemented until it appears on `main`.
 
@@ -153,26 +161,13 @@ The following remain intentionally unresolved:
 - Future automated relationship, asset, document-link, and other repository validators.
 - Other audit findings not yet discussed to completion must remain visible and must not be silently treated as decided.
 
-# 8. Required Closeout Before Any New Build Segment
+# 8. Next Recommended Work
 
-**Current Segment Status: In Progress**
+The Batch 1–3 documentation/governance segment has passed repository cleanup validation.
 
-Do not begin the next build segment yet.
+After this handoff revision is pushed and revalidated, the next implementation segment should be selected from already approved Build Now work rather than opening a new area prematurely.
 
-Required closeout actions:
-
-1. Remove `docs/data-model/05-INVENTORY.md`.
-2. Remove root `_PACKAGE-VALIDATION.txt`.
-3. Replace this `docs/HANDOFF.md` with the current post-sync version.
-4. Push the cleanup through GitHub Desktop.
-5. Re-fetch the actual files from GitHub.
-6. Confirm the duplicate Inventory document and root package artifact are gone.
-7. Confirm this handoff file matches the resulting repository state.
-8. Mark the documentation/governance segment finalized only after that GitHub validation passes.
-
-After closeout, choose the next implementation segment from already approved Build Now work rather than opening a new area prematurely.
-
-Likely implementation sequence after validation:
+Recommended sequence:
 
 1. Current-state UX repairs:
    - Coming Soon affordances
