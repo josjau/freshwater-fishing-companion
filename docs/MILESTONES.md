@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.7.2  
+**Document Revision:** 1.7.3  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-08
 
@@ -62,7 +62,7 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 - Safety guidance
 - Navigation and error handling
 
-**Current note:** D027 approves expansion to a 20-Rig regional library with six Core Rigs; that expansion is Approved / Not Implemented.
+**Current note:** D027 approves a 20-Rig regional library. The six-Rig Core milestone is In Progress in the Core Rigs and Tackle Media segment; the remaining fourteen Rigs are Approved / Not Implemented.
 
 ## MS2.5 — Lightweight Tackle Readiness
 
@@ -140,6 +140,24 @@ See:
 - `workstreams/RIG-TACKLE-DATA-INTEGRITY.md`
 - `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`
 
+
+# In Progress
+
+## Core Rigs and Tackle Media
+
+**Implementation Status: In Progress**
+
+Prepared scope:
+
+- complete the Core 6 with Jighead + Soft Plastic and Inline Spinner Setup,
+- add canonical Jighead and Inline Spinner Tackle concepts,
+- implement the ordered Core learning-path section and Core card/detail emphasis,
+- replace the 15 prior Tackle assets and add two new assets using the approved neutral-background standard,
+- preserve text-authoritative Rig assembly and verified external visual references,
+- prohibit generated finished-Rig/build-step instruction media.
+
+The milestone is not complete until GitHub and runtime/regression validation pass and closeout documentation is revalidated.
+
 # Next Segment
 
-After the Rig/Tackle closeout documentation is pushed and revalidated on GitHub, the recommended next segment is the Tackle recognition-image quality audit, followed by resolution of the Core-6 Rig-vs-setup modeling question.
+Complete and validate the active Core Rigs and Tackle Media segment before beginning the remaining fourteen regional Rigs or another module.

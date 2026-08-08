@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG_REFERENCE_SOURCES.md  
-**Version:** 1.0.0  
-**Status:** Active  
-**Last Updated:** 2026-08-07
+**Document Revision:** 1.1.0  
+**Document Status:** Approved  
+**Last Updated:** 2026-08-08
 
 # Purpose
 
@@ -38,6 +38,21 @@ These sources are used for visual confirmation and technical cross-checking. The
   https://www.wired2fish.com/fishing-rigs/the-texas-rig-how-to-rig-and-fish
 - Norrik — Texas Rig  
   https://norrik.com/fishing-rigs/texas-rig/
+
+
+# Jighead + Soft Plastic
+
+- Berkley — Fusion19 Hybrid Jighead  
+  https://www.berkley-fishing.com/products/fusion19-hybrid-jighead
+- Take Me Fishing — Lure Fishing for Beginners: Jig with Soft Plastic  
+  https://www.takemefishing.org/blog/april-2019/lure-fishing-for-beginners-lures-every-angler-should-have/
+
+# Inline Spinner Setup
+
+- Mepps — Aglia Spinner Rigging and Tips  
+  https://www.mepps.com/mepps-tactics/article/mepps-aglia-spinners/411
+- Panther Martin — In-Line Spinner Quick Reference  
+  https://www.panthermartin.com/guide/
 
 # Link Semantics
 

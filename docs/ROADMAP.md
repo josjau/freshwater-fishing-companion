@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.2.0  
+**Document Revision:** 0.2.1  
 **Document Status:** Draft  
-**Last Updated:** 2026-08-07
+**Last Updated:** 2026-08-08
 
 # Purpose
 
@@ -24,7 +24,9 @@ Features may move between releases as priorities change, but a new build segment
 
 ## Documentation / Governance Closeout
 
-Before the next build segment:
+**Implementation Status: Validated**
+
+The required governance closeout was completed before this build segment. Historical checklist:
 
 - Push the current documentation package.
 - Verify the actual GitHub files.
@@ -33,15 +35,32 @@ Before the next build segment:
 
 ## Current-State UX Repairs
 
-Approved / Not Implemented:
+**Implementation Status: Validated**
+
+Validated scope:
 
 - Mark unimplemented child cards `Coming Soon` or equivalent without misleading active affordances.
 - Change the Dashboard Regulations CTA to `Go to ODWC Regulations ↗`.
 - Restore the previously approved Forest Journal Dashboard styling regression without redesign.
 
+
+## Core Rigs and Tackle Media
+
+**Implementation Status: In Progress**
+
+- Complete the approved Core 6 dataset.
+- Treat Jighead + Soft Plastic and Inline Spinner Setup as ready-to-fish terminal setups in the Rig Guide.
+- Store Core membership/order once in `CORE_RIG_IDS`.
+- Add the approved Core learning-path visual emphasis.
+- Replace the prior transparent/shadowed Tackle assets with the 17-image neutral-background production set.
+- Preserve text-authoritative Rig assembly and verified external references.
+- Validate the complete segment before continuing.
+
 ## Rig / Tackle Integrity
 
-Approved / Not Implemented:
+**Implementation Status: Validated**
+
+Validated scope:
 
 - Derive Tackle `Used In` relationships from `Rig.componentRequirements`.
 - Resolve Rig component display names from canonical Tackle.
@@ -49,7 +68,7 @@ Approved / Not Implemented:
 
 ## Regional Rig Expansion
 
-Approved / Not Implemented:
+**Approved / Not Implemented after Core closeout:**
 
 - Expand to the approved 20-Rig library for northeast Oklahoma and southwest Kansas.
 - Include Carolina Rig as a canonical record.

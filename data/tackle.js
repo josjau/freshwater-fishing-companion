@@ -9,7 +9,7 @@
 
 const TACKLE_DATA_BUILD_INFO = Object.freeze({
     file: "data/tackle.js",
-    milestone: "Rig/Tackle Data Integrity"
+    milestone: "Core Rigs and Tackle Media"
 });
 
 const TACKLE_DATA = Object.freeze([
@@ -217,10 +217,10 @@ const TACKLE_DATA = Object.freeze([
         purpose: "Provides shape, action, and profile for many weed-resistant and finesse presentations.",
         recognitionNotes: ["Flexible rubber-like body", "Available in many shapes and colors", "Usually packaged in resealable bags"],
         commonVariants: ["Worm", "Creature bait", "Craw", "Swimbait"],
-        relatedTackleIds: ["offset-worm-hook", "bullet-weight"],
+        relatedTackleIds: ["offset-worm-hook", "bullet-weight", "jighead"],
         mediaIds: ["soft-plastic-reference"],
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -236,6 +236,36 @@ const TACKLE_DATA = Object.freeze([
         mediaIds: ["weight-peg-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
+        isActive: true
+    },
+    {
+        id: "jighead",
+        name: "Jighead",
+        aliases: ["Jig Head", "Leadhead Jig"],
+        category: "Jigheads",
+        summary: "A weighted hook with the weight molded around the hook eye and shank.",
+        purpose: "Adds weight and a hook in one component so a soft plastic can be cast, counted down, jigged, or retrieved at depth.",
+        recognitionNotes: ["Weighted head molded onto the hook", "Line-tie eye near or above the head", "Often includes a collar or keeper for holding soft plastic"],
+        commonVariants: ["Round head", "Minnow head", "Swimbait head", "Mushroom head"],
+        relatedTackleIds: ["soft-plastic"],
+        mediaIds: ["jighead-reference"],
+        createdVersion: "0.2.8",
+        lastModifiedVersion: "0.2.8",
+        isActive: true
+    },
+    {
+        id: "inline-spinner",
+        name: "Inline Spinner",
+        aliases: ["In-line Spinner", "Spinner"],
+        category: "Lures",
+        summary: "A compact lure with a blade that rotates around a central wire shaft during the retrieve.",
+        purpose: "Creates flash and vibration while covering water with a straightforward cast-and-retrieve presentation.",
+        recognitionNotes: ["Metal blade mounted beside a straight wire shaft", "Weighted body below the blade", "Single or treble hook at the rear"],
+        commonVariants: ["French blade", "In-line blade", "Dressed hook", "Undressed hook"],
+        relatedTackleIds: [],
+        mediaIds: ["inline-spinner-reference"],
+        createdVersion: "0.2.8",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     }
 ]);

@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.3.1
+**Document Revision:** 0.3.2
 **Document Status:** Draft
-**Decision Baseline:** D025, D026, D037
+**Decision Baseline:** D025, D026, D037, D043, D044
 
 ---
 
@@ -207,6 +207,31 @@ A separate requirement-level `id` is not introduced unless independent requireme
 
 ---
 
+
+# Core Learning-Path Relationship
+
+Core membership is a curated relationship from the Core learning group to canonical Rig IDs.
+
+Canonical storage:
+
+```text
+CORE_RIG_IDS
+    -> ordered canonical Rig IDs
+```
+
+Derived presentation:
+
+```text
+Core Rigs — Master These First
+    -> ordered cards
+    -> Core badges
+    -> Core detail emphasis
+```
+
+Individual Rig records do not store duplicate Core membership/order fields solely for UI convenience.
+
+---
+
 # Rig and Technique Relationship
 
 Rig owns physical assembly and Rig-specific configuration.
@@ -311,6 +336,8 @@ Relationship validation should include, where applicable:
 - No manual Tackle `rigIds` inverse exists solely for Rig usage.
 - Every current Rig component `tackleId` resolves.
 - Derived `Used In` output matches active Rig requirements.
+- Every `CORE_RIG_IDS` entry resolves to one active canonical Rig and appears only once.
+- Core presentation order matches the registry order.
 - Inactive entities remain resolvable for historical or migration needs.
 - User-owned references do not mutate canonical Reference Knowledge.
 

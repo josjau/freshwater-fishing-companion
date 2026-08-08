@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.3.1
+**Document Revision:** 0.3.2
 **Document Status:** Approved
 **Last Updated:** 2026-08-08
 
@@ -152,6 +152,8 @@ Rig `componentRequirements` is the authoritative source for Rig-to-Tackle usage 
 
 A Rig component requirement references canonical Tackle explicitly through `tackleId`. Canonical Tackle owns the display name; Rig data owns only Rig-specific usage context such as required/optional status, quantity, order, size/configuration guidance, assembly role, and setup notes. Rig requirements do not duplicate canonical Tackle display names.
 
+`CORE_RIG_IDS` is the single canonical owner of Core Rig membership and order. Core status is derived from this registry rather than duplicated inside individual Rig records.
+
 Rig `referenceLinks` point to verified external fishing references used to visually confirm completed rigs. They are not production-media copies and do not transfer ownership of external content into the project.
 
 Historical `imageIds` fields may remain empty while older media records/assets are retained for cleanup or audit history.
@@ -168,13 +170,15 @@ Rigs reference Tackle records through `componentRequirements[].tackleId`.
 
 Manual inverse `rigIds` have been removed from canonical Tackle records. Reverse Rig usage is derived from `Rig.componentRequirements`.
 
+The Core-Rig build expands canonical Tackle from 15 to 17 active concepts by adding `jighead` and `inline-spinner`.
+
 ## `data/media.js`
 
 Owns reusable canonical media metadata and stable media IDs.
 
-The active media catalog for this refresh contains only the approved contextual Tackle reference media. Obsolete generated Rig SVGs and superseded Tackle SVGs are removed as part of this replacement.
+The active media catalog contains contextual Tackle reference media only.
 
-Approved Tackle reference imagery uses optimized WebP files and is displayed only when contextual `Name ⓘ` help is opened. Clean edges and recognition quality take priority over mandatory transparency; artificial baked-in drop shadows are not approved.
+The Core-Rig build expands the catalog from 15 to 17 optimized 640 × 440 WebP assets. Current production Tackle media uses a restrained neutral background with no alpha transparency and no artificial cast shadow. Images remain on-demand through contextual `Name ⓘ` help.
 
 ## `search.js`
 
@@ -240,6 +244,8 @@ Completed-Rig visual confirmation uses verified external references unless a cle
 
 ## Approved Rig Library Expansion — Not Implemented
 
+**Status clarification:** the remaining fourteen-Rig expansion is Approved / Not Implemented. The six-Rig Core subset is In Progress in the Core Rigs and Tackle Media segment.
+
 The initial canonical target is a 20-rig regional library for practical use in northeast Oklahoma and southwest Kansas:
 
 1. Fixed Bobber Rig
@@ -263,7 +269,7 @@ The initial canonical target is a 20-rig regional library for practical use in n
 19. Double-Jig Crappie Rig
 20. Bottom-Bouncer / Spinner Rig
 
-The confidence-building subset **Core Rigs — Master These First** contains:
+The implemented confidence-building subset **Core Rigs — Master These First** contains:
 
 - Fixed Bobber Rig
 - Basic Bottom Rig — especially useful for catfish
@@ -274,13 +280,24 @@ The confidence-building subset **Core Rigs — Master These First** contains:
 
 The Core 6 are the first Rig-expansion milestone and must be complete, accurate, beginner-ready, and validated before expansion to the remaining fourteen Rigs.
 
-Per D042, Core learning groups receive additional restrained Forest Journal hierarchy so the recommended starting path is immediately recognizable.
+Per D042, Core learning groups receive additional restrained Forest Journal hierarchy so the recommended starting path is immediately recognizable. The Browse All Rigs page derives its Core section and order from `CORE_RIG_IDS`, and Core detail pages receive the matching badge/header treatment.
 
-Before adding the two currently absent Core entries, resolve whether Inline Spinner Setup and Jighead + Soft Plastic are correctly modeled as canonical Rigs or should be represented as lure/setup combinations.
+D043 resolves the former modeling question: Jighead + Soft Plastic and Inline Spinner Setup are ready-to-fish terminal setups in the Rig Guide. Reusable presentation behavior remains owned by Technique.
 
 The teaching strategy is to build success and confidence with these broadly useful rigs before expanding the user's fishing arsenal.
 
 Carolina Rig is approved for the near-term canonical library. The existing `carolina-rig` relationship should be resolved by implementing the canonical Rig during the expansion rather than treating Carolina Rig as an unwanted concept.
+
+
+# Core Rigs and Tackle Media Build
+
+**Implementation Status: In Progress**
+
+This coherent segment adds the two missing Core Rig records, the single-owner `CORE_RIG_IDS` registry, Core browse/detail presentation, two required canonical Tackle concepts, and a 17-image neutral-background Tackle media set.
+
+The source and documentation package must be pushed, inspected on GitHub, and runtime/regression validated before this segment may be marked Validated.
+
+Generated completed-Rig or build-step imagery remains prohibited under D045; Rig assembly continues to use authoritative text plus verified external visual references.
 
 # My Tackle Architecture
 
@@ -375,14 +392,14 @@ Detailed media rules are authoritative in `MEDIA_GUIDE.md`.
 
 Preferred formats:
 
-- Optimized WebP for photographic/semi-photorealistic Tackle reference media
+- Optimized WebP for catalog-style Tackle reference media, including rasterized vector-style or semi-photorealistic assets
 - SVG for technically safe diagrams, line art, and instructional graphics
 
 Entity rules:
 
 - Fish: verified real photographs/scientific illustrations for identification
 - Rigs: verified local completed image only when licensing and technical accuracy are established; otherwise external verified reference links
-- Tackle: recognition-first semi-photorealistic or vector illustration anchored to real geometry
+- Tackle: recognition-first vector-style or semi-photorealistic illustration anchored to approved real-world geometry
 - Knots: step-by-step diagrams
 - Lures: photography or accurate illustration according to recognition requirements
 - Techniques: instructional media only when it improves understanding
@@ -455,7 +472,7 @@ The current deployed reference-refresh package changed the presentation layer wi
 Implemented changes include:
 
 - My Tackle remains the user-owned inventory domain
-- Approved transparent Tackle recognition media used only in contextual help
+- Historical transparent Tackle recognition media used only in contextual help; the active Core-Rig package supersedes those assets with neutral-background references
 - Text-first Tackle contextual popovers
 - Verified external completed-Rig reference links
 - Text-first Rig assembly instructions
@@ -463,4 +480,4 @@ Implemented changes include:
 - Dashboard `My Tackle` label
 - Existing Fish Search and transitional readiness workflows preserved
 
-Rig/Tackle Data Integrity Batch 1 implements the D025–D026 canonical relationship cleanup while the workstream remains In Progress pending runtime and repository validation.
+Rig/Tackle Data Integrity Batch 1 is Validated. The Core Rigs and Tackle Media workstream is In Progress pending GitHub and runtime validation.

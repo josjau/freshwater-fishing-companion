@@ -1,8 +1,7 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/media.js
-   REPLACEMENT: TACKLE REFERENCE MEDIA REFRESH
-   PURPOSE: Owns active on-demand Tackle reference imagery
+   PURPOSE: Owns active neutral-background Tackle reference imagery
    used by contextual Name ⓘ help interactions.
    ========================================================== */
 
@@ -10,8 +9,7 @@
 
 const MEDIA_DATA_BUILD_INFO = Object.freeze({
     file: "data/media.js",
-    milestone: "Reference Refresh",
-    replacement: "Tackle Reference Media Refresh"
+    milestone: "Core Rigs and Tackle Media"
 });
 
 const MEDIA_DATA = Object.freeze([
@@ -21,10 +19,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "fixed-bobber",
         type: "image",
         file: "images/tackle/fixed-bobber-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a clip-on bobber",
+        alt: "Neutral-background reference illustration of a red-and-white clip-on bobber with a spring button and lower line clip",
         caption: "Clip-on Bobber",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -32,11 +30,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -45,10 +43,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "split-shot",
         type: "image",
         file: "images/tackle/split-shot-reference.webp",
-        alt: "Reference image of a removable split-shot sinker",
+        alt: "Neutral-background reference illustration of a removable split-shot sinker",
         caption: "Split Shot",
         license: {
-            status: "Original project asset; geometry checked against CC0 reference",
+            status: "Original project illustration; geometry checked against CC0 reference",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: "https://commons.wikimedia.org/wiki/File:Split_shot_1.jpg",
@@ -56,11 +54,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -69,10 +67,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "hook",
         type: "image",
         file: "images/tackle/hook-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a fishing hook",
+        alt: "Neutral-background reference illustration of a fishing hook",
         caption: "Fishing Hook",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -80,11 +78,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -93,10 +91,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "bait",
         type: "image",
         file: "images/tackle/bait-reference.webp",
-        alt: "Approved semi-photorealistic reference image of worm bait",
+        alt: "Neutral-background reference illustration of worm bait",
         caption: "Bait",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -104,11 +102,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -117,10 +115,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "bobber-stop",
         type: "image",
         file: "images/tackle/bobber-stop-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a bobber stop",
+        alt: "Neutral-background reference illustration of a thread-style bobber stop wrapped around fishing line",
         caption: "Bobber Stop",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -128,11 +126,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -141,10 +139,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "stop-bead",
         type: "image",
         file: "images/tackle/stop-bead-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a bobber stop bead",
+        alt: "Neutral-background reference illustration of a bobber stop bead",
         caption: "Bobber Stop Bead",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -152,11 +150,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -165,10 +163,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "slip-float",
         type: "image",
         file: "images/tackle/slip-float-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a slip float",
+        alt: "Neutral-background reference illustration of a slip float with a central line tube",
         caption: "Slip Float",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -176,11 +174,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -189,10 +187,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "sliding-sinker",
         type: "image",
         file: "images/tackle/sliding-sinker-reference.webp",
-        alt: "Approved semi-photorealistic reference image of an egg-style sliding sinker",
+        alt: "Neutral-background reference illustration of an egg-style sliding sinker",
         caption: "Sliding Sinker",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -200,11 +198,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -213,10 +211,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "bead",
         type: "image",
         file: "images/tackle/bead-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a protective rig bead",
+        alt: "Neutral-background reference illustration of a protective rig bead",
         caption: "Protective Bead",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -224,11 +222,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -237,10 +235,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "barrel-swivel",
         type: "image",
         file: "images/tackle/barrel-swivel-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a barrel swivel",
+        alt: "Neutral-background reference illustration of a barrel swivel",
         caption: "Barrel Swivel",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -248,11 +246,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -261,10 +259,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "leader-line",
         type: "image",
         file: "images/tackle/leader-line-reference.webp",
-        alt: "Approved semi-photorealistic reference image of leader line",
+        alt: "Neutral-background reference illustration of leader line on a small spool",
         caption: "Leader Line",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -272,11 +270,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -285,10 +283,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "bullet-weight",
         type: "image",
         file: "images/tackle/bullet-weight-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a bullet weight",
+        alt: "Neutral-background reference illustration of a bullet weight with a center line hole",
         caption: "Bullet Weight",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -296,11 +294,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -309,10 +307,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "offset-worm-hook",
         type: "image",
         file: "images/tackle/offset-worm-hook-reference.webp",
-        alt: "Approved semi-photorealistic reference image of an offset worm hook",
+        alt: "Neutral-background reference illustration of an offset worm hook",
         caption: "Offset Worm Hook",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -320,11 +318,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -333,10 +331,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "soft-plastic",
         type: "image",
         file: "images/tackle/soft-plastic-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a soft-plastic worm",
+        alt: "Neutral-background reference illustration of a straight soft-plastic worm bait",
         caption: "Soft Plastic Bait",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -344,11 +342,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     },
     {
@@ -357,10 +355,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "weight-peg",
         type: "image",
         file: "images/tackle/weight-peg-reference.webp",
-        alt: "Approved semi-photorealistic reference image of a rubber line stop used to peg a weight",
+        alt: "Neutral-background reference illustration of rubber line stops used to peg a sliding weight",
         caption: "Weight Peg",
         license: {
-            status: "Original project asset derived from approved tackle reference board",
+            status: "Original project illustration rebuilt from the approved Tackle reference asset",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -368,11 +366,59 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-07"
+            reviewedDate: "2026-08-08"
         },
-        replacementStatus: "Approved transparent Tackle reference refresh",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.8",
+        isActive: true
+    },
+    {
+        id: "jighead-reference",
+        ownerType: "tackle",
+        ownerId: "jighead",
+        type: "image",
+        file: "images/tackle/jighead-reference.webp",
+        alt: "Neutral-background reference illustration of a round jighead with a 90-degree line eye, bait keeper, and exposed hook",
+        caption: "Jighead",
+        license: {
+            status: "Original project illustration; geometry checked against an official Berkley jighead reference",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: "https://www.berkley-fishing.com/products/fusion19-hybrid-jighead",
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-08"
+        },
+        productionStatus: "Approved neutral-background Tackle reference",
+        createdVersion: "0.2.8",
+        lastModifiedVersion: "0.2.8",
+        isActive: true
+    },
+    {
+        id: "inline-spinner-reference",
+        ownerType: "tackle",
+        ownerId: "inline-spinner",
+        type: "image",
+        file: "images/tackle/inline-spinner-reference.webp",
+        alt: "Neutral-background reference illustration of an inline spinner with blade, shaft, weighted body, and treble hook",
+        caption: "Inline Spinner",
+        license: {
+            status: "Original project illustration; geometry checked against official Mepps and Panther Martin references",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: "https://www.mepps.com/mepps-tactics/article/mepps-aglia-spinners/411",
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-08"
+        },
+        productionStatus: "Approved neutral-background Tackle reference",
+        createdVersion: "0.2.8",
+        lastModifiedVersion: "0.2.8",
         isActive: true
     }
 ]);
@@ -380,6 +426,5 @@ const MEDIA_DATA = Object.freeze([
 console.info(
     `[Loaded] ${MEDIA_DATA_BUILD_INFO.file} | ` +
     `${MEDIA_DATA_BUILD_INFO.milestone} | ` +
-    `${MEDIA_DATA_BUILD_INFO.replacement} | ` +
     `${MEDIA_DATA.length} records`
 );

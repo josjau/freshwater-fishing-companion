@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 05-TACKLE.md  
-**Document Revision:** 0.1.1  
+**Document Revision:** 0.1.2  
 **Document Status:** Approved  
 **Implementation Status:** In Progress  
-**Decision Baseline:** D025, D026, D028, D037
+**Decision Baseline:** D019, D025, D026, D028, D037, D043
 
 # Purpose
 
@@ -112,15 +112,15 @@ Canonical Tackle recognition imagery follows `../MEDIA_GUIDE.md`.
 
 Current reference media is intended for recognition help through contextual `Name ⓘ` rather than default inline display in every Rig requirement.
 
-The approved quality direction prioritizes clean edges and recognition quality over mandatory transparency and prohibits artificial baked-in drop shadows.
+The current production standard uses optimized 640 × 440 WebP assets on a restrained warm-neutral background. Alpha transparency and artificial baked-in drop shadows are not used in the active set.
 
 # Current Implementation
 
-`data/tackle.js` owns the production canonical Tackle records and stable IDs.
+`data/tackle.js` owns the production canonical Tackle records and stable IDs. The validated baseline contains 15 active concepts.
 
-The Rig/Tackle Data Integrity Batch 1 implementation removes manually maintained `rigIds` and derives `Used In` from active Rig requirements.
+The Core Rigs and Tackle Media package adds `jighead` and `inline-spinner`, expanding the prepared catalog to 17 active concepts. It also replaces the active recognition-media set with 17 neutral-background assets.
 
-The segment remains **In Progress** until the package is pushed and runtime/regression validation passes.
+This expansion remains **In Progress** until the package is pushed and runtime/regression validation passes.
 
 # Future / Deferred
 

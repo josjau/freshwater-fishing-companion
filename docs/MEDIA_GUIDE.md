@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Version:** 1.0.1  
-**Status:** Approved  
-**Last Updated:** 2026-08-07
+**Document Revision:** 1.0.3  
+**Document Status:** Approved  
+**Last Updated:** 2026-08-08
 
 # Purpose
 
@@ -134,7 +134,7 @@ For any future Texas Rig illustration or locally licensed diagram, the finished 
 - The point reaches the opposite side and is lightly skin-hooked or barely buried for a weedless finish.
 - The bait must remain straight rather than bowed or twisted.
 
-Do not use generated or hand-drawn Rig geometry unless it survives direct comparison with a real reference image.
+Do not use generated Rig geometry. Manually constructed project diagrams are allowed only when built from verified references and validated component-by-component. D045 records the failed generative-image tests and the permanent prohibition on generated finished-Rig/build-step instruction media.
 
 # Fish Media
 
@@ -170,7 +170,8 @@ Tackle is recognition-first and is suitable for original semi-photorealistic or 
 The approved visual style uses:
 
 - Clean catalog-like presentation
-- Semi-photorealistic object rendering
+- Clean product-reference rendering that visually matches the approved neutral-background examples
+- Semi-photorealistic treatment where practical; precise illustration only when it improves mechanical accuracy
 - Clean object edges at normal mobile display sizes
 - Forest Journal-compatible green/earth accents
 - Consistent lighting and scale
@@ -185,7 +186,22 @@ For mechanically sensitive items, compare the final illustration back to the rea
 
 Tackle imagery is recognition help, not a photo library. It is displayed on demand from contextual `Name ⓘ` interactions.
 
-For the approved semi-photorealistic Tackle style, optimized WebP is the preferred production format. Alpha transparency may be used when it preserves clean edges and realistic materials; otherwise use a restrained neutral background. Do not add a white or cream rectangle merely for consistency, and do not preserve a transparent cutout when its edge quality is visibly worse than a well-composed background treatment. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art. Do not convert semi-photorealistic Tackle art to SVG merely for consistency when doing so increases complexity or file size without improving field usability.
+For the approved catalog-style Tackle treatment, optimized WebP is the preferred production format. The current production standard uses 640 × 440 single-object catalog references on a restrained warm-neutral background, without alpha transparency or artificial cast shadows. The object should visually match the approved examples: realistic material, clean edges, useful scale, and enough detail to identify the component without relying on the label.
+
+Semi-photorealistic rendering is preferred when it improves recognition and preserves correct geometry. Precise illustration remains acceptable for small or mechanically sensitive items when it is clearer and more accurate than a simulated photograph. Alpha transparency remains permissible for a future asset only when it demonstrably produces a cleaner result than the neutral-background standard. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art; production Tackle references may be rasterized to WebP for consistent loading and presentation.
+
+## Hook Geometry Standard
+
+Hook imagery is mechanically sensitive and must remain immediately readable as a hook rather than a nearly closed circle.
+
+For a standard fishing hook, offset worm hook, or Jighead hook:
+
+- The silhouette must retain an open `J` shape.
+- The eye, shank, bend, gap, point, and barb must be visually distinct.
+- The gap must remain open enough that the point does not visually close against the shank.
+- An offset worm hook must show the offset near the eye without distorting the main bend or gap.
+- A Jighead must show the weighted head and an attached open-`J` hook with a clear point/barb relationship.
+- Near-circular, closed-loop, or ambiguous hook silhouettes fail validation even when they look polished.
 
 # Knot Media
 
@@ -280,7 +296,7 @@ Do not hotlink production assets.
 Prefer:
 
 - SVG for diagrams, labels, line art, instructional plates
-- Optimized WebP for photographs and semi-photorealistic Tackle recognition images
+- Optimized WebP for photographs and catalog-style Tackle recognition images, including rasterized vector-style assets
 
 Use PNG only when source/tooling requires it.
 
@@ -361,12 +377,15 @@ Before approval, verify:
 
 ## Tackle
 
-- Beginner can recognize the item
-- Key geometry is clear
+- Beginner can recognize the item without relying on the caption
+- Key geometry is clear and the object is not visually ambiguous
+- Small accessories are shown in an identifiable configuration rather than as an unexplained shape
+- Standard, offset, and Jighead hooks retain an open `J` profile with visible eye, shank, bend, gap, point, and barb
 - Usage relationships are accurate
 - No artificial drop shadow is baked into the asset
 - Edge quality is clean at normal phone display size
-- Transparency, when used, does not introduce halos, jagged edges, or visible fringing
+- Current production assets use the approved 640 × 440 neutral-background treatment
+- Transparency, if exceptionally approved later, does not introduce halos, jagged edges, or visible fringing
 
 # Contextual Tackle Image Rule
 

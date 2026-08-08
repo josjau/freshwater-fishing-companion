@@ -1,11 +1,39 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.10.3  
+**Document Revision:** 1.10.4  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-08
 
 # Unreleased
+
+## Core Rigs and Tackle Media
+
+**Implementation Status: In Progress**
+
+### Added
+
+- `CORE_RIG_IDS` as the single canonical Core-membership/order registry.
+- Jighead + Soft Plastic and Inline Spinner Setup, completing the approved Core 6 dataset.
+- Canonical Jighead and Inline Spinner Tackle records.
+- Dedicated **Core Rigs — Master These First** browse presentation and Core detail-page emphasis.
+- New Jighead and Inline Spinner contextual recognition images.
+- Workstream and validation documentation.
+
+### Changed
+
+- Replaced all 15 prior transparent/shadowed Tackle images with 640 × 440 neutral-background WebP assets.
+- Tackle media metadata now records the approved neutral-background production status.
+- Rig modeling now explicitly includes complete ready-to-fish terminal setups, including a lure tied directly to line.
+- Core membership is derived from one ordered registry instead of duplicated record flags.
+- Generated finished-Rig and build-step imagery is explicitly prohibited after failed mechanical-accuracy tests.
+
+### Validation Status
+
+- Static source/data/media preflight: completed before package delivery.
+- GitHub inspection and runtime/regression validation: required after push.
+
+See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`.
 
 ## Rig/Tackle Data Integrity — Batch 1
 

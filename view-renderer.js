@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Rig/Tackle Data Integrity"
+    milestone: "Core Rigs and Tackle Media"
 });
 
 function renderView(appMain, viewConfig) {
@@ -130,6 +130,12 @@ function renderSearchResults(appMain, records, resultConfig) {
     resultsContainer.querySelectorAll("[data-result-id]").forEach((resultCard) => {
         resultCard.addEventListener("click", () => resultConfig.onResultSelect(resultCard.dataset.resultId));
     });
+}
+
+function isCoreRigRecord(record) {
+    return Boolean(record?.id) &&
+        typeof CORE_RIG_IDS !== "undefined" &&
+        CORE_RIG_IDS.includes(record.id);
 }
 
 function getTackleRecord(tackleId) {
@@ -284,6 +290,7 @@ function renderInstructionDetail(appMain, detailConfig) {
 
     const record = detailConfig.record;
     const selections = detailConfig.selections ?? {};
+    const isCoreRig = isCoreRigRecord(record);
     const componentsMarkup = record.componentRequirements.map((component) => {
         const tackleRecord = getTackleRecord(component.tackleId);
         const componentName = tackleRecord?.name ?? component.tackleId;
@@ -333,7 +340,8 @@ function renderInstructionDetail(appMain, detailConfig) {
                 <button class="page-navigation" type="button" data-parent-navigation>← ${detailConfig.parentLabel}</button>
                 <button class="page-navigation" type="button" data-home-navigation>Home</button>
             </div>
-            <header class="detail-header">
+            <header class="detail-header${isCoreRig ? " detail-header--core" : ""}">
+                ${isCoreRig ? '<p class="detail-core-badge">Core Rig · Master This First</p>' : ""}
                 <p class="detail-eyebrow">${record.difficulty}</p>
                 <h2 id="rig-detail-title">${record.name}</h2>
                 <p>${record.summary}</p>

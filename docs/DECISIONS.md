@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.3.3
+**Document Revision:** 0.3.4
 **Document Status:** Approved
 **Last Updated:** 2026-08-08
 
@@ -55,6 +55,9 @@ This document records long-term architectural decisions.
 | D040 | No Unvalidated Build Transition | Approved |
 | D041 | Cross-Segment Decision Capture and Parking | Approved |
 | D042 | Core Learning Path Visual Emphasis | Approved |
+| D043 | Ready-to-Fish Terminal Setups in the Rig Guide | Approved |
+| D044 | Single-Owner Core Rig Membership | Approved |
+| D045 | No Generated Rig Assembly Imagery | Approved |
 
 # D001 – Local-First Architecture
 
@@ -160,9 +163,11 @@ Current Rig detail pages do not bundle generated completed-Rig or build-step ima
 
 # D019 – Tackle Reference Production Format
 
-The approved semi-photorealistic Tackle reference style uses optimized WebP production assets. Recognition quality, clean object edges, and technically faithful geometry take priority over mandatory alpha transparency.
+The approved catalog-style Tackle reference treatment uses optimized WebP production assets. It may use precise vector-style illustration or semi-photorealistic rendering when the object geometry is anchored to an approved real-world or authoritative reference. Recognition quality, clean object edges, and technically faithful geometry take priority over mandatory alpha transparency.
 
 Alpha transparency is optional rather than required. Use it only when the object can be isolated with clean edges at normal mobile display sizes. A restrained neutral background is acceptable when it materially improves edge quality and recognition.
+
+The active production set uses 640 × 440 neutral-background rasterized illustrations without alpha transparency or artificial cast shadows.
 
 Tackle reference assets must not contain artificial baked-in drop shadows or other effects that make the object look detached from the application surface. If a shadow exists in a source rendering, it must be removed unless it is necessary to represent real object geometry.
 
@@ -281,7 +286,7 @@ A six-rig confidence-building subset is presented as **Core Rigs — Master Thes
 
 The Core 6 are the first Rig-expansion milestone. They should be complete, accurate, beginner-ready, and validated before expansion proceeds to the remaining fourteen rigs.
 
-Before creating new canonical records for the Core 6, resolve the open modeling question for entries such as Inline Spinner Setup and Jighead + Soft Plastic if they blur the boundary between a canonical Rig and a lure/setup combination. Do not create new records merely to satisfy the list if doing so would encode the wrong domain model.
+D043 resolves the Core-6 modeling question: Jighead + Soft Plastic and Inline Spinner Setup are canonical ready-to-fish terminal setups within the Rig Guide. Their inclusion does not create a separate domain model merely because one setup is built from two components and the other is a lure tied directly to line.
 
 The product teaching principle is to help a newer angler become successful with a small set of broadly productive rigs before expanding the fishing arsenal.
 
@@ -502,3 +507,53 @@ Core emphasis must:
 The same visual language should be reusable across domains rather than inventing unrelated styling for Core Rigs, Core Knots, and future curated learning groups.
 
 Permanent principle: **important recommended learning paths should look important, but still belong to the same field guide.**
+
+# D043 – Ready-to-Fish Terminal Setups in the Rig Guide
+
+The Rig Guide teaches complete, ready-to-fish terminal setups.
+
+A canonical Rig may therefore be:
+
+- an assembly of several terminal-tackle components,
+- a weighted hook paired with a soft plastic,
+- or a complete lure tied directly to the main line or leader.
+
+The defining test is whether the record teaches a complete terminal configuration the angler can assemble or connect and then fish. The number of component records does not determine whether it belongs in the Rig Guide.
+
+Under this rule:
+
+- **Jighead + Soft Plastic** is a canonical Rig Guide record referencing `jighead` and `soft-plastic`.
+- **Inline Spinner Setup** is a canonical Rig Guide record referencing `inline-spinner`.
+
+Reusable retrieve and presentation behavior still belongs to Technique under D024. The Rig record owns physical setup, connection, component selection, setup-specific mistakes, and safety.
+
+# D044 – Single-Owner Core Rig Membership
+
+Core Rig membership and order are stored once in `data/rigs.js` through the canonical `CORE_RIG_IDS` registry.
+
+Rig records do not duplicate `isCore`, `coreOrder`, or equivalent presentation flags solely to support the Core learning-path UI.
+
+The ordered registry owns:
+
+- membership in **Core Rigs — Master These First**,
+- teaching sequence,
+- Core-section ordering,
+- Core badges and detail-page emphasis.
+
+The renderer derives Core presentation from that registry. This keeps curated learning-path membership separate from each Rig's intrinsic identity and prevents duplicated order metadata.
+
+# D045 – No Generated Rig Assembly Imagery
+
+Generative-image systems are not approved for finished-Rig diagrams, build-step illustrations, terminal-tackle connection diagrams, or hook-and-bait geometry.
+
+Repeated tests produced visually plausible but mechanically unreliable results, including incorrect component order, line routing, hook geometry, bait seating, and orientation. These defects can teach an unsafe or ineffective build even when the image appears polished.
+
+Rig assembly remains text-authoritative. Visual confirmation follows this order:
+
+1. technically verified and legally reusable local media,
+2. a direct verified visual destination or dedicated media/file page,
+3. an authoritative external instructional reference,
+4. text-only instructions when no trustworthy visual exists.
+
+Original project diagrams may be used only when manually constructed from verified references and validated component-by-component. This prohibition does not automatically extend to isolated Tackle recognition art, which may use original illustration when its single-object geometry is anchored to a real reference and independently checked.
+

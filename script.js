@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Rig/Tackle Data Integrity"
+    milestone: "Core Rigs and Tackle Media"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -159,23 +159,141 @@ function renderRigBrowseView(appMain) {
     });
 }
 
+function isCoreRig(rig) {
+    return Boolean(rig?.id) && CORE_RIG_IDS.includes(rig.id);
+}
+
+function getCoreRigOrder(rigId) {
+    return CORE_RIG_IDS.indexOf(rigId);
+}
+
+function getCoreRigs(activeRigs) {
+    return CORE_RIG_IDS
+        .map((rigId) => findRecordById(activeRigs, rigId))
+        .filter(Boolean);
+}
+
+function sortRigsForBrowse(records) {
+    return [...records].sort((first, second) => {
+        const firstCoreOrder = getCoreRigOrder(first.id);
+        const secondCoreOrder = getCoreRigOrder(second.id);
+
+        if (firstCoreOrder >= 0 && secondCoreOrder < 0) return -1;
+        if (firstCoreOrder < 0 && secondCoreOrder >= 0) return 1;
+        if (firstCoreOrder >= 0 && secondCoreOrder >= 0) {
+            return firstCoreOrder - secondCoreOrder;
+        }
+
+        return first.name.localeCompare(second.name);
+    });
+}
+
+function renderCoreRigSection(appMain, records) {
+    const searchForm = appMain.querySelector("[data-search-form]");
+    let section = appMain.querySelector("[data-core-rig-section]");
+
+    if (!section) {
+        section = document.createElement("section");
+        section.className = "core-rig-section";
+        section.dataset.coreRigSection = "";
+        section.setAttribute("aria-labelledby", "core-rigs-title");
+        searchForm?.insertAdjacentElement("afterend", section);
+    }
+
+    if (!Array.isArray(records) || records.length === 0) {
+        section.hidden = true;
+        section.innerHTML = "";
+        return;
+    }
+
+    section.hidden = false;
+    section.innerHTML = `
+        <header class="core-rig-section__header">
+            <span class="core-rig-section__eyebrow">Start Here</span>
+            <div>
+                <h3 id="core-rigs-title">Core Rigs — Master These First</h3>
+                <p>Build confidence with six broadly useful setups before expanding your fishing arsenal.</p>
+            </div>
+        </header>
+        <div class="core-rig-grid">
+            ${records.map((rig, index) => `
+                <button class="core-rig-card" type="button" data-core-rig-id="${rig.id}">
+                    <span class="core-rig-card__number" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+                    <span class="core-rig-card__body">
+                        <span class="core-rig-card__badge">Core Rig</span>
+                        <span class="core-rig-card__title">${rig.name}</span>
+                        <span class="core-rig-card__summary">${rig.summary}</span>
+                        <span class="core-rig-card__action">View instructions →</span>
+                    </span>
+                </button>
+            `).join("")}
+        </div>
+    `;
+
+    section.querySelectorAll("[data-core-rig-id]").forEach((card) => {
+        card.addEventListener("click", () => {
+            selectedRigId = card.dataset.coreRigId;
+            showView(ROUTES.RIG_DETAIL);
+        });
+    });
+}
+
 function updateRigBrowseResults(appMain, query) {
-    const matches = searchRecords(RIG_DATA.filter((rig) => rig.isActive), query, ["name", "difficulty", "useCases", "conditionTags"]);
-    renderSearchResults(appMain, sortRecordsAlphabetically(matches), {
+    const activeRigs = RIG_DATA.filter((rig) => rig.isActive);
+    const normalizedQuery = String(query ?? "").trim();
+    const matches = searchRecords(
+        activeRigs,
+        query,
+        ["name", "difficulty", "useCases", "conditionTags"]
+    );
+
+    renderCoreRigSection(
+        appMain,
+        normalizedQuery ? [] : getCoreRigs(activeRigs)
+    );
+
+    const resultRecords = normalizedQuery
+        ? sortRigsForBrowse(matches)
+        : sortRecordsAlphabetically(matches.filter((rig) => !isCoreRig(rig)));
+
+    if (!normalizedQuery && resultRecords.length === 0) {
+        const status = appMain.querySelector("[data-search-status]");
+        const resultsContainer = appMain.querySelector("[data-search-results]");
+        if (status) status.textContent = "";
+        if (resultsContainer) resultsContainer.innerHTML = "";
+        return;
+    }
+
+    renderSearchResults(appMain, resultRecords, {
         emptyMessage: "No rigs matched your search.",
-        renderRecord: (rig) => `
-            <button class="search-result-card search-result-card--rig" type="button" data-result-id="${rig.id}">
-                <span class="search-result-card__title">${rig.name}</span>
-                <span class="search-result-card__meta">${rig.difficulty}</span>
-                <span class="search-result-card__summary">${rig.summary}</span>
-                <span class="search-result-card__action">View instructions →</span>
-            </button>
-        `,
+        renderRecord: (rig) => {
+            const coreOrder = getCoreRigOrder(rig.id);
+            const coreBadge = coreOrder >= 0
+                ? `<span class="search-result-card__badge">Core Rig ${coreOrder + 1} of ${CORE_RIG_IDS.length}</span>`
+                : "";
+
+            return `
+                <button class="search-result-card search-result-card--rig${coreOrder >= 0 ? " search-result-card--core" : ""}" type="button" data-result-id="${rig.id}">
+                    ${coreBadge}
+                    <span class="search-result-card__title">${rig.name}</span>
+                    <span class="search-result-card__meta">${rig.difficulty}</span>
+                    <span class="search-result-card__summary">${rig.summary}</span>
+                    <span class="search-result-card__action">View instructions →</span>
+                </button>
+            `;
+        },
         onResultSelect: (rigId) => {
             selectedRigId = rigId;
             showView(ROUTES.RIG_DETAIL);
         }
     });
+
+    if (!normalizedQuery) {
+        const status = appMain.querySelector("[data-search-status]");
+        if (status) {
+            status.textContent = `${resultRecords.length} additional ${resultRecords.length === 1 ? "rig" : "rigs"}`;
+        }
+    }
 }
 
 function renderRigDetailView(appMain) {

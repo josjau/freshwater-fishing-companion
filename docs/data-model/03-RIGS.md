@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.2.1
+**Document Revision:** 0.2.2
 **Document Status:** Draft
-**Decision Baseline:** D025, D026, D027, D028, D042
+**Decision Baseline:** D025, D026, D027, D028, D042-D045
 
 ---
 
@@ -11,7 +11,7 @@
 
 This document defines the canonical Rig entity for Freshwater Fishing Companion.
 
-A Rig represents a complete fishing setup used to present bait or lures to fish.
+A Rig represents a complete ready-to-fish terminal setup used to present bait or lures to fish. A setup may use several components, a weighted hook plus soft plastic, or a complete lure tied directly to line.
 
 The Rig entity supports:
 
@@ -245,6 +245,22 @@ The displayed component name is resolved from canonical Tackle. Duplicated compo
 
 ---
 
+
+# Core Rig Membership and Order
+
+Core membership is curated learning-path metadata owned once by the ordered `CORE_RIG_IDS` registry in `data/rigs.js`.
+
+The registry controls:
+
+- membership in **Core Rigs — Master These First**,
+- teaching order,
+- Core browse-section order,
+- Core badges and detail-page emphasis.
+
+Individual Rig records do not duplicate `isCore`, `coreOrder`, or equivalent display flags solely for this presentation.
+
+---
+
 # Assembly vs Presentation
 
 Rig owns:
@@ -313,7 +329,7 @@ Carolina Rig is specifically approved for this near-term expansion. The existing
 
 # Core Rigs — Master These First
 
-The approved confidence-building subset contains six Rigs:
+The prepared Core build contains six Rigs:
 
 1. Fixed Bobber Rig
 2. Basic Bottom Rig — especially useful for catfish
@@ -324,8 +340,6 @@ The approved confidence-building subset contains six Rigs:
 
 The Core 6 are the first Rig-expansion milestone and must be complete, accurate, beginner-ready, and validated before expansion proceeds to the remaining fourteen Rigs.
 
-Before adding the two currently absent Core entries, resolve whether Inline Spinner Setup and Jighead + Soft Plastic are correctly modeled as canonical Rigs or should be represented as lure/setup combinations.
-
 Core learning-path presentation follows D042 and `STYLE_GUIDE.md`: important curated starting paths receive additional restrained Forest Journal hierarchy.
 
 Purpose:
@@ -334,6 +348,8 @@ Purpose:
 - Cover multiple common species and water-column situations.
 - Build confidence before encouraging a larger fishing arsenal.
 - Teach progressively useful skills such as bite detection, depth control, cast-and-retrieve, bottom contact, and fishing cover.
+
+Jighead + Soft Plastic and Inline Spinner Setup are valid Rig Guide records under D043 because each teaches a complete ready-to-fish terminal setup.
 
 Rigs beyond the approved initial 20, specialized sonar-driven rigs, and niche tournament presentations remain deferred.
 

@@ -9,8 +9,17 @@
 
 const RIG_DATA_BUILD_INFO = Object.freeze({
     file: "data/rigs.js",
-    milestone: "Rig/Tackle Data Integrity"
+    milestone: "Core Rigs and Tackle Media"
 });
+
+const CORE_RIG_IDS = Object.freeze([
+    "fixed-bobber-rig",
+    "basic-bottom-rig",
+    "jighead-soft-plastic",
+    "inline-spinner-setup",
+    "texas-rig",
+    "slip-bobber-rig"
+]);
 
 const RIG_DATA = Object.freeze([
     {
@@ -355,6 +364,139 @@ const RIG_DATA = Object.freeze([
         ],
         techniqueIds: [],
         variationIds: ["carolina-rig"],
+        imageIds: []
+    },
+    {
+        id: "jighead-soft-plastic",
+        name: "Jighead + Soft Plastic",
+        summary: "A simple weighted-lure setup that threads a soft plastic straight onto a jighead for casting, swimming, hopping, or vertical presentation.",
+        createdVersion: "0.2.8",
+        lastModifiedVersion: "0.2.8",
+        isActive: true,
+        difficulty: "Beginner",
+        useCases: [
+            "Fishing for crappie, white bass, panfish, and bass",
+            "Covering open water from shore or boat",
+            "Fishing at a controlled depth with a compact lure"
+        ],
+        conditionTags: [
+            "Open Water",
+            "Light Cover",
+            "Shallow Water",
+            "Deep Water",
+            "Clear Water",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Berkley — Fusion19 Hybrid Jighead",
+                url: "https://www.berkley-fishing.com/products/fusion19-hybrid-jighead"
+            },
+            {
+                label: "Take Me Fishing — Jig with Soft Plastic",
+                url: "https://www.takemefishing.org/blog/april-2019/lure-fishing-for-beginners-lures-every-angler-should-have/"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "jighead",
+                quantity: 1,
+                required: true,
+                notes: "Match the head weight and hook size to the bait, depth, and current."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Small grubs, minnows, paddletails, and worms are practical choices."
+            }
+        ],
+        assemblySteps: [
+            "Inspect the jighead and choose a soft plastic that fits the hook without crowding the bend.",
+            "Tie the jighead directly to the main line or leader.",
+            "Insert the hook point into the center of the bait's nose.",
+            "Thread the bait straight along the hook shank toward the jighead and bait keeper.",
+            "Bring the hook point out through the bait at the point that lets the body lie straight and centered.",
+            "Slide the bait snugly against the jighead and confirm that it is not bent or twisted."
+        ],
+        setupNotes: [
+            "Start with the lightest jighead that reaches the intended depth and can still be felt during the presentation.",
+            "A straight bait tracks and swims more naturally than a crooked bait."
+        ],
+        commonMistakes: [
+            "Threading the bait off-center so it spins or tracks sideways.",
+            "Using a jighead that is too heavy for the depth or presentation.",
+            "Covering too much of the hook gap with the bait.",
+            "Leaving the bait loose instead of seating it against the head or keeper."
+        ],
+        safetyNotes: [
+            "Keep fingers behind the hook point while threading the soft plastic.",
+            "Check behind you before casting a weighted jighead."
+        ],
+        techniqueIds: [],
+        variationIds: [],
+        imageIds: []
+    },
+    {
+        id: "inline-spinner-setup",
+        name: "Inline Spinner Setup",
+        summary: "A ready-to-fish cast-and-retrieve setup built around a compact lure whose blade spins around a central shaft.",
+        createdVersion: "0.2.8",
+        lastModifiedVersion: "0.2.8",
+        isActive: true,
+        difficulty: "Beginner",
+        useCases: [
+            "Covering water and locating active fish",
+            "Fishing for panfish, white bass, trout, and smallmouth bass",
+            "Learning a simple cast-and-retrieve presentation"
+        ],
+        conditionTags: [
+            "Open Water",
+            "Light Cover",
+            "Shallow Water",
+            "Clear Water",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Mepps — Aglia Spinner Rigging and Tips",
+                url: "https://www.mepps.com/mepps-tactics/article/mepps-aglia-spinners/411"
+            },
+            {
+                label: "Panther Martin — In-Line Spinner Quick Reference",
+                url: "https://www.panthermartin.com/guide/"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "inline-spinner",
+                quantity: 1,
+                required: true,
+                notes: "Choose a size that matches the target fish, line, and depth you need to reach."
+            }
+        ],
+        assemblySteps: [
+            "Inspect the line-tie eye, blade, shaft, body, and hook for damage or tangles.",
+            "Tie the main line or leader directly to the spinner's line-tie eye.",
+            "Trim the tag end and pull firmly on the knot to confirm that it is secure.",
+            "Confirm that the blade rotates freely and that the hook is not caught on the blade, body, or dressing."
+        ],
+        setupNotes: [
+            "A direct line connection is the standard setup; add a leader only when toothy fish or abrasion makes one necessary.",
+            "Use the smallest spinner that casts well and reaches the intended depth."
+        ],
+        commonMistakes: [
+            "Adding an oversized snap or swivel that changes the lure's action.",
+            "Fishing with a bent shaft or damaged blade that cannot rotate freely.",
+            "Choosing a lure that is too large for the target fish or available forage.",
+            "Casting the exposed hook directly into heavy cover where it is likely to snag."
+        ],
+        safetyNotes: [
+            "Keep the exposed hook secured until you are ready to cast.",
+            "Check the casting area carefully because the compact weighted lure can travel quickly."
+        ],
+        techniqueIds: [],
+        variationIds: [],
         imageIds: []
     }
 ]);

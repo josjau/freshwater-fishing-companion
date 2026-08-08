@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.4.6  
+**Document Revision:** 0.4.7  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `4e1fdd10ae10935039a86959533e59b495cd09a1`  
+**Repository Baseline Reviewed:** `main` at `530642470f1a82c643561bf94991fdcd0cfed895`  
 **Last Updated:** 2026-08-08
 
 # 1. Start Here
@@ -28,20 +28,20 @@ Permanent operating rule:
 
 The repository baseline reviewed for this handoff is commit:
 
-`4e1fdd10ae10935039a86959533e59b495cd09a1`
+`530642470f1a82c643561bf94991fdcd0cfed895`
 
 Commit message:
 
-`Rig Correction`
+`Rig/Tackle closeout`
 
 The Current-State UX Repairs segment is validated and repository-finalized.
 
-The Rig/Tackle Data Integrity — Batch 1 implementation and runtime/regression validation are complete. This closeout documentation package must be pushed and revalidated on GitHub before the segment itself is repository-finalized.
+The Rig/Tackle Data Integrity — Batch 1 segment is validated and repository-finalized.
 
 Validated governance state:
 
 - `HANDOFF.md` is present.
-- Decisions D022–D042 are present in `DECISIONS.md`.
+- Decisions D022–D045 are present in `DECISIONS.md`.
 - The canonical Tackle data-model document is present.
 - `docs/data-model/05A-INVENTORY.md` is the active Inventory/My Tackle model document.
 - Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
@@ -100,6 +100,24 @@ See `workstreams/RIG-TACKLE-DATA-INTEGRITY.md` and `workstreams/RIG-TACKLE-DATA-
 The exact current source implementation must always be re-fetched from GitHub before edits. Do not assume any proposed or locally staged change has been implemented until it appears on `main`.
 
 `MILESTONES.md` preserves historical milestone detail while current architecture in `ARCHITECTURE.md` and structural decisions in `DECISIONS.md` govern present and planned behavior.
+
+## Core Rigs and Tackle Media
+
+**Implementation Status: In Progress**
+
+The prepared coherent package:
+
+- completes the approved Core 6 by adding Jighead + Soft Plastic and Inline Spinner Setup,
+- resolves both records as ready-to-fish terminal setups under D043,
+- stores Core membership/order once in `CORE_RIG_IDS` under D044,
+- adds a dedicated **Core Rigs — Master These First** browse section and Core detail-page emphasis,
+- adds canonical `jighead` and `inline-spinner` Tackle concepts,
+- replaces the 15 prior transparent/shadowed Tackle assets and adds two new assets, producing a 17-image 640 × 440 neutral-background WebP set,
+- records D045, which prohibits generated finished-Rig/build-step imagery after failed mechanical-accuracy tests.
+
+This segment is not Validated until the package is pushed, GitHub is inspected, and the Core browse/detail, readiness, Tackle popover, media, responsive, accessibility, and regression checks pass.
+
+See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`.
 
 # 3. Current Production Architecture
 
@@ -161,9 +179,8 @@ See `DECISIONS.md` and the governing data-model/media documents.
 **Implementation Status: Approved / Not Implemented**
 
 - Lightweight deterministic relevance ranking before Search becomes noisy.
-- Tackle recognition-image quality cleanup across the current production asset set.
-- Core 6 completion and validation before remaining regional Rig expansion.
-- Reusable Core learning-path card/section emphasis for Core Rigs, future Core Knots, and other explicitly approved starting-path groups.
+- Remaining regional Rig expansion after the Core 6 segment is validated.
+- Reusable Core learning-path card/section emphasis for future Core Knots and other explicitly approved starting-path groups.
 - Direct/shortest-path finished-Rig visual references where trustworthy sources permit.
 - Common fishing-knot step illustrations as a later Knots workstream.
 - Canonical Carolina Rig record to resolve the approved relationship during later expansion.
@@ -211,8 +228,6 @@ The following remain intentionally unresolved:
 - Commercial/branded name resolution such as `Rooster Tail` between a canonical lure/tackle concept and any future commercial ProductDefinition.
 - Exact Recommendation model schema; a dedicated Recommendations model document remains deferred until mature.
 - ProductDefinition architecture beyond the approved rule that it is not required for My Tackle MVP/readiness.
-- Whether Inline Spinner Setup and Jighead + Soft Plastic should remain canonical Rigs versus lure/setup combinations; resolve before creating new Core-6 canonical records.
-- Exact replacement treatment for the current Tackle recognition assets: clean alpha cutout versus restrained neutral background on an asset-by-asset or batch basis.
 - Exact source/licensing choices for Core-Rig finished visual references.
 - Exact initial common-knot set and the future Rig-to-Knot relationship model.
 - Future automated relationship, asset, document-link, and other repository validators.
@@ -220,17 +235,17 @@ The following remain intentionally unresolved:
 
 # 8. Next Recommended Work
 
-Rig/Tackle Data Integrity — Batch 1 is functionally validated. After this closeout package is pushed and GitHub-revalidated, the next build segment is the Tackle recognition-image audit followed by Core-6 modeling/build work.
+The active build segment is **Core Rigs and Tackle Media**.
 
-Recommended sequence:
+Required next actions:
 
-1. Audit the current Tackle recognition assets and approve a no-shadow, clean-edge replacement treatment before producing replacements.
-2. Resolve Core-6 Rig-vs-setup modeling for Inline Spinner Setup and Jighead + Soft Plastic.
-3. Complete and validate the Core 6, including the approved reusable Core learning-path visual emphasis.
-4. Improve finished-Rig visual references, favoring licensed local assets or direct stable verified visual destinations.
-5. Continue the remaining regional Rig expansion after the Core 6 is validated.
-6. Address the common-knot illustration workstream separately.
-7. Hold the dedicated My Tackle schema discussion before My Tackle implementation.
+1. Push the coherent source/media/documentation package.
+2. Re-fetch and inspect the actual GitHub files and image inventory.
+3. Validate the Core browse section, all six Rig details, readiness, derived Tackle `Used In`, and all 17 contextual images.
+4. Validate Fish Search, external references, related Tackle navigation, console health, keyboard/focus behavior, and phone/desktop layouts.
+5. Complete closeout documentation and GitHub verification.
+
+Only after this segment is Validated should work continue to the remaining fourteen regional Rigs, finished-Rig visual-reference improvements, Knots, or My Tackle schema implementation.
 
 Re-evaluate this sequence after each finalized and validated segment.
 
@@ -251,6 +266,8 @@ Re-evaluate this sequence after each finalized and validated segment.
 | UX repair validation | `workstreams/UX-REPAIRS-VALIDATION.md` |
 | Rig/Tackle integrity scope | `workstreams/RIG-TACKLE-DATA-INTEGRITY.md` |
 | Rig/Tackle integrity validation | `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md` |
+| Core Rigs/Tackle Media scope | `workstreams/CORE-RIGS-TACKLE-MEDIA.md` |
+| Core Rigs/Tackle Media validation | `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md` |
 | Data-model index | `data-model/README.md` |
 | Data-model terminology | `data-model/00-GLOSSARY.md` |
 | Global data rules | `data-model/01-FOUNDATION.md` |
