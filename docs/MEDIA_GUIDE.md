@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.4  
+**Document Revision:** 1.0.5  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-10
 
 # Purpose
 
@@ -172,30 +172,60 @@ The Fish page may surround the verified photograph with field-guide information,
 
 # Tackle Media
 
-Tackle is recognition-first and is suitable for original semi-photorealistic or vector illustration when the object geometry is anchored to real reference imagery.
+Tackle is recognition-first. Production recognition media should use a trustworthy real photograph when local reuse rights, subject identity, and presentation quality permit it. When a suitable reusable photograph is unavailable, use an original semi-photorealistic catalog-style reference anchored to verified real-world geometry.
+
+Vector, line-art, flat-graphic, or clip-art treatment is not the normal production style for Tackle recognition media. Precise illustration is an exception for mechanically sensitive items only when it materially improves geometry or recognition and must be explicitly identified and reviewed before inclusion in a build.
 
 The approved visual style uses:
 
 - Clean catalog-like presentation
-- Clean product-reference rendering that visually matches the approved neutral-background examples
-- Semi-photorealistic treatment where practical; precise illustration only when it improves mechanical accuracy
+- Clean product-reference rendering that visually matches the current approved neutral-background production examples
+- Realistic material appearance and depth
+- Semi-photorealistic treatment where a reusable real photograph is unavailable
 - Clean object edges at normal mobile display sizes
-- Forest Journal-compatible green/earth accents
+- Forest Journal-compatible green/earth accents where appropriate
 - Consistent lighting and scale
 - Minimal decorative branding
 - No artificial baked-in drop shadow
+- No heavy outline, vector, icon, cartoon, or clip-art appearance
 
 Transparency is optional rather than mandatory. Use alpha transparency only when the object can be isolated cleanly without rough halos, jagged edges, fringing, or degraded fine geometry. A restrained neutral background is acceptable when it produces a cleaner and more recognizable reference image.
 
-Before creating a Tackle illustration, use a real photograph, manufacturer product image, or authoritative technical image as the geometry baseline. Do not invent hook, float, swivel, sinker, stop, or connector geometry from memory.
+Before creating a Tackle recognition asset, use a real photograph, manufacturer product image, or authoritative technical image as the geometry baseline. Do not invent hook, float, swivel, sinker, stop, or connector geometry from memory.
 
-For mechanically sensitive items, compare the final illustration back to the real baseline before approval.
+For mechanically sensitive items, compare the final production asset back to the real baseline before approval.
 
 Tackle imagery is recognition help, not a photo library. It is displayed on demand from contextual `Name ⓘ` interactions.
 
-For the approved catalog-style Tackle treatment, optimized WebP is the preferred production format. The current production standard uses 640 × 440 single-object catalog references on a restrained warm-neutral background, without alpha transparency or artificial cast shadows. The object should visually match the approved examples: realistic material, clean edges, useful scale, and enough detail to identify the component without relying on the label.
+For the approved catalog-style Tackle treatment, optimized WebP is the preferred production format. The current production standard uses 640 × 440 single-object catalog references on a restrained warm-neutral background, without alpha transparency or artificial cast shadows. The object should visually match the approved production examples: realistic material, clean edges, useful scale, and enough detail to identify the component without relying on the label.
 
-Semi-photorealistic rendering is preferred when it improves recognition and preserves correct geometry. Precise illustration remains acceptable for small or mechanically sensitive items when it is clearer and more accurate than a simulated photograph. Alpha transparency remains permissible for a future asset only when it demonstrably produces a cleaner result than the neutral-background standard. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art; production Tackle references may be rasterized to WebP for consistent loading and presentation.
+## Tackle Acquisition Priority
+
+For a canonical Tackle recognition asset, use this order:
+
+1. A technically correct real photograph that is public domain, CC0, or otherwise clearly licensed for the project's local redistribution and modification needs.
+2. Another properly licensed authoritative or manufacturer image only when the exact reuse rights permit local inclusion.
+3. An original semi-photorealistic catalog-style reference created from independently verified real-world geometry.
+4. A precise illustration only when mechanical accuracy cannot be represented clearly through the preferred treatments; this is an explicit exception, not a default production shortcut.
+
+Manufacturer and retailer photographs may be used as geometry/reference evidence even when redistribution rights do not permit copying them into the repository. Reference permission and production-asset permission are separate questions.
+
+Do not choose a weaker reusable photograph merely because it is available. The production asset must represent the correct canonical concept clearly enough for a beginner to identify the component.
+
+## Tackle Media Generation Gate
+
+Every new or replacement Tackle recognition asset must pass this gate before it may enter an implementation package:
+
+1. Re-read the current `MEDIA_GUIDE.md` from GitHub.
+2. Inspect representative current approved production Tackle assets from GitHub; archived or superseded artwork is not a visual baseline.
+3. Verify the subject's geometry against a real photograph, manufacturer image, or authoritative technical reference.
+4. Search for a legally reusable real photograph before generating an original replacement.
+5. When an original asset is required, explicitly target the approved semi-photorealistic catalog-reference treatment rather than generic illustration.
+6. Compare the finished asset visually with the current approved production library at full size and at realistic contextual-popover phone size.
+7. Reject the asset before packaging if it appears vector-like, flat, cartoon-like, clip-art-like, mechanically ambiguous, materially inconsistent with the current library, or dependent on its caption for basic identification.
+8. Only after visual-style, geometry, licensing/provenance, format, and mobile-recognition checks pass may the asset be added to `data/media.js` or a delivery package.
+
+Passing file dimensions, format, metadata, or path checks is not sufficient. Visual conformity with the current approved production library is a mandatory pre-delivery requirement.
 
 ## Hook Geometry Standard
 
@@ -288,11 +318,11 @@ Preferred order:
 
 1. Public domain / CC0
 2. Properly licensed free sources after per-asset verification
-3. Original authoritative project diagrams
+3. Original authoritative project diagrams or original semi-photorealistic recognition assets when appropriate for the domain
 4. Other licensed sources when they add meaningful accuracy
 5. Discovery sources only to trace the original source
-6. Original Companion SVG illustration
-7. AI-generated or enhanced imagery only when appropriate and independently verified
+6. Original Companion SVG illustration for true diagrams/line art
+7. AI-generated or enhanced imagery only when appropriate for the domain and independently verified
 
 Pinterest and similar sites are discovery sources, not production sources.
 
@@ -303,7 +333,7 @@ Do not hotlink production assets.
 Prefer:
 
 - SVG for diagrams, labels, line art, instructional plates
-- Optimized WebP for photographs and catalog-style Tackle recognition images, including rasterized vector-style assets
+- Optimized WebP for photographs and catalog-style Tackle recognition images
 
 Use PNG only when source/tooling requires it.
 
@@ -394,6 +424,10 @@ Before approval, verify:
 - No artificial drop shadow is baked into the asset
 - Edge quality is clean at normal phone display size
 - Current production assets use the approved 640 × 440 neutral-background treatment
+- Real photographs are preferred when they are technically correct, legally reusable, and presentation-safe
+- Original replacement assets visually match the current approved semi-photorealistic catalog-reference library
+- Vector, flat, cartoon, icon, or clip-art appearance fails normal Tackle recognition-media validation unless an explicit mechanically justified illustration exception was approved before packaging
+- The finished asset was visually compared against current approved production examples before delivery
 - Transparency, if exceptionally approved later, does not introduce halos, jagged edges, or visible fringing
 
 # Contextual Tackle Image Rule
