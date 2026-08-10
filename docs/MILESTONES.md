@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.8.0  
+**Document Revision:** 1.8.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-10
 
@@ -62,7 +62,7 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 - Safety guidance
 - Navigation and error handling
 
-**Current note:** D027 approves a 20-Rig regional library. Current `main` contains nine active Rigs: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig, completing the Beginner and Beginner+ difficulty tiers. The Rig UX finalization segment below is validated; Intermediate is the next Rig expansion tier.
+**Current note:** D027 approves a 20-Rig regional library. The nine-Rig Beginner/Beginner+ foundation is validated. Four Intermediate Rigs are now implemented on `main`, bringing the intended active total to 13, but the Intermediate segment remains unvalidated and is undergoing recognition-media correction before runtime validation.
 
 ## MS2.5 — Lightweight Tackle Readiness
 
@@ -120,7 +120,6 @@ Validated scope:
 
 Validated runtime/regression coverage:
 
-- all four current Rigs,
 - canonical `What You Need` names,
 - contextual Tackle references,
 - required/optional readiness behavior,
@@ -140,7 +139,6 @@ See:
 - `workstreams/RIG-TACKLE-DATA-INTEGRITY.md`
 - `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`
 
-
 ## Core Rigs and Tackle Media
 
 ### Rig Learning Tiers — Rig UX Finalization
@@ -155,7 +153,7 @@ Validated source/data/media scope:
 - global Rig Guide search plus scoped subset search,
 - Dashboard-derived varied navigation-card accents with restrained Core emphasis,
 - corrected Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig assembly/readiness behavior,
-- 20 active canonical Tackle concepts with Wacky Hook, Wacky O-Ring, and Ned Jighead,
+- 20 active canonical Tackle concepts,
 - intact warm-neutral worm-bait recognition media,
 - Texas Rig lazy-loaded Wired2Fish tutorial pilot through `youtube-nocookie.com` with external fallback,
 - compact Rig-detail density approved for Rigs,
@@ -165,8 +163,6 @@ Validated source/data/media scope:
 - top-reset behavior for forward, Parent, and Home transitions.
 
 Validated runtime/regression coverage included mobile and desktop Rig detail presentation, Core/Beginner/Beginner+/All membership and search scope, Wacky/Ned/Weightless component/readiness behavior, worm recognition media, Texas tutorial playback in Brave, Fish landing-page search, clear controls, `Ned` ranking Ned Rig first, sticky navigation, Parent/Home top reset, Fish common/scientific/category search, and derived Tackle `Used In` relationships.
-
-GitHub source/package verification passed on `main` commit `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0` before formal closeout documentation was prepared.
 
 The compact-detail standard remains Rig-specific. Dashboard search is approved future direction but remains deferred pending deliberate cross-domain scope and result-presentation design. Dashboard card density remains unchanged.
 
@@ -178,8 +174,53 @@ See:
 
 # In Progress
 
-No active build segment remains after this closeout is confirmed on GitHub `main`.
+## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
+
+**Implementation Status: Implemented / Unvalidated — Recognition Media Correction In Progress**
+
+Implementation landed on `main` in `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`).
+
+Implemented target scope, pending validation:
+
+- four Intermediate Rigs:
+  1. Drop Shot Rig
+  2. Carolina Rig
+  3. Live-Bait Slip-Sinker Rig
+  4. Three-Way Rig
+- intended 13 active Rigs total,
+- intended 23 active canonical Tackle concepts,
+- tutorial expansion for the existing Beginner/Beginner+ foundation and the Intermediate records,
+- six new recognition-media assets.
+
+Known validation failure:
+
+- all six new recognition-media assets failed initial visual-quality/style review because the pushed versions use an older flat/vector-style treatment instead of the approved current catalog/semi-photorealistic Tackle recognition standard.
+
+Current correction scope:
+
+- Wacky Hook
+- Wacky O-Ring
+- Ned Jighead
+- Drop Shot Weight
+- Three-Way Swivel
+- Fixed Sinker
+
+The Media Guide and Development Workflow now enforce real-photo-first sourcing when legally/technically suitable and a mandatory pre-delivery Tackle Media Generation Gate. Failed replacement candidates are rejected before repository inclusion.
+
+See:
+
+- `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`
+- `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`
 
 # Next Segment
 
-Begin the **Intermediate Rig tier** after the formal closeout documentation commit is pushed, re-fetched, and validated on actual GitHub `main` under D039/D040.
+Do **not** begin Intermediate+ yet.
+
+Next actions are:
+
+1. finish six corrected recognition-media replacements,
+2. verify the corrected GitHub baseline,
+3. complete Intermediate source/data/runtime/tutorial/media/regression validation,
+4. reconcile final governing/current-state documentation,
+5. finalize the Intermediate segment,
+6. then re-evaluate the next milestone; Intermediate+ remains the current likely next tier under D039/D040.
