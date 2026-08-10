@@ -1,11 +1,36 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.11.0  
+**Document Revision:** 1.11.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-10
 
 # Unreleased
+
+## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
+
+**Implementation Status: Implemented / Unvalidated — Ready for Validation**
+
+### Added / Changed
+
+- Four Intermediate Rig records are implemented: Drop Shot Rig, Carolina Rig, Live-Bait Slip-Sinker Rig, and Three-Way Rig.
+- The intended active Rig library expands to 13 records and canonical Tackle to 23 concepts, pending validation.
+- Existing Beginner/Beginner+ and new Intermediate Rig tutorial candidates are implemented, pending runtime playback/fallback validation.
+- The initial six new Tackle recognition-media assets were rejected because their flat/vector treatment did not match the approved current catalog/semi-photorealistic standard.
+- `MEDIA_GUIDE.md` now requires real-photo-first sourcing when technically correct and legally reusable, semi-photorealistic catalog treatment otherwise, a mandatory pre-delivery media gate, exact 640 × 440 `#f4f0e8` current Tackle canvas matching, and conventional viewer-facing J hook orientation unless a reviewed technical exception applies.
+- The user reviewed and uploaded the current seven-image Tackle correction package in `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`).
+- That upload replaced Bobber Stop, Drop Shot Weight, Fixed Sinker, Ned Jighead, Three-Way Swivel, Wacky Hook, and Wacky O-Ring recognition images.
+- Bobber Stop uses an approved rubber/silicone recognition variant.
+- `DEVELOPMENT_WORKFLOW.md` now permits direct Markdown documentation updates but requires user review and explicit approval before assistant direct-write of images, JavaScript, CSS, HTML, application data, configuration, or other non-Markdown production files.
+
+### Validation Status
+
+- Corrected seven-image upload presence on GitHub: verified.
+- Intermediate source/data/runtime/tutorial/media/regression validation: not yet started.
+- Intermediate remains **Implemented / Unvalidated**.
+- Next action is the documented Intermediate validation sequence; Intermediate+ must not begin before this segment is validated and finalized.
+
+See `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`, `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`, and `HANDOFF.md`.
 
 ## Core Rigs and Tackle Media / Rig Learning Tiers
 
