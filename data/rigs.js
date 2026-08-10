@@ -9,7 +9,7 @@
 
 const RIG_DATA_BUILD_INFO = Object.freeze({
     file: "data/rigs.js",
-    milestone: "Rig Learning Tiers"
+    milestone: "Rig UX Finalization"
 });
 
 const CORE_RIG_IDS = Object.freeze([
@@ -290,7 +290,7 @@ const RIG_DATA = Object.freeze([
         name: "Texas Rig",
         summary: "A weed-resistant soft-plastic rig built around a bullet weight and offset hook.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.2.9",
+        lastModifiedVersion: "0.3.0",
         isActive: true,
         difficulty: "Beginner+",
         useCases: [
@@ -314,6 +314,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://norrik.com/fishing-rigs/texas-rig/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How to Rig the Texas Rig",
+            creator: "Wired2Fish",
+            videoId: "cIraWgiR6u0",
+            externalUrl: "https://www.youtube.com/watch?v=cIraWgiR6u0"
+        },
         componentRequirements: [
             {
                 tackleId: "bullet-weight",
@@ -504,7 +511,7 @@ const RIG_DATA = Object.freeze([
         name: "Wacky Rig",
         summary: "A weightless soft-plastic setup that hooks a stick-style worm through its middle so both ends can move freely.",
         createdVersion: "0.2.9",
-        lastModifiedVersion: "0.2.9",
+        lastModifiedVersion: "0.3.0",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -521,43 +528,50 @@ const RIG_DATA = Object.freeze([
         ],
         referenceLinks: [
             {
-                label: "Take Me Fishing — Bass Fishing Rigs",
-                url: "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/bass-fishing-rigs/"
+                label: "Mustad — Wacky / Neko / Dropshot Hook",
+                url: "https://mustad-fishing.com/us/products/w60403np"
             },
             {
-                label: "Yamamoto — Senko Rigging Options",
-                url: "https://www.yamamotobaits.com/senko-soft-bait/"
+                label: "Take Me Fishing — Bass Fishing Rigs",
+                url: "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/bass-fishing-rigs/"
             }
         ],
         componentRequirements: [
             {
-                tackleId: "hook",
+                tackleId: "wacky-hook",
                 quantity: 1,
                 required: true,
-                notes: "A small finesse or wacky-style hook is a practical choice."
+                notes: "Use a small wacky or finesse hook with an open gap; weedless-guard versions are optional for cover."
             },
             {
                 tackleId: "soft-plastic",
                 quantity: 1,
                 required: true,
-                notes: "A straight stick worm is the standard beginner-friendly bait."
+                notes: "A straight four- to five-inch stick worm is a simple beginner starting point."
+            },
+            {
+                tackleId: "wacky-o-ring",
+                quantity: 1,
+                required: false,
+                notes: "Optional; an O-ring can reduce bait tearing while keeping the midpoint presentation."
             }
         ],
         assemblySteps: [
-            "Tie the hook directly to the main line or leader.",
+            "Tie the Wacky Hook directly to the main line or leader.",
             "Find the approximate midpoint of the soft-plastic stick worm.",
-            "Push the hook point straight through the middle of the bait so the hook sits perpendicular to the worm.",
-            "Slide only enough plastic onto the hook to keep the bait secure while leaving both ends free to move.",
-            "Confirm that the hook point and gap remain open and unobstructed."
+            "Push the hook point once through the bait at the midpoint so the bend rests against the worm; do not thread the worm up the hook shank.",
+            "Confirm that both ends of the worm hang freely on opposite sides of the hook and that the hook point and gap remain fully exposed.",
+            "Optional: place a Wacky O-Ring at the midpoint and secure the hook with the ring instead of repeatedly piercing the plastic."
         ],
         setupNotes: [
             "Start without added weight so the bait can fall naturally.",
-            "A four- to five-inch stick worm is an easy starting size."
+            "Centering the hook or O-ring keeps the two ends balanced and free to move."
         ],
         commonMistakes: [
-            "Hooking the bait far away from its midpoint so one side hangs much longer than the other.",
-            "Burying too much of the hook in the plastic and closing the hook gap.",
-            "Adding unnecessary terminal hardware that interferes with the simple weightless setup."
+            "Threading the worm along the hook shank instead of piercing it once at the midpoint.",
+            "Hooking far away from the midpoint so one side hangs much longer than the other.",
+            "Covering the hook point or closing the hook gap with too much plastic.",
+            "Adding unnecessary weight or hardware that changes the simple falling presentation."
         ],
         safetyNotes: [
             "Keep fingers clear of the hook point while piercing the middle of the bait."
@@ -571,7 +585,7 @@ const RIG_DATA = Object.freeze([
         name: "Ned Rig",
         summary: "A compact finesse setup pairing a light mushroom-style jighead with a short soft-plastic bait.",
         createdVersion: "0.2.9",
-        lastModifiedVersion: "0.2.9",
+        lastModifiedVersion: "0.3.0",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -599,35 +613,36 @@ const RIG_DATA = Object.freeze([
         ],
         componentRequirements: [
             {
-                tackleId: "jighead",
+                tackleId: "ned-jighead",
                 quantity: 1,
                 required: true,
-                notes: "A light mushroom-style finesse jighead is the standard choice."
+                notes: "Use a light mushroom-style Ned jighead sized for compact finesse plastics."
             },
             {
                 tackleId: "soft-plastic",
                 quantity: 1,
                 required: true,
-                notes: "Use a short finesse stick bait or similar compact soft plastic."
+                notes: "A roughly 2.75-inch stick-style finesse bait is a standard beginner example; other compact Ned-sized plastics also work."
             }
         ],
         assemblySteps: [
-            "Tie the jighead directly to the main line or leader.",
-            "Choose a compact soft plastic that fits the jighead hook without crowding the gap.",
+            "Tie the Ned Jighead directly to the main line or leader.",
+            "Choose a compact finesse soft plastic that fits the small jighead without crowding the hook gap.",
             "Insert the hook point into the center of the bait's nose.",
-            "Thread the bait straight along the hook shank toward the jighead.",
+            "Thread the bait straight along the hook shank toward the mushroom head and keeper.",
             "Bring the hook point out through the bait so the body remains straight and centered.",
-            "Seat the nose of the bait firmly against the jighead or keeper and confirm that the hook gap remains open."
+            "Seat the bait firmly against the head or keeper and leave the standard hook point fully exposed."
         ],
         setupNotes: [
-            "Use the lightest jighead that maintains the depth and bottom contact you need.",
-            "A straight, compact bait is more important than adding extra hardware."
+            "Use the lightest Ned jighead that maintains the depth and bottom contact you need.",
+            "The standard beginner setup uses an exposed hook; weedless Ned heads are useful variations for snag-prone cover."
         ],
         commonMistakes: [
+            "Substituting a large general-purpose jighead that overwhelms the compact finesse bait.",
             "Using a jighead that is much heavier than necessary.",
             "Threading the bait crooked so it twists or tracks sideways.",
-            "Covering too much of the hook gap with the soft plastic.",
-            "Using a long bulky bait that defeats the compact finesse profile."
+            "Covering the exposed hook point or too much of the hook gap with the soft plastic.",
+            "Using a long bulky bait that defeats the compact Ned profile."
         ],
         safetyNotes: [
             "Keep fingers behind the hook point while threading the soft plastic.",

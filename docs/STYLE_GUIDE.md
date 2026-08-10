@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.2.1
+**Document Revision:** 1.2.2
 **Document Status:** Approved
 **Last Updated:** 2026-08-08
 
@@ -118,6 +118,8 @@ The interface should be:
 
 Avoid visual clutter and duplicated instructional content.
 
+When a section has searchable reference or instructional content, provide search on the main section landing page as well as on relevant scoped subset/browse pages. Main-section search covers the implemented section library; subset search respects the selected scope. The Rig Guide is the first deliberate implementation; older sections should adopt the standard when their searchable navigation is next actively developed rather than through unrelated edits.
+
 Anything that looks actionable must either perform an action or clearly communicate that it is unavailable.
 
 Unimplemented child cards may remain visible when they help communicate application structure, but they must be clearly marked `Coming Soon` or equivalent. Unavailable cards must not retain hover, pointer, click, or other affordances that imply working navigation and should use appropriate accessible disabled/unavailable semantics.
@@ -144,13 +146,15 @@ Previously approved Forest Journal behavior should not be altered by unrelated f
 
 # Core Learning Path Visual Emphasis
 
-Curated `Core` learning groups are intentional teaching paths and should receive stronger visual hierarchy than ordinary peer cards.
+Curated `Core` content is intentional priority learning/reference material and should receive stronger visual hierarchy than ordinary peer cards.
+
+Core is cross-cutting rather than a difficulty or category. A Core item may coexist with Beginner, Intermediate, Advanced, Expert, or other domain-specific classifications.
 
 Examples include:
 
-- **Core Rigs — Master These First**
+- **Core Rigs**
 - Future **Core Knots**
-- Other explicitly approved `Core` or `Start Here` learning groups.
+- Other explicitly approved `Core` learning/reference groups.
 
 Use restrained Forest Journal design flairs rather than a separate visual system. Appropriate treatments include:
 
@@ -172,6 +176,22 @@ Rules:
 - Unavailable Core items, if ever shown, must still follow the unavailable-feature rules and cannot masquerade as actionable.
 
 The goal is immediate recognition of the recommended starting path while preserving the calm field-guide character of Forest Journal.
+
+# Section and Subset Card Navigation
+
+The main Dashboard is the visual reference for card-based section and subset navigation.
+
+Card grids on section and subset/navigation pages should preserve the same shared grammar:
+
+- varied adjacent accent colors rather than one repeated domain accent,
+- the corresponding left-edge accent line,
+- consistent spacing, proportions, hover, active, focus, and responsive behavior,
+- stronger primary treatment only for deliberately prioritized cards,
+- D030 unavailable-card behavior for unimplemented destinations.
+
+Domain identity may still appear in headings, search/results, detail-page accents, and badges. Do not override the entire navigation-card grid to a single domain color.
+
+Core cards may add the approved Core emphasis on top of the shared Dashboard-derived palette.
 
 # Unified Field-Guide Presentation
 

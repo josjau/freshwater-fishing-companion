@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 05-TACKLE.md  
-**Document Revision:** 0.1.2  
+**Document Revision:** 0.1.3  
 **Document Status:** Approved  
 **Implementation Status:** In Progress  
 **Decision Baseline:** D019, D025, D026, D028, D037, D043
@@ -17,6 +17,9 @@ Examples include:
 - Offset Hook
 - Bullet Weight
 - Jighead
+- Ned Jighead
+- Wacky Hook
+- Wacky O-Ring
 - Slip Float
 - Barrel Swivel
 - Spinnerbait
@@ -94,6 +97,8 @@ The Rig owns context specific to its use of the component, including where appro
 
 Context-specific display labels are not added unless a demonstrated UX need justifies them.
 
+Canonical functional types should be specific enough for truthful Rig buildability. When a generic component category would incorrectly mark a Rig as buildable, use a narrower canonical Tackle concept rather than relying only on explanatory notes. Current examples are `wacky-hook` and `ned-jighead`.
+
 # Search and Connected Knowledge
 
 Canonical Tackle may be searchable by deliberate fields such as canonical name, approved aliases, beginner terminology, category, and approved keywords.
@@ -116,11 +121,19 @@ The current production standard uses optimized 640 × 440 WebP assets on a restr
 
 # Current Implementation
 
-`data/tackle.js` owns the production canonical Tackle records and stable IDs. The validated baseline contains 15 active concepts.
+`data/tackle.js` owns the production canonical Tackle records and stable IDs.
 
-The Core Rigs and Tackle Media package adds `jighead` and `inline-spinner`, expanding the prepared catalog to 17 active concepts. It also replaces the active recognition-media set with 17 neutral-background assets.
+Current `main` contains 17 active canonical Tackle concepts and 17 neutral-background recognition-media assets from the Core Rigs/Tackle Media implementation.
 
-This expansion remains **In Progress** until the package is pushed and runtime/regression validation passes.
+The current Rig UX corrective package adds three narrower canonical concepts:
+
+- `wacky-hook`
+- `wacky-o-ring`
+- `ned-jighead`
+
+This produces 20 active canonical Tackle concepts while keeping the active recognition-media set at 17 assets. The three newly narrowed concepts intentionally use text recognition guidance until technically accurate dedicated recognition media is separately approved; no generic image is reused when it could misidentify the component.
+
+This corrective expansion remains **In Progress** until pushed and runtime/regression validation passes.
 
 # Future / Deferred
 

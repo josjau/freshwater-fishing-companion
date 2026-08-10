@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.2.3
+**Document Revision:** 0.2.4
 **Document Status:** Draft
-**Decision Baseline:** D025, D026, D027, D028, D042-D046
+**Decision Baseline:** D025, D026, D027, D028, D042-D049
 
 ---
 
@@ -220,7 +220,29 @@ Purpose
 
 References approved Rig media when technically verified and legally reusable media exists.
 
-Current Rig pages may leave this field empty and use authoritative text instructions plus verified external references.
+Current Rig pages may leave this field empty and use authoritative text instructions plus verified external references or an approved platform-hosted tutorial.
+
+Ownership
+
+Application.
+
+---
+
+## tutorialVideo
+
+Purpose
+
+Optional metadata for a verified platform-hosted Rig tutorial that may be loaded through an official permitted embed player.
+
+A tutorial record may include:
+
+- platform
+- title
+- creator
+- platform video ID
+- external fallback URL
+
+The video remains third-party hosted content. This field does not authorize downloading, rehosting, editing, or extracting frames from the video.
 
 Ownership
 
@@ -263,26 +285,28 @@ The registry controls:
 
 Individual Rig records do not duplicate `isCore`, `coreOrder`, or equivalent display flags solely for this presentation.
 
-Core status is independent of `difficulty` and may overlap Beginner or Beginner+.
+Core status is independent of `difficulty` and may overlap any canonical difficulty or other classification. Core is a curated designation, not a difficulty value.
 
 ---
 
 # Rig Guide Learning-Tier Navigation
 
-The Rig Guide landing page exposes the progression directly through top-level cards:
+The Rig Guide landing page exposes both the complete library and progression directly through top-level cards:
 
-1. Core Rigs
-2. Beginner
-3. Beginner+
-4. Intermediate
-5. Intermediate+
-6. Advanced
-7. Expert
-8. All Rigs
+1. All Rigs
+2. Core Rigs
+3. Beginner
+4. Beginner+
+5. Intermediate
+6. Intermediate+
+7. Advanced
+8. Expert
 
 Implemented tiers are actionable. Future tiers may remain visible with `Coming Soon` semantics until canonical records exist.
 
 `All Rigs` always includes every implemented active Rig, including Core Rigs. It does not own a second Core section.
+
+The main Rig Guide page searches all active implemented Rigs. Each implemented subset/browse page retains scoped search within that collection.
 
 The intended expansion sequence is tier-by-tier:
 
@@ -360,7 +384,9 @@ The approved initial canonical target is 20 Rigs selected for practical freshwat
 
 The list is an approved implementation target, not a claim that all 20 records currently exist in `data/rigs.js`.
 
-The current Rig Learning Tiers implementation prepares the first nine active records: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig. This completes the Beginner and Beginner+ tiers before Intermediate work begins.
+The current Rig Learning Tiers implementation contains the first nine active records: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig. This completes the Beginner and Beginner+ tiers before Intermediate work begins.
+
+The current corrective implementation uses `wacky-hook` (plus optional `wacky-o-ring`) for the Wacky Rig and `ned-jighead` for the Ned Rig so readiness does not treat an unsuitable generic hook or general-purpose jighead as sufficient for those standard setups.
 
 Carolina Rig is specifically approved for the near-term expansion. The existing `carolina-rig` relationship should be resolved by adding the canonical Carolina Rig record during the Intermediate expansion.
 

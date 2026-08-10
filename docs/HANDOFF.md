@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.4.8  
+**Document Revision:** 0.4.9  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `a6cf30622b2e4a2ef1e51d959109765c4a8fe2a5`  
+**Repository Baseline Reviewed:** `main` at `07e8f712ef507349a273ca21610145612e941bf5`  
 **Last Updated:** 2026-08-09
 
 # 1. Start Here
@@ -28,22 +28,22 @@ Permanent operating rule:
 
 The repository baseline reviewed for this handoff is commit:
 
-`a6cf30622b2e4a2ef1e51d959109765c4a8fe2a5`
+`07e8f712ef507349a273ca21610145612e941bf5`
 
 Commit message:
 
-`Core Rig Design Implementation`
+`Rig Update - Core Placement and Beginner Rigs`
 
 The Current-State UX Repairs segment is validated and repository-finalized.
 
 The Rig/Tackle Data Integrity — Batch 1 segment is validated and repository-finalized.
 
-The Core Rigs and Tackle Media segment remains In Progress pending the current corrective/expansion package and runtime validation.
+The Core Rigs and Tackle Media / Rig Learning Tiers segment remains In Progress pending the Rig UX finalization package and runtime validation.
 
 Validated governance state:
 
 - `HANDOFF.md` is present.
-- Decisions D022–D045 are present in the current GitHub `DECISIONS.md`; D046 is included in the prepared Rig Learning Tiers package.
+- Decisions D022–D046 are present in the current GitHub `DECISIONS.md`; D047–D049 are included in the current Rig UX finalization package.
 - The canonical Tackle data-model document is present.
 - `docs/data-model/05A-INVENTORY.md` is the active Inventory/My Tackle model document.
 - Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
@@ -105,30 +105,33 @@ The exact current source implementation must always be re-fetched from GitHub be
 
 **Implementation Status: In Progress**
 
-Current GitHub `main` at `a6cf306...` contains:
+Current GitHub `main` at `07e8f712...` contains:
 
-- six active Core Rigs,
-- `CORE_RIG_IDS` single-owner Core membership,
+- nine active Rigs,
+- six Beginner and three Beginner+ difficulty records,
+- the six-member `CORE_RIG_IDS` registry,
+- top-level Rig Guide cards for Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, and All Rigs,
+- Core/Beginner/Beginner+/All Rigs subset search,
+- the corrected intact worm-bait recognition asset,
+- 17 active canonical Tackle concepts,
 - 17 active neutral-background Tackle recognition images,
-- Core-result/detail visual emphasis,
-- a dedicated Core section inside the current All Rigs browse flow.
+- Core-result/detail visual emphasis.
 
-The prepared Rig Learning Tiers update changes that structure by:
+Repository validation passed after that push, and the initial runtime Rig Guide card-order/unavailable-state check passed. The segment remains In Progress because the final design/technical corrections below were approved before closeout.
 
-- replacing the damaged/ambiguous worm-bait recognition image with a clearly intact reference illustration,
-- adding Wacky Rig,
-- adding Ned Rig,
-- adding Weightless Soft-Plastic Rig,
-- classifying Slip Bobber Rig and Texas Rig as `Beginner+`,
-- completing six Beginner and three Beginner+ Rigs,
-- moving Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, and All Rigs to the top-level Rig Guide page,
-- keeping Core membership separate from difficulty,
-- making only Core, Beginner, Beginner+, and All Rigs actionable while later tiers remain `Coming Soon`,
-- removing the dedicated Core section from All Rigs,
-- removing **Master These First** from current runtime presentation,
-- preserving the restrained Core visual emphasis and Core badges.
+The current Rig UX finalization package:
 
-This update is not Validated until it is pushed, GitHub is inspected, and the landing-page groups, nine Rig records, readiness, derived `Used In`, worm-bait media, responsive/accessibility behavior, and regressions pass.
+- moves **All Rigs** to the first Rig Guide card,
+- adds global Rig search to the main Rig Guide page while retaining scoped subset search,
+- restores Dashboard-derived varied navigation-card accents/left-edge lines instead of one repeated Rig accent,
+- keeps Core as a cross-cutting curated designation with separate visual emphasis,
+- corrects Wacky Rig geometry/readiness using Wacky Hook plus optional Wacky O-Ring,
+- corrects Ned Rig readiness using a dedicated small mushroom-style Ned Jighead,
+- expands canonical Tackle from 17 to 20 concepts without assigning misleading generic images to the three new narrowed concepts,
+- adds the first lazy-loaded official-platform tutorial trial on Texas Rig using Wired2Fish on YouTube with privacy-enhanced embedding and an external fallback,
+- trials a materially more compact mobile-first Rig detail layout, especially What You Need, without reducing touch usability or hiding safety/build instructions.
+
+The compact-detail treatment is a Rig-only trial. It does not become a permanent non-Rig subset/detail standard until user runtime approval.
 
 See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`.
 
@@ -139,7 +142,7 @@ See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-ME
 - Three knowledge layers: Reference Knowledge, Decision Knowledge, User Knowledge.
 - Forest Journal is the only production-supported Version 1 theme.
 - Fish Guide/Search exists with lightweight shared search helpers.
-- Rig Guide exists with canonical Rig data, searchable/browsable Rig records, text-authoritative assembly, contextual Tackle `Name ⓘ` recognition help, verified external Rig references, and inline readiness.
+- Rig Guide exists on current `main` with nine canonical active Rig records, scoped browse search, text-authoritative assembly, contextual Tackle `Name ⓘ` recognition help, verified external references, and inline readiness; the current finalization package adds landing-page global search and the Texas embedded-tutorial trial.
 - Canonical Tackle Reference Knowledge exists in `data/tackle.js`.
 - Rig component requirements reference canonical Tackle through `tackleId`.
 - Reverse Tackle `Used In` relationships are derived from active Rig requirements.
@@ -155,6 +158,8 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 **Decision Status: Approved**
 
 - Search is relevance-first; connected knowledge is breadth-first.
+- Searchable sections provide search on the main section landing page as well as relevant scoped subset/browse pages; both use shared canonical data/search helpers.
+- Card-based section/subset navigation follows the main Dashboard visual grammar, including varied adjacent accents and left-edge lines rather than one repeated domain color.
 - Recommendation tiers are:
   - Best of the Best
   - Best Bang for the Buck
@@ -167,15 +172,15 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 - Canonical Tackle owns Tackle identity/display name.
 - Initial regional Rig target is 20 Rigs for northeast Oklahoma and southwest Kansas.
 - Core Rigs contains six curated confidence-building Rigs.
-- Core is a curated learning group, not a difficulty rank.
-- The Rig Guide landing page owns the learning progression: Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, All Rigs.
+- Core is a cross-cutting curated designation, not a difficulty/category/rank; it may coexist with any applicable difficulty or classification.
+- Rig Guide top-level order is All Rigs, Core Rigs, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert.
 - All Rigs is the complete implemented library and does not own a second dedicated Core section.
 - Rig expansion proceeds one completed learning tier at a time.
 - Approved Core learning groups such as Core Rigs and future Core Knots receive additional restrained Forest Journal visual hierarchy so recommended starting paths are immediately recognizable.
 - Tackle recognition imagery prioritizes clean edges and recognition quality over mandatory alpha transparency.
 - Artificial baked-in drop shadows are not part of the approved Tackle recognition style.
 - A restrained neutral Tackle-image background is acceptable when it produces cleaner recognition than a transparent cutout.
-- Completed-Rig visual confirmation prefers a licensed local image; otherwise prefer the most direct stable verified external visual destination available.
+- Completed-Rig visual confirmation prefers a licensed local image, then an officially permitted embedded verified tutorial, then direct external visual/reference paths; embedded third-party media remains platform-hosted and is not copied into the repository.
 - Common fishing-knot step illustrations are approved future work, but remain outside the immediate Rig workstream.
 - Canonical Tackle defines functional type; My Tackle defines actual owned items.
 - Rig Readiness answers buildability first; optimization comes later.
@@ -195,6 +200,8 @@ See `DECISIONS.md` and the governing data-model/media documents.
 **Implementation Status: Approved / Not Implemented**
 
 - Lightweight deterministic relevance ranking before Search becomes noisy.
+- Broader rollout of verified embedded Rig tutorials after the Texas trial is validated.
+- Dedicated accurate recognition media for Wacky Hook, Wacky O-Ring, and Ned Jighead if/when produced and validated.
 - Intermediate Rig tier.
 - Intermediate+ Rig tier.
 - Advanced Rig tier.
@@ -250,21 +257,25 @@ The following remain intentionally unresolved:
 - Exact source/licensing choices for future finished-Rig visual references.
 - Exact initial common-knot set and the future Rig-to-Knot relationship model.
 - Future automated relationship, asset, document-link, and other repository validators.
+- Whether the compact Rig-detail trial should be promoted to the permanent subset/detail-page density standard after runtime review.
+- A future conservative Dashboard density review; current larger Dashboard cards remain the validated production treatment.
 - Other audit findings not yet discussed to completion must remain visible and must not be silently treated as decided.
 
 # 8. Next Recommended Work
 
-The active build segment is **Core Rigs and Tackle Media / Rig Learning Tiers**.
+The active build segment is **Core Rigs and Tackle Media / Rig Learning Tiers — Rig UX Finalization**.
 
 Required next actions:
 
-1. Push the coherent Rig Learning Tiers source/media/documentation package.
-2. Re-fetch and inspect the actual GitHub files and image inventory.
-3. Validate the top-level Rig Guide cards and unavailable-tier semantics.
-4. Validate Core, Beginner, Beginner+, and All Rigs filtering/search.
-5. Validate all nine Rig details, readiness, derived Tackle `Used In`, and worm-bait media.
-6. Validate Fish Search, external references, related Tackle navigation, console health, keyboard/focus behavior, and phone/desktop layouts.
-7. Complete closeout documentation and GitHub verification.
+1. Push the coherent Rig UX finalization source/documentation package.
+2. Re-fetch and inspect the actual GitHub files and changed-file inventory.
+3. Validate main Rig search, All Rigs-first ordering, Dashboard-derived navigation-card accents, and unavailable-tier semantics.
+4. Validate corrected Wacky and Ned Rig components, assembly wording, contextual Tackle help, derived `Used In`, and readiness persistence.
+5. Validate the Texas tutorial lazy-load/embed behavior, privacy-enhanced host, no-autoplay behavior, fallback link, and phone/desktop layout.
+6. Validate the compact Rig-detail trial at phone width first, especially What You Need, then desktop.
+7. Validate Fish Search, related Tackle navigation/focus restoration, console health, keyboard focus, and Dashboard regressions.
+8. If runtime review approves the compact Rig-detail treatment, make a separate explicit decision about promoting it to the permanent subset/detail-page standard; otherwise keep it Rig-specific or revise it.
+9. Complete closeout documentation and GitHub verification.
 
 Only after this segment is Validated should work continue to the Intermediate Rig tier.
 

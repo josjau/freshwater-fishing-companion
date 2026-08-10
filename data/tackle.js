@@ -9,7 +9,7 @@
 
 const TACKLE_DATA_BUILD_INFO = Object.freeze({
     file: "data/tackle.js",
-    milestone: "Core Rigs and Tackle Media"
+    milestone: "Rig UX Finalization"
 });
 
 const TACKLE_DATA = Object.freeze([
@@ -251,6 +251,51 @@ const TACKLE_DATA = Object.freeze([
         mediaIds: ["jighead-reference"],
         createdVersion: "0.2.8",
         lastModifiedVersion: "0.2.8",
+        isActive: true
+    },
+    {
+        id: "wacky-hook",
+        name: "Wacky Hook",
+        aliases: ["Wacky Rig Hook", "Finesse Wacky Hook"],
+        category: "Hooks",
+        summary: "A compact hook with an open gap used to hold a soft-plastic worm at or near its midpoint.",
+        purpose: "Keeps the hook point and gap exposed while both ends of a wacky-rigged worm move freely.",
+        recognitionNotes: ["Short compact hook profile", "Open hook gap and exposed point", "May include a light weed guard"],
+        commonVariants: ["Open hook", "Weedless guard", "Wacky/Neko hook"],
+        relatedTackleIds: ["soft-plastic", "wacky-o-ring", "hook"],
+        mediaIds: [],
+        createdVersion: "0.3.0",
+        lastModifiedVersion: "0.3.0",
+        isActive: true
+    },
+    {
+        id: "wacky-o-ring",
+        name: "Wacky O-Ring",
+        aliases: ["Wacky Ring", "Worm O-Ring"],
+        category: "Rig Accessories",
+        summary: "A small rubber or silicone ring placed around a soft-plastic stick worm near its midpoint.",
+        purpose: "Provides an optional hook attachment point that can reduce tearing of the soft plastic.",
+        recognitionNotes: ["Small flexible ring", "Sized to fit around a stick worm", "Usually installed near the bait midpoint"],
+        commonVariants: ["Single O-ring", "Crossed double-ring", "Wacky saddle"],
+        relatedTackleIds: ["wacky-hook", "soft-plastic"],
+        mediaIds: [],
+        createdVersion: "0.3.0",
+        lastModifiedVersion: "0.3.0",
+        isActive: true
+    },
+    {
+        id: "ned-jighead",
+        name: "Ned Jighead",
+        aliases: ["Mushroom Jighead", "Ned Head", "Mushroom Head"],
+        category: "Jigheads",
+        summary: "A small mushroom-style finesse jighead designed for compact Ned-rig soft plastics.",
+        purpose: "Provides the light weighted hook and compact profile that define the standard Ned Rig.",
+        recognitionNotes: ["Small mushroom-shaped weighted head", "Light-wire compact hook on standard finesse versions", "Usually includes a keeper for holding a short soft plastic"],
+        commonVariants: ["Exposed-hook mushroom head", "Weedless mushroom head", "Heavier-duty Ned head"],
+        relatedTackleIds: ["soft-plastic", "jighead"],
+        mediaIds: [],
+        createdVersion: "0.3.0",
+        lastModifiedVersion: "0.3.0",
         isActive: true
     },
     {

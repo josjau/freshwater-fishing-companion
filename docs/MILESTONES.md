@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.7.3  
+**Document Revision:** 1.7.4  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-09
 
 # Purpose
 
@@ -62,7 +62,7 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 - Safety guidance
 - Navigation and error handling
 
-**Current note:** D027 approves a 20-Rig regional library. The six-Rig Core milestone is In Progress in the Core Rigs and Tackle Media segment; the remaining fourteen Rigs are Approved / Not Implemented.
+**Current note:** D027 approves a 20-Rig regional library. Current `main` now contains nine active Rigs: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig, completing the Beginner and Beginner+ difficulty tiers. The active Rig UX finalization work remains In Progress before Intermediate expansion begins.
 
 ## MS2.5 — Lightweight Tackle Readiness
 
@@ -145,19 +145,27 @@ See:
 
 ## Core Rigs and Tackle Media
 
+### Rig Learning Tiers — Rig UX Finalization
+
 **Implementation Status: In Progress**
 
-Prepared scope:
+Current `main` has already established the nine-Rig Beginner/Beginner+ library, six-member Core registry, 17 neutral-background Tackle images, corrected bait image, and top-level learning-tier navigation.
 
-- complete the Core 6 with Jighead + Soft Plastic and Inline Spinner Setup,
-- add canonical Jighead and Inline Spinner Tackle concepts,
-- implement the ordered Core learning-path section and Core card/detail emphasis,
-- replace the 15 prior Tackle assets and add two new assets using the approved neutral-background standard,
-- preserve text-authoritative Rig assembly and verified external visual references,
-- prohibit generated finished-Rig/build-step instruction media.
+Current finalization scope:
 
-The milestone is not complete until GitHub and runtime/regression validation pass and closeout documentation is revalidated.
+- move **All Rigs** to the first Rig Guide card,
+- add global Rig search on the Rig Guide landing page while preserving scoped subset search,
+- use Dashboard-derived varied accents/left-edge lines for Rig Guide navigation cards,
+- keep Core as a cross-cutting curated designation with separate visual emphasis,
+- correct Wacky Rig and Ned Rig assembly/readiness with dedicated Wacky Hook, optional Wacky O-Ring, and Ned Jighead concepts,
+- expand canonical Tackle from 17 to 20 concepts while leaving the three new narrowed concepts text-only until accurate recognition media is approved,
+- test one lazy-loaded official-platform tutorial embed on Texas Rig,
+- test a more compact mobile-first Rig detail layout without reducing touch usability or hiding build/safety content.
+
+The compact-detail treatment remains a Rig-only trial until runtime review explicitly approves broader standardization. Dashboard card density is not changed in this segment.
+
+The milestone is not complete until this package is pushed, GitHub is inspected, runtime/regression validation passes, and closeout documentation is revalidated.
 
 # Next Segment
 
-Complete and validate the active Core Rigs and Tackle Media segment before beginning the remaining fourteen regional Rigs or another module.
+Complete and validate the active Rig UX finalization before beginning the Intermediate Rig tier or another module.

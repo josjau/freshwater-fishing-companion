@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.3.5
+**Document Revision:** 0.3.6
 **Document Status:** Approved
 **Last Updated:** 2026-08-09
 
@@ -59,6 +59,9 @@ This document records long-term architectural decisions.
 | D044 | Single-Owner Core Rig Membership | Approved |
 | D045 | No Generated Rig Assembly Imagery | Approved |
 | D046 | Rig Guide Learning-Tier Navigation | Approved |
+| D047 | Section and Subset Search Availability | Approved |
+| D048 | Dashboard-Derived Section Card Design | Approved |
+| D049 | Verified Rig Tutorial Embed Policy | Approved |
 
 # D001 – Local-First Architecture
 
@@ -474,15 +477,17 @@ When a substantial off-segment discussion would unnecessarily interrupt a cohere
 
 # D042 – Core Learning Path Visual Emphasis
 
-Curated beginner learning paths that the application explicitly recommends as high-priority starting points must receive additional visual hierarchy within the Forest Journal design system.
+Curated `Core` content that the application explicitly identifies as high-priority learning or reference material receives additional visual hierarchy within the Forest Journal design system.
 
 Examples include:
 
-- **Core Rigs — Master These First**
+- **Core Rigs**
 - Future **Core Knots**
-- Other future curated `Core` learning groups only when they have been deliberately approved as recommended starting paths.
+- Other future curated `Core` groups only when they have been deliberately approved as priority learning/reference sets.
 
-The purpose of the additional treatment is instructional prioritization, not decoration. A newer angler should be able to identify the recommended starting path quickly without reading every card equally.
+Core is a cross-cutting designation, not a difficulty, category, ownership state, or recommendation tier. A Core item may coexist with Beginner, Intermediate, Advanced, Expert, or other domain-specific classifications.
+
+The purpose of the additional treatment is instructional prioritization, not decoration. A user should be able to identify curated priority content quickly without reading every peer card equally.
 
 Approved treatment may include restrained combinations of:
 
@@ -535,9 +540,9 @@ Rig records do not duplicate `isCore`, `coreOrder`, or equivalent presentation f
 
 The ordered registry owns:
 
-- membership in **Core Rigs — Master These First**,
+- membership in **Core Rigs**,
 - teaching sequence,
-- Core-section ordering,
+- Core-filter ordering,
 - Core badges and detail-page emphasis.
 
 The renderer derives Core presentation from that registry. This keeps curated learning-path membership separate from each Rig's intrinsic identity and prevents duplicated order metadata.
@@ -548,29 +553,24 @@ Generative-image systems are not approved for finished-Rig diagrams, build-step 
 
 Repeated tests produced visually plausible but mechanically unreliable results, including incorrect component order, line routing, hook geometry, bait seating, and orientation. These defects can teach an unsafe or ineffective build even when the image appears polished.
 
-Rig assembly remains text-authoritative. Visual confirmation follows this order:
-
-1. technically verified and legally reusable local media,
-2. a direct verified visual destination or dedicated media/file page,
-3. an authoritative external instructional reference,
-4. text-only instructions when no trustworthy visual exists.
+Rig assembly remains text-authoritative. D049 governs the current completed-Rig visual-confirmation hierarchy, including officially permitted tutorial embeds. Generated finished-Rig/build-step imagery remains prohibited regardless of presentation channel.
 
 Original project diagrams may be used only when manually constructed from verified references and validated component-by-component. This prohibition does not automatically extend to isolated Tackle recognition art, which may use original illustration when its single-object geometry is anchored to a real reference and independently checked.
 
 # D046 – Rig Guide Learning-Tier Navigation
 
-The Rig Guide landing page is the primary learning-navigation hub for Rigs.
+The Rig Guide landing page is the primary navigation hub for Rigs and exposes both the complete implemented library and the learning progression.
 
 Top-level Rig Guide cards are:
 
-1. Core Rigs
-2. Beginner
-3. Beginner+
-4. Intermediate
-5. Intermediate+
-6. Advanced
-7. Expert
-8. All Rigs
+1. All Rigs
+2. Core Rigs
+3. Beginner
+4. Beginner+
+5. Intermediate
+6. Intermediate+
+7. Advanced
+8. Expert
 
 Core is a curated learning collection, not a difficulty value. Core membership remains owned once by `CORE_RIG_IDS`; every Rig separately owns exactly one canonical `difficulty` tier.
 
@@ -591,4 +591,66 @@ Implemented learning tiers are actionable. Tiers without implemented Rigs remain
 
 Rig expansion proceeds by completed learning tier rather than creating the full 20-Rig library in one unvalidated batch. The current expansion completes Beginner and Beginner+ before moving to Intermediate, then Intermediate+, Advanced, and Expert.
 
-Permanent principle: **the Rig landing page teaches the progression; All Rigs inventories the implemented library.**
+Permanent principle: **All Rigs is the universal library entry point; the remaining Rig Guide cards expose curated learning paths and difficulty progression.**
+
+# D047 – Section and Subset Search Availability
+
+When a section contains searchable reference or instructional content, search is available from both the main section landing page and the relevant searchable subset/browse pages.
+
+Main-section search queries the complete implemented content set for that section. Subset search is scoped to the selected subset. A user who already knows what they want should not be forced to enter an `All`, category, family, difficulty, or other intermediate page before searching.
+
+Main-section and subset search must reuse the same canonical records and shared search helpers rather than maintaining parallel indexes or duplicated source-of-truth data.
+
+For the Rig Guide, the landing-page search queries all active implemented Rigs. Core, Beginner, Beginner+, All Rigs, and future implemented tier pages may retain their scoped search fields. The Rig Guide is the first deliberate implementation of this permanent standard; existing sections that do not yet expose landing-page search should be aligned when their searchable navigation is next actively developed rather than changed through unrelated scope.
+
+Permanent principle: **search should be available at the section entry point and remain available when the user intentionally narrows the scope.**
+
+# D048 – Dashboard-Derived Section Card Design
+
+The main Dashboard is the visual reference standard for card-based section and subset navigation throughout the application.
+
+Section and subset card grids should preserve the Dashboard's shared visual grammar, including:
+
+- varied adjacent card accent colors,
+- a corresponding left-edge accent line,
+- shared card spacing and proportions,
+- consistent hover, active, focus, and responsive behavior,
+- stronger primary treatment only where a card has deliberate hierarchy,
+- unavailable-card semantics from D030.
+
+A domain page must not flatten every navigation card to one domain color merely because all cards belong to the same section. Domain identity may still appear in headings, search/result styling, detail pages, badges, or other appropriate context.
+
+Curated Core cards may add the D042 primary emphasis on top of the shared card palette. Core styling does not replace the shared navigation-card system.
+
+This decision applies to card-based main section and subset/navigation pages across Fish, Rigs, Tackle, Knots, Recommendations, Catch Log, Favorites, Settings, and future domains.
+
+Permanent principle: **subset navigation should feel like the same application as the Dashboard, not a visually separate card system.**
+
+# D049 – Verified Rig Tutorial Embed Policy
+
+Completed-Rig visual confirmation follows this preference order:
+
+1. technically verified and legally reusable local completed-Rig media,
+2. a verified tutorial video embedded through the platform's official permitted player,
+3. a direct verified external visual destination,
+4. an authoritative external instructional reference,
+5. text-only instructions when no trustworthy visual exists.
+
+An embedded tutorial does not transfer ownership of the video to the project. The application must not download, rehost, alter, extract frames from, or otherwise republish third-party video content without separate reuse rights.
+
+Embedded tutorial requirements:
+
+- use the platform's official embed mechanism,
+- use only public/available videos whose publisher/platform permits embedding,
+- preserve the platform player and attribution,
+- load on user request rather than preloading third-party players across the Rig library,
+- do not autoplay,
+- remain responsive and usable at phone widths,
+- provide a clear external-source fallback,
+- use privacy-enhanced embedding where the platform provides an official mode.
+
+For YouTube, approved implementations use the official embedded player and privacy-enhanced `youtube-nocookie.com` domain. The browser must be allowed to provide the normal HTTP referrer required by YouTube playback.
+
+Texas Rig is the first implementation trial for this pattern. The trial must pass runtime, responsive, privacy/loading, and usability validation before the same treatment is rolled out broadly.
+
+Permanent principle: **prefer trustworthy in-context visual instruction without copying third-party media into the repository.**

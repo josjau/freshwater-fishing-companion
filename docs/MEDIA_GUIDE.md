@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.3  
+**Document Revision:** 1.0.4  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-08
 
@@ -89,13 +89,16 @@ Do not generate a completed Rig image merely to maintain visual consistency. A t
 Preferred order for completed-Rig visual reference:
 
 1. A clearly licensed, technically verified completed-Rig image that may be bundled locally.
-2. A stable direct visual destination or dedicated media/file page from a verified external source when local reuse rights are unclear or unavailable.
-3. A verified authoritative article or instructional reference when a direct visual destination is unavailable or unsuitable.
-4. Text-only instructions if no trustworthy visual reference is available.
+2. A verified tutorial video shown through the source platform's official permitted embed player.
+3. A stable direct visual destination or dedicated media/file page from a verified external source when local reuse rights are unclear or unavailable.
+4. A verified authoritative article or instructional reference when a direct visual destination is unavailable or unsuitable.
+5. Text-only instructions if no trustworthy visual reference is available.
 
-A direct external visual link is a navigation aid, not an embedded production asset. Do not hotlink third-party media into the application.
+A direct external visual link is a navigation aid, not a production asset. Do not hotlink third-party images or copy third-party video into the repository.
 
-Current Rig pages use verified external reference links and text build instructions instead of generated Rig diagrams.
+Embedded tutorials remain hosted and controlled by the source platform. Embedding permission does not grant permission to download, rehost, edit, extract a frame, or reuse the thumbnail as a project asset.
+
+Current Rig pages use authoritative text build instructions. Texas Rig is the first approved lazy-loaded embedded-tutorial trial; other Rigs continue to use verified external references until a better approved visual path is available.
 
 ## Rig Page Standard
 
@@ -118,6 +121,10 @@ Do not repeat the same instruction in multiple visual and text sections without 
 The `ⓘ` symbol remains reserved for contextual information that does not leave the current page.
 
 External Rig references use `↗` and open in a new tab.
+
+An approved embedded tutorial remains in-app through the source platform's official player. The interface must also provide a clearly labeled external-source fallback such as `Watch on YouTube ↗`.
+
+For YouTube tutorials, use the official embed player, privacy-enhanced `youtube-nocookie.com` mode, no autoplay, responsive 16:9 presentation, and the normal browser referrer behavior required for playback. If the uploader disables embedding or the player cannot load, the external YouTube fallback remains available.
 
 When a trustworthy direct image, dedicated media page, or file page is available, prefer that destination for visual confirmation so the user does not have to search through a long article for the relevant Rig image.
 
@@ -320,8 +327,10 @@ Preferred behavior:
 
 - Contextual reference media loads when the popover opens.
 - Large secondary media uses lazy loading.
-- Primary detail media loads with the selected page.
-- Avoid preloading large libraries without a demonstrated benefit.
+- Third-party tutorial players load only after the user requests the tutorial.
+- Embedded tutorial video does not autoplay.
+- Primary local detail media loads with the selected page when appropriate.
+- Avoid preloading large libraries or third-party players without a demonstrated benefit.
 
 # Licensing Metadata
 

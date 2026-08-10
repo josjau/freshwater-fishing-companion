@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.10.5  
+**Document Revision:** 1.10.6  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-09
 
@@ -13,37 +13,41 @@
 
 ### Added
 
-- Wacky Rig as an active Beginner Rig.
-- Ned Rig as an active Beginner Rig.
-- Weightless Soft-Plastic Rig as an active Beginner+ Rig.
-- Top-level Rig Guide cards for Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, and All Rigs.
-- D046 — Rig Guide Learning-Tier Navigation.
+- Global Rig search directly on the main Rig Guide landing page while retaining scoped subset search.
+- D047 — Section and Subset Search Availability.
+- D048 — Dashboard-Derived Section Card Design.
+- D049 — Verified Rig Tutorial Embed Policy.
+- Canonical Wacky Hook, Wacky O-Ring, and Ned Jighead Tackle concepts.
+- Texas Rig lazy-loaded Wired2Fish YouTube tutorial trial using privacy-enhanced embedding and an external fallback.
+- Compact mobile-first Rig-detail layout trial.
 
 ### Changed
 
-- Slip Bobber Rig and Texas Rig are classified as `Beginner+`.
-- Core Rigs move from a dedicated All Rigs browse section to a top-level Rig Guide collection.
-- `All Rigs` now owns the complete implemented library and includes Core Rigs as ordinary results with Core badges.
-- Removed **Master These First** from current runtime presentation while preserving Core visual emphasis.
-- Intermediate, Intermediate+, Advanced, and Expert top-level cards remain visible with `Coming Soon` semantics until their Rig tiers are implemented.
-- Replaced the ambiguous worm-bait recognition asset with a clearly intact 640 × 440 warm-neutral WebP illustration.
-- Rig expansion now proceeds one completed learning tier at a time.
+- Rig Guide card order is now All Rigs, Core Rigs, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert.
+- Removed the Rig Guide CSS override that forced every navigation card to the same Rig accent; section navigation now follows the Dashboard-derived varied accent/left-line system.
+- Core remains visually emphasized but is explicitly cross-cutting rather than tied to Beginner difficulty.
+- Wacky Rig now uses a dedicated Wacky Hook, optional Wacky O-Ring, one-time midpoint piercing, freely hanging worm ends, and an exposed hook point/gap.
+- Ned Rig now uses a dedicated small mushroom-style Ned Jighead and explicitly preserves the exposed-hook standard beginner configuration.
+- Canonical Tackle expands from 17 to 20 active concepts; the three new narrowed concepts remain text-recognition-only until dedicated accurate media is approved.
+- Texas Rig primary visual/reference experience uses the embedded tutorial trial rather than presenting broad article links as the primary visual path.
+- Rig detail cards and What You Need are more compact while retaining readable text and practical touch targets.
 
 ### Preserved
 
-- `CORE_RIG_IDS` remains the single canonical Core-membership/order registry.
-- Current Core membership and teaching order.
-- Existing canonical Tackle relationships and derived `Used In` behavior.
-- Inline Rig readiness and persistence key.
-- Verified external Rig references.
-- Tackle `Name ⓘ` popovers and related-component navigation.
-- Existing neutral-background Tackle media standard.
-- No generated finished-Rig/build-step imagery.
+- Nine active Rig records: six Beginner and three Beginner+.
+- Six-member `CORE_RIG_IDS` single-owner registry and current Core teaching order.
+- All Rigs complete-library behavior and Core badges.
+- Existing readiness persistence key and buildability behavior.
+- Existing 17-image neutral-background Tackle recognition-media set.
+- Text-authoritative Rig assembly and prohibition on generated Rig assembly imagery.
+- Dashboard larger-card treatment; Dashboard density review remains parked.
 
 ### Validation Status
 
-- Static source/data/media preflight: required before package delivery.
+- Static source/data/documentation preflight: required before package delivery.
 - GitHub inspection and runtime/regression validation: required after push.
+- Compact Rig-detail treatment remains a Rig-only trial until user runtime approval.
+- Texas tutorial embed remains a one-Rig trial until runtime validation passes.
 
 See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`.
 

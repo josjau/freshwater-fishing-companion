@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.3.2
+**Document Revision:** 0.3.3
 **Document Status:** Approved
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-09
 
 # Purpose
 
@@ -135,6 +135,7 @@ Owns canonical Rig records, including:
 - Use cases
 - Condition tags
 - Verified external reference links
+- Optional verified tutorial-video metadata
 - Component requirements
 - Assembly steps
 - Setup notes
@@ -154,7 +155,9 @@ A Rig component requirement references canonical Tackle explicitly through `tack
 
 `CORE_RIG_IDS` is the single canonical owner of Core Rig membership and order. Core status is derived from this registry rather than duplicated inside individual Rig records.
 
-Rig `referenceLinks` point to verified external fishing references used to visually confirm completed rigs. They are not production-media copies and do not transfer ownership of external content into the project.
+Rig `referenceLinks` point to verified external fishing references used for technical cross-checking and visual confirmation. They are not production-media copies and do not transfer ownership of external content into the project.
+
+Optional `tutorialVideo` metadata may identify a verified platform-hosted tutorial. The renderer may load that tutorial through the platform's official permitted embed player without downloading or rehosting the video. Texas Rig is the first approved implementation trial.
 
 Historical `imageIds` fields may remain empty while older media records/assets are retained for cleanup or audit history.
 
@@ -170,7 +173,9 @@ Rigs reference Tackle records through `componentRequirements[].tackleId`.
 
 Manual inverse `rigIds` have been removed from canonical Tackle records. Reverse Rig usage is derived from `Rig.componentRequirements`.
 
-The Core-Rig build expands canonical Tackle from 15 to 17 active concepts by adding `jighead` and `inline-spinner`.
+The Core-Rig build expanded canonical Tackle from 15 to 17 active concepts by adding `jighead` and `inline-spinner`.
+
+The current Rig UX finalization package adds `wacky-hook`, `wacky-o-ring`, and `ned-jighead`, producing 20 active canonical concepts. These narrower types keep buildability checks from treating an unsuitable generic hook or jighead as sufficient. Dedicated media for these three concepts is deferred rather than reusing a potentially misleading generic image.
 
 ## `data/media.js`
 
@@ -192,8 +197,9 @@ Owns reusable rendering and UI interactions, including:
 
 - Child-card views
 - Search pages and result cards
+- Optional main-section landing-page search UI
 - Rig detail rendering
-- Rig external-reference links
+- Rig external-reference links and lazy-loaded tutorial player
 - My Tackle inventory-domain rendering
 - Contextual `Name ⓘ` Tackle reference rendering
 - Canonical Tackle name resolution for Rig requirements
@@ -212,23 +218,30 @@ Coordinates:
 - Application routes
 - Dashboard restoration
 - Fish Guide and Fish Search
-- Rig Guide, Rig browsing, Rig details
+- Rig Guide browsing/subset search and Rig details; the current package adds main-page global search
 - My Tackle
 - Current local readiness-state loading/persistence
 - Current per-Rig Tackle availability selections
 
 # Rig Guide Architecture
 
-Current Rig flow:
+Current package target Rig flow (current `main` already provides the nine-Rig library and scoped browse search; landing-page global search/tutorial/compact-detail changes are In Progress until pushed and validated):
 
     Dashboard
     → Rig Guide
-    → Browse All Rigs
+        → Search all active Rigs directly
+        → All Rigs
+        → Core Rigs
+        → Beginner
+        → Beginner+
+        → future implemented tiers
     → Select a Rig
     → Rig Detail
-        → Best For
-        → Good Conditions
-        → Verified Rig Examples ↗
+        → Best For + Good Conditions (compact at-a-glance trial)
+        → Verified tutorial when approved for that Rig
+            → lazy-load official platform player
+            → external source fallback ↗
+        → otherwise Verified References ↗
         → What You Need + Readiness
             → Mark current availability inline
             → Tackle Reference Popover ⓘ
@@ -238,13 +251,19 @@ Current Rig flow:
         → Common Mistakes
         → Safety
 
+Main Rig Guide search queries the full active implemented Rig set. Search within an implemented subset remains scoped to that subset. Both paths use the same canonical Rig data and shared search helpers.
+
+Card-based Rig Guide navigation uses the same Dashboard-derived varied accent/left-line grammar as other section/subset navigation. Core adds a separate priority treatment rather than forcing the whole Rig page to one accent.
+
 Rig pages intentionally use authoritative text instructions rather than generated Rig build diagrams.
 
-Completed-Rig visual confirmation uses verified external references unless a clearly licensed, technically verified local asset is approved.
+Completed-Rig visual confirmation prefers verified licensed local media, then a verified officially permitted embedded tutorial, then direct external visual/reference paths. Texas Rig is the first embedded-tutorial trial.
+
+The compact Rig-detail layout is an In Progress Rig-only trial and is not yet a permanent cross-domain density standard.
 
 ## Approved Rig Library Expansion — Not Implemented
 
-**Status clarification:** the remaining fourteen-Rig expansion is Approved / Not Implemented. The six-Rig Core subset is In Progress in the Core Rigs and Tackle Media segment.
+**Status clarification:** nine Rigs are implemented on current `main`: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig. Intermediate, Intermediate+, Advanced, and Expert expansion remains Approved / Not Implemented.
 
 The initial canonical target is a 20-rig regional library for practical use in northeast Oklahoma and southwest Kansas:
 
@@ -269,7 +288,7 @@ The initial canonical target is a 20-rig regional library for practical use in n
 19. Double-Jig Crappie Rig
 20. Bottom-Bouncer / Spinner Rig
 
-The implemented confidence-building subset **Core Rigs — Master These First** contains:
+The implemented curated **Core Rigs** subset contains:
 
 - Fixed Bobber Rig
 - Basic Bottom Rig — especially useful for catfish
@@ -280,7 +299,7 @@ The implemented confidence-building subset **Core Rigs — Master These First** 
 
 The Core 6 are the first Rig-expansion milestone and must be complete, accurate, beginner-ready, and validated before expansion to the remaining fourteen Rigs.
 
-Per D042, Core learning groups receive additional restrained Forest Journal hierarchy so the recommended starting path is immediately recognizable. The Browse All Rigs page derives its Core section and order from `CORE_RIG_IDS`, and Core detail pages receive the matching badge/header treatment.
+Per D042/D044/D048, Core membership/order derives from `CORE_RIG_IDS`, Core may overlap any difficulty/category, and Core receives restrained additional hierarchy while Rig Guide navigation cards retain the shared Dashboard-derived palette. All Rigs contains Core records normally rather than owning a separate Core section.
 
 D043 resolves the former modeling question: Jighead + Soft Plastic and Inline Spinner Setup are ready-to-fish terminal setups in the Rig Guide. Reusable presentation behavior remains owned by Technique.
 
@@ -293,7 +312,7 @@ Carolina Rig is approved for the near-term canonical library. The existing `caro
 
 **Implementation Status: In Progress**
 
-This coherent segment adds the two missing Core Rig records, the single-owner `CORE_RIG_IDS` registry, Core browse/detail presentation, two required canonical Tackle concepts, and a 17-image neutral-background Tackle media set.
+The active Rig segment now contains nine implemented Rigs, the single-owner `CORE_RIG_IDS` registry, learning-tier navigation, 17 neutral-background Tackle images, and the finalization work described above.
 
 The source and documentation package must be pushed, inspected on GitHub, and runtime/regression validated before this segment may be marked Validated.
 

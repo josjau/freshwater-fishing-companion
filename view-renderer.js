@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Rig Learning Tiers"
+    milestone: "Rig UX Finalization"
 });
 
 function renderView(appMain, viewConfig) {
@@ -39,17 +39,64 @@ function renderView(appMain, viewConfig) {
         `;
     }).join("");
 
+    const searchConfig = viewConfig.search;
+    const searchMarkup = searchConfig ? `
+        <form class="search-form section-search-form" data-section-search-form>
+            <label class="search-label" for="${searchConfig.inputId}">${searchConfig.label}</label>
+            <div class="search-controls">
+                <input class="search-input" id="${searchConfig.inputId}" name="query" type="search"
+                    placeholder="${searchConfig.placeholder}" autocomplete="off" enterkeyhint="search">
+                <button class="search-button" type="submit">Search</button>
+            </div>
+        </form>
+        <div class="section-search-results" data-section-search-region hidden>
+            <p class="search-status" data-search-status aria-live="polite"></p>
+            <div class="search-results" data-search-results></div>
+        </div>
+    ` : "";
+
     appMain.innerHTML = `
         <section class="content-view" aria-labelledby="${viewConfig.headingId}">
             <button class="page-navigation" type="button" data-home-navigation>← Home</button>
             <h2 id="${viewConfig.headingId}">${viewConfig.title}</h2>
             <p>${viewConfig.description}</p>
-            <div class="dashboard-grid">${cardsMarkup}</div>
+            ${searchMarkup}
+            <div class="dashboard-grid" data-view-card-grid>${cardsMarkup}</div>
         </section>
     `;
 
     initializeHomeNavigation(appMain);
     initializeViewCardActions(appMain, viewConfig.onCardSelect);
+
+    if (searchConfig && typeof searchConfig.onSearch === "function") {
+        const form = appMain.querySelector("[data-section-search-form]");
+        const input = appMain.querySelector(`#${searchConfig.inputId}`);
+        const cardGrid = appMain.querySelector("[data-view-card-grid]");
+        const searchRegion = appMain.querySelector("[data-section-search-region]");
+
+        const updateSearch = () => {
+            const query = input?.value?.trim() ?? "";
+            const hasQuery = query.length > 0;
+            if (cardGrid) cardGrid.hidden = hasQuery;
+            if (searchRegion) searchRegion.hidden = !hasQuery;
+
+            if (!hasQuery) {
+                const status = appMain.querySelector("[data-search-status]");
+                const results = appMain.querySelector("[data-search-results]");
+                if (status) status.textContent = "";
+                if (results) results.innerHTML = "";
+                return;
+            }
+
+            searchConfig.onSearch(query);
+        };
+
+        form?.addEventListener("submit", (event) => {
+            event.preventDefault();
+            updateSearch();
+        });
+        input?.addEventListener("input", updateSearch);
+    }
 }
 
 function initializeHomeNavigation(appMain) {
@@ -265,9 +312,9 @@ function initializeReferenceLinks(appMain) {
 function buildRigReferenceLinks(record) {
     if (!Array.isArray(record.referenceLinks) || record.referenceLinks.length === 0) return "";
     return `
-        <section class="detail-section rig-reference-section">
-            <h3>Verified Rig Examples</h3>
-            <p class="rig-reference-intro">Open an external fishing reference to visually confirm the completed rig. External links are used here instead of generated rig artwork.</p>
+        <section class="detail-section detail-section--supporting rig-reference-section">
+            <h3>Verified References</h3>
+            <p class="rig-reference-intro">Use these external sources for additional technical cross-checking.</p>
             <div class="rig-reference-links">
                 ${record.referenceLinks.map((reference) => `
                     <a class="rig-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span aria-hidden="true">↗</span></a>
@@ -275,6 +322,53 @@ function buildRigReferenceLinks(record) {
             </div>
         </section>
     `;
+}
+
+function buildRigTutorial(record) {
+    const tutorial = record?.tutorialVideo;
+    if (!tutorial || tutorial.platform !== "youtube" || !tutorial.videoId || !tutorial.externalUrl) return "";
+
+    return `
+        <section class="detail-section rig-tutorial-section" data-rig-tutorial>
+            <div class="rig-tutorial-section__header">
+                <div>
+                    <h3>Rig Tutorial</h3>
+                    <p>${tutorial.title} · ${tutorial.creator}</p>
+                </div>
+                <a class="rig-tutorial-section__external" href="${tutorial.externalUrl}" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>
+            </div>
+            <button class="rig-tutorial-load" type="button" data-rig-tutorial-load data-video-id="${tutorial.videoId}" data-video-title="${tutorial.title}">
+                <span class="rig-tutorial-load__icon" aria-hidden="true">▶</span>
+                <span>Load tutorial</span>
+            </button>
+            <div class="rig-tutorial-player" data-rig-tutorial-player hidden></div>
+        </section>
+    `;
+}
+
+function initializeRigTutorial(appMain) {
+    const loadButton = appMain.querySelector("[data-rig-tutorial-load]");
+    const player = appMain.querySelector("[data-rig-tutorial-player]");
+    if (!loadButton || !player) return;
+
+    loadButton.addEventListener("click", () => {
+        const videoId = loadButton.dataset.videoId;
+        const title = loadButton.dataset.videoTitle || "Rig tutorial";
+        if (!videoId) return;
+
+        const iframe = document.createElement("iframe");
+        iframe.className = "rig-tutorial-player__iframe";
+        iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?rel=0`;
+        iframe.title = title;
+        iframe.loading = "lazy";
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+        iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+
+        player.replaceChildren(iframe);
+        player.hidden = false;
+        loadButton.hidden = true;
+    }, { once: true });
 }
 
 function buildTagList(items) {
@@ -319,8 +413,9 @@ function renderInstructionDetail(appMain, detailConfig) {
                             : '<span class="detail-list__optional">Optional</span>'
                     }
                 </div>
-                <p>${component.notes}</p>
-                <label class="rig-component-owned" for="${checkboxId}">
+                <div class="rig-component-item__detail-row">
+                    <p>${component.notes}</p>
+                    <label class="rig-component-owned" for="${checkboxId}">
                     <input
                         id="${checkboxId}"
                         class="rig-component-owned__checkbox"
@@ -328,14 +423,15 @@ function renderInstructionDetail(appMain, detailConfig) {
                         data-component-owned-id="${component.tackleId}"
                         ${isOwned ? "checked" : ""}
                     >
-                    <span>I have this</span>
-                </label>
+                        <span>I have this</span>
+                    </label>
+                </div>
             </li>
         `;
     }).join("");
 
     appMain.innerHTML = `
-        <article class="detail-view" aria-labelledby="rig-detail-title">
+        <article class="detail-view detail-view--rig-compact" aria-labelledby="rig-detail-title">
             <div class="page-navigation-group">
                 <button class="page-navigation" type="button" data-parent-navigation>← ${detailConfig.parentLabel}</button>
                 <button class="page-navigation" type="button" data-home-navigation>Home</button>
@@ -346,11 +442,12 @@ function renderInstructionDetail(appMain, detailConfig) {
                 <h2 id="rig-detail-title">${record.name}</h2>
                 <p>${record.summary}</p>
             </header>
-            <div class="rig-quick-grid">
-                <section class="detail-section"><h3>Best For</h3>${buildTagList(record.useCases)}</section>
-                <section class="detail-section"><h3>Good Conditions</h3>${buildTagList(record.conditionTags)}</section>
-            </div>
-            ${buildRigReferenceLinks(record)}
+            <section class="detail-section rig-at-a-glance">
+                <div class="rig-at-a-glance__group"><h3>Best For</h3>${buildTagList(record.useCases)}</div>
+                <div class="rig-at-a-glance__group"><h3>Good Conditions</h3>${buildTagList(record.conditionTags)}</div>
+            </section>
+            ${buildRigTutorial(record)}
+            ${record.tutorialVideo ? "" : buildRigReferenceLinks(record)}
             <section class="detail-section rig-requirements-section">
                 <div class="rig-requirements-section__header">
                     <div>
@@ -361,13 +458,13 @@ function renderInstructionDetail(appMain, detailConfig) {
                 </div>
                 <ul class="rig-component-list">${componentsMarkup}</ul>
             </section>
-            <section class="detail-section">
+            <section class="detail-section detail-section--build">
                 <h3>How to Build It</h3>
                 <ol class="detail-steps">${record.assemblySteps.map((step) => `<li>${step}</li>`).join("")}</ol>
             </section>
-            <section class="detail-section"><h3>Setup Notes</h3><ul class="detail-list">${record.setupNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
-            <section class="detail-section"><h3>Common Mistakes</h3><ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul></section>
-            <section class="detail-section detail-section--safety"><h3>Safety</h3><ul class="detail-list">${record.safetyNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
+            <section class="detail-section detail-section--supporting"><h3>Setup Notes</h3><ul class="detail-list">${record.setupNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
+            <section class="detail-section detail-section--supporting"><h3>Common Mistakes</h3><ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul></section>
+            <section class="detail-section detail-section--supporting detail-section--safety"><h3>Safety</h3><ul class="detail-list">${record.safetyNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
         </article>
     `;
 
@@ -415,6 +512,7 @@ function renderInstructionDetail(appMain, detailConfig) {
     });
 
     initializeReferenceLinks(appMain);
+    initializeRigTutorial(appMain);
     initializeHomeNavigation(appMain);
     updateReadinessStatus();
 }

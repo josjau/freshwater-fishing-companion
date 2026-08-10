@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Rig Learning Tiers"
+    milestone: "Rig UX Finalization"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -33,7 +33,7 @@ const ROUTES = Object.freeze({
 const RIG_COLLECTIONS = Object.freeze({
     core: Object.freeze({
         title: "Core Rigs",
-        description: "Six foundational rigs that cover the most useful beginner fishing situations."
+        description: "Six curated rigs that cover broadly useful freshwater fishing situations."
     }),
     beginner: Object.freeze({
         title: "Beginner Rigs",
@@ -146,16 +146,22 @@ function renderRigGuideView(appMain) {
     renderView(appMain, {
         headingId: "rig-guide-title",
         title: "Rig Guide",
-        description: "Choose a learning level or browse every implemented freshwater Rig.",
+        description: "Search the full Rig library or choose a learning collection.",
+        search: {
+            inputId: "rig-guide-search-input",
+            label: "Search all Rigs",
+            placeholder: "Try Texas, bobber, shore, cover, or clear water",
+            onSearch: (query) => updateRigGuideSearchResults(appMain, query)
+        },
         cards: [
-            { id: "browse-core-rigs", title: "Core Rigs", description: "Six foundational setups that form the starting fishing toolkit.", isAvailable: true },
+            { id: "browse-all-rigs", title: "All Rigs", description: "Browse every Rig currently implemented in the library.", isAvailable: true },
+            { id: "browse-core-rigs", title: "Core Rigs", description: "Six curated setups that form a broadly useful fishing toolkit.", isAvailable: true },
             { id: "browse-beginner-rigs", title: "Beginner", description: "Six simple rigs with forgiving assembly and broad usefulness.", isAvailable: true },
             { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Three approachable rigs that require a little more setup precision.", isAvailable: true },
             { id: "browse-intermediate-rigs", title: "Intermediate", description: "More specialized rigs for broader fishing situations." },
             { id: "browse-intermediate-plus-rigs", title: "Intermediate+", description: "Specialized finesse and bottom-contact setups." },
             { id: "browse-advanced-rigs", title: "Advanced", description: "Purpose-built rigs for demanding cover, current, and multi-rig situations." },
-            { id: "browse-expert-rigs", title: "Expert", description: "Complex systems that combine multiple setup and presentation decisions." },
-            { id: "browse-all-rigs", title: "All Rigs", description: "Browse every Rig currently implemented in the library.", isAvailable: true }
+            { id: "browse-expert-rigs", title: "Expert", description: "Complex systems that combine multiple setup and presentation decisions." }
         ],
         onCardSelect: handleRigGuideCardSelect
     });
@@ -165,6 +171,41 @@ function renderRigGuideView(appMain) {
         "dashboard-card--primary",
         "rig-guide-core-card"
     );
+}
+
+function renderRigSearchResultCard(rig) {
+    const coreBadge = isCoreRig(rig)
+        ? '<span class="search-result-card__badge">Core Rig</span>'
+        : "";
+
+    return `
+        <button class="search-result-card search-result-card--rig${isCoreRig(rig) ? " search-result-card--core" : ""}" type="button" data-result-id="${rig.id}">
+            ${coreBadge}
+            <span class="search-result-card__title">${rig.name}</span>
+            <span class="search-result-card__meta">${rig.difficulty}</span>
+            <span class="search-result-card__summary">${rig.summary}</span>
+            <span class="search-result-card__action">View instructions →</span>
+        </button>
+    `;
+}
+
+function updateRigGuideSearchResults(appMain, query) {
+    const activeRigs = RIG_DATA.filter((rig) => rig.isActive);
+    const matches = searchRecords(
+        activeRigs,
+        query,
+        ["name", "difficulty", "useCases", "conditionTags"]
+    );
+
+    renderSearchResults(appMain, sortRecordsAlphabetically(matches), {
+        emptyMessage: "No rigs matched your search.",
+        renderRecord: renderRigSearchResultCard,
+        onResultSelect: (rigId) => {
+            selectedRigCollectionKey = "guide";
+            selectedRigId = rigId;
+            showView(ROUTES.RIG_DETAIL);
+        }
+    });
 }
 
 function handleRigGuideCardSelect(cardId) {
@@ -252,21 +293,7 @@ function updateRigBrowseResults(appMain, query) {
 
     renderSearchResults(appMain, resultRecords, {
         emptyMessage: "No rigs matched your search.",
-        renderRecord: (rig) => {
-            const coreBadge = isCoreRig(rig)
-                ? '<span class="search-result-card__badge">Core Rig</span>'
-                : "";
-
-            return `
-                <button class="search-result-card search-result-card--rig${isCoreRig(rig) ? " search-result-card--core" : ""}" type="button" data-result-id="${rig.id}">
-                    ${coreBadge}
-                    <span class="search-result-card__title">${rig.name}</span>
-                    <span class="search-result-card__meta">${rig.difficulty}</span>
-                    <span class="search-result-card__summary">${rig.summary}</span>
-                    <span class="search-result-card__action">View instructions →</span>
-                </button>
-            `;
-        },
+        renderRecord: renderRigSearchResultCard,
         onResultSelect: (rigId) => {
             selectedRigId = rigId;
             showView(ROUTES.RIG_DETAIL);
@@ -276,18 +303,20 @@ function updateRigBrowseResults(appMain, query) {
 
 function renderRigDetailView(appMain) {
     const rig = findRecordById(RIG_DATA, selectedRigId);
+    const fromGuideSearch = selectedRigCollectionKey === "guide";
     if (!rig) {
         console.warn(`Rig was not found: ${selectedRigId}`);
-        showView(ROUTES.RIG_BROWSE);
+        showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE);
         return;
     }
+
 
     const collection = getRigCollectionConfig();
     renderInstructionDetail(appMain, {
         record: rig,
-        parentLabel: collection.title,
+        parentLabel: fromGuideSearch ? "Rig Guide" : collection.title,
         selections: getRigReadinessSelections(rig.id),
-        onParent: () => showView(ROUTES.RIG_BROWSE),
+        onParent: () => showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE),
         onReadinessChange: (tackleId, isOwned) =>
             updateRigReadinessSelection(rig.id, tackleId, isOwned)
     });
