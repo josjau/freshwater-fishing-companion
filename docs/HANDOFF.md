@@ -1,15 +1,16 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.5.1  
+**Document Revision:** 0.5.2  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative; do not rely on a self-referential handoff commit SHA.  
 **Intermediate Implementation Baseline:** `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
+**Latest Verified Tackle Image Update:** `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`)  
 **Last Updated:** 2026-08-10
 
 # 1. Start Here
 
-GitHub `main` is authoritative for existing project files. This document is the repository current-state map, not a duplicate specification. Follow the governing documents linked below before proposing changes.
+GitHub `main` is authoritative for existing project files. This document is the repository current-state map, not a duplicate specification. Follow the governing documents linked below before proposing project changes.
 
 Recommended first-read order:
 
@@ -28,13 +29,15 @@ Permanent operating rules:
 
 > Repository documentation must describe what is actually true on `main` after the most recent meaningful repository action. Implementation, validation failures, corrective work, and next actions are documented continuously rather than reconstructed later from chat history.
 
+> Markdown documentation may be updated directly when needed to keep repository state current. Images, JavaScript, CSS, HTML, application data, configuration, and other non-Markdown production files require user review and explicit approval before the assistant writes them directly to GitHub.
+
 # 2. Current Repository / Milestone State
 
 ## Current Active Segment
 
 **Beginner/Beginner+ Media Completion + Intermediate Rig Expansion**
 
-**Implementation Status: Implemented / Unvalidated — Recognition Media Correction In Progress**
+**Implementation Status: Implemented / Unvalidated — Ready for Intermediate Validation**
 
 The Intermediate implementation package is present on `main` from commit:
 
@@ -44,7 +47,25 @@ Commit message:
 
 `Rigs - Intermediate Build`
 
-That implementation added the intended Intermediate source/data/media package, but post-push Intermediate validation had not begun before the preceding development session ended.
+The initial recognition-media package did not meet the approved Tackle image standard. That correction work has now advanced to a new reviewed seven-image package uploaded by the user in commit:
+
+`eed8929cb1859aef653168884e1e71244d1dd80e`
+
+Commit message:
+
+`Tackle Image Updates`
+
+GitHub inspection confirms that commit replaced exactly these seven production images:
+
+- `images/tackle/bobber-stop-reference.webp`
+- `images/tackle/drop-shot-weight-reference.webp`
+- `images/tackle/fixed-sinker-reference.webp`
+- `images/tackle/ned-jighead-reference.webp`
+- `images/tackle/three-way-swivel-reference.webp`
+- `images/tackle/wacky-hook-reference.webp`
+- `images/tackle/wacky-o-ring-reference.webp`
+
+`main` subsequently advanced through merge commit `f75374a34abad52c2df5c525ff366c70db0706ec`, which also contains the approved `MEDIA_GUIDE.md` update for the exact `#f4f0e8` reference canvas and conventional viewer-facing J hook orientation.
 
 Current known state:
 
@@ -60,27 +81,25 @@ Current known state:
 - 23 canonical Tackle concepts are intended by the implementation,
 - the six-member `CORE_RIG_IDS` registry remains unchanged,
 - Intermediate+, Advanced, and Expert have not started,
-- runtime/source/data/tutorial/regression validation for the Intermediate segment has not yet been completed,
-- all six newly introduced recognition-media assets failed their first visual-quality review because they used an older flat/vector-style treatment inconsistent with the approved current Tackle media standard,
-- those six assets are being replaced before any remaining Intermediate validation begins.
+- the seven-image correction package is now present on `main`,
+- no Intermediate source/data/runtime/tutorial/regression validation has yet been completed,
+- the next session should begin with the documented Intermediate validation sequence rather than more implementation.
 
-Failed recognition-media files:
+The approved Tackle media rules now include:
 
-- `images/tackle/wacky-hook-reference.webp`
-- `images/tackle/wacky-o-ring-reference.webp`
-- `images/tackle/ned-jighead-reference.webp`
-- `images/tackle/drop-shot-weight-reference.webp`
-- `images/tackle/three-way-swivel-reference.webp`
-- `images/tackle/fixed-sinker-reference.webp`
-
-The visual-style decision is not open. `MEDIA_GUIDE.md` now requires a real-photo-first acquisition search, an original semi-photorealistic catalog treatment when a suitable reusable photograph is unavailable, and a mandatory pre-delivery Tackle Media Generation Gate. Flat/vector/clip-art-looking Tackle recognition assets fail normal production review unless a mechanically justified illustration exception was explicitly approved.
+- real-photo-first sourcing when technically correct and legally reusable,
+- original semi-photorealistic catalog treatment when suitable reusable photography is unavailable,
+- mandatory pre-delivery visual/mechanical review,
+- exact 640 × 440 `#f4f0e8` production canvas for current Tackle references,
+- conventional viewer-facing capital-J hook orientation unless a reviewed technical exception applies,
+- rejection of normal-production vector/flat/clip-art treatment.
 
 The active source of truth for this segment is:
 
 - `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`
 - `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`
 
-Do not describe the Intermediate tier as Validated or Finalized until those documents say so after the required checks actually pass.
+Do not describe the Intermediate tier as Validated or Finalized until the required checks actually pass and those documents are reconciled.
 
 ## Previously Finalized Work
 
@@ -190,6 +209,7 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 - Rig expansion proceeds one completed learning tier at a time.
 - Tackle recognition media is recognition-first and must meet the current `MEDIA_GUIDE.md` visual/geometry/licensing gate before packaging.
 - For Tackle recognition assets, use an accurate legally reusable real photograph when practical; otherwise use an original semi-photorealistic catalog-style reference anchored to verified real-world geometry.
+- Current Tackle reference images use exact `#f4f0e8` canvas matching and normal viewer-facing J hook orientation.
 - Vector/flat/clip-art appearance is not an acceptable normal Tackle production shortcut.
 - Completed-Rig visual confirmation follows the D049 hierarchy: trustworthy reusable local media when available, verified permitted tutorial embed, direct verified external visual/reference, authoritative article/reference, then authoritative text-only instructions.
 - Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
@@ -266,30 +286,28 @@ The following remain intentionally unresolved:
 - Whether any non-Rig domain should adopt the Rig-specific compact-detail density treatment after separate review.
 - Exact Dashboard-search cross-domain scope, grouping, and result presentation.
 - Future conservative Dashboard density review.
+- Full-library hook-orientation audit for older recognition assets such as Fishing Hook, Offset Worm Hook, and generic Jighead; this is a media-consistency follow-up and must not block the already-uploaded seven-image correction package from entering Intermediate runtime validation unless an actual runtime recognition defect is observed.
 - Other audit findings not yet discussed to completion remain visible until explicitly decided.
 
 # 8. Next Recommended Work
 
-The immediate work is **not Intermediate+**.
+The immediate work is **Intermediate validation**, not Intermediate+ and not another implementation tier.
 
-Current sequence:
+Start the next session by re-reading actual GitHub `main` and then execute the validation sequence documented in `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`:
 
-1. Complete corrected replacements for all six failed recognition-media assets under the current Media Generation Gate.
-2. Re-fetch actual `main` and verify the corrective file inventory and any metadata/license changes.
-3. Perform the Intermediate validation sequence documented in `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`:
-   - GitHub/source/package integrity,
-   - canonical data counts and relationships,
-   - Intermediate membership/routing/search,
-   - Drop Shot Rig,
-   - Carolina Rig,
-   - Live-Bait Slip-Sinker Rig,
-   - Three-Way Rig,
-   - corrected media phone/desktop review,
-   - tutorial audit,
-   - Beginner/Beginner+/Core/application regressions.
-4. Update validation/current-state documentation after each meaningful validation result.
-5. Perform final governing-document reconciliation and repository closeout.
-6. Only then select/start the next milestone, with Intermediate+ as the current likely candidate under the tier-by-tier expansion rule.
+1. GitHub/source/package integrity.
+2. Canonical Rig/Tackle/media counts and relationships.
+3. Intermediate membership, routing, and search.
+4. Drop Shot Rig.
+5. Carolina Rig.
+6. Live-Bait Slip-Sinker Rig.
+7. Three-Way Rig.
+8. Corrected recognition-media phone/desktop review, including the seven user-uploaded replacements.
+9. Existing and Intermediate tutorial audit.
+10. Beginner/Beginner+/Core and application regression pass.
+11. Documentation reconciliation/final closeout.
+
+Update validation/current-state documentation after each meaningful validation result. Only after all required checks pass should the Intermediate segment be finalized and the next milestone selected.
 
 Dashboard search remains parked.
 
@@ -337,6 +355,8 @@ Dashboard search remains parked.
 - Preflight is not runtime validation.
 - After push, inspect actual repository state.
 - Documentation must be updated continuously to match meaningful implementation/correction/validation state changes.
+- Markdown documentation may be updated directly to keep repository state current.
+- Images, JavaScript, CSS, HTML, application data, configuration, and other non-Markdown production files require user review and explicit approval before assistant direct-write to GitHub.
 - Known validation failures are recorded immediately.
 - Permanent project knowledge belongs in repository documentation, not only chat history.
 - Do not move into a new build segment while the current one remains unfinalized.
