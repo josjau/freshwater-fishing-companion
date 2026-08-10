@@ -1,10 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE.md  
-**Document Revision:** 0.1.1  
+**Document Revision:** 0.1.2  
 **Document Status:** Approved  
 **Implementation Status:** Implemented / Unvalidated — Recognition Media Correction In Progress  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
+**Latest Media Correction:** `601b741f368f7e1ae9e5b2963935673901b76674` (`Replace four failed tackle recognition assets`)  
 **Last Updated:** 2026-08-10
 
 # Purpose
@@ -17,18 +18,25 @@ This segment keeps D046's tier-by-tier expansion discipline: it adds exactly one
 
 The Intermediate implementation package was pushed to `main` in commit `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`). The source/data implementation is therefore present in the repository, but the segment has not yet completed its required post-push validation.
 
+The initial six-image recognition-media set failed visual-quality review. A first corrective media commit, `601b741f368f7e1ae9e5b2963935673901b76674`, replaced four of those six files after they passed the new pre-delivery visual/mechanical gate.
+
 Current state:
 
 - four Intermediate Rig records are implemented,
 - the intended Beginner/Beginner+ tutorial expansion is implemented,
 - canonical Tackle expands to the intended 23 active concepts,
-- six new Tackle recognition-media files are present,
 - no Intermediate runtime/regression validation has yet been completed,
-- the six new recognition-media assets failed the first visual-quality review because they use an older flat/vector-style treatment rather than the approved current catalog/semi-photorealistic production treatment,
-- replacement of those six assets is the active corrective action,
+- four recognition-media corrections are now present on `main`:
+  - Wacky Hook,
+  - Wacky O-Ring,
+  - Three-Way Swivel,
+  - Fixed Sinker,
+- two recognition-media corrections remain blocked because available candidates have not yet passed mechanical/visual review:
+  - Ned Jighead,
+  - Drop Shot Weight,
 - Intermediate+, Advanced, and Expert work has not started.
 
-The failed image review is a known validation failure, not a reopened design decision. `MEDIA_GUIDE.md` now contains the mandatory real-photo-first acquisition order and Tackle Media Generation Gate that must be satisfied before replacement assets are accepted.
+The failed image review is a known validation failure, not a reopened design decision. `MEDIA_GUIDE.md` contains the mandatory real-photo-first acquisition order and Tackle Media Generation Gate that must be satisfied before replacement assets are accepted.
 
 # Segment Decisions
 
@@ -86,7 +94,7 @@ Video records remain unvalidated until the post-push runtime test confirms that 
 
 # Recognition-Media Completion Scope
 
-The six new recognition-media files requiring corrected replacements are:
+The six original recognition-media additions were:
 
 - Wacky Hook → `images/tackle/wacky-hook-reference.webp`
 - Wacky O-Ring → `images/tackle/wacky-o-ring-reference.webp`
@@ -95,7 +103,21 @@ The six new recognition-media files requiring corrected replacements are:
 - Three-Way Swivel → `images/tackle/three-way-swivel-reference.webp`
 - Fixed Sinker → `images/tackle/fixed-sinker-reference.webp`
 
-The versions introduced in `e4b61ae` are rejected for visual quality/style. Their replacements must follow the current `MEDIA_GUIDE.md`:
+The versions introduced in `e4b61ae` were rejected for visual quality/style.
+
+Corrected replacements currently on `main` from `601b741...`:
+
+- Wacky Hook,
+- Wacky O-Ring,
+- Three-Way Swivel,
+- Fixed Sinker.
+
+Still pending because candidate geometry/quality has not yet passed the gate:
+
+- Ned Jighead — must clearly show a mushroom-style head, line-tie eye, welded/functional keeper, and exposed open-J hook,
+- Drop Shot Weight — must clearly show a terminal drop-shot weight with the intended quick-change line clip rather than a generic swivel/eye attachment.
+
+All replacements follow the current `MEDIA_GUIDE.md`:
 
 1. search for an accurate legally reusable real photograph first,
 2. otherwise create an original semi-photorealistic catalog-style reference anchored to verified real-world geometry,
@@ -155,7 +177,7 @@ Canonical configuration:
 - Fishing Hook,
 - Bait.
 
-A walking sinker is modeled as a recognized Sliding Sinker variant rather than creating a duplicate canonical weight concept.
+A walking sinker is modeled as a recognized Sliding Sinker variant rather than creating a duplicate canonical Tackle type.
 
 Tutorial:
 
@@ -196,7 +218,7 @@ New canonical Tackle concepts are limited to concepts that are functionally dist
 2. Three-Way Swivel
 3. Fixed Sinker
 
-These counts and relationships are not considered validated until the Intermediate validation procedure is run against current `main`.
+These counts and relationships are not considered validated until the Intermediate validation procedure is run against the final corrected `main` baseline.
 
 # Rig Guide Result
 
@@ -225,12 +247,12 @@ Implementation commit `e4b61ae` changed:
 
 Recognition-media correction scope:
 
-- `images/tackle/wacky-hook-reference.webp`
-- `images/tackle/wacky-o-ring-reference.webp`
-- `images/tackle/ned-jighead-reference.webp`
-- `images/tackle/drop-shot-weight-reference.webp`
-- `images/tackle/three-way-swivel-reference.webp`
-- `images/tackle/fixed-sinker-reference.webp`
+- `images/tackle/wacky-hook-reference.webp` — corrected on `main`,
+- `images/tackle/wacky-o-ring-reference.webp` — corrected on `main`,
+- `images/tackle/ned-jighead-reference.webp` — correction pending,
+- `images/tackle/drop-shot-weight-reference.webp` — correction pending,
+- `images/tackle/three-way-swivel-reference.webp` — corrected on `main`,
+- `images/tackle/fixed-sinker-reference.webp` — corrected on `main`.
 
 Active documentation:
 
@@ -239,6 +261,7 @@ Active documentation:
 - `docs/HANDOFF.md`
 - `docs/DEVELOPMENT_WORKFLOW.md`
 - `docs/MEDIA_GUIDE.md`
+- `docs/MILESTONES.md`
 
 Additional governing/current-state documentation will continue to be reconciled as meaningful implementation and validation results occur rather than waiting until the end of the segment.
 
@@ -259,12 +282,12 @@ Additional governing/current-state documentation will continue to be reconciled 
 
 This segment remains **Implemented / Unvalidated** until the current correction and validation sequence is complete:
 
-1. replace the six rejected recognition assets under the current Media Generation Gate,
-2. re-fetch actual GitHub `main` and confirm the corrected file inventory/state,
+1. finish the remaining Ned Jighead and Drop Shot Weight corrections under the Media Generation Gate,
+2. re-fetch actual GitHub `main` and confirm the complete corrected file inventory/state,
 3. validate canonical Rig/Tackle/media counts and relationships,
 4. validate Intermediate navigation/search/detail/readiness behavior,
 5. test all tutorial candidates for current lazy-load playback and fallback behavior,
-6. validate the six corrected recognition assets at phone and desktop sizes,
+6. validate all six corrected recognition assets at phone and desktop sizes,
 7. run Beginner/Beginner+/Core and related application regressions,
 8. reconcile governing/current-state documentation with every meaningful result,
 9. push/re-fetch the final closeout state and only then mark the segment Finalized.
