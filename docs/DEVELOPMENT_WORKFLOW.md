@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.1.3  
+**Document Revision:** 1.1.4  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-10
 
@@ -79,6 +79,30 @@ For coherent multi-file or asset-heavy work:
 - Keep related source, documentation, and imagery together so the user can review one coherent GitHub Desktop diff.
 - Minimize GitHub pushes: when implementation and its required documentation can safely be reviewed together, deliver them in the same package and target one coherent commit/push.
 - Do not minimize pushes at the cost of stale current-state documentation. If implementation is intentionally pushed before runtime validation, its documentation must state `Implemented / Unvalidated` in that same repository state whenever practical.
+
+# Production Write Approval Gate
+
+Markdown documentation may be updated directly on GitHub when needed to keep repository state, decisions, validation results, and handoff information current.
+
+Production assets and source require user review before direct repository writes by the assistant. This includes, but is not limited to:
+
+- images and other media,
+- JavaScript,
+- CSS,
+- HTML,
+- application data files,
+- configuration files,
+- other non-Markdown production files.
+
+Default workflow for those files:
+
+1. Build the complete proposed replacement/package from the latest verified GitHub baseline.
+2. Provide the files or coherent ZIP to the user for review.
+3. Do not write those production files to GitHub unless the user explicitly approves that direct write after review.
+4. The user may instead copy/upload the reviewed files and push them through GitHub Desktop.
+5. After the user push, verify the actual commit and affected files on GitHub.
+
+A prior approval for one production update does not grant blanket approval for later production writes. Ask again before each new direct-write set unless the user explicitly changes this rule.
 
 # Decision-to-Package Continuity
 
