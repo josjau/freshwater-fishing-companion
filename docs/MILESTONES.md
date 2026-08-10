@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.7.4  
+**Document Revision:** 1.8.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-09
+**Last Updated:** 2026-08-10
 
 # Purpose
 
@@ -46,7 +46,7 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 - Parent/Home navigation
 - Responsive validation
 
-**Current note:** the lightweight substring implementation remains current, while D022 establishes relevance-first Search as the permanent quality standard.
+**Current note:** the primary Fish workflow now exposes the shared inline search field directly on the Fish Guide landing page. Search uses lightweight deterministic relevance ranking under D022/D050 instead of alphabetizing all substring matches, while the historical standalone Fish Search route remains part of milestone history rather than the current primary interaction.
 
 ## MS2.4 — Functional Rig Guide
 
@@ -62,7 +62,7 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 - Safety guidance
 - Navigation and error handling
 
-**Current note:** D027 approves a 20-Rig regional library. Current `main` now contains nine active Rigs: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig, completing the Beginner and Beginner+ difficulty tiers. The active Rig UX finalization work remains In Progress before Intermediate expansion begins.
+**Current note:** D027 approves a 20-Rig regional library. Current `main` contains nine active Rigs: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig, completing the Beginner and Beginner+ difficulty tiers. The Rig UX finalization segment below is validated; Intermediate is the next Rig expansion tier.
 
 ## MS2.5 — Lightweight Tackle Readiness
 
@@ -141,31 +141,45 @@ See:
 - `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`
 
 
-# In Progress
-
 ## Core Rigs and Tackle Media
 
 ### Rig Learning Tiers — Rig UX Finalization
 
-**Implementation Status: In Progress**
+**Implementation Status: Validated**
 
-Current `main` has already established the nine-Rig Beginner/Beginner+ library, six-member Core registry, 17 neutral-background Tackle images, corrected bait image, and top-level learning-tier navigation.
+Validated source/data/media scope:
 
-Current finalization scope:
+- nine active Rigs with six Beginner and three Beginner+ records,
+- six-member single-owner `CORE_RIG_IDS` registry,
+- All Rigs first in the Rig Guide, followed by Core, Beginner, Beginner+, and unavailable later tiers,
+- global Rig Guide search plus scoped subset search,
+- Dashboard-derived varied navigation-card accents with restrained Core emphasis,
+- corrected Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig assembly/readiness behavior,
+- 20 active canonical Tackle concepts with Wacky Hook, Wacky O-Ring, and Ned Jighead,
+- intact warm-neutral worm-bait recognition media,
+- Texas Rig lazy-loaded Wired2Fish tutorial pilot through `youtube-nocookie.com` with external fallback,
+- compact Rig-detail density approved for Rigs,
+- shared inline search fields with explicit one-click clear control,
+- deterministic relevance ranking with canonical-name confidence ahead of lower-priority metadata,
+- compact sticky Parent/Home navigation,
+- top-reset behavior for forward, Parent, and Home transitions.
 
-- move **All Rigs** to the first Rig Guide card,
-- add global Rig search on the Rig Guide landing page while preserving scoped subset search,
-- use Dashboard-derived varied accents/left-edge lines for Rig Guide navigation cards,
-- keep Core as a cross-cutting curated designation with separate visual emphasis,
-- correct Wacky Rig and Ned Rig assembly/readiness with dedicated Wacky Hook, optional Wacky O-Ring, and Ned Jighead concepts,
-- expand canonical Tackle from 17 to 20 concepts while leaving the three new narrowed concepts text-only until accurate recognition media is approved,
-- test one lazy-loaded official-platform tutorial embed on Texas Rig,
-- test a more compact mobile-first Rig detail layout without reducing touch usability or hiding build/safety content.
+Validated runtime/regression coverage included mobile and desktop Rig detail presentation, Core/Beginner/Beginner+/All membership and search scope, Wacky/Ned/Weightless component/readiness behavior, worm recognition media, Texas tutorial playback in Brave, Fish landing-page search, clear controls, `Ned` ranking Ned Rig first, sticky navigation, Parent/Home top reset, Fish common/scientific/category search, and derived Tackle `Used In` relationships.
 
-The compact-detail treatment remains a Rig-only trial until runtime review explicitly approves broader standardization. Dashboard card density is not changed in this segment.
+GitHub source/package verification passed on `main` commit `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0` before formal closeout documentation was prepared.
 
-The milestone is not complete until this package is pushed, GitHub is inspected, runtime/regression validation passes, and closeout documentation is revalidated.
+The compact-detail standard remains Rig-specific. Dashboard search is approved future direction but remains deferred pending deliberate cross-domain scope and result-presentation design. Dashboard card density remains unchanged.
+
+See:
+
+- `workstreams/CORE-RIGS-TACKLE-MEDIA.md`
+- `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`
+- `workstreams/RIG-UX-RUNTIME-FOLLOWUP.md`
+
+# In Progress
+
+No active build segment remains after this closeout is confirmed on GitHub `main`.
 
 # Next Segment
 
-Complete and validate the active Rig UX finalization before beginning the Intermediate Rig tier or another module.
+Begin the **Intermediate Rig tier** after the formal closeout documentation commit is pushed, re-fetched, and validated on actual GitHub `main` under D039/D040.

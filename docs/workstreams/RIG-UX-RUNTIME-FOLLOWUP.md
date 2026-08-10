@@ -1,17 +1,17 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-UX-RUNTIME-FOLLOWUP.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.4.0  
 **Document Status:** Approved  
-**Implementation Status:** In Progress  
-**Recorded Against:** `main` at `f2fee384a9bc44d7f481b7c9b1072112cbe6571f`  
+**Implementation Status:** Validated  
+**Recorded Against:** `main` at `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`  
 **Last Updated:** 2026-08-10
 
 # Purpose
 
 Preserve the remaining runtime findings from the Rig UX Finalization session so the current Core Rigs / Rig Learning Tiers segment can be closed without relying on chat history.
 
-The current segment remains **In Progress** until the remaining Rig runtime checks and normal closeout documentation are completed. Intermediate Rig work remains blocked by D040 until this segment is finalized.
+The Rig UX runtime follow-up is complete and **Validated**. The remaining governance step is to push and re-fetch the formal closeout documentation package before Intermediate Rig work begins under D039/D040.
 
 # Runtime Validation Passed
 
@@ -78,13 +78,13 @@ The user validated the behavior in Brave across both Rig and Fish navigation pat
 
 # Remaining Runtime / Closeout Work
 
-1. Complete any remaining Rig runtime/regression checks from the existing validation plan.
-2. Explicitly approve or reject the compact Rig-detail density trial.
-3. If the compact treatment is approved as a broader standard, document that decision separately rather than silently generalizing the trial.
-4. Re-fetch the exact latest GitHub files before closeout documentation edits.
-5. Update the existing workstream, validation, HANDOFF, MILESTONES, CHANGELOG, and any other required closeout documents.
-6. Push/verify the closeout state on actual GitHub `main`.
-7. Only then begin the Intermediate Rig segment.
+Runtime work is complete. The implementation/correction source is pushed and verified on `main` commit `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`, and the final correction checks passed.
+
+Only the formal repository-governance closeout remains:
+
+1. Push the closeout documentation package containing the workstream, validation, runtime follow-up, HANDOFF, MILESTONES, and CHANGELOG.
+2. Re-fetch actual GitHub `main` and confirm those six files match the package with no unrelated changes or truncation.
+3. Only then begin the Intermediate Rig segment under D039/D040.
 
 # Session Classification
 
@@ -102,22 +102,22 @@ The bullets in this existing section preserve the earlier runtime state. Where a
 
 ## DOCUMENT
 
-- This file records the resolved runtime findings and remaining closeout work.
-- Existing workstream and validation documents remain authoritative for the broader segment and intentionally remain `In Progress` until final closeout.
+- This file records the historical runtime findings, the superseding final UX decisions, and the completed correction validation.
+- The active workstream and validation checklist are updated to Validated in the formal closeout package.
 
 ## OPEN
 
-- Final approval/rejection of the compact Rig-detail density trial.
-- Remaining Rig regression checks, if any, from the existing validation checklist.
-- Final documentation closeout and post-push GitHub validation.
+- Exact Dashboard-search cross-domain scope, grouping, and result presentation remain intentionally unresolved.
+- Broader non-Rig adoption of the Rig-specific compact-detail density requires separate domain review.
 
 ## IMPLEMENTATION
 
-- Shared scroll-position behavior is implemented in `script.js` and runtime-validated.
 - Texas Rig tutorial playback is runtime-validated in Brave under normal/default protections.
-- Current Rig UX source is pushed on `main`.
-- Segment is **In Progress**, not yet Validated.
-- Intermediate Rig implementation remains blocked by D040 until final closeout.
+- The correction package is pushed and source/package-verified on `main` commit `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`.
+- Fish inline search, one-click clear, Ned-first ranking, sticky Parent/Home controls, Parent-top reset, and Home-top reset are runtime-validated.
+- Compact Rig-detail density is approved and runtime-validated for Rigs.
+- Runtime follow-up status is **Validated**.
+- Intermediate Rig implementation remains blocked only until the formal closeout documentation commit is pushed and re-fetched under D039/D040.
 
 # Final Runtime Review — Superseding Decisions
 
@@ -158,15 +158,18 @@ A future search field near the top of the Dashboard is approved direction but re
 
 ## Final Review Open Items
 
-- Push the coherent correction package and re-fetch actual GitHub `main`.
-- Runtime-validate Fish landing search, clear controls, Ned-first ranking, sticky Parent/Home controls, and top-reset Parent/Home behavior.
-- Re-run affected Rig/Fish regressions and console/focus checks.
-- Complete `HANDOFF`, `MILESTONES`, `CHANGELOG`, workstream, and validation closeout only after the correction package passes.
-- Resolve exact Dashboard-search scope later; it is not part of this package.
+- Resolve exact Dashboard-search scope later; it is not part of this validated segment.
+- Consider compact-density adoption in other domains only through separate domain review; Rig approval does not generalize automatically.
+- Push/re-fetch the formal closeout documentation package before Intermediate work begins.
 
 ## Final Review Implementation Status
 
 - The correction package updates `script.js`, `search.js`, `view-renderer.js`, and `forest-journal.css` plus governing/workstream documentation.
-- The package is based on verified GitHub `main` at `f2fee384a9bc44d7f481b7c9b1072112cbe6571f` and is not current until pushed and verified.
-- Segment remains **In Progress**, not yet Validated.
-- Intermediate Rig implementation remains blocked by D040 until final closeout.
+- The correction package is current and source/package-verified on GitHub `main` at `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`.
+- Fish landing search, clear controls, Ned-first ranking, sticky Parent/Home controls, and top-reset Parent/Home behavior all passed runtime review.
+- Segment implementation/runtime status is **Validated**.
+- Intermediate Rig implementation remains blocked only until formal closeout documentation is pushed and re-fetched under D039/D040.
+
+# Closeout Runtime Result
+
+The Rig UX runtime follow-up is closed. No source defect remains open from the final approval pass. The Texas tutorial pilot is functional in Brave, the compact Rig detail treatment is approved for Rigs, and the cross-app search/navigation corrections all passed the final user runtime checks.

@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.4.9  
+**Document Revision:** 0.5.0  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `07e8f712ef507349a273ca21610145612e941bf5`  
-**Last Updated:** 2026-08-09
+**Repository Baseline Reviewed:** `main` at `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`  
+**Last Updated:** 2026-08-10
 
 # 1. Start Here
 
@@ -28,22 +28,22 @@ Permanent operating rule:
 
 The repository baseline reviewed for this handoff is commit:
 
-`07e8f712ef507349a273ca21610145612e941bf5`
+`7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`
 
 Commit message:
 
-`Rig Update - Core Placement and Beginner Rigs`
+`UX and Search feature tweaks`
 
 The Current-State UX Repairs segment is validated and repository-finalized.
 
 The Rig/Tackle Data Integrity — Batch 1 segment is validated and repository-finalized.
 
-The Core Rigs and Tackle Media / Rig Learning Tiers segment remains In Progress pending the Rig UX finalization package and runtime validation.
+The Core Rigs and Tackle Media / Rig Learning Tiers — Rig UX Finalization segment is implementation/runtime Validated. Repository-finalized status is complete once this formal closeout documentation package is pushed and re-fetched on actual `main`.
 
 Validated governance state:
 
 - `HANDOFF.md` is present.
-- Decisions D022–D046 are present in the current GitHub `DECISIONS.md`; D047–D049 are included in the current Rig UX finalization package.
+- Decisions D022–D052 are present on current GitHub `main`, including the final search, navigation, tutorial, card-design, and Rig-density standards.
 - The canonical Tackle data-model document is present.
 - `docs/data-model/05A-INVENTORY.md` is the active Inventory/My Tackle model document.
 - Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
@@ -103,37 +103,49 @@ The exact current source implementation must always be re-fetched from GitHub be
 
 ## Core Rigs and Tackle Media / Rig Learning Tiers
 
-**Implementation Status: In Progress**
+**Implementation Status: Validated**
 
-Current GitHub `main` at `07e8f712...` contains:
+Current GitHub `main` at `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0` contains the validated Rig UX finalization source state:
 
 - nine active Rigs,
 - six Beginner and three Beginner+ difficulty records,
 - the six-member `CORE_RIG_IDS` registry,
-- top-level Rig Guide cards for Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, and All Rigs,
-- Core/Beginner/Beginner+/All Rigs subset search,
-- the corrected intact worm-bait recognition asset,
-- 17 active canonical Tackle concepts,
-- 17 active neutral-background Tackle recognition images,
-- Core-result/detail visual emphasis.
+- Rig Guide top-level order: All Rigs, Core Rigs, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert,
+- global Rig Guide search plus scoped Core/Beginner/Beginner+/All search,
+- Fish Guide landing-page inline search using the same shared search interaction,
+- deterministic lightweight relevance ranking with strong canonical-name matches ahead of weaker metadata matches,
+- explicit one-click `×` / `Clear search` behavior,
+- Dashboard-derived varied section-card accents with restrained Core emphasis,
+- corrected Wacky, Ned, and Weightless Soft-Plastic Rig assembly/readiness behavior,
+- 20 active canonical Tackle concepts,
+- the intact warm-neutral worm-bait recognition asset and the existing 17-image neutral-background recognition-media set,
+- the Texas Rig lazy-loaded Wired2Fish YouTube tutorial pilot through `youtube-nocookie.com` plus external fallback,
+- the approved compact Rig-detail treatment on phone and desktop,
+- compact sticky Parent/Home controls on nested views,
+- top-reset behavior for forward, Parent, and Home transitions.
 
-Repository validation passed after that push, and the initial runtime Rig Guide card-order/unavailable-state check passed. The segment remains In Progress because the final design/technical corrections below were approved before closeout.
+Runtime approval passed for:
 
-The current Rig UX finalization package:
+- the compact Rig-detail layout at about 375 px and desktop widths,
+- Wacky Rig geometry/components,
+- Ned Rig components/exposed-hook baseline/recognition help,
+- Weightless Soft-Plastic Rig components/readiness,
+- worm-bait recognition media,
+- Core, Beginner, Beginner+, and All Rigs membership/order/search scope,
+- main Rig Guide search and card-grid restoration,
+- Texas Rig tutorial playback in Brave,
+- Fish search by common name, scientific name, and category,
+- derived Tackle `Used In` relationships,
+- Fish Guide inline search,
+- one-click Clear search,
+- `Ned` ranking **Ned Rig** first,
+- sticky Parent/Home controls,
+- Parent returning to the parent top,
+- Home returning to the Dashboard top.
 
-- moves **All Rigs** to the first Rig Guide card,
-- adds global Rig search to the main Rig Guide page while retaining scoped subset search,
-- restores Dashboard-derived varied navigation-card accents/left-edge lines instead of one repeated Rig accent,
-- keeps Core as a cross-cutting curated designation with separate visual emphasis,
-- corrects Wacky Rig geometry/readiness using Wacky Hook plus optional Wacky O-Ring,
-- corrects Ned Rig readiness using a dedicated small mushroom-style Ned Jighead,
-- expands canonical Tackle from 17 to 20 concepts without assigning misleading generic images to the three new narrowed concepts,
-- adds the first lazy-loaded official-platform tutorial trial on Texas Rig using Wired2Fish on YouTube with privacy-enhanced embedding and an external fallback,
-- trials a materially more compact mobile-first Rig detail layout, especially What You Need, without reducing touch usability or hiding safety/build instructions.
+The compact-detail treatment is approved for Rigs only; it is not automatically generalized to other domain detail pages. Dashboard search is approved future direction but remains deferred until cross-domain scope/grouping/result presentation are deliberately designed.
 
-The compact-detail treatment is a Rig-only trial. It does not become a permanent non-Rig subset/detail standard until user runtime approval.
-
-See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`.
+See `workstreams/CORE-RIGS-TACKLE-MEDIA.md`, `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`, and `workstreams/RIG-UX-RUNTIME-FOLLOWUP.md`.
 
 # 3. Current Production Architecture
 
@@ -141,13 +153,14 @@ See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-ME
 
 - Three knowledge layers: Reference Knowledge, Decision Knowledge, User Knowledge.
 - Forest Journal is the only production-supported Version 1 theme.
-- Fish Guide/Search exists with lightweight shared search helpers.
-- Rig Guide exists on current `main` with nine canonical active Rig records, scoped browse search, text-authoritative assembly, contextual Tackle `Name ⓘ` recognition help, verified external references, and inline readiness; the current finalization package adds landing-page global search and the Texas embedded-tutorial trial.
+- Fish Guide exposes inline landing-page search with shared deterministic relevance ranking and explicit one-click clear behavior.
+- Rig Guide on current `main` contains nine canonical active Rig records, main-page global search, scoped subset search, text-authoritative assembly, contextual Tackle `Name ⓘ` recognition help, verified external references, inline readiness, the Texas embedded-tutorial pilot, and the approved compact Rig-specific detail treatment.
 - Canonical Tackle Reference Knowledge exists in `data/tackle.js`.
 - Rig component requirements reference canonical Tackle through `tackleId`.
 - Reverse Tackle `Used In` relationships are derived from active Rig requirements.
 - Current Rig readiness uses the transitional local readiness state.
-- Current Search uses lightweight normalized substring matching; it is not the permanent relevance-quality ceiling.
+- Current Search uses lightweight deterministic relevance ranking; canonical identity matches outrank lower-priority metadata while heavy fuzzy/intent systems remain deferred.
+- Nested Parent/Home controls remain available through compact sticky navigation, and explicit application transitions open their destination at the top.
 - Historical Copper, Gold, and Legacy Dark CSS files are retained as inactive design concepts and are not part of the supported production theme matrix.
 - Completed package artifacts and obsolete design-board/preview assets have been moved out of active production locations into archive paths.
 
@@ -159,7 +172,11 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 
 - Search is relevance-first; connected knowledge is breadth-first.
 - Searchable sections provide search on the main section landing page as well as relevant scoped subset/browse pages; both use shared canonical data/search helpers.
+- Search is presented as a direct inline field interaction rather than an extra navigation-card destination, with an explicit one-click clear control.
+- Lightweight deterministic relevance ranking places strong canonical identity matches ahead of lower-priority metadata matches.
 - Card-based section/subset navigation follows the main Dashboard visual grammar, including varied adjacent accents and left-edge lines rather than one repeated domain color.
+- Nested Parent/Home navigation remains available while scrolling and all explicit application transitions open the destination at the top.
+- Compact Rig-detail density is approved for Rigs only and is not automatically generalized to other domain detail pages.
 - Recommendation tiers are:
   - Best of the Best
   - Best Bang for the Buck
@@ -199,8 +216,7 @@ See `DECISIONS.md` and the governing data-model/media documents.
 
 **Implementation Status: Approved / Not Implemented**
 
-- Lightweight deterministic relevance ranking before Search becomes noisy.
-- Broader rollout of verified embedded Rig tutorials after the Texas trial is validated.
+- Broader rollout of verified embedded Rig tutorials under D049, applied deliberately after per-Rig source/compatibility review.
 - Dedicated accurate recognition media for Wacky Hook, Wacky O-Ring, and Ned Jighead if/when produced and validated.
 - Intermediate Rig tier.
 - Intermediate+ Rig tier.
@@ -214,6 +230,7 @@ See `DECISIONS.md` and the governing data-model/media documents.
 - Temporary per-build/session availability that does not write ownership.
 - Explicit My Tackle Add/Edit/Remove write authority.
 - Safe User Knowledge rendering rules across future user-entered/imported features.
+- Dashboard search field and cross-domain result experience after scope, grouping, and ranking behavior are deliberately designed.
 
 These items are settled direction but must not be described as current implementation until they are built, pushed, and validated.
 
@@ -257,29 +274,29 @@ The following remain intentionally unresolved:
 - Exact source/licensing choices for future finished-Rig visual references.
 - Exact initial common-knot set and the future Rig-to-Knot relationship model.
 - Future automated relationship, asset, document-link, and other repository validators.
-- Whether the compact Rig-detail trial should be promoted to the permanent subset/detail-page density standard after runtime review.
+- Whether any non-Rig domain should adopt the Rig-specific compact-detail density treatment after separate domain review.
+- Exact Dashboard-search cross-domain scope, grouping, and result presentation.
 - A future conservative Dashboard density review; current larger Dashboard cards remain the validated production treatment.
 - Other audit findings not yet discussed to completion must remain visible and must not be silently treated as decided.
 
 # 8. Next Recommended Work
 
-The active build segment is **Core Rigs and Tackle Media / Rig Learning Tiers — Rig UX Finalization**.
+The completed build segment is **Core Rigs and Tackle Media / Rig Learning Tiers — Rig UX Finalization**. Its source/package state is verified on `main` commit `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`, and runtime approval passed.
 
-Required next actions:
+The next build segment is **Intermediate Rigs**.
 
-1. Push the coherent Rig UX finalization source/documentation package.
-2. Re-fetch and inspect the actual GitHub files and changed-file inventory.
-3. Validate main Rig search, All Rigs-first ordering, Dashboard-derived navigation-card accents, and unavailable-tier semantics.
-4. Validate corrected Wacky and Ned Rig components, assembly wording, contextual Tackle help, derived `Used In`, and readiness persistence.
-5. Validate the Texas tutorial lazy-load/embed behavior, privacy-enhanced host, no-autoplay behavior, fallback link, and phone/desktop layout.
-6. Validate the compact Rig-detail trial at phone width first, especially What You Need, then desktop.
-7. Validate Fish Search, related Tackle navigation/focus restoration, console health, keyboard focus, and Dashboard regressions.
-8. If runtime review approves the compact Rig-detail treatment, make a separate explicit decision about promoting it to the permanent subset/detail-page standard; otherwise keep it Rig-specific or revise it.
-9. Complete closeout documentation and GitHub verification.
+Before implementation begins, complete the final repository-governance step for this closeout:
 
-Only after this segment is Validated should work continue to the Intermediate Rig tier.
+1. Push this formal closeout documentation package through GitHub Desktop.
+2. Re-fetch the actual closeout commit and inspect the changed-file inventory.
+3. Confirm the six closeout documents match the validated package with no unrelated files or truncation.
+4. Only then begin the Intermediate Rig tier under D039/D040.
 
-Re-evaluate this sequence after each finalized and validated segment.
+During Intermediate planning, preserve the current standards: All-Rigs-first learning navigation, Core as a cross-cutting designation, inline/search-clear behavior, deterministic relevance ranking, sticky Parent/Home navigation with top-reset transitions, text-authoritative Rig assembly, D049 tutorial-media hierarchy, Rig-specific compact detail density, and single-owner Rig/Tackle relationships.
+
+Dashboard search remains parked until its cross-domain search contract is deliberately designed.
+
+Re-evaluate the sequence after each finalized and validated segment.
 
 # 9. Governing Documents
 

@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** CORE-RIGS-TACKLE-MEDIA.md  
-**Document Revision:** 0.4.0  
+**Document Revision:** 0.5.0  
 **Document Status:** Approved  
-**Implementation Status:** In Progress  
+**Implementation Status:** Validated  
 **Last Updated:** 2026-08-10
 
 # Purpose
@@ -189,6 +189,21 @@ Texas Rig tutorial trial:
 - implementation of Dashboard search before its cross-domain scope/result presentation is decided
 - Dashboard density reduction; current larger Dashboard cards remain unchanged in this segment
 
+# Validation Outcome
+
+Implementation/source verification passed on actual GitHub `main` commit `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`. Runtime approval passed for the Rig learning-tier structure, compact Rig detail treatment, new Rig component/readiness behavior, worm-bait media, Texas tutorial pilot, shared inline search/clear behavior, deterministic relevance ranking, sticky Parent/Home navigation, and top-reset Parent/Home behavior.
+
+The final cross-app correction checks passed after the correction commit:
+
+- Fish Guide inline search — passed,
+- one-click Clear search — passed,
+- `Ned` ranking **Ned Rig** first — passed,
+- sticky Parent/Home controls — passed,
+- Parent returns to the parent page top — passed,
+- Home returns to the Dashboard top — passed.
+
+The compact Rig-detail treatment is approved for Rigs. Dashboard search remains approved future direction but is not part of this validated segment.
+
 # Completion Rule
 
-This segment remains In Progress until source, media, documentation, GitHub state, and runtime/regression behavior are validated and the final closeout documentation is revalidated on GitHub.
+The implementation/runtime segment is Validated. Repository-finalized closeout is complete only after this formal closeout documentation package is pushed, re-fetched, and confirmed on actual GitHub `main` under D039/D040.

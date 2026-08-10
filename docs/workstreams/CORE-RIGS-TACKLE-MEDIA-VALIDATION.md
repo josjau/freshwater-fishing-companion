@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** CORE-RIGS-TACKLE-MEDIA-VALIDATION.md  
-**Document Revision:** 0.4.0  
+**Document Revision:** 0.5.0  
 **Document Status:** Approved  
-**Implementation Status:** In Progress  
+**Implementation Status:** Validated  
 **Last Updated:** 2026-08-10
 
 # Purpose
@@ -242,8 +242,32 @@ Confirm:
 - Phone and desktop layouts remain usable.
 - Keyboard focus remains visible.
 
+# Validation Outcome
+
+**Implementation/runtime result: Passed.**
+
+GitHub source/package inspection passed on `main` commit `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`. The correction commit was exactly one commit ahead of the verified package baseline and contained only the ten intended source/governing/workstream files. GitHub blob comparison matched every delivered correction-package file byte-for-byte.
+
+Runtime validation passed for the full Rig finalization scope, including:
+
+- All Rigs / Core / Beginner / Beginner+ membership, ordering, and scoped/global search,
+- Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig assembly/readiness behavior,
+- canonical component help and derived `Used In`,
+- intact worm-bait recognition media,
+- Texas Rig tutorial playback in Brave,
+- compact Rig detail layout at phone and desktop widths,
+- Fish search by common name, scientific name, and category,
+- Fish Guide inline landing-page search,
+- one-click Clear search,
+- `Ned` ranking **Ned Rig** first,
+- sticky Parent/Home navigation while scrolling,
+- Parent returning to the parent top,
+- Home returning to the Dashboard top.
+
+No Dashboard search field was introduced. The compact-detail standard remains Rig-specific.
+
 # Closeout
 
-When all checks pass, update this document, the workstream, `HANDOFF.md`, `MILESTONES.md`, and `CHANGELOG.md` to Validated; push; re-fetch GitHub; and only then begin the Intermediate Rig segment.
+This implementation/runtime checklist is complete and Validated. The final documentation set consists of this file, the workstream, `RIG-UX-RUNTIME-FOLLOWUP.md`, `HANDOFF.md`, `MILESTONES.md`, and `CHANGELOG.md`.
 
-Closeout also requires inspection of the actual repository state after push before the segment is declared Validated.
+Push the formal closeout documentation package, re-fetch actual GitHub `main`, and confirm those six files match the validated package with no unrelated files or truncation. Only after that repository closeout verification may the Intermediate Rig segment begin under D039/D040.
