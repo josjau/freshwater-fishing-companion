@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.8.2  
+**Document Revision:** 1.8.3  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-10
 
@@ -62,7 +62,7 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 - Safety guidance
 - Navigation and error handling
 
-**Current note:** D027 approves a 20-Rig regional library. The nine-Rig Beginner/Beginner+ foundation is validated. Four Intermediate Rigs are now implemented on `main`, bringing the intended active total to 13, but the Intermediate segment remains unvalidated and is undergoing recognition-media correction before runtime validation.
+**Current note:** D027 approves a 20-Rig regional library. The nine-Rig Beginner/Beginner+ foundation is validated. Four Intermediate Rigs are now implemented on `main`, bringing the intended active total to 13. The corrected Tackle recognition-media package has been uploaded, but the Intermediate segment remains unvalidated pending the full source/data/runtime/tutorial/media/regression pass.
 
 ## MS2.5 — Lightweight Tackle Readiness
 
@@ -176,7 +176,7 @@ See:
 
 ## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
 
-**Implementation Status: Implemented / Unvalidated — Recognition Media Correction In Progress**
+**Implementation Status: Implemented / Unvalidated — Ready for Validation**
 
 Implementation landed on `main` in `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`).
 
@@ -190,20 +190,16 @@ Implemented target scope, pending validation:
 - intended 13 active Rigs total,
 - intended 23 active canonical Tackle concepts,
 - tutorial expansion for the existing Beginner/Beginner+ foundation and the Intermediate records,
-- six new recognition-media assets.
+- recognition-media completion/correction for the newly introduced and affected Tackle references.
 
-Known validation failure and correction state:
+Recognition-media correction state:
 
 - all six original new recognition-media assets failed initial visual-quality/style review,
-- four corrected replacements passed the pre-delivery visual/mechanical gate and were committed in `601b741f368f7e1ae9e5b2963935673901b76674`:
-  - Wacky Hook,
-  - Wacky O-Ring,
-  - Three-Way Swivel,
-  - Fixed Sinker,
-- Ned Jighead and Drop Shot Weight remain pending because current candidates have not yet passed mechanical/visual review,
+- the permanent Media Guide was tightened to require real-photo-first sourcing when practical, semi-photorealistic catalog treatment otherwise, exact `#f4f0e8` current Tackle canvas matching, and conventional viewer-facing J hook orientation unless a reviewed exception applies,
+- the user reviewed and uploaded the current seven-image correction package in `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`),
+- that commit contains Bobber Stop, Drop Shot Weight, Fixed Sinker, Ned Jighead, Three-Way Swivel, Wacky Hook, and Wacky O-Ring replacements,
+- the image package is now present on `main`,
 - no Intermediate source/data/runtime/tutorial/regression validation has begun.
-
-The Media Guide and Development Workflow now enforce real-photo-first sourcing when legally/technically suitable and a mandatory pre-delivery Tackle Media Generation Gate. Failed replacement candidates are rejected before repository inclusion.
 
 See:
 
@@ -216,9 +212,12 @@ Do **not** begin Intermediate+ yet.
 
 Next actions are:
 
-1. finish corrected Ned Jighead and Drop Shot Weight recognition assets,
-2. verify the final corrected GitHub baseline,
-3. complete Intermediate source/data/runtime/tutorial/media/regression validation,
-4. reconcile final governing/current-state documentation,
-5. finalize the Intermediate segment,
-6. then re-evaluate the next milestone; Intermediate+ remains the current likely next tier under D039/D040.
+1. re-fetch the current GitHub baseline,
+2. complete Intermediate source/data integrity and canonical-count validation,
+3. validate Intermediate membership, routing, search, each Intermediate Rig, readiness, and derived relationships,
+4. validate the seven corrected recognition assets at phone and desktop sizes,
+5. complete existing/Intermediate tutorial validation,
+6. run Beginner/Beginner+/Core/application regressions,
+7. reconcile final governing/current-state documentation,
+8. finalize the Intermediate segment,
+9. then re-evaluate the next milestone; Intermediate+ remains the current likely next tier under D039/D040.
