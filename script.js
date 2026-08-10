@@ -53,6 +53,7 @@ let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
 let selectedRigId = null;
 let selectedRigCollectionKey = "all";
+const viewScrollPositions = new Map();
 
 const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView,
@@ -68,25 +69,59 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.SETTINGS]: renderSettingsView
 });
 
-function showView(route) {
+function getViewScrollKey(route) {
+    if (route === ROUTES.RIG_BROWSE) {
+        return `${route}:${selectedRigCollectionKey}`;
+    }
+
+    if (route === ROUTES.RIG_DETAIL) {
+        return `${route}:${selectedRigId ?? ""}`;
+    }
+
+    return route;
+}
+
+function rememberCurrentViewScrollPosition() {
+    viewScrollPositions.set(getViewScrollKey(currentView), window.scrollY);
+}
+
+function applyViewScrollPosition(route, restoreScroll) {
+    const scrollTop = restoreScroll
+        ? viewScrollPositions.get(getViewScrollKey(route)) ?? 0
+        : 0;
+
+    window.scrollTo({
+        top: scrollTop,
+        left: 0,
+        behavior: "auto"
+    });
+}
+
+function showView(route, { restoreScroll = false } = {}) {
     const appMain = document.querySelector("#app-main");
     if (!appMain) {
         console.error("Application main content area was not found.");
         return;
     }
+
+    if (route !== ROUTES.DASHBOARD && !VIEW_RENDERERS[route]) {
+        console.warn(`No view renderer is registered for: ${route}`);
+        return;
+    }
+
+    rememberCurrentViewScrollPosition();
+
     if (route === ROUTES.DASHBOARD) {
         currentView = ROUTES.DASHBOARD;
         appMain.innerHTML = dashboardMarkup;
         initializeDashboardRouting();
+        applyViewScrollPosition(route, restoreScroll);
         return;
     }
-    const viewRenderer = VIEW_RENDERERS[route];
-    if (!viewRenderer) {
-        console.warn(`No view renderer is registered for: ${route}`);
-        return;
-    }
+
     currentView = route;
-    viewRenderer(appMain);
+    VIEW_RENDERERS[route](appMain);
+    applyViewScrollPosition(route, restoreScroll);
 }
 
 function renderFishGuideView(appMain) {
@@ -121,7 +156,7 @@ function renderFishSearchView(appMain) {
         label: "Fish name or category",
         placeholder: "Try bass, bluegill, or Micropterus",
         parentLabel: "Fish Guide",
-        onParent: () => showView(ROUTES.FISH),
+        onParent: () => showView(ROUTES.FISH, { restoreScroll: true }),
         onSearch: (query) => updateFishSearchResults(appMain, query)
     });
 }
@@ -276,7 +311,7 @@ function renderRigBrowseView(appMain) {
         label: "Search this Rig group",
         placeholder: "Try bobber, bass, shore, cover, or clear water",
         parentLabel: "Rig Guide",
-        onParent: () => showView(ROUTES.RIGS),
+        onParent: () => showView(ROUTES.RIGS, { restoreScroll: true }),
         onSearch: (query) => updateRigBrowseResults(appMain, query)
     });
 }
@@ -316,7 +351,10 @@ function renderRigDetailView(appMain) {
         record: rig,
         parentLabel: fromGuideSearch ? "Rig Guide" : collection.title,
         selections: getRigReadinessSelections(rig.id),
-        onParent: () => showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE),
+        onParent: () => showView(
+            fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE,
+            { restoreScroll: true }
+        ),
         onReadinessChange: (tackleId, isOwned) =>
             updateRigReadinessSelection(rig.id, tackleId, isOwned)
     });
