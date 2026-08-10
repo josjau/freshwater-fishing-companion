@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.5.2  
+**Document Revision:** 0.5.3  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative; do not rely on a self-referential handoff commit SHA.  
 **Intermediate Implementation Baseline:** `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
@@ -83,7 +83,12 @@ Current known state:
 - Intermediate+, Advanced, and Expert have not started,
 - the seven-image correction package is now present on `main`,
 - no Intermediate source/data/runtime/tutorial/regression validation has yet been completed,
-- the next session should begin with the documented Intermediate validation sequence rather than more implementation.
+- before the main Intermediate validation sequence begins, four older recognition assets must be reviewed against the current media standard:
+  - `images/tackle/hook-reference.webp`,
+  - `images/tackle/jighead-reference.webp`,
+  - `images/tackle/offset-worm-hook-reference.webp`,
+  - `images/tackle/weight-peg-reference.webp`,
+- the next session should begin with that four-asset review, then proceed into the documented Intermediate validation sequence.
 
 The approved Tackle media rules now include:
 
@@ -286,14 +291,27 @@ The following remain intentionally unresolved:
 - Whether any non-Rig domain should adopt the Rig-specific compact-detail density treatment after separate review.
 - Exact Dashboard-search cross-domain scope, grouping, and result presentation.
 - Future conservative Dashboard density review.
-- Full-library hook-orientation audit for older recognition assets such as Fishing Hook, Offset Worm Hook, and generic Jighead; this is a media-consistency follow-up and must not block the already-uploaded seven-image correction package from entering Intermediate runtime validation unless an actual runtime recognition defect is observed.
+- Next-session Tackle recognition-media review is explicitly required for:
+  - `images/tackle/hook-reference.webp`,
+  - `images/tackle/jighead-reference.webp`,
+  - `images/tackle/offset-worm-hook-reference.webp`,
+  - `images/tackle/weight-peg-reference.webp`.
+  Review them against the current exact-canvas, semi-photorealistic catalog-quality, geometry, and hook-orientation standards before deciding whether replacement is required. Any proposed replacements remain subject to the Production Write Approval Gate.
 - Other audit findings not yet discussed to completion remain visible until explicitly decided.
 
 # 8. Next Recommended Work
 
 The immediate work is **Intermediate validation**, not Intermediate+ and not another implementation tier.
 
-Start the next session by re-reading actual GitHub `main` and then execute the validation sequence documented in `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`:
+Start the next session by re-reading actual GitHub `main`, then perform this pre-validation media review before the main validation sequence:
+
+1. Review `hook-reference.webp`.
+2. Review `jighead-reference.webp`.
+3. Review `offset-worm-hook-reference.webp`.
+4. Review `weight-peg-reference.webp`.
+5. If any replacement is recommended, prepare it for user review; do not write production media directly to GitHub without explicit approval.
+
+After that review, execute the validation sequence documented in `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`:
 
 1. GitHub/source/package integrity.
 2. Canonical Rig/Tackle/media counts and relationships.
