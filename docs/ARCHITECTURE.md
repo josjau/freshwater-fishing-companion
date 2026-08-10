@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.3.3
+**Document Revision:** 0.4.0
 **Document Status:** Approved
-**Last Updated:** 2026-08-09
+**Last Updated:** 2026-08-10
 
 # Purpose
 
@@ -113,9 +113,9 @@ Examples:
 
 Avoid information overload. Related knowledge should be progressively disclosed.
 
-**Current:** `search.js` uses lightweight normalized substring matching and reusable lookup/filter/sort helpers.
+**Current:** `search.js` uses lightweight normalized matching with deterministic relevance ranking plus reusable lookup/filter/sort helpers. Primary canonical identity fields receive the strongest weight; exact/prefix/name matches outrank lower-priority metadata matches, and equal-confidence results retain stable source order.
 
-**Approved / Not Implemented:** before dataset growth makes Search noisy, introduce lightweight deterministic relevance ranking. Heavy fuzzy search, advanced typo-tolerance, sophisticated confidence systems, natural-language intent parsing, and a global cross-domain result dump remain deferred until demonstrated by actual use.
+**Approved / Not Implemented:** heavy fuzzy search, advanced typo-tolerance, sophisticated confidence systems, natural-language intent parsing, and a global cross-domain result dump remain deferred until demonstrated by actual use. A future Dashboard search field is approved direction, but its cross-domain scope and result presentation remain intentionally unresolved.
 
 # Source Ownership
 
@@ -187,17 +187,17 @@ The Core-Rig build expands the catalog from 15 to 17 optimized 640 × 440 WebP a
 
 ## `search.js`
 
-Owns reusable, non-mutating lookup, search, filter, and sort helpers.
+Owns reusable, non-mutating lookup, relevance-ranked search, filter, and sort helpers.
 
-The current helper implementation is intentionally lightweight. It is not the permanent relevance-quality ceiling defined by D022.
+The current search helper remains intentionally lightweight and deterministic. It ranks stronger canonical identity matches ahead of lower-priority searchable metadata without introducing a parallel search index. More sophisticated fuzzy/intent systems remain deferred under D022.
 
 ## `view-renderer.js`
 
 Owns reusable rendering and UI interactions, including:
 
 - Child-card views
-- Search pages and result cards
-- Optional main-section landing-page search UI
+- Search/result UI with shared inline field, explicit clear control, and result cards
+- Main-section landing-page and scoped subset search presentation
 - Rig detail rendering
 - Rig external-reference links and lazy-loaded tutorial player
 - My Tackle inventory-domain rendering
@@ -206,7 +206,7 @@ Owns reusable rendering and UI interactions, including:
 - Derived Tackle `Used In` Rig navigation
 - Related-component popover navigation
 - Combined Rig requirements/readiness rendering
-- Parent/Home navigation
+- Compact sticky Parent/Home navigation
 - Modal close behavior and focus restoration
 
 Any future rendering path that receives User Knowledge or imported content must treat it as untrusted text and render it through safe DOM APIs such as `textContent`, unless a centrally owned sanitization path is explicitly approved.
@@ -217,8 +217,8 @@ Coordinates:
 
 - Application routes
 - Dashboard restoration
-- Fish Guide and Fish Search
-- Rig Guide browsing/subset search and Rig details; the current package adds main-page global search
+- Fish Guide with landing-page inline search
+- Rig Guide landing-page search, scoped browse search, and Rig details
 - My Tackle
 - Current local readiness-state loading/persistence
 - Current per-Rig Tackle availability selections
@@ -259,7 +259,7 @@ Rig pages intentionally use authoritative text instructions rather than generate
 
 Completed-Rig visual confirmation prefers verified licensed local media, then a verified officially permitted embedded tutorial, then direct external visual/reference paths. Texas Rig is the first embedded-tutorial trial.
 
-The compact Rig-detail layout is an In Progress Rig-only trial and is not yet a permanent cross-domain density standard.
+The compact Rig-detail layout is runtime-approved for Rigs. It remains a Rig-specific density standard and is not automatically promoted to other domain detail pages.
 
 ## Approved Rig Library Expansion — Not Implemented
 
@@ -368,6 +368,20 @@ Permanent rule: **Anything that looks actionable must either perform an action o
 # Interaction Depth
 
 Common field workflows should stay within approximately three intentional interactions from a relevant entry point whenever practical. Do not add a separate page when the same task can be completed clearly in context. The combined Rig requirements/readiness section follows this rule by keeping identification help, availability, and readiness feedback on the Rig detail page.
+
+# Navigation and Scroll Architecture
+
+`script.js` owns view transitions. Every explicit application transition renders the destination and resets the window to the top. Parent navigation does not restore a remembered scroll position.
+
+`view-renderer.js` owns the shared Parent/Home control markup for nested views, while `forest-journal.css` keeps that control group compact and sticky during scrolling. This removes the need for per-view, per-collection, or per-Rig scroll-position state solely to support Parent navigation.
+
+The standard is intentionally predictable:
+
+    Forward -> destination top
+    Parent -> parent top
+    Home -> Dashboard top
+
+Browser-native history behavior is separate from these explicit in-application controls.
 
 # Link Semantics
 

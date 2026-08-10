@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.3.6
+**Document Revision:** 0.4.0
 **Document Status:** Approved
-**Last Updated:** 2026-08-09
+**Last Updated:** 2026-08-10
 
 # Purpose
 
@@ -62,6 +62,9 @@ This document records long-term architectural decisions.
 | D047 | Section and Subset Search Availability | Approved |
 | D048 | Dashboard-Derived Section Card Design | Approved |
 | D049 | Verified Rig Tutorial Embed Policy | Approved |
+| D050 | Standard Search Field and Clear Control | Approved |
+| D051 | Persistent Parent Navigation and Top-Reset View Transitions | Approved |
+| D052 | Rig Detail Compact Density | Approved |
 
 # D001 – Local-First Architecture
 
@@ -204,7 +207,11 @@ Find
 
 Major entities should act as gateways to useful adjacent knowledge. Examples include Fish to Rigs/Conditions/Lures/Techniques, Rig to Fish/Conditions/Components/Techniques, and Lure/Tackle to compatible uses and ownership context.
 
-The current lowercase substring search is an acceptable temporary implementation for the small dataset, but it is not the permanent relevance standard. Lightweight deterministic relevance ranking should be introduced before dataset growth makes search noisy. Heavy fuzzy search, advanced typo tolerance, natural-language intent parsing, sophisticated confidence systems, and global cross-domain result dumps remain deferred until demonstrated by actual need.
+The lightweight search implementation uses deterministic relevance ranking rather than alphabetizing all substring matches. Canonical identity fields are strongest; exact and prefix/name matches outrank word/contains matches and lower-priority metadata. Secondary identity fields such as scientific name may still rank strongly, while category, difficulty, use-case, and condition metadata remain weaker signals. Equal-confidence results retain stable source order.
+
+A direct canonical-name query should therefore place the intended entity first when it is present; for example, `Ned` should rank **Ned Rig** ahead of Rigs that only mention Ned-related terms in lower-priority searchable metadata.
+
+Heavy fuzzy search, advanced typo tolerance, natural-language intent parsing, sophisticated confidence systems, and global cross-domain result dumps remain deferred until demonstrated by actual need.
 
 Branded or commercial names such as `Rooster Tail` require a later product/concept-resolution decision and are not resolved by this decision alone.
 
@@ -654,3 +661,55 @@ For YouTube, approved implementations use the official embedded player and priva
 Texas Rig is the first implementation trial for this pattern. The trial must pass runtime, responsive, privacy/loading, and usability validation before the same treatment is rolled out broadly.
 
 Permanent principle: **prefer trustworthy in-context visual instruction without copying third-party media into the repository.**
+
+# D050 – Standard Search Field and Clear Control
+
+Searchable sections use an inline search field at the section entry point rather than requiring a navigation card whose only purpose is to open a separate Search page.
+
+The standard search interaction is:
+
+- the main section landing page exposes search above its navigation cards,
+- searchable subset/browse pages retain scoped search,
+- the same canonical records and shared search helpers power both,
+- typing may update results immediately while the Search submit action remains available,
+- when text is present, an explicit one-click `×` control clears the query,
+- clearing immediately restores the section's unfiltered/default state and returns focus to the search field,
+- the clear control has an accessible `Clear search` name and must not depend on browser-specific native search-input controls.
+
+Fish Guide adopts the same landing-page search pattern as Rig Guide; a dedicated **Search Fish** navigation card/page is not required for the primary workflow.
+
+A search field near the top of the Dashboard is approved future direction, but it is not implemented by this decision. Its cross-domain scope, grouping, and result presentation remain deferred so Dashboard search does not become an indiscriminate global result dump.
+
+Permanent principle: **search is a direct field interaction, not an extra navigation destination.**
+
+# D051 – Persistent Parent Navigation and Top-Reset View Transitions
+
+Nested views keep their Parent/Home controls available while the user scrolls. The shared control group uses a compact sticky/floating treatment that remains legible, keyboard accessible, touch usable, and visually subordinate to the page content.
+
+All explicit application view transitions start the destination at the top, including:
+
+- forward navigation,
+- Parent navigation,
+- Home navigation.
+
+The earlier runtime behavior that restored a parent's remembered scroll position is superseded. Application view routing no longer needs per-view or per-Rig remembered scroll-position state for Parent navigation.
+
+Permanent principle: **navigation stays reachable while scrolling, and every destination opens from a predictable top position.**
+
+# D052 – Rig Detail Compact Density
+
+The compact Rig-detail treatment is approved for Rig detail pages after runtime review at phone and desktop widths.
+
+The approved Rig treatment prioritizes information density without visual crowding:
+
+- compact At a Glance presentation,
+- especially compact `What You Need` component rows,
+- practical touch controls and readable component notes,
+- comparatively generous `How to Build It` spacing,
+- lighter supporting sections for Setup Notes and Common Mistakes,
+- Safety remains visible by default,
+- narrow-phone content stacks instead of compressing into crowded multi-column rows.
+
+This approval is Rig-specific. It does not automatically establish the same density for Fish, Tackle, Knots, or other future detail pages; cross-domain adoption requires separate review when those detail experiences are actively developed.
+
+Permanent principle: **Rig details are information-dense, not visually dense.**

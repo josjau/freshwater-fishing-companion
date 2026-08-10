@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** CORE-RIGS-TACKLE-MEDIA.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.4.0  
 **Document Status:** Approved  
 **Implementation Status:** In Progress  
-**Last Updated:** 2026-08-09
+**Last Updated:** 2026-08-10
 
 # Purpose
 
@@ -13,6 +13,7 @@ Complete the approved Core Rig foundation, finish the Beginner and Beginner+ Rig
 # Decisions Implemented
 
 - D019 — Tackle Reference Production Format
+- D022 — Relevance-First Search and Connected Knowledge
 - D027 — Regional Rig Library and Core Rigs
 - D042 — Core Learning Path Visual Emphasis
 - D043 — Ready-to-Fish Terminal Setups in the Rig Guide
@@ -22,6 +23,9 @@ Complete the approved Core Rig foundation, finish the Beginner and Beginner+ Rig
 - D047 — Section and Subset Search Availability
 - D048 — Dashboard-Derived Section Card Design
 - D049 — Verified Rig Tutorial Embed Policy
+- D050 — Standard Search Field and Clear Control
+- D051 — Persistent Parent Navigation and Top-Reset View Transitions
+- D052 — Rig Detail Compact Density
 
 # Current Update Scope
 
@@ -52,6 +56,16 @@ Finalization additions:
 - add the first lazy-loaded official-platform tutorial trial on Texas Rig using Wired2Fish/YouTube privacy-enhanced embedding plus external fallback,
 - trial a more compact mobile-first Rig detail layout, especially `What You Need`, without shrinking practical touch targets or hiding build/safety content.
 
+Runtime-review correction additions before closeout:
+
+- standardize Fish Guide on the same landing-page inline search-field pattern used by Rig Guide and remove the dedicated Search Fish card/page from the primary flow,
+- add one-click explicit `×` clear controls to shared section/subset search fields,
+- replace alphabetized substring-result ordering with lightweight deterministic relevance ranking so strong canonical-name matches lead weaker metadata matches,
+- keep Parent/Home controls available through a compact sticky navigation surface on nested views,
+- supersede remembered parent-scroll restoration so every explicit view transition opens the destination at the top,
+- record the compact Rig-detail treatment as approved for Rigs after phone/desktop runtime review,
+- park Dashboard search as approved future direction pending deliberate cross-domain scope/result design.
+
 Media correction:
 
 - replace `images/tackle/bait-reference.webp` with a clearly intact, immediately recognizable worm-bait illustration,
@@ -62,6 +76,7 @@ Media correction:
 - `data/rigs.js`
 - `data/tackle.js`
 - `script.js`
+- `search.js`
 - `view-renderer.js`
 - `forest-journal.css`
 - `images/tackle/bait-reference.webp`
@@ -80,6 +95,7 @@ Media correction:
 - `data-model/05-TACKLE.md`
 - this workstream
 - `CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`
+- `RIG-UX-RUNTIME-FOLLOWUP.md`
 
 # Rig Learning Groups
 
@@ -132,6 +148,8 @@ Core retains restrained additional Forest Journal emphasis through the primary-c
 
 The main Rig Guide additionally gains global search across all active Rigs. Implemented subset pages retain scoped search. Navigation cards follow the shared Dashboard-derived varied accent/left-line grammar rather than one repeated Rig accent.
 
+Final runtime review also standardized Fish Guide on the same inline landing-page search pattern, added shared explicit clear controls, and required relevance-ranked results. Nested Parent/Home controls use the shared compact sticky treatment, and Parent/Home transitions return to the top instead of restoring remembered scroll position.
+
 # Reference Scope for New Rigs
 
 Wacky Rig:
@@ -167,7 +185,8 @@ Texas Rig tutorial trial:
 - ProductDefinition/commercial product catalog
 - tutorial rollout beyond Texas before the trial is validated
 - dedicated images for Wacky Hook, Wacky O-Ring, or Ned Jighead until accurate media is produced and validated
-- promotion of the compact Rig-detail trial to a permanent cross-domain standard before user runtime approval
+- promotion of the approved compact Rig-detail density treatment beyond Rigs without separate domain review
+- implementation of Dashboard search before its cross-domain scope/result presentation is decided
 - Dashboard density reduction; current larger Dashboard cards remain unchanged in this segment
 
 # Completion Rule

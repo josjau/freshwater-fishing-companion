@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.2.2
+**Document Revision:** 1.3.0
 **Document Status:** Approved
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-10
 
 # Purpose
 
@@ -118,11 +118,30 @@ The interface should be:
 
 Avoid visual clutter and duplicated instructional content.
 
-When a section has searchable reference or instructional content, provide search on the main section landing page as well as on relevant scoped subset/browse pages. Main-section search covers the implemented section library; subset search respects the selected scope. The Rig Guide is the first deliberate implementation; older sections should adopt the standard when their searchable navigation is next actively developed rather than through unrelated edits.
+When a section has searchable reference or instructional content, provide the standard inline search field on the main section landing page as well as on relevant scoped subset/browse pages. Main-section search covers the implemented section library; subset search respects the selected scope. Do not require a separate navigation card merely to enter primary Search.
 
 Anything that looks actionable must either perform an action or clearly communicate that it is unavailable.
 
 Unimplemented child cards may remain visible when they help communicate application structure, but they must be clearly marked `Coming Soon` or equivalent. Unavailable cards must not retain hover, pointer, click, or other affordances that imply working navigation and should use appropriate accessible disabled/unavailable semantics.
+
+# Search Controls and Result Ordering
+
+Search uses one shared interaction pattern across searchable sections and subsets:
+
+- show an inline search field at the section entry point,
+- keep subset search scoped to the selected subset,
+- use the same canonical records and shared search helpers,
+- allow live input updates while retaining an explicit Search submit action,
+- show a one-click `×` clear control whenever the field contains text,
+- give the clear control the accessible name `Clear search`,
+- clearing the query immediately restores the unfiltered/default view and keeps focus in the search field,
+- suppress browser-specific duplicate native cancel controls when the explicit application clear control is shown.
+
+Do not use a `Search` navigation card when its only function would be to open a separate primary search page. Fish Guide and Rig Guide use the inline section-search pattern.
+
+Search results are relevance ordered. Canonical-name exact/prefix matches outrank lower-priority metadata matches; scientific/secondary identity fields may rank strongly where applicable; category, difficulty, use-case, and condition metadata are weaker signals. Alphabetical ordering is appropriate for unfiltered browse lists or as an explicitly chosen browse order, not as a replacement for search relevance.
+
+A future Dashboard search field is approved direction but remains outside the current implementation until cross-domain scope and result presentation are deliberately defined.
 
 # Forest Journal
 
@@ -192,6 +211,28 @@ Card grids on section and subset/navigation pages should preserve the same share
 Domain identity may still appear in headings, search/results, detail-page accents, and badges. Do not override the entire navigation-card grid to a single domain color.
 
 Core cards may add the approved Core emphasis on top of the shared Dashboard-derived palette.
+
+# Persistent Parent Navigation
+
+Nested subset/detail views keep Parent/Home controls available while the page scrolls. Use the shared compact sticky navigation group rather than requiring the user to return to the top just to leave a long detail page.
+
+Requirements:
+
+- keep Parent and Home controls visible while scrolling,
+- preserve keyboard focus and practical touch interaction,
+- keep the floating surface compact and visually subordinate to page content,
+- avoid covering important content or creating a large mobile toolbar,
+- every explicit application navigation transition opens the destination at the top.
+
+Do not restore remembered parent scroll positions through application Parent controls. Predictable top-of-page arrival is the standard.
+
+# Rig Detail Density
+
+The compact Rig-detail treatment is approved for Rigs. It should reduce scrolling primarily through tighter section spacing and compact component rows rather than by shrinking readable text or hiding instructions.
+
+Keep `How to Build It` comparatively spacious, preserve visible Safety content, maintain practical ownership controls, and stack component content cleanly at narrow phone widths.
+
+Do not automatically apply the Rig density treatment to non-Rig detail pages without separate domain review.
 
 # Unified Field-Guide Presentation
 

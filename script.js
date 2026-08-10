@@ -18,7 +18,6 @@ console.info(`[Loaded] ${BUILD_INFO.file} | ${BUILD_INFO.milestone}`);
 const ROUTES = Object.freeze({
     DASHBOARD: "dashboard",
     FISH: "fish",
-    FISH_SEARCH: "fish-search",
     RIGS: "rigs",
     RIG_BROWSE: "rig-browse",
     RIG_DETAIL: "rig-detail",
@@ -53,11 +52,9 @@ let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
 let selectedRigId = null;
 let selectedRigCollectionKey = "all";
-const viewScrollPositions = new Map();
 
 const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView,
-    [ROUTES.FISH_SEARCH]: renderFishSearchView,
     [ROUTES.RIGS]: renderRigGuideView,
     [ROUTES.RIG_BROWSE]: renderRigBrowseView,
     [ROUTES.RIG_DETAIL]: renderRigDetailView,
@@ -69,35 +66,7 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.SETTINGS]: renderSettingsView
 });
 
-function getViewScrollKey(route) {
-    if (route === ROUTES.RIG_BROWSE) {
-        return `${route}:${selectedRigCollectionKey}`;
-    }
-
-    if (route === ROUTES.RIG_DETAIL) {
-        return `${route}:${selectedRigId ?? ""}`;
-    }
-
-    return route;
-}
-
-function rememberCurrentViewScrollPosition() {
-    viewScrollPositions.set(getViewScrollKey(currentView), window.scrollY);
-}
-
-function applyViewScrollPosition(route, restoreScroll) {
-    const scrollTop = restoreScroll
-        ? viewScrollPositions.get(getViewScrollKey(route)) ?? 0
-        : 0;
-
-    window.scrollTo({
-        top: scrollTop,
-        left: 0,
-        behavior: "auto"
-    });
-}
-
-function showView(route, { restoreScroll = false } = {}) {
+function showView(route) {
     const appMain = document.querySelector("#app-main");
     if (!appMain) {
         console.error("Application main content area was not found.");
@@ -109,61 +78,44 @@ function showView(route, { restoreScroll = false } = {}) {
         return;
     }
 
-    rememberCurrentViewScrollPosition();
-
     if (route === ROUTES.DASHBOARD) {
         currentView = ROUTES.DASHBOARD;
         appMain.innerHTML = dashboardMarkup;
         initializeDashboardRouting();
-        applyViewScrollPosition(route, restoreScroll);
-        return;
+    } else {
+        currentView = route;
+        VIEW_RENDERERS[route](appMain);
     }
 
-    currentView = route;
-    VIEW_RENDERERS[route](appMain);
-    applyViewScrollPosition(route, restoreScroll);
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto"
+    });
 }
 
 function renderFishGuideView(appMain) {
     renderView(appMain, {
         headingId: "fish-guide-title",
         title: "Fish Guide",
-        description: "Learn to identify freshwater fish using clear, beginner-friendly information.",
+        description: "Search by common name, scientific name, or category, or browse a Fish Guide collection.",
+        search: {
+            inputId: "fish-guide-search-input",
+            label: "Search all Fish",
+            placeholder: "Try bass, bluegill, or Micropterus",
+            onSearch: (query) => updateFishSearchResults(appMain, query)
+        },
         cards: [
-            { id: "search-fish", title: "Search Fish", description: "Find a fish by its common or scientific name.", isAvailable: true },
             { id: "browse-fish-by-family", title: "Browse by Family", description: "Explore related freshwater fish groups." },
             { id: "browse-fish-by-habitat", title: "Browse by Habitat", description: "Find fish by the water and habitat they prefer." },
             { id: "browse-fish-alphabetically", title: "Browse Alphabetically", description: "View the complete fish guide from A to Z." }
-        ],
-        onCardSelect: handleFishGuideCardSelect
-    });
-}
-
-function handleFishGuideCardSelect(cardId) {
-    if (cardId === "search-fish") {
-        showView(ROUTES.FISH_SEARCH);
-        return;
-    }
-    console.info(`Fish Guide action not implemented yet: ${cardId}`);
-}
-
-function renderFishSearchView(appMain) {
-    renderSearchView(appMain, {
-        headingId: "fish-search-title",
-        inputId: "fish-search-input",
-        title: "Search Fish",
-        description: "Search by common name, scientific name, or category.",
-        label: "Fish name or category",
-        placeholder: "Try bass, bluegill, or Micropterus",
-        parentLabel: "Fish Guide",
-        onParent: () => showView(ROUTES.FISH, { restoreScroll: true }),
-        onSearch: (query) => updateFishSearchResults(appMain, query)
+        ]
     });
 }
 
 function updateFishSearchResults(appMain, query) {
     const matches = searchRecords(FISH_DATA.filter((fish) => fish.isActive), query, ["name", "scientificName", "category"]);
-    renderSearchResults(appMain, sortRecordsAlphabetically(matches), {
+    renderSearchResults(appMain, matches, {
         emptyMessage: "No fish matched your search.",
         renderRecord: (fish) => `
             <button class="search-result-card" type="button" data-result-id="${fish.id}">
@@ -232,7 +184,7 @@ function updateRigGuideSearchResults(appMain, query) {
         ["name", "difficulty", "useCases", "conditionTags"]
     );
 
-    renderSearchResults(appMain, sortRecordsAlphabetically(matches), {
+    renderSearchResults(appMain, matches, {
         emptyMessage: "No rigs matched your search.",
         renderRecord: renderRigSearchResultCard,
         onResultSelect: (rigId) => {
@@ -311,7 +263,7 @@ function renderRigBrowseView(appMain) {
         label: "Search this Rig group",
         placeholder: "Try bobber, bass, shore, cover, or clear water",
         parentLabel: "Rig Guide",
-        onParent: () => showView(ROUTES.RIGS, { restoreScroll: true }),
+        onParent: () => showView(ROUTES.RIGS),
         onSearch: (query) => updateRigBrowseResults(appMain, query)
     });
 }
@@ -324,7 +276,9 @@ function updateRigBrowseResults(appMain, query) {
         query,
         ["name", "difficulty", "useCases", "conditionTags"]
     );
-    const resultRecords = sortRigCollection(matches);
+    const resultRecords = normalizeSearchText(query)
+        ? matches
+        : sortRigCollection(matches);
 
     renderSearchResults(appMain, resultRecords, {
         emptyMessage: "No rigs matched your search.",
@@ -352,8 +306,7 @@ function renderRigDetailView(appMain) {
         parentLabel: fromGuideSearch ? "Rig Guide" : collection.title,
         selections: getRigReadinessSelections(rig.id),
         onParent: () => showView(
-            fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE,
-            { restoreScroll: true }
+            fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE
         ),
         onReadinessChange: (tackleId, isOwned) =>
             updateRigReadinessSelection(rig.id, tackleId, isOwned)

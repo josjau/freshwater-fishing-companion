@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** CORE-RIGS-TACKLE-MEDIA-VALIDATION.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.4.0  
 **Document Status:** Approved  
 **Implementation Status:** In Progress  
-**Last Updated:** 2026-08-09
+**Last Updated:** 2026-08-10
 
 # Purpose
 
@@ -25,7 +25,12 @@ Confirm before delivery:
 - Ned Rig requires `ned-jighead` + `soft-plastic`.
 - Weightless Soft-Plastic Rig still requires `offset-worm-hook` + `soft-plastic` and no Bullet Weight.
 - Existing readiness storage key remains unchanged.
+- Parent/Home view transitions do not use remembered-scroll restoration and open the destination at the top.
+- No obsolete `viewScrollPositions` routing state remains.
 - Main Rig Guide global search uses active canonical Rig data and shared search helpers.
+- Fish Guide exposes the same standard inline landing-page search field and no longer requires a dedicated Search Fish card/page.
+- Shared search fields expose an explicit one-click `Clear search` control when text is present.
+- Search results use deterministic relevance ordering; a `Ned` Rig query places **Ned Rig** first.
 - Subset search remains scoped.
 - `All Rigs` logic includes every active Rig.
 - Core membership remains separate from `difficulty`.
@@ -63,8 +68,10 @@ Confirm:
 - a visible global search field appears on the main Rig Guide above the cards,
 - an empty search shows the normal card grid,
 - entering search text hides/replaces the card grid with matching Rig results,
+- the explicit `×` clear control appears when text is present and restores the card grid in one click while retaining field focus,
 - clearing search restores the card grid,
 - global search can find Rigs without first entering a subset,
+- searching `Ned` places **Ned Rig** first rather than alphabetizing weaker matches ahead of it,
 - a Rig opened from main search returns to **Rig Guide** through its parent control,
 - adjacent navigation cards use varied Dashboard-derived accent/left-line colors rather than one repeated Rig accent,
 - Core Rigs is visually emphasized without decorative clutter.
@@ -199,14 +206,33 @@ Validate at phone width first, then desktop:
 - no dense table or accordion-heavy interaction is introduced,
 - no text requires pinch zoom.
 
-This trial does not become a permanent non-Rig subset/detail standard until user runtime approval.
+The compact treatment passed user runtime approval for Rig detail pages. It remains Rig-specific and is not automatically promoted to non-Rig detail pages.
+
+# Cross-App Search and Navigation Corrections
+
+Confirm after the correction package is pushed:
+
+- Fish Guide shows its search field directly on the landing page above the remaining Fish browse cards,
+- no actionable **Search Fish** navigation card is required for primary Fish search,
+- Fish search still matches common name, scientific name, and category,
+- Rig Guide, Fish Guide, and scoped Rig searches show an explicit `×` clear control only while text is present,
+- one click on clear empties the field, immediately restores the unfiltered/default view, and returns focus to the field,
+- `Ned` ranks **Ned Rig** first in main Rig search,
+- exact/prefix canonical-name matches consistently outrank lower-priority metadata-only matches,
+- empty scoped Rig search preserves the intended collection browse order,
+- Parent/Home controls remain available in a compact sticky surface while scrolling long subset/detail views,
+- Parent returns to the parent page at the top,
+- Home returns to the Dashboard at the top,
+- forward navigation still opens new views at the top,
+- sticky controls do not obscure page content and retain visible keyboard focus and practical touch interaction,
+- no Dashboard search field is introduced by this package.
 
 # Regression
 
 Confirm:
 
 - Existing six Core Rig details remain intact.
-- Fish Search still works by common name, scientific name, and category.
+- Fish Guide landing-page search works by common name, scientific name, and category.
 - Related Tackle navigation and focus restoration work.
 - Derived `Used In` now includes the three new Rig relationships where applicable.
 - Dashboard and unavailable-card semantics remain intact.

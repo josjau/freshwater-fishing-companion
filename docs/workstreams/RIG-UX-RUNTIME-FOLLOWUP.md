@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-UX-RUNTIME-FOLLOWUP.md  
-**Document Revision:** 0.2.0  
+**Document Revision:** 0.3.0  
 **Document Status:** Approved  
 **Implementation Status:** In Progress  
-**Recorded Against:** `main` at `418c0dc04716aa70ebebf2cac8048ab05870c8b7`  
+**Recorded Against:** `main` at `f2fee384a9bc44d7f481b7c9b1072112cbe6571f`  
 **Last Updated:** 2026-08-10
 
 # Purpose
@@ -22,7 +22,7 @@ The Rig Guide landing page passed user runtime review for:
 - varied Dashboard-derived card accents / left-edge lines,
 - restrained Core Rigs visual emphasis.
 
-The shared nested-view scroll behavior also passed runtime validation after the application-wide routing fix:
+The shared nested-view scroll behavior also passed runtime validation after the application-wide routing fix. **Historical note:** the remembered-parent-position behavior documented immediately below was later superseded during final UX review; the superseding behavior is recorded in the Final Runtime Review section at the end of this document.
 
 - forward navigation opens the newly selected section/subset/detail at the top,
 - parent navigation restores the previous page's remembered scroll position,
@@ -90,6 +90,8 @@ The user validated the behavior in Brave across both Rig and Fish navigation pat
 
 ## DECIDED
 
+The bullets in this existing section preserve the earlier runtime state. Where a later final-review decision differs, the later **Final Runtime Review — Superseding Decisions** section below is authoritative.
+
 - The Rig Guide landing-page order, global search, Dashboard-derived card accents, and Core emphasis passed runtime review.
 - Forward navigation starts at the top; explicit parent navigation restores the previous parent-view scroll position.
 - The shared scroll-position fix is application-wide rather than Rig-specific.
@@ -115,4 +117,56 @@ The user validated the behavior in Brave across both Rig and Fish navigation pat
 - Texas Rig tutorial playback is runtime-validated in Brave under normal/default protections.
 - Current Rig UX source is pushed on `main`.
 - Segment is **In Progress**, not yet Validated.
+- Intermediate Rig implementation remains blocked by D040 until final closeout.
+
+# Final Runtime Review — Superseding Decisions
+
+The final Rig approval pass completed the remaining functional checks and then identified a small cross-app UX correction package that must be built and validated before closeout.
+
+Additional runtime checks passed for:
+
+- compact Rig detail presentation at about 375 px and desktop widths,
+- Wacky Rig components and assembly geometry,
+- Ned Rig components, exposed-hook baseline, and recognition help,
+- Weightless Soft-Plastic Rig component/readiness behavior,
+- intact worm-bait recognition media,
+- Core, Beginner, Beginner+, and All Rigs membership/order/search scope,
+- main Rig Guide search and card-grid restoration,
+- Texas Rig tutorial playback in Brave,
+- Fish search by common name, scientific name, and category,
+- derived Tackle `Used In` relationships for Wacky Hook and Ned Jighead.
+
+The compact Rig-detail treatment is approved for Rigs. It is not automatically generalized to other domain detail pages.
+
+The final review supersedes the earlier remembered-parent-scroll behavior with these decisions:
+
+1. Searchable section entry uses an inline search field; Fish Guide adopts the Rig Guide pattern instead of a dedicated Search Fish card/page.
+2. Shared search fields provide an explicit one-click `×` control with accessible name `Clear search`.
+3. Search results use lightweight deterministic relevance ranking; canonical-name confidence outranks lower-priority metadata, and `Ned` must rank **Ned Rig** first.
+4. Parent/Home controls remain reachable while scrolling through a compact sticky navigation surface.
+5. Every explicit application view transition opens the destination at the top, including Parent and Home. Remembered parent-scroll restoration is no longer the approved behavior.
+
+A future search field near the top of the Dashboard is approved direction but remains parked until cross-domain scope, grouping, and result presentation are deliberately designed.
+
+## Final Review Documentation
+
+- D022 is updated to reflect deterministic relevance ranking.
+- D050 records the standard inline search field and explicit clear control.
+- D051 records sticky Parent/Home navigation and top-reset view transitions.
+- D052 records the approved Rig-specific compact-detail density.
+- The active workstream and validation checklist include the required correction-package checks.
+
+## Final Review Open Items
+
+- Push the coherent correction package and re-fetch actual GitHub `main`.
+- Runtime-validate Fish landing search, clear controls, Ned-first ranking, sticky Parent/Home controls, and top-reset Parent/Home behavior.
+- Re-run affected Rig/Fish regressions and console/focus checks.
+- Complete `HANDOFF`, `MILESTONES`, `CHANGELOG`, workstream, and validation closeout only after the correction package passes.
+- Resolve exact Dashboard-search scope later; it is not part of this package.
+
+## Final Review Implementation Status
+
+- The correction package updates `script.js`, `search.js`, `view-renderer.js`, and `forest-journal.css` plus governing/workstream documentation.
+- The package is based on verified GitHub `main` at `f2fee384a9bc44d7f481b7c9b1072112cbe6571f` and is not current until pushed and verified.
+- Segment remains **In Progress**, not yet Validated.
 - Intermediate Rig implementation remains blocked by D040 until final closeout.
