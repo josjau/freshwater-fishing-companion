@@ -1,7 +1,7 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/rigs.js
-   PURPOSE: Provides canonical beginner-focused Rig records for
+   PURPOSE: Provides canonical learning-tier Rig records for
    browsing, instruction, verified references, and tackle readiness.
    ========================================================== */
 
@@ -9,7 +9,7 @@
 
 const RIG_DATA_BUILD_INFO = Object.freeze({
     file: "data/rigs.js",
-    milestone: "Rig UX Finalization"
+    milestone: "Beginner Media + Intermediate Expansion"
 });
 
 const CORE_RIG_IDS = Object.freeze([
@@ -27,7 +27,7 @@ const RIG_DATA = Object.freeze([
         name: "Fixed Bobber Rig",
         summary: "A simple float rig for presenting bait at a shallow, fixed depth.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.3.1",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -50,6 +50,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://norrik.com/fishing-rigs/float-rig/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How To Rig a Bobber and Worm for Fishing",
+            creator: "NYSDEC",
+            videoId: "LlzvkVUvYBs",
+            externalUrl: "https://www.youtube.com/watch?v=LlzvkVUvYBs"
+        },
         componentRequirements: [
             {
                 tackleId: "fixed-bobber",
@@ -104,7 +111,7 @@ const RIG_DATA = Object.freeze([
         name: "Slip Bobber Rig",
         summary: "A depth-adjustable float rig for presenting bait at a controlled depth.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.2.9",
+        lastModifiedVersion: "0.3.1",
         isActive: true,
         difficulty: "Beginner+",
         useCases: [
@@ -128,6 +135,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://norrik.com/fishing-rigs/slip-bobber-rig/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How to Rig and Fish Slip Bobbers for Crappie in Timber",
+            creator: "Wired2Fish",
+            videoId: "foSgzdjLZyk",
+            externalUrl: "https://www.youtube.com/watch?v=foSgzdjLZyk"
+        },
         componentRequirements: [
             {
                 tackleId: "bobber-stop",
@@ -197,7 +211,7 @@ const RIG_DATA = Object.freeze([
         name: "Basic Bottom Rig",
         summary: "A straightforward bait rig that holds the offering near the bottom.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.3.1",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -221,6 +235,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://norrik.com/fishing-rigs/slip-sinker-rig/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How To Tie A Slip Sinker Rig For Catfish",
+            creator: "Catfish Edge",
+            videoId: "O6pEc6Y_44U",
+            externalUrl: "https://www.youtube.com/watch?v=O6pEc6Y_44U"
+        },
         componentRequirements: [
             {
                 tackleId: "sliding-sinker",
@@ -378,7 +399,7 @@ const RIG_DATA = Object.freeze([
         name: "Jighead + Soft Plastic",
         summary: "A simple weighted-lure setup that threads a soft plastic straight onto a jighead for casting, swimming, hopping, or vertical presentation.",
         createdVersion: "0.2.8",
-        lastModifiedVersion: "0.2.8",
+        lastModifiedVersion: "0.3.1",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -404,6 +425,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://www.takemefishing.org/blog/april-2019/lure-fishing-for-beginners-lures-every-angler-should-have/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "Soft Plastics 101 - Chapter 6 - Soft Plastic Rigging on a Standard Jighead",
+            creator: "Tackle Tactics TV",
+            videoId: "wv1e53YZuBo",
+            externalUrl: "https://www.youtube.com/watch?v=wv1e53YZuBo"
+        },
         componentRequirements: [
             {
                 tackleId: "jighead",
@@ -511,7 +539,7 @@ const RIG_DATA = Object.freeze([
         name: "Wacky Rig",
         summary: "A weightless soft-plastic setup that hooks a stick-style worm through its middle so both ends can move freely.",
         createdVersion: "0.2.9",
-        lastModifiedVersion: "0.3.0",
+        lastModifiedVersion: "0.3.1",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -536,6 +564,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/bass-fishing-rigs/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "Wacky Rigging a Senko with an O-Ring, Fishing Lure Tutorial",
+            creator: "Vermont Fish & Wildlife Department",
+            videoId: "u8N--D8C--4",
+            externalUrl: "https://www.youtube.com/watch?v=u8N--D8C--4"
+        },
         componentRequirements: [
             {
                 tackleId: "wacky-hook",
@@ -585,7 +620,7 @@ const RIG_DATA = Object.freeze([
         name: "Ned Rig",
         summary: "A compact finesse setup pairing a light mushroom-style jighead with a short soft-plastic bait.",
         createdVersion: "0.2.9",
-        lastModifiedVersion: "0.3.0",
+        lastModifiedVersion: "0.3.1",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -611,6 +646,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://www.takemefishing.org/blog/january-2019/how-to-set-up-a-fishing-rig-for-bass-the-ned-rig/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How to Rig & Fish the Ned Rig",
+            creator: "Bass University",
+            videoId: "ajJz8pH0Jig",
+            externalUrl: "https://www.youtube.com/watch?v=ajJz8pH0Jig"
+        },
         componentRequirements: [
             {
                 tackleId: "ned-jighead",
@@ -657,7 +699,7 @@ const RIG_DATA = Object.freeze([
         name: "Weightless Soft-Plastic Rig",
         summary: "A weed-resistant soft-plastic setup tied directly to an offset hook with no sinker or other added weight.",
         createdVersion: "0.2.9",
-        lastModifiedVersion: "0.2.9",
+        lastModifiedVersion: "0.3.1",
         isActive: true,
         difficulty: "Beginner+",
         useCases: [
@@ -682,6 +724,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/bass-fishing-rigs/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "Weightless Soft Plastics for Springtime Bass",
+            creator: "Wired2Fish",
+            videoId: "Bld_-8GBsco",
+            externalUrl: "https://www.youtube.com/watch?v=Bld_-8GBsco"
+        },
         componentRequirements: [
             {
                 tackleId: "offset-worm-hook",
@@ -719,6 +768,393 @@ const RIG_DATA = Object.freeze([
         ],
         techniqueIds: [],
         variationIds: ["texas-rig"],
+        imageIds: []
+    },
+    {
+        id: "drop-shot-rig",
+        name: "Drop Shot Rig",
+        summary: "A finesse rig that holds a soft plastic above a bottom-contact weight while keeping the hook tied directly to the main line.",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true,
+        difficulty: "Intermediate",
+        useCases: [
+            "Presenting finesse plastics just above the bottom",
+            "Fishing clear or pressured water",
+            "Targeting bass around rock, points, ledges, and sparse cover"
+        ],
+        conditionTags: [
+            "Clear Water",
+            "Stained Water",
+            "Deep Water",
+            "Open Water",
+            "Light Cover",
+            "Bottom Fishing"
+        ],
+        referenceLinks: [
+            {
+                label: "Mustad — Weedless/Snagless Dropshot Rigging",
+                url: "https://mustad-fishing.com/us/article/weedless-snagless-dropshot-rigging"
+            },
+            {
+                label: "Mustad — TitanX Wacky / Neko / Dropshot Hook",
+                url: "https://business.mustad-fishing.com/us/products/60403np"
+            }
+        ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "Drop Shot Rig: How To Rig the Drop Shot",
+            creator: "Mystery Tackle Box",
+            videoId: "xuqaAq98BDA",
+            externalUrl: "https://www.youtube.com/watch?v=xuqaAq98BDA"
+        },
+        componentRequirements: [
+            {
+                tackleId: "wacky-hook",
+                quantity: 1,
+                required: true,
+                notes: "Use a compact finesse or drop-shot hook that can ride point-up when tied to the line."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Small finesse worms, minnows, and other compact plastics are common choices."
+            },
+            {
+                tackleId: "drop-shot-weight",
+                quantity: 1,
+                required: true,
+                notes: "Use the lightest drop-shot weight that maintains bottom contact."
+            }
+        ],
+        assemblySteps: [
+            "Tie the finesse hook to the main line while leaving a long tag end below the knot.",
+            "Pass the tag end back through the hook eye from the point side so the hook turns outward and rides point-up.",
+            "Attach the Drop Shot Weight to the tag end, starting about 12 to 18 inches below the hook.",
+            "Nose-hook or lightly thread the soft plastic so the hook gap and point remain exposed for the standard open-water setup.",
+            "Hold the line vertically and confirm that the bait sits above the weight and the hook rides point-up.",
+            "Adjust the hook-to-weight spacing to keep the bait above bottom clutter or vegetation."
+        ],
+        setupNotes: [
+            "A 12- to 18-inch hook-to-weight spacing is a practical starting range; adjust it to the fish and bottom cover.",
+            "Round or teardrop weights work well on cleaner bottom, while skinny weights can pass through vegetation and crevices more easily."
+        ],
+        commonMistakes: [
+            "Leaving the hook rotated downward instead of point-up.",
+            "Using a weight that is heavier than needed and overloading the finesse presentation.",
+            "Threading too much plastic onto the hook and closing the hook gap.",
+            "Setting the hook-to-weight spacing without considering grass, rock, or bottom debris."
+        ],
+        safetyNotes: [
+            "Secure both the exposed hook and hanging weight before moving or storing the rod.",
+            "Keep fingers clear of the exposed hook point when nose-hooking the bait."
+        ],
+        techniqueIds: [],
+        variationIds: [],
+        imageIds: []
+    },
+    {
+        id: "carolina-rig",
+        name: "Carolina Rig",
+        summary: "A bottom-contact soft-plastic rig that separates a sliding weight from the bait with a swivel and leader.",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true,
+        difficulty: "Intermediate",
+        useCases: [
+            "Covering broad flats, points, and offshore structure",
+            "Keeping a soft plastic moving behind a bottom-contact weight",
+            "Fishing for bass in moderate to deep water"
+        ],
+        conditionTags: [
+            "Deep Water",
+            "Open Water",
+            "Sparse Cover",
+            "Bottom Fishing",
+            "Clear Water",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Wired2Fish — Carolina Rig",
+                url: "https://www.wired2fish.com/fishing-rigs/the-carolina-rig-how-to-rig-and-fish"
+            },
+            {
+                label: "Mustad — Tungsten Carolina Weights",
+                url: "https://mustad-fishing.com/us/collections/weights"
+            }
+        ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "HOW TO FISH A CAROLINA RIG",
+            creator: "John Crews",
+            videoId: "4nU1QncQ0QM",
+            externalUrl: "https://www.youtube.com/watch?v=4nU1QncQ0QM"
+        },
+        componentRequirements: [
+            {
+                tackleId: "sliding-sinker",
+                quantity: 1,
+                required: true,
+                notes: "An egg, barrel, or Carolina-style sliding sinker can be used; choose weight for depth and bottom contact."
+            },
+            {
+                tackleId: "bead",
+                quantity: 1,
+                required: true,
+                notes: "Place the bead between the sinker and swivel to protect the knot and add separation."
+            },
+            {
+                tackleId: "barrel-swivel",
+                quantity: 1,
+                required: true,
+                notes: "Stops the sliding weight and connects the main line to the leader."
+            },
+            {
+                tackleId: "leader-line",
+                quantity: 1,
+                required: true,
+                notes: "Start around 18 to 36 inches and adjust for cover, casting control, and bait action."
+            },
+            {
+                tackleId: "offset-worm-hook",
+                quantity: 1,
+                required: true,
+                notes: "Match the hook size and gap to the selected soft plastic."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Worms, lizards, creature baits, and other soft plastics are common choices."
+            }
+        ],
+        assemblySteps: [
+            "Slide the sinker onto the main line so it can move freely.",
+            "Slide the Protective Bead onto the main line below the sinker.",
+            "Tie the main line to one eye of the Barrel Swivel.",
+            "Tie the Leader Line to the other swivel eye.",
+            "Tie the Offset Worm Hook to the free end of the leader.",
+            "Texas-rig the Soft Plastic Bait on the offset hook so the body is straight and the hook point is lightly skin-hooked or barely buried for a weed-resistant finish.",
+            "Confirm that the sinker slides on the main line while the swivel keeps the leader and bait separated behind it."
+        ],
+        setupNotes: [
+            "Use the lightest sinker that maintains useful bottom contact and casting control.",
+            "Shorten the leader around snaggy cover or for easier casting; lengthen it when you want more bait separation and freedom of movement."
+        ],
+        commonMistakes: [
+            "Placing the bead on the wrong side of the swivel.",
+            "Using a leader so long that the rig becomes difficult to cast safely.",
+            "Rigging the soft plastic crooked on the offset hook.",
+            "Using excessive weight when lighter tackle would maintain bottom contact."
+        ],
+        safetyNotes: [
+            "Use a controlled side-arm or lob cast because the long leader and heavy sliding weight create a wide moving rig.",
+            "Check behind and beside you before casting."
+        ],
+        techniqueIds: [],
+        variationIds: ["texas-rig", "basic-bottom-rig"],
+        imageIds: []
+    },
+    {
+        id: "live-bait-slip-sinker-rig",
+        name: "Live-Bait Slip-Sinker Rig",
+        summary: "A sliding-sinker live-bait rig that lets a fish move the line with reduced resistance while the bait trails behind a swivel and leader.",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true,
+        difficulty: "Intermediate",
+        useCases: [
+            "Slow-drifting or back-trolling live bait for walleye",
+            "Presenting worms, leeches, or minnows near bottom",
+            "Fishing points, breaks, and bottom transitions with controlled movement"
+        ],
+        conditionTags: [
+            "Deep Water",
+            "Open Water",
+            "Light Current",
+            "Bottom Fishing",
+            "Clear Water",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Outdoor Life — Walleye Fishing Tips and Lindy Rigging",
+                url: "https://www.outdoorlife.com/fishing/walleye-fishing-tips/"
+            },
+            {
+                label: "Outdoor Life — Complete Guide to Fishing Sinkers",
+                url: "https://www.outdoorlife.com/complete-guide-to-using-fishing-sinkers/"
+            }
+        ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "Lindy Rigging Walleyes (The Complete Guide)",
+            creator: "Nick Lindner",
+            videoId: "61mG-xGi-I0",
+            externalUrl: "https://www.youtube.com/watch?v=61mG-xGi-I0"
+        },
+        componentRequirements: [
+            {
+                tackleId: "sliding-sinker",
+                quantity: 1,
+                required: true,
+                notes: "A walking or egg-style sliding sinker lets the main line move through the weight; choose the lightest size that maintains bottom contact."
+            },
+            {
+                tackleId: "bead",
+                quantity: 1,
+                required: false,
+                notes: "Optional between the sinker and swivel to protect the knot from repeated contact."
+            },
+            {
+                tackleId: "barrel-swivel",
+                quantity: 1,
+                required: true,
+                notes: "Stops the sliding sinker and connects the main line to the leader."
+            },
+            {
+                tackleId: "leader-line",
+                quantity: 1,
+                required: true,
+                notes: "Leader length varies with bottom cover, water clarity, and the amount of bait freedom needed."
+            },
+            {
+                tackleId: "hook",
+                quantity: 1,
+                required: true,
+                notes: "Use a live-bait hook appropriate for the bait and target species."
+            },
+            {
+                tackleId: "bait",
+                quantity: 1,
+                required: true,
+                notes: "Common options include nightcrawlers, leeches, or minnows where legal."
+            }
+        ],
+        assemblySteps: [
+            "Slide the Sliding Sinker onto the main line so the line can move freely through it.",
+            "Slide on a Protective Bead below the sinker if using one.",
+            "Tie the main line to one eye of the Barrel Swivel.",
+            "Tie the Leader Line to the other swivel eye.",
+            "Tie the Fishing Hook to the free end of the leader.",
+            "Add the selected live or natural bait in a way that keeps it lively and securely attached.",
+            "Lower, drift, or cast the rig and maintain just enough contact to feel the sinker touch bottom without dragging the bait unnaturally."
+        ],
+        setupNotes: [
+            "Walking sinkers are especially useful for slow, controlled bottom travel; egg-style sinkers remain a workable sliding alternative.",
+            "Leader length is a tuning variable: shorten it around snags and lengthen it when you want the bait to move more freely."
+        ],
+        commonMistakes: [
+            "Using enough weight to anchor the rig instead of letting it move naturally.",
+            "Dragging the bait too fast for a controlled live-bait presentation.",
+            "Using a leader that is unnecessarily long around snag-prone bottom.",
+            "Failing to check local bait-use regulations before fishing live bait."
+        ],
+        safetyNotes: [
+            "Use controlled casts because the sliding sinker and baited hook can swing independently.",
+            "Handle live bait and hooks carefully, and follow local bait and invasive-species regulations."
+        ],
+        techniqueIds: [],
+        variationIds: ["basic-bottom-rig"],
+        imageIds: []
+    },
+    {
+        id: "three-way-rig",
+        name: "Three-Way Rig",
+        summary: "A current-oriented bottom rig that uses a three-way swivel to separate the main line, bait leader, and sinker dropper.",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true,
+        difficulty: "Intermediate",
+        useCases: [
+            "Fishing bait in river current",
+            "Holding a baited hook above bottom while the sinker stays below it",
+            "Bottom fishing from bank or boat where a separate sinker dropper helps presentation"
+        ],
+        conditionTags: [
+            "Current",
+            "Deep Water",
+            "Bottom Fishing",
+            "Open Water",
+            "Rock",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Zebco — How to Rig for Catfish",
+                url: "https://www.zebco.com/en/academy/getting-started/how-to-rig-for-catfish"
+            },
+            {
+                label: "Mustad — Power 3-Way Swivel",
+                url: "https://mustad-fishing.com/us/products/dlt05"
+            }
+        ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "3 Way Rig - Three Way Rig Catfish Rigs",
+            creator: "Catfish Edge",
+            videoId: "8SONykmBFxA",
+            externalUrl: "https://www.youtube.com/watch?v=8SONykmBFxA"
+        },
+        componentRequirements: [
+            {
+                tackleId: "three-way-swivel",
+                quantity: 1,
+                required: true,
+                notes: "The three separate eyes connect main line, bait leader, and sinker dropper."
+            },
+            {
+                tackleId: "leader-line",
+                quantity: 1,
+                required: true,
+                notes: "Cut two sections from the leader material: one for the hook leader and one shorter sinker dropper."
+            },
+            {
+                tackleId: "hook",
+                quantity: 1,
+                required: true,
+                notes: "Match hook style and size to the bait and target fish."
+            },
+            {
+                tackleId: "bait",
+                quantity: 1,
+                required: true,
+                notes: "Use bait appropriate for the target species and local regulations."
+            },
+            {
+                tackleId: "fixed-sinker",
+                quantity: 1,
+                required: true,
+                notes: "Tie a bank, bell, or similar terminal sinker to the short dropper so the weight stays below the bait leader."
+            }
+        ],
+        assemblySteps: [
+            "Tie the main line to one eye of the Three-Way Swivel.",
+            "Cut a hook leader from the Leader Line and tie it to a second swivel eye.",
+            "Tie the Fishing Hook to the free end of the hook leader.",
+            "Cut a shorter sinker dropper from the Leader Line and tie it to the third swivel eye.",
+            "Tie the Fixed Sinker to the free end of the shorter dropper.",
+            "Add bait to the hook and confirm that the sinker hangs below the hook leader without the two branches wrapping around each other.",
+            "Use a controlled cast or lower the rig into current so the weight holds near bottom while the bait leader can move separately."
+        ],
+        setupNotes: [
+            "Keep the sinker dropper shorter than the hook leader so the bait rides above the weight.",
+            "Use only enough sinker weight to hold the rig where you want it in the current."
+        ],
+        commonMistakes: [
+            "Making the sinker dropper longer than the bait leader.",
+            "Using a two-eye barrel swivel instead of a true three-way swivel.",
+            "Using more sinker weight than necessary.",
+            "Casting aggressively and tangling the two leader branches."
+        ],
+        safetyNotes: [
+            "Use controlled casts because a baited hook and separate sinker can swing on different leaders.",
+            "Inspect all three swivel connections before fishing strong current."
+        ],
+        techniqueIds: [],
+        variationIds: [],
         imageIds: []
     }
 ]);

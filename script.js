@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Rig UX Finalization"
+    milestone: "Beginner Media + Intermediate Expansion"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -41,6 +41,10 @@ const RIG_COLLECTIONS = Object.freeze({
     "beginner-plus": Object.freeze({
         title: "Beginner+ Rigs",
         description: "Rigs that add a little more setup precision while remaining approachable for a newer angler."
+    }),
+    intermediate: Object.freeze({
+        title: "Intermediate Rigs",
+        description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup."
     }),
     all: Object.freeze({
         title: "All Rigs",
@@ -145,7 +149,7 @@ function renderRigGuideView(appMain) {
             { id: "browse-core-rigs", title: "Core Rigs", description: "Six curated setups that form a broadly useful fishing toolkit.", isAvailable: true },
             { id: "browse-beginner-rigs", title: "Beginner", description: "Six simple rigs with forgiving assembly and broad usefulness.", isAvailable: true },
             { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Three approachable rigs that require a little more setup precision.", isAvailable: true },
-            { id: "browse-intermediate-rigs", title: "Intermediate", description: "More specialized rigs for broader fishing situations." },
+            { id: "browse-intermediate-rigs", title: "Intermediate", description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup.", isAvailable: true },
             { id: "browse-intermediate-plus-rigs", title: "Intermediate+", description: "Specialized finesse and bottom-contact setups." },
             { id: "browse-advanced-rigs", title: "Advanced", description: "Purpose-built rigs for demanding cover, current, and multi-rig situations." },
             { id: "browse-expert-rigs", title: "Expert", description: "Complex systems that combine multiple setup and presentation decisions." }
@@ -200,6 +204,7 @@ function handleRigGuideCardSelect(cardId) {
         "browse-core-rigs": "core",
         "browse-beginner-rigs": "beginner",
         "browse-beginner-plus-rigs": "beginner-plus",
+        "browse-intermediate-rigs": "intermediate",
         "browse-all-rigs": "all"
     };
     const collectionKey = collectionKeyByCardId[cardId];
@@ -238,6 +243,10 @@ function getRigsForCollection(activeRigs) {
 
     if (selectedRigCollectionKey === "beginner-plus") {
         return activeRigs.filter((rig) => rig.difficulty === "Beginner+");
+    }
+
+    if (selectedRigCollectionKey === "intermediate") {
+        return activeRigs.filter((rig) => rig.difficulty === "Intermediate");
     }
 
     return activeRigs;

@@ -9,7 +9,7 @@
 
 const MEDIA_DATA_BUILD_INFO = Object.freeze({
     file: "data/media.js",
-    milestone: "Core Rigs and Tackle Media"
+    milestone: "Beginner Media + Intermediate Expansion"
 });
 
 const MEDIA_DATA = Object.freeze([
@@ -395,6 +395,150 @@ const MEDIA_DATA = Object.freeze([
         productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.2.8",
         lastModifiedVersion: "0.2.8",
+        isActive: true
+    },
+    {
+        id: "wacky-hook-reference",
+        ownerType: "tackle",
+        ownerId: "wacky-hook",
+        type: "image",
+        file: "images/tackle/wacky-hook-reference.webp",
+        alt: "Neutral-background reference illustration of a compact open-gap wacky and drop-shot finesse hook with ringed eye and exposed point",
+        caption: "Wacky Hook",
+        license: {
+            status: "Original project illustration; geometry checked against the Mustad TitanX Wacky / Neko / Dropshot Hook",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: "https://business.mustad-fishing.com/us/products/60403np",
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-10"
+        },
+        productionStatus: "Approved neutral-background Tackle reference",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true
+    },
+    {
+        id: "wacky-o-ring-reference",
+        ownerType: "tackle",
+        ownerId: "wacky-o-ring",
+        type: "image",
+        file: "images/tackle/wacky-o-ring-reference.webp",
+        alt: "Neutral-background reference illustration of a black flexible wacky O-ring",
+        caption: "Wacky O-Ring",
+        license: {
+            status: "Original project illustration; geometry checked against the Mustad Offset Wacky Neko Ring",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: "https://mustad-fishing.com/us/products/wn-or",
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-10"
+        },
+        productionStatus: "Approved neutral-background Tackle reference",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true
+    },
+    {
+        id: "ned-jighead-reference",
+        ownerType: "tackle",
+        ownerId: "ned-jighead",
+        type: "image",
+        file: "images/tackle/ned-jighead-reference.webp",
+        alt: "Neutral-background reference illustration of a mushroom-head Ned jighead with a welded wire keeper and exposed open hook",
+        caption: "Ned Jighead",
+        license: {
+            status: "Original project illustration; geometry checked against the Z-Man Finesse ShroomZ jighead",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: "https://zmanfishing.com/collections/best-sellers/products/finesse-shroomz",
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-10"
+        },
+        productionStatus: "Approved neutral-background Tackle reference",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true
+    },
+    {
+        id: "drop-shot-weight-reference",
+        ownerType: "tackle",
+        ownerId: "drop-shot-weight",
+        type: "image",
+        file: "images/tackle/drop-shot-weight-reference.webp",
+        alt: "Neutral-background reference illustration of a round drop-shot weight with a narrow quick-change line clip",
+        caption: "Drop Shot Weight",
+        license: {
+            status: "Original project illustration; geometry checked against Mustad TitanX drop-shot weights",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: "https://mustad-fishing.com/us/collections/weights",
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-10"
+        },
+        productionStatus: "Approved neutral-background Tackle reference",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true
+    },
+    {
+        id: "three-way-swivel-reference",
+        ownerType: "tackle",
+        ownerId: "three-way-swivel",
+        type: "image",
+        file: "images/tackle/three-way-swivel-reference.webp",
+        alt: "Neutral-background reference illustration of a black-nickel three-way swivel with three separate line-tie eyes",
+        caption: "Three-Way Swivel",
+        license: {
+            status: "Original project illustration; geometry checked against the Mustad Power 3-Way Swivel",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: "https://mustad-fishing.com/us/products/dlt05",
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-10"
+        },
+        productionStatus: "Approved neutral-background Tackle reference",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true
+    },
+    {
+        id: "fixed-sinker-reference",
+        ownerType: "tackle",
+        ownerId: "fixed-sinker",
+        type: "image",
+        file: "images/tackle/fixed-sinker-reference.webp",
+        alt: "Neutral-background reference illustration of an unpainted teardrop-shaped bank sinker with a terminal tie eye",
+        caption: "Fixed Sinker",
+        license: {
+            status: "Original project illustration; geometry checked against the Eagle Claw Bank Sinker",
+            type: "Original",
+            creator: "Freshwater Fishing Companion",
+            sourceUrl: "https://eagleclaw.com/products/eagle-claw-bank-sinkers",
+            licenseUrl: null,
+            attributionRequired: false,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-10"
+        },
+        productionStatus: "Approved neutral-background Tackle reference",
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
         isActive: true
     },
     {
