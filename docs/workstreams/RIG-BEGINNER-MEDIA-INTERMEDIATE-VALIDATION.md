@@ -1,10 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.1  
+**Document Revision:** 0.1.2  
 **Document Status:** Approved  
 **Implementation Status:** Implemented / Unvalidated — Recognition Media Correction In Progress  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
+**Latest Media Correction:** `601b741f368f7e1ae9e5b2963935673901b76674` (`Replace four failed tackle recognition assets`)  
 **Last Updated:** 2026-08-10
 
 # Purpose
@@ -15,35 +16,34 @@ Preflight confirms package integrity only. GitHub inspection and runtime review 
 
 # Current Validation State
 
-The Intermediate implementation is present on `main`, but the planned post-push validation sequence had not begun when the prior development session ended.
+The Intermediate implementation is present on `main`, but the planned post-push Intermediate source/data/runtime/tutorial/regression validation sequence has not yet begun.
 
-Current known result:
+Recognition-media correction state:
 
-- **Recognition media visual-quality gate: FAILED for all six newly introduced assets.**
-- Failure reason: the six assets use an older flat/vector-style treatment and do not meet the approved current catalog/semi-photorealistic Tackle recognition standard.
-- Corrective action: replace all six assets under the current `MEDIA_GUIDE.md` Tackle Media Generation Gate before proceeding through the remaining Intermediate validation blocks.
+- **Initial six-image visual-quality gate: FAILED.**
+- Failure reason: the six assets introduced in `e4b61ae` used an older flat/vector-style treatment and did not meet the approved current catalog/semi-photorealistic Tackle recognition standard.
+- Four corrected replacements passed pre-delivery visual/mechanical review and were committed in `601b741f368f7e1ae9e5b2963935673901b76674`:
+  - Wacky Hook,
+  - Wacky O-Ring,
+  - Three-Way Swivel,
+  - Fixed Sinker.
+- Two replacement classes remain blocked because current candidates have not passed the mechanical/visual gate:
+  - Ned Jighead,
+  - Drop Shot Weight.
+- Failed candidates were rejected before GitHub inclusion.
 - No Intermediate source/data/runtime/tutorial/regression item below should be interpreted as passed merely because the implementation is present on `main`.
-
-The failed files are:
-
-- `wacky-hook-reference.webp`
-- `wacky-o-ring-reference.webp`
-- `ned-jighead-reference.webp`
-- `drop-shot-weight-reference.webp`
-- `three-way-swivel-reference.webp`
-- `fixed-sinker-reference.webp`
 
 # Package / Source Integrity
 
 **Status: Not Yet Validated**
 
-Confirm against the current corrected `main` baseline before runtime validation:
+Confirm against the final corrected `main` baseline before runtime validation:
 
 - the four implementation JavaScript files remain syntactically valid,
 - no unrelated routing, Fish, Dashboard, readiness-storage, search, or renderer changes were introduced by the Intermediate implementation or recognition-media correction,
 - all intended permanent repository files are present,
 - no package README, manifest, staging note, validation TXT, scripts, contact sheets, or temporary artifacts were committed,
-- the six corrected recognition-media files replace only their rejected predecessors unless an explicitly documented metadata/license correction is also required.
+- the final six corrected recognition-media files replace only their rejected predecessors unless an explicitly documented metadata/license correction is also required.
 
 # Canonical Data Counts
 
@@ -158,18 +158,16 @@ Confirm:
 
 # Recognition Media
 
-**Status: FAILED — Corrective Replacement In Progress**
+**Status: PARTIALLY CORRECTED / NOT YET RUNTIME VALIDATED**
 
-Files:
+Files and current correction state:
 
-- `wacky-hook-reference.webp`
-- `wacky-o-ring-reference.webp`
-- `ned-jighead-reference.webp`
-- `drop-shot-weight-reference.webp`
-- `three-way-swivel-reference.webp`
-- `fixed-sinker-reference.webp`
-
-The versions introduced in `e4b61ae` fail the current production visual-style standard and must not be accepted as validated assets.
+- `wacky-hook-reference.webp` — corrected replacement on `main` in `601b741...`; pre-delivery visual/mechanical gate passed,
+- `wacky-o-ring-reference.webp` — corrected replacement on `main` in `601b741...`; pre-delivery visual/mechanical gate passed,
+- `ned-jighead-reference.webp` — still failed/pending correction; available candidates have not yet shown the required mushroom head + keeper + open-hook geometry at acceptable quality,
+- `drop-shot-weight-reference.webp` — still failed/pending correction; available candidates have not yet shown the intended quick-change line clip at acceptable quality,
+- `three-way-swivel-reference.webp` — corrected replacement on `main` in `601b741...`; pre-delivery visual/mechanical gate passed with three distinct eyes,
+- `fixed-sinker-reference.webp` — corrected replacement on `main` in `601b741...`; pre-delivery visual/mechanical gate passed with a terminal tie eye and non-sliding body.
 
 For every replacement, pre-delivery confirm under the `MEDIA_GUIDE.md` Tackle Media Generation Gate:
 
@@ -182,12 +180,12 @@ For every replacement, pre-delivery confirm under the `MEDIA_GUIDE.md` Tackle Me
 - WebP,
 - normally exactly 640 × 440 for the current Tackle production system,
 - restrained warm-neutral presentation consistent with the production library,
-- no baked-in artificial cast shadow,
+- no baked-in artificial cast shadow treatment,
 - single-object recognition composition,
 - media metadata uses the correct canonical Tackle owner,
 - source/reference geometry and license/provenance are recorded accurately.
 
-After corrected replacements are on `main`, runtime phone/desktop confirm:
+After the remaining two replacements are complete and all six corrected files are on `main`, runtime phone/desktop confirm:
 
 - Wacky Hook reads clearly as an open-gap finesse/wacky hook rather than a closed loop,
 - Wacky O-Ring reads as a flexible ring,
@@ -262,9 +260,14 @@ Confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: Pending Corrected Media Baseline**
+**Status: Pending Final Corrected Media Baseline**
 
-After the six corrected images and accompanying status/metadata documentation are pushed:
+Current corrective checkpoint:
+
+- `601b741f368f7e1ae9e5b2963935673901b76674` changes only four recognition-media binary files.
+- Four corrected media blobs are now on `main`; Ned Jighead and Drop Shot Weight remain pending.
+
+After the remaining two corrected images and accompanying truthful status/metadata documentation are pushed:
 
 1. verify actual `main` commit and parent,
 2. inspect exact changed-file inventory,
@@ -277,7 +280,7 @@ After the six corrected images and accompanying status/metadata documentation ar
 
 # Validation Order From Current State
 
-Once the media correction is complete, proceed in this order so failures are isolated and documented immediately:
+Once the remaining two media corrections are complete, proceed in this order so failures are isolated and documented immediately:
 
 1. GitHub/source/package integrity.
 2. Canonical data counts and relationships.
