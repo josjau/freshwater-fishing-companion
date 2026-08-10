@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.2  
+**Document Revision:** 0.1.3  
 **Document Status:** Approved  
-**Implementation Status:** Implemented / Unvalidated — Recognition Media Correction In Progress  
+**Implementation Status:** Implemented / Unvalidated — Ready for Validation  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
-**Latest Media Correction:** `601b741f368f7e1ae9e5b2963935673901b76674` (`Replace four failed tackle recognition assets`)  
+**Latest Verified Media Update:** `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`)  
 **Last Updated:** 2026-08-10
 
 # Purpose
@@ -16,22 +16,25 @@ Preflight confirms package integrity only. GitHub inspection and runtime review 
 
 # Current Validation State
 
-The Intermediate implementation is present on `main`, but the planned post-push Intermediate source/data/runtime/tutorial/regression validation sequence has not yet begun.
+The Intermediate implementation is present on `main`, and the reviewed seven-image Tackle correction package has now been uploaded by the user. The planned post-push Intermediate source/data/runtime/tutorial/regression validation sequence has **not yet begun**.
 
 Recognition-media correction state:
 
 - **Initial six-image visual-quality gate: FAILED.**
 - Failure reason: the six assets introduced in `e4b61ae` used an older flat/vector-style treatment and did not meet the approved current catalog/semi-photorealistic Tackle recognition standard.
-- Four corrected replacements passed pre-delivery visual/mechanical review and were committed in `601b741f368f7e1ae9e5b2963935673901b76674`:
-  - Wacky Hook,
-  - Wacky O-Ring,
-  - Three-Way Swivel,
-  - Fixed Sinker.
-- Two replacement classes remain blocked because current candidates have not passed the mechanical/visual gate:
-  - Ned Jighead,
-  - Drop Shot Weight.
-- Failed candidates were rejected before GitHub inclusion.
-- No Intermediate source/data/runtime/tutorial/regression item below should be interpreted as passed merely because the implementation is present on `main`.
+- A first partial correction replaced four files in `601b741f368f7e1ae9e5b2963935673901b76674`.
+- The user subsequently reviewed and uploaded the complete current correction set in `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`).
+- GitHub inspection confirms that commit replaced exactly:
+  - `bobber-stop-reference.webp`,
+  - `drop-shot-weight-reference.webp`,
+  - `fixed-sinker-reference.webp`,
+  - `ned-jighead-reference.webp`,
+  - `three-way-swivel-reference.webp`,
+  - `wacky-hook-reference.webp`,
+  - `wacky-o-ring-reference.webp`.
+- The approved Bobber Stop recognition image uses a rubber/silicone variant, which is valid under the canonical Tackle definition.
+- The current Media Guide requires exact `#f4f0e8` canvas matching and normal viewer-facing J orientation for hook-bearing recognition assets unless a reviewed technical exception applies.
+- No Intermediate source/data/runtime/tutorial/regression item below should be interpreted as passed merely because the implementation and corrected media are present on `main`.
 
 # Package / Source Integrity
 
@@ -43,7 +46,8 @@ Confirm against the final corrected `main` baseline before runtime validation:
 - no unrelated routing, Fish, Dashboard, readiness-storage, search, or renderer changes were introduced by the Intermediate implementation or recognition-media correction,
 - all intended permanent repository files are present,
 - no package README, manifest, staging note, validation TXT, scripts, contact sheets, or temporary artifacts were committed,
-- the final six corrected recognition-media files replace only their rejected predecessors unless an explicitly documented metadata/license correction is also required.
+- the seven current recognition-media replacements are present at the expected canonical paths,
+- the media upload did not unintentionally alter application source/data files.
 
 # Canonical Data Counts
 
@@ -158,18 +162,33 @@ Confirm:
 
 # Recognition Media
 
-**Status: PARTIALLY CORRECTED / NOT YET RUNTIME VALIDATED**
+**Status: CORRECTED ON MAIN / NOT YET RUNTIME VALIDATED**
 
-Files and current correction state:
+Current user-uploaded correction set from `eed8929cb1859aef653168884e1e71244d1dd80e`:
 
-- `wacky-hook-reference.webp` — corrected replacement on `main` in `601b741...`; pre-delivery visual/mechanical gate passed,
-- `wacky-o-ring-reference.webp` — corrected replacement on `main` in `601b741...`; pre-delivery visual/mechanical gate passed,
-- `ned-jighead-reference.webp` — still failed/pending correction; available candidates have not yet shown the required mushroom head + keeper + open-hook geometry at acceptable quality,
-- `drop-shot-weight-reference.webp` — still failed/pending correction; available candidates have not yet shown the intended quick-change line clip at acceptable quality,
-- `three-way-swivel-reference.webp` — corrected replacement on `main` in `601b741...`; pre-delivery visual/mechanical gate passed with three distinct eyes,
-- `fixed-sinker-reference.webp` — corrected replacement on `main` in `601b741...`; pre-delivery visual/mechanical gate passed with a terminal tie eye and non-sliding body.
+- `wacky-hook-reference.webp`,
+- `wacky-o-ring-reference.webp`,
+- `ned-jighead-reference.webp`,
+- `drop-shot-weight-reference.webp`,
+- `three-way-swivel-reference.webp`,
+- `fixed-sinker-reference.webp`,
+- `bobber-stop-reference.webp`.
 
-For every replacement, pre-delivery confirm under the `MEDIA_GUIDE.md` Tackle Media Generation Gate:
+Runtime phone/desktop confirm:
+
+- Wacky Hook reads clearly as an open-gap finesse/wacky hook rather than a closed loop,
+- Wacky Hook uses the normal viewer-facing J presentation expected by the current media standard,
+- Wacky O-Ring reads as a flexible ring,
+- Ned Jighead clearly reads as a Ned-style mushroom/cylindrical jighead integrated with an open hook rather than a generic ball jighead,
+- Drop Shot Weight clearly shows a terminal weight with a recognizable line-attachment/quick-change clip relationship,
+- Three-Way Swivel clearly shows exactly three separate eyes,
+- Fixed Sinker clearly shows a terminal tie eye and does not look like a through-hole sliding sinker,
+- Bobber Stop reads clearly as an accepted rubber/silicone stop variant,
+- image canvases visually merge with the reference panel rather than appearing as darker rectangles,
+- images remain useful at contextual-popover phone width,
+- no clipping, fringe, horizontal overflow, misleading scale, or misleading geometry appears.
+
+For future replacement work, pre-delivery confirm under the `MEDIA_GUIDE.md` Tackle Media Generation Gate:
 
 - an accurate legally reusable real photograph was searched for first,
 - any real photograph selected has clear local redistribution/modification rights and represents the canonical concept accurately,
@@ -179,24 +198,14 @@ For every replacement, pre-delivery confirm under the `MEDIA_GUIDE.md` Tackle Me
 - the replacement remains recognizable at realistic contextual-popover phone size,
 - WebP,
 - normally exactly 640 × 440 for the current Tackle production system,
-- restrained warm-neutral presentation consistent with the production library,
+- exact production canvas `#f4f0e8`,
 - no baked-in artificial cast shadow treatment,
 - single-object recognition composition,
+- hook-bearing media follows the conventional viewer-facing J presentation unless an approved exception applies,
 - media metadata uses the correct canonical Tackle owner,
 - source/reference geometry and license/provenance are recorded accurately.
 
-After the remaining two replacements are complete and all six corrected files are on `main`, runtime phone/desktop confirm:
-
-- Wacky Hook reads clearly as an open-gap finesse/wacky hook rather than a closed loop,
-- Wacky O-Ring reads as a flexible ring,
-- Ned Jighead clearly shows the mushroom-style head, keeper, and open hook,
-- Drop Shot Weight clearly shows a terminal weight with quick-change line clip,
-- Three-Way Swivel clearly shows three separate eyes,
-- Fixed Sinker clearly shows a terminal tie eye and does not look like a through-hole sliding sinker,
-- images remain useful at contextual-popover phone width,
-- no clipping, fringe, horizontal overflow, misleading scale, or misleading geometry appears.
-
-Only after these checks pass does this section become **Validated**.
+Only after the runtime checks pass does this section become **Validated**.
 
 # Tutorial Audit — Existing Rigs
 
@@ -236,7 +245,7 @@ For every tutorial:
 - a disabled/unavailable embed does not make the Rig unusable,
 - blocker-related `ERR_BLOCKED_BY_CLIENT` requests are distinguished from actual playback/player failure.
 
-If a video has been removed, made private, or has embedding disabled, remove the in-app tutorial record in a correction package and retain the next D049 fallback rather than substituting an unverified video.
+If a video has been removed, made private, or has embedding disabled, remove the in-app tutorial record in a reviewed correction package and retain the next D049 fallback rather than substituting an unverified video.
 
 # Beginner / Beginner+ Regression
 
@@ -260,27 +269,28 @@ Confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: Pending Final Corrected Media Baseline**
+**Status: CORRECTED MEDIA UPLOAD VERIFIED / REMAINING SOURCE-RUNTIME VALIDATION PENDING**
 
-Current corrective checkpoint:
+Verified corrective checkpoint:
 
-- `601b741f368f7e1ae9e5b2963935673901b76674` changes only four recognition-media binary files.
-- Four corrected media blobs are now on `main`; Ned Jighead and Drop Shot Weight remain pending.
+- `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`) contains exactly the seven expected recognition-media binary replacements listed above.
+- `main` subsequently advanced through merge commit `f75374a34abad52c2df5c525ff366c70db0706ec`.
+- The current repository also contains the approved `MEDIA_GUIDE.md` rules for exact canvas matching and hook orientation.
+- No runtime validation result is implied by those GitHub checks.
 
-After the remaining two corrected images and accompanying truthful status/metadata documentation are pushed:
+At the start of the next session:
 
-1. verify actual `main` commit and parent,
-2. inspect exact changed-file inventory,
-3. confirm every intended source/doc/image file is present,
-4. verify no unrelated source changes were introduced by the corrective pass,
-5. confirm each corrected binary asset has a new expected blob SHA,
-6. confirm any license/provenance metadata change matches the actual replacement source,
-7. confirm no package-only artifacts were committed,
-8. only then begin the remaining runtime validation sequence.
+1. re-fetch actual current `main`,
+2. confirm the current head/parent and changed-file state since this handoff,
+3. validate the implementation JavaScript/data integrity and canonical counts,
+4. validate routing/search and each Intermediate Rig,
+5. validate the seven corrected recognition assets on phone and desktop,
+6. complete the tutorial and regression audit,
+7. update this file after each meaningful validation block.
 
 # Validation Order From Current State
 
-Once the remaining two media corrections are complete, proceed in this order so failures are isolated and documented immediately:
+Proceed in this order so failures are isolated and documented immediately:
 
 1. GitHub/source/package integrity.
 2. Canonical data counts and relationships.
