@@ -1,29 +1,53 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.0  
+**Document Revision:** 0.1.1  
 **Document Status:** Approved  
-**Implementation Status:** In Progress  
-**Repository Baseline:** `main` at `73ec8e2ec86c390b0580979cfe975b411b35f7d6` (`Beginner Rig Finalization`)  
+**Implementation Status:** Implemented / Unvalidated — Recognition Media Correction In Progress  
+**Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Last Updated:** 2026-08-10
 
 # Purpose
 
-Validation plan for the combined Beginner/Beginner+ media-completion pass and full Intermediate Rig expansion.
+Validation plan and live validation record for the combined Beginner/Beginner+ media-completion pass and full Intermediate Rig expansion.
 
 Preflight confirms package integrity only. GitHub inspection and runtime review are required before the segment is Validated.
 
+# Current Validation State
+
+The Intermediate implementation is present on `main`, but the planned post-push validation sequence had not begun when the prior development session ended.
+
+Current known result:
+
+- **Recognition media visual-quality gate: FAILED for all six newly introduced assets.**
+- Failure reason: the six assets use an older flat/vector-style treatment and do not meet the approved current catalog/semi-photorealistic Tackle recognition standard.
+- Corrective action: replace all six assets under the current `MEDIA_GUIDE.md` Tackle Media Generation Gate before proceeding through the remaining Intermediate validation blocks.
+- No Intermediate source/data/runtime/tutorial/regression item below should be interpreted as passed merely because the implementation is present on `main`.
+
+The failed files are:
+
+- `wacky-hook-reference.webp`
+- `wacky-o-ring-reference.webp`
+- `ned-jighead-reference.webp`
+- `drop-shot-weight-reference.webp`
+- `three-way-swivel-reference.webp`
+- `fixed-sinker-reference.webp`
+
 # Package / Source Integrity
 
-Confirm before delivery:
+**Status: Not Yet Validated**
 
-- all four changed JavaScript files pass syntax validation,
-- each existing source replacement is derived from the exact GitHub baseline at `73ec8e2ec86c390b0580979cfe975b411b35f7d6`,
-- no unrelated routing, Fish, Dashboard, readiness-storage, search, or renderer changes are introduced,
-- the ZIP contains only intended permanent repository files,
-- no package README, manifest, staging note, validation TXT, scripts, contact sheets, or temporary artifacts appear in the ZIP.
+Confirm against the current corrected `main` baseline before runtime validation:
+
+- the four implementation JavaScript files remain syntactically valid,
+- no unrelated routing, Fish, Dashboard, readiness-storage, search, or renderer changes were introduced by the Intermediate implementation or recognition-media correction,
+- all intended permanent repository files are present,
+- no package README, manifest, staging note, validation TXT, scripts, contact sheets, or temporary artifacts were committed,
+- the six corrected recognition-media files replace only their rejected predecessors unless an explicitly documented metadata/license correction is also required.
 
 # Canonical Data Counts
+
+**Status: Not Yet Validated**
 
 Confirm:
 
@@ -41,6 +65,8 @@ Confirm:
 
 # Intermediate Membership
 
+**Status: Not Yet Validated**
+
 The Intermediate collection must contain exactly:
 
 1. Drop Shot Rig
@@ -53,6 +79,8 @@ No Beginner, Beginner+, Intermediate+, Advanced, or Expert record may appear in 
 Intermediate+, Advanced, and Expert cards remain clearly unavailable under D030.
 
 # Intermediate Routing / Search
+
+**Status: Not Yet Validated**
 
 Runtime confirm:
 
@@ -69,6 +97,8 @@ Runtime confirm:
 
 # Drop Shot Rig
 
+**Status: Not Yet Validated**
+
 Confirm:
 
 - detail opens with `Intermediate` difficulty,
@@ -84,6 +114,8 @@ Confirm:
 
 # Carolina Rig
 
+**Status: Not Yet Validated**
+
 Confirm:
 
 - detail opens with `Intermediate` difficulty,
@@ -98,6 +130,8 @@ Confirm:
 
 # Live-Bait Slip-Sinker Rig
 
+**Status: Not Yet Validated**
+
 Confirm:
 
 - detail opens with `Intermediate` difficulty,
@@ -109,6 +143,8 @@ Confirm:
 - `Used In` derives the new relationships.
 
 # Three-Way Rig
+
+**Status: Not Yet Validated**
 
 Confirm:
 
@@ -122,7 +158,9 @@ Confirm:
 
 # Recognition Media
 
-New media files:
+**Status: FAILED — Corrective Replacement In Progress**
+
+Files:
 
 - `wacky-hook-reference.webp`
 - `wacky-o-ring-reference.webp`
@@ -131,29 +169,40 @@ New media files:
 - `three-way-swivel-reference.webp`
 - `fixed-sinker-reference.webp`
 
-Static confirm for every new image:
+The versions introduced in `e4b61ae` fail the current production visual-style standard and must not be accepted as validated assets.
 
+For every replacement, pre-delivery confirm under the `MEDIA_GUIDE.md` Tackle Media Generation Gate:
+
+- an accurate legally reusable real photograph was searched for first,
+- any real photograph selected has clear local redistribution/modification rights and represents the canonical concept accurately,
+- if no suitable reusable photograph exists, the replacement is an original semi-photorealistic catalog-style reference anchored to verified real-world geometry,
+- vector/flat/cartoon/icon/clip-art appearance is rejected unless an explicit mechanically justified illustration exception was approved before packaging,
+- the replacement was compared visually against representative current approved production Tackle assets,
+- the replacement remains recognizable at realistic contextual-popover phone size,
 - WebP,
-- exactly 640 × 440,
-- RGB/no alpha,
-- restrained warm-neutral background,
-- no baked-in cast shadow,
+- normally exactly 640 × 440 for the current Tackle production system,
+- restrained warm-neutral presentation consistent with the production library,
+- no baked-in artificial cast shadow,
 - single-object recognition composition,
 - media metadata uses the correct canonical Tackle owner,
-- source/reference geometry is recorded.
+- source/reference geometry and license/provenance are recorded accurately.
 
-Runtime phone/desktop confirm:
+After corrected replacements are on `main`, runtime phone/desktop confirm:
 
-- Wacky Hook reads clearly as an open-gap hook rather than a closed loop,
+- Wacky Hook reads clearly as an open-gap finesse/wacky hook rather than a closed loop,
 - Wacky O-Ring reads as a flexible ring,
 - Ned Jighead clearly shows the mushroom-style head, keeper, and open hook,
 - Drop Shot Weight clearly shows a terminal weight with quick-change line clip,
 - Three-Way Swivel clearly shows three separate eyes,
 - Fixed Sinker clearly shows a terminal tie eye and does not look like a through-hole sliding sinker,
 - images remain useful at contextual-popover phone width,
-- no clipping, fringe, horizontal overflow, or misleading scale/geometry appears.
+- no clipping, fringe, horizontal overflow, misleading scale, or misleading geometry appears.
+
+Only after these checks pass does this section become **Validated**.
 
 # Tutorial Audit — Existing Rigs
+
+**Status: Not Yet Validated**
 
 Runtime test each configured tutorial by pressing **Load tutorial** and confirming playback/player initialization plus external fallback:
 
@@ -169,6 +218,8 @@ Runtime test each configured tutorial by pressing **Load tutorial** and confirmi
 Inline Spinner intentionally has no embedded tutorial in this package because no suitable candidate was independently verified during sourcing. Confirm the existing Mepps/Panther Martin external references remain available as the D049 fallback.
 
 # Tutorial Audit — Intermediate
+
+**Status: Not Yet Validated**
 
 Runtime test:
 
@@ -191,6 +242,8 @@ If a video has been removed, made private, or has embedding disabled, remove the
 
 # Beginner / Beginner+ Regression
 
+**Status: Not Yet Validated**
+
 Confirm the previously validated behavior remains intact:
 
 - Beginner exact six,
@@ -209,24 +262,46 @@ Confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-After push:
+**Status: Pending Corrected Media Baseline**
+
+After the six corrected images and accompanying status/metadata documentation are pushed:
 
 1. verify actual `main` commit and parent,
 2. inspect exact changed-file inventory,
-3. confirm every delivered source/doc/image file is present,
-4. compare source/document text blobs to the delivered package,
-5. compare new binary media blob SHAs to the delivered package,
-6. confirm no package-only artifacts were committed,
-7. only then begin runtime validation.
+3. confirm every intended source/doc/image file is present,
+4. verify no unrelated source changes were introduced by the corrective pass,
+5. confirm each corrected binary asset has a new expected blob SHA,
+6. confirm any license/provenance metadata change matches the actual replacement source,
+7. confirm no package-only artifacts were committed,
+8. only then begin the remaining runtime validation sequence.
+
+# Validation Order From Current State
+
+Once the media correction is complete, proceed in this order so failures are isolated and documented immediately:
+
+1. GitHub/source/package integrity.
+2. Canonical data counts and relationships.
+3. Intermediate membership, routing, and search.
+4. Drop Shot Rig.
+5. Carolina Rig.
+6. Live-Bait Slip-Sinker Rig.
+7. Three-Way Rig.
+8. Corrected recognition-media phone/desktop review.
+9. Existing and Intermediate tutorial audit.
+10. Beginner/Beginner+/Core and application regression pass.
+11. Documentation reconciliation/final closeout.
+
+Update this file after each meaningful validation block. A failed block must remain visibly failed/pending until corrected and re-tested.
 
 # Closeout
 
 After all source, GitHub, runtime, tutorial, recognition-media, and regression checks pass:
 
 - promote the segment's durable D053/D054 decisions into `DECISIONS.md`,
-- update the post-Texas rollout language in `MEDIA_GUIDE.md`,
+- reconcile the post-Texas rollout language in `MEDIA_GUIDE.md`,
 - update `RIG_REFERENCE_SOURCES.md`,
 - update `HANDOFF.md`, `MILESTONES.md`, and `CHANGELOG.md`,
 - update this workstream and validation document to `Validated`,
 - push and re-fetch the closeout package,
+- mark the segment `Finalized` only after that repository state is verified,
 - only then begin Intermediate+ under D039/D040.
