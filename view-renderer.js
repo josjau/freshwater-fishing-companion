@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Core Rigs and Tackle Media"
+    milestone: "Rig Learning Tiers"
 });
 
 function renderView(appMain, viewConfig) {
@@ -341,7 +341,7 @@ function renderInstructionDetail(appMain, detailConfig) {
                 <button class="page-navigation" type="button" data-home-navigation>Home</button>
             </div>
             <header class="detail-header${isCoreRig ? " detail-header--core" : ""}">
-                ${isCoreRig ? '<p class="detail-core-badge">Core Rig · Master This First</p>' : ""}
+                ${isCoreRig ? '<p class="detail-core-badge">Core Rig</p>' : ""}
                 <p class="detail-eyebrow">${record.difficulty}</p>
                 <h2 id="rig-detail-title">${record.name}</h2>
                 <p>${record.summary}</p>

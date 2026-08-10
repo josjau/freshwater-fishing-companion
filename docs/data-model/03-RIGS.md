@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.2.2
+**Document Revision:** 0.2.3
 **Document Status:** Draft
-**Decision Baseline:** D025, D026, D027, D028, D042-D045
+**Decision Baseline:** D025, D026, D027, D028, D042-D046
 
 ---
 
@@ -65,8 +65,13 @@ Recommended experience level for assembling and fishing the Rig correctly.
 Allowed values:
 
 - Beginner
+- Beginner+
 - Intermediate
+- Intermediate+
 - Advanced
+- Expert
+
+Core is not a difficulty value. Core membership is a separate curated learning-path relationship owned by `CORE_RIG_IDS`.
 
 Ownership
 
@@ -199,7 +204,7 @@ Texas Rig
 
 ↓
 
-Weightless Texas Rig
+Weightless Soft-Plastic Rig
 
 Ordinary relationship fields are not planning placeholders. Once the relevant production dataset is complete for a planned expansion, referenced Rig IDs must resolve to canonical Rig records.
 
@@ -245,19 +250,51 @@ The displayed component name is resolved from canonical Tackle. Duplicated compo
 
 ---
 
-
 # Core Rig Membership and Order
 
 Core membership is curated learning-path metadata owned once by the ordered `CORE_RIG_IDS` registry in `data/rigs.js`.
 
 The registry controls:
 
-- membership in **Core Rigs — Master These First**,
+- membership in **Core Rigs**,
 - teaching order,
-- Core browse-section order,
+- Core-filter ordering,
 - Core badges and detail-page emphasis.
 
 Individual Rig records do not duplicate `isCore`, `coreOrder`, or equivalent display flags solely for this presentation.
+
+Core status is independent of `difficulty` and may overlap Beginner or Beginner+.
+
+---
+
+# Rig Guide Learning-Tier Navigation
+
+The Rig Guide landing page exposes the progression directly through top-level cards:
+
+1. Core Rigs
+2. Beginner
+3. Beginner+
+4. Intermediate
+5. Intermediate+
+6. Advanced
+7. Expert
+8. All Rigs
+
+Implemented tiers are actionable. Future tiers may remain visible with `Coming Soon` semantics until canonical records exist.
+
+`All Rigs` always includes every implemented active Rig, including Core Rigs. It does not own a second Core section.
+
+The intended expansion sequence is tier-by-tier:
+
+```text
+Core + Beginner + Beginner+
+→ Intermediate
+→ Intermediate+
+→ Advanced
+→ Expert
+```
+
+This keeps each learning level coherent and validated before the library expands further.
 
 ---
 
@@ -323,13 +360,15 @@ The approved initial canonical target is 20 Rigs selected for practical freshwat
 
 The list is an approved implementation target, not a claim that all 20 records currently exist in `data/rigs.js`.
 
-Carolina Rig is specifically approved for this near-term expansion. The existing `carolina-rig` relationship should be resolved by adding the canonical Carolina Rig record during the expansion.
+The current Rig Learning Tiers implementation prepares the first nine active records: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig. This completes the Beginner and Beginner+ tiers before Intermediate work begins.
+
+Carolina Rig is specifically approved for the near-term expansion. The existing `carolina-rig` relationship should be resolved by adding the canonical Carolina Rig record during the Intermediate expansion.
 
 ---
 
-# Core Rigs — Master These First
+# Core Rigs
 
-The prepared Core build contains six Rigs:
+The Core set contains six Rigs:
 
 1. Fixed Bobber Rig
 2. Basic Bottom Rig — especially useful for catfish
@@ -338,9 +377,7 @@ The prepared Core build contains six Rigs:
 5. Texas Rig
 6. Slip Bobber Rig
 
-The Core 6 are the first Rig-expansion milestone and must be complete, accurate, beginner-ready, and validated before expansion proceeds to the remaining fourteen Rigs.
-
-Core learning-path presentation follows D042 and `STYLE_GUIDE.md`: important curated starting paths receive additional restrained Forest Journal hierarchy.
+Core learning-path presentation follows D042 and `STYLE_GUIDE.md`: the Core card and Core Rig identity receive additional restrained Forest Journal hierarchy without adding the removed **Master These First** wording.
 
 Purpose:
 

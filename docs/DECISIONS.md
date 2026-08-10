@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.3.4
+**Document Revision:** 0.3.5
 **Document Status:** Approved
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-09
 
 # Purpose
 
@@ -58,6 +58,7 @@ This document records long-term architectural decisions.
 | D043 | Ready-to-Fish Terminal Setups in the Rig Guide | Approved |
 | D044 | Single-Owner Core Rig Membership | Approved |
 | D045 | No Generated Rig Assembly Imagery | Approved |
+| D046 | Rig Guide Learning-Tier Navigation | Approved |
 
 # D001 – Local-First Architecture
 
@@ -471,7 +472,6 @@ Such outcomes must be classified as appropriate (`Build Now`, `Parking Lot`, `Re
 
 When a substantial off-segment discussion would unnecessarily interrupt a coherent build segment, the technical lead may recommend parking it until a clean stopping point. The topic must be recorded with enough context that it cannot be lost. If the issue materially changes the work currently underway, it is discussed immediately instead.
 
-
 # D042 – Core Learning Path Visual Emphasis
 
 Curated beginner learning paths that the application explicitly recommends as high-priority starting points must receive additional visual hierarchy within the Forest Journal design system.
@@ -557,3 +557,38 @@ Rig assembly remains text-authoritative. Visual confirmation follows this order:
 
 Original project diagrams may be used only when manually constructed from verified references and validated component-by-component. This prohibition does not automatically extend to isolated Tackle recognition art, which may use original illustration when its single-object geometry is anchored to a real reference and independently checked.
 
+# D046 – Rig Guide Learning-Tier Navigation
+
+The Rig Guide landing page is the primary learning-navigation hub for Rigs.
+
+Top-level Rig Guide cards are:
+
+1. Core Rigs
+2. Beginner
+3. Beginner+
+4. Intermediate
+5. Intermediate+
+6. Advanced
+7. Expert
+8. All Rigs
+
+Core is a curated learning collection, not a difficulty value. Core membership remains owned once by `CORE_RIG_IDS`; every Rig separately owns exactly one canonical `difficulty` tier.
+
+The approved difficulty vocabulary is:
+
+- `Beginner`
+- `Beginner+`
+- `Intermediate`
+- `Intermediate+`
+- `Advanced`
+- `Expert`
+
+The phrase **Master These First** is removed from current Rig Guide presentation. D046 supersedes only the presentation wording and browse-section placement implied by D027, D042, and D044; their Core membership, ordering, and visual-emphasis principles remain in force.
+
+Implemented learning tiers are actionable. Tiers without implemented Rigs remain visible only when useful for orientation and must follow D030 `Coming Soon` unavailable semantics.
+
+`All Rigs` always displays every currently implemented active Rig, including Core Rigs. It does not own a second dedicated Core section.
+
+Rig expansion proceeds by completed learning tier rather than creating the full 20-Rig library in one unvalidated batch. The current expansion completes Beginner and Beginner+ before moving to Intermediate, then Intermediate+, Advanced, and Expert.
+
+Permanent principle: **the Rig landing page teaches the progression; All Rigs inventories the implemented library.**

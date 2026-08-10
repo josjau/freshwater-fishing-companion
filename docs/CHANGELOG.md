@@ -1,36 +1,48 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.10.4  
+**Document Revision:** 1.10.5  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-09
 
 # Unreleased
 
-## Core Rigs and Tackle Media
+## Core Rigs and Tackle Media / Rig Learning Tiers
 
 **Implementation Status: In Progress**
 
 ### Added
 
-- `CORE_RIG_IDS` as the single canonical Core-membership/order registry.
-- Jighead + Soft Plastic and Inline Spinner Setup, completing the approved Core 6 dataset.
-- Canonical Jighead and Inline Spinner Tackle records.
-- Dedicated **Core Rigs — Master These First** browse presentation and Core detail-page emphasis.
-- New Jighead and Inline Spinner contextual recognition images.
-- Workstream and validation documentation.
+- Wacky Rig as an active Beginner Rig.
+- Ned Rig as an active Beginner Rig.
+- Weightless Soft-Plastic Rig as an active Beginner+ Rig.
+- Top-level Rig Guide cards for Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, and All Rigs.
+- D046 — Rig Guide Learning-Tier Navigation.
 
 ### Changed
 
-- Replaced all 15 prior transparent/shadowed Tackle images with 640 × 440 neutral-background WebP assets.
-- Tackle media metadata now records the approved neutral-background production status.
-- Rig modeling now explicitly includes complete ready-to-fish terminal setups, including a lure tied directly to line.
-- Core membership is derived from one ordered registry instead of duplicated record flags.
-- Generated finished-Rig and build-step imagery is explicitly prohibited after failed mechanical-accuracy tests.
+- Slip Bobber Rig and Texas Rig are classified as `Beginner+`.
+- Core Rigs move from a dedicated All Rigs browse section to a top-level Rig Guide collection.
+- `All Rigs` now owns the complete implemented library and includes Core Rigs as ordinary results with Core badges.
+- Removed **Master These First** from current runtime presentation while preserving Core visual emphasis.
+- Intermediate, Intermediate+, Advanced, and Expert top-level cards remain visible with `Coming Soon` semantics until their Rig tiers are implemented.
+- Replaced the ambiguous worm-bait recognition asset with a clearly intact 640 × 440 warm-neutral WebP illustration.
+- Rig expansion now proceeds one completed learning tier at a time.
+
+### Preserved
+
+- `CORE_RIG_IDS` remains the single canonical Core-membership/order registry.
+- Current Core membership and teaching order.
+- Existing canonical Tackle relationships and derived `Used In` behavior.
+- Inline Rig readiness and persistence key.
+- Verified external Rig references.
+- Tackle `Name ⓘ` popovers and related-component navigation.
+- Existing neutral-background Tackle media standard.
+- No generated finished-Rig/build-step imagery.
 
 ### Validation Status
 
-- Static source/data/media preflight: completed before package delivery.
+- Static source/data/media preflight: required before package delivery.
 - GitHub inspection and runtime/regression validation: required after push.
 
 See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`.

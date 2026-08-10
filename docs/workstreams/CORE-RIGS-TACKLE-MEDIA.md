@@ -1,14 +1,14 @@
 # Freshwater Fishing Companion
 
 **Document:** CORE-RIGS-TACKLE-MEDIA.md  
-**Document Revision:** 0.1.1  
+**Document Revision:** 0.2.0  
 **Document Status:** Approved  
 **Implementation Status:** In Progress  
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-09
 
 # Purpose
 
-Complete the approved six-Rig confidence-building library and replace the active Tackle recognition-media set with the approved neutral-background standard in one coherent build segment.
+Complete the approved Core Rig foundation, finish the Beginner and Beginner+ Rig tiers, and keep the Tackle recognition-media set aligned with the approved neutral-background recognition standard in one coherent build segment.
 
 # Decisions Implemented
 
@@ -18,50 +18,49 @@ Complete the approved six-Rig confidence-building library and replace the active
 - D043 — Ready-to-Fish Terminal Setups in the Rig Guide
 - D044 — Single-Owner Core Rig Membership
 - D045 — No Generated Rig Assembly Imagery
+- D046 — Rig Guide Learning-Tier Navigation
+
+# Current Update Scope
+
+Source changes:
+
+- add Wacky Rig,
+- add Ned Rig,
+- add Weightless Soft-Plastic Rig,
+- classify Slip Bobber Rig and Texas Rig as `Beginner+`,
+- expose Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, and All Rigs at the top level of the Rig Guide,
+- keep only implemented groups actionable,
+- remove the dedicated Core section from All Rigs,
+- remove **Master These First** from current UI copy,
+- keep Core membership and order owned by `CORE_RIG_IDS`,
+- preserve existing readiness, Tackle-reference, search, and external-reference behavior.
+
+Media correction:
+
+- replace `images/tackle/bait-reference.webp` with a clearly intact, immediately recognizable worm-bait illustration,
+- preserve the approved 640 × 440 warm-neutral, no-alpha, no-cast-shadow treatment.
 
 # Source Scope
 
 - `data/rigs.js`
-- `data/tackle.js`
-- `data/media.js`
 - `script.js`
 - `view-renderer.js`
 - `forest-journal.css`
+- `images/tackle/bait-reference.webp`
 
-# Media Scope
+# Documentation Scope
 
-Replace the 15 active Tackle WebP assets and add:
+- `DECISIONS.md`
+- `HANDOFF.md`
+- `CHANGELOG.md`
+- `RIG_REFERENCE_SOURCES.md`
+- `data-model/03-RIGS.md`
+- this workstream
+- `CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`
 
-- `jighead-reference.webp`
-- `inline-spinner-reference.webp`
+# Rig Learning Groups
 
-Final active set: 17 images.
-
-Production treatment:
-
-- 640 × 440 WebP
-- restrained warm-neutral background
-- no alpha transparency
-- no artificial cast shadow
-- clean mobile edges
-- consistent framing and scale
-- real-reference geometry for mechanically sensitive items
-- approved product-reference visual style rather than simplified icon/cartoon treatment
-- open-`J` hook geometry with visible eye, shank, bend, gap, point, and barb
-- individual review of all 17 assets for immediate recognizability and useful scale
-
-
-# Corrective Image Rebuild
-
-The first prepared 17-image set did not sufficiently match the approved product-reference examples. Several assets were too icon-like, some objects were difficult to identify, and the hook silhouettes were too circular.
-
-Before delivery, all 17 assets were re-evaluated and rebuilt. The corrected set uses the approved warm-neutral catalog treatment, larger and more discernible objects, and mechanically correct open-`J` geometry for the standard hook, offset worm hook, and Jighead hook.
-
-The rejected image set is not part of the repository package.
-
-# Core Rig Scope
-
-Ordered registry:
+## Core Rigs
 
 1. Fixed Bobber Rig
 2. Basic Bottom Rig
@@ -70,27 +69,64 @@ Ordered registry:
 5. Texas Rig
 6. Slip Bobber Rig
 
-New canonical records:
+## Beginner
 
-- `jighead-soft-plastic`
-- `inline-spinner-setup`
+1. Fixed Bobber Rig
+2. Inline Spinner Setup
+3. Jighead + Soft Plastic
+4. Basic Bottom Rig
+5. Wacky Rig
+6. Ned Rig
 
-New canonical Tackle concepts:
+## Beginner+
 
-- `jighead`
-- `inline-spinner`
+1. Slip Bobber Rig
+2. Texas Rig
+3. Weightless Soft-Plastic Rig
 
-# UI Scope
+Core overlaps the difficulty tiers by design. Core is curated learning membership; difficulty is intrinsic Rig metadata.
 
-- Dedicated **Core Rigs — Master These First** section on empty-query Rig browse.
-- Core cards ordered by `CORE_RIG_IDS`.
-- Core badges in search results.
-- Core detail-page header treatment.
-- Forest Journal visual continuity, keyboard focus, responsive behavior, and no color-only meaning.
+# Rig Guide UI
+
+Top-level cards:
+
+1. Core Rigs
+2. Beginner
+3. Beginner+
+4. Intermediate
+5. Intermediate+
+6. Advanced
+7. Expert
+8. All Rigs
+
+Core, Beginner, Beginner+, and All Rigs are implemented in this package.
+
+Intermediate, Intermediate+, Advanced, and Expert remain visible only as unavailable `Coming Soon` cards until their canonical Rig records are built.
+
+All Rigs displays all nine implemented Rigs and does not contain a second Core section.
+
+Core retains restrained additional Forest Journal emphasis through the primary-card treatment and Core badges on individual Rig results/details.
+
+# Reference Scope for New Rigs
+
+Wacky Rig:
+
+- Take Me Fishing — Bass Fishing Rigs
+- Yamamoto — Senko Rigging Options
+
+Ned Rig:
+
+- Z-Man — Ned Rig
+- Take Me Fishing — How to Set Up a Ned Rig
+
+Weightless Soft-Plastic Rig:
+
+- Yamamoto — Senko Rigging Options
+- Take Me Fishing — Bass Fishing Rigs
 
 # Explicit Non-Scope
 
-- Remaining fourteen regional Rigs
+- Intermediate, Intermediate+, Advanced, and Expert Rig records
 - My Tackle ownership implementation
 - Knot implementation
 - Generated finished-Rig or build-step imagery

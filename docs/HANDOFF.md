@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.4.7  
+**Document Revision:** 0.4.8  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `530642470f1a82c643561bf94991fdcd0cfed895`  
-**Last Updated:** 2026-08-08
+**Repository Baseline Reviewed:** `main` at `a6cf30622b2e4a2ef1e51d959109765c4a8fe2a5`  
+**Last Updated:** 2026-08-09
 
 # 1. Start Here
 
@@ -28,25 +28,27 @@ Permanent operating rule:
 
 The repository baseline reviewed for this handoff is commit:
 
-`530642470f1a82c643561bf94991fdcd0cfed895`
+`a6cf30622b2e4a2ef1e51d959109765c4a8fe2a5`
 
 Commit message:
 
-`Rig/Tackle closeout`
+`Core Rig Design Implementation`
 
 The Current-State UX Repairs segment is validated and repository-finalized.
 
 The Rig/Tackle Data Integrity — Batch 1 segment is validated and repository-finalized.
 
+The Core Rigs and Tackle Media segment remains In Progress pending the current corrective/expansion package and runtime validation.
+
 Validated governance state:
 
 - `HANDOFF.md` is present.
-- Decisions D022–D045 are present in `DECISIONS.md`.
+- Decisions D022–D045 are present in the current GitHub `DECISIONS.md`; D046 is included in the prepared Rig Learning Tiers package.
 - The canonical Tackle data-model document is present.
 - `docs/data-model/05A-INVENTORY.md` is the active Inventory/My Tackle model document.
 - Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
 - Historical package artifacts and obsolete design-board/preview assets remain preserved in archive paths.
-- Root package artifacts from the UX repair package have been removed.
+- Root package artifacts from prior packages have been removed.
 - `tools/validate_replacement_integrity.py` is present as the repository-side documentation replacement-integrity safeguard.
 
 ## Current-State UX Repairs
@@ -56,7 +58,7 @@ Validated governance state:
 The UX source implementation was pushed in commit `cf4f8bfa4974d06ada35650dd4e27f9371ee034f` and repository inspection confirmed the intended D030–D032 source changes:
 
 - inert child cards render with visible `Coming Soon` unavailable semantics,
-- Fish Guide `Search Fish` and Rig Guide `Browse All Rigs` remain actionable,
+- Fish Guide `Search Fish` and Rig Guide implemented child cards remain actionable,
 - the Dashboard Regulations CTA reads `Go to ODWC Regulations ↗`,
 - the approved Forest Journal Dashboard primary-card styling has been restored.
 
@@ -81,7 +83,7 @@ See `workstreams/UX-REPAIRS.md` and `workstreams/UX-REPAIRS-VALIDATION.md`.
 
 **Implementation Status: Validated**
 
-The approved D025–D026 relationship cleanup is implemented on `main` before Core-6 expansion:
+The approved D025–D026 relationship cleanup is implemented on `main`:
 
 - `Rig.componentRequirements[].tackleId` explicitly references canonical Tackle.
 - duplicated Rig-side component display names are removed,
@@ -91,9 +93,7 @@ The approved D025–D026 relationship cleanup is implemented on `main` before Co
 - the transitional readiness storage keeps the same underlying Tackle ID string keys,
 - `script.js` uses `tackleId` naming consistently at the readiness callback boundary.
 
-Repository/source inspection passed after the corrective documentation commit. Runtime/regression validation then passed for all four current Rigs, canonical component names, contextual Tackle references, required/optional readiness behavior, persistence, derived `Used In`, Fish Search, Rig browse/search, external Rig references, related Tackle navigation, normal-navigation console health, and phone/desktop layout.
-
-The initial documentation replacement defect was corrected before closeout. `tools/validate_replacement_integrity.py` and the corresponding workflow rule now provide a mechanical guard against future accidental documentation truncation.
+Repository/source inspection and runtime/regression validation passed before closeout.
 
 See `workstreams/RIG-TACKLE-DATA-INTEGRITY.md` and `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`.
 
@@ -101,21 +101,34 @@ The exact current source implementation must always be re-fetched from GitHub be
 
 `MILESTONES.md` preserves historical milestone detail while current architecture in `ARCHITECTURE.md` and structural decisions in `DECISIONS.md` govern present and planned behavior.
 
-## Core Rigs and Tackle Media
+## Core Rigs and Tackle Media / Rig Learning Tiers
 
 **Implementation Status: In Progress**
 
-The prepared coherent package:
+Current GitHub `main` at `a6cf306...` contains:
 
-- completes the approved Core 6 by adding Jighead + Soft Plastic and Inline Spinner Setup,
-- resolves both records as ready-to-fish terminal setups under D043,
-- stores Core membership/order once in `CORE_RIG_IDS` under D044,
-- adds a dedicated **Core Rigs — Master These First** browse section and Core detail-page emphasis,
-- adds canonical `jighead` and `inline-spinner` Tackle concepts,
-- replaces the 15 prior transparent/shadowed Tackle assets and adds two new assets, producing a 17-image 640 × 440 neutral-background WebP set,
-- records D045, which prohibits generated finished-Rig/build-step imagery after failed mechanical-accuracy tests.
+- six active Core Rigs,
+- `CORE_RIG_IDS` single-owner Core membership,
+- 17 active neutral-background Tackle recognition images,
+- Core-result/detail visual emphasis,
+- a dedicated Core section inside the current All Rigs browse flow.
 
-This segment is not Validated until the package is pushed, GitHub is inspected, and the Core browse/detail, readiness, Tackle popover, media, responsive, accessibility, and regression checks pass.
+The prepared Rig Learning Tiers update changes that structure by:
+
+- replacing the damaged/ambiguous worm-bait recognition image with a clearly intact reference illustration,
+- adding Wacky Rig,
+- adding Ned Rig,
+- adding Weightless Soft-Plastic Rig,
+- classifying Slip Bobber Rig and Texas Rig as `Beginner+`,
+- completing six Beginner and three Beginner+ Rigs,
+- moving Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, and All Rigs to the top-level Rig Guide page,
+- keeping Core membership separate from difficulty,
+- making only Core, Beginner, Beginner+, and All Rigs actionable while later tiers remain `Coming Soon`,
+- removing the dedicated Core section from All Rigs,
+- removing **Master These First** from current runtime presentation,
+- preserving the restrained Core visual emphasis and Core badges.
+
+This update is not Validated until it is pushed, GitHub is inspected, and the landing-page groups, nine Rig records, readiness, derived `Used In`, worm-bait media, responsive/accessibility behavior, and regressions pass.
 
 See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`.
 
@@ -153,14 +166,17 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 - `Rig.componentRequirements` owns Rig-to-Tackle usage; reverse `Used In` relationships are derived.
 - Canonical Tackle owns Tackle identity/display name.
 - Initial regional Rig target is 20 Rigs for northeast Oklahoma and southwest Kansas.
-- Core Rigs — Master These First contains six confidence-building Rigs and is the first Rig-expansion milestone.
-- The Core 6 must be complete, accurate, beginner-ready, and validated before expansion to the remaining fourteen rigs.
+- Core Rigs contains six curated confidence-building Rigs.
+- Core is a curated learning group, not a difficulty rank.
+- The Rig Guide landing page owns the learning progression: Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, All Rigs.
+- All Rigs is the complete implemented library and does not own a second dedicated Core section.
+- Rig expansion proceeds one completed learning tier at a time.
 - Approved Core learning groups such as Core Rigs and future Core Knots receive additional restrained Forest Journal visual hierarchy so recommended starting paths are immediately recognizable.
 - Tackle recognition imagery prioritizes clean edges and recognition quality over mandatory alpha transparency.
 - Artificial baked-in drop shadows are not part of the approved Tackle recognition style.
 - A restrained neutral Tackle-image background is acceptable when it produces cleaner recognition than a transparent cutout.
 - Completed-Rig visual confirmation prefers a licensed local image; otherwise prefer the most direct stable verified external visual destination available.
-- Common fishing-knot step illustrations are approved future work, but remain outside the immediate Rig/Tackle cleanup segment.
+- Common fishing-knot step illustrations are approved future work, but remain outside the immediate Rig workstream.
 - Canonical Tackle defines functional type; My Tackle defines actual owned items.
 - Rig Readiness answers buildability first; optimization comes later.
 - My Tackle will be the only persistent ownership source of truth.
@@ -179,8 +195,11 @@ See `DECISIONS.md` and the governing data-model/media documents.
 **Implementation Status: Approved / Not Implemented**
 
 - Lightweight deterministic relevance ranking before Search becomes noisy.
-- Remaining regional Rig expansion after the Core 6 segment is validated.
-- Reusable Core learning-path card/section emphasis for future Core Knots and other explicitly approved starting-path groups.
+- Intermediate Rig tier.
+- Intermediate+ Rig tier.
+- Advanced Rig tier.
+- Expert Rig tier.
+- Reusable Core learning-path emphasis for future Core Knots and other explicitly approved starting-path groups.
 - Direct/shortest-path finished-Rig visual references where trustworthy sources permit.
 - Common fishing-knot step illustrations as a later Knots workstream.
 - Canonical Carolina Rig record to resolve the approved relationship during later expansion.
@@ -228,24 +247,26 @@ The following remain intentionally unresolved:
 - Commercial/branded name resolution such as `Rooster Tail` between a canonical lure/tackle concept and any future commercial ProductDefinition.
 - Exact Recommendation model schema; a dedicated Recommendations model document remains deferred until mature.
 - ProductDefinition architecture beyond the approved rule that it is not required for My Tackle MVP/readiness.
-- Exact source/licensing choices for Core-Rig finished visual references.
+- Exact source/licensing choices for future finished-Rig visual references.
 - Exact initial common-knot set and the future Rig-to-Knot relationship model.
 - Future automated relationship, asset, document-link, and other repository validators.
 - Other audit findings not yet discussed to completion must remain visible and must not be silently treated as decided.
 
 # 8. Next Recommended Work
 
-The active build segment is **Core Rigs and Tackle Media**.
+The active build segment is **Core Rigs and Tackle Media / Rig Learning Tiers**.
 
 Required next actions:
 
-1. Push the coherent source/media/documentation package.
+1. Push the coherent Rig Learning Tiers source/media/documentation package.
 2. Re-fetch and inspect the actual GitHub files and image inventory.
-3. Validate the Core browse section, all six Rig details, readiness, derived Tackle `Used In`, and all 17 contextual images.
-4. Validate Fish Search, external references, related Tackle navigation, console health, keyboard/focus behavior, and phone/desktop layouts.
-5. Complete closeout documentation and GitHub verification.
+3. Validate the top-level Rig Guide cards and unavailable-tier semantics.
+4. Validate Core, Beginner, Beginner+, and All Rigs filtering/search.
+5. Validate all nine Rig details, readiness, derived Tackle `Used In`, and worm-bait media.
+6. Validate Fish Search, external references, related Tackle navigation, console health, keyboard/focus behavior, and phone/desktop layouts.
+7. Complete closeout documentation and GitHub verification.
 
-Only after this segment is Validated should work continue to the remaining fourteen regional Rigs, finished-Rig visual-reference improvements, Knots, or My Tackle schema implementation.
+Only after this segment is Validated should work continue to the Intermediate Rig tier.
 
 Re-evaluate this sequence after each finalized and validated segment.
 

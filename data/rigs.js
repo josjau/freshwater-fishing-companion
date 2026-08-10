@@ -9,7 +9,7 @@
 
 const RIG_DATA_BUILD_INFO = Object.freeze({
     file: "data/rigs.js",
-    milestone: "Core Rigs and Tackle Media"
+    milestone: "Rig Learning Tiers"
 });
 
 const CORE_RIG_IDS = Object.freeze([
@@ -104,9 +104,9 @@ const RIG_DATA = Object.freeze([
         name: "Slip Bobber Rig",
         summary: "A depth-adjustable float rig for presenting bait at a controlled depth.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.9",
         isActive: true,
-        difficulty: "Beginner",
+        difficulty: "Beginner+",
         useCases: [
             "Fishing from shore",
             "Fishing around docks",
@@ -290,9 +290,9 @@ const RIG_DATA = Object.freeze([
         name: "Texas Rig",
         summary: "A weed-resistant soft-plastic rig built around a bullet weight and offset hook.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.2.7",
+        lastModifiedVersion: "0.2.9",
         isActive: true,
-        difficulty: "Beginner",
+        difficulty: "Beginner+",
         useCases: [
             "Fishing around grass",
             "Fishing brush and timber",
@@ -363,7 +363,7 @@ const RIG_DATA = Object.freeze([
             "Keep fingers clear of the hook point while threading the bait."
         ],
         techniqueIds: [],
-        variationIds: ["carolina-rig"],
+        variationIds: ["carolina-rig", "weightless-soft-plastic-rig"],
         imageIds: []
     },
     {
@@ -434,7 +434,7 @@ const RIG_DATA = Object.freeze([
             "Check behind you before casting a weighted jighead."
         ],
         techniqueIds: [],
-        variationIds: [],
+        variationIds: ["ned-rig"],
         imageIds: []
     },
     {
@@ -497,6 +497,213 @@ const RIG_DATA = Object.freeze([
         ],
         techniqueIds: [],
         variationIds: [],
+        imageIds: []
+    },
+    {
+        id: "wacky-rig",
+        name: "Wacky Rig",
+        summary: "A weightless soft-plastic setup that hooks a stick-style worm through its middle so both ends can move freely.",
+        createdVersion: "0.2.9",
+        lastModifiedVersion: "0.2.9",
+        isActive: true,
+        difficulty: "Beginner",
+        useCases: [
+            "Learning finesse soft-plastic fishing",
+            "Fishing around docks, sparse grass, and open pockets",
+            "Presenting a slow-falling stick bait to bass"
+        ],
+        conditionTags: [
+            "Shallow Water",
+            "Open Water",
+            "Light Cover",
+            "Clear Water",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Take Me Fishing — Bass Fishing Rigs",
+                url: "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/bass-fishing-rigs/"
+            },
+            {
+                label: "Yamamoto — Senko Rigging Options",
+                url: "https://www.yamamotobaits.com/senko-soft-bait/"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "hook",
+                quantity: 1,
+                required: true,
+                notes: "A small finesse or wacky-style hook is a practical choice."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "A straight stick worm is the standard beginner-friendly bait."
+            }
+        ],
+        assemblySteps: [
+            "Tie the hook directly to the main line or leader.",
+            "Find the approximate midpoint of the soft-plastic stick worm.",
+            "Push the hook point straight through the middle of the bait so the hook sits perpendicular to the worm.",
+            "Slide only enough plastic onto the hook to keep the bait secure while leaving both ends free to move.",
+            "Confirm that the hook point and gap remain open and unobstructed."
+        ],
+        setupNotes: [
+            "Start without added weight so the bait can fall naturally.",
+            "A four- to five-inch stick worm is an easy starting size."
+        ],
+        commonMistakes: [
+            "Hooking the bait far away from its midpoint so one side hangs much longer than the other.",
+            "Burying too much of the hook in the plastic and closing the hook gap.",
+            "Adding unnecessary terminal hardware that interferes with the simple weightless setup."
+        ],
+        safetyNotes: [
+            "Keep fingers clear of the hook point while piercing the middle of the bait."
+        ],
+        techniqueIds: [],
+        variationIds: [],
+        imageIds: []
+    },
+    {
+        id: "ned-rig",
+        name: "Ned Rig",
+        summary: "A compact finesse setup pairing a light mushroom-style jighead with a short soft-plastic bait.",
+        createdVersion: "0.2.9",
+        lastModifiedVersion: "0.2.9",
+        isActive: true,
+        difficulty: "Beginner",
+        useCases: [
+            "Learning a simple finesse presentation",
+            "Fishing for bass in pressured or clear water",
+            "Working open bottom, rock, gravel, and light cover"
+        ],
+        conditionTags: [
+            "Clear Water",
+            "Stained Water",
+            "Open Water",
+            "Light Cover",
+            "Shallow Water",
+            "Deep Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Z-Man — Ned Rig",
+                url: "https://zmanfishing.com/pages/ned-rig"
+            },
+            {
+                label: "Take Me Fishing — How to Set Up a Ned Rig",
+                url: "https://www.takemefishing.org/blog/january-2019/how-to-set-up-a-fishing-rig-for-bass-the-ned-rig/"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "jighead",
+                quantity: 1,
+                required: true,
+                notes: "A light mushroom-style finesse jighead is the standard choice."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Use a short finesse stick bait or similar compact soft plastic."
+            }
+        ],
+        assemblySteps: [
+            "Tie the jighead directly to the main line or leader.",
+            "Choose a compact soft plastic that fits the jighead hook without crowding the gap.",
+            "Insert the hook point into the center of the bait's nose.",
+            "Thread the bait straight along the hook shank toward the jighead.",
+            "Bring the hook point out through the bait so the body remains straight and centered.",
+            "Seat the nose of the bait firmly against the jighead or keeper and confirm that the hook gap remains open."
+        ],
+        setupNotes: [
+            "Use the lightest jighead that maintains the depth and bottom contact you need.",
+            "A straight, compact bait is more important than adding extra hardware."
+        ],
+        commonMistakes: [
+            "Using a jighead that is much heavier than necessary.",
+            "Threading the bait crooked so it twists or tracks sideways.",
+            "Covering too much of the hook gap with the soft plastic.",
+            "Using a long bulky bait that defeats the compact finesse profile."
+        ],
+        safetyNotes: [
+            "Keep fingers behind the hook point while threading the soft plastic.",
+            "Check behind you before casting the weighted jighead."
+        ],
+        techniqueIds: [],
+        variationIds: ["jighead-soft-plastic"],
+        imageIds: []
+    },
+    {
+        id: "weightless-soft-plastic-rig",
+        name: "Weightless Soft-Plastic Rig",
+        summary: "A weed-resistant soft-plastic setup tied directly to an offset hook with no sinker or other added weight.",
+        createdVersion: "0.2.9",
+        lastModifiedVersion: "0.2.9",
+        isActive: true,
+        difficulty: "Beginner+",
+        useCases: [
+            "Fishing shallow grass, brush edges, and open pockets",
+            "Presenting a soft plastic slowly without added weight",
+            "Fishing for bass around light to moderate cover"
+        ],
+        conditionTags: [
+            "Shallow Water",
+            "Sparse Cover",
+            "Light Cover",
+            "Clear Water",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Yamamoto — Senko Rigging Options",
+                url: "https://www.yamamotobaits.com/senko-soft-bait/"
+            },
+            {
+                label: "Take Me Fishing — Bass Fishing Rigs",
+                url: "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/bass-fishing-rigs/"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "offset-worm-hook",
+                quantity: 1,
+                required: true,
+                notes: "Match the hook size and gap to the soft plastic."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Stick worms, flukes, and other soft plastics can be rigged weightless."
+            }
+        ],
+        assemblySteps: [
+            "Tie the offset worm hook directly to the main line or leader; do not add a sinker.",
+            "Insert the hook point into the nose of the soft plastic about one eighth to one quarter inch and bring the point out through the side.",
+            "Slide the bait up the hook shank to the offset, then rotate it so the nose seats against the offset.",
+            "Lay the hook alongside the bait to locate the natural re-entry point without stretching or bunching the plastic.",
+            "Push the hook point straight through the bait at that point so the body hangs straight.",
+            "For a weedless finish, lightly skin-hook the point while keeping the bait straight and the hook gap usable."
+        ],
+        setupNotes: [
+            "The absence of a sinker is part of the setup; the soft plastic provides the casting weight and fall rate.",
+            "Use a bait heavy enough to cast comfortably on your line and rod."
+        ],
+        commonMistakes: [
+            "Adding a bullet weight and unintentionally turning the setup into a Texas Rig.",
+            "Rigging the bait crooked so it twists or pulls to one side.",
+            "Choosing the re-entry point before the bait nose is seated against the hook offset.",
+            "Burying the hook point so deeply that hooksets become difficult."
+        ],
+        safetyNotes: [
+            "Keep fingers clear of the hook point while threading and skin-hooking the bait."
+        ],
+        techniqueIds: [],
+        variationIds: ["texas-rig"],
         imageIds: []
     }
 ]);

@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG_REFERENCE_SOURCES.md  
-**Document Revision:** 1.1.0  
+**Document Revision:** 1.2.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-09
 
 # Purpose
 
@@ -39,7 +39,6 @@ These sources are used for visual confirmation and technical cross-checking. The
 - Norrik — Texas Rig  
   https://norrik.com/fishing-rigs/texas-rig/
 
-
 # Jighead + Soft Plastic
 
 - Berkley — Fusion19 Hybrid Jighead  
@@ -53,6 +52,27 @@ These sources are used for visual confirmation and technical cross-checking. The
   https://www.mepps.com/mepps-tactics/article/mepps-aglia-spinners/411
 - Panther Martin — In-Line Spinner Quick Reference  
   https://www.panthermartin.com/guide/
+
+# Wacky Rig
+
+- Take Me Fishing — Bass Fishing Rigs  
+  https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/bass-fishing-rigs/
+- Yamamoto — Senko Rigging Options  
+  https://www.yamamotobaits.com/senko-soft-bait/
+
+# Ned Rig
+
+- Z-Man — Ned Rig  
+  https://zmanfishing.com/pages/ned-rig
+- Take Me Fishing — How to Set Up a Ned Rig  
+  https://www.takemefishing.org/blog/january-2019/how-to-set-up-a-fishing-rig-for-bass-the-ned-rig/
+
+# Weightless Soft-Plastic Rig
+
+- Yamamoto — Senko Rigging Options  
+  https://www.yamamotobaits.com/senko-soft-bait/
+- Take Me Fishing — Bass Fishing Rigs  
+  https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/bass-fishing-rigs/
 
 # Link Semantics
 
