@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.8.1  
+**Document Revision:** 1.8.2  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-10
 
@@ -192,18 +192,16 @@ Implemented target scope, pending validation:
 - tutorial expansion for the existing Beginner/Beginner+ foundation and the Intermediate records,
 - six new recognition-media assets.
 
-Known validation failure:
+Known validation failure and correction state:
 
-- all six new recognition-media assets failed initial visual-quality/style review because the pushed versions use an older flat/vector-style treatment instead of the approved current catalog/semi-photorealistic Tackle recognition standard.
-
-Current correction scope:
-
-- Wacky Hook
-- Wacky O-Ring
-- Ned Jighead
-- Drop Shot Weight
-- Three-Way Swivel
-- Fixed Sinker
+- all six original new recognition-media assets failed initial visual-quality/style review,
+- four corrected replacements passed the pre-delivery visual/mechanical gate and were committed in `601b741f368f7e1ae9e5b2963935673901b76674`:
+  - Wacky Hook,
+  - Wacky O-Ring,
+  - Three-Way Swivel,
+  - Fixed Sinker,
+- Ned Jighead and Drop Shot Weight remain pending because current candidates have not yet passed mechanical/visual review,
+- no Intermediate source/data/runtime/tutorial/regression validation has begun.
 
 The Media Guide and Development Workflow now enforce real-photo-first sourcing when legally/technically suitable and a mandatory pre-delivery Tackle Media Generation Gate. Failed replacement candidates are rejected before repository inclusion.
 
@@ -218,8 +216,8 @@ Do **not** begin Intermediate+ yet.
 
 Next actions are:
 
-1. finish six corrected recognition-media replacements,
-2. verify the corrected GitHub baseline,
+1. finish corrected Ned Jighead and Drop Shot Weight recognition assets,
+2. verify the final corrected GitHub baseline,
 3. complete Intermediate source/data/runtime/tutorial/media/regression validation,
 4. reconcile final governing/current-state documentation,
 5. finalize the Intermediate segment,
