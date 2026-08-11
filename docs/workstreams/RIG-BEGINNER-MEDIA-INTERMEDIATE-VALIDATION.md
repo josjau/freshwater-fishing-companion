@@ -1,12 +1,12 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.16  
+**Document Revision:** 0.1.17  
 **Document Status:** Approved  
 **Implementation Status:** Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorial Corrections Fully Identified; Regression / Metadata Pending  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Latest Verified Media Update:** `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`)  
-**Validation Baseline Before This Documentation Update:** `4351d7c6df53543bb2f2c632169ba7293687c119`  
+**Validation Baseline Before This Documentation Update:** `4ca10b8a0a22fba60c01470042fbac1d6c258224`  
 **Last Updated:** 2026-08-11
 
 # Purpose
@@ -27,7 +27,7 @@ The Intermediate implementation is present on `main`. Repository/source-integrit
 - Intermediate Tutorial Selection — PASSED / COMPLETE
 - Existing-Rig Tutorial Replacement Selection — PASSED / COMPLETE
 - Intermediate Tutorial Runtime — PARTIAL: Drop Shot and Three-Way passed; Carolina and Live-Bait Slip-Sinker approved replacements await consolidated source update and runtime re-test
-- Retained Existing-Rig Tutorial Runtime — IN PROGRESS: Fixed Bobber passed; Basic Bottom, Jighead + Soft Plastic, Texas, and Wacky pending
+- Retained Existing-Rig Tutorial Runtime — IN PROGRESS: Fixed Bobber and Basic Bottom passed; Jighead + Soft Plastic, Texas, and Wacky pending
 
 The nine-image correction upload is verified on `main` in commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`). That commit changes exactly the nine intended recognition assets, and every current GitHub blob SHA/byte size matches the approved local package.
 
@@ -324,7 +324,7 @@ For future replacement work, pre-delivery confirm under the `MEDIA_GUIDE.md` Tac
 
 # Tutorial Audit — Existing Rigs
 
-**Status: REPLACEMENT SELECTION COMPLETE / RETAINED-TUTORIAL RUNTIME REGRESSION IN PROGRESS — 1 OF 5 PASSED**
+**Status: REPLACEMENT SELECTION COMPLETE / RETAINED-TUTORIAL RUNTIME REGRESSION IN PROGRESS — 2 OF 5 PASSED**
 
 Static renderer validation confirms:
 
@@ -338,7 +338,7 @@ Static renderer validation confirms:
 The build-first tutorial selection/runtime audit classifies the existing-Rig tutorials as follows:
 
 - Fixed Bobber — NYSDEC (`LlzvkVUvYBs`) — KEEP; **PASSED 2026-08-11**
-- Basic Bottom — Catfish Edge (`O6pEc6Y_44U`) — KEEP; runtime regression pending
+- Basic Bottom — Catfish Edge (`O6pEc6Y_44U`) — KEEP; **PASSED 2026-08-11**
 - Jighead + Soft Plastic — Tackle Tactics TV (`wv1e53YZuBo`) — KEEP; runtime regression pending
 - Slip Bobber — current Wired2Fish (`foSgzdjLZyk`) — REPLACE with approved Sportsman's Journal TV `0V-gaboIlD0`, **HOW-TO Rig A Slip Bobber (Easiest Way)**
 - Texas — Wired2Fish (`cIraWgiR6u0`) — KEEP; runtime regression pending
@@ -351,6 +351,19 @@ Fixed Bobber runtime regression in Brave Desktop confirmed:
 - no tutorial iframe/player was loaded before **Load tutorial** activation,
 - **Load tutorial** created the expected embedded player,
 - the NYSDEC Fixed Bobber tutorial loaded successfully,
+- playback did not autoplay,
+- the player fit the page without horizontal overflow,
+- YouTube branding and normal player controls remained visible,
+- `Watch on YouTube ↗` remained available separately,
+- the video successfully played when manually started,
+- the rest of the Rig page remained usable after the player loaded,
+- the tutorial remains sufficiently build-focused to satisfy the approved build-first rule.
+
+Basic Bottom runtime regression in Brave Desktop confirmed:
+
+- no tutorial iframe/player was loaded before **Load tutorial** activation,
+- **Load tutorial** created the expected embedded player,
+- the Catfish Edge Basic Bottom tutorial loaded successfully,
 - playback did not autoplay,
 - the player fit the page without horizontal overflow,
 - YouTube branding and normal player controls remained visible,
@@ -447,7 +460,7 @@ Verified checkpoints:
 - Seven-image correction: `eed8929cb1859aef653168884e1e71244d1dd80e`.
 - Four-image legacy correction: `5704da6b9cde20bf90edfa8205e9811fba4114ab`.
 - Nine-image correction: `630beb13fe7519dac6993b6f3776dd3b6bfca7bf`.
-- Validation documentation baseline immediately before this update: `4351d7c6df53543bb2f2c632169ba7293687c119`.
+- Validation documentation baseline immediately before this update: `4ca10b8a0a22fba60c01470042fbac1d6c258224`.
 - Runtime Intermediate collection membership, routing, scoped/global search, All Rigs count/order, and Core count/order passed in Chrome on 2026-08-10.
 - Drop Shot Rig detail, component rendering, readiness persistence, derived relationships, recognition popovers, fixed-surface blending, and navigation passed in Chrome on 2026-08-10.
 - Carolina Rig detail, component order/relationships, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
@@ -457,6 +470,7 @@ Verified checkpoints:
 - Drop Shot Intermediate tutorial playback passed in Brave Desktop on 2026-08-11.
 - Three-Way Intermediate tutorial playback and build-first suitability passed in Brave Desktop on 2026-08-11.
 - Fixed Bobber retained tutorial playback and build-first suitability passed in Brave Desktop on 2026-08-11.
+- Basic Bottom retained tutorial playback and build-first suitability passed in Brave Desktop on 2026-08-11.
 - Carolina replacement `iYngOOMQCC0` and Live-Bait Slip-Sinker replacement `IbV0yG3sRms` are user-approved and awaiting the consolidated production-data correction package before runtime re-test.
 - Slip Bobber replacement `0V-gaboIlD0`, Ned replacement `COFdRET28cY`, and Weightless Soft-Plastic replacement `EFORJFsycJQ` are user-approved and awaiting the same consolidated production-data correction package before in-app runtime re-test.
 
@@ -479,15 +493,16 @@ Completed:
 13. **Intermediate replacement tutorial selections — PASSED / COMPLETE.**
 14. **Existing-Rig replacement tutorial selections — PASSED / COMPLETE.**
 15. **Fixed Bobber retained-tutorial runtime regression — PASSED.**
+16. **Basic Bottom retained-tutorial runtime regression — PASSED.**
 
 Open work:
 
-16. Continue retained tutorial playback regression: Basic Bottom, Jighead + Soft Plastic, Texas, and Wacky; then perform Inline Spinner D049 external-fallback check.
-17. Beginner/Beginner+/Core and application regression pass.
-18. Apply all five approved tutorial replacements together in one reviewed `data/rigs.js` correction package and correct the Bobber Stop alt-text defect in the same reviewed production-data correction phase.
-19. Runtime-test every changed tutorial embed and re-test the affected Bobber Stop reference popover.
-20. Reconcile the build-first tutorial-selection rule into governing documentation.
-21. Documentation reconciliation/final closeout.
+17. Continue retained tutorial playback regression: Jighead + Soft Plastic, Texas, and Wacky; then perform Inline Spinner D049 external-fallback check.
+18. Beginner/Beginner+/Core and application regression pass.
+19. Apply all five approved tutorial replacements together in one reviewed `data/rigs.js` correction package and correct the Bobber Stop alt-text defect in the same reviewed production-data correction phase.
+20. Runtime-test every changed tutorial embed and re-test the affected Bobber Stop reference popover.
+21. Reconcile the build-first tutorial-selection rule into governing documentation.
+22. Documentation reconciliation/final closeout.
 
 A failed block must remain visibly failed/pending until corrected and re-tested.
 
