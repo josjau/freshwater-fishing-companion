@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.4  
+**Document Revision:** 0.1.5  
 **Document Status:** Approved  
-**Implementation Status:** Partially Validated — Static Source/Data Passed; Runtime Pending  
+**Implementation Status:** Partially Validated — Static + Routing/Search Passed; Rig Detail Runtime Pending  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Latest Verified Media Update:** `5704da6b9cde20bf90edfa8205e9811fba4114ab` (`Hook fixes`)  
 **Current Validation Head:** `67eea13d623067186171a68be6778cf99ebf5456`  
@@ -17,7 +17,7 @@ Preflight confirms package integrity only. GitHub inspection and runtime review 
 
 # Current Validation State
 
-The Intermediate implementation is present on `main`. Repository/source-integrity and canonical-data validation have now passed against current head `67eea13d623067186171a68be6778cf99ebf5456`. Runtime routing/search, Rig-detail behavior, recognition-media presentation, tutorial playback, and regression validation remain pending.
+The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, and Intermediate routing/search have now passed. Rig-detail behavior, recognition-media presentation, tutorial playback, regression validation, and the known Bobber Stop alt-text correction remain pending.
 
 Recognition-media correction state:
 
@@ -74,47 +74,38 @@ The known Bobber Stop alt-text mismatch is a metadata/accessibility defect, not 
 
 # Intermediate Membership
 
-**Status: STATIC DATA PASSED / RUNTIME PENDING**
+**Status: PASSED — 2026-08-10**
 
-Current canonical Intermediate records are exactly:
+Runtime validation confirmed the Intermediate collection contains exactly these four records:
 
-1. Drop Shot Rig
-2. Carolina Rig
+1. Carolina Rig
+2. Drop Shot Rig
 3. Live-Bait Slip-Sinker Rig
 4. Three-Way Rig
 
-Source filtering uses `rig.difficulty === "Intermediate"` for the Intermediate collection. No Intermediate+, Advanced, or Expert canonical Rig record exists in the active implementation.
-
-Runtime collection rendering remains to be confirmed.
+The collection renders alphabetically with no Beginner, Beginner+, Intermediate+, Advanced, or Expert record present. Intermediate+, Advanced, and Expert remain unavailable from the Rig Guide.
 
 # Intermediate Routing / Search
 
-**Status: STATIC SOURCE PASSED / RUNTIME PENDING**
+**Status: PASSED — 2026-08-10**
 
-Static source confirms:
-
-- Intermediate card is marked available,
-- `browse-intermediate-rigs` maps to collection key `intermediate`,
-- Intermediate filtering selects only `difficulty === "Intermediate"`,
-- empty scoped collections are alphabetically sorted except Core, which preserves curated Core order,
-- scoped search searches only the selected collection,
-- global Rig search searches all active Rigs,
-- clear-search behavior empties the query, updates results, and restores input focus,
-- explicit view transitions reset scroll position to the top,
-- Core membership/order remains driven by the unchanged six-member `CORE_RIG_IDS` registry.
-
-Runtime confirm:
+Runtime validation in Chrome confirmed:
 
 - Intermediate card is actionable,
 - Intermediate page opens at the top,
-- Parent/Home sticky navigation follows D051,
-- empty Intermediate search displays all four records in normal collection order,
-- scoped search returns only Intermediate records,
+- Parent/Home navigation returns to the expected destination at the top,
+- empty Intermediate search displays all four records in alphabetical collection order,
+- scoped `drop` search returns only Drop Shot Rig,
 - clear control restores all four records and returns focus to the field,
-- global Rig search can find every new Intermediate Rig,
-- All Rigs contains exactly 13 active records,
-- All Rigs remains alphabetized when its query is empty,
-- Core membership/order remains unchanged.
+- global Rig Guide search finds Carolina Rig, Drop Shot Rig, Live-Bait Slip-Sinker Rig, and Three-Way Rig individually,
+- All Rigs contains exactly 13 active records and remains alphabetized with an empty query,
+- Core Rigs remains exactly six records in the validated curated order:
+  1. Fixed Bobber Rig
+  2. Basic Bottom Rig
+  3. Jighead + Soft Plastic
+  4. Inline Spinner Setup
+  5. Texas Rig
+  6. Slip Bobber Rig
 
 # Drop Shot Rig
 
@@ -318,17 +309,16 @@ Runtime confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: STATIC REPOSITORY VALIDATION PASSED / RUNTIME PENDING**
+**Status: STATIC REPOSITORY + ROUTING/SEARCH VALIDATION PASSED / REMAINING RUNTIME PENDING**
 
 Verified checkpoints:
 
 - Intermediate implementation baseline: `e4b61aea052f4ad843be0f6d54231af87d574905`.
 - Seven-image correction: `eed8929cb1859aef653168884e1e71244d1dd80e`.
 - Four-image legacy correction: `5704da6b9cde20bf90edfa8205e9811fba4114ab`.
-- Current validation head: `67eea13d623067186171a68be6778cf99ebf5456`.
-- Comparison from the implementation baseline to current head shows no post-implementation JavaScript/data/CSS/HTML changes; only documentation and Tackle recognition-media files changed.
-- The current repository contains the permanent `#f4f0e8` media-surface and hook-orientation standards.
-- No runtime result is implied by these GitHub checks.
+- Static validation baseline before documentation updates: `67eea13d623067186171a68be6778cf99ebf5456`.
+- Comparison from the implementation baseline to that static validation head showed no post-implementation JavaScript/data/CSS/HTML changes; only documentation and Tackle recognition-media files changed.
+- Runtime Intermediate collection membership, routing, scoped/global search, All Rigs count/order, and Core count/order passed in Chrome on 2026-08-10.
 
 # Validation Order From Current State
 
@@ -336,10 +326,10 @@ Completed:
 
 1. **GitHub/source/package integrity — PASSED.**
 2. **Canonical data counts and relationships — PASSED.**
+3. **Intermediate membership, routing, and search — PASSED.**
 
 Proceed next in this order:
 
-3. Intermediate membership, routing, and search — runtime.
 4. Drop Shot Rig — runtime.
 5. Carolina Rig — runtime.
 6. Live-Bait Slip-Sinker Rig — runtime.
