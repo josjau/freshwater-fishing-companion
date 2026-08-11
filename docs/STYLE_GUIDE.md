@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.3.0
+**Document Revision:** 1.3.1
 **Document Status:** Approved
 **Last Updated:** 2026-08-10
 
@@ -159,9 +159,11 @@ Any future production-supported alternative theme may change appearance but must
 - Accessibility
 - Responsive design
 - User experience
+- The canonical reference-media panel color `#f4f0e8` / RGB `244, 240, 232`
+
+The reference-media surface is a cross-theme invariant, not a theme token. Future themes must be designed around that fixed surface rather than recoloring it. Surrounding page/card colors, borders, text, controls, focus states, and accents must remain visually compatible with `#f4f0e8` and maintain sufficient contrast. A theme concept that materially clashes with the fixed reference-media surface must be redesigned rather than changing the media surface.
 
 Previously approved Forest Journal behavior should not be altered by unrelated full-file replacements. Confirmed regressions should be restored narrowly without redesign or unrelated cleanup.
-
 
 # Core Learning Path Visual Emphasis
 
