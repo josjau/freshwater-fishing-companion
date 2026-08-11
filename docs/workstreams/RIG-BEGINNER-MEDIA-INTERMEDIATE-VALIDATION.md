@@ -1,12 +1,12 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.10  
+**Document Revision:** 0.1.11  
 **Document Status:** Approved  
-**Implementation Status:** Partially Validated — All Intermediate Rigs Passed; 9-Image Correction Package Approved / Upload Pending  
+**Implementation Status:** Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorials / Regression / Metadata Pending  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
-**Latest Verified Media Update:** `5704da6b9cde20bf90edfa8205e9811fba4114ab` (`Hook fixes`)  
-**Current Validation Head:** `67eea13d623067186171a68be6778cf99ebf5456`  
+**Latest Verified Media Update:** `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`)  
+**Validation Baseline Before This Documentation Update:** `7e21f61946284b56256ce97aebc81f960fec59db`  
 **Last Updated:** 2026-08-10
 
 # Purpose
@@ -17,18 +17,21 @@ Preflight confirms package integrity only. GitHub inspection and runtime review 
 
 # Current Validation State
 
-The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, and all four Intermediate Rig runtime blocks have passed:
+The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, all four Intermediate Rig runtime blocks, and recognition-media runtime validation have passed:
 
 - Drop Shot Rig — PASSED
 - Carolina Rig — PASSED
 - Live-Bait Slip-Sinker Rig — PASSED
 - Three-Way Rig — PASSED
+- Recognition Media — PASSED
 
-The nine-image recognition-media correction package has now passed user review and is approved for production upload. The production replacements are not yet verified on GitHub, so recognition-media runtime re-validation remains pending.
+The nine-image correction upload is verified on `main` in commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`). That commit changes exactly the nine intended recognition assets, and every current GitHub blob SHA/byte size matches the approved local package.
 
-Tutorial playback, regression validation, production upload/verification of the nine approved media corrections, recognition-media re-validation, and the known Bobber Stop alt-text correction remain pending.
+Runtime review then confirmed the corrected assets render cleanly in their contextual reference panels without the previously observed background-color mismatch or baked/uneven shadow defect.
 
-Recognition-media correction state:
+Remaining validation work is now limited to tutorial playback, Beginner/Beginner+/Core and application regression, the known Bobber Stop alt-text metadata correction, and documentation/final closeout.
+
+Recognition-media correction history:
 
 - **Initial six-image visual-quality gate: FAILED.**
 - Failure reason: the six assets introduced in `e4b61ae` used an older flat/vector-style treatment and did not meet the approved current catalog/semi-photorealistic Tackle recognition standard.
@@ -55,23 +58,25 @@ Recognition-media correction state:
   - `split-shot-reference.webp`,
   - `stop-bead-reference.webp`.
 - **Nine-image correction package review: PASSED — 2026-08-10.** Each replacement was individually reviewed and approved, then deterministically packaged as a 640 × 440 RGB WebP on the fixed `#f4f0e8` canvas without further generative changes to the approved object version.
-- The approved nine-image package remains **upload pending**. Do not mark those production assets validated until the replacements are present on `main` and pass phone/desktop runtime review.
+- **Nine-image GitHub upload/package verification: PASSED — 2026-08-10.** Commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` changes exactly the intended nine files, and all current GitHub blobs match the approved package by SHA and byte size.
+- **Nine-image runtime contextual-popover review: PASSED — 2026-08-10.** The corrected panels now blend correctly with the fixed reference-media surface and no clipping, distortion, or misleading geometry was reported.
 
 # Package / Source Integrity
 
 **Status: PASSED — 2026-08-10**
 
-Validated against current head `67eea13d623067186171a68be6778cf99ebf5456`:
+Validated against the Intermediate implementation baseline and subsequent corrective-media/documentation state:
 
-- `main` is 24 commits ahead of the Intermediate implementation baseline and not behind it.
-- Comparing `e4b61aea052f4ad843be0f6d54231af87d574905` to current head shows only Markdown documentation and Tackle image files changed after the Intermediate implementation.
-- `data/rigs.js`, `data/tackle.js`, `data/media.js`, `script.js`, and `view-renderer.js` remain the Intermediate implementation source/data baseline; no later corrective media upload altered application source/data.
-- `5704da6b9cde20bf90edfa8205e9811fba4114ab` contains exactly the four intended legacy Tackle image replacements.
-- No package README, manifest, staging note, validation TXT, contact sheet, or other review-only artifact appears in the production Tackle image directory.
-- Current `script.js` statically defines Intermediate as an available Rig collection and keeps Intermediate+, Advanced, and Expert unavailable.
-- Current renderer source retains canonical-Tackle lookup, derived `Used In`, readiness persistence, contextual `Name ⓘ` references, lazy tutorial creation, `youtube-nocookie.com`, no autoplay parameter, and external YouTube fallback behavior.
+- the Intermediate implementation remains rooted in `e4b61aea052f4ad843be0f6d54231af87d574905`,
+- subsequent production application changes relevant to this segment are Tackle recognition-media replacements only,
+- `data/rigs.js`, `data/tackle.js`, `data/media.js`, `script.js`, and `view-renderer.js` remain the Intermediate implementation source/data baseline; corrective media uploads did not alter application source/data,
+- `5704da6b9cde20bf90edfa8205e9811fba4114ab` contains exactly the four intended legacy Tackle image replacements,
+- `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` contains exactly the nine intended background/shadow correction replacements,
+- no package README, manifest, staging note, validation TXT, contact sheet, or other review-only artifact appears in the production Tackle image directory,
+- current `script.js` statically defines Intermediate as an available Rig collection and keeps Intermediate+, Advanced, and Expert unavailable,
+- current renderer source retains canonical-Tackle lookup, derived `Used In`, readiness persistence, contextual `Name ⓘ` references, lazy tutorial creation, `youtube-nocookie.com`, no autoplay parameter, and external YouTube fallback behavior.
 
-Runtime/console execution remains required before final source behavior is considered fully validated.
+Runtime/console execution remains required for the remaining tutorial/regression blocks before final source behavior is considered fully validated.
 
 # Canonical Data Counts
 
@@ -177,7 +182,7 @@ Runtime validation in Chrome confirmed the Carolina Rig itself passes:
 - canonical reference popovers and derived `Used In` relationships function,
 - Parent/Home navigation remains normal.
 
-The separate recognition-media review performed during this Rig exposed background/shadow inconsistencies on older shared Tackle assets. Those media defects are tracked under Recognition Media and do not change the Carolina Rig status from **PASSED**.
+The separate recognition-media review performed during this Rig exposed background/shadow inconsistencies on older shared Tackle assets. Those defects have now been corrected and revalidated under Recognition Media.
 
 # Live-Bait Slip-Sinker Rig
 
@@ -203,7 +208,7 @@ Runtime validation in Chrome confirmed:
 - Sliding Sinker, Fishing Hook, and Bait contextual reference information and derived `Used In` relationships function,
 - Parent/Home navigation remains normal.
 
-The previously logged background/shadow defects on Sliding Sinker and Bait are shared recognition-media issues and do not change the Live-Bait Slip-Sinker Rig status from **PASSED**.
+The previously logged background/shadow defects on Sliding Sinker and Bait were shared recognition-media issues and are now corrected/revalidated.
 
 # Three-Way Rig
 
@@ -232,9 +237,9 @@ Runtime validation in Chrome confirmed:
 
 # Recognition Media
 
-**Status: CORRECTION PACKAGE APPROVED / GITHUB UPLOAD + RUNTIME REVALIDATION PENDING — 2026-08-10**
+**Status: PASSED — 2026-08-10**
 
-Current reviewed correction sets on `main` include:
+Reviewed/corrected production media currently includes:
 
 From `eed8929cb1859aef653168884e1e71244d1dd80e`:
 
@@ -253,34 +258,29 @@ From `5704da6b9cde20bf90edfa8205e9811fba4114ab`:
 - `offset-worm-hook-reference.webp`,
 - `weight-peg-reference.webp`.
 
-The four newest GitHub blobs exactly match the final reviewed local upload package by Git blob SHA and byte size.
+From `630beb13fe7519dac6993b6f3776dd3b6bfca7bf`:
 
-Drop Shot runtime validation confirmed Wacky Hook and Drop Shot Weight recognition popovers load correctly and their tested panels visually merge with the `#f4f0e8` surface.
+- `barrel-swivel-reference.webp`,
+- `bead-reference.webp`,
+- `bait-reference.webp`,
+- `bullet-weight-reference.webp`,
+- `fixed-bobber-reference.webp`,
+- `sliding-sinker-reference.webp`,
+- `slip-float-reference.webp`,
+- `split-shot-reference.webp`,
+- `stop-bead-reference.webp`.
 
-Carolina runtime review identified nine older assets that required correction because their background/shadow treatment visibly differed from the fixed production reference-media surface:
+Validation confirmed:
 
-1. `barrel-swivel-reference.webp`
-2. `bead-reference.webp`
-3. `bait-reference.webp`
-4. `bullet-weight-reference.webp`
-5. `fixed-bobber-reference.webp`
-6. `sliding-sinker-reference.webp`
-7. `slip-float-reference.webp`
-8. `split-shot-reference.webp`
-9. `stop-bead-reference.webp`
+- commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` changes exactly the nine intended correction files,
+- every current GitHub blob SHA and byte size for those nine files matches the approved local package,
+- contextual reference panels now visually merge with the fixed `#f4f0e8` media surface,
+- the previously identified background-color mismatch and baked/uneven shadow issue is no longer visible,
+- corrected objects remain unclipped and undistorted,
+- corrected objects remain recognizable at runtime display size,
+- previously corrected Fishing Hook, Jighead, Offset Worm Hook, Weight Peg, Wacky Hook, Wacky O-Ring, Ned Jighead, Drop Shot Weight, Three-Way Swivel, Fixed Sinker, and Bobber Stop remain accepted.
 
-The replacement review package for all nine assets **passed user review on 2026-08-10**. Each approved production candidate is 640 × 440 RGB WebP, uses the fixed `#f4f0e8` canvas at verified corners, and was packaged from the individually approved object version without further generative redesign.
-
-Required next media steps:
-
-- upload/replace the nine approved production files on `main`,
-- verify the current GitHub blob/content state after upload,
-- re-run phone and desktop contextual-popover review,
-- confirm all corrected backgrounds visually merge with the reference panel,
-- confirm no clipping, fringe, horizontal overflow, misleading scale, or misleading geometry appears,
-- confirm Fishing Hook, Jighead, Offset Worm Hook, Weight Peg, Wacky Hook, Wacky O-Ring, Ned Jighead, Drop Shot Weight, Three-Way Swivel, Fixed Sinker, and Bobber Stop remain visually correct after the correction pass.
-
-Known metadata correction required before closeout:
+Known metadata correction still required before closeout:
 
 - update `bobber-stop-reference` alt text in `data/media.js` so it accurately describes the approved rubber/silicone stop image rather than the superseded thread-style image.
 
@@ -374,21 +374,21 @@ Runtime confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: ALL INTERMEDIATE RIG RUNTIME BLOCKS PASSED / APPROVED 9-IMAGE PACKAGE UPLOAD PENDING**
+**Status: INTERMEDIATE RIGS + RECOGNITION MEDIA PASSED / TUTORIAL + REGRESSION + METADATA OPEN**
 
 Verified checkpoints:
 
 - Intermediate implementation baseline: `e4b61aea052f4ad843be0f6d54231af87d574905`.
 - Seven-image correction: `eed8929cb1859aef653168884e1e71244d1dd80e`.
 - Four-image legacy correction: `5704da6b9cde20bf90edfa8205e9811fba4114ab`.
-- Static validation baseline before documentation updates: `67eea13d623067186171a68be6778cf99ebf5456`.
-- Comparison from the implementation baseline to that static validation head showed no post-implementation JavaScript/data/CSS/HTML changes; only documentation and Tackle recognition-media files changed.
+- Nine-image correction: `630beb13fe7519dac6993b6f3776dd3b6bfca7bf`.
+- Validation documentation baseline immediately before this update: `7e21f61946284b56256ce97aebc81f960fec59db`.
 - Runtime Intermediate collection membership, routing, scoped/global search, All Rigs count/order, and Core count/order passed in Chrome on 2026-08-10.
 - Drop Shot Rig detail, component rendering, readiness persistence, derived relationships, recognition popovers, fixed-surface blending, and navigation passed in Chrome on 2026-08-10.
 - Carolina Rig detail, component order/relationships, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
 - Live-Bait Slip-Sinker Rig detail, canonical component handling, sliding-sinker relationship, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
 - Three-Way Rig detail, three-eye swivel topology, leader/dropper relationships, readiness, derived relationships, recognition references, and navigation passed in Chrome on 2026-08-10.
-- The nine-image correction package passed user review on 2026-08-10 but is not yet verified as present on `main`.
+- The nine-image correction package passed user review, GitHub blob/package verification, and runtime contextual-popover validation on 2026-08-10.
 
 # Validation Order From Current State
 
@@ -401,12 +401,12 @@ Completed:
 5. **Carolina Rig — PASSED.**
 6. **Live-Bait Slip-Sinker Rig — PASSED.**
 7. **Three-Way Rig — PASSED.**
-8. **Nine-image correction package review — PASSED / APPROVED.**
+8. **Recognition-media correction package review — PASSED.**
+9. **Recognition-media GitHub upload/package verification — PASSED.**
+10. **Recognition-media phone/desktop runtime re-validation — PASSED.**
 
 Open work:
 
-9. Upload/replace the nine approved recognition-media files on `main` and verify GitHub state.
-10. Corrected recognition-media phone/desktop re-validation.
 11. Intermediate tutorial playback audit.
 12. Existing tutorial playback regression audit.
 13. Beginner/Beginner+/Core and application regression pass.
