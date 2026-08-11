@@ -1,13 +1,13 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.11  
+**Document Revision:** 0.1.12  
 **Document Status:** Approved  
-**Implementation Status:** Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorials / Regression / Metadata Pending  
+**Implementation Status:** Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorial Audit In Progress; Regression / Metadata Pending  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Latest Verified Media Update:** `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`)  
 **Validation Baseline Before This Documentation Update:** `7e21f61946284b56256ce97aebc81f960fec59db`  
-**Last Updated:** 2026-08-10
+**Last Updated:** 2026-08-11
 
 # Purpose
 
@@ -24,12 +24,13 @@ The Intermediate implementation is present on `main`. Repository/source-integrit
 - Live-Bait Slip-Sinker Rig — PASSED
 - Three-Way Rig — PASSED
 - Recognition Media — PASSED
+- Intermediate Tutorial Playback — IN PROGRESS (Drop Shot passed; Carolina, Live-Bait Slip-Sinker, and Three-Way pending)
 
 The nine-image correction upload is verified on `main` in commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`). That commit changes exactly the nine intended recognition assets, and every current GitHub blob SHA/byte size matches the approved local package.
 
 Runtime review then confirmed the corrected assets render cleanly in their contextual reference panels without the previously observed background-color mismatch or baked/uneven shadow defect.
 
-Remaining validation work is now limited to tutorial playback, Beginner/Beginner+/Core and application regression, the known Bobber Stop alt-text metadata correction, and documentation/final closeout.
+Remaining validation work is now limited to the remaining Intermediate tutorial playback checks, existing tutorial playback regression, Beginner/Beginner+/Core and application regression, the known Bobber Stop alt-text metadata correction, and documentation/final closeout.
 
 Recognition-media correction history:
 
@@ -329,16 +330,28 @@ Inline Spinner intentionally has no embedded tutorial in this package because no
 
 # Tutorial Audit — Intermediate
 
-**Status: STATIC PLAYER PATTERN PASSED / PLAYBACK NOT YET VALIDATED**
+**Status: IN PROGRESS — 1 OF 4 PASSED — 2026-08-11**
 
 Runtime test:
 
-- Drop Shot — Mystery Tackle Box (`xuqaAq98BDA`)
-- Carolina — John Crews (`4nU1QncQ0QM`)
-- Live-Bait Slip-Sinker — Nick Lindner (`61mG-xGi-I0`)
-- Three-Way — Catfish Edge (`8SONykmBFxA`)
+- Drop Shot — Mystery Tackle Box (`xuqaAq98BDA`) — **PASSED 2026-08-11**
+- Carolina — John Crews (`4nU1QncQ0QM`) — PENDING
+- Live-Bait Slip-Sinker — Nick Lindner (`61mG-xGi-I0`) — PENDING
+- Three-Way — Catfish Edge (`8SONykmBFxA`) — PENDING
 
-For every tutorial:
+Drop Shot runtime validation in Brave Desktop confirmed:
+
+- no tutorial iframe/player was loaded before **Load tutorial** activation,
+- **Load tutorial** created the expected embedded player,
+- the Mystery Tackle Box tutorial loaded successfully,
+- playback did not autoplay,
+- the player fit the page without horizontal overflow,
+- YouTube branding and normal player controls remained visible,
+- `Watch on YouTube ↗` remained available separately,
+- the video successfully played when manually started,
+- the rest of the Rig page remained usable after the player loaded.
+
+For every remaining tutorial:
 
 - no iframe exists before user activation,
 - load action creates a responsive `youtube-nocookie.com` iframe,
@@ -374,7 +387,7 @@ Runtime confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: INTERMEDIATE RIGS + RECOGNITION MEDIA PASSED / TUTORIAL + REGRESSION + METADATA OPEN**
+**Status: INTERMEDIATE RIGS + RECOGNITION MEDIA PASSED / INTERMEDIATE TUTORIAL AUDIT IN PROGRESS / REGRESSION + METADATA OPEN**
 
 Verified checkpoints:
 
@@ -382,13 +395,14 @@ Verified checkpoints:
 - Seven-image correction: `eed8929cb1859aef653168884e1e71244d1dd80e`.
 - Four-image legacy correction: `5704da6b9cde20bf90edfa8205e9811fba4114ab`.
 - Nine-image correction: `630beb13fe7519dac6993b6f3776dd3b6bfca7bf`.
-- Validation documentation baseline immediately before this update: `7e21f61946284b56256ce97aebc81f960fec59db`.
+- Validation documentation baseline immediately before recognition-media closeout update: `7e21f61946284b56256ce97aebc81f960fec59db`.
 - Runtime Intermediate collection membership, routing, scoped/global search, All Rigs count/order, and Core count/order passed in Chrome on 2026-08-10.
 - Drop Shot Rig detail, component rendering, readiness persistence, derived relationships, recognition popovers, fixed-surface blending, and navigation passed in Chrome on 2026-08-10.
 - Carolina Rig detail, component order/relationships, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
 - Live-Bait Slip-Sinker Rig detail, canonical component handling, sliding-sinker relationship, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
 - Three-Way Rig detail, three-eye swivel topology, leader/dropper relationships, readiness, derived relationships, recognition references, and navigation passed in Chrome on 2026-08-10.
 - The nine-image correction package passed user review, GitHub blob/package verification, and runtime contextual-popover validation on 2026-08-10.
+- Drop Shot Intermediate tutorial playback passed in Brave Desktop on 2026-08-11; Carolina, Live-Bait Slip-Sinker, and Three-Way tutorial playback remain pending.
 
 # Validation Order From Current State
 
@@ -407,7 +421,7 @@ Completed:
 
 Open work:
 
-11. Intermediate tutorial playback audit.
+11. Intermediate tutorial playback audit — **IN PROGRESS**: Drop Shot PASSED; Carolina, Live-Bait Slip-Sinker, and Three-Way pending.
 12. Existing tutorial playback regression audit.
 13. Beginner/Beginner+/Core and application regression pass.
 14. Correct known Bobber Stop alt-text metadata defect in a user-reviewed production-data package and re-test the affected reference popover.
