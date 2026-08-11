@@ -1,12 +1,12 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.12  
+**Document Revision:** 0.1.13  
 **Document Status:** Approved  
 **Implementation Status:** Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorial Audit In Progress; Regression / Metadata Pending  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Latest Verified Media Update:** `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`)  
-**Validation Baseline Before This Documentation Update:** `7e21f61946284b56256ce97aebc81f960fec59db`  
+**Validation Baseline Before This Documentation Update:** `aaac829afc79242e648e5213c28ed76facda9b9c`  
 **Last Updated:** 2026-08-11
 
 # Purpose
@@ -24,13 +24,17 @@ The Intermediate implementation is present on `main`. Repository/source-integrit
 - Live-Bait Slip-Sinker Rig — PASSED
 - Three-Way Rig — PASSED
 - Recognition Media — PASSED
-- Intermediate Tutorial Playback — IN PROGRESS (Drop Shot passed; Carolina, Live-Bait Slip-Sinker, and Three-Way pending)
+- Intermediate Tutorial Playback — IN PROGRESS (Drop Shot and Three-Way passed; Carolina and Live-Bait Slip-Sinker pending replacement/source update/runtime validation)
 
 The nine-image correction upload is verified on `main` in commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`). That commit changes exactly the nine intended recognition assets, and every current GitHub blob SHA/byte size matches the approved local package.
 
 Runtime review then confirmed the corrected assets render cleanly in their contextual reference panels without the previously observed background-color mismatch or baked/uneven shadow defect.
 
-Remaining validation work is now limited to the remaining Intermediate tutorial playback checks, existing tutorial playback regression, Beginner/Beginner+/Core and application regression, the known Bobber Stop alt-text metadata correction, and documentation/final closeout.
+The tutorial audit is now also applying the approved build-first selection rule: embedded Rig tutorials should primarily demonstrate how to assemble the Rig correctly, with concise runtime preferred when technical completeness and source quality are otherwise adequate. Technique/presentation content may be secondary but should not dominate the embedded tutorial.
+
+The current Carolina production tutorial is superseded by the user-approved ShakespeareFishingUS replacement `iYngOOMQCC0`, but the production data edit is intentionally being held for a consolidated correction package after validation identifies all needed tutorial changes. The current Live-Bait Slip-Sinker tutorial also requires replacement under the same build-first rule; replacement selection remains pending.
+
+Remaining validation work is now limited to completing tutorial selection/runtime validation, existing tutorial playback regression, Beginner/Beginner+/Core and application regression, the known Bobber Stop alt-text metadata correction, and documentation/final closeout.
 
 Recognition-media correction history:
 
@@ -304,7 +308,7 @@ For future replacement work, pre-delivery confirm under the `MEDIA_GUIDE.md` Tac
 
 # Tutorial Audit — Existing Rigs
 
-**Status: STATIC PLAYER PATTERN PASSED / PLAYBACK NOT YET VALIDATED**
+**Status: SELECTION AUDIT COMPLETE / RUNTIME + SOURCE CORRECTIONS PENDING**
 
 Static renderer validation confirms:
 
@@ -315,29 +319,31 @@ Static renderer validation confirms:
 - `Watch on YouTube ↗` remains present independently of the embedded player,
 - iframe uses `strict-origin-when-cross-origin` referrer policy and allows fullscreen.
 
-Runtime test each configured tutorial:
+The build-first tutorial selection audit classified the current existing-Rig tutorials as follows:
 
-- Fixed Bobber — NYSDEC (`LlzvkVUvYBs`)
-- Basic Bottom — Catfish Edge (`O6pEc6Y_44U`)
-- Jighead + Soft Plastic — Tackle Tactics TV (`wv1e53YZuBo`)
-- Slip Bobber — Wired2Fish (`foSgzdjLZyk`)
-- Texas — Wired2Fish (`cIraWgiR6u0`)
-- Wacky — Vermont Fish & Wildlife Department (`u8N--D8C--4`)
-- Ned — Bass University (`ajJz8pH0Jig`)
-- Weightless Soft-Plastic — Wired2Fish (`Bld_-8GBsco`)
+- Fixed Bobber — NYSDEC (`LlzvkVUvYBs`) — KEEP
+- Basic Bottom — Catfish Edge (`O6pEc6Y_44U`) — KEEP
+- Jighead + Soft Plastic — Tackle Tactics TV (`wv1e53YZuBo`) — KEEP
+- Slip Bobber — Wired2Fish (`foSgzdjLZyk`) — REPLACE; current video is too technique-heavy for the embedded build-tutorial role
+- Texas — Wired2Fish (`cIraWgiR6u0`) — KEEP
+- Wacky — Vermont Fish & Wildlife Department (`u8N--D8C--4`) — KEEP
+- Ned — Bass University (`ajJz8pH0Jig`) — REPLACE; current video is broader than the preferred build-first scope
+- Weightless Soft-Plastic — Wired2Fish (`Bld_-8GBsco`) — REPLACE; current video is primarily fishing-strategy content rather than a concise build tutorial
 
 Inline Spinner intentionally has no embedded tutorial in this package because no suitable candidate was independently verified during sourcing. Confirm the existing Mepps/Panther Martin external references remain available as the D049 fallback.
 
+Runtime playback validation and final replacement selection for the flagged existing-Rig tutorials remain pending. Production edits are intentionally being batched until validation identifies all tutorial changes.
+
 # Tutorial Audit — Intermediate
 
-**Status: IN PROGRESS — 1 OF 4 PASSED — 2026-08-11**
+**Status: IN PROGRESS — 2 OF 4 RUNTIME-PASSED; 2 REQUIRE REPLACEMENT — 2026-08-11**
 
-Runtime test:
+Runtime / selection state:
 
 - Drop Shot — Mystery Tackle Box (`xuqaAq98BDA`) — **PASSED 2026-08-11**
-- Carolina — John Crews (`4nU1QncQ0QM`) — PENDING
-- Live-Bait Slip-Sinker — Nick Lindner (`61mG-xGi-I0`) — PENDING
-- Three-Way — Catfish Edge (`8SONykmBFxA`) — PENDING
+- Carolina — John Crews (`4nU1QncQ0QM`) — **REPLACE**; approved pending replacement: ShakespeareFishingUS `iYngOOMQCC0`
+- Live-Bait Slip-Sinker — Nick Lindner (`61mG-xGi-I0`) — **REPLACE** under build-first tutorial rule; replacement selection pending
+- Three-Way — Catfish Edge (`8SONykmBFxA`) — **PASSED 2026-08-11**
 
 Drop Shot runtime validation in Brave Desktop confirmed:
 
@@ -351,8 +357,24 @@ Drop Shot runtime validation in Brave Desktop confirmed:
 - the video successfully played when manually started,
 - the rest of the Rig page remained usable after the player loaded.
 
-For every remaining tutorial:
+Three-Way runtime validation in Brave Desktop confirmed:
 
+- no tutorial iframe/player was loaded before **Load tutorial** activation,
+- **Load tutorial** created the expected embedded player,
+- the Catfish Edge Three-Way Rig tutorial loaded successfully,
+- playback did not autoplay,
+- the player fit the page without horizontal overflow,
+- YouTube branding and normal player controls remained visible,
+- `Watch on YouTube ↗` remained available separately,
+- the video successfully played when manually started,
+- the rest of the Rig page remained usable after the player loaded,
+- the video remains sufficiently focused on building/configuring the Three-Way Rig to satisfy the approved build-first tutorial rule.
+
+For every replacement tutorial before approval/runtime pass:
+
+- the video must primarily demonstrate Rig assembly rather than fishing technique,
+- technical completeness and correctness take priority over raw runtime,
+- when technically comparable candidates exist, prefer the shorter direct build demonstration,
 - no iframe exists before user activation,
 - load action creates a responsive `youtube-nocookie.com` iframe,
 - no autoplay request is made,
@@ -361,7 +383,7 @@ For every remaining tutorial:
 - a disabled/unavailable embed does not make the Rig unusable,
 - blocker-related `ERR_BLOCKED_BY_CLIENT` requests are distinguished from actual playback/player failure.
 
-If a video has been removed, made private, or has embedding disabled, remove the in-app tutorial record in a reviewed correction package and retain the next D049 fallback rather than substituting an unverified video.
+If a video has been removed, made private, has embedding disabled, or does not satisfy the build-first tutorial role, remove/replace the in-app tutorial record in a reviewed correction package and retain the next D049 fallback rather than substituting an unverified video.
 
 # Beginner / Beginner+ Regression
 
@@ -387,7 +409,7 @@ Runtime confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: INTERMEDIATE RIGS + RECOGNITION MEDIA PASSED / INTERMEDIATE TUTORIAL AUDIT IN PROGRESS / REGRESSION + METADATA OPEN**
+**Status: INTERMEDIATE RIGS + RECOGNITION MEDIA PASSED / TUTORIAL AUDIT IN PROGRESS / REGRESSION + METADATA OPEN**
 
 Verified checkpoints:
 
@@ -395,14 +417,16 @@ Verified checkpoints:
 - Seven-image correction: `eed8929cb1859aef653168884e1e71244d1dd80e`.
 - Four-image legacy correction: `5704da6b9cde20bf90edfa8205e9811fba4114ab`.
 - Nine-image correction: `630beb13fe7519dac6993b6f3776dd3b6bfca7bf`.
-- Validation documentation baseline immediately before recognition-media closeout update: `7e21f61946284b56256ce97aebc81f960fec59db`.
+- Validation documentation baseline immediately before this update: `aaac829afc79242e648e5213c28ed76facda9b9c`.
 - Runtime Intermediate collection membership, routing, scoped/global search, All Rigs count/order, and Core count/order passed in Chrome on 2026-08-10.
 - Drop Shot Rig detail, component rendering, readiness persistence, derived relationships, recognition popovers, fixed-surface blending, and navigation passed in Chrome on 2026-08-10.
 - Carolina Rig detail, component order/relationships, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
 - Live-Bait Slip-Sinker Rig detail, canonical component handling, sliding-sinker relationship, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
 - Three-Way Rig detail, three-eye swivel topology, leader/dropper relationships, readiness, derived relationships, recognition references, and navigation passed in Chrome on 2026-08-10.
 - The nine-image correction package passed user review, GitHub blob/package verification, and runtime contextual-popover validation on 2026-08-10.
-- Drop Shot Intermediate tutorial playback passed in Brave Desktop on 2026-08-11; Carolina, Live-Bait Slip-Sinker, and Three-Way tutorial playback remain pending.
+- Drop Shot Intermediate tutorial playback passed in Brave Desktop on 2026-08-11.
+- Three-Way Intermediate tutorial playback and build-first suitability passed in Brave Desktop on 2026-08-11.
+- Carolina and Live-Bait Slip-Sinker production tutorials are intentionally not being marked passed because they require replacement under the approved build-first tutorial rule.
 
 # Validation Order From Current State
 
@@ -418,14 +442,19 @@ Completed:
 8. **Recognition-media correction package review — PASSED.**
 9. **Recognition-media GitHub upload/package verification — PASSED.**
 10. **Recognition-media phone/desktop runtime re-validation — PASSED.**
+11. **Drop Shot tutorial runtime — PASSED.**
+12. **Three-Way tutorial runtime — PASSED.**
 
 Open work:
 
-11. Intermediate tutorial playback audit — **IN PROGRESS**: Drop Shot PASSED; Carolina, Live-Bait Slip-Sinker, and Three-Way pending.
-12. Existing tutorial playback regression audit.
-13. Beginner/Beginner+/Core and application regression pass.
-14. Correct known Bobber Stop alt-text metadata defect in a user-reviewed production-data package and re-test the affected reference popover.
-15. Documentation reconciliation/final closeout.
+13. Finalize replacement tutorial selections for Carolina and Live-Bait Slip-Sinker; Carolina replacement is already user-approved.
+14. Finalize replacement tutorial selections for Slip Bobber, Ned, and Weightless Soft-Plastic from the existing-Rig audit.
+15. Apply all approved tutorial replacements together in one reviewed `data/rigs.js` correction package, then runtime-test every changed embed.
+16. Existing tutorial playback regression audit for tutorials retained as-is, plus Inline Spinner D049 external-fallback check.
+17. Beginner/Beginner+/Core and application regression pass.
+18. Correct known Bobber Stop alt-text metadata defect in the same reviewed production-data correction phase and re-test the affected reference popover.
+19. Reconcile the build-first tutorial-selection rule into governing documentation.
+20. Documentation reconciliation/final closeout.
 
 A failed block must remain visibly failed/pending until corrected and re-tested.
 
@@ -434,7 +463,7 @@ A failed block must remain visibly failed/pending until corrected and re-tested.
 After all source, GitHub, runtime, tutorial, recognition-media, metadata/accessibility, and regression checks pass:
 
 - promote the segment's durable D053/D054 decisions into `DECISIONS.md`,
-- reconcile the post-Texas rollout language in `MEDIA_GUIDE.md`,
+- reconcile the post-Texas rollout language and build-first tutorial-selection rule in `MEDIA_GUIDE.md`,
 - update `RIG_REFERENCE_SOURCES.md`,
 - update `HANDOFF.md`, `MILESTONES.md`, and `CHANGELOG.md`,
 - update this workstream and validation document to `Validated`,
