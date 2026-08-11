@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.8  
+**Document Revision:** 0.1.9  
 **Document Status:** Approved  
-**Implementation Status:** Partially Validated — Static + Routing/Search + Drop Shot + Carolina + Live-Bait Passed; Media Corrections Required  
+**Implementation Status:** Partially Validated — All Intermediate Rigs Passed; Media Corrections Required  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Latest Verified Media Update:** `5704da6b9cde20bf90edfa8205e9811fba4114ab` (`Hook fixes`)  
 **Current Validation Head:** `67eea13d623067186171a68be6778cf99ebf5456`  
@@ -17,9 +17,14 @@ Preflight confirms package integrity only. GitHub inspection and runtime review 
 
 # Current Validation State
 
-The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, Drop Shot Rig, Carolina Rig, and Live-Bait Slip-Sinker Rig runtime validation have passed.
+The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, and all four Intermediate Rig runtime blocks have passed:
 
-Three-Way Rig, tutorial playback, regression validation, and final recognition-media validation remain pending.
+- Drop Shot Rig — PASSED
+- Carolina Rig — PASSED
+- Live-Bait Slip-Sinker Rig — PASSED
+- Three-Way Rig — PASSED
+
+Tutorial playback, regression validation, recognition-media correction/re-validation, and the known Bobber Stop alt-text correction remain pending.
 
 The recognition-media gate is currently **FAILED / CORRECTION REQUIRED** because runtime review exposed visible background-color and baked/uneven shadow inconsistencies on nine older Tackle reference assets. These media defects do not invalidate the passed Intermediate Rig logic/runtime blocks, but they block final media validation and segment closeout.
 
@@ -200,7 +205,7 @@ The previously logged background/shadow defects on Sliding Sinker and Bait are s
 
 # Three-Way Rig
 
-**Status: STATIC DEFINITION PASSED / RUNTIME PENDING**
+**Status: PASSED — 2026-08-10**
 
 Static canonical definition confirms:
 
@@ -210,7 +215,18 @@ Static canonical definition confirms:
 - the fixed sinker remains below the hook leader,
 - the canonical Tackle definition requires a true three-eye swivel and the Rig explicitly warns against substituting a two-eye barrel swivel.
 
-Runtime confirm rendering, readiness persistence, derived relationships, and recognition-media presentation.
+Runtime validation in Chrome confirmed:
+
+- detail opens with `Intermediate` difficulty,
+- Three-Way Swivel, Leader Line, Fishing Hook, Bait, and Fixed Sinker render as canonical components,
+- the main line connects to one swivel eye, the hook leader to a second eye, and the shorter sinker dropper to the third eye,
+- the Fishing Hook is presented on the hook leader and the Fixed Sinker on the shorter dropper below the hook leader,
+- the Rig clearly uses a true three-eye swivel rather than a two-eye Barrel Swivel,
+- readiness selection updates and persists after leaving and returning to the Rig,
+- Three-Way Swivel, Fixed Sinker, and Fishing Hook contextual references load correctly and derived `Used In` relationships function,
+- the Three-Way Swivel recognition image reads as a true three-eye swivel,
+- the Fixed Sinker recognition image reads as a terminal tie-eye sinker rather than a sliding through-hole sinker,
+- Parent/Home navigation remains normal.
 
 # Recognition Media
 
@@ -362,7 +378,7 @@ Runtime confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: STATIC REPOSITORY + ROUTING/SEARCH + DROP SHOT + CAROLINA + LIVE-BAIT PASSED / MEDIA CORRECTION OPEN**
+**Status: ALL INTERMEDIATE RIG RUNTIME BLOCKS PASSED / MEDIA CORRECTION OPEN**
 
 Verified checkpoints:
 
@@ -375,6 +391,7 @@ Verified checkpoints:
 - Drop Shot Rig detail, component rendering, readiness persistence, derived relationships, recognition popovers, fixed-surface blending, and navigation passed in Chrome on 2026-08-10.
 - Carolina Rig detail, component order/relationships, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
 - Live-Bait Slip-Sinker Rig detail, canonical component handling, sliding-sinker relationship, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
+- Three-Way Rig detail, three-eye swivel topology, leader/dropper relationships, readiness, derived relationships, recognition references, and navigation passed in Chrome on 2026-08-10.
 - Recognition-media validation remains open because nine older assets require fixed-surface/background/shadow correction.
 
 # Validation Order From Current State
@@ -387,16 +404,17 @@ Completed:
 4. **Drop Shot Rig — PASSED.**
 5. **Carolina Rig — PASSED.**
 6. **Live-Bait Slip-Sinker Rig — PASSED.**
+7. **Three-Way Rig — PASSED.**
 
 Open work:
 
-7. Three-Way Rig — runtime.
 8. Review/correct the nine identified legacy recognition-media assets.
 9. Corrected recognition-media phone/desktop re-validation.
-10. Existing and Intermediate tutorial playback audit.
-11. Beginner/Beginner+/Core and application regression pass.
-12. Correct known Bobber Stop alt-text metadata defect in a user-reviewed production-data package and re-test the affected reference popover.
-13. Documentation reconciliation/final closeout.
+10. Intermediate tutorial playback audit.
+11. Existing tutorial playback regression audit.
+12. Beginner/Beginner+/Core and application regression pass.
+13. Correct known Bobber Stop alt-text metadata defect in a user-reviewed production-data package and re-test the affected reference popover.
+14. Documentation reconciliation/final closeout.
 
 A failed block must remain visibly failed/pending until corrected and re-tested.
 
