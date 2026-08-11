@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.6  
+**Document Revision:** 1.0.7  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-10
 
@@ -61,6 +61,24 @@ Avoid:
 - Promotional poster styling
 
 Original Freshwater Fishing Companion diagrams do not need a footer badge.
+
+# Reference Media Surface Invariant
+
+The canonical reference-media panel and current Tackle recognition-image canvas use **exact RGB `244, 240, 232` / `#f4f0e8`**.
+
+This color is a permanent cross-theme design constraint, not a Forest Journal-only theme choice.
+
+All future production-supported themes, palettes, and color schemes must be designed to work harmoniously with this fixed reference-media surface. Theme work must not recolor, tint, filter, darken, lighten, or substitute a theme-specific background for the canonical reference-media panel or for Tackle recognition assets built to this canvas.
+
+Future theme evaluation must therefore include:
+
+- visual compatibility with `#f4f0e8`,
+- sufficient contrast between the fixed media surface and surrounding cards/panels,
+- sufficient contrast for text, controls, borders, focus states, and contextual-reference chrome adjacent to the fixed surface,
+- confirmation that the media panel does not look accidental, muddy, overly bright, or visually disconnected from the proposed theme,
+- preservation of the seamless relationship between the reference panel and 640 × 440 Tackle assets composited on the same exact canvas color.
+
+A proposed theme that materially clashes with `#f4f0e8` must be redesigned rather than changing the reference-media surface to accommodate the theme.
 
 # Mobile-First Standard
 
@@ -197,7 +215,7 @@ For mechanically sensitive items, compare the final production asset back to the
 
 Tackle imagery is recognition help, not a photo library. It is displayed on demand from contextual `Name ⓘ` interactions.
 
-For the approved catalog-style Tackle treatment, optimized WebP is the preferred production format. The current production standard uses 640 × 440 single-object catalog references on **exact RGB `244, 240, 232` / `#f4f0e8`**, matching the `.reference-popover__image` background in the production Forest Journal stylesheet. Generated or isolated objects should be composited onto this exact canvas before final WebP export so the image area visually merges with the reference page rather than appearing as a darker cream rectangle. Do not rely on a generator to approximate the canvas color. Production references use no alpha transparency or artificial cast shadows. The object should visually match the approved production examples: realistic material, clean edges, useful scale, and enough detail to identify the component without relying on the label.
+For the approved catalog-style Tackle treatment, optimized WebP is the preferred production format. The current production standard uses 640 × 440 single-object catalog references on **exact RGB `244, 240, 232` / `#f4f0e8`**, matching the canonical reference-media panel. Generated or isolated objects should be composited onto this exact canvas before final WebP export so the image area visually merges with the reference panel rather than appearing as a darker or lighter rectangle. Do not rely on a generator to approximate the canvas color. Production references use no alpha transparency or artificial cast shadows. The object should visually match the approved production examples: realistic material, clean edges, useful scale, and enough detail to identify the component without relying on the label. Future themes must preserve this panel/canvas color and design their surrounding palette around it.
 
 ## Tackle Acquisition Priority
 
@@ -430,6 +448,7 @@ Before approval, verify:
 - Edge quality is clean at normal phone display size
 - Current production assets use the approved 640 × 440 `#f4f0e8` reference-panel canvas
 - The image canvas does not appear visibly darker or lighter than the surrounding reference-image panel
+- Any current or future application theme preserves the `#f4f0e8` reference-media surface and remains visually compatible with it
 - Real photographs are preferred when they are technically correct, legally reusable, and presentation-safe
 - Original replacement assets visually match the current approved semi-photorealistic catalog-reference library
 - Vector, flat, cartoon, icon, or clip-art appearance fails normal Tackle recognition-media validation unless an explicit mechanically justified illustration exception was approved before packaging
