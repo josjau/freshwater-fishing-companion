@@ -12,6 +12,47 @@ const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     milestone: "Rig UX Finalization"
 });
 
+function buildSearchControlsMarkup(inputId, placeholder) {
+    return `
+        <div class="search-controls">
+            <div class="search-input-shell">
+                <input class="search-input" id="${inputId}" name="query" type="search"
+                    placeholder="${placeholder}" autocomplete="off" enterkeyhint="search">
+                <button class="search-clear-button" type="button" data-search-clear aria-label="Clear search" hidden>
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <button class="search-button" type="submit">Search</button>
+        </div>
+    `;
+}
+
+function initializeSearchControls(form, input, clearButton, onUpdate) {
+    if (!input || typeof onUpdate !== "function") return;
+
+    const update = () => {
+        if (clearButton) {
+            clearButton.hidden = input.value.length === 0;
+        }
+        onUpdate();
+    };
+
+    form?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        update();
+    });
+    input.addEventListener("input", update);
+    clearButton?.addEventListener("click", () => {
+        input.value = "";
+        update();
+        input.focus();
+    });
+
+    if (clearButton) {
+        clearButton.hidden = input.value.length === 0;
+    }
+}
+
 function renderView(appMain, viewConfig) {
     if (!appMain || !viewConfig || !Array.isArray(viewConfig.cards)) {
         console.error("A valid view configuration is required.");
@@ -43,11 +84,7 @@ function renderView(appMain, viewConfig) {
     const searchMarkup = searchConfig ? `
         <form class="search-form section-search-form" data-section-search-form>
             <label class="search-label" for="${searchConfig.inputId}">${searchConfig.label}</label>
-            <div class="search-controls">
-                <input class="search-input" id="${searchConfig.inputId}" name="query" type="search"
-                    placeholder="${searchConfig.placeholder}" autocomplete="off" enterkeyhint="search">
-                <button class="search-button" type="submit">Search</button>
-            </div>
+            ${buildSearchControlsMarkup(searchConfig.inputId, searchConfig.placeholder)}
         </form>
         <div class="section-search-results" data-section-search-region hidden>
             <p class="search-status" data-search-status aria-live="polite"></p>
@@ -71,6 +108,7 @@ function renderView(appMain, viewConfig) {
     if (searchConfig && typeof searchConfig.onSearch === "function") {
         const form = appMain.querySelector("[data-section-search-form]");
         const input = appMain.querySelector(`#${searchConfig.inputId}`);
+        const clearButton = appMain.querySelector("[data-search-clear]");
         const cardGrid = appMain.querySelector("[data-view-card-grid]");
         const searchRegion = appMain.querySelector("[data-section-search-region]");
 
@@ -91,11 +129,7 @@ function renderView(appMain, viewConfig) {
             searchConfig.onSearch(query);
         };
 
-        form?.addEventListener("submit", (event) => {
-            event.preventDefault();
-            updateSearch();
-        });
-        input?.addEventListener("input", updateSearch);
+        initializeSearchControls(form, input, clearButton, updateSearch);
     }
 }
 
@@ -128,11 +162,7 @@ function renderSearchView(appMain, searchConfig) {
             <p>${searchConfig.description}</p>
             <form class="search-form" data-search-form>
                 <label class="search-label" for="${searchConfig.inputId}">${searchConfig.label}</label>
-                <div class="search-controls">
-                    <input class="search-input" id="${searchConfig.inputId}" name="query" type="search"
-                        placeholder="${searchConfig.placeholder}" autocomplete="off" enterkeyhint="search">
-                    <button class="search-button" type="submit">Search</button>
-                </div>
+                ${buildSearchControlsMarkup(searchConfig.inputId, searchConfig.placeholder)}
             </form>
             <p class="search-status" data-search-status aria-live="polite"></p>
             <div class="search-results" data-search-results></div>
@@ -141,18 +171,16 @@ function renderSearchView(appMain, searchConfig) {
 
     const searchForm = appMain.querySelector("[data-search-form]");
     const searchInput = appMain.querySelector(`#${searchConfig.inputId}`);
+    const clearButton = appMain.querySelector("[data-search-clear]");
 
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", searchConfig.onParent);
     initializeHomeNavigation(appMain);
 
-    searchForm?.addEventListener("submit", (event) => {
-        event.preventDefault();
-        searchConfig.onSearch(searchInput?.value ?? "");
-    });
+    const updateSearch = () => searchConfig.onSearch(searchInput?.value ?? "");
+    initializeSearchControls(searchForm, searchInput, clearButton, updateSearch);
 
-    searchInput?.addEventListener("input", () => searchConfig.onSearch(searchInput.value));
     searchInput?.focus();
-    searchConfig.onSearch("");
+    updateSearch();
 }
 
 function renderSearchResults(appMain, records, resultConfig) {

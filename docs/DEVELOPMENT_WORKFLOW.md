@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.1.2  
+**Document Revision:** 1.1.4  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-10
 
 # Purpose
 
@@ -31,6 +31,33 @@ Before changing an existing file:
 
 A new session should read `HANDOFF.md` and the governing files it references before proposing project changes.
 
+# Continuous Documentation State
+
+Repository documentation must describe what is actually true on `main` after the most recent meaningful repository action. Documentation is not deferred until final closeout when the implementation state has already changed.
+
+Use these implementation-state terms consistently when they apply:
+
+- **Planned** — approved scope exists but implementation has not started.
+- **In Progress** — implementation work is actively being prepared or only partially present.
+- **Implemented / Unvalidated** — the intended implementation is present on `main`, but required post-push runtime, visual, relationship, media, or regression validation has not passed.
+- **Partially Validated** — some required validation has passed, but remaining checks, failures, or corrections still exist.
+- **Validated** — all required implementation and validation checks for the stated scope have passed.
+- **Finalized** — the validated implementation and its governing/current-state documentation have been reconciled, pushed, re-fetched, and verified.
+
+After every meaningful implementation, correction, or validation push:
+
+1. Record what is now present on `main`.
+2. Record what remains unvalidated.
+3. Record known failures immediately rather than waiting for final closeout.
+4. Update the active workstream and validation documents when their state changed.
+5. Update `HANDOFF.md` whenever the repository continuation point, current milestone, known defect, or next action materially changed.
+6. Update `CHANGELOG.md` when meaningful implementation or corrective behavior landed.
+7. Update governing documents immediately when a permanent rule or durable decision changed.
+
+The repository must be sufficient to reconstruct the current state after an unexpected chat/session boundary. The user should not have to supply missing recent history that could have been recorded with the preceding implementation push.
+
+Final closeout remains required, but closeout is a reconciliation/verification step rather than the first time documentation catches up with implementation.
+
 # Default Delivery Method
 
 Complete-file replacement is the default implementation workflow.
@@ -51,6 +78,31 @@ For coherent multi-file or asset-heavy work:
 - Do not place package manifests, validation notes, staging instructions, package READMEs, or other delivery-only artifacts inside the repository ZIP unless they are explicitly approved permanent repository documents.
 - Keep related source, documentation, and imagery together so the user can review one coherent GitHub Desktop diff.
 - Minimize GitHub pushes: when implementation and its required documentation can safely be reviewed together, deliver them in the same package and target one coherent commit/push.
+- Do not minimize pushes at the cost of stale current-state documentation. If implementation is intentionally pushed before runtime validation, its documentation must state `Implemented / Unvalidated` in that same repository state whenever practical.
+
+# Production Write Approval Gate
+
+Markdown documentation may be updated directly on GitHub when needed to keep repository state, decisions, validation results, and handoff information current.
+
+Production assets and source require user review before direct repository writes by the assistant. This includes, but is not limited to:
+
+- images and other media,
+- JavaScript,
+- CSS,
+- HTML,
+- application data files,
+- configuration files,
+- other non-Markdown production files.
+
+Default workflow for those files:
+
+1. Build the complete proposed replacement/package from the latest verified GitHub baseline.
+2. Provide the files or coherent ZIP to the user for review.
+3. Do not write those production files to GitHub unless the user explicitly approves that direct write after review.
+4. The user may instead copy/upload the reviewed files and push them through GitHub Desktop.
+5. After the user push, verify the actual commit and affected files on GitHub.
+
+A prior approval for one production update does not grant blanket approval for later production writes. Ask again before each new direct-write set unless the user explicitly changes this rule.
 
 # Decision-to-Package Continuity
 
@@ -112,9 +164,11 @@ Sequence:
 7. User reviews the GitHub Desktop diff.
 8. User commits and pushes the coherent update.
 9. Verify the commit and affected files on GitHub.
-10. Validate the live deployment when applicable.
-11. If validation produces required corrections, package those corrections coherently.
-12. Only then mark the session/module/section finalized.
+10. Update current-state documentation immediately if the push changed the repository state and those status changes were not already included in the same push.
+11. Validate the live deployment when applicable.
+12. Record each meaningful validation result or known failure in the active validation/current-state documentation.
+13. If validation produces required corrections, package those corrections and their status documentation coherently.
+14. Only then mark the session/module/section finalized.
 
 Avoid unnecessary pushes and deployments, but do not trade fewer pushes for incomplete validation or stale documentation.
 
@@ -163,13 +217,16 @@ Identify:
 - UI impact
 - Regression checks
 - Validation criteria
-- Documentation that must change before closeout
+- Documentation that must change with the implementation state
+- Documentation that must change again at final closeout
 
 ## Build
 
 Create all required implementation files, documentation, and media for the approved module.
 
 When original diagrams are appropriate, create the needed images instead of leaving placeholders simply to avoid asset work.
+
+For Tackle recognition-media work, `MEDIA_GUIDE.md`'s Tackle Media Generation Gate is mandatory. A new or replacement Tackle recognition asset must not enter a delivery package until it has passed the real-photo search, geometry verification, current-library visual comparison, mobile-recognition, licensing/provenance, format, and style checks defined there.
 
 ## Validate
 
@@ -182,9 +239,12 @@ Validate as applicable:
 - Existing related features
 - Mobile layout
 - Media rendering
+- Media visual-style conformity and recognition quality
 - Accessibility
 - Runtime/console behavior
 - Storage footprint for media work
+
+A failed validation criterion changes repository status immediately. Record the failure before proceeding with unrelated expansion work.
 
 ## Package
 
@@ -208,6 +268,7 @@ After push:
 - Verify the affected files on `main`.
 - Do not assume local/staged work reached GitHub.
 - Rule out GitHub Pages deployment lag before altering otherwise-correct source.
+- Confirm the active workstream/HANDOFF state accurately describes what is now on `main`; correct stale status before starting another build segment.
 
 # Documentation Closeout
 
@@ -217,13 +278,13 @@ A session, module, or section is not finalized until all relevant documentation 
 
 Closeout sequence:
 
-1. Identify all decisions, current-state changes, deferred work, and open issues produced by the segment.
+1. Identify all decisions, current-state changes, deferred work, known failures, corrections, and open issues produced by the segment.
 2. Fetch the latest relevant documentation from GitHub.
-3. Update all affected governing documents and `HANDOFF.md`.
+3. Reconcile all affected governing documents and `HANDOFF.md` with the already-current active workstream state.
 4. Return complete replacement documentation files as part of the coherent segment package whenever practical.
 5. User reviews, commits, and pushes.
 6. Verify the actual GitHub files after push.
-7. Confirm that Current, Approved / Not Implemented, In Progress, Validated, and Open states are represented accurately.
+7. Confirm that Planned, In Progress, Implemented / Unvalidated, Partially Validated, Validated, Finalized, Approved / Not Implemented, and Open states are represented accurately where applicable.
 8. Only then mark the segment finalized.
 
 Conversation agreement, local files, staged files, preflight checks, or implementation alone do not satisfy this closeout rule.
@@ -252,7 +313,7 @@ Classify the outcome as appropriate:
 - **Reject**
 - **Open**
 
-Update the governing documentation before closeout.
+Update the governing documentation before closeout, and update active status documentation immediately when the outcome changes the current continuation point.
 
 When a substantial off-segment discussion would unnecessarily interrupt coherent active work, the technical lead may recommend parking it until a clean stopping point. Record enough context that the topic cannot be lost. If the issue materially affects the active implementation, discuss it immediately.
 
@@ -268,7 +329,7 @@ When a permanent standard is agreed:
 4. Include those documentation changes with the active coherent package when practical.
 5. Verify the documentation after push.
 
-A new chat should be able to reconstruct the project's operating rules from GitHub alone.
+A new chat should be able to reconstruct the project's operating rules and current implementation state from GitHub alone.
 
 # Change Classification
 

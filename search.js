@@ -3,7 +3,7 @@
    FILE: search.js
    REPLACEMENT: MS2.2 - SHARED SEARCH UTILITIES
    PURPOSE: Provides reusable record lookup, text search,
-   filtering, and alphabetical sorting for canonical data.
+   filtering, relevance ranking, and alphabetical sorting for canonical data.
    ========================================================== */
 
 "use strict";
@@ -35,6 +35,40 @@ function findRecordById(records, recordId) {
     );
 }
 
+function getSearchValueScore(value, normalizedQuery) {
+    const normalizedValue = normalizeSearchText(value);
+    if (!normalizedValue || !normalizedQuery) return 0;
+
+    if (normalizedValue === normalizedQuery) return 400;
+    if (normalizedValue.startsWith(normalizedQuery)) return 350;
+
+    const words = normalizedValue.split(/[^a-z0-9]+/).filter(Boolean);
+    if (words.some((word) => word === normalizedQuery)) return 325;
+    if (words.some((word) => word.startsWith(normalizedQuery))) return 300;
+    if (normalizedValue.includes(normalizedQuery)) return 250;
+
+    return 0;
+}
+
+function getSearchRecordScore(record, normalizedQuery, fields) {
+    return fields.reduce((bestScore, field, fieldIndex) => {
+        const fieldValue = record[field];
+        const values = Array.isArray(fieldValue) ? fieldValue : [fieldValue];
+        const valueScore = values.reduce(
+            (bestValueScore, value) => Math.max(
+                bestValueScore,
+                getSearchValueScore(value, normalizedQuery)
+            ),
+            0
+        );
+
+        if (valueScore === 0) return bestScore;
+
+        const fieldPriority = Math.max(0, fields.length - fieldIndex) * 1000;
+        return Math.max(bestScore, fieldPriority + valueScore);
+    }, 0);
+}
+
 function searchRecords(records, query, fields = ["name"]) {
     if (!Array.isArray(records)) {
         return [];
@@ -46,21 +80,18 @@ function searchRecords(records, query, fields = ["name"]) {
         return [...records];
     }
 
-    return records.filter((record) =>
-        fields.some((field) => {
-            const fieldValue = record[field];
-
-            if (Array.isArray(fieldValue)) {
-                return fieldValue.some((value) =>
-                    normalizeSearchText(value).includes(normalizedQuery)
-                );
-            }
-
-            return normalizeSearchText(fieldValue).includes(
-                normalizedQuery
-            );
-        })
-    );
+    return records
+        .map((record, originalIndex) => ({
+            record,
+            originalIndex,
+            score: getSearchRecordScore(record, normalizedQuery, fields)
+        }))
+        .filter((match) => match.score > 0)
+        .sort((matchA, matchB) =>
+            matchB.score - matchA.score ||
+            matchA.originalIndex - matchB.originalIndex
+        )
+        .map((match) => match.record);
 }
 
 function filterRecordsByValue(records, field, expectedValue) {

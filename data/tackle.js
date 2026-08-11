@@ -9,7 +9,7 @@
 
 const TACKLE_DATA_BUILD_INFO = Object.freeze({
     file: "data/tackle.js",
-    milestone: "Rig UX Finalization"
+    milestone: "Beginner Media + Intermediate Expansion"
 });
 
 const TACKLE_DATA = Object.freeze([
@@ -121,16 +121,16 @@ const TACKLE_DATA = Object.freeze([
     {
         id: "sliding-sinker",
         name: "Sliding Sinker",
-        aliases: ["Egg Sinker", "No-Roll Sinker"],
+        aliases: ["Egg Sinker", "No-Roll Sinker", "Walking Sinker"],
         category: "Weights",
         summary: "A sinker with a hole through it so the fishing line can slide freely.",
         purpose: "Keeps bait near the bottom while allowing a fish to move the line with less resistance.",
         recognitionNotes: ["Hole through the center", "Usually egg-shaped, flat, or cylindrical", "Slides directly on the main line"],
-        commonVariants: ["Egg", "No-roll", "Barrel"],
+        commonVariants: ["Egg", "No-roll", "Barrel", "Walking"],
         relatedTackleIds: ["bead", "barrel-swivel", "leader-line"],
         mediaIds: ["sliding-sinker-reference"],
         createdVersion: "0.2.6",
-        lastModifiedVersion: "0.2.6",
+        lastModifiedVersion: "0.3.1",
         isActive: true
     },
     {
@@ -256,16 +256,16 @@ const TACKLE_DATA = Object.freeze([
     {
         id: "wacky-hook",
         name: "Wacky Hook",
-        aliases: ["Wacky Rig Hook", "Finesse Wacky Hook"],
+        aliases: ["Wacky Rig Hook", "Finesse Wacky Hook", "Drop Shot Hook"],
         category: "Hooks",
         summary: "A compact hook with an open gap used to hold a soft-plastic worm at or near its midpoint.",
-        purpose: "Keeps the hook point and gap exposed while both ends of a wacky-rigged worm move freely.",
+        purpose: "Provides a compact exposed-hook finesse connection for Wacky and Drop Shot presentations.",
         recognitionNotes: ["Short compact hook profile", "Open hook gap and exposed point", "May include a light weed guard"],
-        commonVariants: ["Open hook", "Weedless guard", "Wacky/Neko hook"],
+        commonVariants: ["Open hook", "Weedless guard", "Wacky/Neko/Drop Shot hook"],
         relatedTackleIds: ["soft-plastic", "wacky-o-ring", "hook"],
-        mediaIds: [],
+        mediaIds: ["wacky-hook-reference"],
         createdVersion: "0.3.0",
-        lastModifiedVersion: "0.3.0",
+        lastModifiedVersion: "0.3.1",
         isActive: true
     },
     {
@@ -278,9 +278,9 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Small flexible ring", "Sized to fit around a stick worm", "Usually installed near the bait midpoint"],
         commonVariants: ["Single O-ring", "Crossed double-ring", "Wacky saddle"],
         relatedTackleIds: ["wacky-hook", "soft-plastic"],
-        mediaIds: [],
+        mediaIds: ["wacky-o-ring-reference"],
         createdVersion: "0.3.0",
-        lastModifiedVersion: "0.3.0",
+        lastModifiedVersion: "0.3.1",
         isActive: true
     },
     {
@@ -293,9 +293,54 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Small mushroom-shaped weighted head", "Light-wire compact hook on standard finesse versions", "Usually includes a keeper for holding a short soft plastic"],
         commonVariants: ["Exposed-hook mushroom head", "Weedless mushroom head", "Heavier-duty Ned head"],
         relatedTackleIds: ["soft-plastic", "jighead"],
-        mediaIds: [],
+        mediaIds: ["ned-jighead-reference"],
         createdVersion: "0.3.0",
-        lastModifiedVersion: "0.3.0",
+        lastModifiedVersion: "0.3.1",
+        isActive: true
+    },
+    {
+        id: "drop-shot-weight",
+        name: "Drop Shot Weight",
+        aliases: ["Dropshot Weight", "Drop Shot Sinker"],
+        category: "Weights",
+        summary: "A terminal sinker made to hang below a drop-shot hook, commonly using a quick-change line clip instead of a tied eye.",
+        purpose: "Maintains bottom contact below the bait while allowing hook-to-weight spacing to be adjusted quickly.",
+        recognitionNotes: ["Weight hangs at the end of the tag line", "Often has a narrow quick-change line clip", "Common shapes include round, teardrop, and skinny cylinder"],
+        commonVariants: ["Round", "Teardrop", "Skinny cylinder"],
+        relatedTackleIds: ["wacky-hook", "soft-plastic"],
+        mediaIds: ["drop-shot-weight-reference"],
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true
+    },
+    {
+        id: "three-way-swivel",
+        name: "Three-Way Swivel",
+        aliases: ["3-Way Swivel", "Cross Swivel"],
+        category: "Connectors",
+        summary: "A swivel with three line-tie eyes arranged around a central junction for separating main line, leader, and dropper connections.",
+        purpose: "Creates three independent connection points for multi-line bottom and current rigs.",
+        recognitionNotes: ["Three distinct line-tie eyes", "Central rotating metal junction", "Forms a three-branch or T-shaped connection rather than a straight two-eye swivel"],
+        commonVariants: ["Power three-way", "Cross swivel", "Three-way crane swivel"],
+        relatedTackleIds: ["leader-line", "fixed-sinker", "hook"],
+        mediaIds: ["three-way-swivel-reference"],
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
+        isActive: true
+    },
+    {
+        id: "fixed-sinker",
+        name: "Fixed Sinker",
+        aliases: ["Dropper Sinker", "Bank Sinker", "Bell Sinker"],
+        category: "Weights",
+        summary: "A terminal sinker with an eye or tie point that is secured to the end of a dropper line instead of sliding on the main line.",
+        purpose: "Holds a bottom rig near the desired depth or position while remaining separated from the bait leader.",
+        recognitionNotes: ["Tie eye or molded top loop", "No through-hole for sliding on the main line", "Bank and bell shapes are common bottom-fishing examples"],
+        commonVariants: ["Bank", "Bell", "Pyramid"],
+        relatedTackleIds: ["three-way-swivel", "leader-line"],
+        mediaIds: ["fixed-sinker-reference"],
+        createdVersion: "0.3.1",
+        lastModifiedVersion: "0.3.1",
         isActive: true
     },
     {

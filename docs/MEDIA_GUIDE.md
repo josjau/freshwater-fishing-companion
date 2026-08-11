@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.4  
+**Document Revision:** 1.0.7  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-08
+**Last Updated:** 2026-08-10
 
 # Purpose
 
@@ -61,6 +61,24 @@ Avoid:
 - Promotional poster styling
 
 Original Freshwater Fishing Companion diagrams do not need a footer badge.
+
+# Reference Media Surface Invariant
+
+The canonical reference-media panel and current Tackle recognition-image canvas use **exact RGB `244, 240, 232` / `#f4f0e8`**.
+
+This color is a permanent cross-theme design constraint, not a Forest Journal-only theme choice.
+
+All future production-supported themes, palettes, and color schemes must be designed to work harmoniously with this fixed reference-media surface. Theme work must not recolor, tint, filter, darken, lighten, or substitute a theme-specific background for the canonical reference-media panel or for Tackle recognition assets built to this canvas.
+
+Future theme evaluation must therefore include:
+
+- visual compatibility with `#f4f0e8`,
+- sufficient contrast between the fixed media surface and surrounding cards/panels,
+- sufficient contrast for text, controls, borders, focus states, and contextual-reference chrome adjacent to the fixed surface,
+- confirmation that the media panel does not look accidental, muddy, overly bright, or visually disconnected from the proposed theme,
+- preservation of the seamless relationship between the reference panel and 640 × 440 Tackle assets composited on the same exact canvas color.
+
+A proposed theme that materially clashes with `#f4f0e8` must be redesigned rather than changing the reference-media surface to accommodate the theme.
 
 # Mobile-First Standard
 
@@ -172,43 +190,77 @@ The Fish page may surround the verified photograph with field-guide information,
 
 # Tackle Media
 
-Tackle is recognition-first and is suitable for original semi-photorealistic or vector illustration when the object geometry is anchored to real reference imagery.
+Tackle is recognition-first. Production recognition media should use a trustworthy real photograph when local reuse rights, subject identity, and presentation quality permit it. When a suitable reusable photograph is unavailable, use an original semi-photorealistic catalog-style reference anchored to verified real-world geometry.
+
+Vector, line-art, flat-graphic, or clip-art treatment is not the normal production style for Tackle recognition media. Precise illustration is an exception for mechanically sensitive items only when it materially improves geometry or recognition and must be explicitly identified and reviewed before inclusion in a build.
 
 The approved visual style uses:
 
 - Clean catalog-like presentation
-- Clean product-reference rendering that visually matches the approved neutral-background examples
-- Semi-photorealistic treatment where practical; precise illustration only when it improves mechanical accuracy
+- Clean product-reference rendering that visually matches the current approved neutral-background production examples
+- Realistic material appearance and depth
+- Semi-photorealistic treatment where a reusable real photograph is unavailable
 - Clean object edges at normal mobile display sizes
-- Forest Journal-compatible green/earth accents
+- Forest Journal-compatible green/earth accents where appropriate
 - Consistent lighting and scale
 - Minimal decorative branding
 - No artificial baked-in drop shadow
+- No heavy outline, vector, icon, cartoon, or clip-art appearance
 
-Transparency is optional rather than mandatory. Use alpha transparency only when the object can be isolated cleanly without rough halos, jagged edges, fringing, or degraded fine geometry. A restrained neutral background is acceptable when it produces a cleaner and more recognizable reference image.
+Transparency is optional as an intermediate production technique, but the normal shipped Tackle reference is an RGB WebP with the exact reference-panel canvas color described below. Use alpha only when isolation can be performed cleanly without rough halos, jagged edges, fringing, or degraded fine geometry.
 
-Before creating a Tackle illustration, use a real photograph, manufacturer product image, or authoritative technical image as the geometry baseline. Do not invent hook, float, swivel, sinker, stop, or connector geometry from memory.
+Before creating a Tackle recognition asset, use a real photograph, manufacturer product image, or authoritative technical image as the geometry baseline. Do not invent hook, float, swivel, sinker, stop, or connector geometry from memory.
 
-For mechanically sensitive items, compare the final illustration back to the real baseline before approval.
+For mechanically sensitive items, compare the final production asset back to the real baseline before approval.
 
 Tackle imagery is recognition help, not a photo library. It is displayed on demand from contextual `Name ⓘ` interactions.
 
-For the approved catalog-style Tackle treatment, optimized WebP is the preferred production format. The current production standard uses 640 × 440 single-object catalog references on a restrained warm-neutral background, without alpha transparency or artificial cast shadows. The object should visually match the approved examples: realistic material, clean edges, useful scale, and enough detail to identify the component without relying on the label.
+For the approved catalog-style Tackle treatment, optimized WebP is the preferred production format. The current production standard uses 640 × 440 single-object catalog references on **exact RGB `244, 240, 232` / `#f4f0e8`**, matching the canonical reference-media panel. Generated or isolated objects should be composited onto this exact canvas before final WebP export so the image area visually merges with the reference panel rather than appearing as a darker or lighter rectangle. Do not rely on a generator to approximate the canvas color. Production references use no alpha transparency or artificial cast shadows. The object should visually match the approved production examples: realistic material, clean edges, useful scale, and enough detail to identify the component without relying on the label. Future themes must preserve this panel/canvas color and design their surrounding palette around it.
 
-Semi-photorealistic rendering is preferred when it improves recognition and preserves correct geometry. Precise illustration remains acceptable for small or mechanically sensitive items when it is clearer and more accurate than a simulated photograph. Alpha transparency remains permissible for a future asset only when it demonstrably produces a cleaner result than the neutral-background standard. SVG remains preferred for true vector diagrams, icons, knots, and instructional line art; production Tackle references may be rasterized to WebP for consistent loading and presentation.
+## Tackle Acquisition Priority
 
-## Hook Geometry Standard
+For a canonical Tackle recognition asset, use this order:
 
-Hook imagery is mechanically sensitive and must remain immediately readable as a hook rather than a nearly closed circle.
+1. A technically correct real photograph that is public domain, CC0, or otherwise clearly licensed for the project's local redistribution and modification needs.
+2. Another properly licensed authoritative or manufacturer image only when the exact reuse rights permit local inclusion.
+3. An original semi-photorealistic catalog-style reference created from independently verified real-world geometry.
+4. A precise illustration only when mechanical accuracy cannot be represented clearly through the preferred treatments; this is an explicit exception, not a default production shortcut.
 
-For a standard fishing hook, offset worm hook, or Jighead hook:
+Manufacturer and retailer photographs may be used as geometry/reference evidence even when redistribution rights do not permit copying them into the repository. Reference permission and production-asset permission are separate questions.
+
+Do not choose a weaker reusable photograph merely because it is available. The production asset must represent the correct canonical concept clearly enough for a beginner to identify the component.
+
+## Tackle Media Generation Gate
+
+Every new or replacement Tackle recognition asset must pass this gate before it may enter an implementation package:
+
+1. Re-read the current `MEDIA_GUIDE.md` from GitHub.
+2. Inspect representative current approved production Tackle assets from GitHub; archived or superseded artwork is not a visual baseline.
+3. Verify the subject's geometry against a real photograph, manufacturer image, or authoritative technical reference.
+4. Search for a legally reusable real photograph before generating an original replacement.
+5. When an original asset is required, explicitly target the approved semi-photorealistic catalog-reference treatment rather than generic illustration.
+6. Isolate/composite the subject as needed and verify the final 640 × 440 production canvas is exact `#f4f0e8`, not an approximate generated cream.
+7. Compare the finished asset visually with the current approved production library at full size and at realistic contextual-popover phone size.
+8. Reject the asset before packaging if it appears vector-like, flat, cartoon-like, clip-art-like, mechanically ambiguous, materially inconsistent with the current library, uses a visibly mismatched canvas, or depends on its caption for basic identification.
+9. Only after visual-style, geometry, licensing/provenance, format, canvas-color, and mobile-recognition checks pass may the asset be added to `data/media.js` or a delivery package.
+
+Passing file dimensions, format, metadata, or path checks is not sufficient. Visual conformity with the current approved production library is a mandatory pre-delivery requirement.
+
+## Hook Geometry and Orientation Standard
+
+Hook imagery is mechanically sensitive and must remain immediately readable as a hook rather than a nearly closed circle or mirrored catalog presentation.
+
+For standalone standard fishing hooks, Wacky/finesse hooks, offset worm hooks, and hook-bearing Jighead references:
 
 - The silhouette must retain an open `J` shape.
+- The normal recognition orientation is a conventional viewer-facing capital `J`: eye/shank on the **right**, bend across the **bottom**, and point/barb rising on the **left**.
+- Do not ship a mirrored/reversed-J orientation solely because a generated candidate happened to face the opposite direction.
+- A different orientation is permitted only when a specific technical relationship requires it and that exception is explicitly reviewed.
 - The eye, shank, bend, gap, point, and barb must be visually distinct.
 - The gap must remain open enough that the point does not visually close against the shank.
 - An offset worm hook must show the offset near the eye without distorting the main bend or gap.
-- A Jighead must show the weighted head and an attached open-`J` hook with a clear point/barb relationship.
-- Near-circular, closed-loop, or ambiguous hook silhouettes fail validation even when they look polished.
+- A Jighead must show the weighted head integrated with the hook shank and an attached open-`J` hook with a clear point/barb relationship.
+- Near-circular, closed-loop, ambiguous, or unintentionally mirrored hook silhouettes fail validation even when they look polished.
 
 # Knot Media
 
@@ -288,11 +340,11 @@ Preferred order:
 
 1. Public domain / CC0
 2. Properly licensed free sources after per-asset verification
-3. Original authoritative project diagrams
+3. Original authoritative project diagrams or original semi-photorealistic recognition assets when appropriate for the domain
 4. Other licensed sources when they add meaningful accuracy
 5. Discovery sources only to trace the original source
-6. Original Companion SVG illustration
-7. AI-generated or enhanced imagery only when appropriate and independently verified
+6. Original Companion SVG illustration for true diagrams/line art
+7. AI-generated or enhanced imagery only when appropriate for the domain and independently verified
 
 Pinterest and similar sites are discovery sources, not production sources.
 
@@ -303,7 +355,7 @@ Do not hotlink production assets.
 Prefer:
 
 - SVG for diagrams, labels, line art, instructional plates
-- Optimized WebP for photographs and catalog-style Tackle recognition images, including rasterized vector-style assets
+- Optimized WebP for photographs and catalog-style Tackle recognition images
 
 Use PNG only when source/tooling requires it.
 
@@ -389,12 +441,19 @@ Before approval, verify:
 - Beginner can recognize the item without relying on the caption
 - Key geometry is clear and the object is not visually ambiguous
 - Small accessories are shown in an identifiable configuration rather than as an unexplained shape
-- Standard, offset, and Jighead hooks retain an open `J` profile with visible eye, shank, bend, gap, point, and barb
+- Standard, Wacky/finesse, offset, and Jighead hooks retain an open `J` profile with visible eye, shank, bend, gap, point, and barb
+- Hook-bearing recognition media follows the normal viewer-facing J orientation unless a reviewed technical exception applies
 - Usage relationships are accurate
 - No artificial drop shadow is baked into the asset
 - Edge quality is clean at normal phone display size
-- Current production assets use the approved 640 × 440 neutral-background treatment
-- Transparency, if exceptionally approved later, does not introduce halos, jagged edges, or visible fringing
+- Current production assets use the approved 640 × 440 `#f4f0e8` reference-panel canvas
+- The image canvas does not appear visibly darker or lighter than the surrounding reference-image panel
+- Any current or future application theme preserves the `#f4f0e8` reference-media surface and remains visually compatible with it
+- Real photographs are preferred when they are technically correct, legally reusable, and presentation-safe
+- Original replacement assets visually match the current approved semi-photorealistic catalog-reference library
+- Vector, flat, cartoon, icon, or clip-art appearance fails normal Tackle recognition-media validation unless an explicit mechanically justified illustration exception was approved before packaging
+- The finished asset was visually compared against current approved production examples before delivery
+- Transparency used during production does not introduce halos, jagged edges, or visible fringing in the final RGB WebP
 
 # Contextual Tackle Image Rule
 

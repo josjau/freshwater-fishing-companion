@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Rig UX Finalization"
+    milestone: "Beginner Media + Intermediate Expansion"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -18,7 +18,6 @@ console.info(`[Loaded] ${BUILD_INFO.file} | ${BUILD_INFO.milestone}`);
 const ROUTES = Object.freeze({
     DASHBOARD: "dashboard",
     FISH: "fish",
-    FISH_SEARCH: "fish-search",
     RIGS: "rigs",
     RIG_BROWSE: "rig-browse",
     RIG_DETAIL: "rig-detail",
@@ -43,6 +42,10 @@ const RIG_COLLECTIONS = Object.freeze({
         title: "Beginner+ Rigs",
         description: "Rigs that add a little more setup precision while remaining approachable for a newer angler."
     }),
+    intermediate: Object.freeze({
+        title: "Intermediate Rigs",
+        description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup."
+    }),
     all: Object.freeze({
         title: "All Rigs",
         description: "Browse every currently implemented Rig in the library."
@@ -56,7 +59,6 @@ let selectedRigCollectionKey = "all";
 
 const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView,
-    [ROUTES.FISH_SEARCH]: renderFishSearchView,
     [ROUTES.RIGS]: renderRigGuideView,
     [ROUTES.RIG_BROWSE]: renderRigBrowseView,
     [ROUTES.RIG_DETAIL]: renderRigDetailView,
@@ -74,61 +76,50 @@ function showView(route) {
         console.error("Application main content area was not found.");
         return;
     }
+
+    if (route !== ROUTES.DASHBOARD && !VIEW_RENDERERS[route]) {
+        console.warn(`No view renderer is registered for: ${route}`);
+        return;
+    }
+
     if (route === ROUTES.DASHBOARD) {
         currentView = ROUTES.DASHBOARD;
         appMain.innerHTML = dashboardMarkup;
         initializeDashboardRouting();
-        return;
+    } else {
+        currentView = route;
+        VIEW_RENDERERS[route](appMain);
     }
-    const viewRenderer = VIEW_RENDERERS[route];
-    if (!viewRenderer) {
-        console.warn(`No view renderer is registered for: ${route}`);
-        return;
-    }
-    currentView = route;
-    viewRenderer(appMain);
+
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto"
+    });
 }
 
 function renderFishGuideView(appMain) {
     renderView(appMain, {
         headingId: "fish-guide-title",
         title: "Fish Guide",
-        description: "Learn to identify freshwater fish using clear, beginner-friendly information.",
+        description: "Search by common name, scientific name, or category, or browse a Fish Guide collection.",
+        search: {
+            inputId: "fish-guide-search-input",
+            label: "Search all Fish",
+            placeholder: "Try bass, bluegill, or Micropterus",
+            onSearch: (query) => updateFishSearchResults(appMain, query)
+        },
         cards: [
-            { id: "search-fish", title: "Search Fish", description: "Find a fish by its common or scientific name.", isAvailable: true },
             { id: "browse-fish-by-family", title: "Browse by Family", description: "Explore related freshwater fish groups." },
             { id: "browse-fish-by-habitat", title: "Browse by Habitat", description: "Find fish by the water and habitat they prefer." },
             { id: "browse-fish-alphabetically", title: "Browse Alphabetically", description: "View the complete fish guide from A to Z." }
-        ],
-        onCardSelect: handleFishGuideCardSelect
-    });
-}
-
-function handleFishGuideCardSelect(cardId) {
-    if (cardId === "search-fish") {
-        showView(ROUTES.FISH_SEARCH);
-        return;
-    }
-    console.info(`Fish Guide action not implemented yet: ${cardId}`);
-}
-
-function renderFishSearchView(appMain) {
-    renderSearchView(appMain, {
-        headingId: "fish-search-title",
-        inputId: "fish-search-input",
-        title: "Search Fish",
-        description: "Search by common name, scientific name, or category.",
-        label: "Fish name or category",
-        placeholder: "Try bass, bluegill, or Micropterus",
-        parentLabel: "Fish Guide",
-        onParent: () => showView(ROUTES.FISH),
-        onSearch: (query) => updateFishSearchResults(appMain, query)
+        ]
     });
 }
 
 function updateFishSearchResults(appMain, query) {
     const matches = searchRecords(FISH_DATA.filter((fish) => fish.isActive), query, ["name", "scientificName", "category"]);
-    renderSearchResults(appMain, sortRecordsAlphabetically(matches), {
+    renderSearchResults(appMain, matches, {
         emptyMessage: "No fish matched your search.",
         renderRecord: (fish) => `
             <button class="search-result-card" type="button" data-result-id="${fish.id}">
@@ -158,7 +149,7 @@ function renderRigGuideView(appMain) {
             { id: "browse-core-rigs", title: "Core Rigs", description: "Six curated setups that form a broadly useful fishing toolkit.", isAvailable: true },
             { id: "browse-beginner-rigs", title: "Beginner", description: "Six simple rigs with forgiving assembly and broad usefulness.", isAvailable: true },
             { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Three approachable rigs that require a little more setup precision.", isAvailable: true },
-            { id: "browse-intermediate-rigs", title: "Intermediate", description: "More specialized rigs for broader fishing situations." },
+            { id: "browse-intermediate-rigs", title: "Intermediate", description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup.", isAvailable: true },
             { id: "browse-intermediate-plus-rigs", title: "Intermediate+", description: "Specialized finesse and bottom-contact setups." },
             { id: "browse-advanced-rigs", title: "Advanced", description: "Purpose-built rigs for demanding cover, current, and multi-rig situations." },
             { id: "browse-expert-rigs", title: "Expert", description: "Complex systems that combine multiple setup and presentation decisions." }
@@ -197,7 +188,7 @@ function updateRigGuideSearchResults(appMain, query) {
         ["name", "difficulty", "useCases", "conditionTags"]
     );
 
-    renderSearchResults(appMain, sortRecordsAlphabetically(matches), {
+    renderSearchResults(appMain, matches, {
         emptyMessage: "No rigs matched your search.",
         renderRecord: renderRigSearchResultCard,
         onResultSelect: (rigId) => {
@@ -213,6 +204,7 @@ function handleRigGuideCardSelect(cardId) {
         "browse-core-rigs": "core",
         "browse-beginner-rigs": "beginner",
         "browse-beginner-plus-rigs": "beginner-plus",
+        "browse-intermediate-rigs": "intermediate",
         "browse-all-rigs": "all"
     };
     const collectionKey = collectionKeyByCardId[cardId];
@@ -253,6 +245,10 @@ function getRigsForCollection(activeRigs) {
         return activeRigs.filter((rig) => rig.difficulty === "Beginner+");
     }
 
+    if (selectedRigCollectionKey === "intermediate") {
+        return activeRigs.filter((rig) => rig.difficulty === "Intermediate");
+    }
+
     return activeRigs;
 }
 
@@ -289,7 +285,9 @@ function updateRigBrowseResults(appMain, query) {
         query,
         ["name", "difficulty", "useCases", "conditionTags"]
     );
-    const resultRecords = sortRigCollection(matches);
+    const resultRecords = normalizeSearchText(query)
+        ? matches
+        : sortRigCollection(matches);
 
     renderSearchResults(appMain, resultRecords, {
         emptyMessage: "No rigs matched your search.",
@@ -316,7 +314,9 @@ function renderRigDetailView(appMain) {
         record: rig,
         parentLabel: fromGuideSearch ? "Rig Guide" : collection.title,
         selections: getRigReadinessSelections(rig.id),
-        onParent: () => showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE),
+        onParent: () => showView(
+            fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE
+        ),
         onReadinessChange: (tackleId, isOwned) =>
             updateRigReadinessSelection(rig.id, tackleId, isOwned)
     });

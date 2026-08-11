@@ -1,36 +1,70 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.10.6  
+**Document Revision:** 1.11.1  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-09
+**Last Updated:** 2026-08-10
 
 # Unreleased
 
+## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
+
+**Implementation Status: Implemented / Unvalidated — Ready for Validation**
+
+### Added / Changed
+
+- Four Intermediate Rig records are implemented: Drop Shot Rig, Carolina Rig, Live-Bait Slip-Sinker Rig, and Three-Way Rig.
+- The intended active Rig library expands to 13 records and canonical Tackle to 23 concepts, pending validation.
+- Existing Beginner/Beginner+ and new Intermediate Rig tutorial candidates are implemented, pending runtime playback/fallback validation.
+- The initial six new Tackle recognition-media assets were rejected because their flat/vector treatment did not match the approved current catalog/semi-photorealistic standard.
+- `MEDIA_GUIDE.md` now requires real-photo-first sourcing when technically correct and legally reusable, semi-photorealistic catalog treatment otherwise, a mandatory pre-delivery media gate, exact 640 × 440 `#f4f0e8` current Tackle canvas matching, and conventional viewer-facing J hook orientation unless a reviewed technical exception applies.
+- The user reviewed and uploaded the current seven-image Tackle correction package in `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`).
+- That upload replaced Bobber Stop, Drop Shot Weight, Fixed Sinker, Ned Jighead, Three-Way Swivel, Wacky Hook, and Wacky O-Ring recognition images.
+- Bobber Stop uses an approved rubber/silicone recognition variant.
+- `DEVELOPMENT_WORKFLOW.md` now permits direct Markdown documentation updates but requires user review and explicit approval before assistant direct-write of images, JavaScript, CSS, HTML, application data, configuration, or other non-Markdown production files.
+
+### Validation Status
+
+- Corrected seven-image upload presence on GitHub: verified.
+- Intermediate source/data/runtime/tutorial/media/regression validation: not yet started.
+- Intermediate remains **Implemented / Unvalidated**.
+- Next action is the documented Intermediate validation sequence; Intermediate+ must not begin before this segment is validated and finalized.
+
+See `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`, `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`, and `HANDOFF.md`.
+
 ## Core Rigs and Tackle Media / Rig Learning Tiers
 
-**Implementation Status: In Progress**
+**Implementation Status: Validated**
 
 ### Added
 
 - Global Rig search directly on the main Rig Guide landing page while retaining scoped subset search.
+- Fish Guide inline landing-page search using the same shared search interaction instead of a dedicated Search Fish card as the primary workflow.
+- Explicit one-click `×` / `Clear search` control for shared main-section and scoped search fields.
+- Lightweight deterministic relevance ranking so strong canonical-name matches lead weaker metadata matches.
+- Compact sticky Parent/Home navigation on nested views.
 - D047 — Section and Subset Search Availability.
 - D048 — Dashboard-Derived Section Card Design.
 - D049 — Verified Rig Tutorial Embed Policy.
+- D050 — Standard Search Field and Clear Control.
+- D051 — Persistent Parent Navigation and Top-Reset View Transitions.
+- D052 — Rig Detail Compact Density.
 - Canonical Wacky Hook, Wacky O-Ring, and Ned Jighead Tackle concepts.
-- Texas Rig lazy-loaded Wired2Fish YouTube tutorial trial using privacy-enhanced embedding and an external fallback.
-- Compact mobile-first Rig-detail layout trial.
+- Texas Rig lazy-loaded Wired2Fish YouTube tutorial pilot using privacy-enhanced embedding and an external fallback.
+- Compact mobile-first Rig-detail treatment, now approved for Rigs.
 
 ### Changed
 
-- Rig Guide card order is now All Rigs, Core Rigs, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert.
-- Removed the Rig Guide CSS override that forced every navigation card to the same Rig accent; section navigation now follows the Dashboard-derived varied accent/left-line system.
+- Rig Guide card order is All Rigs, Core Rigs, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert.
+- Removed the Rig Guide CSS override that forced every navigation card to the same Rig accent; section navigation follows the Dashboard-derived varied accent/left-line system.
 - Core remains visually emphasized but is explicitly cross-cutting rather than tied to Beginner difficulty.
-- Wacky Rig now uses a dedicated Wacky Hook, optional Wacky O-Ring, one-time midpoint piercing, freely hanging worm ends, and an exposed hook point/gap.
-- Ned Rig now uses a dedicated small mushroom-style Ned Jighead and explicitly preserves the exposed-hook standard beginner configuration.
-- Canonical Tackle expands from 17 to 20 active concepts; the three new narrowed concepts remain text-recognition-only until dedicated accurate media is approved.
-- Texas Rig primary visual/reference experience uses the embedded tutorial trial rather than presenting broad article links as the primary visual path.
-- Rig detail cards and What You Need are more compact while retaining readable text and practical touch targets.
+- Wacky Rig uses a dedicated Wacky Hook, optional Wacky O-Ring, one-time midpoint piercing, freely hanging worm ends, and an exposed hook point/gap.
+- Ned Rig uses a dedicated small mushroom-style Ned Jighead and explicitly preserves the exposed-hook standard beginner configuration.
+- Canonical Tackle expands from 17 to 20 active concepts; the three narrowed concepts remain text-recognition-only until dedicated accurate media is approved.
+- Texas Rig primary visual/reference experience uses the embedded tutorial pilot rather than broad article links as the primary visual path.
+- Rig detail cards and What You Need use the approved compact Rig-specific treatment while retaining readable text and practical touch targets.
+- Search results no longer alphabetize all substring matches; exact/prefix/name confidence outranks lower-priority metadata, with stable ordering as the tie-break.
+- Parent/Home controls stay available while scrolling, and forward/Parent/Home transitions open the destination at the top rather than restoring remembered parent scroll position.
 
 ### Preserved
 
@@ -41,15 +75,28 @@
 - Existing 17-image neutral-background Tackle recognition-media set.
 - Text-authoritative Rig assembly and prohibition on generated Rig assembly imagery.
 - Dashboard larger-card treatment; Dashboard density review remains parked.
+- Dashboard search remains unimplemented pending deliberate cross-domain scope/grouping/result design.
 
 ### Validation Status
 
-- Static source/data/documentation preflight: required before package delivery.
-- GitHub inspection and runtime/regression validation: required after push.
-- Compact Rig-detail treatment remains a Rig-only trial until user runtime approval.
-- Texas tutorial embed remains a one-Rig trial until runtime validation passes.
+- Source/package integrity on actual GitHub `main` commit `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`: passed.
+- Rig Guide All-Rigs-first ordering, Core emphasis, subset membership/search scope, and card-grid restoration: passed.
+- Wacky, Ned, and Weightless Soft-Plastic component/readiness behavior: passed.
+- Intact worm-bait recognition media: passed.
+- Texas Rig tutorial playback in Brave: passed; earlier Edge `ERR_BLOCKED_BY_CLIENT` messages remain classified as blocker/ad-request noise rather than a reproduced application playback defect.
+- Compact Rig-detail presentation at about 375 px and desktop widths: passed and approved for Rigs.
+- Fish search by common name, scientific name, and category: passed.
+- Derived Tackle `Used In` relationships: passed.
+- Fish Guide inline search: passed.
+- One-click Clear search: passed.
+- `Ned` ranking **Ned Rig** first: passed.
+- Sticky Parent/Home controls: passed.
+- Parent navigation returning to parent top: passed.
+- Home navigation returning to Dashboard top: passed.
 
-See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`.
+The implementation/runtime segment is validated. The formal closeout documentation package must still be pushed and re-fetched before the repository is declared finalized and Intermediate work begins under D039/D040.
+
+See `workstreams/CORE-RIGS-TACKLE-MEDIA.md`, `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`, and `workstreams/RIG-UX-RUNTIME-FOLLOWUP.md`.
 
 ## Rig/Tackle Data Integrity — Batch 1
 

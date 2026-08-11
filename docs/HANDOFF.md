@@ -1,155 +1,189 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.4.9  
+**Document Revision:** 0.5.3  
 **Document Status:** Approved  
-**Repository Baseline Reviewed:** `main` at `07e8f712ef507349a273ca21610145612e941bf5`  
-**Last Updated:** 2026-08-09
+**Repository State Reference:** GitHub `main` is authoritative; do not rely on a self-referential handoff commit SHA.  
+**Intermediate Implementation Baseline:** `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
+**Latest Verified Tackle Image Update:** `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`)  
+**Last Updated:** 2026-08-10
 
 # 1. Start Here
 
-GitHub `main` is authoritative for existing project files. This document is the repository current-state map, not a duplicate specification. Follow the governing documents linked below before proposing changes.
+GitHub `main` is authoritative for existing project files. This document is the repository current-state map, not a duplicate specification. Follow the governing documents linked below before proposing project changes.
 
 Recommended first-read order:
 
 1. `HANDOFF.md`
-2. `DECISIONS.md`
-3. `ARCHITECTURE.md`
-4. `DEVELOPMENT_WORKFLOW.md`
-5. `STYLE_GUIDE.md`
-6. Relevant `data-model/` documents
-7. `MEDIA_GUIDE.md` when media is involved
+2. active workstream and validation documents
+3. `DECISIONS.md`
+4. `ARCHITECTURE.md`
+5. `DEVELOPMENT_WORKFLOW.md`
+6. `STYLE_GUIDE.md`
+7. relevant `data-model/` documents
+8. `MEDIA_GUIDE.md` when media is involved
 
-Permanent operating rule:
+Permanent operating rules:
 
-> Do not begin a new build segment while the current segment is unfinalized. A session, module, section, or build segment is not finalized until all relevant implementation and documentation work has been pushed, inspected, and validated in GitHub.
+> Do not begin a new build segment while the current segment is unfinalized.
+
+> Repository documentation must describe what is actually true on `main` after the most recent meaningful repository action. Implementation, validation failures, corrective work, and next actions are documented continuously rather than reconstructed later from chat history.
+
+> Markdown documentation may be updated directly when needed to keep repository state current. Images, JavaScript, CSS, HTML, application data, configuration, and other non-Markdown production files require user review and explicit approval before the assistant writes them directly to GitHub.
 
 # 2. Current Repository / Milestone State
 
-The repository baseline reviewed for this handoff is commit:
+## Current Active Segment
 
-`07e8f712ef507349a273ca21610145612e941bf5`
+**Beginner/Beginner+ Media Completion + Intermediate Rig Expansion**
+
+**Implementation Status: Implemented / Unvalidated — Ready for Intermediate Validation**
+
+The Intermediate implementation package is present on `main` from commit:
+
+`e4b61aea052f4ad843be0f6d54231af87d574905`
 
 Commit message:
 
-`Rig Update - Core Placement and Beginner Rigs`
+`Rigs - Intermediate Build`
 
-The Current-State UX Repairs segment is validated and repository-finalized.
+The initial recognition-media package did not meet the approved Tackle image standard. That correction work has now advanced to a new reviewed seven-image package uploaded by the user in commit:
 
-The Rig/Tackle Data Integrity — Batch 1 segment is validated and repository-finalized.
+`eed8929cb1859aef653168884e1e71244d1dd80e`
 
-The Core Rigs and Tackle Media / Rig Learning Tiers segment remains In Progress pending the Rig UX finalization package and runtime validation.
+Commit message:
 
-Validated governance state:
+`Tackle Image Updates`
 
-- `HANDOFF.md` is present.
-- Decisions D022–D046 are present in the current GitHub `DECISIONS.md`; D047–D049 are included in the current Rig UX finalization package.
-- The canonical Tackle data-model document is present.
-- `docs/data-model/05A-INVENTORY.md` is the active Inventory/My Tackle model document.
-- Obsolete `docs/data-model/05-INVENTORY.md` has been removed.
-- Historical package artifacts and obsolete design-board/preview assets remain preserved in archive paths.
-- Root package artifacts from prior packages have been removed.
-- `tools/validate_replacement_integrity.py` is present as the repository-side documentation replacement-integrity safeguard.
+GitHub inspection confirms that commit replaced exactly these seven production images:
 
-## Current-State UX Repairs
+- `images/tackle/bobber-stop-reference.webp`
+- `images/tackle/drop-shot-weight-reference.webp`
+- `images/tackle/fixed-sinker-reference.webp`
+- `images/tackle/ned-jighead-reference.webp`
+- `images/tackle/three-way-swivel-reference.webp`
+- `images/tackle/wacky-hook-reference.webp`
+- `images/tackle/wacky-o-ring-reference.webp`
 
-**Implementation Status: Validated**
+`main` subsequently advanced through merge commit `f75374a34abad52c2df5c525ff366c70db0706ec`, which also contains the approved `MEDIA_GUIDE.md` update for the exact `#f4f0e8` reference canvas and conventional viewer-facing J hook orientation.
 
-The UX source implementation was pushed in commit `cf4f8bfa4974d06ada35650dd4e27f9371ee034f` and repository inspection confirmed the intended D030–D032 source changes:
+Current known state:
 
-- inert child cards render with visible `Coming Soon` unavailable semantics,
-- Fish Guide `Search Fish` and Rig Guide implemented child cards remain actionable,
-- the Dashboard Regulations CTA reads `Go to ODWC Regulations ↗`,
-- the approved Forest Journal Dashboard primary-card styling has been restored.
+- 13 active Rigs are intended by the implementation:
+  - 6 Beginner,
+  - 3 Beginner+,
+  - 4 Intermediate,
+- Intermediate membership is:
+  1. Drop Shot Rig
+  2. Carolina Rig
+  3. Live-Bait Slip-Sinker Rig
+  4. Three-Way Rig
+- 23 canonical Tackle concepts are intended by the implementation,
+- the six-member `CORE_RIG_IDS` registry remains unchanged,
+- Intermediate+, Advanced, and Expert have not started,
+- the seven-image correction package is now present on `main`,
+- no Intermediate source/data/runtime/tutorial/regression validation has yet been completed,
+- before the main Intermediate validation sequence begins, four older recognition assets must be reviewed against the current media standard:
+  - `images/tackle/hook-reference.webp`,
+  - `images/tackle/jighead-reference.webp`,
+  - `images/tackle/offset-worm-hook-reference.webp`,
+  - `images/tackle/weight-peg-reference.webp`,
+- the next session should begin with that four-asset review, then proceed into the documented Intermediate validation sequence.
 
-Runtime/regression validation passed for:
+The approved Tackle media rules now include:
 
-- Dashboard hierarchy and interaction,
-- Fish Guide child-card behavior,
-- Rig Guide child-card behavior,
-- unavailable child cards under Recommendations, My Tackle, Knots, Catch Log, Favorites, and Settings,
-- Regulations external-link behavior,
-- Fish Search,
-- Rig browse/detail,
-- external Rig references,
-- Tackle `Name ⓘ` popovers and related-component navigation,
-- Rig readiness persistence and Ready/Missing updates,
-- responsive/accessibility behavior at phone and desktop widths,
+- real-photo-first sourcing when technically correct and legally reusable,
+- original semi-photorealistic catalog treatment when suitable reusable photography is unavailable,
+- mandatory pre-delivery visual/mechanical review,
+- exact 640 × 440 `#f4f0e8` production canvas for current Tackle references,
+- conventional viewer-facing capital-J hook orientation unless a reviewed technical exception applies,
+- rejection of normal-production vector/flat/clip-art treatment.
+
+The active source of truth for this segment is:
+
+- `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`
+- `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`
+
+Do not describe the Intermediate tier as Validated or Finalized until the required checks actually pass and those documents are reconciled.
+
+## Previously Finalized Work
+
+### Current-State UX Repairs
+
+**Implementation Status: Validated / Finalized**
+
+The validated UX repair state preserves:
+
+- visible `Coming Soon` semantics for unavailable child cards,
+- actionable implemented Fish/Rig flows,
+- `Go to ODWC Regulations ↗`,
+- the approved Forest Journal Dashboard primary-card styling,
+- validated Dashboard/Fish/Rig navigation behavior,
+- external-link behavior,
+- Tackle contextual help,
+- Rig readiness persistence,
+- responsive/accessibility behavior,
 - normal-navigation console health.
 
 See `workstreams/UX-REPAIRS.md` and `workstreams/UX-REPAIRS-VALIDATION.md`.
 
-## Rig/Tackle Data Integrity — Batch 1
+### Rig/Tackle Data Integrity — Batch 1
 
-**Implementation Status: Validated**
+**Implementation Status: Validated / Finalized**
 
-The approved D025–D026 relationship cleanup is implemented on `main`:
+The approved relationship cleanup remains current:
 
-- `Rig.componentRequirements[].tackleId` explicitly references canonical Tackle.
+- `Rig.componentRequirements[].tackleId` references canonical Tackle,
 - duplicated Rig-side component display names are removed,
 - Tackle `rigIds` inverse arrays are removed,
-- Tackle `Used In` is derived from active Rig component requirements,
-- visible component names and readiness missing-item labels resolve from canonical Tackle,
-- the transitional readiness storage keeps the same underlying Tackle ID string keys,
-- `script.js` uses `tackleId` naming consistently at the readiness callback boundary.
-
-Repository/source inspection and runtime/regression validation passed before closeout.
+- Tackle `Used In` is derived from active Rig requirements,
+- visible component names and readiness labels resolve from canonical Tackle,
+- transitional readiness storage retains the same Tackle-ID keys,
+- `script.js` uses `tackleId` naming at the readiness callback boundary.
 
 See `workstreams/RIG-TACKLE-DATA-INTEGRITY.md` and `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`.
 
-The exact current source implementation must always be re-fetched from GitHub before edits. Do not assume any proposed or locally staged change has been implemented until it appears on `main`.
+### Core Rigs / Beginner + Beginner+ / Rig UX Finalization
 
-`MILESTONES.md` preserves historical milestone detail while current architecture in `ARCHITECTURE.md` and structural decisions in `DECISIONS.md` govern present and planned behavior.
+**Implementation Status: Validated / Finalized**
 
-## Core Rigs and Tackle Media / Rig Learning Tiers
+The validated pre-Intermediate foundation includes:
 
-**Implementation Status: In Progress**
+- nine validated Beginner/Beginner+ Rigs,
+- six Beginner and three Beginner+ records,
+- six Core Rigs as a cross-cutting curated registry,
+- Rig Guide order: All Rigs, Core Rigs, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert,
+- global Rig search and scoped subset search,
+- Fish Guide inline search,
+- lightweight deterministic relevance ranking,
+- explicit one-click search clear,
+- Dashboard-derived varied section-card accents with restrained Core emphasis,
+- corrected Wacky/Ned/Weightless assembly/readiness behavior,
+- the validated Texas Rig lazy-loaded tutorial pilot,
+- approved compact Rig-detail density,
+- sticky Parent/Home controls,
+- top-reset forward/Parent/Home transitions.
 
-Current GitHub `main` at `07e8f712...` contains:
+The compact-detail treatment remains approved for Rigs only. Dashboard search remains parked pending deliberate cross-domain scope/grouping/result design.
 
-- nine active Rigs,
-- six Beginner and three Beginner+ difficulty records,
-- the six-member `CORE_RIG_IDS` registry,
-- top-level Rig Guide cards for Core, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert, and All Rigs,
-- Core/Beginner/Beginner+/All Rigs subset search,
-- the corrected intact worm-bait recognition asset,
-- 17 active canonical Tackle concepts,
-- 17 active neutral-background Tackle recognition images,
-- Core-result/detail visual emphasis.
-
-Repository validation passed after that push, and the initial runtime Rig Guide card-order/unavailable-state check passed. The segment remains In Progress because the final design/technical corrections below were approved before closeout.
-
-The current Rig UX finalization package:
-
-- moves **All Rigs** to the first Rig Guide card,
-- adds global Rig search to the main Rig Guide page while retaining scoped subset search,
-- restores Dashboard-derived varied navigation-card accents/left-edge lines instead of one repeated Rig accent,
-- keeps Core as a cross-cutting curated designation with separate visual emphasis,
-- corrects Wacky Rig geometry/readiness using Wacky Hook plus optional Wacky O-Ring,
-- corrects Ned Rig readiness using a dedicated small mushroom-style Ned Jighead,
-- expands canonical Tackle from 17 to 20 concepts without assigning misleading generic images to the three new narrowed concepts,
-- adds the first lazy-loaded official-platform tutorial trial on Texas Rig using Wired2Fish on YouTube with privacy-enhanced embedding and an external fallback,
-- trials a materially more compact mobile-first Rig detail layout, especially What You Need, without reducing touch usability or hiding safety/build instructions.
-
-The compact-detail treatment is a Rig-only trial. It does not become a permanent non-Rig subset/detail standard until user runtime approval.
-
-See `workstreams/CORE-RIGS-TACKLE-MEDIA.md` and `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`.
+See `workstreams/CORE-RIGS-TACKLE-MEDIA.md`, `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`, and `workstreams/RIG-UX-RUNTIME-FOLLOWUP.md`.
 
 # 3. Current Production Architecture
 
-**Implementation Status: Current**
+**Implementation Status: Current, with Intermediate additions present but unvalidated**
 
 - Three knowledge layers: Reference Knowledge, Decision Knowledge, User Knowledge.
 - Forest Journal is the only production-supported Version 1 theme.
-- Fish Guide/Search exists with lightweight shared search helpers.
-- Rig Guide exists on current `main` with nine canonical active Rig records, scoped browse search, text-authoritative assembly, contextual Tackle `Name ⓘ` recognition help, verified external references, and inline readiness; the current finalization package adds landing-page global search and the Texas embedded-tutorial trial.
-- Canonical Tackle Reference Knowledge exists in `data/tackle.js`.
+- Fish Guide exposes inline landing-page search with shared deterministic relevance ranking and explicit one-click clear behavior.
+- Rig Guide has the validated nine-Rig Beginner/Beginner+ foundation plus four implemented Intermediate records awaiting validation.
+- Canonical Tackle Reference Knowledge exists in `data/tackle.js`; the Intermediate implementation expands the intended current set to 23 concepts pending validation.
 - Rig component requirements reference canonical Tackle through `tackleId`.
 - Reverse Tackle `Used In` relationships are derived from active Rig requirements.
 - Current Rig readiness uses the transitional local readiness state.
-- Current Search uses lightweight normalized substring matching; it is not the permanent relevance-quality ceiling.
-- Historical Copper, Gold, and Legacy Dark CSS files are retained as inactive design concepts and are not part of the supported production theme matrix.
-- Completed package artifacts and obsolete design-board/preview assets have been moved out of active production locations into archive paths.
+- Search uses lightweight deterministic relevance ranking; canonical identity matches outrank lower-priority metadata while heavy fuzzy/intent systems remain deferred.
+- Nested Parent/Home controls remain available through compact sticky navigation, and explicit application transitions open their destination at the top.
+- Historical Copper, Gold, and Legacy Dark CSS files remain inactive design concepts and are not part of the supported production theme matrix.
+- Completed package artifacts and obsolete design-board/preview assets remain outside active production locations.
 
 See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinctions.
 
@@ -158,8 +192,12 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 **Decision Status: Approved**
 
 - Search is relevance-first; connected knowledge is breadth-first.
-- Searchable sections provide search on the main section landing page as well as relevant scoped subset/browse pages; both use shared canonical data/search helpers.
-- Card-based section/subset navigation follows the main Dashboard visual grammar, including varied adjacent accents and left-edge lines rather than one repeated domain color.
+- Searchable sections provide search on the main section landing page and relevant scoped subset/browse pages through shared canonical helpers.
+- Search is a direct inline field interaction with an explicit one-click clear control.
+- Lightweight deterministic relevance ranking places strong canonical identity matches ahead of lower-priority metadata matches.
+- Section/subset cards follow the Dashboard visual grammar with varied adjacent accents/left-edge lines.
+- Nested Parent/Home navigation remains available while scrolling; explicit application transitions open at the destination top.
+- Compact Rig-detail density is approved for Rigs only.
 - Recommendation tiers are:
   - Best of the Best
   - Best Bang for the Buck
@@ -168,54 +206,47 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
   - Avoid
 - Rig owns physical assembly and rig-specific configuration.
 - Technique owns reusable presentation behavior.
-- `Rig.componentRequirements` owns Rig-to-Tackle usage; reverse `Used In` relationships are derived.
+- `Rig.componentRequirements` owns Rig-to-Tackle usage; reverse `Used In` is derived.
 - Canonical Tackle owns Tackle identity/display name.
 - Initial regional Rig target is 20 Rigs for northeast Oklahoma and southwest Kansas.
 - Core Rigs contains six curated confidence-building Rigs.
-- Core is a cross-cutting curated designation, not a difficulty/category/rank; it may coexist with any applicable difficulty or classification.
-- Rig Guide top-level order is All Rigs, Core Rigs, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert.
-- All Rigs is the complete implemented library and does not own a second dedicated Core section.
+- Core is cross-cutting, not a difficulty/category/rank.
 - Rig expansion proceeds one completed learning tier at a time.
-- Approved Core learning groups such as Core Rigs and future Core Knots receive additional restrained Forest Journal visual hierarchy so recommended starting paths are immediately recognizable.
-- Tackle recognition imagery prioritizes clean edges and recognition quality over mandatory alpha transparency.
-- Artificial baked-in drop shadows are not part of the approved Tackle recognition style.
-- A restrained neutral Tackle-image background is acceptable when it produces cleaner recognition than a transparent cutout.
-- Completed-Rig visual confirmation prefers a licensed local image, then an officially permitted embedded verified tutorial, then direct external visual/reference paths; embedded third-party media remains platform-hosted and is not copied into the repository.
-- Common fishing-knot step illustrations are approved future work, but remain outside the immediate Rig workstream.
+- Tackle recognition media is recognition-first and must meet the current `MEDIA_GUIDE.md` visual/geometry/licensing gate before packaging.
+- For Tackle recognition assets, use an accurate legally reusable real photograph when practical; otherwise use an original semi-photorealistic catalog-style reference anchored to verified real-world geometry.
+- Current Tackle reference images use exact `#f4f0e8` canvas matching and normal viewer-facing J hook orientation.
+- Vector/flat/clip-art appearance is not an acceptable normal Tackle production shortcut.
+- Completed-Rig visual confirmation follows the D049 hierarchy: trustworthy reusable local media when available, verified permitted tutorial embed, direct verified external visual/reference, authoritative article/reference, then authoritative text-only instructions.
+- Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
+- Generated finished-Rig/build-step instructional imagery remains prohibited under D045.
 - Canonical Tackle defines functional type; My Tackle defines actual owned items.
 - Rig Readiness answers buildability first; optimization comes later.
 - My Tackle will be the only persistent ownership source of truth.
-- Nothing outside explicit My Tackle ownership-management workflows may silently create or modify persistent ownership.
+- Nothing outside explicit My Tackle ownership workflows may silently modify persistent ownership.
 - User Knowledge is untrusted text by default and must be rendered safely.
 - Unimplemented UI controls must clearly communicate that they are unavailable.
-- External CTAs must identify their destination and use `↗`.
-- Forest Journal Dashboard regressions are approved for narrow restoration rather than redesign.
-- Document status, implementation status, decision status, and application version are separate concepts.
-- Repository handoff and continuous decision documentation are mandatory project-governance requirements.
+- External CTAs identify their destination and use `↗`.
+- Repository handoff and continuous current-state documentation are mandatory governance requirements.
 
-See `DECISIONS.md` and the governing data-model/media documents.
+See `DECISIONS.md`, `MEDIA_GUIDE.md`, and the governing data-model documents.
 
 # 5. Approved but Not Yet Implemented
 
 **Implementation Status: Approved / Not Implemented**
 
-- Lightweight deterministic relevance ranking before Search becomes noisy.
-- Broader rollout of verified embedded Rig tutorials after the Texas trial is validated.
-- Dedicated accurate recognition media for Wacky Hook, Wacky O-Ring, and Ned Jighead if/when produced and validated.
-- Intermediate Rig tier.
 - Intermediate+ Rig tier.
 - Advanced Rig tier.
 - Expert Rig tier.
 - Reusable Core learning-path emphasis for future Core Knots and other explicitly approved starting-path groups.
 - Direct/shortest-path finished-Rig visual references where trustworthy sources permit.
 - Common fishing-knot step illustrations as a later Knots workstream.
-- Canonical Carolina Rig record to resolve the approved relationship during later expansion.
 - My Tackle as the persistent ownership source for Rig Readiness.
 - Temporary per-build/session availability that does not write ownership.
 - Explicit My Tackle Add/Edit/Remove write authority.
 - Safe User Knowledge rendering rules across future user-entered/imported features.
+- Dashboard search and cross-domain result experience after scope, grouping, and ranking behavior are deliberately designed.
 
-These items are settled direction but must not be described as current implementation until they are built, pushed, and validated.
+The Intermediate tier itself is **implemented but unvalidated**, so it must not be listed as Approved / Not Implemented.
 
 # 6. Known Temporary Bridges
 
@@ -251,46 +282,65 @@ The following remain intentionally unresolved:
   - durable-vs-consumable MVP treatment
   - custom/unmapped items
   - exact compatibility constraints
-- Commercial/branded name resolution such as `Rooster Tail` between a canonical lure/tackle concept and any future commercial ProductDefinition.
-- Exact Recommendation model schema; a dedicated Recommendations model document remains deferred until mature.
+- Commercial/branded name resolution such as `Rooster Tail` between a canonical lure/tackle concept and any future ProductDefinition.
+- Exact Recommendation model schema.
 - ProductDefinition architecture beyond the approved rule that it is not required for My Tackle MVP/readiness.
 - Exact source/licensing choices for future finished-Rig visual references.
-- Exact initial common-knot set and the future Rig-to-Knot relationship model.
+- Exact initial common-knot set and future Rig-to-Knot relationship model.
 - Future automated relationship, asset, document-link, and other repository validators.
-- Whether the compact Rig-detail trial should be promoted to the permanent subset/detail-page density standard after runtime review.
-- A future conservative Dashboard density review; current larger Dashboard cards remain the validated production treatment.
-- Other audit findings not yet discussed to completion must remain visible and must not be silently treated as decided.
+- Whether any non-Rig domain should adopt the Rig-specific compact-detail density treatment after separate review.
+- Exact Dashboard-search cross-domain scope, grouping, and result presentation.
+- Future conservative Dashboard density review.
+- Next-session Tackle recognition-media review is explicitly required for:
+  - `images/tackle/hook-reference.webp`,
+  - `images/tackle/jighead-reference.webp`,
+  - `images/tackle/offset-worm-hook-reference.webp`,
+  - `images/tackle/weight-peg-reference.webp`.
+  Review them against the current exact-canvas, semi-photorealistic catalog-quality, geometry, and hook-orientation standards before deciding whether replacement is required. Any proposed replacements remain subject to the Production Write Approval Gate.
+- Other audit findings not yet discussed to completion remain visible until explicitly decided.
 
 # 8. Next Recommended Work
 
-The active build segment is **Core Rigs and Tackle Media / Rig Learning Tiers — Rig UX Finalization**.
+The immediate work is **Intermediate validation**, not Intermediate+ and not another implementation tier.
 
-Required next actions:
+Start the next session by re-reading actual GitHub `main`, then perform this pre-validation media review before the main validation sequence:
 
-1. Push the coherent Rig UX finalization source/documentation package.
-2. Re-fetch and inspect the actual GitHub files and changed-file inventory.
-3. Validate main Rig search, All Rigs-first ordering, Dashboard-derived navigation-card accents, and unavailable-tier semantics.
-4. Validate corrected Wacky and Ned Rig components, assembly wording, contextual Tackle help, derived `Used In`, and readiness persistence.
-5. Validate the Texas tutorial lazy-load/embed behavior, privacy-enhanced host, no-autoplay behavior, fallback link, and phone/desktop layout.
-6. Validate the compact Rig-detail trial at phone width first, especially What You Need, then desktop.
-7. Validate Fish Search, related Tackle navigation/focus restoration, console health, keyboard focus, and Dashboard regressions.
-8. If runtime review approves the compact Rig-detail treatment, make a separate explicit decision about promoting it to the permanent subset/detail-page standard; otherwise keep it Rig-specific or revise it.
-9. Complete closeout documentation and GitHub verification.
+1. Review `hook-reference.webp`.
+2. Review `jighead-reference.webp`.
+3. Review `offset-worm-hook-reference.webp`.
+4. Review `weight-peg-reference.webp`.
+5. If any replacement is recommended, prepare it for user review; do not write production media directly to GitHub without explicit approval.
 
-Only after this segment is Validated should work continue to the Intermediate Rig tier.
+After that review, execute the validation sequence documented in `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`:
 
-Re-evaluate this sequence after each finalized and validated segment.
+1. GitHub/source/package integrity.
+2. Canonical Rig/Tackle/media counts and relationships.
+3. Intermediate membership, routing, and search.
+4. Drop Shot Rig.
+5. Carolina Rig.
+6. Live-Bait Slip-Sinker Rig.
+7. Three-Way Rig.
+8. Corrected recognition-media phone/desktop review, including the seven user-uploaded replacements.
+9. Existing and Intermediate tutorial audit.
+10. Beginner/Beginner+/Core and application regression pass.
+11. Documentation reconciliation/final closeout.
+
+Update validation/current-state documentation after each meaningful validation result. Only after all required checks pass should the Intermediate segment be finalized and the next milestone selected.
+
+Dashboard search remains parked.
 
 # 9. Governing Documents
 
 | Topic | Governing document |
 |---|---|
 | Repository current-state entrypoint | `HANDOFF.md` |
+| Active Intermediate scope | `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md` |
+| Active Intermediate validation/live status | `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md` |
 | Long-term structural decisions | `DECISIONS.md` |
 | Current source ownership / architecture | `ARCHITECTURE.md` |
-| Editing, validation, closeout, scope control | `DEVELOPMENT_WORKFLOW.md` |
+| Editing, validation, continuous documentation, closeout, scope control | `DEVELOPMENT_WORKFLOW.md` |
 | UI, coding, and documentation conventions | `STYLE_GUIDE.md` |
-| Media requirements | `MEDIA_GUIDE.md` |
+| Media requirements and Tackle Media Generation Gate | `MEDIA_GUIDE.md` |
 | Project direction | `PROJECT.md` / `ROADMAP.md` |
 | Functional requirements | `SPECIFICATION.md` |
 | Milestone/history status | `MILESTONES.md` / `CHANGELOG.md` |
@@ -315,21 +365,18 @@ Re-evaluate this sequence after each finalized and validated segment.
 
 - GitHub `main` is authoritative for existing project files.
 - Fetch latest GitHub contents before proposing edits to an existing source file.
-- Do not assume a prior proposal, package, or staged file was implemented.
+- Do not assume a prior proposal, package, staged file, or chat statement was implemented.
 - Make targeted edits by default.
-- Full-file replacement is the default final artifact.
-- A replacement file must be derived from the latest verified GitHub file, not reconstructed from memory, an old package, or a template.
-- Make only authorized changes.
-- Diff the completed replacement against the fetched source.
-- Any unrelated diff is a failure unless explicitly authorized.
-- Preserve mature approved UI behaviors as regression targets.
-- User normally commits and pushes through GitHub Desktop.
-- Preflight is not validation.
-- After push, inspect the actual repository state and validate runtime behavior where applicable.
-- Permanent project knowledge belongs in repository documentation, not only in chat history.
-- Meaningful design, architecture, workflow, data-model, UI, deferment, or rejection decisions must be documented even if the discussion occurs outside the active build segment.
-- If a substantial off-segment discussion would disrupt clean completion of the current segment, deliberately park it until a coherent stopping point and preserve enough context that it cannot be lost.
-- No session, module, section, or build segment is finalized until all relevant documentation is updated and validated in GitHub.
+- Full-file replacement is the default final artifact when files are delivered manually.
+- Replacement files derive from the latest verified GitHub file.
+- Make only authorized changes and protect mature validated behavior from regression.
+- Preflight is not runtime validation.
+- After push, inspect actual repository state.
+- Documentation must be updated continuously to match meaningful implementation/correction/validation state changes.
+- Markdown documentation may be updated directly to keep repository state current.
+- Images, JavaScript, CSS, HTML, application data, configuration, and other non-Markdown production files require user review and explicit approval before assistant direct-write to GitHub.
+- Known validation failures are recorded immediately.
+- Permanent project knowledge belongs in repository documentation, not only chat history.
 - Do not move into a new build segment while the current one remains unfinalized.
 
 # 11. Decision-Making Operating Model
@@ -351,18 +398,9 @@ Evaluate meaningful changes against:
 Classify proposals as:
 
 - **Build Now** — required for correctness/current implementation, foundational architecture/data, prevention of foreseeable rework, or material simplification/value.
-- **Parking Lot** — valuable, preserved, but not required by the current milestone.
-- **Reject** — conflicts with the mission/architecture, duplicates capability, or adds disproportionate complexity.
-
-Before materially disruptive change, document:
-
-- old approach,
-- proposed approach,
-- expected gain,
-- rework required,
-- affected flows,
-- regression risk,
-- simpler alternatives.
+- **Parking Lot** — valuable and preserved, but not required by the current milestone.
+- **Reject** — conflicts with mission/architecture, duplicates capability, or adds disproportionate complexity.
+- **Open** — meaningful unresolved issue that must remain visible.
 
 Permanent principle:
 
@@ -370,19 +408,19 @@ Permanent principle:
 
 # 12. Session / Module Closeout Rule
 
-At the end of every meaningful session, module, section, or build segment:
+At every meaningful implementation, correction, validation, session, module, or segment boundary:
 
-1. Identify decisions made.
-2. Identify files and documentation affected.
-3. Record approved but unimplemented work explicitly.
-4. Record unresolved questions explicitly.
-5. Record rejected/deferred ideas when forgetting them would cause repeated re-discussion.
-6. Update the correct governing documents.
-7. Update `HANDOFF.md` if project state, open work, or next steps changed.
-8. Push through GitHub.
-9. Inspect the actual repository state.
-10. Validate runtime behavior where applicable.
-11. Only then declare the area finalized and move on.
+1. Identify what changed on `main`.
+2. Identify what is implemented but still unvalidated.
+3. Record validation passes/failures immediately.
+4. Identify decisions and documentation affected.
+5. Record approved but unimplemented work explicitly.
+6. Record unresolved/deferred/rejected items when forgetting them would cause rework.
+7. Update the active workstream/validation documents.
+8. Update `HANDOFF.md` whenever current state or next action materially changed.
+9. Update governing documents when a permanent standard changed.
+10. Verify the actual GitHub state.
+11. Only mark a segment Finalized after implementation, validation, documentation reconciliation, push, and re-fetch all pass.
 
 Permanent principle:
 
