@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.6  
+**Document Revision:** 0.1.7  
 **Document Status:** Approved  
-**Implementation Status:** Partially Validated — Static + Routing/Search + Drop Shot Passed; Remaining Rig Runtime Pending  
+**Implementation Status:** Partially Validated — Static + Routing/Search + Drop Shot + Carolina Passed; Media Corrections Required  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Latest Verified Media Update:** `5704da6b9cde20bf90edfa8205e9811fba4114ab` (`Hook fixes`)  
 **Current Validation Head:** `67eea13d623067186171a68be6778cf99ebf5456`  
@@ -17,7 +17,11 @@ Preflight confirms package integrity only. GitHub inspection and runtime review 
 
 # Current Validation State
 
-The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, and Drop Shot Rig runtime validation have now passed. Carolina, Live-Bait Slip-Sinker, Three-Way, recognition-media presentation, tutorial playback, regression validation, and the known Bobber Stop alt-text correction remain pending.
+The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, Drop Shot Rig, and Carolina Rig runtime validation have passed.
+
+Live-Bait Slip-Sinker, Three-Way, tutorial playback, regression validation, and final recognition-media validation remain pending.
+
+The recognition-media gate is currently **FAILED / CORRECTION REQUIRED** because runtime review exposed visible background-color and baked/uneven shadow inconsistencies on nine older Tackle reference assets. These media defects do not invalidate the Carolina Rig logic/runtime pass, but they block final media validation and segment closeout.
 
 Recognition-media correction state:
 
@@ -35,6 +39,16 @@ Recognition-media correction state:
 - The approved Bobber Stop recognition image uses a rubber/silicone variant, which is valid under the canonical Tackle definition.
 - **Known metadata defect:** `data/media.js` still describes `bobber-stop-reference.webp` in alt text as a thread-style stop wrapped around fishing line. The current image is the approved rubber/silicone stop variant, so that alt text is inaccurate and must be corrected in a reviewed data-file package before final closeout.
 - The current Media Guide requires exact `#f4f0e8` canvas matching and normal viewer-facing J orientation for hook-bearing recognition assets unless a reviewed technical exception applies.
+- **New runtime media defect identified during Carolina validation:** nine older recognition assets show visible background-color mismatch and/or baked/uneven shadow treatment against the fixed reference-media surface and require review/correction:
+  - `barrel-swivel-reference.webp`,
+  - `bead-reference.webp`,
+  - `bait-reference.webp`,
+  - `bullet-weight-reference.webp`,
+  - `fixed-bobber-reference.webp`,
+  - `sliding-sinker-reference.webp`,
+  - `slip-float-reference.webp`,
+  - `split-shot-reference.webp`,
+  - `stop-bead-reference.webp`.
 
 # Package / Source Integrity
 
@@ -134,7 +148,7 @@ Runtime validation in Chrome confirmed:
 
 # Carolina Rig
 
-**Status: STATIC DEFINITION PASSED / RUNTIME PENDING**
+**Status: PASSED — 2026-08-10**
 
 Static canonical definition confirms:
 
@@ -146,7 +160,17 @@ Static canonical definition confirms:
 - Basic Bottom Rig forwards to `carolina-rig`,
 - Carolina variation metadata links to `texas-rig` and `basic-bottom-rig`.
 
-Runtime confirm rendering, readiness persistence, and relationship presentation.
+Runtime validation in Chrome confirmed the Carolina Rig itself passes:
+
+- detail opens with `Intermediate` difficulty,
+- all canonical components render in the intended order,
+- sinker/bead/swivel/leader relationships are presented correctly,
+- the soft plastic/Offset Worm Hook setup is presented correctly,
+- readiness updates and persists,
+- canonical reference popovers and derived `Used In` relationships function,
+- Parent/Home navigation remains normal.
+
+The separate recognition-media review performed during this Rig exposed background/shadow inconsistencies on older shared Tackle assets. Those media defects are tracked under Recognition Media and do not change the Carolina Rig status from **PASSED**.
 
 # Live-Bait Slip-Sinker Rig
 
@@ -178,7 +202,7 @@ Runtime confirm rendering, readiness persistence, derived relationships, and rec
 
 # Recognition Media
 
-**Status: BINARY UPLOADS VERIFIED / PARTIAL RUNTIME PASS / METADATA CORRECTION PENDING**
+**Status: FAILED / CORRECTION REQUIRED — 2026-08-10**
 
 Current reviewed correction sets on `main` include:
 
@@ -203,22 +227,36 @@ The four newest GitHub blobs exactly match the final reviewed local upload packa
 
 Drop Shot runtime validation confirmed Wacky Hook and Drop Shot Weight recognition popovers load correctly and their tested panels visually merge with the `#f4f0e8` surface.
 
-Remaining runtime phone/desktop confirmation:
+Carolina runtime review identified nine older assets that require correction because their background/shadow treatment visibly differs from the fixed production reference-media surface:
 
-- Fishing Hook reads as the approved simple J-style hook with a straight shank,
-- Jighead reads as a generic round Jighead with visible line eye, keeper, and exposed hook,
-- Offset Worm Hook reads clearly with its offset geometry and conventional J presentation,
-- Weight Peg reads clearly as the approved rubber/silicone stop on its threading wire,
-- Wacky O-Ring reads as a flexible ring,
-- Ned Jighead clearly reads as a Ned-style mushroom/cylindrical jighead integrated with an open hook rather than a generic ball jighead,
-- Three-Way Swivel clearly shows exactly three separate eyes,
-- Fixed Sinker clearly shows a terminal tie eye and does not look like a through-hole sliding sinker,
-- Bobber Stop reads clearly as an accepted rubber/silicone stop variant,
-- remaining image canvases visually merge with the reference panel rather than appearing as darker rectangles,
-- images remain useful at contextual-popover phone width,
-- no clipping, fringe, horizontal overflow, misleading scale, or misleading geometry appears.
+1. `barrel-swivel-reference.webp`
+2. `bead-reference.webp`
+3. `bait-reference.webp`
+4. `bullet-weight-reference.webp`
+5. `fixed-bobber-reference.webp`
+6. `sliding-sinker-reference.webp`
+7. `slip-float-reference.webp`
+8. `split-shot-reference.webp`
+9. `stop-bead-reference.webp`
 
-Known correction required before closeout:
+Required correction standard for those nine assets:
+
+- preserve the approved/canonical object geometry unless a separate geometry defect is identified during review,
+- final production size 640 × 440,
+- exact fixed canvas `#f4f0e8` / RGB 244, 240, 232,
+- no visible darker/lighter background rectangle,
+- remove baked artificial cast-shadow treatment,
+- retain realistic material depth without detached drop-shadow styling,
+- maintain clean catalog-style recognition presentation,
+- remain recognizable at contextual-popover phone width.
+
+Remaining runtime confirmation after correction:
+
+- all corrected backgrounds visually merge with the reference panel,
+- no clipping, fringe, horizontal overflow, misleading scale, or misleading geometry appears,
+- Fishing Hook, Jighead, Offset Worm Hook, Weight Peg, Wacky Hook, Wacky O-Ring, Ned Jighead, Drop Shot Weight, Three-Way Swivel, Fixed Sinker, and Bobber Stop remain visually correct after the correction pass.
+
+Known metadata correction required before closeout:
 
 - update `bobber-stop-reference` alt text in `data/media.js` so it accurately describes the approved rubber/silicone stop image rather than the superseded thread-style image.
 
@@ -312,7 +350,7 @@ Runtime confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: STATIC REPOSITORY + ROUTING/SEARCH + DROP SHOT VALIDATION PASSED / REMAINING RUNTIME PENDING**
+**Status: STATIC REPOSITORY + ROUTING/SEARCH + DROP SHOT + CAROLINA PASSED / MEDIA CORRECTION OPEN**
 
 Verified checkpoints:
 
@@ -323,6 +361,8 @@ Verified checkpoints:
 - Comparison from the implementation baseline to that static validation head showed no post-implementation JavaScript/data/CSS/HTML changes; only documentation and Tackle recognition-media files changed.
 - Runtime Intermediate collection membership, routing, scoped/global search, All Rigs count/order, and Core count/order passed in Chrome on 2026-08-10.
 - Drop Shot Rig detail, component rendering, readiness persistence, derived relationships, recognition popovers, fixed-surface blending, and navigation passed in Chrome on 2026-08-10.
+- Carolina Rig detail, component order/relationships, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
+- Recognition-media validation remains open because nine older assets require fixed-surface/background/shadow correction.
 
 # Validation Order From Current State
 
@@ -332,19 +372,20 @@ Completed:
 2. **Canonical data counts and relationships — PASSED.**
 3. **Intermediate membership, routing, and search — PASSED.**
 4. **Drop Shot Rig — PASSED.**
+5. **Carolina Rig — PASSED.**
 
-Proceed next in this order:
+Open work:
 
-5. Carolina Rig — runtime.
-6. Live-Bait Slip-Sinker Rig — runtime.
-7. Three-Way Rig — runtime.
-8. Corrected recognition-media phone/desktop review.
-9. Existing and Intermediate tutorial playback audit.
-10. Beginner/Beginner+/Core and application regression pass.
-11. Correct known Bobber Stop alt-text metadata defect in a user-reviewed production-data package and re-test the affected reference popover.
-12. Documentation reconciliation/final closeout.
+6. Review/correct the nine newly identified legacy recognition-media assets.
+7. Live-Bait Slip-Sinker Rig — runtime.
+8. Three-Way Rig — runtime.
+9. Corrected recognition-media phone/desktop re-validation.
+10. Existing and Intermediate tutorial playback audit.
+11. Beginner/Beginner+/Core and application regression pass.
+12. Correct known Bobber Stop alt-text metadata defect in a user-reviewed production-data package and re-test the affected reference popover.
+13. Documentation reconciliation/final closeout.
 
-Update this file after each meaningful validation block. A failed block must remain visibly failed/pending until corrected and re-tested.
+A failed block must remain visibly failed/pending until corrected and re-tested.
 
 # Closeout
 
