@@ -1,11 +1,12 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.3  
+**Document Revision:** 0.1.4  
 **Document Status:** Approved  
-**Implementation Status:** Implemented / Unvalidated — Ready for Validation  
+**Implementation Status:** Partially Validated — Static Source/Data Passed; Runtime Pending  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
-**Latest Verified Media Update:** `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`)  
+**Latest Verified Media Update:** `5704da6b9cde20bf90edfa8205e9811fba4114ab` (`Hook fixes`)  
+**Current Validation Head:** `67eea13d623067186171a68be6778cf99ebf5456`  
 **Last Updated:** 2026-08-10
 
 # Purpose
@@ -16,44 +17,46 @@ Preflight confirms package integrity only. GitHub inspection and runtime review 
 
 # Current Validation State
 
-The Intermediate implementation is present on `main`, and the reviewed seven-image Tackle correction package has now been uploaded by the user. The planned post-push Intermediate source/data/runtime/tutorial/regression validation sequence has **not yet begun**.
+The Intermediate implementation is present on `main`. Repository/source-integrity and canonical-data validation have now passed against current head `67eea13d623067186171a68be6778cf99ebf5456`. Runtime routing/search, Rig-detail behavior, recognition-media presentation, tutorial playback, and regression validation remain pending.
 
 Recognition-media correction state:
 
 - **Initial six-image visual-quality gate: FAILED.**
 - Failure reason: the six assets introduced in `e4b61ae` used an older flat/vector-style treatment and did not meet the approved current catalog/semi-photorealistic Tackle recognition standard.
 - A first partial correction replaced four files in `601b741f368f7e1ae9e5b2963935673901b76674`.
-- The user subsequently reviewed and uploaded the complete current correction set in `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`).
-- GitHub inspection confirms that commit replaced exactly:
-  - `bobber-stop-reference.webp`,
-  - `drop-shot-weight-reference.webp`,
-  - `fixed-sinker-reference.webp`,
-  - `ned-jighead-reference.webp`,
-  - `three-way-swivel-reference.webp`,
-  - `wacky-hook-reference.webp`,
-  - `wacky-o-ring-reference.webp`.
+- The user subsequently reviewed and uploaded the seven-image correction set in `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`).
+- The user then reviewed and uploaded four additional legacy recognition-media replacements in `5704da6b9cde20bf90edfa8205e9811fba4114ab` (`Hook fixes`):
+  - `hook-reference.webp`,
+  - `jighead-reference.webp`,
+  - `offset-worm-hook-reference.webp`,
+  - `weight-peg-reference.webp`.
+- GitHub blob SHAs and byte sizes for those four files exactly match the final reviewed local upload package.
+- Those four reviewed files are 640 × 440 lossless WebPs built on exact `#f4f0e8` production canvas corners.
 - The approved Bobber Stop recognition image uses a rubber/silicone variant, which is valid under the canonical Tackle definition.
+- **Known metadata defect:** `data/media.js` still describes `bobber-stop-reference.webp` in alt text as a thread-style stop wrapped around fishing line. The current image is the approved rubber/silicone stop variant, so that alt text is inaccurate and must be corrected in a reviewed data-file package before final closeout.
 - The current Media Guide requires exact `#f4f0e8` canvas matching and normal viewer-facing J orientation for hook-bearing recognition assets unless a reviewed technical exception applies.
-- No Intermediate source/data/runtime/tutorial/regression item below should be interpreted as passed merely because the implementation and corrected media are present on `main`.
 
 # Package / Source Integrity
 
-**Status: Not Yet Validated**
+**Status: PASSED — 2026-08-10**
 
-Confirm against the final corrected `main` baseline before runtime validation:
+Validated against current head `67eea13d623067186171a68be6778cf99ebf5456`:
 
-- the four implementation JavaScript files remain syntactically valid,
-- no unrelated routing, Fish, Dashboard, readiness-storage, search, or renderer changes were introduced by the Intermediate implementation or recognition-media correction,
-- all intended permanent repository files are present,
-- no package README, manifest, staging note, validation TXT, scripts, contact sheets, or temporary artifacts were committed,
-- the seven current recognition-media replacements are present at the expected canonical paths,
-- the media upload did not unintentionally alter application source/data files.
+- `main` is 24 commits ahead of the Intermediate implementation baseline and not behind it.
+- Comparing `e4b61aea052f4ad843be0f6d54231af87d574905` to current head shows only Markdown documentation and Tackle image files changed after the Intermediate implementation.
+- `data/rigs.js`, `data/tackle.js`, `data/media.js`, `script.js`, and `view-renderer.js` remain the Intermediate implementation source/data baseline; no later corrective media upload altered application source/data.
+- `5704da6b9cde20bf90edfa8205e9811fba4114ab` contains exactly the four intended legacy Tackle image replacements.
+- No package README, manifest, staging note, validation TXT, contact sheet, or other review-only artifact appears in the production Tackle image directory.
+- Current `script.js` statically defines Intermediate as an available Rig collection and keeps Intermediate+, Advanced, and Expert unavailable.
+- Current renderer source retains canonical-Tackle lookup, derived `Used In`, readiness persistence, contextual `Name ⓘ` references, lazy tutorial creation, `youtube-nocookie.com`, no autoplay parameter, and external YouTube fallback behavior.
+
+Runtime/console execution remains required before final source behavior is considered fully validated.
 
 # Canonical Data Counts
 
-**Status: Not Yet Validated**
+**Status: PASSED — 2026-08-10**
 
-Confirm:
+Validated from current canonical source plus the previously validated Beginner/Beginner+ baseline:
 
 - exactly 13 active Rigs,
 - exactly 6 Beginner Rigs,
@@ -62,29 +65,43 @@ Confirm:
 - exactly 6 unique `CORE_RIG_IDS`, unchanged from the validated baseline,
 - exactly 23 active canonical Tackle records,
 - exactly 23 active Tackle recognition-media records,
-- every active Rig `tackleId` resolves to active canonical Tackle,
-- every active Tackle `mediaIds` entry resolves to active media,
-- every active media `ownerId` resolves to active canonical Tackle,
-- every active canonical Tackle concept has at least one recognition-media reference.
+- the four Intermediate Rig component requirements resolve to active canonical Tackle records,
+- the three Intermediate-added Tackle concepts (`drop-shot-weight`, `three-way-swivel`, `fixed-sinker`) each resolve to active recognition-media records,
+- all previously validated Beginner/Beginner+ Rig-to-Tackle relationships remain unchanged after the Intermediate baseline,
+- every current canonical Tackle record has a corresponding media ID and the current media registry contains the matching active owner record.
+
+The known Bobber Stop alt-text mismatch is a metadata/accessibility defect, not an ID-resolution defect.
 
 # Intermediate Membership
 
-**Status: Not Yet Validated**
+**Status: STATIC DATA PASSED / RUNTIME PENDING**
 
-The Intermediate collection must contain exactly:
+Current canonical Intermediate records are exactly:
 
 1. Drop Shot Rig
 2. Carolina Rig
 3. Live-Bait Slip-Sinker Rig
 4. Three-Way Rig
 
-No Beginner, Beginner+, Intermediate+, Advanced, or Expert record may appear in the scoped Intermediate collection.
+Source filtering uses `rig.difficulty === "Intermediate"` for the Intermediate collection. No Intermediate+, Advanced, or Expert canonical Rig record exists in the active implementation.
 
-Intermediate+, Advanced, and Expert cards remain clearly unavailable under D030.
+Runtime collection rendering remains to be confirmed.
 
 # Intermediate Routing / Search
 
-**Status: Not Yet Validated**
+**Status: STATIC SOURCE PASSED / RUNTIME PENDING**
+
+Static source confirms:
+
+- Intermediate card is marked available,
+- `browse-intermediate-rigs` maps to collection key `intermediate`,
+- Intermediate filtering selects only `difficulty === "Intermediate"`,
+- empty scoped collections are alphabetically sorted except Core, which preserves curated Core order,
+- scoped search searches only the selected collection,
+- global Rig search searches all active Rigs,
+- clear-search behavior empties the query, updates results, and restores input focus,
+- explicit view transitions reset scroll position to the top,
+- Core membership/order remains driven by the unchanged six-member `CORE_RIG_IDS` registry.
 
 Runtime confirm:
 
@@ -95,76 +112,83 @@ Runtime confirm:
 - scoped search returns only Intermediate records,
 - clear control restores all four records and returns focus to the field,
 - global Rig search can find every new Intermediate Rig,
-- All Rigs now contains exactly 13 active records,
+- All Rigs contains exactly 13 active records,
 - All Rigs remains alphabetized when its query is empty,
 - Core membership/order remains unchanged.
 
 # Drop Shot Rig
 
-**Status: Not Yet Validated**
+**Status: STATIC DEFINITION PASSED / RUNTIME PENDING**
 
-Confirm:
+Static canonical definition confirms:
+
+- difficulty is `Intermediate`,
+- components are Wacky Hook, Soft Plastic Bait, and Drop Shot Weight through canonical `tackleId` references,
+- hook is instructed to ride point-up,
+- weight attaches below the hook on the tag end,
+- standard open-water setup leaves the hook point exposed,
+- starting hook-to-weight spacing is 12–18 inches and explicitly adjustable.
+
+Runtime confirm:
 
 - detail opens with `Intermediate` difficulty,
 - Wacky/Finesse/Drop Shot hook, Soft Plastic Bait, and Drop Shot Weight render from canonical Tackle,
-- no unresolved or duplicate component name is stored on the Rig,
-- standard hook rides point-up,
-- weight is below the hook on the tag end,
-- standard open-water setup leaves the hook point exposed,
-- hook-to-weight spacing is presented as adjustable,
+- no unresolved or duplicate component name appears,
 - readiness updates/persists,
 - Tackle `Used In` derives the new relationships,
 - `Name ⓘ` recognition help works for Drop Shot Weight and the shared finesse hook.
 
 # Carolina Rig
 
-**Status: Not Yet Validated**
+**Status: STATIC DEFINITION PASSED / RUNTIME PENDING**
 
-Confirm:
+Static canonical definition confirms:
 
-- detail opens with `Intermediate` difficulty,
-- component order is Sliding Sinker → Protective Bead → Barrel Swivel → Leader → Offset Worm Hook + Soft Plastic,
-- weight slides on the main line rather than the leader,
-- bead is below the weight and above the swivel,
+- difficulty is `Intermediate`,
+- component order is Sliding Sinker → Protective Bead → Barrel Swivel → Leader Line → Offset Worm Hook → Soft Plastic Bait,
+- sinker and bead remain on the main-line side of the swivel,
 - leader begins after the swivel,
-- soft plastic is rigged straight on the offset hook,
-- readiness updates/persists,
-- Basic Bottom Rig's `carolina-rig` forward variation now resolves to a real active canonical Rig,
-- Carolina links back to Basic Bottom/Texas as defined by the canonical variation metadata.
+- soft plastic is instructed to remain straight on the offset hook,
+- Basic Bottom Rig forwards to `carolina-rig`,
+- Carolina variation metadata links to `texas-rig` and `basic-bottom-rig`.
+
+Runtime confirm rendering, readiness persistence, and relationship presentation.
 
 # Live-Bait Slip-Sinker Rig
 
-**Status: Not Yet Validated**
+**Status: STATIC DEFINITION PASSED / RUNTIME PENDING**
 
-Confirm:
+Static canonical definition confirms:
 
-- detail opens with `Intermediate` difficulty,
-- Sliding Sinker, optional Protective Bead, Barrel Swivel, Leader Line, Fishing Hook, and Bait render,
-- walking sinker terminology is handled as a Sliding Sinker alias/variant rather than a duplicate canonical Tackle type,
-- main line can slide through the sinker,
-- leader begins after the swivel,
-- readiness updates/persists,
-- `Used In` derives the new relationships.
+- difficulty is `Intermediate`,
+- components are Sliding Sinker, optional Protective Bead, Barrel Swivel, Leader Line, Fishing Hook, and Bait,
+- `Walking Sinker` remains an alias/variant of canonical Sliding Sinker rather than a duplicate Tackle record,
+- the main line is instructed to slide through the sinker,
+- the leader begins after the swivel.
+
+Runtime confirm rendering, readiness persistence, and derived `Used In` relationships.
 
 # Three-Way Rig
 
-**Status: Not Yet Validated**
+**Status: STATIC DEFINITION PASSED / RUNTIME PENDING**
 
-Confirm:
+Static canonical definition confirms:
 
-- detail opens with `Intermediate` difficulty,
-- Three-Way Swivel, Leader Line, Fishing Hook, Bait, and Fixed Sinker render,
-- a true three-eye swivel is shown in recognition media,
+- difficulty is `Intermediate`,
+- components are Three-Way Swivel, Leader Line, Fishing Hook, Bait, and Fixed Sinker,
 - instructions create one hook leader and one shorter sinker dropper,
-- sinker remains below the hook leader,
-- readiness updates/persists,
-- `Used In` derives the new relationships.
+- the fixed sinker remains below the hook leader,
+- the canonical Tackle definition requires a true three-eye swivel and the Rig explicitly warns against substituting a two-eye barrel swivel.
+
+Runtime confirm rendering, readiness persistence, derived relationships, and recognition-media presentation.
 
 # Recognition Media
 
-**Status: CORRECTED ON MAIN / NOT YET RUNTIME VALIDATED**
+**Status: BINARY UPLOADS VERIFIED / RUNTIME + METADATA CORRECTION PENDING**
 
-Current user-uploaded correction set from `eed8929cb1859aef653168884e1e71244d1dd80e`:
+Current reviewed correction sets on `main` include:
+
+From `eed8929cb1859aef653168884e1e71244d1dd80e`:
 
 - `wacky-hook-reference.webp`,
 - `wacky-o-ring-reference.webp`,
@@ -174,10 +198,22 @@ Current user-uploaded correction set from `eed8929cb1859aef653168884e1e71244d1dd
 - `fixed-sinker-reference.webp`,
 - `bobber-stop-reference.webp`.
 
+From `5704da6b9cde20bf90edfa8205e9811fba4114ab`:
+
+- `hook-reference.webp`,
+- `jighead-reference.webp`,
+- `offset-worm-hook-reference.webp`,
+- `weight-peg-reference.webp`.
+
+The four newest GitHub blobs exactly match the final reviewed local upload package by Git blob SHA and byte size.
+
 Runtime phone/desktop confirm:
 
+- Fishing Hook reads as the approved simple J-style hook with a straight shank,
+- Jighead reads as a generic round Jighead with visible line eye, keeper, and exposed hook,
+- Offset Worm Hook reads clearly with its offset geometry and conventional J presentation,
+- Weight Peg reads clearly as the approved rubber/silicone stop on its threading wire,
 - Wacky Hook reads clearly as an open-gap finesse/wacky hook rather than a closed loop,
-- Wacky Hook uses the normal viewer-facing J presentation expected by the current media standard,
 - Wacky O-Ring reads as a flexible ring,
 - Ned Jighead clearly reads as a Ned-style mushroom/cylindrical jighead integrated with an open hook rather than a generic ball jighead,
 - Drop Shot Weight clearly shows a terminal weight with a recognizable line-attachment/quick-change clip relationship,
@@ -187,6 +223,10 @@ Runtime phone/desktop confirm:
 - image canvases visually merge with the reference panel rather than appearing as darker rectangles,
 - images remain useful at contextual-popover phone width,
 - no clipping, fringe, horizontal overflow, misleading scale, or misleading geometry appears.
+
+Known correction required before closeout:
+
+- update `bobber-stop-reference` alt text in `data/media.js` so it accurately describes the approved rubber/silicone stop image rather than the superseded thread-style image.
 
 For future replacement work, pre-delivery confirm under the `MEDIA_GUIDE.md` Tackle Media Generation Gate:
 
@@ -205,13 +245,20 @@ For future replacement work, pre-delivery confirm under the `MEDIA_GUIDE.md` Tac
 - media metadata uses the correct canonical Tackle owner,
 - source/reference geometry and license/provenance are recorded accurately.
 
-Only after the runtime checks pass does this section become **Validated**.
-
 # Tutorial Audit — Existing Rigs
 
-**Status: Not Yet Validated**
+**Status: STATIC PLAYER PATTERN PASSED / PLAYBACK NOT YET VALIDATED**
 
-Runtime test each configured tutorial by pressing **Load tutorial** and confirming playback/player initialization plus external fallback:
+Static renderer validation confirms:
+
+- no iframe is emitted by the initial tutorial markup,
+- iframe creation occurs only after **Load tutorial** activation,
+- player source uses `https://www.youtube-nocookie.com/embed/`,
+- no autoplay parameter is requested,
+- `Watch on YouTube ↗` remains present independently of the embedded player,
+- iframe uses `strict-origin-when-cross-origin` referrer policy and allows fullscreen.
+
+Runtime test each configured tutorial:
 
 - Fixed Bobber — NYSDEC (`LlzvkVUvYBs`)
 - Basic Bottom — Catfish Edge (`O6pEc6Y_44U`)
@@ -226,7 +273,7 @@ Inline Spinner intentionally has no embedded tutorial in this package because no
 
 # Tutorial Audit — Intermediate
 
-**Status: Not Yet Validated**
+**Status: STATIC PLAYER PATTERN PASSED / PLAYBACK NOT YET VALIDATED**
 
 Runtime test:
 
@@ -249,9 +296,11 @@ If a video has been removed, made private, or has embedding disabled, remove the
 
 # Beginner / Beginner+ Regression
 
-**Status: Not Yet Validated**
+**Status: STATIC SOURCE UNCHANGED / RUNTIME PENDING**
 
-Confirm the previously validated behavior remains intact:
+GitHub comparison confirms no application source/data file changed after the Intermediate implementation baseline; subsequent changes are documentation and Tackle media only.
+
+Runtime confirm the previously validated behavior remains intact:
 
 - Beginner exact six,
 - Beginner+ exact three,
@@ -269,46 +318,43 @@ Confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: CORRECTED MEDIA UPLOAD VERIFIED / REMAINING SOURCE-RUNTIME VALIDATION PENDING**
+**Status: STATIC REPOSITORY VALIDATION PASSED / RUNTIME PENDING**
 
-Verified corrective checkpoint:
+Verified checkpoints:
 
-- `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`) contains exactly the seven expected recognition-media binary replacements listed above.
-- `main` subsequently advanced through merge commit `f75374a34abad52c2df5c525ff366c70db0706ec`.
-- The current repository also contains the approved `MEDIA_GUIDE.md` rules for exact canvas matching and hook orientation.
-- No runtime validation result is implied by those GitHub checks.
-
-At the start of the next session:
-
-1. re-fetch actual current `main`,
-2. confirm the current head/parent and changed-file state since this handoff,
-3. validate the implementation JavaScript/data integrity and canonical counts,
-4. validate routing/search and each Intermediate Rig,
-5. validate the seven corrected recognition assets on phone and desktop,
-6. complete the tutorial and regression audit,
-7. update this file after each meaningful validation block.
+- Intermediate implementation baseline: `e4b61aea052f4ad843be0f6d54231af87d574905`.
+- Seven-image correction: `eed8929cb1859aef653168884e1e71244d1dd80e`.
+- Four-image legacy correction: `5704da6b9cde20bf90edfa8205e9811fba4114ab`.
+- Current validation head: `67eea13d623067186171a68be6778cf99ebf5456`.
+- Comparison from the implementation baseline to current head shows no post-implementation JavaScript/data/CSS/HTML changes; only documentation and Tackle recognition-media files changed.
+- The current repository contains the permanent `#f4f0e8` media-surface and hook-orientation standards.
+- No runtime result is implied by these GitHub checks.
 
 # Validation Order From Current State
 
-Proceed in this order so failures are isolated and documented immediately:
+Completed:
 
-1. GitHub/source/package integrity.
-2. Canonical data counts and relationships.
-3. Intermediate membership, routing, and search.
-4. Drop Shot Rig.
-5. Carolina Rig.
-6. Live-Bait Slip-Sinker Rig.
-7. Three-Way Rig.
+1. **GitHub/source/package integrity — PASSED.**
+2. **Canonical data counts and relationships — PASSED.**
+
+Proceed next in this order:
+
+3. Intermediate membership, routing, and search — runtime.
+4. Drop Shot Rig — runtime.
+5. Carolina Rig — runtime.
+6. Live-Bait Slip-Sinker Rig — runtime.
+7. Three-Way Rig — runtime.
 8. Corrected recognition-media phone/desktop review.
-9. Existing and Intermediate tutorial audit.
+9. Existing and Intermediate tutorial playback audit.
 10. Beginner/Beginner+/Core and application regression pass.
-11. Documentation reconciliation/final closeout.
+11. Correct known Bobber Stop alt-text metadata defect in a user-reviewed production-data package and re-test the affected reference popover.
+12. Documentation reconciliation/final closeout.
 
 Update this file after each meaningful validation block. A failed block must remain visibly failed/pending until corrected and re-tested.
 
 # Closeout
 
-After all source, GitHub, runtime, tutorial, recognition-media, and regression checks pass:
+After all source, GitHub, runtime, tutorial, recognition-media, metadata/accessibility, and regression checks pass:
 
 - promote the segment's durable D053/D054 decisions into `DECISIONS.md`,
 - reconcile the post-Texas rollout language in `MEDIA_GUIDE.md`,
