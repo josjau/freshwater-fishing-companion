@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.5  
+**Document Revision:** 0.1.6  
 **Document Status:** Approved  
-**Implementation Status:** Partially Validated — Static + Routing/Search Passed; Rig Detail Runtime Pending  
+**Implementation Status:** Partially Validated — Static + Routing/Search + Drop Shot Passed; Remaining Rig Runtime Pending  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Latest Verified Media Update:** `5704da6b9cde20bf90edfa8205e9811fba4114ab` (`Hook fixes`)  
 **Current Validation Head:** `67eea13d623067186171a68be6778cf99ebf5456`  
@@ -17,7 +17,7 @@ Preflight confirms package integrity only. GitHub inspection and runtime review 
 
 # Current Validation State
 
-The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, and Intermediate routing/search have now passed. Rig-detail behavior, recognition-media presentation, tutorial playback, regression validation, and the known Bobber Stop alt-text correction remain pending.
+The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, and Drop Shot Rig runtime validation have now passed. Carolina, Live-Bait Slip-Sinker, Three-Way, recognition-media presentation, tutorial playback, regression validation, and the known Bobber Stop alt-text correction remain pending.
 
 Recognition-media correction state:
 
@@ -109,7 +109,7 @@ Runtime validation in Chrome confirmed:
 
 # Drop Shot Rig
 
-**Status: STATIC DEFINITION PASSED / RUNTIME PENDING**
+**Status: PASSED — 2026-08-10**
 
 Static canonical definition confirms:
 
@@ -120,14 +120,17 @@ Static canonical definition confirms:
 - standard open-water setup leaves the hook point exposed,
 - starting hook-to-weight spacing is 12–18 inches and explicitly adjustable.
 
-Runtime confirm:
+Runtime validation in Chrome confirmed:
 
 - detail opens with `Intermediate` difficulty,
-- Wacky/Finesse/Drop Shot hook, Soft Plastic Bait, and Drop Shot Weight render from canonical Tackle,
-- no unresolved or duplicate component name appears,
-- readiness updates/persists,
-- Tackle `Used In` derives the new relationships,
-- `Name ⓘ` recognition help works for Drop Shot Weight and the shared finesse hook.
+- Wacky Hook, Soft Plastic Bait, and Drop Shot Weight render from canonical Tackle,
+- no unresolved, duplicated, or raw-ID component name appears,
+- the instructions preserve point-up hook orientation, tag-end weight placement below the hook, exposed-point open-water setup, and adjustable 12–18 inch starting spacing,
+- readiness selection updates and persists after leaving and returning to the Rig,
+- Wacky Hook `Name ⓘ` recognition help loads correctly and derived `Used In` includes Drop Shot Rig,
+- Drop Shot Weight `Name ⓘ` recognition help loads the corrected terminal/quick-change weight image and derived `Used In` includes Drop Shot Rig,
+- the tested recognition panels visually merge with the fixed `#f4f0e8` reference surface without a darker rectangle,
+- Parent/Home navigation continues to work normally from the Drop Shot detail flow.
 
 # Carolina Rig
 
@@ -175,7 +178,7 @@ Runtime confirm rendering, readiness persistence, derived relationships, and rec
 
 # Recognition Media
 
-**Status: BINARY UPLOADS VERIFIED / RUNTIME + METADATA CORRECTION PENDING**
+**Status: BINARY UPLOADS VERIFIED / PARTIAL RUNTIME PASS / METADATA CORRECTION PENDING**
 
 Current reviewed correction sets on `main` include:
 
@@ -198,20 +201,20 @@ From `5704da6b9cde20bf90edfa8205e9811fba4114ab`:
 
 The four newest GitHub blobs exactly match the final reviewed local upload package by Git blob SHA and byte size.
 
-Runtime phone/desktop confirm:
+Drop Shot runtime validation confirmed Wacky Hook and Drop Shot Weight recognition popovers load correctly and their tested panels visually merge with the `#f4f0e8` surface.
+
+Remaining runtime phone/desktop confirmation:
 
 - Fishing Hook reads as the approved simple J-style hook with a straight shank,
 - Jighead reads as a generic round Jighead with visible line eye, keeper, and exposed hook,
 - Offset Worm Hook reads clearly with its offset geometry and conventional J presentation,
 - Weight Peg reads clearly as the approved rubber/silicone stop on its threading wire,
-- Wacky Hook reads clearly as an open-gap finesse/wacky hook rather than a closed loop,
 - Wacky O-Ring reads as a flexible ring,
 - Ned Jighead clearly reads as a Ned-style mushroom/cylindrical jighead integrated with an open hook rather than a generic ball jighead,
-- Drop Shot Weight clearly shows a terminal weight with a recognizable line-attachment/quick-change clip relationship,
 - Three-Way Swivel clearly shows exactly three separate eyes,
 - Fixed Sinker clearly shows a terminal tie eye and does not look like a through-hole sliding sinker,
 - Bobber Stop reads clearly as an accepted rubber/silicone stop variant,
-- image canvases visually merge with the reference panel rather than appearing as darker rectangles,
+- remaining image canvases visually merge with the reference panel rather than appearing as darker rectangles,
 - images remain useful at contextual-popover phone width,
 - no clipping, fringe, horizontal overflow, misleading scale, or misleading geometry appears.
 
@@ -309,7 +312,7 @@ Runtime confirm the previously validated behavior remains intact:
 
 # GitHub Validation
 
-**Status: STATIC REPOSITORY + ROUTING/SEARCH VALIDATION PASSED / REMAINING RUNTIME PENDING**
+**Status: STATIC REPOSITORY + ROUTING/SEARCH + DROP SHOT VALIDATION PASSED / REMAINING RUNTIME PENDING**
 
 Verified checkpoints:
 
@@ -319,6 +322,7 @@ Verified checkpoints:
 - Static validation baseline before documentation updates: `67eea13d623067186171a68be6778cf99ebf5456`.
 - Comparison from the implementation baseline to that static validation head showed no post-implementation JavaScript/data/CSS/HTML changes; only documentation and Tackle recognition-media files changed.
 - Runtime Intermediate collection membership, routing, scoped/global search, All Rigs count/order, and Core count/order passed in Chrome on 2026-08-10.
+- Drop Shot Rig detail, component rendering, readiness persistence, derived relationships, recognition popovers, fixed-surface blending, and navigation passed in Chrome on 2026-08-10.
 
 # Validation Order From Current State
 
@@ -327,10 +331,10 @@ Completed:
 1. **GitHub/source/package integrity — PASSED.**
 2. **Canonical data counts and relationships — PASSED.**
 3. **Intermediate membership, routing, and search — PASSED.**
+4. **Drop Shot Rig — PASSED.**
 
 Proceed next in this order:
 
-4. Drop Shot Rig — runtime.
 5. Carolina Rig — runtime.
 6. Live-Bait Slip-Sinker Rig — runtime.
 7. Three-Way Rig — runtime.
