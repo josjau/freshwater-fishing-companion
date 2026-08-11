@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.5.3  
+**Document Revision:** 0.5.4  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative; do not rely on a self-referential handoff commit SHA.  
 **Intermediate Implementation Baseline:** `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
-**Latest Verified Tackle Image Update:** `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`)  
+**Latest Verified Tackle Image Update:** `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`)  
 **Last Updated:** 2026-08-10
 
 # 1. Start Here
@@ -37,7 +37,7 @@ Permanent operating rules:
 
 **Beginner/Beginner+ Media Completion + Intermediate Rig Expansion**
 
-**Implementation Status: Implemented / Unvalidated — Ready for Intermediate Validation**
+**Implementation Status: Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorials / Regression / Metadata Pending**
 
 The Intermediate implementation package is present on `main` from commit:
 
@@ -47,50 +47,65 @@ Commit message:
 
 `Rigs - Intermediate Build`
 
-The initial recognition-media package did not meet the approved Tackle image standard. That correction work has now advanced to a new reviewed seven-image package uploaded by the user in commit:
+The recognition-media correction sequence is also present on `main`:
 
-`eed8929cb1859aef653168884e1e71244d1dd80e`
+- `eed8929cb1859aef653168884e1e71244d1dd80e` — `Tackle Image Updates`
+- `5704da6b9cde20bf90edfa8205e9811fba4114ab` — `Hook fixes`
+- `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` — `Rig Image Updates`
 
-Commit message:
+Current validated state:
 
-`Tackle Image Updates`
-
-GitHub inspection confirms that commit replaced exactly these seven production images:
-
-- `images/tackle/bobber-stop-reference.webp`
-- `images/tackle/drop-shot-weight-reference.webp`
-- `images/tackle/fixed-sinker-reference.webp`
-- `images/tackle/ned-jighead-reference.webp`
-- `images/tackle/three-way-swivel-reference.webp`
-- `images/tackle/wacky-hook-reference.webp`
-- `images/tackle/wacky-o-ring-reference.webp`
-
-`main` subsequently advanced through merge commit `f75374a34abad52c2df5c525ff366c70db0706ec`, which also contains the approved `MEDIA_GUIDE.md` update for the exact `#f4f0e8` reference canvas and conventional viewer-facing J hook orientation.
-
-Current known state:
-
-- 13 active Rigs are intended by the implementation:
+- exactly 13 active Rigs,
   - 6 Beginner,
   - 3 Beginner+,
   - 4 Intermediate,
-- Intermediate membership is:
-  1. Drop Shot Rig
-  2. Carolina Rig
+- Intermediate membership is exactly:
+  1. Carolina Rig
+  2. Drop Shot Rig
   3. Live-Bait Slip-Sinker Rig
   4. Three-Way Rig
-- 23 canonical Tackle concepts are intended by the implementation,
-- the six-member `CORE_RIG_IDS` registry remains unchanged,
-- Intermediate+, Advanced, and Expert have not started,
-- the seven-image correction package is now present on `main`,
-- no Intermediate source/data/runtime/tutorial/regression validation has yet been completed,
-- before the main Intermediate validation sequence begins, four older recognition assets must be reviewed against the current media standard:
-  - `images/tackle/hook-reference.webp`,
-  - `images/tackle/jighead-reference.webp`,
-  - `images/tackle/offset-worm-hook-reference.webp`,
-  - `images/tackle/weight-peg-reference.webp`,
-- the next session should begin with that four-asset review, then proceed into the documented Intermediate validation sequence.
+- Intermediate routing/search passed,
+- Drop Shot Rig runtime passed,
+- Carolina Rig runtime passed,
+- Live-Bait Slip-Sinker Rig runtime passed,
+- Three-Way Rig runtime passed,
+- exactly 23 active canonical Tackle concepts,
+- exactly 23 active Tackle recognition-media records,
+- six-member `CORE_RIG_IDS` registry remains unchanged,
+- recognition-media package review passed,
+- nine-image production upload/package verification passed,
+- recognition-media phone/desktop contextual-popover validation passed,
+- Intermediate+, Advanced, and Expert remain unstarted/unavailable.
 
-The approved Tackle media rules now include:
+The nine-image correction commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` changes exactly:
+
+- `images/tackle/barrel-swivel-reference.webp`
+- `images/tackle/bead-reference.webp`
+- `images/tackle/bait-reference.webp`
+- `images/tackle/bullet-weight-reference.webp`
+- `images/tackle/fixed-bobber-reference.webp`
+- `images/tackle/sliding-sinker-reference.webp`
+- `images/tackle/slip-float-reference.webp`
+- `images/tackle/split-shot-reference.webp`
+- `images/tackle/stop-bead-reference.webp`
+
+GitHub blob SHAs and byte sizes for those nine files match the approved local package exactly. Runtime review confirmed the corrected backgrounds merge visually with the fixed `#f4f0e8` reference-media surface, the prior baked/uneven shadow issue is resolved, and the objects remain recognizable without clipping or distortion.
+
+Known open defect:
+
+- `data/media.js` still describes `bobber-stop-reference.webp` in alt text as a thread-style bobber stop wrapped around fishing line.
+- The approved image is a rubber/silicone stop variant.
+- This metadata/accessibility defect must be corrected in a user-reviewed production-data edit before final closeout.
+
+Remaining validation before Intermediate can be marked Validated/Finalized:
+
+1. Intermediate tutorial playback audit.
+2. Existing tutorial playback regression audit.
+3. Beginner/Beginner+/Core and broader application regression pass.
+4. Bobber Stop alt-text metadata correction and affected popover re-test.
+5. Documentation reconciliation/final closeout.
+
+The approved Tackle media rules remain:
 
 - real-photo-first sourcing when technically correct and legally reusable,
 - original semi-photorealistic catalog treatment when suitable reusable photography is unavailable,
@@ -104,7 +119,7 @@ The active source of truth for this segment is:
 - `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`
 - `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`
 
-Do not describe the Intermediate tier as Validated or Finalized until the required checks actually pass and those documents are reconciled.
+Do not describe the Intermediate tier as Validated or Finalized until the remaining tutorial, regression, metadata, and closeout checks pass and those documents are reconciled.
 
 ## Previously Finalized Work
 
@@ -170,13 +185,13 @@ See `workstreams/CORE-RIGS-TACKLE-MEDIA.md`, `workstreams/CORE-RIGS-TACKLE-MEDIA
 
 # 3. Current Production Architecture
 
-**Implementation Status: Current, with Intermediate additions present but unvalidated**
+**Implementation Status: Current, with Intermediate additions present and partially validated**
 
 - Three knowledge layers: Reference Knowledge, Decision Knowledge, User Knowledge.
 - Forest Journal is the only production-supported Version 1 theme.
 - Fish Guide exposes inline landing-page search with shared deterministic relevance ranking and explicit one-click clear behavior.
-- Rig Guide has the validated nine-Rig Beginner/Beginner+ foundation plus four implemented Intermediate records awaiting validation.
-- Canonical Tackle Reference Knowledge exists in `data/tackle.js`; the Intermediate implementation expands the intended current set to 23 concepts pending validation.
+- Rig Guide has the validated nine-Rig Beginner/Beginner+ foundation plus four implemented Intermediate records whose membership/routing/search/detail behavior now pass runtime validation.
+- Canonical Tackle Reference Knowledge exists in `data/tackle.js`; the current active set is 23 concepts.
 - Rig component requirements reference canonical Tackle through `tackleId`.
 - Reverse Tackle `Used In` relationships are derived from active Rig requirements.
 - Current Rig readiness uses the transitional local readiness state.
@@ -246,7 +261,7 @@ See `DECISIONS.md`, `MEDIA_GUIDE.md`, and the governing data-model documents.
 - Safe User Knowledge rendering rules across future user-entered/imported features.
 - Dashboard search and cross-domain result experience after scope, grouping, and ranking behavior are deliberately designed.
 
-The Intermediate tier itself is **implemented but unvalidated**, so it must not be listed as Approved / Not Implemented.
+The Intermediate tier itself is **implemented and partially validated**, so it must not be listed as Approved / Not Implemented.
 
 # 6. Known Temporary Bridges
 
@@ -267,9 +282,9 @@ When My Tackle becomes authoritative:
 - temporary availability never writes My Tackle,
 - only explicit My Tackle ownership-management actions write persistent ownership.
 
-# 7. Open Decisions
+# 7. Open Decisions / Known Open Items
 
-The following remain intentionally unresolved:
+The following remain intentionally unresolved or open:
 
 - Detailed My Tackle owned-item schema:
   - brand
@@ -291,41 +306,42 @@ The following remain intentionally unresolved:
 - Whether any non-Rig domain should adopt the Rig-specific compact-detail density treatment after separate review.
 - Exact Dashboard-search cross-domain scope, grouping, and result presentation.
 - Future conservative Dashboard density review.
-- Next-session Tackle recognition-media review is explicitly required for:
-  - `images/tackle/hook-reference.webp`,
-  - `images/tackle/jighead-reference.webp`,
-  - `images/tackle/offset-worm-hook-reference.webp`,
-  - `images/tackle/weight-peg-reference.webp`.
-  Review them against the current exact-canvas, semi-photorealistic catalog-quality, geometry, and hook-orientation standards before deciding whether replacement is required. Any proposed replacements remain subject to the Production Write Approval Gate.
+- Bobber Stop recognition-media alt text in `data/media.js` is known inaccurate and must be corrected before Intermediate closeout.
 - Other audit findings not yet discussed to completion remain visible until explicitly decided.
 
 # 8. Next Recommended Work
 
-The immediate work is **Intermediate validation**, not Intermediate+ and not another implementation tier.
+The immediate work is **remaining Intermediate validation**, not Intermediate+ and not another implementation tier.
 
-Start the next session by re-reading actual GitHub `main`, then perform this pre-validation media review before the main validation sequence:
+At the start of the next session:
 
-1. Review `hook-reference.webp`.
-2. Review `jighead-reference.webp`.
-3. Review `offset-worm-hook-reference.webp`.
-4. Review `weight-peg-reference.webp`.
-5. If any replacement is recommended, prepare it for user review; do not write production media directly to GitHub without explicit approval.
+1. Re-read actual GitHub `main`.
+2. Re-read `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md` revision 0.1.11 or later.
+3. Do **not** repeat completed Intermediate Rig or recognition-media validation unless repository changes invalidate those results.
 
-After that review, execute the validation sequence documented in `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`:
+Proceed in this order:
 
-1. GitHub/source/package integrity.
-2. Canonical Rig/Tackle/media counts and relationships.
-3. Intermediate membership, routing, and search.
-4. Drop Shot Rig.
-5. Carolina Rig.
-6. Live-Bait Slip-Sinker Rig.
-7. Three-Way Rig.
-8. Corrected recognition-media phone/desktop review, including the seven user-uploaded replacements.
-9. Existing and Intermediate tutorial audit.
-10. Beginner/Beginner+/Core and application regression pass.
-11. Documentation reconciliation/final closeout.
+1. Intermediate tutorial playback audit:
+   - Drop Shot — Mystery Tackle Box (`xuqaAq98BDA`)
+   - Carolina — John Crews (`4nU1QncQ0QM`)
+   - Live-Bait Slip-Sinker — Nick Lindner (`61mG-xGi-I0`)
+   - Three-Way — Catfish Edge (`8SONykmBFxA`)
+2. Existing tutorial playback regression audit:
+   - Fixed Bobber — NYSDEC (`LlzvkVUvYBs`)
+   - Basic Bottom — Catfish Edge (`O6pEc6Y_44U`)
+   - Jighead + Soft Plastic — Tackle Tactics TV (`wv1e53YZuBo`)
+   - Slip Bobber — Wired2Fish (`foSgzdjLZyk`)
+   - Texas — Wired2Fish (`cIraWgiR6u0`)
+   - Wacky — Vermont Fish & Wildlife Department (`u8N--D8C--4`)
+   - Ned — Bass University (`ajJz8pH0Jig`)
+   - Weightless Soft-Plastic — Wired2Fish (`Bld_-8GBsco`)
+   - Inline Spinner remains intentionally without an embedded tutorial; confirm D049 external fallbacks remain usable.
+3. Beginner/Beginner+/Core and application regression pass.
+4. Prepare the targeted `data/media.js` Bobber Stop alt-text correction from the latest verified GitHub file, present it for user approval, then apply only after explicit approval.
+5. Re-test the affected Bobber Stop reference popover.
+6. Documentation reconciliation/final closeout.
 
-Update validation/current-state documentation after each meaningful validation result. Only after all required checks pass should the Intermediate segment be finalized and the next milestone selected.
+Only after all remaining checks pass should the Intermediate segment be marked `Validated` and then `Finalized`, followed by selection of the next milestone.
 
 Dashboard search remains parked.
 
