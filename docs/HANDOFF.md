@@ -1,12 +1,13 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.5.4  
+**Document Revision:** 0.5.5  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative; do not rely on a self-referential handoff commit SHA.  
 **Intermediate Implementation Baseline:** `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Latest Verified Tackle Image Update:** `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`)  
-**Last Updated:** 2026-08-10
+**Latest Tutorial Validation Record:** `docs/workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md` revision 0.1.20  
+**Last Updated:** 2026-08-11
 
 # 1. Start Here
 
@@ -37,7 +38,7 @@ Permanent operating rules:
 
 **Beginner/Beginner+ Media Completion + Intermediate Rig Expansion**
 
-**Implementation Status: Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorials / Regression / Metadata Pending**
+**Implementation Status: Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorial Selection Complete; Retained Tutorial Regression Passed; Inline Spinner / Application Regression / Production Corrections Pending**
 
 The Intermediate implementation package is present on `main` from commit:
 
@@ -75,7 +76,34 @@ Current validated state:
 - recognition-media package review passed,
 - nine-image production upload/package verification passed,
 - recognition-media phone/desktop contextual-popover validation passed,
+- Drop Shot tutorial playback passed,
+- Three-Way tutorial playback passed,
+- retained tutorial runtime regression passed for:
+  - Fixed Bobber,
+  - Basic Bottom,
+  - Jighead + Soft Plastic,
+  - Texas Rig,
+- all tutorial replacement selections are complete,
 - Intermediate+, Advanced, and Expert remain unstarted/unavailable.
+
+Approved tutorial replacements are now:
+
+1. Slip Bobber — Sportsman's Journal TV `0V-gaboIlD0` — **HOW-TO Rig A Slip Bobber (Easiest Way)**
+2. Ned Rig — Mystery Tackle Box `COFdRET28cY` — **How To Rig A Ned Rig - Ned Rigging Tips**
+3. Weightless Soft-Plastic — Reaction Tackle `EFORJFsycJQ` — **How to Rig a Weightless Texas Rig**
+4. Wacky Rig — Kevin VanDam `EbHzUCM4o7Y` — **The fishing rig that whacks them every time - Wacky Rig**
+5. Carolina Rig — ShakespeareFishingUS `iYngOOMQCC0` — **Fishing 101 - How to Tie a Carolina Rig**
+6. Live-Bait Slip-Sinker — Castaway Fishing Kits `IbV0yG3sRms` — **How to rig a Lindy Rig**
+
+These six replacements are approved for the consolidated production-data correction package but **have not yet been written to `data/rigs.js`**. They require final in-app runtime validation after implementation.
+
+The approved tutorial-selection standard for this segment is build-first:
+
+- primary embedded Rig tutorials should primarily demonstrate correct Rig assembly/build,
+- concise/direct videos are preferred when technical completeness and source quality are otherwise adequate,
+- component order, knots/connections, leader placement, weight placement, bait/hook placement, and final assembled configuration are higher priority than fishing technique,
+- technique/retrieve/presentation/strategy may be present but should not dominate,
+- no arbitrary hard duration threshold is required.
 
 The nine-image correction commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` changes exactly:
 
@@ -97,13 +125,18 @@ Known open defect:
 - The approved image is a rubber/silicone stop variant.
 - This metadata/accessibility defect must be corrected in a user-reviewed production-data edit before final closeout.
 
-Remaining validation before Intermediate can be marked Validated/Finalized:
+Remaining validation/correction before Intermediate can be marked Validated/Finalized:
 
-1. Intermediate tutorial playback audit.
-2. Existing tutorial playback regression audit.
-3. Beginner/Beginner+/Core and broader application regression pass.
-4. Bobber Stop alt-text metadata correction and affected popover re-test.
-5. Documentation reconciliation/final closeout.
+1. **Inline Spinner D049 external-fallback check — NOT COMPLETED.** Confirm the existing Mepps and Panther Martin references still open and remain useful.
+2. Beginner/Beginner+/Core and broader application regression pass.
+3. Prepare and review one consolidated `data/rigs.js` correction package containing all six approved tutorial replacements.
+4. Prepare and review the targeted `data/media.js` Bobber Stop alt-text correction in the same controlled production-data phase.
+5. Apply production-data changes only after explicit user approval.
+6. Runtime-test all six changed tutorial embeds and re-test the affected Bobber Stop reference popover.
+7. Reconcile the build-first tutorial-selection rule into governing documentation.
+8. Documentation reconciliation/final closeout.
+
+**Session pause state — 2026-08-11:** The user ended the session before performing the Inline Spinner fallback check. Do not mark that check passed or infer its result. Resume there next session.
 
 The approved Tackle media rules remain:
 
@@ -119,7 +152,7 @@ The active source of truth for this segment is:
 - `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`
 - `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`
 
-Do not describe the Intermediate tier as Validated or Finalized until the remaining tutorial, regression, metadata, and closeout checks pass and those documents are reconciled.
+Do not describe the Intermediate tier as Validated or Finalized until the remaining fallback, application-regression, production-correction, changed-runtime, metadata, governing-document, and closeout checks pass and those documents are reconciled.
 
 ## Previously Finalized Work
 
@@ -232,6 +265,7 @@ See `ARCHITECTURE.md` for source ownership and exact current-vs-planned distinct
 - Current Tackle reference images use exact `#f4f0e8` canvas matching and normal viewer-facing J hook orientation.
 - Vector/flat/clip-art appearance is not an acceptable normal Tackle production shortcut.
 - Completed-Rig visual confirmation follows the D049 hierarchy: trustworthy reusable local media when available, verified permitted tutorial embed, direct verified external visual/reference, authoritative article/reference, then authoritative text-only instructions.
+- Primary embedded Rig tutorials should be concise and build-first: correct assembly is the main purpose; technique/retrieve/presentation/strategy should be secondary.
 - Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
 - Generated finished-Rig/build-step instructional imagery remains prohibited under D045.
 - Canonical Tackle defines functional type; My Tackle defines actual owned items.
@@ -307,6 +341,8 @@ The following remain intentionally unresolved or open:
 - Exact Dashboard-search cross-domain scope, grouping, and result presentation.
 - Future conservative Dashboard density review.
 - Bobber Stop recognition-media alt text in `data/media.js` is known inaccurate and must be corrected before Intermediate closeout.
+- Inline Spinner D049 external-fallback check remains pending; it was not completed before the 2026-08-11 session ended.
+- Governing `MEDIA_GUIDE.md` still needs the approved build-first tutorial-selection rule reconciled during closeout.
 - Other audit findings not yet discussed to completion remain visible until explicitly decided.
 
 # 8. Next Recommended Work
@@ -316,30 +352,30 @@ The immediate work is **remaining Intermediate validation**, not Intermediate+ a
 At the start of the next session:
 
 1. Re-read actual GitHub `main`.
-2. Re-read `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md` revision 0.1.11 or later.
-3. Do **not** repeat completed Intermediate Rig or recognition-media validation unless repository changes invalidate those results.
+2. Re-read `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md` revision 0.1.20 or later.
+3. Do **not** repeat completed Intermediate Rig, recognition-media, replacement-selection, or retained-tutorial regression validation unless repository changes invalidate those results.
+4. Do **not** assume the Inline Spinner fallback check was completed; it remains pending.
 
 Proceed in this order:
 
-1. Intermediate tutorial playback audit:
-   - Drop Shot — Mystery Tackle Box (`xuqaAq98BDA`)
-   - Carolina — John Crews (`4nU1QncQ0QM`)
-   - Live-Bait Slip-Sinker — Nick Lindner (`61mG-xGi-I0`)
-   - Three-Way — Catfish Edge (`8SONykmBFxA`)
-2. Existing tutorial playback regression audit:
-   - Fixed Bobber — NYSDEC (`LlzvkVUvYBs`)
-   - Basic Bottom — Catfish Edge (`O6pEc6Y_44U`)
-   - Jighead + Soft Plastic — Tackle Tactics TV (`wv1e53YZuBo`)
-   - Slip Bobber — Wired2Fish (`foSgzdjLZyk`)
-   - Texas — Wired2Fish (`cIraWgiR6u0`)
-   - Wacky — Vermont Fish & Wildlife Department (`u8N--D8C--4`)
-   - Ned — Bass University (`ajJz8pH0Jig`)
-   - Weightless Soft-Plastic — Wired2Fish (`Bld_-8GBsco`)
-   - Inline Spinner remains intentionally without an embedded tutorial; confirm D049 external fallbacks remain usable.
-3. Beginner/Beginner+/Core and application regression pass.
-4. Prepare the targeted `data/media.js` Bobber Stop alt-text correction from the latest verified GitHub file, present it for user approval, then apply only after explicit approval.
-5. Re-test the affected Bobber Stop reference popover.
-6. Documentation reconciliation/final closeout.
+1. **Resume with the Inline Spinner D049 external-fallback check.**
+   - Inline Spinner intentionally has no embedded tutorial.
+   - Confirm the current Mepps reference opens and remains useful.
+   - Confirm the current Panther Martin reference opens and remains useful.
+   - Do not record PASS until the user actually performs this check.
+2. Run the Beginner/Beginner+/Core and broader application regression pass.
+3. Fetch the latest verified `data/rigs.js` from GitHub and prepare one targeted correction package containing exactly the six approved tutorial replacements:
+   - Slip Bobber → `0V-gaboIlD0`
+   - Ned Rig → `COFdRET28cY`
+   - Weightless Soft-Plastic → `EFORJFsycJQ`
+   - Wacky Rig → `EbHzUCM4o7Y`
+   - Carolina Rig → `iYngOOMQCC0`
+   - Live-Bait Slip-Sinker → `IbV0yG3sRms`
+4. Fetch the latest verified `data/media.js` and prepare the targeted Bobber Stop alt-text correction so it accurately describes the approved rubber/silicone stop variant.
+5. Present both production-data correction sets for explicit user review/approval. Do not write either production file before approval.
+6. After approved production changes are applied, verify GitHub state and runtime-test every changed tutorial embed plus the affected Bobber Stop reference popover.
+7. Reconcile the build-first tutorial-selection rule into `MEDIA_GUIDE.md` and any related governing/reference documentation.
+8. Complete documentation reconciliation/final closeout.
 
 Only after all remaining checks pass should the Intermediate segment be marked `Validated` and then `Finalized`, followed by selection of the next milestone.
 
