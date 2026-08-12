@@ -1,12 +1,12 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.21  
+**Document Revision:** 0.1.22  
 **Document Status:** Approved  
-**Implementation Status:** Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorial Corrections Fully Identified; Application Regression In Progress / Metadata Pending  
+**Implementation Status:** Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorial Corrections Fully Identified; Application Regression Passed / Metadata Pending  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
 **Latest Verified Media Update:** `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`)  
-**Validation Baseline Before This Documentation Update:** `89d4a43c6734b39451b06d2ad9b59e5713f1386c`  
+**Validation Baseline Before This Documentation Update:** `cadbd3936d05089a14d7267d56f2597e31fb4020`  
 **Last Updated:** 2026-08-11
 
 # Purpose
@@ -17,7 +17,7 @@ Preflight confirms package integrity only. GitHub inspection and runtime review 
 
 # Current Validation State
 
-The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, all four Intermediate Rig runtime blocks, recognition-media runtime validation, retained-tutorial regression, and the Inline Spinner D049 fallback check have passed:
+The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, all four Intermediate Rig runtime blocks, recognition-media runtime validation, retained-tutorial regression, the Inline Spinner D049 fallback check, and the full desktop/mobile application regression have passed:
 
 - Drop Shot Rig — PASSED
 - Carolina Rig — PASSED
@@ -29,7 +29,7 @@ The Intermediate implementation is present on `main`. Repository/source-integrit
 - Intermediate Tutorial Runtime — PARTIAL: Drop Shot and Three-Way passed; Carolina and Live-Bait Slip-Sinker approved replacements await consolidated source update and runtime re-test
 - Retained Existing-Rig Tutorial Runtime — PASSED / COMPLETE: Fixed Bobber, Basic Bottom, Jighead + Soft Plastic, and Texas passed
 - Inline Spinner D049 External Fallback — PASSED: Mepps remains useful; Panther Martin opens but was judged marketing-heavy and is approved for removal from `data/rigs.js`
-- Beginner/Beginner+/Core + Application Regression — IN PROGRESS: Desktop Regression Blocks 1 and 2 passed
+- Beginner/Beginner+/Core + Application Regression — PASSED / COMPLETE: desktop Blocks 1–3 and mobile Block 4 passed
 
 The nine-image correction upload is verified on `main` in commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`). That commit changes exactly the nine intended recognition assets, and every current GitHub blob SHA/byte size matches the approved local package.
 
@@ -51,11 +51,11 @@ Existing-Rig replacement selection is also complete:
 - Weightless Soft-Plastic will replace Wired2Fish `Bld_-8GBsco` with the user-approved Reaction Tackle video `EFORJFsycJQ`, **How to Rig a Weightless Texas Rig**.
 - Wacky Rig will replace Vermont Fish & Wildlife Department `u8N--D8C--4` with the user-approved Kevin VanDam video `EbHzUCM4o7Y`, **The fishing rig that whacks them every time - Wacky Rig**.
 
-The production tutorial edits are intentionally being held for one consolidated `data/rigs.js` correction package after the remaining application regression identifies any additional defects. Replacement tutorials cannot receive final in-app runtime PASS until their approved records are present in production and re-tested through the application player.
+The production tutorial edits are intentionally being held for one consolidated `data/rigs.js` correction package now that application regression is complete. Replacement tutorials cannot receive final in-app runtime PASS until their approved records are present in production and re-tested through the application player.
 
-The consolidated `data/rigs.js` correction package now has seven approved targeted changes: six tutorial replacements plus removal of the Panther Martin Inline Spinner reference. Production source remains unchanged until the package is reviewed and explicitly approved for write.
+The consolidated `data/rigs.js` correction package has seven approved targeted changes: six tutorial replacements plus removal of the Panther Martin Inline Spinner reference. Production source remains unchanged until the exact package is reviewed and explicitly approved for write.
 
-Remaining validation work is now limited to completing the broader desktop/mobile application regression, the consolidated production-data corrections and changed-runtime re-test, the known Bobber Stop alt-text metadata correction, governing-document reconciliation, and final closeout.
+Remaining validation work is now limited to the reviewed production-data corrections and changed-runtime re-test, the known Bobber Stop alt-text metadata correction, governing-document reconciliation, and final closeout.
 
 Recognition-media correction history:
 
@@ -102,7 +102,7 @@ Validated against the Intermediate implementation baseline and subsequent correc
 - current `script.js` statically defines Intermediate as an available Rig collection and keeps Intermediate+, Advanced, and Expert unavailable,
 - current renderer source retains canonical-Tackle lookup, derived `Used In`, readiness persistence, contextual `Name ⓘ` references, lazy tutorial creation, `youtube-nocookie.com`, no autoplay parameter, and external YouTube fallback behavior.
 
-Runtime/console execution remains required for the remaining application-regression blocks before final source behavior is considered fully validated.
+The remaining source changes are intentionally limited to the reviewed production-data correction package; final changed-runtime validation is required afterward.
 
 # Canonical Data Counts
 
@@ -407,7 +407,7 @@ The Wacky runtime regression of the current 10-minute Vermont Fish & Wildlife De
 
 Inline Spinner intentionally has no embedded tutorial. D049 fallback validation in Edge on 2026-08-11 confirmed the current external references opened. The Mepps Aglia reference remains useful instructional material. The Panther Martin guide was judged too marketing-heavy relative to the project's instructional purpose, so removal of that reference is approved and pending the consolidated `data/rigs.js` correction package. Retaining Mepps alone satisfies the current verified external-reference fallback for Inline Spinner.
 
-Production edits are intentionally being batched until the application regression is complete.
+Production edits are now eligible for reviewed packaging because the application regression has passed.
 
 # Tutorial Audit — Intermediate
 
@@ -463,7 +463,7 @@ If a video has been removed, made private, has embedding disabled, or no longer 
 
 # Beginner / Beginner+ Regression
 
-**Status: RUNTIME IN PROGRESS — DESKTOP BLOCKS 1 AND 2 PASSED — 2026-08-11**
+**Status: RUNTIME PASSED — DESKTOP + MOBILE — 2026-08-11**
 
 GitHub comparison confirms no application source/data file changed after the Intermediate implementation baseline; subsequent production changes are Tackle media only.
 
@@ -493,21 +493,38 @@ Desktop Regression Block 2 in Edge passed:
 - Weightless instructions retain direct hook-to-line/leader connection and straight weedless finish,
 - readiness state persisted after leaving and returning to each of Wacky, Ned, and Weightless.
 
+Desktop Regression Block 3 in Edge passed:
+
+- Fish Guide opens normally and its search/clear workflow remains functional,
+- relevant Fish search results display without duplicate or blank cards and clearing restores the full list,
+- Dashboard loads with its validated layout/styling intact,
+- implemented Dashboard cards remain actionable and unavailable areas retain clear Coming Soon/unavailable semantics,
+- Home navigation from nested pages works normally,
+- normal navigation through Dashboard → Fish Guide → Rig Guide → Rig detail → Home produced no new console errors,
+- keyboard focus remains visibly indicated while tabbing through interactive controls,
+- normal desktop width shows no horizontal overflow, clipping, or overlap.
+
+Mobile Regression Block 4 passed:
+
+- Dashboard fits the mobile viewport without horizontal scrolling, clipped controls, or overlapping text,
+- implemented/unavailable Dashboard states remain clear,
+- Fish Guide search and clear behavior remain usable at mobile width,
+- Rig Guide → Beginner → Rig detail and Core Rigs → Rig detail flows navigate correctly,
+- tested Parent/Home transitions remain usable and open at the expected top position,
+- Rig detail headings, components, readiness controls, instructions, and references fit the viewport,
+- at least one `Name ⓘ` Tackle reference panel/image opened and closed normally without clipping or horizontal overflow,
+- sticky Parent/Home controls remain usable,
+- normal mobile scrolling remains usable without horizontal page scrolling or overlapping controls.
+
 Already separately validated in the tutorial audit:
 
 - Texas tutorial still lazy-loads through the approved pattern.
 
-Still required to complete application regression:
-
-- Fish Guide/search behavior remains unchanged,
-- Dashboard behavior remains unchanged,
-- normal desktop navigation produces no new console errors,
-- desktop keyboard focus remains visible,
-- phone/mobile layouts and primary navigation/search/detail flows remain usable without horizontal overflow or clipping.
+The application regression is complete. Final runtime work now targets only the changed production-data correction package after implementation.
 
 # GitHub Validation
 
-**Status: INTERMEDIATE RIGS + RECOGNITION MEDIA PASSED / TUTORIAL CORRECTIONS FULLY IDENTIFIED / RETAINED-TUTORIAL + INLINE FALLBACK PASSED / APPLICATION REGRESSION IN PROGRESS / METADATA OPEN**
+**Status: INTERMEDIATE RIGS + RECOGNITION MEDIA PASSED / TUTORIAL CORRECTIONS FULLY IDENTIFIED / RETAINED-TUTORIAL + INLINE FALLBACK + APPLICATION REGRESSION PASSED / PRODUCTION CORRECTION + METADATA OPEN**
 
 Verified checkpoints:
 
@@ -515,7 +532,7 @@ Verified checkpoints:
 - Seven-image correction: `eed8929cb1859aef653168884e1e71244d1dd80e`.
 - Four-image legacy correction: `5704da6b9cde20bf90edfa8205e9811fba4114ab`.
 - Nine-image correction: `630beb13fe7519dac6993b6f3776dd3b6bfca7bf`.
-- Validation documentation baseline immediately before this update: `89d4a43c6734b39451b06d2ad9b59e5713f1386c`.
+- Validation documentation baseline immediately before this update: `cadbd3936d05089a14d7267d56f2597e31fb4020`.
 - Runtime Intermediate collection membership, routing, scoped/global search, All Rigs count/order, and Core count/order passed in Chrome on 2026-08-10.
 - Drop Shot Rig detail, component rendering, readiness persistence, derived relationships, recognition popovers, fixed-surface blending, and navigation passed in Chrome on 2026-08-10.
 - Carolina Rig detail, component order/relationships, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
@@ -531,6 +548,8 @@ Verified checkpoints:
 - Inline Spinner D049 external fallback passed in Edge on 2026-08-11; Mepps is retained, Panther Martin removal is approved pending source correction.
 - Beginner/Beginner+/Core regression Block 1 passed in Edge on 2026-08-11.
 - Wacky/Ned/Weightless detail/readiness regression Block 2 passed in Edge on 2026-08-11.
+- Fish Guide/Dashboard/navigation/console/focus desktop regression Block 3 passed in Edge on 2026-08-11.
+- Mobile responsive/navigation/search/Rig-detail regression Block 4 passed on 2026-08-11.
 - Carolina replacement `iYngOOMQCC0` and Live-Bait Slip-Sinker replacement `IbV0yG3sRms` are user-approved and awaiting the consolidated production-data correction package before runtime re-test.
 - Slip Bobber replacement `0V-gaboIlD0`, Ned replacement `COFdRET28cY`, Weightless Soft-Plastic replacement `EFORJFsycJQ`, and Wacky replacement `EbHzUCM4o7Y` are user-approved and awaiting the same consolidated production-data correction package before in-app runtime re-test.
 
@@ -560,15 +579,17 @@ Completed:
 20. **Inline Spinner D049 external-fallback check — PASSED; Panther Martin removal approved.**
 21. **Application regression Block 1 — PASSED: Beginner/Beginner+/Core/All Rigs collections, counts, ordering, and navigation.**
 22. **Application regression Block 2 — PASSED: Wacky/Ned/Weightless detail integrity and readiness persistence.**
+23. **Application regression Block 3 — PASSED: Fish Guide/search, Dashboard, normal navigation, console health, keyboard focus, and desktop layout.**
+24. **Application regression Block 4 — PASSED: mobile Dashboard, Fish search, Rig navigation/detail/reference panel, sticky controls, and responsive layout.**
+25. **Beginner/Beginner+/Core + broader application regression — PASSED / COMPLETE.**
 
 Open work:
 
-23. Complete broader desktop application regression: Fish Guide/search, Dashboard, normal-navigation console health, and keyboard focus.
-24. Complete mobile responsive regression for primary navigation/search/Rig-detail flows.
-25. Apply all six approved tutorial replacements plus Panther Martin reference removal together in one reviewed `data/rigs.js` correction package and correct the Bobber Stop alt-text defect in the same reviewed production-data correction phase.
-26. Runtime-test every changed tutorial embed, confirm Inline Spinner reference state, and re-test the affected Bobber Stop reference popover.
-27. Reconcile the build-first tutorial-selection rule into governing documentation.
-28. Documentation reconciliation/final closeout.
+26. Review and apply all six approved tutorial replacements plus Panther Martin reference removal together in one targeted `data/rigs.js` correction package.
+27. Review and apply the Bobber Stop alt-text correction in `data/media.js` in the same controlled production-data correction phase.
+28. Runtime-test every changed tutorial embed, confirm Inline Spinner reference state, and re-test the affected Bobber Stop reference popover.
+29. Reconcile the build-first tutorial-selection rule into governing documentation.
+30. Documentation reconciliation/final closeout.
 
 A failed block must remain visibly failed/pending until corrected and re-tested.
 
