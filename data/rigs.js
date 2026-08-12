@@ -9,7 +9,7 @@
 
 const RIG_DATA_BUILD_INFO = Object.freeze({
     file: "data/rigs.js",
-    milestone: "Beginner Media + Intermediate Expansion"
+    milestone: "Rig Guide Completion"
 });
 
 const CORE_RIG_IDS = Object.freeze([
@@ -1151,6 +1151,551 @@ const RIG_DATA = Object.freeze([
         ],
         techniqueIds: [],
         variationIds: [],
+        imageIds: []
+    },
+    {
+        id: "neko-rig",
+        name: "Neko Rig",
+        summary: "A weighted wacky-style finesse rig with a nail weight inserted into one end of a soft-plastic worm so the bait works nose-down along the bottom.",
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true,
+        difficulty: "Intermediate+",
+        useCases: [
+            "Fishing pressured bass around docks, rock, and offshore structure",
+            "Adding bottom contact to a wacky-style soft plastic",
+            "Presenting a finesse worm in moderate or deep water"
+        ],
+        conditionTags: [
+            "Clear Water",
+            "Stained Water",
+            "Deep Water",
+            "Light Cover",
+            "Bottom Fishing",
+            "Docks"
+        ],
+        referenceLinks: [
+            {
+                label: "Wired2Fish — Neko Rig Complete Rigging and Fishing Guide",
+                url: "https://www.wired2fish.com/fishing-tips/neko-rig-complete-rigging-and-fishing-guide"
+            },
+            {
+                label: "Z-Man — Bang StickZ",
+                url: "https://zmanfishing.com/products/bang-stickz"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "nail-weight",
+                quantity: 1,
+                required: true,
+                notes: "Insert the weight into one end of the worm; use only enough weight to reach the desired depth and bottom contact."
+            },
+            {
+                tackleId: "wacky-hook",
+                quantity: 1,
+                required: true,
+                notes: "Use a compact finesse hook with the point oriented toward the unweighted end of the bait."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Straight-tail and stick-style worms are practical Neko choices."
+            },
+            {
+                tackleId: "wacky-o-ring",
+                quantity: 1,
+                required: false,
+                notes: "Optional but useful for securing the hook while reducing damage to the soft plastic."
+            }
+        ],
+        assemblySteps: [
+            "Choose which end of the soft-plastic worm will be the weighted nose.",
+            "Insert the Nail Weight straight into that end until it is secure; a small exposed head may be left for added bottom feel when appropriate.",
+            "Place the Wacky O-Ring near the bait's midpoint or slightly toward the weighted end if using one.",
+            "Tie the Wacky Hook to the main line or leader.",
+            "Hook the bait at the ring or through the body so the hook point faces toward the unweighted tail and away from the nail weight.",
+            "Hold the rig by the line and confirm that the weighted end hangs down while the hook gap and point remain clear."
+        ],
+        setupNotes: [
+            "Start with a light nail weight; heavier weights increase fall speed and bottom contact but reduce the slow finesse fall.",
+            "Hook orientation matters because the weighted nose fishes down while the hook point should face upward toward the tail."
+        ],
+        commonMistakes: [
+            "Pointing the hook toward the weighted nose instead of the unweighted tail.",
+            "Using a nail weight so large that it tears or distorts the bait.",
+            "Placing the hook so far off-center that the bait loses its balanced action.",
+            "Burying the hook gap in the plastic or O-ring."
+        ],
+        safetyNotes: [
+            "Keep fingers clear of the hook point while installing the hook and weight.",
+            "Check the nail weight after catches so a loosened weight is not thrown during the next cast."
+        ],
+        techniqueIds: [],
+        variationIds: ["wacky-rig"],
+        imageIds: []
+    },
+    {
+        id: "shaky-head-rig",
+        name: "Shaky Head Rig",
+        summary: "A finesse soft-plastic rig built around a dedicated shaky-head jighead that keeps the bait connected directly to a light bottom-contact weight.",
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true,
+        difficulty: "Intermediate+",
+        useCases: [
+            "Fishing pressured bass on rock, gravel, points, and sparse cover",
+            "Maintaining a compact bottom-contact finesse presentation",
+            "Fishing clear to moderately stained water"
+        ],
+        conditionTags: [
+            "Clear Water",
+            "Stained Water",
+            "Bottom Fishing",
+            "Rock",
+            "Light Cover",
+            "Deep Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Z-Man — SMH Jigheads",
+                url: "https://zmanfishing.com/products/smh-jigheads"
+            },
+            {
+                label: "Wired2Fish — Shaky Head, Neko Rig and Drop Shot Finesse Fishing Mastery",
+                url: "https://www.wired2fish.com/fishing-videos/shaky-head-neko-rig-and-drop-shot-finesse-fishing-mastery"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "shaky-head-jighead",
+                quantity: 1,
+                required: true,
+                notes: "Use a head and hook size that matches the worm, depth, and cover."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Straight-tail finesse worms are a common starting point."
+            }
+        ],
+        assemblySteps: [
+            "Tie the Shaky Head Jighead directly to the main line or leader.",
+            "Secure the nose of the soft plastic on the jighead's keeper, screw-lock, or pin so it is seated firmly against the head.",
+            "Lay the hook along the bait to identify the natural re-entry point without stretching the plastic.",
+            "Push the hook point through the bait at that location so the body remains straight.",
+            "For a weed-resistant setup, lightly skin-hook or barely bury the point while keeping the hook gap usable.",
+            "Confirm that the bait is straight and the head can contact bottom without the plastic twisting around the hook."
+        ],
+        setupNotes: [
+            "Use the lightest head that maintains the bottom contact needed for the depth and wind.",
+            "The bait keeper should hold the worm nose securely without bunching or tearing it."
+        ],
+        commonMistakes: [
+            "Using a generic jighead that does not hold the worm securely in the intended shaky-head configuration.",
+            "Rigging the worm crooked or stretched on the hook.",
+            "Using excessive weight for a finesse presentation.",
+            "Burying the hook point too deeply for reliable hooksets."
+        ],
+        safetyNotes: [
+            "Keep fingers behind the hook point while threading and skin-hooking the bait."
+        ],
+        techniqueIds: [],
+        variationIds: ["ned-rig"],
+        imageIds: []
+    },
+    {
+        id: "free-rig",
+        name: "Free Rig",
+        summary: "A soft-plastic rig that lets a ringed sinker slide freely on the main line above a directly tied offset hook, separating the weight's fall from the bait.",
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true,
+        difficulty: "Intermediate+",
+        useCases: [
+            "Giving a Texas-rigged soft plastic a freer fall behind the sinker",
+            "Fishing points, rock, docks, and sparse cover",
+            "Changing fall rate without adding a leader or swivel"
+        ],
+        conditionTags: [
+            "Bottom Fishing",
+            "Open Water",
+            "Sparse Cover",
+            "Deep Water",
+            "Clear Water",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Bassmaster — Free Rig Insights",
+                url: "https://www.bassmaster.com/how-to/news/free-rig-insights/"
+            },
+            {
+                label: "Outdoor Life — How to Fish a Free Rig",
+                url: "https://www.outdoorlife.com/fishing/free-rig/"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "ringed-sinker",
+                quantity: 1,
+                required: true,
+                notes: "The main line passes through the sinker's external eye so the weight can move freely; do not tie or peg it."
+            },
+            {
+                tackleId: "offset-worm-hook",
+                quantity: 1,
+                required: true,
+                notes: "Tie the hook directly below the free-sliding sinker."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Worms, creatures, craws, and other Texas-riggable plastics can be used."
+            }
+        ],
+        assemblySteps: [
+            "Pass the main line through the closed eye of the Ringed Sinker so the weight can slide freely up and down the line.",
+            "Tie the Offset Worm Hook directly to the end of the main line below the sinker.",
+            "Insert the hook point into the nose of the soft plastic, bring it out through the side, and slide the bait to the hook offset.",
+            "Rotate the bait and locate the natural re-entry point so the body will remain straight.",
+            "Reinsert the hook and lightly skin-hook or barely bury the point for a weed-resistant finish.",
+            "Confirm that the Ringed Sinker remains completely free to move on the line and is not trapped by a peg, bead, or knot."
+        ],
+        setupNotes: [
+            "The defining feature is unrestricted weight travel through the sinker's external eye.",
+            "Use a lighter weight for a slower separation and a heavier weight when you want the sinker to reach bottom quickly ahead of the bait."
+        ],
+        commonMistakes: [
+            "Tying the sinker to the line instead of letting the line slide through its eye.",
+            "Using a through-hole bullet weight and treating the setup as an ordinary unpegged Texas Rig.",
+            "Adding a peg that prevents the free-sliding action.",
+            "Rigging the soft plastic crooked on the hook."
+        ],
+        safetyNotes: [
+            "Use controlled casts because the freely moving sinker can slide and swing independently of the hook."
+        ],
+        techniqueIds: [],
+        variationIds: ["texas-rig", "carolina-rig"],
+        imageIds: []
+    },
+    {
+        id: "double-jig-crappie-rig",
+        name: "Double-Jig Crappie Rig",
+        summary: "A tandem crappie setup that presents two jighead-and-soft-plastic combinations at different positions on the same main line.",
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true,
+        difficulty: "Intermediate+",
+        useCases: [
+            "Presenting two jig colors or profiles at different depths",
+            "Vertical jigging or controlled slow presentations for crappie",
+            "Locating the preferred depth of suspended fish"
+        ],
+        conditionTags: [
+            "Open Water",
+            "Deep Water",
+            "Suspended Fish",
+            "Light Cover",
+            "Clear Water",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "FishUSA — Crappie Fishing Setup Guide",
+                url: "https://www.fishusa.com/learn/crappie-fishing-setup/"
+            },
+            {
+                label: "Missouri Department of Conservation — Crappie Fishing Tips",
+                url: "https://mdc.mo.gov/fishing/species/crappie/crappie-tips-fishing"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "jighead",
+                quantity: 2,
+                required: true,
+                notes: "Use two light jigheads appropriate for crappie and the intended depth."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 2,
+                required: true,
+                notes: "Rig one small crappie-sized soft plastic on each jighead."
+            }
+        ],
+        assemblySteps: [
+            "Tie the lower Jighead to the end of the main line.",
+            "Move 12 to 18 inches up the main line and form a short dropper loop or loop-knot connection for the upper Jighead.",
+            "Attach the second Jighead to the upper loop so it hangs separately from the main line rather than directly against the lower jig.",
+            "Thread one Soft Plastic Bait straight onto each jighead and keep both hook gaps usable.",
+            "Hold the rig vertically and confirm that the two jigs remain separated rather than tangling together.",
+            "Adjust spacing within a practical range when needed to cover the depth band where crappie are holding."
+        ],
+        setupNotes: [
+            "Twelve to eighteen inches between jigs is a practical starting range for the standard learning setup.",
+            "Using two different colors or profiles can help identify what the fish prefer without changing the fundamental rig."
+        ],
+        commonMistakes: [
+            "Placing the two jigs so close together that they tangle repeatedly.",
+            "Using jigheads that are unnecessarily heavy for a controlled crappie presentation.",
+            "Leaving the upper dropper loop so long that it wraps around the main line.",
+            "Threading either soft plastic crooked so it spins."
+        ],
+        safetyNotes: [
+            "Remember that two exposed hooks are moving during every cast, lift, and landing sequence.",
+            "Use controlled casts and secure both hooks before transport."
+        ],
+        techniqueIds: [],
+        variationIds: ["jighead-soft-plastic"],
+        imageIds: []
+    },
+    {
+        id: "jika-rig",
+        name: "Jika Rig",
+        summary: "A compact bottom-contact soft-plastic rig that connects an offset hook and hanging ringed sinker at a split-ring junction.",
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true,
+        difficulty: "Advanced",
+        useCases: [
+            "Fishing soft plastics close to bottom with the weight below the hook eye",
+            "Working rock, brush, grass edges, and compact cover",
+            "Using a weed-resistant bait with an independently hanging weight"
+        ],
+        conditionTags: [
+            "Bottom Fishing",
+            "Heavy Cover",
+            "Sparse Cover",
+            "Rock",
+            "Deep Water",
+            "Stained Water"
+        ],
+        referenceLinks: [
+            {
+                label: "Bass Pro Shops — The Jika Fishing Rig",
+                url: "https://1source.basspro.com/news-tips/fishing-tackle/6343/jika-fishing-rig-how-bass-pro-stacey-king"
+            },
+            {
+                label: "BassResource — Fishing the Jika Rig",
+                url: "https://www.bassresource.com/fishing/jika-rig.html"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "split-ring",
+                quantity: 1,
+                required: true,
+                notes: "Use the split ring as the central connection for the hook, hanging weight, and line."
+            },
+            {
+                tackleId: "ringed-sinker",
+                quantity: 1,
+                required: true,
+                notes: "Attach the sinker's closed eye to the split-ring connection so the weight hangs below the hook and moves independently."
+            },
+            {
+                tackleId: "offset-worm-hook",
+                quantity: 1,
+                required: true,
+                notes: "The hook is attached at the same compact junction as the weight."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Texas-rig the soft plastic weedless on the offset hook."
+            }
+        ],
+        assemblySteps: [
+            "Use split-ring pliers to attach the Split Ring to the eye of the Offset Worm Hook.",
+            "Attach the Ringed Sinker to the same split-ring junction so the weight hangs below the hook and can pivot independently.",
+            "Tie the main line or leader securely to the split ring rather than trapping the weight on the line.",
+            "Texas-rig the Soft Plastic Bait on the offset hook so the body is straight and the hook point is lightly skin-hooked or barely buried.",
+            "Hold the rig by the line and confirm that the hook and weight both pivot freely from the central ring without crossing or binding.",
+            "Inspect the split ring after assembly to confirm that the hook eye, sinker eye, and line cannot slip through an open edge."
+        ],
+        setupNotes: [
+            "Some commercial Jika variants use two rings or a swivel, but the standard learning configuration keeps the key relationship: weight below the hook at a compact movable junction.",
+            "Choose the lightest sinker that provides the bottom contact and fall rate needed."
+        ],
+        commonMistakes: [
+            "Sliding the weight on the main line and accidentally building a Free Rig instead of a Jika Rig.",
+            "Tying directly to the weight instead of the central hook/weight junction.",
+            "Using a split ring too large for the hook eye or leaving a component caught at the ring opening.",
+            "Rigging the soft plastic crooked or exposing too much hook point in heavy cover."
+        ],
+        safetyNotes: [
+            "Use split-ring pliers rather than fingernails when installing small heavy-duty rings.",
+            "Inspect the ring and weight connection frequently because a compact weighted rig can damage hardware during repeated contact with cover."
+        ],
+        techniqueIds: [],
+        variationIds: ["free-rig", "texas-rig"],
+        imageIds: []
+    },
+    {
+        id: "punch-pegged-texas-rig",
+        name: "Punch / Pegged Texas Rig",
+        summary: "A heavy-cover Texas Rig that pegs the bullet weight tight to a weedless soft plastic so the weight and bait penetrate dense vegetation together.",
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true,
+        difficulty: "Advanced",
+        useCases: [
+            "Penetrating matted vegetation and dense grass",
+            "Presenting a compact soft plastic through heavy cover",
+            "Keeping the weight and bait together during vertical heavy-cover presentations"
+        ],
+        conditionTags: [
+            "Heavy Cover",
+            "Vegetation",
+            "Shallow Water",
+            "Stained Water",
+            "Bottom Fishing"
+        ],
+        referenceLinks: [
+            {
+                label: "Wired2Fish — Texas Rig Setups for Bass: Punching vs. Pitching",
+                url: "https://www.wired2fish.com/fishing-videos/texas-rig-setups-for-bass-punching-vs-pitching"
+            },
+            {
+                label: "Wired2Fish — Best Punching and Texas Rig Setups for Heavy Matted Cover",
+                url: "https://www.wired2fish.com/fishing-videos/best-punching-and-texas-rig-setups-for-bass-in-heavy-matted-cover"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "weight-peg",
+                quantity: 1,
+                required: true,
+                notes: "The peg is required here because the purpose is to keep the weight tight to the bait through dense cover."
+            },
+            {
+                tackleId: "bullet-weight",
+                quantity: 1,
+                required: true,
+                notes: "Use the lightest heavy-cover weight that consistently penetrates the vegetation."
+            },
+            {
+                tackleId: "offset-worm-hook",
+                quantity: 1,
+                required: true,
+                notes: "Use a strong hook sized to the bait and heavy-cover application."
+            },
+            {
+                tackleId: "soft-plastic",
+                quantity: 1,
+                required: true,
+                notes: "Compact creature, craw, and streamlined soft plastics move through cover efficiently."
+            }
+        ],
+        assemblySteps: [
+            "Install the Weight Peg on the main line before the weight.",
+            "Slide the Bullet Weight onto the line with the pointed end facing the rod.",
+            "Tie the Offset Worm Hook to the main line.",
+            "Texas-rig the Soft Plastic Bait on the hook so the body is straight and the point is securely skin-hooked or buried just under the surface.",
+            "Slide the Weight Peg down until it holds the Bullet Weight tight against the hook and bait.",
+            "Pull on the weight and bait separately to confirm that the peg prevents the weight from sliding away during the presentation."
+        ],
+        setupNotes: [
+            "Unlike the standard Texas Rig, the weight peg is part of the defining heavy-cover configuration rather than an optional accessory.",
+            "Heavier weights are used only when needed to penetrate the cover; the goal is reliable entry, not maximum weight."
+        ],
+        commonMistakes: [
+            "Leaving the weight unpegged so it separates from the bait above the mat.",
+            "Using more weight than necessary once the bait can already penetrate the cover.",
+            "Rigging the bait crooked and creating a wider snag-prone profile.",
+            "Using a hook or line system too light for the cover being fished."
+        ],
+        safetyNotes: [
+            "Heavy weights and hooks carry substantial energy; use short controlled pitches and verify that the casting lane is clear.",
+            "Inspect line near the weight and hook frequently for abrasion after fishing dense cover."
+        ],
+        techniqueIds: [],
+        variationIds: ["texas-rig"],
+        imageIds: []
+    },
+    {
+        id: "bottom-bouncer-spinner-rig",
+        name: "Bottom-Bouncer / Spinner Rig",
+        summary: "A trolling and drifting system that uses a wire bottom bouncer to maintain bottom contact while a spinner harness and bait trail behind it.",
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true,
+        difficulty: "Expert",
+        useCases: [
+            "Trolling or drifting spinner harnesses for walleye",
+            "Maintaining a baited spinner just above bottom across flats and contours",
+            "Controlling depth while covering water from a boat"
+        ],
+        conditionTags: [
+            "Deep Water",
+            "Open Water",
+            "Bottom Fishing",
+            "Trolling",
+            "Wind",
+            "Light Current"
+        ],
+        referenceLinks: [
+            {
+                label: "FishUSA — Complete Walleye Harness + Bottom Bouncer Setup",
+                url: "https://www.fishusa.com/learn/walleye-harness-bottom-bouncer-setup/"
+            },
+            {
+                label: "Northland Fishing Tackle — Walleye Spinner Rig",
+                url: "https://shop.northlandtackle.com/rigs/walleye-spinner-rig/"
+            }
+        ],
+        componentRequirements: [
+            {
+                tackleId: "bottom-bouncer",
+                quantity: 1,
+                required: true,
+                notes: "Choose bouncer weight for depth, speed, wind, and current while maintaining periodic bottom contact."
+            },
+            {
+                tackleId: "spinner-harness",
+                quantity: 1,
+                required: true,
+                notes: "Connect the harness to the trailing arm or snap of the bottom bouncer and keep the leader free of twists."
+            },
+            {
+                tackleId: "bait",
+                quantity: 1,
+                required: true,
+                notes: "Nightcrawlers, minnows, leeches, or approved artificial trailers may be used with a compatible harness."
+            }
+        ],
+        assemblySteps: [
+            "Inspect the Bottom Bouncer and identify the main-line attachment at the bend and the trailing harness attachment on the rear arm.",
+            "Tie the main line securely to the bouncer's main-line connection point.",
+            "Connect the Spinner Harness to the bouncer's trailing snap or swivel so the leader extends behind the weighted wire frame.",
+            "Add bait to the harness hook or hooks while keeping the bait straight enough for the blade and harness to run cleanly.",
+            "Lower the assembled rig beside the boat and confirm that the spinner blade turns and the harness does not twist around the bouncer wire.",
+            "Deploy line until the bouncer reaches bottom, then take up slack so the wire ticks bottom periodically while the harness trails behind and above it."
+        ],
+        setupNotes: [
+            "Use the lightest bouncer that maintains controlled bottom contact at the current depth and speed; a common starting rule is roughly one ounce per ten feet, adjusted for conditions.",
+            "A roughly 36- to 60-inch harness leader is a practical starting range; shorter leaders simplify control while longer leaders add separation in clear water.",
+            "Spinner blades create line twist, so the harness/bouncer connection should include a sound swivel or equivalent anti-twist connection."
+        ],
+        commonMistakes: [
+            "Attaching the main line to the trailing harness arm instead of the bouncer's main-line connection.",
+            "Dragging the bouncer continuously instead of maintaining controlled periodic bottom contact.",
+            "Using too little weight to keep an effective line angle or too much weight for the depth and speed.",
+            "Allowing the spinner harness to wrap around the bouncer wire during deployment.",
+            "Running a twisted harness whose blade or bait no longer tracks correctly."
+        ],
+        safetyNotes: [
+            "Deploy the weighted wire rig beside the boat rather than making an uncontrolled overhead cast.",
+            "Keep hooks secured while baiting and handling the harness, especially when multiple hooks are present.",
+            "Secure the rod when trolling because the bouncer and harness remain under continuous load."
+        ],
+        techniqueIds: [],
+        variationIds: ["live-bait-slip-sinker-rig"],
         imageIds: []
     }
 ]);
