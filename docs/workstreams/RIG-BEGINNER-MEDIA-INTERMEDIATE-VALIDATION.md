@@ -1,607 +1,235 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md  
-**Document Revision:** 0.1.22  
+**Document Revision:** 1.0.0  
 **Document Status:** Approved  
-**Implementation Status:** Partially Validated — Intermediate Rigs + Recognition Media Passed; Tutorial Corrections Fully Identified; Application Regression Passed / Metadata Pending  
+**Implementation Status:** Validated / Finalized  
 **Implementation Baseline:** `main` at `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`)  
+**Final Production Corrections:** `80b8ef0ba2b0734429b29a5b02c318e02c81bc55` (`Restore and apply approved Rig tutorial updates`), `291967ed4eb19eb9b1f7f83837c59133c949a333` (`Correct Bobber Stop alt text`)  
 **Latest Verified Media Update:** `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`)  
-**Validation Baseline Before This Documentation Update:** `cadbd3936d05089a14d7267d56f2597e31fb4020`  
 **Last Updated:** 2026-08-11
 
 # Purpose
 
-Validation plan and live validation record for the combined Beginner/Beginner+ media-completion pass and full Intermediate Rig expansion.
+Final validation record for the combined Beginner/Beginner+ media-completion pass and full Intermediate Rig expansion.
 
-Preflight confirms package integrity only. GitHub inspection and runtime review are required before the segment is Validated.
+This record supersedes the earlier in-progress validation state. The segment is now fully validated and may be treated as finalized after governing/current-state documentation reconciliation.
 
-# Current Validation State
+# Final Result
 
-The Intermediate implementation is present on `main`. Repository/source-integrity, canonical-data validation, Intermediate membership, Intermediate routing/search, all four Intermediate Rig runtime blocks, recognition-media runtime validation, retained-tutorial regression, the Inline Spinner D049 fallback check, and the full desktop/mobile application regression have passed:
+**PASSED / COMPLETE**
 
-- Drop Shot Rig — PASSED
-- Carolina Rig — PASSED
-- Live-Bait Slip-Sinker Rig — PASSED
-- Three-Way Rig — PASSED
-- Recognition Media — PASSED
-- Intermediate Tutorial Selection — PASSED / COMPLETE
-- Existing-Rig Tutorial Replacement Selection — PASSED / COMPLETE
-- Intermediate Tutorial Runtime — PARTIAL: Drop Shot and Three-Way passed; Carolina and Live-Bait Slip-Sinker approved replacements await consolidated source update and runtime re-test
-- Retained Existing-Rig Tutorial Runtime — PASSED / COMPLETE: Fixed Bobber, Basic Bottom, Jighead + Soft Plastic, and Texas passed
-- Inline Spinner D049 External Fallback — PASSED: Mepps remains useful; Panther Martin opens but was judged marketing-heavy and is approved for removal from `data/rigs.js`
-- Beginner/Beginner+/Core + Application Regression — PASSED / COMPLETE: desktop Blocks 1–3 and mobile Block 4 passed
+Validated final production state:
 
-The nine-image correction upload is verified on `main` in commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` (`Rig Image Updates`). That commit changes exactly the nine intended recognition assets, and every current GitHub blob SHA/byte size matches the approved local package.
+- 13 active Rigs total,
+  - 6 Beginner,
+  - 3 Beginner+,
+  - 4 Intermediate,
+- 23 active canonical Tackle concepts,
+- 23 active Tackle recognition-media records,
+- six-member `CORE_RIG_IDS` registry unchanged,
+- Intermediate membership, routing, scoped search, global search, detail rendering, readiness persistence, reverse `Used In`, and Parent/Home navigation passed,
+- recognition-media package review, GitHub verification, desktop/mobile contextual rendering, canvas matching, and geometry review passed,
+- retained tutorial runtime regression passed,
+- all six approved tutorial replacements were written to production and passed final runtime closeout,
+- Inline Spinner external fallback passed with Mepps retained and Panther Martin removed,
+- Bobber Stop alt text was corrected to match the approved rubber/silicone stop image and the affected contextual reference passed runtime closeout,
+- broader Beginner/Beginner+/Core/Fish/Dashboard/application regression passed on desktop and mobile,
+- normal-navigation console health and keyboard focus passed.
 
-Runtime review then confirmed the corrected assets render cleanly in their contextual reference panels without the previously observed background-color mismatch or baked/uneven shadow defect.
+# Intermediate Tier
 
-The tutorial audit is applying the approved build-first selection rule: embedded Rig tutorials should primarily demonstrate how to assemble the Rig correctly, with concise runtime preferred when technical completeness and source quality are otherwise adequate. Technique/presentation content may be secondary but should not dominate the embedded tutorial.
-
-Intermediate tutorial selection is complete:
-
-- Drop Shot retains Mystery Tackle Box `xuqaAq98BDA` and has passed runtime validation.
-- Carolina will replace John Crews `4nU1QncQ0QM` with the user-approved ShakespeareFishingUS video `iYngOOMQCC0`, **Fishing 101 - How to Tie a Carolina Rig**.
-- Live-Bait Slip-Sinker will replace Nick Lindner `61mG-xGi-I0` with the user-approved Castaway Fishing Kits video `IbV0yG3sRms`, **How to rig a Lindy Rig**.
-- Three-Way retains Catfish Edge `8SONykmBFxA` and has passed runtime validation.
-
-Existing-Rig replacement selection is also complete:
-
-- Slip Bobber will replace Wired2Fish `foSgzdjLZyk` with the user-approved Sportsman's Journal TV video `0V-gaboIlD0`, **HOW-TO Rig A Slip Bobber (Easiest Way)**.
-- Ned Rig will replace Bass University `ajJz8pH0Jig` with the user-approved Mystery Tackle Box video `COFdRET28cY`, **How To Rig A Ned Rig - Ned Rigging Tips**.
-- Weightless Soft-Plastic will replace Wired2Fish `Bld_-8GBsco` with the user-approved Reaction Tackle video `EFORJFsycJQ`, **How to Rig a Weightless Texas Rig**.
-- Wacky Rig will replace Vermont Fish & Wildlife Department `u8N--D8C--4` with the user-approved Kevin VanDam video `EbHzUCM4o7Y`, **The fishing rig that whacks them every time - Wacky Rig**.
-
-The production tutorial edits are intentionally being held for one consolidated `data/rigs.js` correction package now that application regression is complete. Replacement tutorials cannot receive final in-app runtime PASS until their approved records are present in production and re-tested through the application player.
-
-The consolidated `data/rigs.js` correction package has seven approved targeted changes: six tutorial replacements plus removal of the Panther Martin Inline Spinner reference. Production source remains unchanged until the exact package is reviewed and explicitly approved for write.
-
-Remaining validation work is now limited to the reviewed production-data corrections and changed-runtime re-test, the known Bobber Stop alt-text metadata correction, governing-document reconciliation, and final closeout.
-
-Recognition-media correction history:
-
-- **Initial six-image visual-quality gate: FAILED.**
-- Failure reason: the six assets introduced in `e4b61ae` used an older flat/vector-style treatment and did not meet the approved current catalog/semi-photorealistic Tackle recognition standard.
-- A first partial correction replaced four files in `601b741f368f7e1ae9e5b2963935673901b76674`.
-- The user subsequently reviewed and uploaded the seven-image correction set in `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`).
-- The user then reviewed and uploaded four additional legacy recognition-media replacements in `5704da6b9cde20bf90edfa8205e9811fba4114ab` (`Hook fixes`):
-  - `hook-reference.webp`,
-  - `jighead-reference.webp`,
-  - `offset-worm-hook-reference.webp`,
-  - `weight-peg-reference.webp`.
-- GitHub blob SHAs and byte sizes for those four files exactly match the final reviewed local upload package.
-- Those four reviewed files are 640 × 440 lossless WebPs built on exact `#f4f0e8` production canvas corners.
-- The approved Bobber Stop recognition image uses a rubber/silicone variant, which is valid under the canonical Tackle definition.
-- **Known metadata defect:** `data/media.js` still describes `bobber-stop-reference.webp` in alt text as a thread-style stop wrapped around fishing line. The current image is the approved rubber/silicone stop variant, so that alt text is inaccurate and must be corrected in a reviewed data-file package before final closeout.
-- The current Media Guide requires exact `#f4f0e8` canvas matching and normal viewer-facing J orientation for hook-bearing recognition assets unless a reviewed technical exception applies.
-- **Runtime media defect identified during Carolina validation:** nine older recognition assets showed visible background-color mismatch and/or baked/uneven shadow treatment against the fixed reference-media surface:
-  - `barrel-swivel-reference.webp`,
-  - `bead-reference.webp`,
-  - `bait-reference.webp`,
-  - `bullet-weight-reference.webp`,
-  - `fixed-bobber-reference.webp`,
-  - `sliding-sinker-reference.webp`,
-  - `slip-float-reference.webp`,
-  - `split-shot-reference.webp`,
-  - `stop-bead-reference.webp`.
-- **Nine-image correction package review: PASSED — 2026-08-10.** Each replacement was individually reviewed and approved, then deterministically packaged as a 640 × 440 RGB WebP on the fixed `#f4f0e8` canvas without further generative changes to the approved object version.
-- **Nine-image GitHub upload/package verification: PASSED — 2026-08-10.** Commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` changes exactly the intended nine files, and all current GitHub blobs match the approved package by SHA and byte size.
-- **Nine-image runtime contextual-popover review: PASSED — 2026-08-10.** The corrected panels now blend correctly with the fixed reference-media surface and no clipping, distortion, or misleading geometry was reported.
-
-# Package / Source Integrity
-
-**Status: PASSED — 2026-08-10**
-
-Validated against the Intermediate implementation baseline and subsequent corrective-media/documentation state:
-
-- the Intermediate implementation remains rooted in `e4b61aea052f4ad843be0f6d54231af87d574905`,
-- subsequent production application changes relevant to this segment are Tackle recognition-media replacements only,
-- `data/rigs.js`, `data/tackle.js`, `data/media.js`, `script.js`, and `view-renderer.js` remain the Intermediate implementation source/data baseline; corrective media uploads did not alter application source/data,
-- `5704da6b9cde20bf90edfa8205e9811fba4114ab` contains exactly the four intended legacy Tackle image replacements,
-- `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` contains exactly the nine intended background/shadow correction replacements,
-- no package README, manifest, staging note, validation TXT, contact sheet, or other review-only artifact appears in the production Tackle image directory,
-- current `script.js` statically defines Intermediate as an available Rig collection and keeps Intermediate+, Advanced, and Expert unavailable,
-- current renderer source retains canonical-Tackle lookup, derived `Used In`, readiness persistence, contextual `Name ⓘ` references, lazy tutorial creation, `youtube-nocookie.com`, no autoplay parameter, and external YouTube fallback behavior.
-
-The remaining source changes are intentionally limited to the reviewed production-data correction package; final changed-runtime validation is required afterward.
-
-# Canonical Data Counts
-
-**Status: PASSED — 2026-08-10**
-
-Validated from current canonical source plus the previously validated Beginner/Beginner+ baseline:
-
-- exactly 13 active Rigs,
-- exactly 6 Beginner Rigs,
-- exactly 3 Beginner+ Rigs,
-- exactly 4 Intermediate Rigs,
-- exactly 6 unique `CORE_RIG_IDS`, unchanged from the validated baseline,
-- exactly 23 active canonical Tackle records,
-- exactly 23 active Tackle recognition-media records,
-- the four Intermediate Rig component requirements resolve to active canonical Tackle records,
-- the three Intermediate-added Tackle concepts (`drop-shot-weight`, `three-way-swivel`, `fixed-sinker`) each resolve to active recognition-media records,
-- all previously validated Beginner/Beginner+ Rig-to-Tackle relationships remain unchanged after the Intermediate baseline,
-- every current canonical Tackle record has a corresponding media ID and the current media registry contains the matching active owner record.
-
-The known Bobber Stop alt-text mismatch is a metadata/accessibility defect, not an ID-resolution defect.
-
-# Intermediate Membership
-
-**Status: PASSED — 2026-08-10**
-
-Runtime validation confirmed the Intermediate collection contains exactly these four records:
+The validated Intermediate tier is exactly:
 
 1. Carolina Rig
 2. Drop Shot Rig
 3. Live-Bait Slip-Sinker Rig
 4. Three-Way Rig
 
-The collection renders alphabetically with no Beginner, Beginner+, Intermediate+, Advanced, or Expert record present. Intermediate+, Advanced, and Expert remain unavailable from the Rig Guide.
+Intermediate+, Advanced, and Expert remain outside this segment.
 
-# Intermediate Routing / Search
+# Final Tutorial State
 
-**Status: PASSED — 2026-08-10**
+## Retained tutorials — PASSED
 
-Runtime validation in Chrome confirmed:
+- Fixed Bobber — NYSDEC — `LlzvkVUvYBs`
+- Basic Bottom — Catfish Edge — `O6pEc6Y_44U`
+- Jighead + Soft Plastic — Tackle Tactics TV — `wv1e53YZuBo`
+- Texas Rig — Wired2Fish — `cIraWgiR6u0`
+- Drop Shot — Mystery Tackle Box — `xuqaAq98BDA`
+- Three-Way — Catfish Edge — `8SONykmBFxA`
 
-- Intermediate card is actionable,
-- Intermediate page opens at the top,
-- Parent/Home navigation returns to the expected destination at the top,
-- empty Intermediate search displays all four records in alphabetical collection order,
-- scoped `drop` search returns only Drop Shot Rig,
-- clear control restores all four records and returns focus to the field,
-- global Rig Guide search finds Carolina Rig, Drop Shot Rig, Live-Bait Slip-Sinker Rig, and Three-Way Rig individually,
-- All Rigs contains exactly 13 active records and remains alphabetized with an empty query,
-- Core Rigs remains exactly six records in the validated curated order:
-  1. Fixed Bobber Rig
-  2. Basic Bottom Rig
-  3. Jighead + Soft Plastic
-  4. Inline Spinner Setup
-  5. Texas Rig
-  6. Slip Bobber Rig
+## Replacement tutorials — IMPLEMENTED / PASSED
 
-# Drop Shot Rig
+- Slip Bobber — Sportsman's Journal TV — `0V-gaboIlD0` — **HOW-TO Rig A Slip Bobber (Easiest Way)**
+- Wacky Rig — Kevin VanDam — `EbHzUCM4o7Y` — **The fishing rig that whacks them every time - Wacky Rig**
+- Ned Rig — Mystery Tackle Box — `COFdRET28cY` — **How To Rig A Ned Rig - Ned Rigging Tips**
+- Weightless Soft-Plastic — Reaction Tackle — `EFORJFsycJQ` — **How to Rig a Weightless Texas Rig**
+- Carolina Rig — ShakespeareFishingUS — `iYngOOMQCC0` — **Fishing 101 - How to Tie a Carolina Rig**
+- Live-Bait Slip-Sinker — Castaway Fishing Kits — `IbV0yG3sRms` — **How to rig a Lindy Rig**
 
-**Status: PASSED — 2026-08-10**
+Final runtime closeout confirmed for every changed tutorial:
 
-Static canonical definition confirms:
+- expected new title/creator rendered,
+- no iframe/player before **Load tutorial**,
+- activation created the expected YouTube player,
+- no autoplay,
+- responsive presentation without horizontal overflow,
+- normal YouTube branding and controls remained visible,
+- `Watch on YouTube ↗` remained independently available,
+- manual playback succeeded,
+- tutorial remained build-first and technically consistent with the canonical Rig,
+- the rest of the Rig page remained usable,
+- no new console error was observed.
 
-- difficulty is `Intermediate`,
-- components are Wacky Hook, Soft Plastic Bait, and Drop Shot Weight through canonical `tackleId` references,
-- hook is instructed to ride point-up,
-- weight attaches below the hook on the tag end,
-- standard open-water setup leaves the hook point exposed,
-- starting hook-to-weight spacing is 12–18 inches and explicitly adjustable.
+# Inline Spinner
 
-Runtime validation in Chrome confirmed:
+**PASSED / COMPLETE**
 
-- detail opens with `Intermediate` difficulty,
-- Wacky Hook, Soft Plastic Bait, and Drop Shot Weight render from canonical Tackle,
-- no unresolved, duplicated, or raw-ID component name appears,
-- the instructions preserve point-up hook orientation, tag-end weight placement below the hook, exposed-point open-water setup, and adjustable 12–18 inch starting spacing,
-- readiness selection updates and persists after leaving and returning to the Rig,
-- Wacky Hook `Name ⓘ` recognition help loads correctly and derived `Used In` includes Drop Shot Rig,
-- Drop Shot Weight `Name ⓘ` recognition help loads the corrected terminal/quick-change weight image and derived `Used In` includes Drop Shot Rig,
-- the tested recognition panels visually merge with the fixed `#f4f0e8` reference surface without a darker rectangle,
-- Parent/Home navigation continues to work normally from the Drop Shot detail flow.
+Inline Spinner intentionally has no embedded tutorial.
 
-# Carolina Rig
+Final state:
 
-**Status: PASSED — 2026-08-10**
-
-Static canonical definition confirms:
-
-- difficulty is `Intermediate`,
-- component order is Sliding Sinker → Protective Bead → Barrel Swivel → Leader Line → Offset Worm Hook → Soft Plastic Bait,
-- sinker and bead remain on the main-line side of the swivel,
-- leader begins after the swivel,
-- soft plastic is instructed to remain straight on the offset hook,
-- Basic Bottom Rig forwards to `carolina-rig`,
-- Carolina variation metadata links to `texas-rig` and `basic-bottom-rig`.
-
-Runtime validation in Chrome confirmed the Carolina Rig itself passes:
-
-- detail opens with `Intermediate` difficulty,
-- all canonical components render in the intended order,
-- sinker/bead/swivel/leader relationships are presented correctly,
-- the soft plastic/Offset Worm Hook setup is presented correctly,
-- readiness updates and persists,
-- canonical reference popovers and derived `Used In` relationships function,
-- Parent/Home navigation remains normal.
-
-The separate recognition-media review performed during this Rig exposed background/shadow inconsistencies on older shared Tackle assets. Those defects have now been corrected and revalidated under Recognition Media.
-
-# Live-Bait Slip-Sinker Rig
-
-**Status: PASSED — 2026-08-10**
-
-Static canonical definition confirms:
-
-- difficulty is `Intermediate`,
-- components are Sliding Sinker, optional Protective Bead, Barrel Swivel, Leader Line, Fishing Hook, and Bait,
-- `Walking Sinker` remains an alias/variant of canonical Sliding Sinker rather than a duplicate Tackle record,
-- the main line is instructed to slide through the sinker,
-- the leader begins after the swivel.
-
-Runtime validation in Chrome confirmed:
-
-- detail opens with `Intermediate` difficulty,
-- Sliding Sinker, optional Protective Bead, Barrel Swivel, Leader Line, Fishing Hook, and Bait render as canonical components,
-- the Sliding Sinker remains on the main line and the instructions clearly allow the line to move freely through it,
-- the optional bead is positioned between the sinker and swivel,
-- the leader begins after the Barrel Swivel and the Fishing Hook is tied to the leader's free end,
-- Walking Sinker is handled as a Sliding Sinker alias/variant rather than a duplicate component,
-- readiness selection updates and persists after leaving and returning to the Rig,
-- Sliding Sinker, Fishing Hook, and Bait contextual reference information and derived `Used In` relationships function,
-- Parent/Home navigation remains normal.
-
-The previously logged background/shadow defects on Sliding Sinker and Bait were shared recognition-media issues and are now corrected/revalidated.
-
-# Three-Way Rig
-
-**Status: PASSED — 2026-08-10**
-
-Static canonical definition confirms:
-
-- difficulty is `Intermediate`,
-- components are Three-Way Swivel, Leader Line, Fishing Hook, Bait, and Fixed Sinker,
-- instructions create one hook leader and one shorter sinker dropper,
-- the fixed sinker remains below the hook leader,
-- the canonical Tackle definition requires a true three-eye swivel and the Rig explicitly warns against substituting a two-eye barrel swivel.
-
-Runtime validation in Chrome confirmed:
-
-- detail opens with `Intermediate` difficulty,
-- Three-Way Swivel, Leader Line, Fishing Hook, Bait, and Fixed Sinker render as canonical components,
-- the main line connects to one swivel eye, the hook leader to a second eye, and the shorter sinker dropper to the third eye,
-- the Fishing Hook is presented on the hook leader and the Fixed Sinker on the shorter dropper below the hook leader,
-- the Rig clearly uses a true three-eye swivel rather than a two-eye Barrel Swivel,
-- readiness selection updates and persists after leaving and returning to the Rig,
-- Three-Way Swivel, Fixed Sinker, and Fishing Hook contextual references load correctly and derived `Used In` relationships function,
-- the Three-Way Swivel recognition image reads as a true three-eye swivel,
-- the Fixed Sinker recognition image reads as a terminal tie-eye sinker rather than a sliding through-hole sinker,
-- Parent/Home navigation remains normal.
+- Mepps — Aglia Spinner Rigging and Tips is retained as the verified external instructional fallback,
+- Panther Martin was removed after review because its destination was more marketing-oriented than instructional for this use case,
+- Mepps-only fallback opens and remains useful,
+- the Inline Spinner page otherwise behaves normally.
 
 # Recognition Media
 
-**Status: PASSED — 2026-08-10**
+**PASSED / COMPLETE**
 
-Reviewed/corrected production media currently includes:
+Recognition-media validation covered the corrected and newly introduced Tackle assets, including:
 
-From `eed8929cb1859aef653168884e1e71244d1dd80e`:
+- Wacky Hook,
+- Wacky O-Ring,
+- Ned Jighead,
+- Drop Shot Weight,
+- Three-Way Swivel,
+- Fixed Sinker,
+- Bobber Stop,
+- Fishing Hook,
+- Jighead,
+- Offset Worm Hook,
+- Weight Peg,
+- Barrel Swivel,
+- Protective Bead,
+- Bait,
+- Bullet Weight,
+- Fixed Bobber,
+- Sliding Sinker,
+- Slip Float,
+- Split Shot,
+- Stop Bead.
 
-- `wacky-hook-reference.webp`,
-- `wacky-o-ring-reference.webp`,
-- `ned-jighead-reference.webp`,
-- `drop-shot-weight-reference.webp`,
-- `three-way-swivel-reference.webp`,
-- `fixed-sinker-reference.webp`,
-- `bobber-stop-reference.webp`.
+Validated production rules include:
 
-From `5704da6b9cde20bf90edfa8205e9811fba4114ab`:
+- real-photo-first when technically correct and legally reusable,
+- otherwise original semi-photorealistic catalog treatment anchored to verified geometry,
+- normal production assets are not flat/vector/cartoon/clip-art treatments,
+- exact 640 × 440 RGB WebP production canvas for the current Tackle system,
+- exact `#f4f0e8` reference-media surface,
+- no baked artificial cast shadow,
+- conventional viewer-facing capital-J hook orientation unless a reviewed technical exception applies,
+- useful recognition at realistic phone contextual-popover size.
 
-- `hook-reference.webp`,
-- `jighead-reference.webp`,
-- `offset-worm-hook-reference.webp`,
-- `weight-peg-reference.webp`.
+The nine-image correction upload in `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` passed package verification and runtime contextual review.
 
-From `630beb13fe7519dac6993b6f3776dd3b6bfca7bf`:
+# Bobber Stop Metadata
 
-- `barrel-swivel-reference.webp`,
-- `bead-reference.webp`,
-- `bait-reference.webp`,
-- `bullet-weight-reference.webp`,
-- `fixed-bobber-reference.webp`,
-- `sliding-sinker-reference.webp`,
-- `slip-float-reference.webp`,
-- `split-shot-reference.webp`,
-- `stop-bead-reference.webp`.
+**PASSED / COMPLETE**
 
-Validation confirmed:
+Production correction commit:
 
-- commit `630beb13fe7519dac6993b6f3776dd3b6bfca7bf` changes exactly the nine intended correction files,
-- every current GitHub blob SHA and byte size for those nine files matches the approved local package,
-- contextual reference panels now visually merge with the fixed `#f4f0e8` media surface,
-- the previously identified background-color mismatch and baked/uneven shadow issue is no longer visible,
-- corrected objects remain unclipped and undistorted,
-- corrected objects remain recognizable at runtime display size,
-- previously corrected Fishing Hook, Jighead, Offset Worm Hook, Weight Peg, Wacky Hook, Wacky O-Ring, Ned Jighead, Drop Shot Weight, Three-Way Swivel, Fixed Sinker, and Bobber Stop remain accepted.
+`291967ed4eb19eb9b1f7f83837c59133c949a333` — `Correct Bobber Stop alt text`
 
-Known metadata correction still required before closeout:
+The canonical alt text now accurately describes the approved rubber/silicone stop variant:
 
-- update `bobber-stop-reference` alt text in `data/media.js` so it accurately describes the approved rubber/silicone stop image rather than the superseded thread-style image.
+> Neutral-background reference illustration of a rubber/silicone bobber stop on fishing line
 
-For future replacement work, pre-delivery confirm under the `MEDIA_GUIDE.md` Tackle Media Generation Gate:
+Final runtime closeout confirmed the Bobber Stop `Name ⓘ` reference still opens, renders the correct image, fits normally, and does not introduce clipping or horizontal overflow.
 
-- an accurate legally reusable real photograph was searched for first,
-- any real photograph selected has clear local redistribution/modification rights and represents the canonical concept accurately,
-- if no suitable reusable photograph exists, the replacement is an original semi-photorealistic catalog-style reference anchored to verified real-world geometry,
-- vector/flat/cartoon/icon/clip-art appearance is rejected unless an explicit mechanically justified illustration exception was approved before packaging,
-- the replacement was compared visually against representative current approved production Tackle assets,
-- the replacement remains recognizable at realistic contextual-popover phone size,
-- WebP,
-- normally exactly 640 × 440 for the current Tackle production system,
-- exact production canvas `#f4f0e8`,
-- no baked-in artificial cast shadow treatment,
-- single-object recognition composition,
-- hook-bearing media follows the conventional viewer-facing J presentation unless an approved exception applies,
-- media metadata uses the correct canonical Tackle owner,
-- source/reference geometry and license/provenance are recorded accurately.
+# Beginner / Beginner+ / Core Application Regression
 
-# Tutorial Audit — Existing Rigs
+**PASSED / COMPLETE**
 
-**Status: REPLACEMENT SELECTION COMPLETE / RETAINED-TUTORIAL RUNTIME REGRESSION PASSED / INLINE SPINNER FALLBACK PASSED**
+Desktop Edge validation confirmed:
 
-Static renderer validation confirms:
+- Beginner contains exactly 6 Rigs,
+- Beginner+ contains exactly 3 Rigs,
+- Core contains exactly 6 Rigs in the approved curated order,
+- All Rigs contains exactly 13 active Rigs and is alphabetized with an empty query,
+- navigation opens destinations at the top,
+- Parent/Home behavior works,
+- no blank or duplicate Rig cards appear,
+- Wacky, Ned, and Weightless detail/component/readiness behavior remains correct,
+- readiness state persists,
+- Fish Guide search/clear remains functional,
+- Dashboard layout and implemented/Coming Soon semantics remain intact,
+- normal navigation produced no new console errors,
+- keyboard focus remains visible,
+- desktop layout has no unintended horizontal overflow or clipping.
 
-- no iframe is emitted by the initial tutorial markup,
-- iframe creation occurs only after **Load tutorial** activation,
-- player source uses `https://www.youtube-nocookie.com/embed/`,
-- no autoplay parameter is requested,
-- `Watch on YouTube ↗` remains present independently of the embedded player,
-- iframe uses `strict-origin-when-cross-origin` referrer policy and allows fullscreen.
+Mobile validation confirmed:
 
-The build-first tutorial selection/runtime audit classifies the existing-Rig tutorials as follows:
-
-- Fixed Bobber — NYSDEC (`LlzvkVUvYBs`) — KEEP; **PASSED 2026-08-11**
-- Basic Bottom — Catfish Edge (`O6pEc6Y_44U`) — KEEP; **PASSED 2026-08-11**
-- Jighead + Soft Plastic — Tackle Tactics TV (`wv1e53YZuBo`) — KEEP; **PASSED 2026-08-11**
-- Slip Bobber — current Wired2Fish (`foSgzdjLZyk`) — REPLACE with approved Sportsman's Journal TV `0V-gaboIlD0`, **HOW-TO Rig A Slip Bobber (Easiest Way)**
-- Texas — Wired2Fish (`cIraWgiR6u0`) — KEEP; **PASSED 2026-08-11**
-- Wacky — current Vermont Fish & Wildlife Department (`u8N--D8C--4`) — REPLACE with approved Kevin VanDam `EbHzUCM4o7Y`, **The fishing rig that whacks them every time - Wacky Rig**
-- Ned — current Bass University (`ajJz8pH0Jig`) — REPLACE with approved Mystery Tackle Box `COFdRET28cY`, **How To Rig A Ned Rig - Ned Rigging Tips**
-- Weightless Soft-Plastic — current Wired2Fish (`Bld_-8GBsco`) — REPLACE with approved Reaction Tackle `EFORJFsycJQ`, **How to Rig a Weightless Texas Rig**
-
-Fixed Bobber runtime regression in Brave Desktop confirmed:
-
-- no tutorial iframe/player was loaded before **Load tutorial** activation,
-- **Load tutorial** created the expected embedded player,
-- the NYSDEC Fixed Bobber tutorial loaded successfully,
-- playback did not autoplay,
-- the player fit the page without horizontal overflow,
-- YouTube branding and normal player controls remained visible,
-- `Watch on YouTube ↗` remained available separately,
-- the video successfully played when manually started,
-- the rest of the Rig page remained usable after the player loaded,
-- the tutorial remains sufficiently build-focused to satisfy the approved build-first rule.
-
-Basic Bottom runtime regression in Brave Desktop confirmed:
-
-- no tutorial iframe/player was loaded before **Load tutorial** activation,
-- **Load tutorial** created the expected embedded player,
-- the Catfish Edge Basic Bottom tutorial loaded successfully,
-- playback did not autoplay,
-- the player fit the page without horizontal overflow,
-- YouTube branding and normal player controls remained visible,
-- `Watch on YouTube ↗` remained available separately,
-- the video successfully played when manually started,
-- the rest of the Rig page remained usable after the player loaded,
-- the tutorial remains sufficiently build-focused to satisfy the approved build-first rule.
-
-Jighead + Soft Plastic runtime regression in Brave Desktop confirmed:
-
-- no tutorial iframe/player was loaded before **Load tutorial** activation,
-- **Load tutorial** created the expected embedded player,
-- the Tackle Tactics TV Jighead + Soft Plastic tutorial loaded successfully,
-- playback did not autoplay,
-- the player fit the page without horizontal overflow,
-- YouTube branding and normal player controls remained visible,
-- `Watch on YouTube ↗` remained available separately,
-- the video successfully played when manually started,
-- the rest of the Rig page remained usable after the player loaded,
-- the tutorial remains sufficiently build-focused to satisfy the approved build-first rule.
-
-Texas runtime regression in Brave Desktop confirmed:
-
-- no tutorial iframe/player was loaded before **Load tutorial** activation,
-- **Load tutorial** created the expected embedded player,
-- the Wired2Fish Texas Rig tutorial loaded successfully,
-- playback did not autoplay,
-- the player fit the page without horizontal overflow,
-- YouTube branding and normal player controls remained visible,
-- `Watch on YouTube ↗` remained available separately,
-- the video successfully played when manually started,
-- the rest of the Rig page remained usable after the player loaded,
-- the tutorial remains sufficiently build-focused to satisfy the approved build-first rule.
-
-The Wacky runtime regression of the current 10-minute Vermont Fish & Wildlife Department video was intentionally superseded by replacement selection. The user approved Kevin VanDam `EbHzUCM4o7Y` as the shorter build-first replacement candidate; it will receive final in-app runtime validation only after the consolidated production-data update.
-
-Inline Spinner intentionally has no embedded tutorial. D049 fallback validation in Edge on 2026-08-11 confirmed the current external references opened. The Mepps Aglia reference remains useful instructional material. The Panther Martin guide was judged too marketing-heavy relative to the project's instructional purpose, so removal of that reference is approved and pending the consolidated `data/rigs.js` correction package. Retaining Mepps alone satisfies the current verified external-reference fallback for Inline Spinner.
-
-Production edits are now eligible for reviewed packaging because the application regression has passed.
-
-# Tutorial Audit — Intermediate
-
-**Status: SELECTION COMPLETE — 2 OF 4 RUNTIME-PASSED; 2 APPROVED REPLACEMENTS PENDING IMPLEMENTATION/RE-TEST — 2026-08-11**
-
-Runtime / selection state:
-
-- Drop Shot — Mystery Tackle Box (`xuqaAq98BDA`) — **PASSED 2026-08-11**
-- Carolina — current John Crews (`4nU1QncQ0QM`) — **REPLACE** with approved ShakespeareFishingUS `iYngOOMQCC0`, **Fishing 101 - How to Tie a Carolina Rig**
-- Live-Bait Slip-Sinker — current Nick Lindner (`61mG-xGi-I0`) — **REPLACE** with approved Castaway Fishing Kits `IbV0yG3sRms`, **How to rig a Lindy Rig**
-- Three-Way — Catfish Edge (`8SONykmBFxA`) — **PASSED 2026-08-11**
-
-Drop Shot runtime validation in Brave Desktop confirmed:
-
-- no tutorial iframe/player was loaded before **Load tutorial** activation,
-- **Load tutorial** created the expected embedded player,
-- the Mystery Tackle Box tutorial loaded successfully,
-- playback did not autoplay,
-- the player fit the page without horizontal overflow,
-- YouTube branding and normal player controls remained visible,
-- `Watch on YouTube ↗` remained available separately,
-- the video successfully played when manually started,
-- the rest of the Rig page remained usable after the player loaded.
-
-Three-Way runtime validation in Brave Desktop confirmed:
-
-- no tutorial iframe/player was loaded before **Load tutorial** activation,
-- **Load tutorial** created the expected embedded player,
-- the Catfish Edge Three-Way Rig tutorial loaded successfully,
-- playback did not autoplay,
-- the player fit the page without horizontal overflow,
-- YouTube branding and normal player controls remained visible,
-- `Watch on YouTube ↗` remained available separately,
-- the video successfully played when manually started,
-- the rest of the Rig page remained usable after the player loaded,
-- the video remains sufficiently focused on building/configuring the Three-Way Rig to satisfy the approved build-first tutorial rule.
-
-The Carolina replacement was user-approved after confirming its build-first scope and supplied metadata. The Live-Bait Slip-Sinker replacement was user-approved after reviewing the candidate against the build-first criteria, including assembly sequence compatibility, concise focus, and playback/embedding suitability.
-
-For every replacement tutorial before final runtime PASS:
-
-- the approved record must be present in production source,
-- no iframe exists before user activation,
-- load action creates a responsive `youtube-nocookie.com` iframe,
-- no autoplay request is made,
-- source/player branding and controls remain unobscured,
-- `Watch on YouTube ↗` remains available,
-- manual playback succeeds,
-- the rest of the Rig page remains usable,
-- the tutorial remains technically consistent with the canonical Rig definition.
-
-If a video has been removed, made private, has embedding disabled, or no longer satisfies the build-first tutorial role, remove/replace the in-app tutorial record in a reviewed correction package and retain the next D049 fallback rather than substituting an unverified video.
-
-# Beginner / Beginner+ Regression
-
-**Status: RUNTIME PASSED — DESKTOP + MOBILE — 2026-08-11**
-
-GitHub comparison confirms no application source/data file changed after the Intermediate implementation baseline; subsequent production changes are Tackle media only.
-
-Desktop Regression Block 1 in Edge passed:
-
-- Beginner contains exactly six Rigs and no higher-tier records,
-- Beginner+ contains exactly three Rigs and no Beginner/Intermediate records,
-- Core contains exactly six Rigs in the validated curated order:
-  1. Fixed Bobber Rig
-  2. Basic Bottom Rig
-  3. Jighead + Soft Plastic
-  4. Inline Spinner Setup
-  5. Texas Rig
-  6. Slip Bobber Rig
-- All Rigs contains exactly 13 active records and is alphabetized with an empty search,
-- tested forward transitions open at the top,
-- Parent/Home navigation works,
-- no blank cards, duplicated Rigs, or obvious layout break was observed.
-
-Desktop Regression Block 2 in Edge passed:
-
-- Wacky Rig remains Beginner and renders exactly Wacky Hook + Soft Plastic Bait as required plus optional Wacky O-Ring,
-- Wacky assembly preserves midpoint hook placement, free-moving bait ends, exposed hook gap, and the standard weightless setup,
-- Ned Rig remains Beginner and renders exactly Ned Jighead + Soft Plastic Bait as required, with straight bait rigging and the standard exposed hook point,
-- Weightless Soft-Plastic remains Beginner+ and renders exactly Offset Worm Hook + Soft Plastic Bait as required,
-- Weightless Soft-Plastic does not gain Bullet Weight, Weight Peg, sinker, or other added weight,
-- Weightless instructions retain direct hook-to-line/leader connection and straight weedless finish,
-- readiness state persisted after leaving and returning to each of Wacky, Ned, and Weightless.
-
-Desktop Regression Block 3 in Edge passed:
-
-- Fish Guide opens normally and its search/clear workflow remains functional,
-- relevant Fish search results display without duplicate or blank cards and clearing restores the full list,
-- Dashboard loads with its validated layout/styling intact,
-- implemented Dashboard cards remain actionable and unavailable areas retain clear Coming Soon/unavailable semantics,
-- Home navigation from nested pages works normally,
-- normal navigation through Dashboard → Fish Guide → Rig Guide → Rig detail → Home produced no new console errors,
-- keyboard focus remains visibly indicated while tabbing through interactive controls,
-- normal desktop width shows no horizontal overflow, clipping, or overlap.
-
-Mobile Regression Block 4 passed:
-
-- Dashboard fits the mobile viewport without horizontal scrolling, clipped controls, or overlapping text,
-- implemented/unavailable Dashboard states remain clear,
-- Fish Guide search and clear behavior remain usable at mobile width,
-- Rig Guide → Beginner → Rig detail and Core Rigs → Rig detail flows navigate correctly,
-- tested Parent/Home transitions remain usable and open at the expected top position,
-- Rig detail headings, components, readiness controls, instructions, and references fit the viewport,
-- at least one `Name ⓘ` Tackle reference panel/image opened and closed normally without clipping or horizontal overflow,
+- Dashboard fits the viewport,
+- Fish search/clear remains usable,
+- Beginner/Core/Rig-detail navigation remains usable,
+- Rig detail content and readiness controls fit the viewport,
+- contextual `Name ⓘ` reference panels fit and close normally,
 - sticky Parent/Home controls remain usable,
-- normal mobile scrolling remains usable without horizontal page scrolling or overlapping controls.
+- no unintended horizontal page scrolling, clipping, or overlapping controls was observed.
 
-Already separately validated in the tutorial audit:
+Final mobile runtime closeout additionally passed one changed Beginner/Beginner+ tutorial, one changed Intermediate tutorial, and the Bobber Stop reference panel.
 
-- Texas tutorial still lazy-loads through the approved pattern.
+# Production Correction Verification
 
-The application regression is complete. Final runtime work now targets only the changed production-data correction package after implementation.
+Final `data/rigs.js` correction commit:
 
-# GitHub Validation
+`80b8ef0ba2b0734429b29a5b02c318e02c81bc55`
 
-**Status: INTERMEDIATE RIGS + RECOGNITION MEDIA PASSED / TUTORIAL CORRECTIONS FULLY IDENTIFIED / RETAINED-TUTORIAL + INLINE FALLBACK + APPLICATION REGRESSION PASSED / PRODUCTION CORRECTION + METADATA OPEN**
+Final corrected `data/rigs.js` blob:
 
-Verified checkpoints:
+`5c5425f5939917459a40bb067ebb2bd68bbdb5b4`
 
-- Intermediate implementation baseline: `e4b61aea052f4ad843be0f6d54231af87d574905`.
-- Seven-image correction: `eed8929cb1859aef653168884e1e71244d1dd80e`.
-- Four-image legacy correction: `5704da6b9cde20bf90edfa8205e9811fba4114ab`.
-- Nine-image correction: `630beb13fe7519dac6993b6f3776dd3b6bfca7bf`.
-- Validation documentation baseline immediately before this update: `cadbd3936d05089a14d7267d56f2597e31fb4020`.
-- Runtime Intermediate collection membership, routing, scoped/global search, All Rigs count/order, and Core count/order passed in Chrome on 2026-08-10.
-- Drop Shot Rig detail, component rendering, readiness persistence, derived relationships, recognition popovers, fixed-surface blending, and navigation passed in Chrome on 2026-08-10.
-- Carolina Rig detail, component order/relationships, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
-- Live-Bait Slip-Sinker Rig detail, canonical component handling, sliding-sinker relationship, readiness, derived relationships, and navigation passed in Chrome on 2026-08-10.
-- Three-Way Rig detail, three-eye swivel topology, leader/dropper relationships, readiness, derived relationships, recognition references, and navigation passed in Chrome on 2026-08-10.
-- The nine-image correction package passed user review, GitHub blob/package verification, and runtime contextual-popover validation on 2026-08-10.
-- Drop Shot Intermediate tutorial playback passed in Brave Desktop on 2026-08-11.
-- Three-Way Intermediate tutorial playback and build-first suitability passed in Brave Desktop on 2026-08-11.
-- Fixed Bobber retained tutorial playback and build-first suitability passed in Brave Desktop on 2026-08-11.
-- Basic Bottom retained tutorial playback and build-first suitability passed in Brave Desktop on 2026-08-11.
-- Jighead + Soft Plastic retained tutorial playback and build-first suitability passed in Brave Desktop on 2026-08-11.
-- Texas retained tutorial playback and build-first suitability passed in Brave Desktop on 2026-08-11.
-- Inline Spinner D049 external fallback passed in Edge on 2026-08-11; Mepps is retained, Panther Martin removal is approved pending source correction.
-- Beginner/Beginner+/Core regression Block 1 passed in Edge on 2026-08-11.
-- Wacky/Ned/Weightless detail/readiness regression Block 2 passed in Edge on 2026-08-11.
-- Fish Guide/Dashboard/navigation/console/focus desktop regression Block 3 passed in Edge on 2026-08-11.
-- Mobile responsive/navigation/search/Rig-detail regression Block 4 passed on 2026-08-11.
-- Carolina replacement `iYngOOMQCC0` and Live-Bait Slip-Sinker replacement `IbV0yG3sRms` are user-approved and awaiting the consolidated production-data correction package before runtime re-test.
-- Slip Bobber replacement `0V-gaboIlD0`, Ned replacement `COFdRET28cY`, Weightless Soft-Plastic replacement `EFORJFsycJQ`, and Wacky replacement `EbHzUCM4o7Y` are user-approved and awaiting the same consolidated production-data correction package before in-app runtime re-test.
+Approved production changes were limited to:
 
-# Validation Order From Current State
+1. Slip Bobber tutorial replacement.
+2. Wacky Rig tutorial replacement.
+3. Ned Rig tutorial replacement.
+4. Weightless Soft-Plastic tutorial replacement.
+5. Carolina Rig tutorial replacement.
+6. Live-Bait Slip-Sinker tutorial replacement.
+7. Panther Martin Inline Spinner reference removal.
+8. Inline Spinner `lastModifiedVersion` update to `0.3.1`.
 
-Completed:
+Final `data/media.js` correction commit:
 
-1. **GitHub/source/package integrity — PASSED.**
-2. **Canonical data counts and relationships — PASSED.**
-3. **Intermediate membership, routing, and search — PASSED.**
-4. **Drop Shot Rig — PASSED.**
-5. **Carolina Rig — PASSED.**
-6. **Live-Bait Slip-Sinker Rig — PASSED.**
-7. **Three-Way Rig — PASSED.**
-8. **Recognition-media correction package review — PASSED.**
-9. **Recognition-media GitHub upload/package verification — PASSED.**
-10. **Recognition-media phone/desktop runtime re-validation — PASSED.**
-11. **Drop Shot tutorial runtime — PASSED.**
-12. **Three-Way tutorial runtime — PASSED.**
-13. **Intermediate replacement tutorial selections — PASSED / COMPLETE.**
-14. **Existing-Rig replacement tutorial selections — PASSED / COMPLETE.**
-15. **Fixed Bobber retained-tutorial runtime regression — PASSED.**
-16. **Basic Bottom retained-tutorial runtime regression — PASSED.**
-17. **Jighead + Soft Plastic retained-tutorial runtime regression — PASSED.**
-18. **Texas retained-tutorial runtime regression — PASSED.**
-19. **Retained-tutorial runtime regression — PASSED / COMPLETE; Wacky moved to approved replacement set.**
-20. **Inline Spinner D049 external-fallback check — PASSED; Panther Martin removal approved.**
-21. **Application regression Block 1 — PASSED: Beginner/Beginner+/Core/All Rigs collections, counts, ordering, and navigation.**
-22. **Application regression Block 2 — PASSED: Wacky/Ned/Weightless detail integrity and readiness persistence.**
-23. **Application regression Block 3 — PASSED: Fish Guide/search, Dashboard, normal navigation, console health, keyboard focus, and desktop layout.**
-24. **Application regression Block 4 — PASSED: mobile Dashboard, Fish search, Rig navigation/detail/reference panel, sticky controls, and responsive layout.**
-25. **Beginner/Beginner+/Core + broader application regression — PASSED / COMPLETE.**
+`291967ed4eb19eb9b1f7f83837c59133c949a333`
 
-Open work:
+Final corrected `data/media.js` blob:
 
-26. Review and apply all six approved tutorial replacements plus Panther Martin reference removal together in one targeted `data/rigs.js` correction package.
-27. Review and apply the Bobber Stop alt-text correction in `data/media.js` in the same controlled production-data correction phase.
-28. Runtime-test every changed tutorial embed, confirm Inline Spinner reference state, and re-test the affected Bobber Stop reference popover.
-29. Reconcile the build-first tutorial-selection rule into governing documentation.
-30. Documentation reconciliation/final closeout.
+`e98f84df784d78da58bc4641460dd1a509ea73ab`
 
-A failed block must remain visibly failed/pending until corrected and re-tested.
+The `data/media.js` correction was limited to the Bobber Stop alt-text change.
 
-# Closeout
+# Tutorial Selection Standard
 
-After all source, GitHub, runtime, tutorial, recognition-media, metadata/accessibility, and regression checks pass:
+The validated build-first rule for Rig tutorials is:
 
-- promote the segment's durable D053/D054 decisions into `DECISIONS.md`,
-- reconcile the post-Texas rollout language and build-first tutorial-selection rule in `MEDIA_GUIDE.md`,
-- update `RIG_REFERENCE_SOURCES.md`,
-- update `HANDOFF.md`, `MILESTONES.md`, and `CHANGELOG.md`,
-- update this workstream and validation document to `Validated`,
-- push and re-fetch the closeout package,
-- mark the segment `Finalized` only after that repository state is verified,
-- only then begin Intermediate+ under D039/D040.
+- the primary embedded tutorial should primarily teach correct physical assembly/build,
+- concise/direct videos are preferred when technical completeness and source quality are otherwise adequate,
+- prioritize component order, knots/connections, leader placement, weight placement, bait/hook placement, and final assembled configuration,
+- fishing technique, retrieve, presentation, and strategy may appear but must not dominate the primary embedded tutorial,
+- when multiple technically correct candidates exist, prefer the shorter build-focused source,
+- no arbitrary fixed duration threshold is required,
+- authoritative text assembly remains mandatory and authoritative,
+- if no suitable tutorial exists, use the next trustworthy D049 fallback instead of adding a weak or mismatched video.
+
+# Final Status
+
+All required implementation, media, tutorial, metadata, desktop/mobile regression, and changed-runtime checks for this segment have passed.
+
+**Implementation Status: Validated / Finalized**
+
+The next build segment may now be selected under D039/D040. Intermediate+ remains the next logical Rig tier unless a higher-priority milestone is deliberately selected.
