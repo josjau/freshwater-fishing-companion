@@ -9,7 +9,7 @@
 
 const TACKLE_DATA_BUILD_INFO = Object.freeze({
     file: "data/tackle.js",
-    milestone: "Beginner Media + Intermediate Expansion"
+    milestone: "Rig Guide Completion"
 });
 
 const TACKLE_DATA = Object.freeze([
@@ -356,6 +356,96 @@ const TACKLE_DATA = Object.freeze([
         mediaIds: ["inline-spinner-reference"],
         createdVersion: "0.2.8",
         lastModifiedVersion: "0.2.8",
+        isActive: true
+    },
+    {
+        id: "nail-weight",
+        name: "Nail Weight",
+        aliases: ["Neko Weight", "Insert Weight"],
+        category: "Weights",
+        summary: "A slender insert weight pushed into the end of a soft-plastic bait.",
+        purpose: "Weights one end of a soft plastic so a Neko-rigged bait falls and rests nose-down while the opposite end remains free to move.",
+        recognitionNotes: ["Thin nail- or pin-like shape", "Designed to insert directly into soft plastic", "May have ribs, barbs, or a wider head to resist pulling out"],
+        commonVariants: ["Lead nail", "Tungsten nail", "Ribbed insert"],
+        relatedTackleIds: ["soft-plastic", "wacky-hook", "wacky-o-ring"],
+        mediaIds: [],
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true
+    },
+    {
+        id: "shaky-head-jighead",
+        name: "Shaky Head Jighead",
+        aliases: ["Shakey Head", "Shaky Head"],
+        category: "Jigheads",
+        summary: "A finesse weighted hook with a bait keeper designed to hold a soft-plastic worm in a bottom-oriented presentation.",
+        purpose: "Combines a light bottom-contact weight, hook, and keeper so a soft plastic can be presented upright or angled off the bottom.",
+        recognitionNotes: ["Weighted head integrated with a worm hook", "Keeper, screw-lock, or pin secures the bait nose", "Hook exits the bait farther back for a weed-resistant or exposed-point setup"],
+        commonVariants: ["Round head", "Stand-up head", "Screw-lock head", "Weedless head"],
+        relatedTackleIds: ["soft-plastic", "jighead"],
+        mediaIds: [],
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true
+    },
+    {
+        id: "ringed-sinker",
+        name: "Ringed Sinker",
+        aliases: ["Free Rig Weight", "Bell Weight", "Casting Sinker"],
+        category: "Weights",
+        summary: "A compact sinker with an external closed eye or ring instead of a line channel through the weight body.",
+        purpose: "Provides a freely moving eye for Free Rig line travel or a hanging weight connection for Jika-style terminal rigs.",
+        recognitionNotes: ["Weight body ends in a distinct metal eye or loop", "Fishing line or connector passes through the external eye", "The weight body itself does not contain the main sliding line channel"],
+        commonVariants: ["Bell", "Casting", "Teardrop", "Tungsten free-rig weight"],
+        relatedTackleIds: ["offset-worm-hook", "soft-plastic", "split-ring"],
+        mediaIds: [],
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true
+    },
+    {
+        id: "split-ring",
+        name: "Split Ring",
+        aliases: ["Terminal Split Ring", "Connector Ring"],
+        category: "Connectors",
+        summary: "A small coiled metal ring with overlapping turns that allows terminal components to be attached without opening a solid ring.",
+        purpose: "Creates a compact common attachment point for the hook and hanging weight in a standard Jika Rig.",
+        recognitionNotes: ["Looks like a miniature key ring", "Two overlapping wire turns", "No swivel barrel or snap arm"],
+        commonVariants: ["Stainless steel", "Black nickel", "Heavy-duty"],
+        relatedTackleIds: ["ringed-sinker", "offset-worm-hook"],
+        mediaIds: [],
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true
+    },
+    {
+        id: "bottom-bouncer",
+        name: "Bottom Bouncer",
+        aliases: ["Bottom-Bouncer Weight", "Bouncer"],
+        category: "Weights",
+        summary: "A weighted rigid-wire trolling component that keeps a trailing bait or spinner harness near bottom while the wire contacts structure first.",
+        purpose: "Maintains controlled bottom contact and positions a trailing leader or spinner harness above snag-prone bottom during trolling or drifting.",
+        recognitionNotes: ["Long rigid wire bent into an angled or 7-shaped frame", "Lead weight fixed to the vertical wire", "Main-line connection near the bend and harness connection on the trailing arm"],
+        commonVariants: ["Fixed-weight wire", "Quick-change weight", "Snap-equipped"],
+        relatedTackleIds: ["spinner-harness", "bait"],
+        mediaIds: [],
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
+        isActive: true
+    },
+    {
+        id: "spinner-harness",
+        name: "Spinner Harness",
+        aliases: ["Crawler Harness", "Walleye Spinner Rig", "Worm Harness"],
+        category: "Terminal Rigs",
+        summary: "A pre-tied leader assembly with a spinner blade, beads, and one or more hooks used behind a bottom bouncer or similar trolling weight.",
+        purpose: "Adds flash and vibration while carrying live bait or a soft-plastic trailer behind a controlled bottom-contact weight.",
+        recognitionNotes: ["Leader with a rotating spinner blade ahead of the hook", "Several beads commonly separate the blade from the hook", "Often uses one hook or a two-hook crawler configuration"],
+        commonVariants: ["Single-hook", "Two-hook crawler harness", "Colorado blade", "Indiana blade", "Smile blade"],
+        relatedTackleIds: ["bottom-bouncer", "bait", "barrel-swivel"],
+        mediaIds: [],
+        createdVersion: "0.4.0",
+        lastModifiedVersion: "0.4.0",
         isActive: true
     }
 ]);
