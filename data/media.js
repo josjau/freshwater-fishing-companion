@@ -571,10 +571,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "nail-weight",
         type: "image",
         file: "images/tackle/nail-weight-reference.webp",
-        alt: "Neutral-background precise reference illustration of a slender ribbed Neko nail weight",
+        alt: "Neutral-background semi-photorealistic reference of a nail-style insert weight for Neko rigging",
         caption: "Nail Weight",
         license: {
-            status: "Original project precise illustration anchored to verified real-world tackle geometry",
+            status: "Original project semi-photorealistic reference created from approved tackle geometry",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -582,11 +582,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-11"
+            reviewedDate: "2026-08-12"
         },
-        productionStatus: "Approved precise Tackle reference illustration",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true
     },
     {
@@ -595,22 +595,22 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "shaky-head-jighead",
         type: "image",
         file: "images/tackle/shaky-head-jighead-reference.webp",
-        alt: "Neutral-background precise reference illustration of a shaky-head jighead with weighted head, bait keeper, and worm hook",
+        alt: "Neutral-background semi-photorealistic reference of a shaky-head jighead with weighted head, line eye, bristle detail, and exposed worm hook",
         caption: "Shaky Head Jighead",
         license: {
-            status: "Original project precise illustration anchored to verified real-world tackle geometry",
+            status: "Original project semi-photorealistic reference created from approved tackle geometry",
             type: "Original",
             creator: "Freshwater Fishing Companion",
-            sourceUrl: "https://zmanfishing.com/products/smh-jigheads",
+            sourceUrl: "https://www.tacklewarehouse.com/catpage-TTSH.html",
             licenseUrl: null,
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-11"
+            reviewedDate: "2026-08-12"
         },
-        productionStatus: "Approved precise Tackle reference illustration",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true
     },
     {
@@ -619,22 +619,22 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "ringed-sinker",
         type: "image",
         file: "images/tackle/ringed-sinker-reference.webp",
-        alt: "Neutral-background precise reference illustration of a compact teardrop sinker with a closed external line eye",
+        alt: "Neutral-background semi-photorealistic reference of an elongated two-ring sinker with a closed metal eye at each end",
         caption: "Ringed Sinker",
         license: {
-            status: "Original project precise illustration anchored to verified real-world tackle geometry",
+            status: "Original project semi-photorealistic reference created from approved tackle geometry",
             type: "Original",
             creator: "Freshwater Fishing Companion",
-            sourceUrl: null,
+            sourceUrl: "https://hanapaa.com/products/2-ring-sinker",
             licenseUrl: null,
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-11"
+            reviewedDate: "2026-08-12"
         },
-        productionStatus: "Approved precise Tackle reference illustration",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true
     },
     {
@@ -643,10 +643,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "split-ring",
         type: "image",
         file: "images/tackle/split-ring-reference.webp",
-        alt: "Neutral-background precise reference illustration of a small overlapping-wire terminal split ring",
+        alt: "Neutral-background semi-photorealistic reference of a double-coil metal split ring with a visible opening",
         caption: "Split Ring",
         license: {
-            status: "Original project precise illustration anchored to verified real-world tackle geometry",
+            status: "Original project semi-photorealistic reference created from approved tackle geometry",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: null,
@@ -654,11 +654,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-11"
+            reviewedDate: "2026-08-12"
         },
-        productionStatus: "Approved precise Tackle reference illustration",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true
     },
     {
@@ -667,22 +667,22 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "bottom-bouncer",
         type: "image",
         file: "images/tackle/bottom-bouncer-reference.webp",
-        alt: "Neutral-background precise reference illustration of a bottom bouncer with angled wire frame, fixed weight, main-line eye, and trailing harness eye",
+        alt: "Neutral-background semi-photorealistic reference of a 90-degree bottom bouncer with an inside-corner line loop, straight lower feeler wire, fixed lead weight, and trailing swivel",
         caption: "Bottom Bouncer",
         license: {
-            status: "Original project precise illustration anchored to verified real-world tackle geometry",
+            status: "Original project semi-photorealistic reference created from approved tackle geometry",
             type: "Original",
             creator: "Freshwater Fishing Companion",
-            sourceUrl: "https://www.fishusa.com/learn/walleye-harness-bottom-bouncer-setup/",
+            sourceUrl: "https://www.vtfishandwildlife.com/sites/fishandwildlife/files/images/Fish/Fishing%20Opportunities/fishing_basics/lures/bottomLures/BL_bottombouncer.jpg",
             licenseUrl: null,
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-11"
+            reviewedDate: "2026-08-12"
         },
-        productionStatus: "Approved precise Tackle reference illustration",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true
     },
     {
@@ -691,10 +691,10 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "spinner-harness",
         type: "image",
         file: "images/tackle/spinner-harness-reference.webp",
-        alt: "Neutral-background precise reference illustration of a spinner harness with leader, spinner blade, beads, and two hooks",
+        alt: "Neutral-background semi-photorealistic reference of a walleye spinner harness with barrel swivel, spinner blade, beads, clear leader, and two hooks",
         caption: "Spinner Harness",
         license: {
-            status: "Original project precise illustration anchored to verified real-world tackle geometry",
+            status: "Original project semi-photorealistic reference created from approved tackle geometry",
             type: "Original",
             creator: "Freshwater Fishing Companion",
             sourceUrl: "https://shop.northlandtackle.com/rigs/walleye-spinner-rig/",
@@ -702,11 +702,11 @@ const MEDIA_DATA = Object.freeze([
             attributionRequired: false,
             commercialUseAllowed: true,
             modificationAllowed: true,
-            reviewedDate: "2026-08-11"
+            reviewedDate: "2026-08-12"
         },
-        productionStatus: "Approved precise Tackle reference illustration",
+        productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true
     }
 ]);

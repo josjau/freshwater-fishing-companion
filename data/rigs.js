@@ -1158,7 +1158,7 @@ const RIG_DATA = Object.freeze([
         name: "Neko Rig",
         summary: "A weighted wacky-style finesse rig with a nail weight inserted into one end of a soft-plastic worm so the bait works nose-down along the bottom.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
@@ -1184,6 +1184,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://zmanfishing.com/products/bang-stickz"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How to Rig the Neko Rig and Where to Fish It",
+            creator: "Wired2Fish",
+            videoId: "yxGJLTxa_B0",
+            externalUrl: "https://www.youtube.com/watch?v=yxGJLTxa_B0"
+        },
         componentRequirements: [
             {
                 tackleId: "nail-weight",
@@ -1241,7 +1248,7 @@ const RIG_DATA = Object.freeze([
         name: "Shaky Head Rig",
         summary: "A finesse soft-plastic rig built around a dedicated shaky-head jighead that keeps the bait connected directly to a light bottom-contact weight.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
@@ -1267,6 +1274,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://www.wired2fish.com/fishing-videos/shaky-head-neko-rig-and-drop-shot-finesse-fishing-mastery"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How to Rig a Shaky Head",
+            creator: "Bass Utopia",
+            videoId: "zwcZSE3DVAU",
+            externalUrl: "https://www.youtube.com/watch?v=zwcZSE3DVAU"
+        },
         componentRequirements: [
             {
                 tackleId: "shaky-head-jighead",
@@ -1311,7 +1325,7 @@ const RIG_DATA = Object.freeze([
         name: "Free Rig",
         summary: "A soft-plastic rig that lets a ringed sinker slide freely on the main line above a directly tied offset hook, separating the weight's fall from the bait.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
@@ -1337,6 +1351,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://www.outdoorlife.com/fishing/free-rig/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How To Rig Up The Free Rig (Bassfishing)",
+            creator: "Fishin With GRAMPS",
+            videoId: "_SyrQJ1i0RA",
+            externalUrl: "https://www.youtube.com/watch?v=_SyrQJ1i0RA"
+        },
         componentRequirements: [
             {
                 tackleId: "ringed-sinker",
@@ -1387,7 +1408,7 @@ const RIG_DATA = Object.freeze([
         name: "Double-Jig Crappie Rig",
         summary: "A tandem crappie setup that presents two jighead-and-soft-plastic combinations at different positions on the same main line.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
@@ -1413,6 +1434,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://mdc.mo.gov/fishing/species/crappie/crappie-tips-fishing"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How To Tie a Double Jig Rig For Crappie",
+            creator: "Kansas Angling Experience",
+            videoId: "7EVa28J9y-Y",
+            externalUrl: "https://www.youtube.com/watch?v=7EVa28J9y-Y"
+        },
         componentRequirements: [
             {
                 tackleId: "jighead",
@@ -1458,7 +1486,7 @@ const RIG_DATA = Object.freeze([
         name: "Jika Rig",
         summary: "A compact bottom-contact soft-plastic rig that connects an offset hook and hanging ringed sinker at a split-ring junction.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true,
         difficulty: "Advanced",
         useCases: [
@@ -1484,6 +1512,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://www.bassresource.com/fishing/jika-rig.html"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How To Tie a Non Leadered Punch-Shot! (AKA THE JIKA RIG)",
+            creator: "Mike Iaconelli Fishing",
+            videoId: "uSmbuf-q2xg",
+            externalUrl: "https://www.youtube.com/watch?v=uSmbuf-q2xg"
+        },
         componentRequirements: [
             {
                 tackleId: "split-ring",
@@ -1541,7 +1576,7 @@ const RIG_DATA = Object.freeze([
         name: "Punch / Pegged Texas Rig",
         summary: "A heavy-cover Texas Rig that pegs the bullet weight tight to a weedless soft plastic so the weight and bait penetrate dense vegetation together.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true,
         difficulty: "Advanced",
         useCases: [
@@ -1566,6 +1601,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://www.wired2fish.com/fishing-videos/best-punching-and-texas-rig-setups-for-bass-in-heavy-matted-cover"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How to Rig a Punch Rig for Heavy Cover Bass Fishing",
+            creator: "Wired2Fish",
+            videoId: "HzIMkN_xTtM",
+            externalUrl: "https://www.youtube.com/watch?v=HzIMkN_xTtM"
+        },
         componentRequirements: [
             {
                 tackleId: "weight-peg",
@@ -1623,7 +1665,7 @@ const RIG_DATA = Object.freeze([
         name: "Bottom-Bouncer / Spinner Rig",
         summary: "A trolling and drifting system that uses a wire bottom bouncer to maintain bottom contact while a spinner harness and bait trail behind it.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.0",
+        lastModifiedVersion: "0.4.1",
         isActive: true,
         difficulty: "Expert",
         useCases: [
@@ -1649,6 +1691,13 @@ const RIG_DATA = Object.freeze([
                 url: "https://shop.northlandtackle.com/rigs/walleye-spinner-rig/"
             }
         ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How To Set a Bottom Bouncer and Spinner Rig for Walleye",
+            creator: "Fishing 411 TV",
+            videoId: "xRXzhffsHGM",
+            externalUrl: "https://www.youtube.com/watch?v=xRXzhffsHGM"
+        },
         componentRequirements: [
             {
                 tackleId: "bottom-bouncer",
