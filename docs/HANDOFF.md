@@ -1,11 +1,12 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.7.1  
+**Document Revision:** 0.7.2  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Active Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 0.3.1  
-**Last Updated:** 2026-08-11
+**Session Environment:** Windows Desktop, Brave Browser, Mobile Browser, GitHub Desktop  
+**Last Updated:** 2026-08-12
 
 # 1. Start Here
 
@@ -18,6 +19,12 @@ Permanent rules:
 > Do not begin a new build segment while the current segment remains unfinalized.
 
 > Finish cleanly or deliberately park; do not leave half-finalized project areas behind.
+
+> The assistant must not write production source, data, image, configuration, CSS, HTML, JavaScript, or other non-Markdown project files directly to GitHub.
+
+> The assistant may write only project-progress Markdown files directly to GitHub, such as handoff, milestone, changelog, validation, and workstream status documents.
+
+> Production updates are delivered as user-reviewable update packages for the user to apply through GitHub Desktop unless the user explicitly changes this rule later.
 
 # 2. Active Milestone — Complete Rig Guide
 
@@ -53,13 +60,69 @@ New canonical Tackle:
 5. Bottom Bouncer
 6. Spinner Harness
 
-# 3. Session-End Blockers — Must Be Addressed First Next Session
+# 3. Session Workflow Safeguards — Effective 2026-08-12
+
+## A. GitHub write authority
+
+The assistant is **not authorized to write production files directly to GitHub**.
+
+Allowed direct GitHub writes are limited to project-progress Markdown documents, including:
+
+- `docs/HANDOFF.md`
+- active workstream/status Markdown files
+- validation Markdown files
+- `docs/MILESTONES.md`
+- `docs/CHANGELOG.md`
+- other project-progress Markdown records when needed for continuity
+
+For production changes:
+
+1. fetch the latest authoritative files from GitHub,
+2. prepare the complete reviewed update locally,
+3. package the changed files into a ZIP or equivalent user-reviewable update package,
+4. provide the package to the user,
+5. the user applies/pushes the package through GitHub Desktop,
+6. re-fetch GitHub afterward to verify the applied production state.
+
+Do not silently switch back to direct production GitHub writes.
+
+## B. Image review before site integration
+
+No newly created or replacement image may be added to a production update package before the user has visually reviewed and approved it.
+
+Required workflow:
+
+1. create one candidate image at a time,
+2. show the candidate directly in this chat as its own separate image,
+3. inspect the candidate for geometry, composition, and style against the established media standard,
+4. wait for explicit user approval or revision request,
+5. only after approval prepare the production-format asset,
+6. after all affected images are approved, include them in the update package for GitHub Desktop.
+
+Do not generate an unseen batch and place it directly into the site.
+
+## C. Long-process status updates
+
+During long or multi-step work, the assistant must post concise visible progress updates at meaningful checkpoints rather than remaining silent through many tool calls.
+
+Expected checkpoint pattern:
+
+- source/audit started,
+- research or candidate selection complete,
+- image candidate ready for review,
+- update package built,
+- GitHub Desktop application ready for user action,
+- post-push verification complete.
+
+Status messages should be informative without becoming noisy; report actual progress, blockers, or the next active step.
+
+# 4. Current Rig Guide Blockers — Must Be Addressed First
 
 The user explicitly reported two blocking defects before closing the 2026-08-11 session.
 
 ## A. Recognition media failed the approved visual standard
 
-The six newly added Tackle images have reverted to an older vector/flat illustration appearance.
+The six newly added Tackle images reverted to an older vector/flat illustration appearance.
 
 Affected assets:
 
@@ -79,7 +142,7 @@ Next-session requirement:
 - prefer legally reusable real photography when accurate and practical,
 - otherwise use the approved semi-photorealistic catalog-style recognition treatment anchored to verified geometry,
 - retain exact `#f4f0e8` production canvas and current 640 × 440 WebP standard,
-- review the six replacement assets as one coherent batch before final runtime closeout.
+- review every replacement visually in chat before it is included in any production package.
 
 Do **not** treat the mechanically justified illustration exception as blanket approval for these six current assets; the user rejected their visual result.
 
@@ -89,7 +152,7 @@ The seven new Rig records currently rely on external reference-site links rather
 
 The user explicitly wants YouTube tutorials consistent with the already established Rig tutorial standard.
 
-Next-session requirement:
+Required next-session workflow:
 
 - source a build-first YouTube tutorial for each of the seven new Rigs,
 - prioritize physical assembly/configuration over fishing technique,
@@ -98,11 +161,14 @@ Next-session requirement:
 - use the established lazy `youtube-nocookie.com` embed behavior,
 - no autoplay,
 - retain separate `Watch on YouTube ↗` fallback,
-- runtime-test every new tutorial after production implementation.
+- include all approved `data/rigs.js` tutorial changes in a user-applied update package,
+- runtime-test every new tutorial after the user pushes the package.
 
 The external technical references may remain as supplemental references, but they are **not the intended final substitute for tutorial videos** for these seven Rigs.
 
-# 4. Final Rig Completion Commits Already Present
+# 5. Existing Rig Completion Commits
+
+These commits are already present on `main` and remain part of the current baseline:
 
 - `b0292798bd628fe80ba3297a94454efd6c1ff364` — activate remaining Rig tiers
 - `e8326c030c68dc3b962ca0410301ed2aee5fb20d` — add final six Tackle concepts
@@ -112,7 +178,7 @@ The external technical references may remain as supplemental references, but the
 - `e083ca3d8cefc87f7872aa6f970ce1c10a7c1644` — register final media records
 - `09235f0095bde25f8e508ff7f6676d177944cd3a` — record implementation-complete state before user visual/tutorial review exposed the two blockers above
 
-# 5. Tutorial Standard
+# 6. Tutorial Standard
 
 Primary embedded Rig tutorials are build-first:
 
@@ -128,7 +194,7 @@ Permanent working principle:
 
 > Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
 
-# 6. Tackle Recognition Media Standard
+# 7. Tackle Recognition Media Standard
 
 Current production rules:
 
@@ -139,21 +205,24 @@ Current production rules:
 - current Tackle references use 640 × 440 RGB WebP,
 - exact canonical reference-media canvas is `#f4f0e8`,
 - no baked artificial cast shadow,
-- final assets must be checked at realistic phone contextual-popover size.
+- final assets must be checked at realistic phone contextual-popover size,
+- every new/replacement asset must be shown separately in chat and explicitly approved before production packaging.
 
-# 7. Remaining Gate
+# 8. Remaining Gate
 
 Do **not** run the final consolidated Rig Guide runtime closeout yet.
 
-Required order next session:
+Required order this session:
 
-1. Replace the six rejected new recognition-media assets with compliant production media.
-2. Select and implement seven build-first YouTube tutorials for the seven new Rigs.
-3. Re-fetch and verify all changed production files from GitHub.
-4. Run one consolidated runtime closeout covering counts, tier routing, seven new Rig pages, six new media references, seven tutorial embeds, readiness persistence, desktop/mobile layout, and console health.
-5. Only after that PASS mark the Rig Guide Validated / Finalized and reconcile `MILESTONES.md`, `CHANGELOG.md`, and this handoff.
+1. Review the current six rejected media records/geometry sources and replace the images one at a time, with each candidate shown separately in chat for approval.
+2. Select seven build-first YouTube tutorials for the seven new Rigs and present the selections for review.
+3. Fetch the latest affected production files from GitHub and build one complete update package containing only the approved changes.
+4. Provide the update package to the user for application through GitHub Desktop.
+5. Re-fetch GitHub after the user pushes the package and verify exact production contents.
+6. Run one consolidated runtime closeout covering counts, tier routing, seven new Rig pages, six new media references, seven tutorial embeds, readiness persistence, desktop/mobile layout, and console health.
+7. Only after that PASS mark the Rig Guide Validated / Finalized and reconcile `MILESTONES.md`, `CHANGELOG.md`, and this handoff.
 
-# 8. Previously Finalized Work
+# 9. Previously Finalized Work
 
 The following remain Validated / Finalized:
 
@@ -167,7 +236,7 @@ The following remain Validated / Finalized:
 - Core Rigs / Beginner + Beginner+ / Rig UX Finalization
 - Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
 
-# 9. Known Temporary Bridge
+# 10. Known Temporary Bridge
 
 Rig readiness remains transitional local state under:
 
@@ -175,15 +244,15 @@ Rig readiness remains transitional local state under:
 
 It must not be treated as permanent My Tackle ownership. Persistent inventory remains a later milestone.
 
-# 10. Next Milestone
+# 11. Next Milestone
 
 There is no next feature milestone yet.
 
-The first task next session is to correct and fully close the current **Complete Rig Guide** milestone.
+The first task this session is to correct and fully close the current **Complete Rig Guide** milestone.
 
-Do not start My Tackle, Knots, Recommendations, or another feature until the two blockers in Section 3 are corrected and the Rig Guide runtime closeout passes.
+Do not start My Tackle, Knots, Recommendations, or another feature until the two blockers in Section 4 are corrected and the Rig Guide runtime closeout passes.
 
-# 11. Governing Documents
+# 12. Governing Documents
 
 - Current-state entrypoint: `HANDOFF.md`
 - Active Rig completion workstream: `workstreams/RIG-GUIDE-COMPLETION.md`
