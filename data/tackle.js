@@ -368,7 +368,7 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Thin nail- or pin-like shape", "Designed to insert directly into soft plastic", "May have ribs, barbs, or a wider head to resist pulling out"],
         commonVariants: ["Lead nail", "Tungsten nail", "Ribbed insert"],
         relatedTackleIds: ["soft-plastic", "wacky-hook", "wacky-o-ring"],
-        mediaIds: [],
+        mediaIds: ["nail-weight-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -383,7 +383,7 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Weighted head integrated with a worm hook", "Keeper, screw-lock, or pin secures the bait nose", "Hook exits the bait farther back for a weed-resistant or exposed-point setup"],
         commonVariants: ["Round head", "Stand-up head", "Screw-lock head", "Weedless head"],
         relatedTackleIds: ["soft-plastic", "jighead"],
-        mediaIds: [],
+        mediaIds: ["shaky-head-jighead-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -398,7 +398,7 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Weight body ends in a distinct metal eye or loop", "Fishing line or connector passes through the external eye", "The weight body itself does not contain the main sliding line channel"],
         commonVariants: ["Bell", "Casting", "Teardrop", "Tungsten free-rig weight"],
         relatedTackleIds: ["offset-worm-hook", "soft-plastic", "split-ring"],
-        mediaIds: [],
+        mediaIds: ["ringed-sinker-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -413,7 +413,7 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Looks like a miniature key ring", "Two overlapping wire turns", "No swivel barrel or snap arm"],
         commonVariants: ["Stainless steel", "Black nickel", "Heavy-duty"],
         relatedTackleIds: ["ringed-sinker", "offset-worm-hook"],
-        mediaIds: [],
+        mediaIds: ["split-ring-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -428,7 +428,7 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Long rigid wire bent into an angled or 7-shaped frame", "Lead weight fixed to the vertical wire", "Main-line connection near the bend and harness connection on the trailing arm"],
         commonVariants: ["Fixed-weight wire", "Quick-change weight", "Snap-equipped"],
         relatedTackleIds: ["spinner-harness", "bait"],
-        mediaIds: [],
+        mediaIds: ["bottom-bouncer-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -443,7 +443,7 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Leader with a rotating spinner blade ahead of the hook", "Several beads commonly separate the blade from the hook", "Often uses one hook or a two-hook crawler configuration"],
         commonVariants: ["Single-hook", "Two-hook crawler harness", "Colorado blade", "Indiana blade", "Smile blade"],
         relatedTackleIds: ["bottom-bouncer", "bait", "barrel-swivel"],
-        mediaIds: [],
+        mediaIds: ["spinner-harness-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
