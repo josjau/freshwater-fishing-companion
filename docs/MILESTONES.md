@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.8.3  
+**Document Revision:** 1.9.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-10
+**Last Updated:** 2026-08-11
 
 # Purpose
 
@@ -62,7 +62,7 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 - Safety guidance
 - Navigation and error handling
 
-**Current note:** D027 approves a 20-Rig regional library. The nine-Rig Beginner/Beginner+ foundation is validated. Four Intermediate Rigs are now implemented on `main`, bringing the intended active total to 13. The corrected Tackle recognition-media package has been uploaded, but the Intermediate segment remains unvalidated pending the full source/data/runtime/tutorial/media/regression pass.
+**Current note:** D027 approves a 20-Rig regional library. Beginner, Beginner+, and Intermediate are now validated through 13 active Rigs. Four Intermediate Rigs are complete and the associated Tackle/media/tutorial work has passed final runtime validation.
 
 ## MS2.5 — Lightweight Tackle Readiness
 
@@ -74,7 +74,7 @@ Historical MS2.5 validated a dedicated readiness route and per-Rig local checkli
 
 Historical MS2.6 validated canonical Tackle/media infrastructure, contextual reference popovers, generated Rig imagery, and a 23-record media catalog.
 
-**Superseding current architecture:** D017–D019 replaced generated completed-Rig/build-step imagery with authoritative text assembly plus verified external Rig references.
+**Superseding current architecture:** D017–D019 and D045 replaced generated completed-Rig/build-step imagery with authoritative text assembly plus verified tutorial/external-reference paths. Current Tackle recognition media follows the later `MEDIA_GUIDE.md` catalog-reference standard.
 
 ## Current-State UX Repairs
 
@@ -172,52 +172,70 @@ See:
 - `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`
 - `workstreams/RIG-UX-RUNTIME-FOLLOWUP.md`
 
-# In Progress
-
 ## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
 
-**Implementation Status: Implemented / Unvalidated — Ready for Validation**
+**Implementation Status: Validated / Finalized**
 
-Implementation landed on `main` in `e4b61aea052f4ad843be0f6d54231af87d574905` (`Rigs - Intermediate Build`).
+Implementation baseline:
 
-Implemented target scope, pending validation:
+`e4b61aea052f4ad843be0f6d54231af87d574905` — `Rigs - Intermediate Build`
 
-- four Intermediate Rigs:
+Final production-data corrections:
+
+- `80b8ef0ba2b0734429b29a5b02c318e02c81bc55` — final Rig tutorial/reference corrections
+- `291967ed4eb19eb9b1f7f83837c59133c949a333` — Bobber Stop alt-text correction
+
+Validated final scope:
+
+- 13 active Rigs total,
+  - 6 Beginner,
+  - 3 Beginner+,
+  - 4 Intermediate,
+- Intermediate tier:
   1. Drop Shot Rig
   2. Carolina Rig
   3. Live-Bait Slip-Sinker Rig
   4. Three-Way Rig
-- intended 13 active Rigs total,
-- intended 23 active canonical Tackle concepts,
-- tutorial expansion for the existing Beginner/Beginner+ foundation and the Intermediate records,
-- recognition-media completion/correction for the newly introduced and affected Tackle references.
+- 23 active canonical Tackle concepts,
+- 23 active Tackle recognition-media records,
+- unchanged six-member Core registry,
+- all Intermediate membership/routing/search/detail/readiness behavior passed,
+- recognition-media package and phone/desktop contextual-popover validation passed,
+- retained tutorial regression passed,
+- six approved tutorial replacements were implemented and passed final runtime validation,
+- Inline Spinner Mepps-only external fallback passed after Panther Martin removal,
+- Bobber Stop metadata was corrected for the approved rubber/silicone stop and re-tested,
+- Beginner/Beginner+/Core, Fish Guide/search, Dashboard, desktop console/focus/layout, and mobile responsive regressions passed.
 
-Recognition-media correction state:
+Permanent decisions promoted at closeout:
 
-- all six original new recognition-media assets failed initial visual-quality/style review,
-- the permanent Media Guide was tightened to require real-photo-first sourcing when practical, semi-photorealistic catalog treatment otherwise, exact `#f4f0e8` current Tackle canvas matching, and conventional viewer-facing J hook orientation unless a reviewed exception applies,
-- the user reviewed and uploaded the current seven-image correction package in `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`),
-- that commit contains Bobber Stop, Drop Shot Weight, Fixed Sinker, Ned Jighead, Three-Way Swivel, Wacky Hook, and Wacky O-Ring replacements,
-- the image package is now present on `main`,
-- no Intermediate source/data/runtime/tutorial/regression validation has begun.
+- D053 — Rig Media Completeness and Tutorial Audit
+- D054 — Intermediate Rig Tier Membership
+
+The validated tutorial standard is build-first: correct Rig assembly/configuration is the primary purpose; concise/direct sources are preferred when technically complete; technique/retrieve/presentation content is secondary; no arbitrary fixed duration threshold is required.
 
 See:
 
 - `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`
 - `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`
+- `MEDIA_GUIDE.md`
+- `RIG_REFERENCE_SOURCES.md`
+
+# In Progress
+
+No build segment is currently in progress.
+
+The project is at a clean milestone boundary.
 
 # Next Segment
 
-Do **not** begin Intermediate+ yet.
+Select the next milestone deliberately under D039/D040.
 
-Next actions are:
+Current candidates include:
 
-1. re-fetch the current GitHub baseline,
-2. complete Intermediate source/data integrity and canonical-count validation,
-3. validate Intermediate membership, routing, search, each Intermediate Rig, readiness, and derived relationships,
-4. validate the seven corrected recognition assets at phone and desktop sizes,
-5. complete existing/Intermediate tutorial validation,
-6. run Beginner/Beginner+/Core/application regressions,
-7. reconcile final governing/current-state documentation,
-8. finalize the Intermediate segment,
-9. then re-evaluate the next milestone; Intermediate+ remains the current likely next tier under D039/D040.
+1. Intermediate+ Rig expansion — the logical continuation of the Rig learning-tier sequence.
+2. My Tackle / persistent ownership foundation.
+3. Knots foundation.
+4. Another explicitly prioritized project milestone.
+
+If the Rig sequence continues, Intermediate+ is next. No new segment should begin until its scope is explicitly selected.
