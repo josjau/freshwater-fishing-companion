@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Beginner Media + Intermediate Expansion"
+    milestone: "Rig Guide Completion"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -45,6 +45,18 @@ const RIG_COLLECTIONS = Object.freeze({
     intermediate: Object.freeze({
         title: "Intermediate Rigs",
         description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup."
+    }),
+    "intermediate-plus": Object.freeze({
+        title: "Intermediate+ Rigs",
+        description: "Four specialized finesse and multi-component setups that add precise weight placement and rig orientation."
+    }),
+    advanced: Object.freeze({
+        title: "Advanced Rigs",
+        description: "Two purpose-built rigs for specialized terminal topology and demanding heavy-cover fishing."
+    }),
+    expert: Object.freeze({
+        title: "Expert Rigs",
+        description: "A system-oriented trolling rig that combines bottom contact, harness control, and multiple setup decisions."
     }),
     all: Object.freeze({
         title: "All Rigs",
@@ -150,9 +162,9 @@ function renderRigGuideView(appMain) {
             { id: "browse-beginner-rigs", title: "Beginner", description: "Six simple rigs with forgiving assembly and broad usefulness.", isAvailable: true },
             { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Three approachable rigs that require a little more setup precision.", isAvailable: true },
             { id: "browse-intermediate-rigs", title: "Intermediate", description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup.", isAvailable: true },
-            { id: "browse-intermediate-plus-rigs", title: "Intermediate+", description: "Specialized finesse and bottom-contact setups." },
-            { id: "browse-advanced-rigs", title: "Advanced", description: "Purpose-built rigs for demanding cover, current, and multi-rig situations." },
-            { id: "browse-expert-rigs", title: "Expert", description: "Complex systems that combine multiple setup and presentation decisions." }
+            { id: "browse-intermediate-plus-rigs", title: "Intermediate+", description: "Four specialized finesse and multi-component setups with more precise weight placement and rig orientation.", isAvailable: true },
+            { id: "browse-advanced-rigs", title: "Advanced", description: "Two purpose-built rigs for specialized terminal topology and demanding heavy-cover fishing.", isAvailable: true },
+            { id: "browse-expert-rigs", title: "Expert", description: "A system-oriented trolling rig combining bottom contact, harness control, and multiple setup decisions.", isAvailable: true }
         ],
         onCardSelect: handleRigGuideCardSelect
     });
@@ -205,6 +217,9 @@ function handleRigGuideCardSelect(cardId) {
         "browse-beginner-rigs": "beginner",
         "browse-beginner-plus-rigs": "beginner-plus",
         "browse-intermediate-rigs": "intermediate",
+        "browse-intermediate-plus-rigs": "intermediate-plus",
+        "browse-advanced-rigs": "advanced",
+        "browse-expert-rigs": "expert",
         "browse-all-rigs": "all"
     };
     const collectionKey = collectionKeyByCardId[cardId];
@@ -247,6 +262,18 @@ function getRigsForCollection(activeRigs) {
 
     if (selectedRigCollectionKey === "intermediate") {
         return activeRigs.filter((rig) => rig.difficulty === "Intermediate");
+    }
+
+    if (selectedRigCollectionKey === "intermediate-plus") {
+        return activeRigs.filter((rig) => rig.difficulty === "Intermediate+");
+    }
+
+    if (selectedRigCollectionKey === "advanced") {
+        return activeRigs.filter((rig) => rig.difficulty === "Advanced");
+    }
+
+    if (selectedRigCollectionKey === "expert") {
+        return activeRigs.filter((rig) => rig.difficulty === "Expert");
     }
 
     return activeRigs;
