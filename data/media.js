@@ -115,7 +115,7 @@ const MEDIA_DATA = Object.freeze([
         ownerId: "bobber-stop",
         type: "image",
         file: "images/tackle/bobber-stop-reference.webp",
-        alt: "Neutral-background reference illustration of a thread-style bobber stop wrapped around fishing line",
+        alt: "Neutral-background reference illustration of a rubber/silicone bobber stop on fishing line",
         caption: "Bobber Stop",
         license: {
             status: "Original project illustration rebuilt from the approved Tackle reference asset",
