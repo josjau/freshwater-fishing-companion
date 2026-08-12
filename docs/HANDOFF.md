@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.7.2  
+**Document Revision:** 0.8.0  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
-**Active Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 0.3.1  
+**Active Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 0.4.0  
 **Session Environment:** Windows Desktop, Brave Browser, Mobile Browser, GitHub Desktop  
 **Last Updated:** 2026-08-12
 
@@ -28,37 +28,26 @@ Permanent rules:
 
 # 2. Active Milestone — Complete Rig Guide
 
-**Implementation Status: Functional 20-Rig Build Present — Media + Tutorial Corrections Required Before Runtime Closeout**
+**Implementation Status: Production Corrections Integrated and GitHub-Verified — Final Interactive Runtime Closeout Pending**
 
-The full approved initial Rig library is functionally present on `main`.
+The full approved initial Rig library and the final correction package are present on `main`.
 
-Production state:
+Verified production state:
 
 - 20 active Rigs,
 - 6 learning tiers active,
 - tier counts: 6 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert,
 - 6 Core Rigs unchanged,
 - 29 active canonical Tackle concepts,
-- 29 active Tackle recognition-media records.
+- 29 active Tackle recognition-media records,
+- all seven required build-first YouTube tutorial records integrated,
+- all six user-approved replacement recognition images integrated.
 
-New final-tier Rigs:
+Final production correction commit:
 
-1. Neko Rig
-2. Shaky Head Rig
-3. Free Rig
-4. Double-Jig Crappie Rig
-5. Jika Rig
-6. Punch / Pegged Texas Rig
-7. Bottom-Bouncer / Spinner Rig
+`4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` — `Rig Updates Images and tutorials`
 
-New canonical Tackle:
-
-1. Nail Weight
-2. Shaky Head Jighead
-3. Ringed Sinker
-4. Split Ring
-5. Bottom Bouncer
-6. Spinner Harness
+GitHub Pages deployed that commit successfully in workflow run `31646572910`.
 
 # 3. Session Workflow Safeguards — Effective 2026-08-12
 
@@ -114,17 +103,15 @@ Expected checkpoint pattern:
 - GitHub Desktop application ready for user action,
 - post-push verification complete.
 
-Status messages should be informative without becoming noisy; report actual progress, blockers, or the next active step.
+Status messages should report actual progress, blockers, or the next active step without becoming noisy.
 
-# 4. Current Rig Guide Blockers — Must Be Addressed First
+# 4. Rig Guide Correction Blockers — Resolved
 
-The user explicitly reported two blocking defects before closing the 2026-08-11 session.
+The two blockers recorded at the start of the 2026-08-12 session are now resolved in production.
 
-## A. Recognition media failed the approved visual standard
+## A. Six replacement recognition images
 
-The six newly added Tackle images reverted to an older vector/flat illustration appearance.
-
-Affected assets:
+The user approved all six replacement concepts and pushed the final production assets:
 
 - `images/tackle/nail-weight-reference.webp`
 - `images/tackle/shaky-head-jighead-reference.webp`
@@ -133,52 +120,76 @@ Affected assets:
 - `images/tackle/bottom-bouncer-reference.webp`
 - `images/tackle/spinner-harness-reference.webp`
 
-These assets are **not approved** and must be replaced before Rig Guide closeout.
+GitHub/deployed-artifact validation confirms the files are present and registered. Static media validation confirms 640 × 440 RGB WebP output with the expected `#f4f0e8` production canvas.
 
-Next-session requirement:
+## B. Seven new Rig tutorials
 
-- use the existing `MEDIA_GUIDE.md` production standard,
-- do not default to flat/vector/clip-art treatment,
-- prefer legally reusable real photography when accurate and practical,
-- otherwise use the approved semi-photorealistic catalog-style recognition treatment anchored to verified geometry,
-- retain exact `#f4f0e8` production canvas and current 640 × 440 WebP standard,
-- review every replacement visually in chat before it is included in any production package.
+The approved build-first tutorial records are now present in `data/rigs.js`:
 
-Do **not** treat the mechanically justified illustration exception as blanket approval for these six current assets; the user rejected their visual result.
+- Neko Rig — Wired2Fish — `yxGJLTxa_B0`
+- Shaky Head Rig — Bass Utopia — `zwcZSE3DVAU`
+- Free Rig — Fishin With GRAMPS — `_SyrQJ1i0RA`
+- Double-Jig Crappie Rig — Kansas Angling Experience — `7EVa28J9y-Y`
+- Jika Rig — Mike Iaconelli Fishing — `uSmbuf-q2xg`
+- Punch / Pegged Texas Rig — Wired2Fish — `HzIMkN_xTtM`
+- Bottom-Bouncer / Spinner Rig — Fishing 411 TV — `xRXzhffsHGM`
 
-## B. Seven new Rigs need YouTube tutorials
+GitHub/deployed-artifact validation confirms all seven exact IDs and matching external YouTube URLs are present.
 
-The seven new Rig records currently rely on external reference-site links rather than embedded YouTube tutorials.
+# 5. Production Verification
 
-The user explicitly wants YouTube tutorials consistent with the already established Rig tutorial standard.
+The final production commit changed exactly:
 
-Required next-session workflow:
+- `data/media.js`
+- `data/rigs.js`
+- six replacement `images/tackle/*.webp` assets
 
-- source a build-first YouTube tutorial for each of the seven new Rigs,
-- prioritize physical assembly/configuration over fishing technique,
-- prefer concise/direct sources when technically complete,
-- verify exact creator/title/video ID/external URL,
-- use the established lazy `youtube-nocookie.com` embed behavior,
-- no autoplay,
-- retain separate `Watch on YouTube ↗` fallback,
-- include all approved `data/rigs.js` tutorial changes in a user-applied update package,
-- runtime-test every new tutorial after the user pushes the package.
+Verified Git blobs after push:
 
-The external technical references may remain as supplemental references, but they are **not the intended final substitute for tutorial videos** for these seven Rigs.
+- `data/rigs.js` — `a3fb3b743a4fab665dd606165d90dbbbd387b0ff`
+- `data/media.js` — `710fd2a6a0595405d842b0127c1ed761d4a7533d`
 
-# 5. Existing Rig Completion Commits
+The Pages deployment for the same commit completed successfully.
 
-These commits are already present on `main` and remain part of the current baseline:
+Static validation against the exact deployed artifact passed:
 
-- `b0292798bd628fe80ba3297a94454efd6c1ff364` — activate remaining Rig tiers
-- `e8326c030c68dc3b962ca0410301ed2aee5fb20d` — add final six Tackle concepts
-- `c0216dffbe48e9f6094ef8c312ee9c962f1fc96e` — complete 20-Rig library
-- `cc87e84069f74df488f0435a98e4a9b46fa87404` — add final six recognition-media assets; **current visual treatment rejected and pending replacement**
-- `184d2a24d442e5557b456beb371031b5603d3f84` — connect final Tackle media IDs
-- `e083ca3d8cefc87f7872aa6f970ce1c10a7c1644` — register final media records
-- `09235f0095bde25f8e508ff7f6676d177944cd3a` — record implementation-complete state before user visual/tutorial review exposed the two blockers above
+- active Rig count = 20,
+- tier counts = 6 / 3 / 4 / 4 / 2 / 1,
+- Core membership/order unchanged,
+- active Tackle count = 29,
+- active Tackle recognition-media count = 29,
+- all seven new tutorial records present,
+- all six replacement media records/files present,
+- all six replacement images use the expected production dimensions/mode/background.
 
-# 6. Tutorial Standard
+# 6. Final Interactive Runtime Gate
+
+The Rig Guide must **not** yet be marked `Validated / Finalized` solely from source, deployment, and static artifact checks.
+
+One interactive runtime closeout remains:
+
+1. confirm All Rigs displays 20 records,
+2. confirm tier counts display 6 / 3 / 4 / 4 / 2 / 1,
+3. confirm Core remains the approved six/order,
+4. open all seven new Rig detail pages,
+5. open all six corrected Tackle `Name ⓘ` panels and confirm the replacement images render correctly,
+6. load/play all seven new tutorial embeds and confirm the separate YouTube fallback remains available,
+7. confirm representative readiness selections persist,
+8. confirm desktop layout has no horizontal overflow,
+9. confirm mobile layout has no horizontal overflow,
+10. confirm no new application console errors.
+
+The current assistant execution environment cannot perform that interactive browser walkthrough because browser navigation to local/deployed pages is administratively blocked. Do not record a false runtime pass.
+
+After the user/runtime environment confirms those checks, immediately complete the final documentation closeout:
+
+- mark `workstreams/RIG-GUIDE-COMPLETION.md` Validated / Finalized,
+- update `MILESTONES.md`,
+- update `CHANGELOG.md`,
+- update this handoff to a clean milestone boundary,
+- deliberately choose the next milestone.
+
+# 7. Tutorial Standard
 
 Primary embedded Rig tutorials are build-first:
 
@@ -194,7 +205,7 @@ Permanent working principle:
 
 > Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
 
-# 7. Tackle Recognition Media Standard
+# 8. Tackle Recognition Media Standard
 
 Current production rules:
 
@@ -207,20 +218,6 @@ Current production rules:
 - no baked artificial cast shadow,
 - final assets must be checked at realistic phone contextual-popover size,
 - every new/replacement asset must be shown separately in chat and explicitly approved before production packaging.
-
-# 8. Remaining Gate
-
-Do **not** run the final consolidated Rig Guide runtime closeout yet.
-
-Required order this session:
-
-1. Review the current six rejected media records/geometry sources and replace the images one at a time, with each candidate shown separately in chat for approval.
-2. Select seven build-first YouTube tutorials for the seven new Rigs and present the selections for review.
-3. Fetch the latest affected production files from GitHub and build one complete update package containing only the approved changes.
-4. Provide the update package to the user for application through GitHub Desktop.
-5. Re-fetch GitHub after the user pushes the package and verify exact production contents.
-6. Run one consolidated runtime closeout covering counts, tier routing, seven new Rig pages, six new media references, seven tutorial embeds, readiness persistence, desktop/mobile layout, and console health.
-7. Only after that PASS mark the Rig Guide Validated / Finalized and reconcile `MILESTONES.md`, `CHANGELOG.md`, and this handoff.
 
 # 9. Previously Finalized Work
 
@@ -248,9 +245,7 @@ It must not be treated as permanent My Tackle ownership. Persistent inventory re
 
 There is no next feature milestone yet.
 
-The first task this session is to correct and fully close the current **Complete Rig Guide** milestone.
-
-Do not start My Tackle, Knots, Recommendations, or another feature until the two blockers in Section 4 are corrected and the Rig Guide runtime closeout passes.
+Do not start My Tackle, Knots, Recommendations, or another feature until the final interactive Rig Guide closeout passes and the documentation is finalized.
 
 # 12. Governing Documents
 
