@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-GUIDE-COMPLETION.md  
-**Document Revision:** 0.3.1  
+**Document Revision:** 0.4.0  
 **Document Status:** Approved  
-**Implementation Status:** Functional Build Present — Recognition Media + Tutorial Corrections Required Before Runtime Closeout  
-**Last Updated:** 2026-08-11
+**Implementation Status:** Production Corrections Integrated and GitHub-Verified — Final Interactive Runtime Closeout Pending  
+**Last Updated:** 2026-08-12
 
 # Purpose
 
@@ -12,29 +12,46 @@ Complete the approved 20-Rig regional library and finish the Rig Guide as one co
 
 This milestone builds on the fully validated Beginner, Beginner+, and Intermediate foundation. The established Rig/Tackle, search, readiness, tutorial, media, navigation, responsive, and validation patterns are reused rather than redesigned.
 
-# Current Implementation State
+# Current Production State
 
-The functional 20-Rig implementation is present on GitHub `main`.
+The complete approved production update is present on GitHub `main`.
 
-Implemented production state:
+Verified production state:
 
 - 20 active Rigs,
 - 6 learning tiers active,
 - tier counts 6 / 3 / 4 / 4 / 2 / 1,
-- 6 Core Rigs unchanged,
-- 29 canonical Tackle concepts,
-- 29 registered recognition-media records.
+- 6 Core Rigs unchanged and in the approved order,
+- 29 active canonical Tackle concepts,
+- 29 active Tackle recognition-media records,
+- seven new build-first YouTube tutorial records integrated,
+- six user-approved replacement Tackle recognition images integrated.
 
-Functional implementation commits:
+# Production Integration Commit
 
-- `b0292798bd628fe80ba3297a94454efd6c1ff364` — activate Intermediate+, Advanced, and Expert in `script.js`
-- `e8326c030c68dc3b962ca0410301ed2aee5fb20d` — add six canonical Tackle concepts in `data/tackle.js`
-- `c0216dffbe48e9f6094ef8c312ee9c962f1fc96e` — add the seven remaining Rig records in `data/rigs.js`
-- `cc87e84069f74df488f0435a98e4a9b46fa87404` — add six final recognition-media assets; current visual treatment rejected by user
-- `184d2a24d442e5557b456beb371031b5603d3f84` — connect six new Tackle records to media IDs
-- `e083ca3d8cefc87f7872aa6f970ce1c10a7c1644` — register six recognition-media records in `data/media.js`
+Final production correction commit:
 
-No renderer, CSS, Fish data, Core membership, readiness-storage key, or unrelated route was changed for the functional Rig completion build.
+`4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` — `Rig Updates Images and tutorials`
+
+The commit contains exactly the intended production change set:
+
+- `data/media.js`
+- `data/rigs.js`
+- `images/tackle/bottom-bouncer-reference.webp`
+- `images/tackle/nail-weight-reference.webp`
+- `images/tackle/ringed-sinker-reference.webp`
+- `images/tackle/shaky-head-jighead-reference.webp`
+- `images/tackle/spinner-harness-reference.webp`
+- `images/tackle/split-ring-reference.webp`
+
+No unrelated production or documentation file was included in that commit.
+
+GitHub blob verification:
+
+- `data/rigs.js` — `a3fb3b743a4fab665dd606165d90dbbbd387b0ff`
+- `data/media.js` — `710fd2a6a0595405d842b0127c1ed761d4a7533d`
+
+GitHub Pages deployment for the same commit completed successfully in workflow run `31646572910`.
 
 # Final 20-Rig Library
 
@@ -99,11 +116,9 @@ New concepts:
 5. Bottom Bouncer — `bottom-bouncer`
 6. Spinner Harness — `spinner-harness`
 
-# BLOCKER 1 — Recognition Media Rejected
+# Recognition Media — Corrected and Integrated
 
-The six new production recognition assets were reviewed by the user and rejected because they returned to the old vector/flat illustration style.
-
-Affected files:
+The six previously rejected flat/vector-style assets were replaced with user-approved production images:
 
 - `images/tackle/nail-weight-reference.webp`
 - `images/tackle/shaky-head-jighead-reference.webp`
@@ -112,92 +127,82 @@ Affected files:
 - `images/tackle/bottom-bouncer-reference.webp`
 - `images/tackle/spinner-harness-reference.webp`
 
-These are not accepted final production media.
+Deployed-artifact validation confirmed all six files are:
 
-Required replacement standard:
+- 640 × 440,
+- RGB WebP,
+- using the exact `#f4f0e8` canvas at the tested corners,
+- registered as active media,
+- recorded with `lastModifiedVersion: "0.4.1"`,
+- recorded with review date `2026-08-12`.
 
-- real-photo-first when technically correct and legally reusable,
-- otherwise original semi-photorealistic catalog-style recognition media anchored to verified real-world geometry,
-- do not use flat/vector/cartoon/clip-art styling,
-- 640 × 440 RGB WebP,
-- exact `#f4f0e8` canvas,
-- no alpha,
-- no artificial cast shadow,
-- clear recognition at realistic phone contextual-popover size.
+The prior visual blocker is resolved.
 
-The previously invoked precise-illustration exception does not override the user's visual rejection. Replace all six as a coherent media batch before closeout.
+# Seven New Rig Tutorials — Corrected and Integrated
 
-# BLOCKER 2 — Seven New Rigs Require YouTube Tutorials
+The approved build-first YouTube tutorial set is now present in `data/rigs.js`:
 
-The seven new Rigs currently contain authoritative build instructions and external technical-reference links but do not yet have the intended embedded YouTube tutorials.
+1. Neko Rig — Wired2Fish — `yxGJLTxa_B0`
+2. Shaky Head Rig — Bass Utopia — `zwcZSE3DVAU`
+3. Free Rig — Fishin With GRAMPS — `_SyrQJ1i0RA`
+4. Double-Jig Crappie Rig — Kansas Angling Experience — `7EVa28J9y-Y`
+5. Jika Rig — Mike Iaconelli Fishing — `uSmbuf-q2xg`
+6. Punch / Pegged Texas Rig — Wired2Fish — `HzIMkN_xTtM`
+7. Bottom-Bouncer / Spinner Rig — Fishing 411 TV — `xRXzhffsHGM`
 
-Affected Rigs:
+Deployed-artifact source validation confirmed all seven exact video IDs and matching external YouTube URLs are present.
 
-1. Neko Rig
-2. Shaky Head Rig
-3. Free Rig
-4. Double-Jig Crappie Rig
-5. Jika Rig
-6. Punch / Pegged Texas Rig
-7. Bottom-Bouncer / Spinner Rig
+The existing renderer remains responsible for:
 
-The user explicitly requires YouTube tutorials under the already established build-first tutorial standard.
-
-Required tutorial standard:
-
-- primary purpose is physical build/assembly/configuration,
-- concise/direct videos preferred when technically complete,
-- component order, knots/connections, leader/weight/bait placement, and final configuration must be clear,
-- technique/retrieve/presentation content may be secondary but must not dominate,
-- exact creator/title/video ID/external URL must be verified,
-- production embed must use the existing lazy `youtube-nocookie.com` implementation,
+- lazy tutorial loading,
+- privacy-enhanced `youtube-nocookie.com` iframe construction,
 - no autoplay,
-- separate `Watch on YouTube ↗` fallback remains available,
-- each tutorial must receive runtime playback validation after implementation.
+- separate `Watch on YouTube ↗` fallback.
 
-External reference links may remain as supplemental sources, but they are not the final tutorial substitute for these seven Rigs.
+The prior tutorial-coverage blocker is resolved.
 
-# Application State
+# Static / Deployment Validation Completed
 
-`script.js` currently:
+The exact GitHub Pages artifact produced from commit `4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` was inspected after deployment.
 
-- activates all six learning tiers,
-- maps Intermediate+, Advanced, and Expert cards to their collections,
-- filters each collection by canonical `difficulty`,
-- preserves All Rigs behavior,
-- preserves the six-member Core registry and order.
+Passed:
 
-The existing renderer continues to provide:
+- active Rig count = 20,
+- tier counts = 6 / 3 / 4 / 4 / 2 / 1,
+- Core registry = approved six in approved order,
+- active canonical Tackle count = 29,
+- active Tackle recognition-media count = 29,
+- all seven new tutorial records contain the approved IDs and matching external URLs,
+- all six corrected recognition-media records resolve to the intended files,
+- all six corrected images are 640 × 440 RGB with the expected production background,
+- GitHub Pages build completed successfully.
 
-- Rig search,
-- tier-scoped search,
-- Rig detail rendering,
-- canonical component lookup,
-- readiness persistence,
-- derived Tackle `Used In`,
-- contextual `Name ⓘ` references,
-- lazy embedded tutorial support,
-- external reference links.
+# Final Interactive Runtime Gate
 
-# Required Next-Session Order
+The milestone is not yet marked **Validated / Finalized** because interactive runtime execution must still be confirmed against the deployed application.
 
-Do not run final runtime closeout yet.
+Required final runtime checks:
 
-1. Replace all six rejected recognition-media assets with compliant semi-photorealistic/real-photo-first production media.
-2. Select and verify one build-first YouTube tutorial for each of the seven new Rigs.
-3. Update `data/rigs.js` with the seven approved `tutorialVideo` records.
-4. Verify all changed production files from GitHub.
-5. Run one consolidated runtime closeout covering:
-   - All Rigs = 20,
-   - tier counts = 6 / 3 / 4 / 4 / 2 / 1,
-   - Core six/order unchanged,
-   - all seven new Rig detail pages,
-   - all six corrected `Name ⓘ` recognition images,
-   - all seven YouTube tutorials,
-   - readiness persistence,
-   - desktop/mobile layout,
-   - console health and horizontal overflow.
-6. Only after PASS mark the Rig Guide Validated / Finalized and reconcile `MILESTONES.md`, `CHANGELOG.md`, and `HANDOFF.md`.
+- All Rigs displays 20 records,
+- tier navigation displays 6 / 3 / 4 / 4 / 2 / 1 records,
+- Core remains the approved six/order,
+- all seven new Rig detail pages open normally,
+- all six corrected Tackle `Name ⓘ` panels render the replacement images correctly,
+- all seven tutorial load controls create the expected privacy-enhanced embeds and the videos play normally,
+- representative readiness selections persist,
+- desktop layout remains usable without horizontal overflow,
+- mobile layout remains usable without horizontal overflow,
+- no new application console errors are introduced.
+
+The automated browser available in the current assistant execution environment cannot navigate to local or deployed pages because browser navigation is administratively blocked. Static/deployment validation therefore must not be mislabeled as interactive runtime validation.
+
+After the interactive runtime checks pass:
+
+1. mark this workstream **Validated / Finalized**,
+2. update `MILESTONES.md`,
+3. update `CHANGELOG.md`,
+4. update `HANDOFF.md` to the clean milestone boundary,
+5. deliberately select the next milestone.
 
 # Explicit Non-Scope
 
