@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.4.0
-**Document Status:** Approved
-**Last Updated:** 2026-08-10
+**Document Revision:** 0.4.1  
+**Document Status:** Approved  
+**Last Updated:** 2026-08-11
 
 # Purpose
 
@@ -65,6 +65,8 @@ This document records long-term architectural decisions.
 | D050 | Standard Search Field and Clear Control | Approved |
 | D051 | Persistent Parent Navigation and Top-Reset View Transitions | Approved |
 | D052 | Rig Detail Compact Density | Approved |
+| D053 | Rig Media Completeness and Tutorial Audit | Approved |
+| D054 | Intermediate Rig Tier Membership | Approved |
 
 # D001 – Local-First Architecture
 
@@ -658,7 +660,7 @@ Embedded tutorial requirements:
 
 For YouTube, approved implementations use the official embedded player and privacy-enhanced `youtube-nocookie.com` domain. The browser must be allowed to provide the normal HTTP referrer required by YouTube playback.
 
-Texas Rig is the first implementation trial for this pattern. The trial must pass runtime, responsive, privacy/loading, and usability validation before the same treatment is rolled out broadly.
+The Texas Rig trial passed and the pattern has now been validated across completed Beginner/Beginner+/Intermediate Rig tutorials. D053 adds the permanent build-first tutorial-selection and per-tier completeness audit standard.
 
 Permanent principle: **prefer trustworthy in-context visual instruction without copying third-party media into the repository.**
 
@@ -713,3 +715,41 @@ The approved Rig treatment prioritizes information density without visual crowdi
 This approval is Rig-specific. It does not automatically establish the same density for Fish, Tackle, Knots, or other future detail pages; cross-domain adoption requires separate review when those detail experiences are actively developed.
 
 Permanent principle: **Rig details are information-dense, not visually dense.**
+
+# D053 – Rig Media Completeness and Tutorial Audit
+
+Every Rig that enters a completed learning tier receives a media-completeness audit as part of the same build segment.
+
+The audit requires:
+
+- authoritative text assembly remains mandatory and authoritative,
+- every Rig receives a tutorial-source search,
+- a technically correct tutorial is included when a suitable public source can be independently verified and is compatible with D049,
+- the primary embedded tutorial is build-first: correct physical assembly/configuration is the main purpose,
+- concise/direct videos are preferred when technical completeness and source quality are otherwise adequate,
+- component order, knots/connections, leader placement, weight placement, bait/hook placement, and final assembled configuration take priority over fishing technique,
+- technique/retrieve/presentation/strategy may be present but must not dominate,
+- no arbitrary hard duration threshold is required,
+- tutorial players remain lazy-loaded, use `youtube-nocookie.com`, do not autoplay, preserve platform attribution/controls, and retain a `Watch on YouTube ↗` fallback,
+- if no suitable tutorial is found, use the next trustworthy D049 fallback instead of adding a weak, marketing-heavy, or technically mismatched video,
+- every canonical Tackle concept used by a completed Rig provides accurate contextual recognition help and normally has an approved recognition-media asset,
+- newly introduced canonical Tackle concepts ship with their recognition media in the same tier build,
+- generated completed-Rig/build-step imagery remains prohibited under D045,
+- changed tutorial records receive final in-app runtime validation after implementation.
+
+Permanent principle:
+
+> Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
+
+# D054 – Intermediate Rig Tier Membership
+
+The complete Intermediate tier is:
+
+1. Drop Shot Rig
+2. Carolina Rig
+3. Live-Bait Slip-Sinker Rig
+4. Three-Way Rig
+
+This tier is the deliberate difficulty step after Beginner+ because these Rigs introduce more precise leader management, bottom-contact tuning, multi-component relationships, or multi-branch rigging while remaining broadly practical for the approved regional library.
+
+Intermediate+, Advanced, and Expert membership remain outside D054 and must be assigned deliberately in their own future segment.
