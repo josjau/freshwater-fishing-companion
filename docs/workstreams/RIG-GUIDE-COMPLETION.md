@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** RIG-GUIDE-COMPLETION.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.3.1  
 **Document Status:** Approved  
-**Implementation Status:** Implementation Complete — Consolidated Runtime Closeout Pending  
+**Implementation Status:** Functional Build Present — Recognition Media + Tutorial Corrections Required Before Runtime Closeout  
 **Last Updated:** 2026-08-11
 
 # Purpose
@@ -14,22 +14,29 @@ This milestone builds on the fully validated Beginner, Beginner+, and Intermedia
 
 # Current Implementation State
 
-The complete Rig Guide production implementation is present on GitHub `main`.
+The functional 20-Rig implementation is present on GitHub `main`.
+
+Implemented production state:
+
+- 20 active Rigs,
+- 6 learning tiers active,
+- tier counts 6 / 3 / 4 / 4 / 2 / 1,
+- 6 Core Rigs unchanged,
+- 29 canonical Tackle concepts,
+- 29 registered recognition-media records.
 
 Functional implementation commits:
 
 - `b0292798bd628fe80ba3297a94454efd6c1ff364` — activate Intermediate+, Advanced, and Expert in `script.js`
 - `e8326c030c68dc3b962ca0410301ed2aee5fb20d` — add six canonical Tackle concepts in `data/tackle.js`
 - `c0216dffbe48e9f6094ef8c312ee9c962f1fc96e` — add the seven remaining Rig records in `data/rigs.js`
-- `cc87e84069f74df488f0435a98e4a9b46fa87404` — add six final Tackle recognition-media assets
-- `184d2a24d442e5557b456beb371031b5603d3f84` — connect the six new Tackle records to their media IDs
-- `e083ca3d8cefc87f7872aa6f970ce1c10a7c1644` — register all six recognition-media records in `data/media.js`
+- `cc87e84069f74df488f0435a98e4a9b46fa87404` — add six final recognition-media assets; current visual treatment rejected by user
+- `184d2a24d442e5557b456beb371031b5603d3f84` — connect six new Tackle records to media IDs
+- `e083ca3d8cefc87f7872aa6f970ce1c10a7c1644` — register six recognition-media records in `data/media.js`
 
-No renderer, CSS, Fish data, Core membership, readiness-storage key, or unrelated application route was changed for the Rig Guide completion build.
+No renderer, CSS, Fish data, Core membership, readiness-storage key, or unrelated route was changed for the functional Rig completion build.
 
 # Final 20-Rig Library
-
-The D027-approved regional library is fully implemented:
 
 1. Fixed Bobber Rig
 2. Basic Bottom Rig
@@ -81,9 +88,9 @@ The D027-approved regional library is fully implemented:
 
 # Canonical Tackle
 
-The canonical Tackle library now contains 29 active concepts.
+The canonical Tackle library contains 29 active concepts.
 
-New concepts added for the completed Rig library:
+New concepts:
 
 1. Nail Weight — `nail-weight`
 2. Shaky Head Jighead — `shaky-head-jighead`
@@ -92,11 +99,11 @@ New concepts added for the completed Rig library:
 5. Bottom Bouncer — `bottom-bouncer`
 6. Spinner Harness — `spinner-harness`
 
-All six now have canonical recognition-media IDs in `data/tackle.js`.
+# BLOCKER 1 — Recognition Media Rejected
 
-# New Recognition Media
+The six new production recognition assets were reviewed by the user and rejected because they returned to the old vector/flat illustration style.
 
-Six new production Tackle references are present and registered:
+Affected files:
 
 - `images/tackle/nail-weight-reference.webp`
 - `images/tackle/shaky-head-jighead-reference.webp`
@@ -105,75 +112,54 @@ Six new production Tackle references are present and registered:
 - `images/tackle/bottom-bouncer-reference.webp`
 - `images/tackle/spinner-harness-reference.webp`
 
-The assets use the approved mechanically justified precise-illustration exception for geometry-sensitive terminal tackle and follow the fixed Tackle media requirements:
+These are not accepted final production media.
 
+Required replacement standard:
+
+- real-photo-first when technically correct and legally reusable,
+- otherwise original semi-photorealistic catalog-style recognition media anchored to verified real-world geometry,
+- do not use flat/vector/cartoon/clip-art styling,
 - 640 × 440 RGB WebP,
-- exact `#f4f0e8` background,
+- exact `#f4f0e8` canvas,
 - no alpha,
 - no artificial cast shadow,
-- single recognition subject,
-- production metadata registered in `data/media.js`.
+- clear recognition at realistic phone contextual-popover size.
 
-The production media registry now contains 29 active Tackle recognition-media records.
+The previously invoked precise-illustration exception does not override the user's visual rejection. Replace all six as a coherent media batch before closeout.
 
-# New Rig Component Relationships
+# BLOCKER 2 — Seven New Rigs Require YouTube Tutorials
 
-## Neko Rig
+The seven new Rigs currently contain authoritative build instructions and external technical-reference links but do not yet have the intended embedded YouTube tutorials.
 
-- Nail Weight — required
-- Wacky Hook — required
-- Soft Plastic Bait — required
-- Wacky O-Ring — optional
+Affected Rigs:
 
-## Shaky Head Rig
+1. Neko Rig
+2. Shaky Head Rig
+3. Free Rig
+4. Double-Jig Crappie Rig
+5. Jika Rig
+6. Punch / Pegged Texas Rig
+7. Bottom-Bouncer / Spinner Rig
 
-- Shaky Head Jighead — required
-- Soft Plastic Bait — required
+The user explicitly requires YouTube tutorials under the already established build-first tutorial standard.
 
-## Free Rig
+Required tutorial standard:
 
-- Ringed Sinker — required
-- Offset Worm Hook — required
-- Soft Plastic Bait — required
+- primary purpose is physical build/assembly/configuration,
+- concise/direct videos preferred when technically complete,
+- component order, knots/connections, leader/weight/bait placement, and final configuration must be clear,
+- technique/retrieve/presentation content may be secondary but must not dominate,
+- exact creator/title/video ID/external URL must be verified,
+- production embed must use the existing lazy `youtube-nocookie.com` implementation,
+- no autoplay,
+- separate `Watch on YouTube ↗` fallback remains available,
+- each tutorial must receive runtime playback validation after implementation.
 
-The main line passes freely through the sinker's external eye; the weight is neither tied nor pegged.
-
-## Double-Jig Crappie Rig
-
-- Jighead — quantity 2, required
-- Soft Plastic Bait — quantity 2, required
-
-## Jika Rig
-
-- Split Ring — required
-- Ringed Sinker — required
-- Offset Worm Hook — required
-- Soft Plastic Bait — required
-
-The hook and weight share a compact ring junction; the weight hangs below the hook and does not slide on the main line.
-
-## Punch / Pegged Texas Rig
-
-- Weight Peg — required
-- Bullet Weight — required
-- Offset Worm Hook — required
-- Soft Plastic Bait — required
-
-## Bottom-Bouncer / Spinner Rig
-
-- Bottom Bouncer — required
-- Spinner Harness — required
-- Bait — required
-
-# References / Tutorial Policy
-
-Every new Rig includes authoritative assembly instructions and external technical references.
-
-No unverified `tutorialVideo` record was inserted simply to achieve video coverage. Under D049/D053, the seven new Rigs currently use trustworthy external reference fallback behavior while authoritative text remains primary. Future embeds may be added only when exact public video metadata, build-first suitability, and runtime behavior are verified.
+External reference links may remain as supplemental sources, but they are not the final tutorial substitute for these seven Rigs.
 
 # Application State
 
-`script.js` now:
+`script.js` currently:
 
 - activates all six learning tiers,
 - maps Intermediate+, Advanced, and Expert cards to their collections,
@@ -189,27 +175,29 @@ The existing renderer continues to provide:
 - canonical component lookup,
 - readiness persistence,
 - derived Tackle `Used In`,
-- contextual `Name ⓘ` recognition references,
+- contextual `Name ⓘ` references,
+- lazy embedded tutorial support,
 - external reference links.
 
-# Remaining Closeout Gate
+# Required Next-Session Order
 
-Only one consolidated runtime closeout remains before this milestone is marked Validated / Finalized.
+Do not run final runtime closeout yet.
 
-Runtime must confirm:
-
-- All Rigs = 20,
-- tier counts = 6 / 3 / 4 / 4 / 2 / 1,
-- Core remains six in the approved order,
-- all seven new Rig details open normally,
-- all required new Tackle names resolve,
-- readiness changes persist on representative new Rigs,
-- all six new `Name ⓘ` recognition panels display their images correctly,
-- new external references open normally,
-- desktop and mobile layouts remain usable,
-- no new console error or horizontal overflow is introduced.
-
-After that PASS, reconcile final current-state documentation and mark the Rig Guide milestone Finalized.
+1. Replace all six rejected recognition-media assets with compliant semi-photorealistic/real-photo-first production media.
+2. Select and verify one build-first YouTube tutorial for each of the seven new Rigs.
+3. Update `data/rigs.js` with the seven approved `tutorialVideo` records.
+4. Verify all changed production files from GitHub.
+5. Run one consolidated runtime closeout covering:
+   - All Rigs = 20,
+   - tier counts = 6 / 3 / 4 / 4 / 2 / 1,
+   - Core six/order unchanged,
+   - all seven new Rig detail pages,
+   - all six corrected `Name ⓘ` recognition images,
+   - all seven YouTube tutorials,
+   - readiness persistence,
+   - desktop/mobile layout,
+   - console health and horizontal overflow.
+6. Only after PASS mark the Rig Guide Validated / Finalized and reconcile `MILESTONES.md`, `CHANGELOG.md`, and `HANDOFF.md`.
 
 # Explicit Non-Scope
 
