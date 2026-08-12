@@ -1,36 +1,52 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.11.1  
+**Document Revision:** 1.11.2  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-10
+**Last Updated:** 2026-08-11
 
 # Unreleased
 
 ## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
 
-**Implementation Status: Implemented / Unvalidated — Ready for Validation**
+**Implementation Status: Validated / Finalized**
 
 ### Added / Changed
 
-- Four Intermediate Rig records are implemented: Drop Shot Rig, Carolina Rig, Live-Bait Slip-Sinker Rig, and Three-Way Rig.
-- The intended active Rig library expands to 13 records and canonical Tackle to 23 concepts, pending validation.
-- Existing Beginner/Beginner+ and new Intermediate Rig tutorial candidates are implemented, pending runtime playback/fallback validation.
-- The initial six new Tackle recognition-media assets were rejected because their flat/vector treatment did not match the approved current catalog/semi-photorealistic standard.
-- `MEDIA_GUIDE.md` now requires real-photo-first sourcing when technically correct and legally reusable, semi-photorealistic catalog treatment otherwise, a mandatory pre-delivery media gate, exact 640 × 440 `#f4f0e8` current Tackle canvas matching, and conventional viewer-facing J hook orientation unless a reviewed technical exception applies.
-- The user reviewed and uploaded the current seven-image Tackle correction package in `eed8929cb1859aef653168884e1e71244d1dd80e` (`Tackle Image Updates`).
-- That upload replaced Bobber Stop, Drop Shot Weight, Fixed Sinker, Ned Jighead, Three-Way Swivel, Wacky Hook, and Wacky O-Ring recognition images.
-- Bobber Stop uses an approved rubber/silicone recognition variant.
-- `DEVELOPMENT_WORKFLOW.md` now permits direct Markdown documentation updates but requires user review and explicit approval before assistant direct-write of images, JavaScript, CSS, HTML, application data, configuration, or other non-Markdown production files.
+- Added and validated the complete four-Rig Intermediate tier: Drop Shot Rig, Carolina Rig, Live-Bait Slip-Sinker Rig, and Three-Way Rig.
+- Active Rig library is now 13 records: 6 Beginner, 3 Beginner+, and 4 Intermediate.
+- Canonical Tackle and Tackle recognition-media registries are now 23 active records each.
+- Completed the Rig tutorial audit under the build-first standard and implemented final tutorial replacements:
+  - Slip Bobber — Sportsman's Journal TV `0V-gaboIlD0`
+  - Wacky Rig — Kevin VanDam `EbHzUCM4o7Y`
+  - Ned Rig — Mystery Tackle Box `COFdRET28cY`
+  - Weightless Soft-Plastic — Reaction Tackle `EFORJFsycJQ`
+  - Carolina Rig — ShakespeareFishingUS `iYngOOMQCC0`
+  - Live-Bait Slip-Sinker — Castaway Fishing Kits `IbV0yG3sRms`
+- Retained validated tutorials for Fixed Bobber, Basic Bottom, Jighead + Soft Plastic, Texas Rig, Drop Shot, and Three-Way Rig.
+- Inline Spinner remains intentionally without an embedded tutorial; Mepps is retained as the validated instructional fallback and Panther Martin was removed because the destination was more marketing-oriented than instructional.
+- Corrected Bobber Stop alt text so the metadata matches the approved rubber/silicone stop image.
+- Finalized the corrected Tackle recognition-media library using the permanent exact 640 × 440 `#f4f0e8` production canvas and current catalog/semi-photorealistic visual standard.
+- Added D053 — Rig Media Completeness and Tutorial Audit.
+- Added D054 — Intermediate Rig Tier Membership.
+- `MEDIA_GUIDE.md` now codifies the permanent build-first tutorial-selection standard: assembly/configuration is primary, concise/direct sources are preferred when technically complete, technique content is secondary, and no arbitrary hard duration threshold is imposed.
+- `RIG_REFERENCE_SOURCES.md` now records the final validated tutorial/fallback sources for all 13 active Rigs.
+- `DEVELOPMENT_WORKFLOW.md` continues to permit direct Markdown documentation updates while requiring explicit user approval before assistant direct-write of images, JavaScript, CSS, HTML, application data, configuration, or other non-Markdown production files.
 
 ### Validation Status
 
-- Corrected seven-image upload presence on GitHub: verified.
-- Intermediate source/data/runtime/tutorial/media/regression validation: not yet started.
-- Intermediate remains **Implemented / Unvalidated**.
-- Next action is the documented Intermediate validation sequence; Intermediate+ must not begin before this segment is validated and finalized.
+- Canonical Rig/Tackle/media counts and relationships: passed.
+- Intermediate membership, routing, search, detail, readiness, reverse `Used In`, and navigation: passed.
+- Recognition-media package/GitHub verification and desktop/mobile contextual-popover validation: passed.
+- Retained tutorial runtime regression: passed.
+- All six changed tutorial embeds: passed final runtime closeout.
+- Inline Spinner Mepps-only fallback: passed.
+- Bobber Stop corrected metadata and contextual reference: passed.
+- Beginner/Beginner+/Core collection and detail regressions: passed.
+- Fish Guide/search, Dashboard, desktop navigation/console/focus/layout, and mobile responsive regressions: passed.
+- Segment is **Validated / Finalized**.
 
-See `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`, `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`, and `HANDOFF.md`.
+See `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`, `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`, `MEDIA_GUIDE.md`, `RIG_REFERENCE_SOURCES.md`, and `HANDOFF.md`.
 
 ## Core Rigs and Tackle Media / Rig Learning Tiers
 
