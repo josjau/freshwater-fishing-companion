@@ -1,13 +1,13 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.7  
+**Document Revision:** 1.0.8  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-10
+**Last Updated:** 2026-08-11
 
 # Purpose
 
-This document defines the permanent media, illustration, photography, licensing, storage, and instructional-image standards for Freshwater Fishing Companion.
+This document defines the permanent media, illustration, photography, licensing, storage, and instructional-media standards for Freshwater Fishing Companion.
 
 # Governing Principles
 
@@ -19,7 +19,7 @@ Media must be:
 - Lightweight
 - Beginner friendly
 - Consistent with Forest Journal
-- Locally bundled for production
+- Locally bundled for production when the project owns/reuses the asset
 - Properly licensed
 - Useful rather than decorative
 
@@ -70,7 +70,7 @@ This color is a permanent cross-theme design constraint, not a Forest Journal-on
 
 All future production-supported themes, palettes, and color schemes must be designed to work harmoniously with this fixed reference-media surface. Theme work must not recolor, tint, filter, darken, lighten, or substitute a theme-specific background for the canonical reference-media panel or for Tackle recognition assets built to this canvas.
 
-Future theme evaluation must therefore include:
+Future theme evaluation must include:
 
 - visual compatibility with `#f4f0e8`,
 - sufficient contrast between the fixed media surface and surrounding cards/panels,
@@ -116,7 +116,7 @@ A direct external visual link is a navigation aid, not a production asset. Do no
 
 Embedded tutorials remain hosted and controlled by the source platform. Embedding permission does not grant permission to download, rehost, edit, extract a frame, or reuse the thumbnail as a project asset.
 
-Current Rig pages use authoritative text build instructions. Texas Rig is the first approved lazy-loaded embedded-tutorial trial; other Rigs continue to use verified external references until a better approved visual path is available.
+Current completed Rig tiers use authoritative text assembly plus validated lazy-loaded tutorial embeds when an appropriate build-first source exists. When no suitable tutorial is available, the Rig uses the next trustworthy D049 fallback rather than adding a weak or mismatched video.
 
 ## Rig Page Standard
 
@@ -145,6 +145,26 @@ An approved embedded tutorial remains in-app through the source platform's offic
 For YouTube tutorials, use the official embed player, privacy-enhanced `youtube-nocookie.com` mode, no autoplay, responsive 16:9 presentation, and the normal browser referrer behavior required for playback. If the uploader disables embedding or the player cannot load, the external YouTube fallback remains available.
 
 When a trustworthy direct image, dedicated media page, or file page is available, prefer that destination for visual confirmation so the user does not have to search through a long article for the relevant Rig image.
+
+## Rig Tutorial Selection Standard
+
+Primary embedded Rig tutorials are **build-first**.
+
+Selection requirements:
+
+- The primary purpose of the embedded tutorial is to show correct physical assembly/configuration of the Rig.
+- Prefer concise, direct videos when technical completeness and source quality are otherwise adequate.
+- Prioritize component order, knots/connections, leader placement, weight placement, bait/hook placement, and final assembled configuration.
+- Fishing technique, retrieve, presentation, and strategy may appear, but they must not dominate the primary embedded tutorial.
+- When multiple technically correct candidates exist, prefer the shorter build-focused source.
+- Do not impose an arbitrary fixed duration threshold; a longer video may be selected when necessary to teach the build correctly.
+- Authoritative text assembly remains mandatory and authoritative even when a tutorial is embedded.
+- If no suitable tutorial is available, use the next trustworthy D049 fallback instead of adding a weak, marketing-heavy, technique-dominant, or technically mismatched video.
+- Tutorial selection must be rechecked at runtime after production implementation because public availability and embed behavior can change.
+
+Permanent working principle:
+
+> Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
 
 ## Texas Rig Technical Standard
 
@@ -427,6 +447,8 @@ Before approval, verify:
 - Correct bait relationship
 - Correct weight orientation
 - Correct sequence
+- Tutorial remains build-first and technically consistent with the canonical Rig
+- Tutorial lazy-load, no-autoplay, responsive player, source attribution/controls, and external fallback work at runtime
 - External visual destination opens directly to the useful visual or the shortest trustworthy path to it when practical
 
 ## Fish
