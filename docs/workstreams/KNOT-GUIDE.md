@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Knot Guide
 
 **Document:** KNOT-GUIDE.md  
-**Document Revision:** 0.2.0  
+**Document Revision:** 0.3.0  
 **Document Status:** Approved Planning / In Progress  
 **Milestone:** Knots  
-**Last Updated:** 2026-08-12
+**Last Updated:** 2026-08-13
 
 # Purpose
 
@@ -223,6 +223,245 @@ No Version 1 canonical Knot is artificially promoted to Advanced merely to popul
 
 The Advanced taxonomy remains valid for future knots whose tying process genuinely warrants it, while the Version 1 interface uses the approved **Advanced Knots — Coming Soon** placeholder to represent that future expansion.
 
+# Approved Canonical Knot Schema
+
+The Version 1 canonical Knot entity extends the Foundation entity with only fields that support approved Knot Guide features.
+
+Approved schema:
+
+```text
+id
+name
+summary
+createdVersion
+lastModifiedVersion
+isActive
+
+difficulty
+connectionTypes[]
+compatibleLineTypes[]
+
+aliases[]
+keywords[]
+
+bestFor[]
+limitations[]
+
+tyingSteps[]
+commonMistakes[]
+finalChecks[]
+
+referenceLinks[]
+```
+
+Core membership is not stored as an `isCore` field on individual Knot records. It is owned by the curated Core registry:
+
+```text
+CORE_KNOT_IDS[]
+```
+
+Approved ordered Core registry:
+
+```text
+arbor-knot
+improved-clinch-knot
+palomar-knot
+double-uni-knot
+```
+
+## Schema Changes from the Original Draft
+
+The original `docs/data-model/04-KNOTS.md` Draft predates the current architecture and must later be reconciled with these approved decisions.
+
+Approved changes:
+
+- replace singular `purpose` with `connectionTypes[]`,
+- remove `strengthRating`,
+- remove stored `stepCount`,
+- remove Knot-owned `imageIds`,
+- remove `relatedRigIds`,
+- remove `relatedTechniqueIds` for Version 1,
+- add `aliases[]`,
+- add `keywords[]`,
+- add `bestFor[]`,
+- add `limitations[]`,
+- add authoritative ordered `tyingSteps[]`,
+- add `commonMistakes[]`,
+- add `finalChecks[]`,
+- add `referenceLinks[]`.
+
+No production Knot data exists yet, so these are planning/schema corrections rather than migrations.
+
+# Approved Controlled Vocabularies
+
+## difficulty
+
+Allowed values:
+
+```text
+Beginner
+Intermediate
+Advanced
+```
+
+These are stored as the same user-facing values displayed by the application.
+
+## connectionTypes[]
+
+Approved stored values:
+
+```text
+reel-spool-attachment
+terminal-attachment
+line-to-line
+terminal-loop
+dropper-loop
+```
+
+Approved meanings:
+
+- `reel-spool-attachment` — Attach Line to a Reel
+- `terminal-attachment` — Hook, Swivel, or Lure Attachment
+- `line-to-line` — Connect Two Lines / Add a Leader
+- `terminal-loop` — Free-Moving Terminal Loop
+- `dropper-loop` — Branch / Dropper Loop
+
+Do not create separate structural taxonomy values solely for hook attachment, swivel attachment, lure attachment, leader connection, backing connection, or Snell hook connection when those are application contexts of the approved connection types.
+
+## compatibleLineTypes[]
+
+Approved stored values:
+
+```text
+monofilament
+fluorocarbon
+braid
+```
+
+The field identifies line materials for which the Knot is reasonably appropriate in supported applications. It does not imply that every possible pairing of listed materials is equally recommended.
+
+A separate machine-readable line-pairing matrix is not part of Version 1 unless implementation demonstrates a concrete need for it.
+
+# Approved Search Metadata Semantics
+
+## aliases[]
+
+`aliases[]` contains legitimate alternative names or accepted naming/spelling variants for the Knot.
+
+Task phrases do not belong in aliases.
+
+## keywords[]
+
+`keywords[]` contains deliberate beginner/task search-intent terms such as:
+
+```text
+tie hook
+connect two lines
+braid to leader
+backing to braid
+add a leader
+```
+
+The approved field name is `keywords[]`, not the earlier working name `searchTerms[]`, so the Knot model follows the Foundation Search Metadata Standard.
+
+# Approved Instructional Context Fields
+
+## bestFor[]
+
+Curated beginner-oriented statements explaining situations in which the Knot is particularly useful.
+
+This field may also support comparison when a task returns several candidate Knots.
+
+## limitations[]
+
+Curated statements explaining practical drawbacks, constraints, or situations where another Knot may be a better choice.
+
+This field should use neutral instructional language rather than labels such as `cons`, `weaknesses`, or `avoidWhen`.
+
+# Approved Tying-Step Model
+
+`tyingSteps[]` is the authoritative ordered non-video tying sequence.
+
+Version 1 stores the steps as an ordered array of instruction strings.
+
+Rules:
+
+- array order is authoritative,
+- the UI always presents visible numbered steps,
+- display numbering starts at 1,
+- step numbers are derived from array position and are not stored as separate data,
+- step numbers are not embedded manually in the instruction text,
+- `stepCount` is derived from `tyingSteps.length` and is not stored,
+- the visual presentation should align with the established Rig Guide **How to Build It** numbered-step pattern.
+
+If animation implementation later proves that individual instructional steps require persistent independent identity, `tyingSteps[]` may evolve to step objects with stable step IDs. Even in that case, display step numbers remain derived rather than stored.
+
+# Approved Teaching-Support Fields
+
+## commonMistakes[]
+
+Authoritative beginner-oriented mistakes that help explain why a Knot may fail or be tied incorrectly.
+
+## finalChecks[]
+
+Authoritative checks that help the angler determine whether the Knot is dressed, seated, and completed correctly.
+
+This field remains separate from `commonMistakes[]` because it answers a different beginner question: **Did I tie this correctly?**
+
+# Approved Source Field
+
+## referenceLinks[]
+
+Version 1 uses the established simple reference-link structure:
+
+```text
+referenceLinks: [
+    {
+        label: "...",
+        url: "..."
+    }
+]
+```
+
+The exact research/source-validation standard remains a separate planning decision.
+
+# Approved Knot Media Ownership
+
+Knot records do not store `imageIds[]` or `animationIds[]` for the same relationship already owned by canonical Media records.
+
+Instructional media should use the established media ownership pattern conceptually as:
+
+```text
+Media
+    ownerType: "knot"
+    ownerId: "palomar-knot"
+```
+
+Knot instructional media is then derived from active Media records associated with that canonical Knot.
+
+This preserves one relationship owner and avoids storing both `Knot.imageIds` and `Media.ownerId` as duplicate sources of truth.
+
+The exact animation media vocabulary/implementation remains to be finalized during the diagram/animation planning topic.
+
+# Explicitly Excluded Version 1 Knot Fields
+
+Do not store the following on canonical Knot records unless a later approved requirement demonstrates a need:
+
+```text
+isCore
+stepCount
+strengthRating
+relatedRigIds
+relatedTechniqueIds
+imageIds
+animationIds
+taskIds
+primaryPurpose
+recommendedSpecies
+```
+
+Knot records describe the connection itself. Rig, Technique, Reel Setup, and future Decision Knowledge provide fishing context.
+
 # Approved Knot Instructional Media Direction
 
 For Knots, project-owned diagrams and controlled animations are preferred over video.
@@ -331,38 +570,16 @@ The exact production field name and schema are not yet approved.
 
 A 20-Rig connection audit is expected during this milestone so existing generic `Tie...` assembly instructions can be associated with appropriate canonical Knot recommendations without embedding IDs into instructional strings.
 
-# Knot Data Model Still to Finalize
-
-The existing `docs/data-model/04-KNOTS.md` remains a Draft and must be reconciled before production implementation.
-
-Current recommended direction includes:
-
-- `aliases[]`,
-- controlled connection/purpose taxonomy,
-- `compatibleLineTypes[]`,
-- beginner-oriented search terms,
-- `bestFor[]`,
-- `limitations[]`,
-- authoritative `tyingSteps[]`,
-- `commonMistakes[]`,
-- `finalChecks[]`,
-- verified references,
-- instructional media references,
-- optional tutorial metadata only when the media policy justifies video.
-
-The current draft concepts `strengthRating`, stored `stepCount`, singular `purpose`, and manually stored `relatedRigIds` require review before adoption.
-
 # Remaining Planning Decisions Before Production
 
 The following still require explicit approval before implementation begins:
 
-1. exact canonical Knot schema and controlled vocabularies,
-2. exact Rig → Knot relationship field/schema and 20-Rig audit rules,
-3. Knot detail-page information hierarchy,
-4. exact search behavior and beginner search vocabulary,
-5. research/source-validation standard for canonical Knot instructions,
-6. diagram/animation production and technical validation workflow,
-7. final milestone validation checklist and implementation sequence.
+1. exact Rig → Knot relationship field/schema and 20-Rig audit rules,
+2. Knot detail-page information hierarchy,
+3. exact search behavior and beginner search vocabulary,
+4. research/source-validation standard for canonical Knot instructions,
+5. diagram/animation production and technical validation workflow,
+6. final milestone validation checklist and implementation sequence.
 
 # Production Gate
 
