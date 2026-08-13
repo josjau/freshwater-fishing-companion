@@ -61,6 +61,7 @@ css = (ROOT / "forest-journal.css").read_text(encoding="utf-8")
 detail_standard = (ROOT / "docs/DETAIL-PAGE-STANDARD.md").read_text(encoding="utf-8")
 detail_approval = (ROOT / "docs/workstreams/KNOT-DETAIL-PAGE-APPROVAL.md").read_text(encoding="utf-8")
 landing_approval = (ROOT / "docs/workstreams/KNOT-LANDING-PAGE-APPROVAL.md").read_text(encoding="utf-8")
+navigation_standard = (ROOT / "docs/NAVIGATION-PAGE-STANDARD.md").read_text(encoding="utf-8")
 
 for required_text in [
     "let detailNavigationStack = [];",
@@ -102,6 +103,21 @@ for collection_key in ["all", "core", "beginner", "intermediate", "advanced"]:
 for collection_title in ["All Knots", "Core Knots", "Beginner Knots", "Intermediate Knots", "Advanced Knots"]:
     assert collection_title in script, f"Missing Knot collection title: {collection_title}"
 assert 'isAvailable: false' in script, "Advanced Knots should remain unavailable in Version 1"
+assert 'knot-guide-section--tasks knot-guide-section--priority' in renderer, "Task-first Knot navigation lacks priority treatment hook"
+assert 'dashboard-card--primary knot-guide-core-card' in renderer, "Core Knots lacks shared primary/Core treatment"
+assert '.knot-guide-view .dashboard-card,' not in css, "Knot Guide still overrides every navigation card to one accent"
+assert '.knot-guide-section--priority' in css, "Task-first priority section style is missing"
+assert '.knot-guide-view .knot-guide-core-card' in css, "Core Knots priority card style is missing"
+assert '.knot-collection-grid .dashboard-card:nth-child(5)' in css, "Knot collection palette does not preserve a distinct fifth accent"
+for required_text in [
+    "Rig Guide",
+    "Search",
+    "Special navigation",
+    "Category / collection cards",
+    "varied adjacent accent-bar palette",
+    "Core",
+]:
+    assert required_text in navigation_standard, f"Missing navigation-page standard: {required_text}"
 for required_text in [
     "What are you trying to do?",
     "Attach Line to a Reel",
@@ -190,7 +206,7 @@ assert data["palomarRigIds"][:4] == [
     "inline-spinner-setup",
 ]
 
-print("Production Package 2 runtime revision 2 validation passed.")
+print("Production Package 2 runtime revision 3 validation passed.")
 print(f"Active Knots: {data['knotCount']}")
 print(f"Core Knots: {len(data['coreIds'])}")
 print(f"Task definitions: {data['taskCount']}")

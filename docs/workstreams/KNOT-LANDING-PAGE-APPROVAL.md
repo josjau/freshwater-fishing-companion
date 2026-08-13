@@ -33,6 +33,17 @@ Task-first discovery stays above all Knot collection cards. Future Knot categori
 
 The landing page uses the same collection-card grammar established by the Rig Guide. It does not render the individual Core Knots directly on the landing page. Selecting **Core Knots**, **Beginner Knots**, **Intermediate Knots**, or **All Knots** opens that collection's browse view.
 
+## Visual Priority
+
+The Knot landing page follows the canonical navigation-card visual standard:
+
+- task and collection card grids use the shared **varied accent-bar palette** rather than one repeated Knot color,
+- **What are you trying to do?** receives restrained Knot-accent priority framing because it is the primary beginner task-navigation block,
+- **Core Knots** receives the approved primary/Core card treatment and Knot-domain accent so the recommended learning path is immediately recognizable,
+- ordinary All/Beginner/Intermediate/Advanced collection cards remain peer navigation cards and should not inherit the Core emphasis.
+
+These visual rules are controlled cross-domain by `../NAVIGATION-PAGE-STANDARD.md` and `../STYLE_GUIDE.md`.
+
 This approval supersedes older Knot planning/handoff text that shows **Get Your Reel Ready** as a separate landing card, places **What are you trying to do?** below Core Knots, or renders all four Core Knot records directly on the landing page. Those older documents remain useful for other approved decisions but no longer control the landing-page order.
 
 # Reel-Readiness Integration

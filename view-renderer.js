@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Knot Guide — Production Package 2 Revision 2"
+    milestone: "Knot Guide — Production Package 2 Revision 3"
 });
 
 function buildSearchControlsMarkup(inputId, placeholder) {
@@ -246,9 +246,16 @@ function renderKnotGuideLanding(appMain, config) {
     }).join("");
 
     const collectionMarkup = config.collections.map((collection) => {
+        const isCoreCollection = collection.key === "core";
+        const collectionClassName = [
+            "dashboard-card",
+            "knot-collection-card",
+            isCoreCollection ? "dashboard-card--primary knot-guide-core-card" : ""
+        ].filter(Boolean).join(" ");
+
         if (collection.isAvailable !== true) {
             return `
-                <div class="dashboard-card dashboard-card--unavailable knot-collection-card" aria-disabled="true">
+                <div class="${collectionClassName} dashboard-card--unavailable" aria-disabled="true">
                     <span class="dashboard-card__title">${collection.title}</span>
                     <span class="dashboard-card__description">${collection.description}</span>
                     <span class="dashboard-card__action">Coming Soon</span>
@@ -257,7 +264,7 @@ function renderKnotGuideLanding(appMain, config) {
         }
 
         return `
-            <button class="dashboard-card knot-collection-card" type="button" data-knot-collection-key="${collection.key}">
+            <button class="${collectionClassName}" type="button" data-knot-collection-key="${collection.key}">
                 <span class="dashboard-card__title">${collection.title}</span>
                 <span class="dashboard-card__description">${collection.description}</span>
             </button>
@@ -278,7 +285,7 @@ function renderKnotGuideLanding(appMain, config) {
                 <div class="search-results" data-search-results></div>
             </div>
             <div class="knot-guide-content" data-knot-guide-content>
-                <section class="knot-guide-section knot-guide-section--tasks" aria-labelledby="knot-task-title">
+                <section class="knot-guide-section knot-guide-section--tasks knot-guide-section--priority" aria-labelledby="knot-task-title">
                     <h3 id="knot-task-title">What are you trying to do?</h3>
                     <p>Choose the connection you need. Reel setup starts with <strong>Attach Line to a Reel</strong>.</p>
                     <div class="dashboard-grid knot-task-grid">${taskMarkup}</div>

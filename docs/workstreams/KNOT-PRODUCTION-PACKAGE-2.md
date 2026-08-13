@@ -1,8 +1,8 @@
 # Knot Production Package 2
 
-**Status:** Production Package 2 / Runtime Revision 2 Awaiting Validation  
+**Status:** Production Package 2 / Runtime Revision 3 Awaiting Validation  
 **Milestone:** Knots  
-**Implementation Version:** 0.6.2  
+**Implementation Version:** 0.6.3  
 **Date:** 2026-08-13
 
 # Purpose
@@ -13,6 +13,7 @@ This package implements:
 
 - Knot Guide landing hierarchy,
 - Rig-style Knot collection cards for All/Core/Beginner/Intermediate/Advanced,
+- shared varied navigation-card accent bars with priority treatment for task-first navigation and Core Knots,
 - task-first discovery,
 - deterministic beginner-oriented search,
 - All Knots browsing,
@@ -149,6 +150,9 @@ Approved revision:
 - Individual Core Knot records are removed from the landing page.
 - Knot browsing now uses Rig-style collection cards in this order: **All Knots**, **Core Knots**, **Beginner Knots**, **Intermediate Knots**, **Advanced Knots**.
 - **Advanced Knots** is visible as Coming Soon because Version 1 contains zero active Advanced Knot records.
+- Peer task/collection cards use the shared varied accent-bar palette rather than a repeated Knot accent.
+- **What are you trying to do?** uses restrained Knot-accent priority framing.
+- **Core Knots** uses the approved primary/Core card treatment with the Knot-domain accent.
 
 This keeps the beginner's practical job ahead of the taxonomy, keeps the landing page compact as the library grows, and aligns Knot browsing with the established Rig Guide collection model.
 
@@ -177,11 +181,12 @@ Reason: Knot search has approved domain-specific normalization, task-intent voca
 ## `view-renderer.js`
 
 **Original Package 2 role:** Knot landing/result/detail rendering plus existing Rig/Tackle renderers.  
-**Revision role:** adds task-first landing priority, removes the duplicate reel-readiness landing card, adds progressive Rig-usage disclosure, actionable Knot -> Rig links, and Rig-owned **Knots You'll Tie** navigation links.
+**Revision 3 build milestone:** `Knot Guide — Production Package 2 Revision 3`  
+**Revision 3 role:** preserves the compact task-first/collection landing model, marks **What are you trying to do?** as a priority navigation block, and applies the shared primary/Core treatment to the **Core Knots** collection card while retaining the existing progressive Rig-usage and related-detail navigation behavior.
 
 ## `forest-journal.css`
 
-Adds Knot-specific visual hierarchy using the existing `--accent-knots` token and the approved cross-domain detail-page grammar. The correction adds accessible related-entity link, disclosure, and Rig Knot-link treatments. Rig-specific density rules remain Rig-specific.
+Adds Knot-specific visual hierarchy while preserving the shared navigation-card palette. Runtime Revision 3 removes the Knot-wide card-accent override that flattened all navigation bars to one color, adds restrained priority framing for **What are you trying to do?**, and adds the approved Core treatment for **Core Knots**. Existing disclosure, related-entity, and Rig Knot-link treatments remain unchanged. Rig-specific density rules remain Rig-specific.
 
 ## `index.html`
 
@@ -216,6 +221,10 @@ The 10 locked canonical records from Package 1 remain authoritative and unchange
 - the Knot landing contains no standalone Get Your Reel Ready card,
 - **What are you trying to do?** renders before all Knot collection cards,
 - **Attach Line to a Reel** is the single reel-readiness landing entry and maps to the transitional Get Your Reel Ready task page.
+- navigation cards do not use a Knot-wide repeated accent override,
+- **What are you trying to do?** carries the priority-section hook,
+- **Core Knots** carries both the shared primary-card and Knot Core hooks,
+- `NAVIGATION-PAGE-STANDARD.md` records the cross-domain Search -> special navigation -> collection-card hierarchy and varied-accent/priority rules.
 
 # Brave Runtime Validation After Upload
 
@@ -226,18 +235,19 @@ After upload and GitHub integrity verification:
 3. Open **Knots** from Home.
 4. Confirm the landing order is Search -> **What are you trying to do?** -> collection cards.
 5. Confirm the collection cards are **All Knots**, **Core Knots**, **Beginner Knots**, **Intermediate Knots**, and **Advanced Knots** (Coming Soon). Confirm there is no separate **Get Your Reel Ready** landing card.
-6. Select **Attach Line to a Reel** and confirm the transitional page title is **Get Your Reel Ready** with Arbor Knot first and Uni Knot second; Parent returns to Knots.
-7. Search `palomar`, `tie hook`, `add leader`, `braid`, `mono`, and a no-result term.
-8. Confirm clear-search restores the landing content.
-9. Open the other task-first collections and verify curated Knot order.
-10. Open at least one Core and one Intermediate Knot detail.
-11. Confirm Parent/Home navigation works and explicit navigation opens at the top.
-12. On Palomar, confirm **Where You'll Use It** initially shows four Rigs and **See all 20 rigs**.
-13. Expand/collapse the Palomar Rig list and confirm **Show fewer** restores the four-item view.
-14. Open a Rig from Palomar and confirm the Rig opens at the top with Parent labeled for Palomar.
-15. Confirm that Rig shows **Knots You'll Tie**; open a Knot from there and use Parent to return to the Rig, then Parent again to return to the originating Knot.
-16. Confirm Verified References appear inside How to Tie It.
-17. Recheck Fish search, Rig Guide/search/detail, and Tackle reference/readiness for regressions.
+6. Confirm task and collection cards use varied accent bars, **What are you trying to do?** has the approved priority framing, and **Core Knots** has the stronger Core treatment.
+7. Select **Attach Line to a Reel** and confirm the transitional page title is **Get Your Reel Ready** with Arbor Knot first and Uni Knot second; Parent returns to Knots.
+8. Search `palomar`, `tie hook`, `add leader`, `braid`, `mono`, and a no-result term.
+9. Confirm clear-search restores the landing content.
+10. Open the other task-first collections and verify curated Knot order.
+11. Open at least one Core and one Intermediate Knot detail.
+12. Confirm Parent/Home navigation works and explicit navigation opens at the top.
+13. On Palomar, confirm **Where You'll Use It** initially shows four Rigs and **See all 20 rigs**.
+14. Expand/collapse the Palomar Rig list and confirm **Show fewer** restores the four-item view.
+15. Open a Rig from Palomar and confirm the Rig opens at the top with Parent labeled for Palomar.
+16. Confirm that Rig shows **Knots You'll Tie**; open a Knot from there and use Parent to return to the Rig, then Parent again to return to the originating Knot.
+17. Confirm Verified References appear inside How to Tie It.
+18. Recheck Fish search, Rig Guide/search/detail, and Tackle reference/readiness for regressions.
 
 # Exact Resume Point
 
