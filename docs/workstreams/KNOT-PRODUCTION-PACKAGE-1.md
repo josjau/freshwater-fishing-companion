@@ -1,6 +1,6 @@
 # Knot Production Package 1
 
-**Status:** Production Package 1 / Awaiting Post-Upload Validation  
+**Status:** Production Package 1 / Validated  
 **Milestone:** Knots  
 **Implementation Version:** 0.5.0  
 **Date:** 2026-08-13
@@ -56,9 +56,19 @@ Special handling:
 - Jika split-ring hardware joins are excluded; only line-to-split-ring is a Knot application.
 - Bottom-Bouncer trailing harness hardware join is excluded; main-line-to-bouncer remains a tied connection.
 
-# Validation Before Package 2
+# Post-Upload Validation — Passed
 
-After the user uploads this package:
+Production Package 1 was uploaded to GitHub `main` and validated before Package 2 began. Validation confirmed exact package integrity and the following runtime/static checks:
+
+- 10 canonical Knots loaded successfully.
+- 6 Beginner / 4 Intermediate Knots and 4 Core IDs were correct.
+- 20 Rigs and exactly 31 real Knot applications passed integrity checks.
+- All recommended Knot IDs and connection-type relationships resolved.
+- Existing Rig Guide navigation remained functional in Brave.
+- No Freshwater Fishing Companion JavaScript error was observed during the runtime check.
+- A recurring Chromium/Brave extension message about an asynchronous listener closing its message channel was classified as browser/extension noise because it was not sourced from project code.
+
+The original validation procedure was:
 
 1. Re-fetch every changed file from GitHub `main`.
 2. Confirm package/GitHub blob integrity.

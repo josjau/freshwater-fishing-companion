@@ -1,7 +1,7 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: view-renderer.js
-   PURPOSE: Owns reusable views, search results, Rig details,
+   PURPOSE: Owns reusable views, search results, Rig/Knot details,
    My Tackle presentation, contextual references, and inline Rig readiness.
    ========================================================== */
 
@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Rig UX Finalization"
+    milestone: "Knot Guide — Production Package 2"
 });
 
 function buildSearchControlsMarkup(inputId, placeholder) {
@@ -205,6 +205,211 @@ function renderSearchResults(appMain, records, resultConfig) {
     resultsContainer.querySelectorAll("[data-result-id]").forEach((resultCard) => {
         resultCard.addEventListener("click", () => resultConfig.onResultSelect(resultCard.dataset.resultId));
     });
+}
+
+function isCoreKnotRecord(record) {
+    return Boolean(record?.id) &&
+        typeof CORE_KNOT_IDS !== "undefined" &&
+        CORE_KNOT_IDS.includes(record.id);
+}
+
+function buildKnotResultCardMarkup(knot) {
+    const isCore = isCoreKnotRecord(knot);
+    return `
+        <button class="search-result-card search-result-card--knot${isCore ? " search-result-card--core" : ""}" type="button" data-result-id="${knot.id}">
+            ${isCore ? '<span class="search-result-card__badge">Core Knot</span>' : ""}
+            <span class="search-result-card__title">${knot.name}</span>
+            <span class="search-result-card__meta">${knot.difficulty}</span>
+            <span class="search-result-card__summary">${knot.summary}</span>
+            <span class="search-result-card__action">View instructions →</span>
+        </button>
+    `;
+}
+
+function renderKnotGuideLanding(appMain, config) {
+    if (!appMain || !config || !Array.isArray(config.coreKnots) || !Array.isArray(config.tasks)) {
+        console.error("A valid Knot Guide landing configuration is required.");
+        return;
+    }
+
+    const coreMarkup = config.coreKnots.map(buildKnotResultCardMarkup).join("");
+    const taskMarkup = config.tasks.map((task) => `
+        <button class="dashboard-card knot-task-card" type="button" data-knot-task-id="${task.id}">
+            <span class="dashboard-card__title">${task.title}</span>
+            <span class="dashboard-card__description">${task.description}</span>
+            <span class="dashboard-card__action">Choose this task →</span>
+        </button>
+    `).join("");
+
+    appMain.innerHTML = `
+        <section class="content-view knot-guide-view" aria-labelledby="knots-title">
+            <button class="page-navigation" type="button" data-home-navigation>← Home</button>
+            <h2 id="knots-title">Knots</h2>
+            <p>Learn dependable fishing knots by name, by task, or from the beginner Core set.</p>
+            <form class="search-form section-search-form" data-knot-search-form>
+                <label class="search-label" for="knot-guide-search-input">Search all Knots</label>
+                ${buildSearchControlsMarkup("knot-guide-search-input", "Try Palomar, tie hook, add leader, braid, or beginner")}
+            </form>
+            <div class="section-search-results" data-knot-search-region hidden>
+                <p class="search-status" data-search-status aria-live="polite"></p>
+                <div class="search-results" data-search-results></div>
+            </div>
+            <div class="knot-guide-content" data-knot-guide-content>
+                <section class="knot-guide-section knot-guide-section--reel" aria-labelledby="knot-reel-ready-title">
+                    <h3 id="knot-reel-ready-title">Get Your Reel Ready</h3>
+                    <p>Start with an empty or newly relined reel and work toward a fishable line system.</p>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card dashboard-card--unavailable knot-reel-ready-card" aria-disabled="true">
+                            <span class="dashboard-card__title">Get Your Reel Ready</span>
+                            <span class="dashboard-card__description">Reel identification, line guidance, spool attachment, backing decisions, and leader handoffs arrive in Production Package 3.</span>
+                            <span class="dashboard-card__action">Coming Next</span>
+                        </div>
+                    </div>
+                </section>
+                <section class="knot-guide-section" aria-labelledby="core-knots-title">
+                    <h3 id="core-knots-title">Core Knots — Learn These First</h3>
+                    <p>Four practical knots that cover reel attachment, common terminal connections, and joining lines.</p>
+                    <div class="knot-card-grid" data-core-knot-grid>${coreMarkup}</div>
+                </section>
+                <section class="knot-guide-section" aria-labelledby="knot-task-title">
+                    <h3 id="knot-task-title">What are you trying to do?</h3>
+                    <p>Choose the connection you need and see a short, curated Knot list.</p>
+                    <div class="dashboard-grid knot-task-grid">${taskMarkup}</div>
+                </section>
+                <section class="knot-guide-section" aria-labelledby="all-knots-title">
+                    <h3 id="all-knots-title">All Knots</h3>
+                    <button class="dashboard-card knot-browse-all-card" type="button" data-knot-browse-all>
+                        <span class="dashboard-card__title">Browse All 10 Knots</span>
+                        <span class="dashboard-card__description">View every active Beginner and Intermediate Knot in the Version 1 library.</span>
+                        <span class="dashboard-card__action">Browse all →</span>
+                    </button>
+                </section>
+            </div>
+        </section>
+    `;
+
+    initializeHomeNavigation(appMain);
+
+    const searchForm = appMain.querySelector("[data-knot-search-form]");
+    const searchInput = appMain.querySelector("#knot-guide-search-input");
+    const clearButton = appMain.querySelector("[data-search-clear]");
+    const searchRegion = appMain.querySelector("[data-knot-search-region]");
+    const landingContent = appMain.querySelector("[data-knot-guide-content]");
+    const updateSearch = () => {
+        const query = searchInput?.value?.trim() ?? "";
+        const hasQuery = query.length > 0;
+        if (searchRegion) searchRegion.hidden = !hasQuery;
+        if (landingContent) landingContent.hidden = hasQuery;
+
+        if (!hasQuery) {
+            const status = appMain.querySelector("[data-search-status]");
+            const results = appMain.querySelector("[data-search-results]");
+            if (status) status.textContent = "";
+            if (results) results.innerHTML = "";
+            return;
+        }
+
+        config.onSearch?.(query);
+    };
+    initializeSearchControls(searchForm, searchInput, clearButton, updateSearch);
+
+    appMain.querySelectorAll("[data-core-knot-grid] [data-result-id]").forEach((card) => {
+        card.addEventListener("click", () => config.onKnotSelect?.(card.dataset.resultId));
+    });
+    appMain.querySelectorAll("[data-knot-task-id]").forEach((card) => {
+        card.addEventListener("click", () => config.onTaskSelect?.(card.dataset.knotTaskId));
+    });
+    appMain.querySelector("[data-knot-browse-all]")?.addEventListener("click", () => config.onBrowseAll?.());
+}
+
+function renderKnotInstructionDetail(appMain, detailConfig) {
+    if (!appMain || !detailConfig?.record) {
+        console.error("A valid Knot detail record is required.");
+        return;
+    }
+
+    const record = detailConfig.record;
+    const isCore = isCoreKnotRecord(record);
+    const usageContexts = Array.isArray(detailConfig.usageContexts) ? detailConfig.usageContexts : [];
+    const aliasesMarkup = record.aliases?.length
+        ? `<p class="knot-aliases"><strong>Also called:</strong> ${record.aliases.join(", ")}</p>`
+        : "";
+    const lineTypeLabels = (record.compatibleLineTypes ?? []).map((lineType) => {
+        if (lineType === "monofilament") return "Monofilament";
+        if (lineType === "fluorocarbon") return "Fluorocarbon";
+        if (lineType === "braid") return "Braid";
+        return lineType;
+    });
+    const usageMarkup = usageContexts.length
+        ? `<ul class="knot-usage-list">${usageContexts.map((usage) => `
+            <li>
+                <strong>${usage.title}</strong>
+                <span>${usage.labels.join(" · ")}</span>
+            </li>
+        `).join("")}</ul>`
+        : '<p class="knot-empty-context">No active Rig currently references this Knot.</p>';
+    const referencesMarkup = record.referenceLinks?.length
+        ? `
+            <div class="knot-reference-block">
+                <h4>Verified References</h4>
+                <div class="rig-reference-links knot-reference-links">
+                    ${record.referenceLinks.map((reference) => `
+                        <a class="rig-reference-link knot-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span aria-hidden="true">↗</span></a>
+                    `).join("")}
+                </div>
+            </div>
+        `
+        : "";
+
+    appMain.innerHTML = `
+        <article class="detail-view detail-view--knot" aria-labelledby="knot-detail-title">
+            <div class="page-navigation-group">
+                <button class="page-navigation" type="button" data-parent-navigation>← ${detailConfig.parentLabel}</button>
+                <button class="page-navigation" type="button" data-home-navigation>Home</button>
+            </div>
+            <header class="detail-header knot-detail-header${isCore ? " detail-header--core knot-detail-header--core" : ""}">
+                ${isCore ? '<p class="detail-core-badge">Core Knot</p>' : ""}
+                <p class="detail-eyebrow">${record.difficulty}</p>
+                <h2 id="knot-detail-title">${record.name}</h2>
+                <p>${record.summary}</p>
+                ${aliasesMarkup}
+            </header>
+            <section class="detail-section knot-at-a-glance">
+                <div class="knot-at-a-glance__group">
+                    <h3>Best For</h3>
+                    <ul class="detail-list">${record.bestFor.map((item) => `<li>${item}</li>`).join("")}</ul>
+                    <div class="knot-line-types">
+                        <span class="knot-line-types__label">Line compatibility</span>
+                        ${buildTagList(lineTypeLabels)}
+                    </div>
+                </div>
+                <div class="knot-at-a-glance__group">
+                    <h3>Where You'll Use It</h3>
+                    ${usageMarkup}
+                </div>
+            </section>
+            <section class="detail-section detail-section--build knot-tying-section">
+                <h3>How to Tie It</h3>
+                <ol class="detail-steps knot-tying-steps">${record.tyingSteps.map((step) => `<li>${step}</li>`).join("")}</ol>
+                ${referencesMarkup}
+            </section>
+            <section class="detail-section detail-section--supporting knot-check-section">
+                <h3>Check Your Knot</h3>
+                <ul class="detail-list">${record.finalChecks.map((check) => `<li>${check}</li>`).join("")}</ul>
+            </section>
+            <section class="detail-section detail-section--supporting">
+                <h3>Common Mistakes</h3>
+                <ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>
+            </section>
+            <section class="detail-section detail-section--supporting">
+                <h3>When to Choose Another Knot</h3>
+                <ul class="detail-list">${record.limitations.map((limitation) => `<li>${limitation}</li>`).join("")}</ul>
+            </section>
+        </article>
+    `;
+
+    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
+    initializeHomeNavigation(appMain);
 }
 
 function isCoreRigRecord(record) {

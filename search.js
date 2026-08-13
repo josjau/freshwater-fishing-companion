@@ -1,17 +1,17 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: search.js
-   REPLACEMENT: MS2.2 - SHARED SEARCH UTILITIES
-   PURPOSE: Provides reusable record lookup, text search,
-   filtering, relevance ranking, and alphabetical sorting for canonical data.
+   REPLACEMENT: SHARED SEARCH + KNOT SEARCH UTILITIES
+   PURPOSE: Provides reusable record lookup/search plus deterministic,
+   beginner-oriented Knot relevance ranking and task-intent matching.
    ========================================================== */
 
 "use strict";
 
 const SEARCH_BUILD_INFO = Object.freeze({
     file: "search.js",
-    milestone: "MS2.2",
-    replacement: "Shared Search Utilities"
+    milestone: "Knot Guide — Production Package 2",
+    replacement: "Shared Search + Deterministic Knot Search"
 });
 
 function normalizeSearchText(value) {
@@ -90,6 +90,134 @@ function searchRecords(records, query, fields = ["name"]) {
         .sort((matchA, matchB) =>
             matchB.score - matchA.score ||
             matchA.originalIndex - matchB.originalIndex
+        )
+        .map((match) => match.record);
+}
+
+const KNOT_SEARCH_REPLACEMENTS = Object.freeze({
+    mono: "monofilament",
+    fluoro: "fluorocarbon",
+    lines: "line",
+    hooks: "hook",
+    lures: "lure",
+    swivels: "swivel",
+    leaders: "leader",
+    reels: "reel",
+    spools: "spool",
+    knots: "knot"
+});
+
+const KNOT_SEARCH_FILLER_WORDS = Object.freeze([
+    "a",
+    "an",
+    "the",
+    "for",
+    "my",
+    "please"
+]);
+
+function normalizeKnotSearchText(value) {
+    return normalizeSearchText(value)
+        .replace(/[’']/g, "")
+        .replace(/[^a-z0-9]+/g, " ")
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((token) => KNOT_SEARCH_REPLACEMENTS[token] ?? token)
+        .filter((token) => !KNOT_SEARCH_FILLER_WORDS.includes(token))
+        .join(" ");
+}
+
+function getKnotTaskDefinitions(taskDefinitions) {
+    return Array.isArray(taskDefinitions) ? taskDefinitions : [];
+}
+
+function getKnotTaskSearchTerms(taskDefinitions) {
+    return new Set(
+        getKnotTaskDefinitions(taskDefinitions)
+            .flatMap((task) => [task.title, ...(task.searchTerms ?? [])])
+            .map(normalizeKnotSearchText)
+            .filter(Boolean)
+    );
+}
+
+function getKnotTaskMatch(recordId, normalizedQuery, taskDefinitions) {
+    let bestMatch = null;
+
+    getKnotTaskDefinitions(taskDefinitions).forEach((task, taskIndex) => {
+        const knotIndex = task.knotIds?.indexOf(recordId) ?? -1;
+        if (knotIndex < 0) return;
+
+        const terms = [task.title, ...(task.searchTerms ?? [])]
+            .map(normalizeKnotSearchText)
+            .filter(Boolean);
+        const exactMatch = terms.some((term) => term === normalizedQuery);
+        const phraseMatch = !exactMatch && terms.some((term) =>
+            term.includes(normalizedQuery) || normalizedQuery.includes(term)
+        );
+        if (!exactMatch && !phraseMatch) return;
+
+        const score = exactMatch ? 700 : 650;
+        const candidate = { score, taskIndex, knotIndex };
+        if (!bestMatch || candidate.score > bestMatch.score) {
+            bestMatch = candidate;
+        }
+    });
+
+    return bestMatch;
+}
+
+function getKnotSearchMatch(record, normalizedQuery, taskDefinitions) {
+    const normalizedName = normalizeKnotSearchText(record.name);
+    const normalizedAliases = (record.aliases ?? []).map(normalizeKnotSearchText);
+    const sharedTaskTerms = getKnotTaskSearchTerms(taskDefinitions);
+    const normalizedKeywords = (record.keywords ?? [])
+        .map(normalizeKnotSearchText)
+        .filter((keyword) => keyword && !sharedTaskTerms.has(keyword));
+
+    if (normalizedName === normalizedQuery) return { score: 1000, taskIndex: 999, knotIndex: 999 };
+    if (normalizedAliases.includes(normalizedQuery)) return { score: 950, taskIndex: 999, knotIndex: 999 };
+    if (normalizedName.startsWith(normalizedQuery)) return { score: 900, taskIndex: 999, knotIndex: 999 };
+    if (normalizedAliases.some((alias) => alias.startsWith(normalizedQuery))) return { score: 850, taskIndex: 999, knotIndex: 999 };
+    if (normalizedKeywords.includes(normalizedQuery)) return { score: 800, taskIndex: 999, knotIndex: 999 };
+
+    const taskMatch = getKnotTaskMatch(record.id, normalizedQuery, taskDefinitions);
+    if (taskMatch) return taskMatch;
+
+    if (
+        normalizedName.includes(normalizedQuery) ||
+        normalizedAliases.some((alias) => alias.includes(normalizedQuery)) ||
+        normalizedKeywords.some((keyword) => keyword.includes(normalizedQuery) || normalizedQuery.includes(keyword))
+    ) {
+        return { score: 600, taskIndex: 999, knotIndex: 999 };
+    }
+
+    const lineMatch = (record.compatibleLineTypes ?? []).some(
+        (lineType) => normalizeKnotSearchText(lineType) === normalizedQuery
+    );
+    const difficultyMatch = normalizeKnotSearchText(record.difficulty) === normalizedQuery;
+    if (lineMatch || difficultyMatch) return { score: 400, taskIndex: 999, knotIndex: 999 };
+
+    return { score: 0, taskIndex: 999, knotIndex: 999 };
+}
+
+function searchKnotRecords(records, query, taskDefinitions = []) {
+    if (!Array.isArray(records)) return [];
+
+    const normalizedQuery = normalizeKnotSearchText(query);
+    if (!normalizedQuery) return [...records];
+
+    return records
+        .map((record, originalIndex) => ({
+            record,
+            originalIndex,
+            ...getKnotSearchMatch(record, normalizedQuery, taskDefinitions)
+        }))
+        .filter((match) => match.score > 0)
+        .sort((first, second) =>
+            second.score - first.score ||
+            first.taskIndex - second.taskIndex ||
+            first.knotIndex - second.knotIndex ||
+            first.originalIndex - second.originalIndex
         )
         .map((match) => match.record);
 }
