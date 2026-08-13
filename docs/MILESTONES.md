@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 2.2.0  
+**Document Revision:** 2.2.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-13
 
@@ -276,9 +276,9 @@ Current state:
 
 - Planning, research validation, and canonical content lock are complete.
 - Production Package 1 is **Validated**: 10 active canonical Knots, 6 Beginner / 4 Intermediate, four approved Core IDs, all 20 active Rigs audited, and 31 real tied `knotApplications` connections.
-- Production Package 2 Runtime Revision 3 (`0.6.3`) is **Implemented / Unvalidated** on `main`; GitHub integrity and static validation passed.
+- Production Package 2 Runtime Revision 4 (`0.6.4`) is **Implemented / Unvalidated** in the current coherent update; local static preflight passed and post-push GitHub verification remains required.
 - Package 2 includes task-first Knot navigation, deterministic Knot search, text detail pages, progressive disclosure for long Rig usage lists, and context-preserving Rig ↔ Knot navigation.
-- Runtime review approved a Revision 4 visual correction before validation resumes: remove section-level accenting from **What are you trying to do?**; apply Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**; preserve normal treatment for the other two task cards, varied accent bars, and Core Knots priority treatment.
+- Revision 4 removes section-level accenting from **What are you trying to do?**, applies Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, preserves normal treatment for the other two task cards, varied accent bars, and Core Knots priority treatment, and reduces collapsed **Where You'll Use It** from four visible Rigs to two.
 - Package 3 (**Get Your Reel Ready**) and Package 4 (ten static Knot SVGs/media integration) have not begun.
 
 See:
@@ -313,11 +313,11 @@ The active milestone remains **Knots**. Production Package 2 is not finalized.
 
 Exact next segment:
 
-1. Build Production Package 2 Runtime Revision 4 from freshly re-fetched GitHub source.
-2. Remove section-level priority/accent treatment from **What are you trying to do?**.
-3. Apply Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** only.
-4. Preserve varied navigation-card accents, normal styling for the other two task cards, Core Knots primary/Core emphasis, long Rig-list disclosure, and Rig ↔ Knot navigation.
-5. Push/verify Revision 4, then complete the Package 2 Brave runtime/regression checklist.
+1. Push the coherent Runtime Revision 4 package through GitHub Desktop.
+2. Re-fetch and verify the exact Revision 4 GitHub blobs.
+3. Run the Package 2 static validator against the verified repository state.
+4. Complete the Microsoft Edge runtime/regression checklist, including the two-item **Where You'll Use It** collapsed state and Important Card hierarchy.
+5. Correct only defects exposed by validation; otherwise mark Package 2 Validated and close its documentation.
 6. Only after Package 2 is validated may Package 3 — **Get Your Reel Ready** — begin.
 
 Do not begin Fish Guide, What Should I Throw, Tackle Reference, Settings/User Data, My Tackle, Catch Log, Global Search, or Favorites implementation until Knots is completed and validated unless the roadmap is explicitly revised.

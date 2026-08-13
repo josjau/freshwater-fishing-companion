@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Detail Page Standard
 
-**Document Revision:** 1.1.1  
+**Document Revision:** 1.1.2  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-13
 
@@ -56,7 +56,7 @@ When a related canonical entity can help the user complete or understand the cur
 
 Do not duplicate relationship ownership merely to support this navigation. Derive reverse relationships from the canonical owner whenever the architecture defines one.
 
-For high-cardinality relationship lists, use progressive disclosure instead of forcing a large default scroll. The current Knot **Where You'll Use It** standard shows up to four Rig relationships initially and exposes the remainder through **See all N rigs** / **Show fewer**.
+For high-cardinality relationship lists, use progressive disclosure instead of forcing a large default scroll. The current Knot **Where You'll Use It** standard shows up to two Rig relationships initially and exposes the remainder through **See all N rigs** / **Show fewer**.
 
 Collapsed related items must be removed from the rendered visual layout until expanded. Author CSS must not override the collapsed/hidden state. Expanding must reveal the hidden items and change the control to **Show fewer**; collapsing must restore the initial item limit and the original **See all N rigs** label.
 

@@ -1,10 +1,10 @@
 # Knot Implementation Handoff
 
-**Status:** Approved / Session Closeout — Ready to Resume Runtime Revision 4  
+**Status:** Approved / Ready to Verify Runtime Revision 4  
 **Date:** 2026-08-13  
 **Repository:** `josjau/freshwater-fishing-companion`  
 **Branch:** `main`  
-**Runtime Validation Environment:** Windows Desktop + Brave Browser + GitHub Desktop
+**Runtime Validation Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
 
 # Start Here
 
@@ -38,8 +38,8 @@ Knots planning, research validation, and canonical content lock are complete. Pr
 Current production state:
 
 - Production Package 1 — **Validated**.
-- Production Package 2 Runtime Revision 3 (`0.6.3`) — **Implemented / Unvalidated** on `main`; GitHub integrity and static validation passed.
-- Production Package 2 Runtime Revision 4 — **Approved / Not Implemented**; this is the first action next session.
+- Production Package 2 Runtime Revision 4 (`0.6.4`) — **Implemented / Unvalidated** in the current coherent update; local static preflight passed.
+- GitHub blob verification and Microsoft Edge runtime/regression validation remain open.
 
 # Canonical Post-Rig Roadmap
 
@@ -502,19 +502,17 @@ Do not make destructive shortened replacements of long governing documents. Re-f
 Current `main` state:
 
 - Production Package 1 — validated.
-- Production Package 2 Runtime Revision 3 (`0.6.3`) — implemented and statically verified, but Brave runtime validation is incomplete.
-- Approved Runtime Revision 4 — not implemented.
+- Production Package 2 Runtime Revision 4 (`0.6.4`) — implemented / unvalidated in the current coherent update.
+- Revision 4 removes section-level priority framing from **What are you trying to do?**, gives Important Card treatment to the two foundational task cards, and reduces collapsed **Where You'll Use It** Rig relationships from four to two.
 
-## First Action Next Session — Runtime Revision 4
+## First Action Next Session — Verify and Validate Runtime Revision 4
 
-1. Re-fetch current `view-renderer.js`, `forest-journal.css`, `tools/validate_knot_package_2.py`, and affected documentation from GitHub `main`.
-2. Remove the section-level accent/priority framing from **What are you trying to do?**.
-3. Apply the established Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**.
-4. Keep **Connect Two Lines / Add a Leader** and **Make a Loop Connection** as normal task cards.
-5. Preserve varied navigation-card accent bars and **Core Knots** primary/Core treatment.
-6. Package source + documentation coherently; user pushes through GitHub Desktop.
-7. Re-fetch and verify exact GitHub blobs.
-8. Resume the full Production Package 2 Brave validation, including long `Where You'll Use It` collapse/expand, Rig ↔ Knot navigation, search/task collections, Parent/Home, and Fish/Rig/Tackle regressions.
+1. Re-fetch the Revision 4 production/documentation files from GitHub `main` and verify exact blobs against the delivered package.
+2. Run `tools/validate_knot_package_2.py` against the verified repository state.
+3. In Microsoft Edge, verify the revised Knot landing visual hierarchy and the two-item **Where You'll Use It** collapsed state.
+4. Confirm Palomar expands from two visible Rigs to all 20 and **Show fewer** restores two.
+5. Complete Rig ↔ Knot navigation, search/task collections, Parent/Home, and Fish/Rig/Tackle regression checks.
+6. Update validation/current-state documentation only after the observed runtime results are known.
 
 Only after Package 2 passes runtime validation should Production Package 3 — **Get Your Reel Ready** — begin.
 

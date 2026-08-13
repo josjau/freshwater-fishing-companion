@@ -1,6 +1,7 @@
 # Knot Detail Page Approval
 
 **Status:** Approved / Runtime Refinement  
+**Implementation Status:** Implemented / Unvalidated in Runtime Revision 4  
 **Date:** 2026-08-13
 
 The Knot detail page should follow the established Rig detail-page workflow as closely as practical.
@@ -17,10 +18,10 @@ Approved flow:
    - Where You'll Use It exposes applicable derived Rig/workflow relationships.
    - Task/workflow context remains compact and visible.
    - Rig relationships are presented as actionable internal navigation links rather than a static relationship dump.
-   - When more than four active Rigs reference the Knot, show the first four by default and provide **See all N rigs** / **Show fewer** progressive disclosure.
-   - Items beyond the first four must be visually removed from layout while collapsed; CSS must not override the hidden state.
-   - Expanding reveals the remaining Rigs and changes the control to **Show fewer**; collapsing restores four visible Rigs and the **See all N rigs** label.
-   - The initial four prioritize Core Rigs, then lower difficulty, then canonical Rig order as the tie-breaker.
+   - When more than two active Rigs reference the Knot, show the first two by default and provide **See all N rigs** / **Show fewer** progressive disclosure.
+   - Items beyond the first two must be visually removed from layout while collapsed; CSS must not override the hidden state.
+   - Expanding reveals the remaining Rigs and changes the control to **Show fewer**; collapsing restores two visible Rigs and the **See all N rigs** label.
+   - The initial two prioritize Core Rigs, then lower difficulty, then canonical Rig order as the tie-breaker.
 3. **How to Tie It** follows the visual grammar of Rig **How to Build It**.
    - project-owned diagram/controlled animation remains primary where available,
    - authoritative steps remain visibly numbered,
@@ -34,7 +35,7 @@ Approved flow:
 
 Production Package 2 runtime validation exposed a CSS interaction where list items marked `hidden` were still rendered because the Knot usage-list item rule explicitly set `display: grid`. The approved correction requires a scoped hidden-state rule that wins over the normal list-item display rule.
 
-This is a defect correction, not a change to the four-item threshold or the approved relationship ordering.
+Runtime Revision 2 corrected that hidden-state defect. Runtime Revision 4 deliberately reduces the default visible relationship threshold from four Rigs to two while preserving the same ordering, expansion/collapse behavior, and relationship ownership.
 
 # Related Rig Navigation
 

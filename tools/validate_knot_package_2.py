@@ -72,7 +72,7 @@ for required_text in [
     assert required_text in script, f"Missing related-detail navigation support: {required_text}"
 
 for required_text in [
-    "const KNOT_USAGE_VISIBLE_RIG_LIMIT = 4;",
+    "const KNOT_USAGE_VISIBLE_RIG_LIMIT = 2;",
     "data-knot-rig-id",
     "See all ${rigContexts.length} rigs",
     '"Show fewer"',
@@ -87,7 +87,7 @@ assert ".knot-usage-list > li[hidden] { display: none !important; }" in css, "Co
 
 assert "See all N rigs" in detail_approval
 assert "context-preserving return stack" in detail_approval
-assert "shows up to four Rig relationships initially" in detail_standard
+assert "shows up to two Rig relationships initially" in detail_standard
 
 # Knot landing revision checks.
 assert 'knot-reel-ready-title' not in renderer, "Standalone Get Your Reel Ready landing section remains"
@@ -103,10 +103,12 @@ for collection_key in ["all", "core", "beginner", "intermediate", "advanced"]:
 for collection_title in ["All Knots", "Core Knots", "Beginner Knots", "Intermediate Knots", "Advanced Knots"]:
     assert collection_title in script, f"Missing Knot collection title: {collection_title}"
 assert 'isAvailable: false' in script, "Advanced Knots should remain unavailable in Version 1"
-assert 'knot-guide-section--tasks knot-guide-section--priority' in renderer, "Task-first Knot navigation lacks priority treatment hook"
+assert 'knot-guide-section--tasks knot-guide-section--priority' not in renderer, "Task-first section still carries rejected section-level priority treatment"
 assert 'dashboard-card--primary knot-guide-core-card' in renderer, "Core Knots lacks shared primary/Core treatment"
+assert 'const isImportantTask = ["attach-line-to-reel", "terminal-attachment"].includes(task.id);' in renderer, "Foundational task Important Card selection is missing"
+assert 'dashboard-card--primary knot-task-card--important' in renderer, "Important task cards do not use the shared primary-card treatment"
 assert '.knot-guide-view .dashboard-card,' not in css, "Knot Guide still overrides every navigation card to one accent"
-assert '.knot-guide-section--priority' in css, "Task-first priority section style is missing"
+assert '.knot-guide-section--priority' not in css, "Rejected task-section priority styling remains in CSS"
 assert '.knot-guide-view .knot-guide-core-card' in css, "Core Knots priority card style is missing"
 assert '.knot-collection-grid .dashboard-card:nth-child(5)' in css, "Knot collection palette does not preserve a distinct fifth accent"
 for required_text in [
@@ -199,14 +201,12 @@ assert "arbor-knot" in data["mono"] and "improved-clinch-knot" in data["mono"]
 assert len(data["beginner"]) == 6
 assert data["nonsense"] == []
 assert len(data["palomarRigIds"]) == 20
-assert data["palomarRigIds"][:4] == [
+assert data["palomarRigIds"][:2] == [
     "fixed-bobber-rig",
     "basic-bottom-rig",
-    "jighead-soft-plastic",
-    "inline-spinner-setup",
 ]
 
-print("Production Package 2 runtime revision 3 validation passed.")
+print("Production Package 2 runtime revision 4 validation passed.")
 print(f"Active Knots: {data['knotCount']}")
 print(f"Core Knots: {len(data['coreIds'])}")
 print(f"Task definitions: {data['taskCount']}")

@@ -1,15 +1,15 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.3.0  
+**Document Revision:** 1.3.1  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Latest Finalized Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0  
-**Active Workstream:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md` — Runtime Revision 3 on `main`, Revision 4 visual correction approved  
+**Active Workstream:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md` — Runtime Revision 4 (`0.6.4`) implemented / unvalidated  
 **Active Milestone:** Knots  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3  
-**Session Environment:** Windows Desktop, Brave Browser, GitHub Desktop  
-**Session Status:** Knots implementation in progress. Production Package 1 is validated. Production Package 2 Runtime Revision 3 (`0.6.3`) is present on `main` and passed GitHub/static verification but has not completed Brave runtime validation. Before resuming runtime validation, implement approved Runtime Revision 4: remove section-level accenting from `What are you trying to do?`; apply Important Card treatment to `Attach Line to a Reel` and `Tie On a Hook, Swivel, or Lure`; preserve varied card accent bars and Core Knots priority treatment.  
+**Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
+**Session Status:** Knots implementation in progress. Production Package 1 is validated. Production Package 2 Runtime Revision 4 (`0.6.4`) is the current implementation state after this coherent update: section-level accenting is removed from `What are you trying to do?`, `Attach Line to a Reel` and `Tie On a Hook, Swivel, or Lure` use Important Card treatment, and `Where You'll Use It` shows two Rigs before progressive disclosure. GitHub blob verification and Microsoft Edge runtime/regression validation remain required.  
 **Last Updated:** 2026-08-13
 
 # 1. Start Here
@@ -84,8 +84,8 @@ Planning, research, and canonical content lock are complete.
 Current production state:
 
 - Production Package 1 — **Validated**: 10 canonical Knots, four Core IDs, all 20 Rigs audited, 31 real tied connections.
-- Production Package 2 Runtime Revision 3 (`0.6.3`) — **Implemented / Unvalidated** on `main`; GitHub integrity and static validation passed.
-- Runtime Revision 4 — **Approved / Not Implemented**; required before continuing Brave validation.
+- Production Package 2 Runtime Revision 4 (`0.6.4`) — **Implemented / Unvalidated** in the current coherent update; local static preflight passed.
+- Post-push GitHub blob verification and Microsoft Edge runtime/regression validation are still required before Package 2 can be validated.
 
 Controlling records:
 
@@ -299,17 +299,16 @@ Animations should be user-controlled, non-autoplaying, reduced-motion aware, and
 
 **Do not begin Package 3 or Fish Guide. Production Package 2 remains open.**
 
-Current `main` state is Runtime Revision 3 (`0.6.3`). GitHub/source/static verification passed, but Brave runtime validation is incomplete.
+The current coherent update is Runtime Revision 4 (`0.6.4`). Production Package 2 remains unvalidated.
 
-The first action next session is Runtime Revision 4:
+Resume in this order:
 
-1. Re-fetch current `view-renderer.js`, `forest-journal.css`, `tools/validate_knot_package_2.py`, and affected documentation from GitHub `main`.
-2. Remove the section-level Knot accent/priority treatment from **What are you trying to do?**.
-3. Apply the established Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**.
-4. Keep **Connect Two Lines / Add a Leader** and **Make a Loop Connection** as normal task cards.
-5. Preserve the varied navigation-card accent bars and the existing **Core Knots** primary/Core treatment.
-6. Package the correction and its documentation together, have the user push through GitHub Desktop, then re-fetch/verify `main`.
-7. Resume the Package 2 Brave validation checklist, including long `Where You'll Use It` disclosure, Rig ↔ Knot navigation, search, task collections, and Fish/Rig/Tackle regressions.
+1. Re-fetch the Revision 4 production/documentation files from GitHub `main` and verify their exact blobs against the delivered package.
+2. Run `tools/validate_knot_package_2.py` against the verified repository state.
+3. In Microsoft Edge, confirm the Knot landing uses varied accent bars, no section-level accent frame around **What are you trying to do?**, Important Card treatment on **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, and preserved **Core Knots** treatment.
+4. On Palomar, confirm **Where You'll Use It** shows two Rigs initially, **See all 20 rigs** expands the full list, and **Show fewer** returns to two.
+5. Complete the remaining Package 2 Edge validation checklist, including Rig ↔ Knot navigation, search, task collections, Parent/Home behavior, and Fish/Rig/Tackle regressions.
+6. Record validation results and only then decide whether Package 2 can be marked Validated.
 
 Only after Package 2 passes runtime validation should Production Package 3 — **Get Your Reel Ready** — begin.
 

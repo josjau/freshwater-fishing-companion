@@ -1,7 +1,7 @@
 # Knot Landing Page Approval
 
 **Status:** Approved / Runtime Refinement  
-**Implementation Status:** Approved / Not Implemented in Runtime Revision 3; scheduled for Runtime Revision 4  
+**Implementation Status:** Implemented / Unvalidated in Runtime Revision 4  
 **Date:** 2026-08-13
 
 # Purpose

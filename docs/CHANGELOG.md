@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.13.0  
+**Document Revision:** 1.13.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-13
 
@@ -16,18 +16,18 @@
 - Added and validated Production Package 1 with 10 active canonical Knots, four approved Core Knot IDs, 6 Beginner / 4 Intermediate difficulty distribution, and all 20 active Rigs audited for 31 real tied `knotApplications` connections.
 - Added Production Package 2 Knot task guidance, deterministic Knot search, Knot browse/detail routes, text-based Knot instruction pages, and verified-reference placement inside **How to Tie It**.
 - Added derived **Where You'll Use It** Rig relationships and context-preserving Rig ↔ Knot navigation without storing reverse Knot-to-Rig IDs.
-- Runtime Revision 2 corrected long Rig relationship lists to show four initially with **See all N rigs** / **Show fewer** and changed the Knot landing to Rig-style collection cards.
+- Runtime Revision 2 corrected long Rig relationship lists with **See all N rigs** / **Show fewer** and changed the Knot landing to Rig-style collection cards.
 - Runtime Revision 3 restored the established varied navigation-card accent bars and added the approved Core Knots priority treatment.
 - Added the canonical cross-domain `NAVIGATION-PAGE-STANDARD.md`: navigation pages use the Rig Guide baseline with Search first, optional special navigation second, and collection/category cards afterward.
-- Approved the next Runtime Revision 4 correction: remove section-level accent/priority framing from **What are you trying to do?**; apply Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**; keep the other two task cards normal; preserve varied accent bars and Core Knots emphasis.
+- Runtime Revision 4 removes section-level accent/priority framing from **What are you trying to do?**, applies Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, keeps the other two task cards normal, preserves varied accent bars and Core Knots emphasis, and reduces collapsed **Where You'll Use It** Rig relationships from four visible items to two.
 
 ### Validation Status
 
 - Production Package 1 repository/static/runtime validation: passed.
-- Production Package 2 Revision 3 GitHub blob integrity: passed.
-- Production Package 2 Revision 3 static validator: passed.
-- Production Package 2 Brave runtime validation: **not complete**.
-- Runtime Revision 4: **approved / not implemented**.
+- Production Package 2 Revision 3 GitHub blob integrity and static validator: passed before Revision 4.
+- Production Package 2 Revision 4 local static preflight: passed.
+- Production Package 2 Revision 4 GitHub blob verification: **pending post-push**.
+- Production Package 2 Microsoft Edge runtime validation: **not complete**.
 - Production Package 3 (**Get Your Reel Ready**) and Package 4 (static Knot SVG/media integration): not started.
 
 See `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`, `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`, `NAVIGATION-PAGE-STANDARD.md`, `MILESTONES.md`, and `HANDOFF.md`.

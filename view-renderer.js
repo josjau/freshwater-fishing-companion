@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Knot Guide — Production Package 2 Revision 3"
+    milestone: "Knot Guide — Production Package 2 Revision 4"
 });
 
 function buildSearchControlsMarkup(inputId, placeholder) {
@@ -236,8 +236,14 @@ function renderKnotGuideLanding(appMain, config) {
         const actionLabel = task.id === "attach-line-to-reel"
             ? "Get your reel ready →"
             : "Choose this task →";
+        const isImportantTask = ["attach-line-to-reel", "terminal-attachment"].includes(task.id);
+        const taskClassName = [
+            "dashboard-card",
+            "knot-task-card",
+            isImportantTask ? "dashboard-card--primary knot-task-card--important" : ""
+        ].filter(Boolean).join(" ");
         return `
-            <button class="dashboard-card knot-task-card" type="button" data-knot-task-id="${task.id}">
+            <button class="${taskClassName}" type="button" data-knot-task-id="${task.id}">
                 <span class="dashboard-card__title">${task.title}</span>
                 <span class="dashboard-card__description">${task.description}</span>
                 <span class="dashboard-card__action">${actionLabel}</span>
@@ -285,7 +291,7 @@ function renderKnotGuideLanding(appMain, config) {
                 <div class="search-results" data-search-results></div>
             </div>
             <div class="knot-guide-content" data-knot-guide-content>
-                <section class="knot-guide-section knot-guide-section--tasks knot-guide-section--priority" aria-labelledby="knot-task-title">
+                <section class="knot-guide-section knot-guide-section--tasks" aria-labelledby="knot-task-title">
                     <h3 id="knot-task-title">What are you trying to do?</h3>
                     <p>Choose the connection you need. Reel setup starts with <strong>Attach Line to a Reel</strong>.</p>
                     <div class="dashboard-grid knot-task-grid">${taskMarkup}</div>
@@ -330,7 +336,7 @@ function renderKnotGuideLanding(appMain, config) {
     });
 }
 
-const KNOT_USAGE_VISIBLE_RIG_LIMIT = 4;
+const KNOT_USAGE_VISIBLE_RIG_LIMIT = 2;
 
 function buildKnotUsageMarkup(record, usageContexts) {
     const taskContexts = Array.isArray(usageContexts?.tasks) ? usageContexts.tasks : [];

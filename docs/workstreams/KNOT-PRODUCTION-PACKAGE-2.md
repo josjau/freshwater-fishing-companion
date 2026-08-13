@@ -1,8 +1,8 @@
 # Knot Production Package 2
 
-**Status:** Production Package 2 / Runtime Revision 3 Implemented / Unvalidated — Revision 4 Visual Correction Approved  
+**Status:** Production Package 2 / Runtime Revision 4 Implemented / Unvalidated  
 **Milestone:** Knots  
-**Implementation Version:** 0.6.3  
+**Implementation Version:** 0.6.4  
 **Date:** 2026-08-13
 
 # Purpose
@@ -13,7 +13,7 @@ This package implements:
 
 - Knot Guide landing hierarchy,
 - Rig-style Knot collection cards for All/Core/Beginner/Intermediate/Advanced,
-- shared varied navigation-card accent bars, with Runtime Revision 3 priority styling currently present on the task-first section and Core Knots,
+- shared varied navigation-card accent bars, Important Card treatment for the two foundational task entries, and Core Knots priority treatment,
 - task-first discovery,
 - deterministic beginner-oriented search,
 - All Knots browsing,
@@ -107,9 +107,9 @@ Each active Knot detail page presents:
 2. **Best For** plus line compatibility.
 3. **Where You'll Use It**, derived at runtime from task-first definitions plus Rig-owned `knotApplications[]`.
    - Task context remains compact and visible.
-   - Up to four Rig relationships display initially.
-   - More than four Rigs adds **See all N rigs** / **Show fewer**.
-   - Runtime Revision 2 fixes the hidden-state CSS defect so relationships beyond the first four are actually removed from layout until expanded.
+   - Up to two Rig relationships display initially.
+   - More than two Rigs adds **See all N rigs** / **Show fewer**.
+   - Runtime Revision 2 fixed the hidden-state CSS defect; Runtime Revision 4 keeps that fix and reduces the collapsed visible limit to two Rigs.
    - Initial Rig ordering prioritizes Core status, lower difficulty, then canonical Rig order.
    - Each Rig is an internal navigation link to that Rig detail page.
 4. **How to Tie It** using the locked ordered `tyingSteps[]`.
@@ -128,7 +128,7 @@ Runtime review exposed an excessive-scroll problem on high-cardinality Knot rela
 
 Approved correction:
 
-- Rig relationships above four entries are progressively disclosed rather than fully expanded by default.
+- Rig relationships above two entries are progressively disclosed rather than fully expanded by default.
 - Rig names in **Where You'll Use It** are actionable and open the selected Rig detail at the top.
 - Rig detail pages expose a **Knots You'll Tie** section derived directly from that Rig's canonical `knotApplications[]`.
 - Selecting a Knot from a Rig opens the Knot detail at the top.
@@ -151,9 +151,8 @@ Approved revision:
 - Knot browsing now uses Rig-style collection cards in this order: **All Knots**, **Core Knots**, **Beginner Knots**, **Intermediate Knots**, **Advanced Knots**.
 - **Advanced Knots** is visible as Coming Soon because Version 1 contains zero active Advanced Knot records.
 - Peer task/collection cards use the shared varied accent-bar palette rather than a repeated Knot accent.
-- Runtime Revision 3 currently gives **What are you trying to do?** section-level priority framing. Runtime review rejected that section-level emphasis.
-- The next approved correction removes section-level priority framing from **What are you trying to do?**.
-- **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** will receive the Important Card treatment because both are foundational prerequisites to fishing.
+- Runtime Revision 4 removes the rejected section-level priority framing from **What are you trying to do?**.
+- **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** receive the shared Important Card treatment because both are foundational prerequisites to fishing.
 - **Connect Two Lines / Add a Leader** and **Make a Loop Connection** remain normal task cards.
 - **Core Knots** retains the approved primary/Core card treatment with the Knot-domain accent.
 
@@ -184,14 +183,12 @@ Reason: Knot search has approved domain-specific normalization, task-intent voca
 ## `view-renderer.js`
 
 **Original Package 2 role:** Knot landing/result/detail rendering plus existing Rig/Tackle renderers.  
-**Revision 3 build milestone:** `Knot Guide — Production Package 2 Revision 3`  
-**Revision 3 role:** preserves the compact task-first/collection landing model, currently marks **What are you trying to do?** as a priority navigation block, and applies the shared primary/Core treatment to the **Core Knots** collection card while retaining the existing progressive Rig-usage and related-detail navigation behavior.
-
-**Approved Revision 4 correction:** remove the section-level priority hook/treatment and move Important Card emphasis to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** only. Core Knots remains primary/Core.
+**Revision 4 build milestone:** `Knot Guide — Production Package 2 Revision 4`  
+**Revision 4 role:** preserves the compact task-first/collection landing model, removes section-level priority treatment from **What are you trying to do?**, applies the shared Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, retains the primary/Core treatment for **Core Knots**, and reduces the collapsed **Where You'll Use It** Rig list from four items to two.
 
 ## `forest-journal.css`
 
-Adds Knot-specific visual hierarchy while preserving the shared navigation-card palette. Runtime Revision 3 removes the Knot-wide card-accent override that flattened all navigation bars to one color and adds the approved Core treatment for **Core Knots**. The current Revision 3 section-level framing on **What are you trying to do?** is approved for removal in Revision 4; Important Card styling will instead apply to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**. Existing disclosure, related-entity, and Rig Knot-link treatments remain unchanged. Rig-specific density rules remain Rig-specific.
+Preserves the shared navigation-card palette and **Core Knots** treatment. Runtime Revision 4 removes the section-level accent frame from **What are you trying to do?**; the two foundational task cards use the existing shared primary-card hierarchy instead of a new Knot-specific visual system. Existing hidden-state, related-entity, and Rig Knot-link treatments remain unchanged. Rig-specific density rules remain Rig-specific.
 
 ## `index.html`
 
@@ -219,37 +216,37 @@ The 10 locked canonical records from Package 1 remain authoritative and unchange
 - old Compare Knots / strength-based placeholder UI is removed,
 - existing generic `searchRecords()` remains present for Fish/Rig regression safety,
 - Knot search ranking behavior passes representative queries,
-- the Knot relationship disclosure threshold remains four,
-- Palomar retains 20 derived Rig relationships and the approved first-four ordering,
+- the Knot relationship disclosure threshold is two,
+- Palomar retains 20 derived Rig relationships and the approved first-two ordering,
 - related Rig/Knot navigation hooks and context-stack functions are present,
 - governing detail-page guidance documents contain the approved progressive-disclosure and return-context rules,
 - the Knot landing contains no standalone Get Your Reel Ready card,
 - **What are you trying to do?** renders before all Knot collection cards,
 - **Attach Line to a Reel** is the single reel-readiness landing entry and maps to the transitional Get Your Reel Ready task page.
 - navigation cards do not use a Knot-wide repeated accent override,
-- Runtime Revision 3 still carries the **What are you trying to do?** priority-section hook; Revision 4 must remove it,
-- Revision 4 must give **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** the Important Card hook/treatment,
+- **What are you trying to do?** does not carry a section-level priority hook/treatment,
+- **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** carry the shared Important Card hook/treatment,
 - **Core Knots** continues to carry both the shared primary-card and Knot Core hooks,
 - `NAVIGATION-PAGE-STANDARD.md` records the cross-domain Search -> special navigation -> collection-card hierarchy and varied-accent/priority rules.
 
-# Brave Runtime Validation After Upload
+# Edge Runtime Validation After Upload
 
 After upload and GitHub integrity verification:
 
-1. Hard refresh the deployed app in Brave with DevTools Console open.
+1. Hard refresh the deployed app in Microsoft Edge with DevTools Console open.
 2. Confirm `data/knot-guidance.js`, `search.js`, `view-renderer.js`, and `script.js` load without project JavaScript errors.
 3. Open **Knots** from Home.
 4. Confirm the landing order is Search -> **What are you trying to do?** -> collection cards.
 5. Confirm the collection cards are **All Knots**, **Core Knots**, **Beginner Knots**, **Intermediate Knots**, and **Advanced Knots** (Coming Soon). Confirm there is no separate **Get Your Reel Ready** landing card.
-6. After Revision 4 is uploaded, confirm task and collection cards use varied accent bars; **What are you trying to do?** has no section-level accent frame; **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** have Important Card treatment; and **Core Knots** retains the stronger Core treatment.
+6. Confirm task and collection cards use varied accent bars; **What are you trying to do?** has no section-level accent frame; **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** have Important Card treatment; and **Core Knots** retains the stronger Core treatment.
 7. Select **Attach Line to a Reel** and confirm the transitional page title is **Get Your Reel Ready** with Arbor Knot first and Uni Knot second; Parent returns to Knots.
 8. Search `palomar`, `tie hook`, `add leader`, `braid`, `mono`, and a no-result term.
 9. Confirm clear-search restores the landing content.
 10. Open the other task-first collections and verify curated Knot order.
 11. Open at least one Core and one Intermediate Knot detail.
 12. Confirm Parent/Home navigation works and explicit navigation opens at the top.
-13. On Palomar, confirm **Where You'll Use It** initially shows four Rigs and **See all 20 rigs**.
-14. Expand/collapse the Palomar Rig list and confirm **Show fewer** restores the four-item view.
+13. On Palomar, confirm **Where You'll Use It** initially shows two Rigs and **See all 20 rigs**.
+14. Expand/collapse the Palomar Rig list and confirm **Show fewer** restores the two-item view.
 15. Open a Rig from Palomar and confirm the Rig opens at the top with Parent labeled for Palomar.
 16. Confirm that Rig shows **Knots You'll Tie**; open a Knot from there and use Parent to return to the Rig, then Parent again to return to the originating Knot.
 17. Confirm Verified References appear inside How to Tie It.
@@ -257,9 +254,9 @@ After upload and GitHub integrity verification:
 
 # Exact Resume Point
 
-If this file is present on GitHub `main`, first confirm the current deployed/source state is Runtime Revision 3 (`0.6.3`). Package 2 has **not** passed runtime validation.
+If this file is present on GitHub `main`, confirm the deployed/source state is Runtime Revision 4 (`0.6.4`). Package 2 has **not** passed runtime validation.
 
-The exact next production action is **Runtime Revision 4**: remove section-level accent/priority treatment from **What are you trying to do?**, add Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, preserve varied accent bars and Core Knots priority treatment, then upload/verify and resume the full Brave validation checklist.
+The exact next action is to verify the Revision 4 GitHub blobs and static validator results, then resume the full Microsoft Edge runtime checklist. Do not make additional source changes unless that validation exposes a genuine defect.
 
 After Package 2 passes, proceed to **Production Package 3 — Get Your Reel Ready**.
 
