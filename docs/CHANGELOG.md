@@ -1,11 +1,54 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.11.2  
+**Document Revision:** 1.12.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-11
+**Last Updated:** 2026-08-12
 
 # Unreleased
+
+## Complete Rig Guide
+
+**Implementation Status: Validated / Finalized**
+
+### Added / Changed
+
+- Completed the approved 20-Rig regional library across all six learning tiers.
+- Final active Rig counts are 6 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert.
+- Core remains the approved six-member cross-cutting registry in the established order.
+- Canonical Tackle and Tackle recognition-media registries are now 29 active records each.
+- Added the final seven Rigs: Neko Rig, Shaky Head Rig, Free Rig, Double-Jig Crappie Rig, Jika Rig, Punch / Pegged Texas Rig, and Bottom-Bouncer / Spinner Rig.
+- Added six final canonical Tackle concepts: Nail Weight, Shaky Head Jighead, Ringed Sinker, Split Ring, Bottom Bouncer, and Spinner Harness.
+- Replaced the six initially rejected flat/vector final-tier recognition assets with user-approved production images.
+- Added and validated seven final-tier build-first YouTube tutorials:
+  - Neko Rig — Wired2Fish — `yxGJLTxa_B0`
+  - Shaky Head Rig — Bass Utopia — `zwcZSE3DVAU`
+  - Free Rig — Fishin With GRAMPS — `_SyrQJ1i0RA`
+  - Double-Jig Crappie Rig — Kansas Angling Experience — `7EVa28J9y-Y`
+  - Jika Rig — Mike Iaconelli Fishing — `uSmbuf-q2xg`
+  - Punch / Pegged Texas Rig — Wired2Fish — `HzIMkN_xTtM`
+  - Bottom-Bouncer / Spinner Rig — Fishing 411 TV — `xRXzhffsHGM`
+- Final production correction commit: `4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` (`Rig Updates Images and tutorials`).
+- GitHub Pages deployed the final production correction successfully.
+
+### Validation Status
+
+- GitHub source/blob verification: passed.
+- Deployed-artifact Rig/Tackle/media counts and relationships: passed.
+- All Rigs = 20: passed.
+- Tier counts 6 / 3 / 4 / 4 / 2 / 1: passed.
+- Core six/order: passed.
+- All seven final-tier Rig detail pages: passed.
+- All six final-tier Tackle `Name ⓘ` recognition panels/images: passed.
+- All seven final-tier YouTube embeds and external fallbacks: passed in Microsoft Edge.
+- No-autoplay behavior: passed.
+- Representative readiness persistence: passed.
+- Desktop Edge layout/horizontal-overflow check: passed.
+- Desktop normal-navigation console health: passed.
+- Mobile-width Edge device emulation at approximately 375 px, including dense Rig content, recognition image, tutorial player, Parent/Home navigation, and horizontal-overflow check: passed.
+- Segment is **Validated / Finalized**.
+
+See `workstreams/RIG-GUIDE-COMPLETION.md`, `MEDIA_GUIDE.md`, `RIG_REFERENCE_SOURCES.md`, `MILESTONES.md`, and `HANDOFF.md`.
 
 ## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
 
