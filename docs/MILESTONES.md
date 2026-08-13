@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 1.9.0  
+**Document Revision:** 2.0.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-11
+**Last Updated:** 2026-08-12
 
 # Purpose
 
@@ -62,7 +62,7 @@ When a historical milestone conflicts with current architecture, `DECISIONS.md`,
 - Safety guidance
 - Navigation and error handling
 
-**Current note:** D027 approves a 20-Rig regional library. Beginner, Beginner+, and Intermediate are now validated through 13 active Rigs. Four Intermediate Rigs are complete and the associated Tackle/media/tutorial work has passed final runtime validation.
+**Current note:** D027's approved 20-Rig regional library is now fully implemented and validated through Beginner, Beginner+, Intermediate, Intermediate+, Advanced, and Expert. See **Complete Rig Guide** below for the final current state.
 
 ## MS2.5 — Lightweight Tackle Readiness
 
@@ -221,6 +221,51 @@ See:
 - `MEDIA_GUIDE.md`
 - `RIG_REFERENCE_SOURCES.md`
 
+## Complete Rig Guide
+
+**Implementation Status: Validated / Finalized**
+
+Final production correction commit:
+
+`4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` — `Rig Updates Images and tutorials`
+
+Validated final scope:
+
+- 20 active Rigs,
+- 6 learning tiers,
+- final tier counts: 6 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert,
+- unchanged six-member Core registry and order,
+- 29 active canonical Tackle concepts,
+- 29 active Tackle recognition-media records,
+- seven final-tier Rigs fully integrated:
+  1. Neko Rig
+  2. Shaky Head Rig
+  3. Free Rig
+  4. Double-Jig Crappie Rig
+  5. Jika Rig
+  6. Punch / Pegged Texas Rig
+  7. Bottom-Bouncer / Spinner Rig
+- six final canonical Tackle concepts integrated with approved recognition media:
+  1. Nail Weight
+  2. Shaky Head Jighead
+  3. Ringed Sinker
+  4. Split Ring
+  5. Bottom Bouncer
+  6. Spinner Harness
+- seven approved build-first YouTube tutorials integrated and runtime-validated,
+- all seven final-tier detail pages passed runtime validation,
+- all six new `Name ⓘ` reference panels passed runtime image validation,
+- representative readiness persistence passed,
+- desktop Edge layout and console health passed,
+- mobile-width Edge device emulation at approximately 375 px passed with no horizontal overflow or clipped controls,
+- GitHub Pages deployment and deployed-artifact integrity passed.
+
+Final workstream record:
+
+`workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0
+
+The approved initial Rig Guide is now complete. Further Rig work is enhancement scope rather than completion of the initial library.
+
 # In Progress
 
 No build segment is currently in progress.
@@ -233,9 +278,9 @@ Select the next milestone deliberately under D039/D040.
 
 Current candidates include:
 
-1. Intermediate+ Rig expansion — the logical continuation of the Rig learning-tier sequence.
-2. My Tackle / persistent ownership foundation.
-3. Knots foundation.
+1. My Tackle / persistent ownership foundation.
+2. Knots foundation.
+3. Recommendations foundation.
 4. Another explicitly prioritized project milestone.
 
-If the Rig sequence continues, Intermediate+ is next. No new segment should begin until its scope is explicitly selected.
+The Rig Guide does not require additional completion work before the next milestone is selected.
