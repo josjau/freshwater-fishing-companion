@@ -1,14 +1,15 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.1.0  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Latest Finalized Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0  
+**Active Workstream:** `docs/workstreams/KNOT-GUIDE.md` revision 0.2.0  
 **Next Selected Milestone:** Knots  
-**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.0  
+**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.2  
 **Session Environment:** Windows Desktop, Edge Browser, GitHub Desktop  
-**Session Status:** Clean milestone boundary — Knots selected as next milestone.  
+**Session Status:** Knots planning deliberately paused after Version 1 library, Reel & Line Setup, navigation, and difficulty approval. Resume with canonical Knot schema and controlled vocabularies.  
 **Last Updated:** 2026-08-12
 
 # 1. Start Here
@@ -72,22 +73,145 @@ The approved order is:
 
 This order is canonical until explicitly revised.
 
-`ROADMAP.md` revision 0.3.0 is the detailed planning record. `MILESTONES.md` revision 2.1.0 records the same upcoming sequence.
+`ROADMAP.md` revision 0.3.2 is the detailed planning record. `MILESTONES.md` revision 2.1.0 records the same upcoming sequence.
 
-# 4. Next Milestone — Knots
+# 4. Active Milestone — Knots
 
-Knots is the next selected milestone.
+**Planning Status: Approved Direction / In Progress**
 
-Before production implementation begins:
+The active planning record is:
 
-- review `docs/data-model/04-KNOTS.md` against the current architecture,
-- settle the practical Version 1 knot library,
-- define beginner-oriented Knot detail content,
-- decide the Knot instructional-media/tutorial approach,
-- define Knot search/navigation and connected relationships,
-- create the active Knot workstream and validation plan.
+`docs/workstreams/KNOT-GUIDE.md` revision `0.2.0`
 
-Do not begin the Fish Guide implementation until the Knots milestone is completed and validated unless the roadmap is explicitly revised.
+Production implementation has **not** begun.
+
+## Approved Version 1 Knot Library
+
+Version 1 contains 10 canonical Knots.
+
+Core 4:
+
+1. Arbor Knot
+2. Improved Clinch Knot
+3. Palomar Knot
+4. Double Uni Knot
+
+Additional Beginner / General:
+
+5. Uni Knot
+6. Double Surgeon’s Knot
+7. Non-Slip Loop Knot
+8. Dropper Loop Knot
+
+Specialized / Intermediate:
+
+9. Snell Knot
+10. Alberto Knot
+
+Minor named variations do not automatically become separate canonical Knot records. A separate record requires a meaningfully different tying process or a distinct practical fishing job.
+
+## Approved Difficulty Taxonomy
+
+Allowed values:
+
+- Beginner
+- Intermediate
+- Advanced
+
+Version 1 assignments:
+
+- Beginner: 6
+- Intermediate: 4
+- Advanced: 0 active Knots
+
+The UI should include an **Advanced Knots — Coming Soon** placeholder, but that placeholder is not a canonical Knot entity and is not part of the 10-knot count.
+
+Every active Knot card in **All Knots** should visibly display its difficulty.
+
+Core membership and difficulty are independent concepts.
+
+## Approved Navigation Direction
+
+The Knot Guide is task-first and beginner-oriented.
+
+Planned landing hierarchy:
+
+1. Search all Knots
+2. Get Your Reel Ready
+3. Core Knots — Learn These First
+4. What are you trying to do?
+5. All Knots
+
+Task-first discovery leads with **Attach Line to a Reel**, followed by:
+
+- Tie On a Hook, Swivel, or Lure
+- Connect Two Lines / Add a Leader
+- Make a Loop Connection
+
+The approved design direction may be refined during implementation if the actual UI does not flow naturally, provided the change preserves approved functionality, beginner-first intent, data ownership, and scope. Architecture/scope/ownership changes still require explicit approval.
+
+## Approved Reel & Line Setup Direction
+
+Reel & Line Setup is a first-class guided workflow inside the Knots milestone.
+
+Version 1 includes:
+
+- new/empty reel and replacement-line workflows,
+- Spinning, Spincast, and Baitcasting reels,
+- reel identification including **I'm not sure**,
+- Monofilament, Fluorocarbon, and Braid guidance including **I'm not sure**,
+- beginner species-based line type and pound-test recommendations,
+- all-around beginner recommendations where appropriate,
+- reel/rod compatibility checks,
+- a small **How to Read Your Reel** section explaining line-capacity markings and reel-size numbers,
+- reel-type-aware backing logic,
+- Arbor Knot spool attachment,
+- canonical line-to-line Knot handoffs where required,
+- reel-specific line routing, winding tension, and spool-fill guidance,
+- optional leader connection,
+- context-preserving return from Knot instruction to Reel Setup,
+- a final **Reel Ready** checkpoint and Rig Guide handoff.
+
+Fly reels and fly-line-specific setup remain Parking Lot for Version 1.
+
+Baitcasting scope covers correct spooling only; detailed brake tuning, backlash prevention, lure-weight configuration, and casting instruction are outside this workflow.
+
+## Approved Knot Media Direction
+
+Knot instruction is diagram/animation-first.
+
+Preferred hierarchy:
+
+1. project-owned instructional diagram,
+2. project-owned user-controlled step-through animation,
+3. diagram and animation together where motion materially improves understanding,
+4. video only when the knot cannot be taught adequately with diagram/animation,
+5. supplemental video exception may be approved for more advanced knots where hand position, tensioning, or motion materially benefits from video.
+
+Core Knots require a complete non-video instructional path.
+
+Animations should be user-controlled, non-autoplaying, reduced-motion aware, and understandable when motion is disabled.
+
+## Exact Stopping Point — Resume Here
+
+The next planning discussion is:
+
+**Canonical Knot schema and controlled vocabularies.**
+
+Do not restart the already approved Version 1 library, Reel & Line Setup, navigation, difficulty taxonomy, or media-policy discussions unless testing or a new requirement exposes a genuine issue.
+
+After schema/vocabulary approval, remaining planning topics are:
+
+1. exact Rig → Knot relationship field/schema and 20-Rig audit rules,
+2. Knot detail-page information hierarchy,
+3. exact search behavior and beginner search vocabulary,
+4. research/source-validation standard for canonical Knot instructions,
+5. diagram/animation production and technical validation workflow,
+6. final milestone validation checklist and implementation sequence.
+
+No production Knot data, JavaScript, CSS, HTML, or instructional media should be implemented until planning is sufficiently settled to avoid unnecessary redesign.
+
+Do not begin Fish Guide implementation until the Knots milestone is completed and validated unless the roadmap is explicitly revised.
 
 # 5. What Should I Throw — Canonical Instruction Direction
 
@@ -282,6 +406,7 @@ When My Tackle becomes authoritative:
 
 - Current-state entrypoint: `HANDOFF.md`
 - Canonical development sequence: `ROADMAP.md`
+- Active Knot workstream: `workstreams/KNOT-GUIDE.md`
 - Final Rig completion workstream: `workstreams/RIG-GUIDE-COMPLETION.md`
 - Long-term decisions: `DECISIONS.md`
 - Architecture: `ARCHITECTURE.md`
