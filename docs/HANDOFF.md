@@ -1,16 +1,16 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.1.0  
+**Document Revision:** 1.2.0  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Latest Finalized Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0  
-**Active Workstream:** `docs/workstreams/KNOT-GUIDE.md` revision 0.2.0  
+**Active Workstream:** `docs/workstreams/KNOT-GUIDE.md` revision 0.3.0  
 **Next Selected Milestone:** Knots  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.2  
-**Session Environment:** Windows Desktop, Edge Browser, GitHub Desktop  
-**Session Status:** Knots planning deliberately paused after Version 1 library, Reel & Line Setup, navigation, and difficulty approval. Resume with canonical Knot schema and controlled vocabularies.  
-**Last Updated:** 2026-08-12
+**Session Environment:** Windows Desktop, Brave Browser, GitHub Desktop  
+**Session Status:** Knots planning in progress. Canonical Knot schema and controlled vocabularies approved. Resume with Rig → Knot relationship schema and 20-Rig audit rules.  
+**Last Updated:** 2026-08-13
 
 # 1. Start Here
 
@@ -81,7 +81,7 @@ This order is canonical until explicitly revised.
 
 The active planning record is:
 
-`docs/workstreams/KNOT-GUIDE.md` revision `0.2.0`
+`docs/workstreams/KNOT-GUIDE.md` revision `0.3.0`
 
 Production implementation has **not** begun.
 
@@ -150,6 +150,95 @@ Task-first discovery leads with **Attach Line to a Reel**, followed by:
 
 The approved design direction may be refined during implementation if the actual UI does not flow naturally, provided the change preserves approved functionality, beginner-first intent, data ownership, and scope. Architecture/scope/ownership changes still require explicit approval.
 
+## Approved Canonical Knot Schema
+
+Canonical Knot records use:
+
+```text
+id
+name
+summary
+createdVersion
+lastModifiedVersion
+isActive
+
+difficulty
+connectionTypes[]
+compatibleLineTypes[]
+
+aliases[]
+keywords[]
+
+bestFor[]
+limitations[]
+
+tyingSteps[]
+commonMistakes[]
+finalChecks[]
+
+referenceLinks[]
+```
+
+Core membership is owned separately by ordered `CORE_KNOT_IDS[]` rather than an `isCore` field.
+
+Approved Core IDs:
+
+```text
+arbor-knot
+improved-clinch-knot
+palomar-knot
+double-uni-knot
+```
+
+Approved `connectionTypes[]` values:
+
+```text
+reel-spool-attachment
+terminal-attachment
+line-to-line
+terminal-loop
+dropper-loop
+```
+
+Approved `compatibleLineTypes[]` values:
+
+```text
+monofilament
+fluorocarbon
+braid
+```
+
+`aliases[]` contains legitimate alternative Knot names. `keywords[]` contains deliberate beginner/task search phrases.
+
+Do not store `strengthRating`, `stepCount`, `relatedRigIds`, `relatedTechniqueIds`, Knot-owned `imageIds`, Knot-owned `animationIds`, `taskIds`, `primaryPurpose`, `recommendedSpecies`, or individual `isCore` flags in Version 1.
+
+## Approved Tying-Step Rule
+
+`tyingSteps[]` is an ordered array of authoritative instruction strings.
+
+- array position owns step order,
+- the UI must display numbered steps beginning at 1,
+- the visual treatment should match the established Rig Guide **How to Build It** numbered-step pattern,
+- step numbers are derived and not stored,
+- `stepCount` is derived from `tyingSteps.length`,
+- step numbers are not embedded in the instruction strings.
+
+If future animation work requires persistent step identity, step objects with stable IDs may be introduced, but display numbers remain derived.
+
+## Approved Knot Media Ownership
+
+Knot records do not store inverse `imageIds[]` / `animationIds[]` when Media owns the association.
+
+Conceptual ownership:
+
+```text
+Media
+    ownerType: "knot"
+    ownerId: canonical Knot ID
+```
+
+The exact animation media implementation remains a later planning topic.
+
 ## Approved Reel & Line Setup Direction
 
 Reel & Line Setup is a first-class guided workflow inside the Knots milestone.
@@ -196,18 +285,17 @@ Animations should be user-controlled, non-autoplaying, reduced-motion aware, and
 
 The next planning discussion is:
 
-**Canonical Knot schema and controlled vocabularies.**
+**Rig → Knot relationship field/schema and 20-Rig connection audit rules.**
 
-Do not restart the already approved Version 1 library, Reel & Line Setup, navigation, difficulty taxonomy, or media-policy discussions unless testing or a new requirement exposes a genuine issue.
+Do not restart the already approved Version 1 library, Reel & Line Setup, navigation, difficulty taxonomy, canonical Knot schema, controlled vocabularies, tying-step model, or media-policy discussions unless testing or a new requirement exposes a genuine issue.
 
-After schema/vocabulary approval, remaining planning topics are:
+After Rig → Knot relationship approval, remaining planning topics are:
 
-1. exact Rig → Knot relationship field/schema and 20-Rig audit rules,
-2. Knot detail-page information hierarchy,
-3. exact search behavior and beginner search vocabulary,
-4. research/source-validation standard for canonical Knot instructions,
-5. diagram/animation production and technical validation workflow,
-6. final milestone validation checklist and implementation sequence.
+1. Knot detail-page information hierarchy,
+2. exact search behavior and beginner search vocabulary,
+3. research/source-validation standard for canonical Knot instructions,
+4. diagram/animation production and technical validation workflow,
+5. final milestone validation checklist and implementation sequence.
 
 No production Knot data, JavaScript, CSS, HTML, or instructional media should be implemented until planning is sufficiently settled to avoid unnecessary redesign.
 
