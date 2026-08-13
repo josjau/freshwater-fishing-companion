@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Knot Canonical Content Lock
 
-**Document Status:** Research Complete / Awaiting User Content Lock  
+**Document Status:** Content Locked / Production Package 1  
 **Milestone:** Knots  
 **Updated:** 2026-08-13
 
@@ -10,7 +10,7 @@ This document is the complete pre-production content-lock record for all 10 appr
 
 Research provenance is maintained separately in `docs/KNOT_REFERENCE_SOURCES.md`.
 
-Nothing in this document is production data yet. The records below are the proposed canonical content that will be transferred into `data/knots.js` only after user approval and content lock.
+The user approved the complete 10-Knot content set by uploading the consolidated research/content-lock package. Production Package 1 transfers these locked records into `data/knots.js` using Version 0.5.0 metadata.
 
 # Lock Standard
 
@@ -28,32 +28,32 @@ A Knot is ready for content lock only when:
 
 | Knot | Research | Canonical Content |
 |---|---|---|
-| Arbor Knot | Complete | Proposed / awaiting lock |
-| Improved Clinch Knot | Complete | Proposed / awaiting lock |
-| Palomar Knot | Complete | Proposed / awaiting lock |
-| Double Uni Knot | Complete | Proposed / awaiting lock |
-| Uni Knot | Complete | Proposed / awaiting lock |
-| Double Surgeon’s Knot | Complete | Proposed / awaiting lock |
-| Non-Slip Loop Knot | Complete | Proposed / awaiting lock |
-| Dropper Loop Knot | Complete | Proposed / awaiting lock |
-| Snell Knot | Complete | Proposed / awaiting lock |
-| Alberto Knot | Complete | Proposed / awaiting lock |
+| Arbor Knot | Complete | Locked |
+| Improved Clinch Knot | Complete | Locked |
+| Palomar Knot | Complete | Locked |
+| Double Uni Knot | Complete | Locked |
+| Uni Knot | Complete | Locked |
+| Double Surgeon’s Knot | Complete | Locked |
+| Non-Slip Loop Knot | Complete | Locked |
+| Dropper Loop Knot | Complete | Locked |
+| Snell Knot | Complete | Locked |
+| Alberto Knot | Complete | Locked |
 
-# Proposed Canonical Records
+# Locked Canonical Records
 
 ## Arbor Knot
 
 **Canonical ID:** `arbor-knot`  
 **Difficulty:** Beginner  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "arbor-knot",
     "name": "Arbor Knot",
     "summary": "A simple two-overhand-knot connection used to secure fishing line or backing to a reel spool before spooling.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Beginner",
     "connectionTypes": [
@@ -111,15 +111,15 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `improved-clinch-knot`  
 **Difficulty:** Beginner  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "improved-clinch-knot",
     "name": "Improved Clinch Knot",
     "summary": "A compact snug terminal knot for attaching monofilament or fluorocarbon line to hooks, swivels, clips, and many lures.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Beginner",
     "connectionTypes": [
@@ -179,15 +179,15 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `palomar-knot`  
 **Difficulty:** Beginner  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "palomar-knot",
     "name": "Palomar Knot",
     "summary": "A simple doubled-line terminal knot that works well with monofilament, fluorocarbon, and braid.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Beginner",
     "connectionTypes": [
@@ -250,15 +250,15 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `double-uni-knot`  
 **Difficulty:** Beginner  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "double-uni-knot",
     "name": "Double Uni Knot",
     "summary": "Two opposing Uni knots that slide together to join main line, leader, or backing across common fishing-line materials.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Beginner",
     "connectionTypes": [
@@ -324,15 +324,15 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `uni-knot`  
 **Difficulty:** Beginner  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "uni-knot",
     "name": "Uni Knot",
     "summary": "A versatile sliding knot used for terminal attachments and, with suitable spool guidance, reel-spool attachment.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Beginner",
     "connectionTypes": [
@@ -399,15 +399,15 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `double-surgeons-knot`  
 **Difficulty:** Beginner  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "double-surgeons-knot",
     "name": "Double Surgeon’s Knot",
     "summary": "A simple two-pass overhand line-to-line knot for joining monofilament or fluorocarbon sections of equal or unequal diameter.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Beginner",
     "connectionTypes": [
@@ -470,15 +470,15 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `non-slip-loop-knot`  
 **Difficulty:** Intermediate  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "non-slip-loop-knot",
     "name": "Non-Slip Loop Knot",
     "summary": "A fixed terminal loop knot that lets a lure, jig, or fly move more freely than a snug knot seated directly against the eye.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Intermediate",
     "connectionTypes": [
@@ -543,15 +543,15 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `dropper-loop-knot`  
 **Difficulty:** Intermediate  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "dropper-loop-knot",
     "name": "Dropper Loop Knot",
     "summary": "An in-line branch loop formed in a leader so a hook, jig, fly, or other terminal item can be attached away from the main line.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Intermediate",
     "connectionTypes": [
@@ -610,15 +610,15 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `snell-knot`  
 **Difficulty:** Intermediate  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "snell-knot",
     "name": "Snell Knot",
     "summary": "A hook-specific terminal connection that secures the line in tight coils around the hook shank for a direct in-line pull.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Intermediate",
     "connectionTypes": [
@@ -681,15 +681,15 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `alberto-knot`  
 **Difficulty:** Intermediate  
-**Status:** Proposed / awaiting lock
+**Status:** Locked
 
 ```js
 {
     "id": "alberto-knot",
     "name": "Alberto Knot",
     "summary": "A compact braid-to-leader connection that wraps braid around a folded monofilament or fluorocarbon leader loop.",
-    "createdVersion": "TBD",
-    "lastModifiedVersion": "TBD",
+    "createdVersion": "0.5.0",
+    "lastModifiedVersion": "0.5.0",
     "isActive": true,
     "difficulty": "Intermediate",
     "connectionTypes": [
@@ -778,16 +778,20 @@ A Knot is ready for content lock only when:
 
 ## Deployment metadata
 
-`createdVersion` and `lastModifiedVersion` remain `TBD` in this content-lock document. They will be assigned during Production Package 1 when the actual implementation version is finalized. This does not change the approved canonical schema.
+Production Package 1 assigns `createdVersion` and `lastModifiedVersion` as `0.5.0` for all 10 initial canonical Knot records. This records the first production implementation of the locked library and does not change the approved schema.
 
 
-# Approval Effect
+# Lock Effect
 
-If the user approves this full document without changes:
+All 10 canonical Knot content records are locked for Production Package 1.
 
-1. all 10 canonical Knot content records are considered **Locked for Production Package 1**;
-2. research provenance remains separately maintained in `docs/KNOT_REFERENCE_SOURCES.md`;
-3. Production Package 1 may assign implementation-version metadata and build `data/knots.js`, `CORE_KNOT_IDS`, and the approved Rig-owned `knotApplications[]` relationships;
-4. later diagram/animation work must visualize these locked `tyingSteps[]` rather than creating a second instructional method.
+Production Package 1 may:
+
+1. create `data/knots.js` with the locked records and ordered `CORE_KNOT_IDS`;
+2. assign Version `0.5.0` implementation metadata;
+3. add the approved Rig-owned `knotApplications[]` relationships;
+4. load the canonical Knot dataset without yet exposing the full Knot Guide UI.
+
+Later diagram/animation work must visualize these locked `tyingSteps[]` rather than creating a second instructional method.
 
 If testing or later technical research exposes a genuine defect, the affected record may be reopened through an explicit documented correction.

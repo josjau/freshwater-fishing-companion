@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.3.2
+**Document Revision:** 0.3.3
 **Document Status:** Draft
 **Decision Baseline:** D025, D026, D037, D043, D044
 
@@ -185,6 +185,46 @@ Bidirectional UI navigation does not imply bidirectional canonical storage.
 
 ---
 
+# Rig-to-Knot Relationship Ownership
+
+`Rig.knotApplications[]` is the authoritative source for contextual Rig-to-Knot recommendations.
+
+Each real tied connection contains exactly:
+
+```text
+label
+connectionType
+recommendedKnotIds[]
+notes
+```
+
+Rules:
+
+- Rig owns the physical connection context.
+- Only real tied connections receive an entry; hardware-only joins do not.
+- `recommendedKnotIds[]` is selective and nonempty, not an exhaustive list of every theoretically usable Knot.
+- Referenced Knot IDs must resolve to active canonical Knot records.
+- General tying instructions remain with Knot; `notes` contains only Rig-specific context.
+- No Version 1 application ID or assembly-step index is stored.
+- Runtime code must not infer the relationship by parsing `assemblySteps` prose.
+
+Derived inverse navigation:
+
+```text
+Canonical storage:
+Rig.knotApplications[].recommendedKnotIds[]
+    -> canonical Knot IDs
+
+Derived Knot detail:
+Knot
+    -> Where You'll Use It
+    -> matching active Rigs / connection labels
+```
+
+Production Package 1 audits all 20 active Rigs and records 31 real tied connection points. The final audited count is authoritative.
+
+---
+
 # Canonical Identity Across Relationships
 
 A relationship references another entity by stable ID.
@@ -263,6 +303,7 @@ Rig
     -> Fish
     -> Conditions
     -> Tackle requirements
+    -> Knots
     -> Techniques
     -> Readiness
 
@@ -338,6 +379,11 @@ Relationship validation should include, where applicable:
 - Derived `Used In` output matches active Rig requirements.
 - Every `CORE_RIG_IDS` entry resolves to one active canonical Rig and appears only once.
 - Core presentation order matches the registry order.
+- Every active Rig has a deliberate `knotApplications[]` audit result.
+- Every Rig Knot application has exactly `label`, `connectionType`, `recommendedKnotIds[]`, and `notes`.
+- Every `recommendedKnotIds[]` entry resolves to an active canonical Knot.
+- Rig-to-Knot reverse navigation is derived rather than stored again on Knot.
+- Hardware-only joins are not represented as Knot applications.
 - Inactive entities remain resolvable for historical or migration needs.
 - User-owned references do not mutate canonical Reference Knowledge.
 
@@ -370,3 +416,4 @@ These are deferred until demonstrated by actual need.
 - 08-BACKUP.md
 - ../ARCHITECTURE.md
 - ../DECISIONS.md
+- ../workstreams/KNOT-RELATIONSHIP-APPROVAL.md

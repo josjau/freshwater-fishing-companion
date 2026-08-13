@@ -2,14 +2,15 @@
    FRESHWATER FISHING COMPANION
    FILE: data/rigs.js
    PURPOSE: Provides canonical learning-tier Rig records for
-   browsing, instruction, verified references, and tackle readiness.
+   browsing, instruction, verified references, tackle readiness,
+   and Rig-to-Knot relationships.
    ========================================================== */
 
 "use strict";
 
 const RIG_DATA_BUILD_INFO = Object.freeze({
     file: "data/rigs.js",
-    milestone: "Rig Guide Completion"
+    milestone: "Knot Guide — Production Package 1"
 });
 
 const CORE_RIG_IDS = Object.freeze([
@@ -27,7 +28,7 @@ const RIG_DATA = Object.freeze([
         name: "Fixed Bobber Rig",
         summary: "A simple float rig for presenting bait at a shallow, fixed depth.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -83,6 +84,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Worms are a simple beginner option."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Tie the hook to the end of the main line.",
             "Attach a small split shot above the hook if needed.",
@@ -111,7 +124,7 @@ const RIG_DATA = Object.freeze([
         name: "Slip Bobber Rig",
         summary: "A depth-adjustable float rig for presenting bait at a controlled depth.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Beginner+",
         useCases: [
@@ -180,6 +193,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Common choices include worms, minnows, or small jigs."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Slide the bobber stop onto the main line.",
             "Slide the bead onto the line below the bobber stop.",
@@ -211,7 +236,7 @@ const RIG_DATA = Object.freeze([
         name: "Basic Bottom Rig",
         summary: "A straightforward bait rig that holds the offering near the bottom.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -280,6 +305,38 @@ const RIG_DATA = Object.freeze([
                 notes: "Use bait appropriate for the water and local rules."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to swivel",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Leader to swivel",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Leader to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Slide the sinker onto the main line.",
             "Slide on a bead below the sinker if using one.",
@@ -311,7 +368,7 @@ const RIG_DATA = Object.freeze([
         name: "Texas Rig",
         summary: "A weed-resistant soft-plastic rig built around a bullet weight and offset hook.",
         createdVersion: "0.2.4",
-        lastModifiedVersion: "0.3.0",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Beginner+",
         useCases: [
@@ -368,6 +425,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Optional for keeping the weight close to the bait."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Slide the bullet weight onto the main line with the pointed end facing the rod.",
             "Tie the offset hook to the main line.",
@@ -399,7 +468,7 @@ const RIG_DATA = Object.freeze([
         name: "Jighead + Soft Plastic",
         summary: "A simple weighted-lure setup that threads a soft plastic straight onto a jighead for casting, swimming, hopping, or vertical presentation.",
         createdVersion: "0.2.8",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -446,6 +515,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Small grubs, minnows, paddletails, and worms are practical choices."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line or leader to jighead",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Inspect the jighead and choose a soft plastic that fits the hook without crowding the bend.",
             "Tie the jighead directly to the main line or leader.",
@@ -477,7 +558,7 @@ const RIG_DATA = Object.freeze([
         name: "Inline Spinner Setup",
         summary: "A ready-to-fish cast-and-retrieve setup built around a compact lure whose blade spins around a central shaft.",
         createdVersion: "0.2.8",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -504,6 +585,18 @@ const RIG_DATA = Object.freeze([
                 quantity: 1,
                 required: true,
                 notes: "Choose a size that matches the target fish, line, and depth you need to reach."
+            }
+        ],
+        knotApplications: [
+            {
+                label: "Main line or leader to spinner",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
             }
         ],
         assemblySteps: [
@@ -535,7 +628,7 @@ const RIG_DATA = Object.freeze([
         name: "Wacky Rig",
         summary: "A weightless soft-plastic setup that hooks a stick-style worm through its middle so both ends can move freely.",
         createdVersion: "0.2.9",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -587,6 +680,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Optional; an O-ring can reduce bait tearing while keeping the midpoint presentation."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line or leader to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Tie the Wacky Hook directly to the main line or leader.",
             "Find the approximate midpoint of the soft-plastic stick worm.",
@@ -616,7 +721,7 @@ const RIG_DATA = Object.freeze([
         name: "Ned Rig",
         summary: "A compact finesse setup pairing a light mushroom-style jighead with a short soft-plastic bait.",
         createdVersion: "0.2.9",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
@@ -663,6 +768,18 @@ const RIG_DATA = Object.freeze([
                 notes: "A roughly 2.75-inch stick-style finesse bait is a standard beginner example; other compact Ned-sized plastics also work."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line or leader to jighead",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Tie the Ned Jighead directly to the main line or leader.",
             "Choose a compact finesse soft plastic that fits the small jighead without crowding the hook gap.",
@@ -695,7 +812,7 @@ const RIG_DATA = Object.freeze([
         name: "Weightless Soft-Plastic Rig",
         summary: "A weed-resistant soft-plastic setup tied directly to an offset hook with no sinker or other added weight.",
         createdVersion: "0.2.9",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Beginner+",
         useCases: [
@@ -741,6 +858,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Stick worms, flukes, and other soft plastics can be rigged weightless."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line or leader to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Tie the offset worm hook directly to the main line or leader; do not add a sinker.",
             "Insert the hook point into the nose of the soft plastic about one eighth to one quarter inch and bring the point out through the side.",
@@ -771,7 +900,7 @@ const RIG_DATA = Object.freeze([
         name: "Drop Shot Rig",
         summary: "A finesse rig that holds a soft plastic above a bottom-contact weight while keeping the hook tied directly to the main line.",
         createdVersion: "0.3.1",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Intermediate",
         useCases: [
@@ -824,6 +953,16 @@ const RIG_DATA = Object.freeze([
                 notes: "Use the lightest drop-shot weight that maintains bottom contact."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to drop-shot hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "palomar-knot"
+                ],
+                notes: "Leave a long tag end, then pass the tag end back through the hook eye from the point side so the hook rides point-up."
+            }
+        ],
         assemblySteps: [
             "Tie the finesse hook to the main line while leaving a long tag end below the knot.",
             "Pass the tag end back through the hook eye from the point side so the hook turns outward and rides point-up.",
@@ -855,7 +994,7 @@ const RIG_DATA = Object.freeze([
         name: "Carolina Rig",
         summary: "A bottom-contact soft-plastic rig that separates a sliding weight from the bait with a swivel and leader.",
         createdVersion: "0.3.1",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Intermediate",
         useCases: [
@@ -926,6 +1065,38 @@ const RIG_DATA = Object.freeze([
                 notes: "Worms, lizards, creature baits, and other soft plastics are common choices."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to swivel",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Leader to swivel",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Leader to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Slide the sinker onto the main line so it can move freely.",
             "Slide the Protective Bead onto the main line below the sinker.",
@@ -958,7 +1129,7 @@ const RIG_DATA = Object.freeze([
         name: "Live-Bait Slip-Sinker Rig",
         summary: "A sliding-sinker live-bait rig that lets a fish move the line with reduced resistance while the bait trails behind a swivel and leader.",
         createdVersion: "0.3.1",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Intermediate",
         useCases: [
@@ -1029,6 +1200,38 @@ const RIG_DATA = Object.freeze([
                 notes: "Common options include nightcrawlers, leeches, or minnows where legal."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to swivel",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Leader to swivel",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Leader to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Slide the Sliding Sinker onto the main line so the line can move freely through it.",
             "Slide on a Protective Bead below the sinker if using one.",
@@ -1061,7 +1264,7 @@ const RIG_DATA = Object.freeze([
         name: "Three-Way Rig",
         summary: "A current-oriented bottom rig that uses a three-way swivel to separate the main line, bait leader, and sinker dropper.",
         createdVersion: "0.3.1",
-        lastModifiedVersion: "0.3.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Intermediate",
         useCases: [
@@ -1126,6 +1329,58 @@ const RIG_DATA = Object.freeze([
                 notes: "Tie a bank, bell, or similar terminal sinker to the short dropper so the weight stays below the bait leader."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to three-way swivel",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Hook leader to three-way swivel",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Hook leader to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Sinker dropper to three-way swivel",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Sinker dropper to sinker",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Tie the main line to one eye of the Three-Way Swivel.",
             "Cut a hook leader from the Leader Line and tie it to a second swivel eye.",
@@ -1158,7 +1413,7 @@ const RIG_DATA = Object.freeze([
         name: "Neko Rig",
         summary: "A weighted wacky-style finesse rig with a nail weight inserted into one end of a soft-plastic worm so the bait works nose-down along the bottom.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
@@ -1217,6 +1472,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Optional but useful for securing the hook while reducing damage to the soft plastic."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line or leader to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Choose which end of the soft-plastic worm will be the weighted nose.",
             "Insert the Nail Weight straight into that end until it is secure; a small exposed head may be left for added bottom feel when appropriate.",
@@ -1248,7 +1515,7 @@ const RIG_DATA = Object.freeze([
         name: "Shaky Head Rig",
         summary: "A finesse soft-plastic rig built around a dedicated shaky-head jighead that keeps the bait connected directly to a light bottom-contact weight.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
@@ -1295,6 +1562,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Straight-tail finesse worms are a common starting point."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line or leader to jighead",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Tie the Shaky Head Jighead directly to the main line or leader.",
             "Secure the nose of the soft plastic on the jighead's keeper, screw-lock, or pin so it is seated firmly against the head.",
@@ -1325,7 +1604,7 @@ const RIG_DATA = Object.freeze([
         name: "Free Rig",
         summary: "A soft-plastic rig that lets a ringed sinker slide freely on the main line above a directly tied offset hook, separating the weight's fall from the bait.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
@@ -1378,6 +1657,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Worms, creatures, craws, and other Texas-riggable plastics can be used."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Pass the main line through the closed eye of the Ringed Sinker so the weight can slide freely up and down the line.",
             "Tie the Offset Worm Hook directly to the end of the main line below the sinker.",
@@ -1408,7 +1699,7 @@ const RIG_DATA = Object.freeze([
         name: "Double-Jig Crappie Rig",
         summary: "A tandem crappie setup that presents two jighead-and-soft-plastic combinations at different positions on the same main line.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
@@ -1455,6 +1746,26 @@ const RIG_DATA = Object.freeze([
                 notes: "Rig one small crappie-sized soft plastic on each jighead."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to lower jighead",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            },
+            {
+                label: "Upper jig branch loop",
+                connectionType: "dropper-loop",
+                recommendedKnotIds: [
+                    "dropper-loop-knot"
+                ],
+                notes: "Form the branch loop in the main line above the lower jig, then attach the upper jig to the completed loop."
+            }
+        ],
         assemblySteps: [
             "Tie the lower Jighead to the end of the main line.",
             "Move 12 to 18 inches up the main line and form a short dropper loop or loop-knot connection for the upper Jighead.",
@@ -1486,7 +1797,7 @@ const RIG_DATA = Object.freeze([
         name: "Jika Rig",
         summary: "A compact bottom-contact soft-plastic rig that connects an offset hook and hanging ringed sinker at a split-ring junction.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Advanced",
         useCases: [
@@ -1545,6 +1856,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Texas-rig the soft plastic weedless on the offset hook."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line or leader to split ring",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Use split-ring pliers to attach the Split Ring to the eye of the Offset Worm Hook.",
             "Attach the Ringed Sinker to the same split-ring junction so the weight hangs below the hook and can pivot independently.",
@@ -1576,7 +1899,7 @@ const RIG_DATA = Object.freeze([
         name: "Punch / Pegged Texas Rig",
         summary: "A heavy-cover Texas Rig that pegs the bullet weight tight to a weedless soft plastic so the weight and bait penetrate dense vegetation together.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Advanced",
         useCases: [
@@ -1634,6 +1957,18 @@ const RIG_DATA = Object.freeze([
                 notes: "Compact creature, craw, and streamlined soft plastics move through cover efficiently."
             }
         ],
+        knotApplications: [
+            {
+                label: "Main line to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
         assemblySteps: [
             "Install the Weight Peg on the main line before the weight.",
             "Slide the Bullet Weight onto the line with the pointed end facing the rod.",
@@ -1665,7 +2000,7 @@ const RIG_DATA = Object.freeze([
         name: "Bottom-Bouncer / Spinner Rig",
         summary: "A trolling and drifting system that uses a wire bottom bouncer to maintain bottom contact while a spinner harness and bait trail behind it.",
         createdVersion: "0.4.0",
-        lastModifiedVersion: "0.4.1",
+        lastModifiedVersion: "0.5.0",
         isActive: true,
         difficulty: "Expert",
         useCases: [
@@ -1716,6 +2051,18 @@ const RIG_DATA = Object.freeze([
                 quantity: 1,
                 required: true,
                 notes: "Nightcrawlers, minnows, leeches, or approved artificial trailers may be used with a compatible harness."
+            }
+        ],
+        knotApplications: [
+            {
+                label: "Main line to bottom bouncer",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
             }
         ],
         assemblySteps: [

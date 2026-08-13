@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.2.4
+**Document Revision:** 0.2.5
 **Document Status:** Draft
 **Decision Baseline:** D025, D026, D027, D028, D042-D049
 
@@ -151,6 +151,48 @@ A separate requirement-level `id` is not added unless a demonstrated editing, mi
 Ownership
 
 Application.
+
+---
+
+## knotApplications
+
+Purpose
+
+Authoritative Rig-owned descriptions of real tied connections required by the physical setup, with curated recommendations to active canonical Knot records.
+
+Each application uses exactly:
+
+```js
+{
+    label: "Main line to hook",
+    connectionType: "terminal-attachment",
+    recommendedKnotIds: [
+        "improved-clinch-knot",
+        "palomar-knot",
+        "uni-knot"
+    ],
+    notes: null
+}
+```
+
+Field purposes:
+
+- `label` — human-readable Rig-specific connection context.
+- `connectionType` — one approved Knot connection-type value.
+- `recommendedKnotIds[]` — nonempty curated references to active canonical Knots.
+- `notes` — optional context that matters for this Rig connection but does not duplicate general Knot instructions.
+
+Ownership
+
+Application / Rig.
+
+Rules:
+
+- Store only real tied connections. Hardware-only joins do not receive a Knot application.
+- Do not store an application ID or assembly-step index in Version 1.
+- Do not infer connections by parsing `assemblySteps`.
+- Reverse Knot **Where You'll Use It** navigation is derived from active Rig records rather than stored again on Knot.
+- General tying instructions remain canonical Knot content.
 
 ---
 
@@ -357,9 +399,9 @@ Practical ownership test:
 
 ---
 
-# Approved Initial Rig Library — Not Yet Fully Implemented
+# Approved Initial Rig Library — Implemented
 
-The approved initial canonical target is 20 Rigs selected for practical freshwater fishing in northeast Oklahoma and southwest Kansas:
+The approved initial canonical library contains 20 active Rigs selected for practical freshwater fishing in northeast Oklahoma and southwest Kansas:
 
 1. Fixed Bobber Rig
 2. Basic Bottom Rig
@@ -382,13 +424,11 @@ The approved initial canonical target is 20 Rigs selected for practical freshwat
 19. Double-Jig Crappie Rig
 20. Bottom-Bouncer / Spinner Rig
 
-The list is an approved implementation target, not a claim that all 20 records currently exist in `data/rigs.js`.
+All 20 records are implemented in `data/rigs.js` across the finalized Beginner, Beginner+, Intermediate, Intermediate+, Advanced, and Expert tiers.
 
-The current Rig Learning Tiers implementation contains the first nine active records: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig. This completes the Beginner and Beginner+ tiers before Intermediate work begins.
+The validated corrective implementation uses `wacky-hook` (plus optional `wacky-o-ring`) for the Wacky Rig and `ned-jighead` for the Ned Rig so readiness does not treat an unsuitable generic hook or general-purpose jighead as sufficient for those standard setups.
 
-The current corrective implementation uses `wacky-hook` (plus optional `wacky-o-ring`) for the Wacky Rig and `ned-jighead` for the Ned Rig so readiness does not treat an unsuitable generic hook or general-purpose jighead as sufficient for those standard setups.
-
-Carolina Rig is specifically approved for the near-term expansion. The existing `carolina-rig` relationship should be resolved by adding the canonical Carolina Rig record during the Intermediate expansion.
+Production Package 1 of the Knots milestone adds a deliberate `knotApplications[]` audit across all 20 active Rigs. The audit contains 31 real tied connection points. Hardware-only joins remain excluded.
 
 ---
 
@@ -477,3 +517,4 @@ These require separate architectural approval.
 - 05A-INVENTORY.md
 - 06-LURES.md
 - 09-RELATIONSHIPS.md
+- ../workstreams/KNOT-RELATIONSHIP-APPROVAL.md

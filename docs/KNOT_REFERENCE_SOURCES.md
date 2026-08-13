@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Knot Reference Sources
 
-**Document Status:** Research Provenance / Complete for V1 Content Lock  
+**Document Status:** Research Provenance / Complete for V1 Production Package 1  
 **Milestone:** Knots  
 **Started:** 2026-08-13  
 **Updated:** 2026-08-13
@@ -27,16 +27,16 @@ Every canonical Knot requires at least two independent credible technical source
 
 | Knot | Research Status | Canonical Content Status |
 |---|---|---|
-| Arbor Knot | Source validation complete | Proposed / awaiting lock |
-| Improved Clinch Knot | Source validation complete | Proposed / awaiting lock |
-| Palomar Knot | Source validation complete | Proposed / awaiting lock |
-| Double Uni Knot | Source validation complete | Proposed / awaiting lock |
-| Uni Knot | Source validation complete | Proposed / awaiting lock |
-| Double Surgeon’s Knot | Source validation complete | Proposed / awaiting lock |
-| Non-Slip Loop Knot | Source validation complete | Proposed / awaiting lock |
-| Dropper Loop Knot | Source validation complete | Proposed / awaiting lock |
-| Snell Knot | Source validation complete | Proposed / awaiting lock |
-| Alberto Knot | Source validation complete | Proposed / awaiting lock |
+| Arbor Knot | Source validation complete | Locked |
+| Improved Clinch Knot | Source validation complete | Locked |
+| Palomar Knot | Source validation complete | Locked |
+| Double Uni Knot | Source validation complete | Locked |
+| Uni Knot | Source validation complete | Locked |
+| Double Surgeon’s Knot | Source validation complete | Locked |
+| Non-Slip Loop Knot | Source validation complete | Locked |
+| Dropper Loop Knot | Source validation complete | Locked |
+| Snell Knot | Source validation complete | Locked |
+| Alberto Knot | Source validation complete | Locked |
 
 # Arbor Knot
 
@@ -574,14 +574,8 @@ All three material tokens are stored because the knot’s actual supported pairi
 
 # V1 Research Closeout
 
-All 10 approved Version 1 Knots now meet the project’s research threshold for canonical content review.
+All 10 approved Version 1 Knots meet the project’s research threshold and are content-locked.
 
-Before Production Package 1:
-
-1. user reviews `docs/workstreams/KNOT-CANONICAL-CONTENT-LOCK.md`;
-2. any requested content corrections are reconciled against this provenance record;
-3. after approval, all 10 records are marked content-locked;
-4. production version metadata is assigned;
-5. `data/knots.js`, `CORE_KNOT_IDS`, and Rig `knotApplications[]` may then be prepared.
+Production Package 1 assigns Version `0.5.0` metadata and implements the locked library in `data/knots.js` together with the ordered `CORE_KNOT_IDS` registry and the approved Rig-owned `knotApplications[]` relationship layer.
 
 Static instructional SVG work remains downstream of content lock and must visualize the locked tying geometry rather than introduce new instructional variants.
