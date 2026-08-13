@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.3.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-12
 
@@ -20,6 +20,7 @@ Features may move only through an explicit project decision. A new build segment
 - One source of truth.
 - Finish and validate the current segment before beginning the next.
 - Resolve foundational User Knowledge storage questions before building features that depend on persistent user data.
+- Prioritize practical first-time-angler blockers before advanced fishing specializations.
 
 # Current Project State
 
@@ -73,7 +74,22 @@ The Knot milestone should establish:
 - appropriate instructional media/tutorial strategy,
 - search and navigation,
 - connected relationships to Rigs and later Techniques/Recommendations,
-- responsive/runtime validation.
+- responsive/runtime validation,
+- a first-time-angler **Reel & Line Setup** learning workflow that explains how to get an empty reel ready to fish.
+
+The Reel & Line Setup workflow should cover the practical sequence, not just isolated knot definitions:
+
+- choosing/confirming the main line,
+- determining whether backing is needed,
+- attaching line or backing to the reel spool with the Arbor Knot,
+- connecting backing to braided main line with an approved beginner line-to-line knot such as the Double Uni,
+- filling the spool appropriately,
+- identifying when a leader connection is needed,
+- linking directly into the relevant canonical Knot instructions.
+
+The Version 1 knot discussion currently includes the Arbor Knot as a Core Knot because reel-spool attachment is a prerequisite to fishing, not an optional specialty task.
+
+Fly fishing and fly-line-specific knot systems are **Parking Lot** for the initial build. Do not expand the first Knot milestone with Albright/Nail/fly-line workflows solely to cover advanced fly-fishing use cases.
 
 Existing `data-model/04-KNOTS.md` is the starting design reference and must be reviewed against the current application architecture before production implementation begins.
 
@@ -239,6 +255,7 @@ Do not build Favorites solely because a placeholder currently exists in the appl
 
 Intentionally deferred until demonstrated by actual need or a later milestone:
 
+- fly fishing and fly-line-specific setup/knot systems,
 - heavy fuzzy Search and advanced natural-language intent parsing,
 - commercial ProductDefinition architecture,
 - exhaustive manufacturer/product catalogs,
