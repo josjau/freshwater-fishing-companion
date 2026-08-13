@@ -1,8 +1,9 @@
 # Freshwater Fishing Companion — Knot Reference Sources
 
-**Document Status:** Research Provenance / In Progress  
+**Document Status:** Research Provenance / Complete for V1 Content Lock  
 **Milestone:** Knots  
-**Started:** 2026-08-13
+**Started:** 2026-08-13  
+**Updated:** 2026-08-13
 
 # Purpose
 
@@ -27,21 +28,20 @@ Every canonical Knot requires at least two independent credible technical source
 | Knot | Research Status | Canonical Content Status |
 |---|---|---|
 | Arbor Knot | Source validation complete | Proposed / awaiting lock |
-| Improved Clinch Knot | Pending | Pending |
-| Palomar Knot | Pending | Pending |
-| Double Uni Knot | Pending | Pending |
-| Uni Knot | Pending | Pending |
-| Double Surgeon’s Knot | Pending | Pending |
-| Non-Slip Loop Knot | Pending | Pending |
-| Dropper Loop Knot | Pending | Pending |
-| Snell Knot | Pending | Pending |
-| Alberto Knot | Pending | Pending |
+| Improved Clinch Knot | Source validation complete | Proposed / awaiting lock |
+| Palomar Knot | Source validation complete | Proposed / awaiting lock |
+| Double Uni Knot | Source validation complete | Proposed / awaiting lock |
+| Uni Knot | Source validation complete | Proposed / awaiting lock |
+| Double Surgeon’s Knot | Source validation complete | Proposed / awaiting lock |
+| Non-Slip Loop Knot | Source validation complete | Proposed / awaiting lock |
+| Dropper Loop Knot | Source validation complete | Proposed / awaiting lock |
+| Snell Knot | Source validation complete | Proposed / awaiting lock |
+| Alberto Knot | Source validation complete | Proposed / awaiting lock |
 
 # Arbor Knot
 
 **Canonical ID:** `arbor-knot`  
-**Research Status:** Source validation complete  
-**Canonical Content Status:** Proposed / awaiting lock
+**Research Status:** Source validation complete
 
 ## Source A — Primary Technical Reference
 
@@ -50,15 +50,11 @@ Source: `https://tpwd.texas.gov/publications/pwdpubs/media/pwd_bk_k0700_0639_kno
 
 Validated claims:
 
-- Arbor Knot is a quick connection for attaching line to the reel spool.
-- Line passes around the reel arbor/spool.
-- First overhand knot is tied around the main/standing line.
-- Second overhand knot is tied in the tag end as the stopper.
-- The stopper is tightened, excess tag is trimmed, and the first overhand knot is snugged against the reel.
-
-Technical significance:
-
-This source provides a clear beginner-facing two-overhand-knot geometry and establishes the primary reel-spool application.
+- Arbor Knot is a reel-spool attachment.
+- Line passes around the spool arbor.
+- The first overhand knot is tied around the standing line.
+- A second overhand knot in the tag end acts as the stopper.
+- Pulling the standing line seats the connection against the spool.
 
 ## Source B — Independent Cross-Check
 
@@ -67,87 +63,525 @@ Source: `https://extapps.dec.ny.gov/docs/administration_pdf/ifnyknotlp.pdf`
 
 Validated claims:
 
-- Arbor Knot is used to attach line to a fishing reel.
-- Line runs around the spool/arbor.
-- An overhand knot is tied around the standing end.
-- A second overhand knot is tied at the end of the tag end.
-- Pulling the line tight seats the connection.
+- Same reel-spool application.
+- Same two-overhand-knot topology.
+- The first knot slides/seats against the arbor and the tag-end knot stops it.
 
-Technical significance:
+## Additional Claim-Specific Sources
 
-This independently confirms the same basic topology taught by Texas Parks & Wildlife: spool wrap, sliding overhand around the standing line, and a second tag-end stopper knot.
-
-## Additional Source — Application and Line-Material Guidance
-
-**Recreational Boating & Fishing Foundation / Take Me Fishing — How to Tie an Arbor Knot**  
+**Take Me Fishing — How to Tie an Arbor Knot**  
 Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-an-arbor-knot/`
 
-Validated claims:
-
-- Arbor Knot is used when initially filling or replacing line on a reel.
-- The knot is commonly used with backing, monofilament, and fluorocarbon.
-- Direct use with braided line is not generally recommended on a conventional smooth spool unless the spool provides a non-slip design.
-- Monofilament backing is an appropriate way to provide grip before adding braid with a line-joining knot.
-
-Variation note:
-
-The page's prose breaks the tying process into more steps than the two state-agency references, but the completed method is consistent with the same two-overhand-knot Arbor topology. The Companion should use the clearer state-agency geometry rather than copy the page's wording or step segmentation.
-
-## Additional Source — Braid/Spool Slippage
-
-**Shimano North America Fishing — Shimano FAQ**  
+**Shimano North America — FAQ**  
 Source: `https://fishshop.shimano.com/pages/shimano-faq`
 
 Validated claims:
 
-- Braided line can slip around a reel-spool arbor when it lacks sufficient grip.
-- Reel/spool design and manufacturer guidance matter when attaching braid.
-- Shimano documents spool-arbor grip remedies and warns that setup details can differ by reel type.
-
-Companion implication:
-
-Do not present direct braid-to-arbor use as a universally appropriate Arbor Knot application. Generic Knot compatibility should remain conservative, while Reel & Line Setup can branch according to reel-specific braid-ready/non-slip design or use monofilament backing where appropriate.
-
-## Independent Instructional Cross-Check
-
-**Orvis Fly Fishing Learning Center — Arbor Knot**  
-Source: `https://howtoflyfish.orvis.com/fly-fishing-knots/arbor-knot-video?lang=en`
-
-Validated claims:
-
-- Arbor Knot attaches backing to a reel arbor.
-- The connection uses two overhand knots.
-- Pulling the standing line seats the knotted tag section against the arbor.
-
-Variation note:
-
-Orvis sequences its brief written instructions differently from the state-agency teaching sheets, but it depicts the same two-overhand-knot family and final spool-arbor connection. No separate canonical variation is required.
-
-## Claims Considered Validated
-
-- Canonical name: Arbor Knot.
-- Primary connection type: reel-spool attachment.
-- Beginner suitability: editorial classification supported by the simple two-overhand-knot process.
-- Monofilament compatibility: validated.
-- Fluorocarbon compatibility: validated.
-- Direct braid compatibility: conditional rather than generally recommended; do not store generic braid compatibility in the V1 canonical record.
-- Backing-to-spool use: validated.
-- First knot slides/seats against the arbor and the second tag-end knot acts as a stopper: validated.
-- A completed connection should be snug against the arbor and should not freely slip around the spool under light test tension: validated by the tying geometry and Shimano spool-slippage guidance.
+- Monofilament and fluorocarbon are appropriate generic Arbor materials.
+- Backing-to-spool use is appropriate.
+- Braid can slip around a smooth reel arbor when the spool does not provide sufficient grip.
+- Direct braid attachment must therefore remain reel/spool-specific rather than a universal Arbor recommendation.
 
 ## Variation Resolution
 
-No material geometry conflict remains.
-
-The approved canonical method will follow the clearer state-agency sequence:
-
-1. line around arbor,
-2. overhand knot around standing line,
-3. stopper overhand knot in tag end,
-4. pull standing line to seat the first knot against the arbor and stopper, then trim.
-
-The different number of prose steps used by other sources does not represent a distinct Knot.
+Different sources divide the prose into different numbers of steps, but the topology is materially the same: line around arbor → overhand around standing line → stopper overhand in tag → seat against arbor.
 
 ## Research Decision
 
-Arbor Knot has enough evidence to proceed to canonical content lock. The proposed production-facing record is maintained separately in `docs/workstreams/KNOT-CANONICAL-CONTENT-LOCK.md` until approved/locked.
+Canonical content may use monofilament and fluorocarbon compatibility. Generic braid compatibility is omitted; Reel & Line Setup will own the equipment-specific braid/backing branch.
+
+# Improved Clinch Knot
+
+**Canonical ID:** `improved-clinch-knot`  
+**Research Status:** Source validation complete
+
+## Source A — Primary Technical Reference
+
+**Utah Division of Wildlife Resources — Learn to fish: tying the knot**  
+Source: `https://wildlife.utah.gov/blog/2025/02/21/learn-to-fish-by-tying-knots`
+
+Validated claims:
+
+- Terminal attachment for hook, lure, or swivel.
+- Five to six wraps around the standing line.
+- Tag passes through the loop nearest the eye and then the newly formed larger loop.
+- Knot should be moistened before tightening.
+
+## Source B — Independent Cross-Check
+
+**Iowa Department of Natural Resources — Knots Every Angler Should Know**  
+Source: `https://www.iowadnr.gov/news-release/2015-02-25/knots-every-angler-should-know`
+
+Validated claims:
+
+- Same terminal-attachment job.
+- Same five-to-six-wrap geometry.
+- Same small-loop then larger-loop tag routing.
+- Coils seat directly against the terminal eye.
+
+## Additional Claim-Specific Sources
+
+**Alaska Department of Fish and Game — Common Fishing Knots**  
+Source: `https://www.adfg.alaska.gov/index.cfm?ID=51&adfg=FishingSportFishAK.reelTimes`
+
+**Take Me Fishing — Which Texas Rig Knot Should You Be Tying?**  
+Source: `https://www.takemefishing.org/blog/may-2019/which-texas-rig-knot-should-you-be-tying/`
+
+**Berkley — Fishing Knots 101**  
+Source: `https://www.berkley-fishing.com/blogs/news/fishing-knots-101`
+
+Material-resolution evidence:
+
+- Alaska identifies the standard Improved Clinch as best used with monofilament or fluorocarbon.
+- Utah describes broader all-line use.
+- Take Me Fishing specifically notes that braid may require doubling the line when tying the Improved Clinch or using a Palomar instead.
+- Berkley separately teaches a braid-specific terminal knot intended to prevent braided-line slippage.
+
+## Variation Resolution
+
+The tying geometry itself is consistent. The only material issue is braid suitability. V1 does not redefine a doubled-line braid modification as the canonical Improved Clinch. To avoid implying that the ordinary single-line method is the preferred generic braid choice, the canonical compatibility list is conservatively limited to monofilament and fluorocarbon.
+
+## Research Decision
+
+Five-to-six wraps is the locked beginner range. The canonical knot is a snug terminal connection, not a terminal loop.
+
+# Palomar Knot
+
+**Canonical ID:** `palomar-knot`  
+**Research Status:** Source validation complete
+
+## Source A — Primary Technical Reference
+
+**Utah Division of Wildlife Resources — Learn to fish: tying the knot**  
+Source: `https://wildlife.utah.gov/blog/2025/02/21/learn-to-fish-by-tying-knots`
+
+Validated claims:
+
+- Double the line and pass the doubled section through the terminal eye.
+- Tie a loose overhand in the doubled line.
+- Pass the entire hook/lure/swivel through the large doubled loop.
+- Moisten and tighten.
+- Especially useful with braid.
+
+## Source B — Independent Cross-Check
+
+**Iowa Department of Natural Resources — Knots Every Angler Should Know**  
+Source: `https://www.iowadnr.gov/news-release/2015-02-25/knots-every-angler-should-know`
+
+Validated claims:
+
+- Same doubled-line terminal geometry.
+- Same overhand and pass-entire-terminal-through-loop sequence.
+- Terminal application to hooks and other tackle.
+
+## Additional Claim-Specific Sources
+
+**Alaska Department of Fish and Game — Common Fishing Knots**  
+Source: `https://www.adfg.alaska.gov/index.cfm?ID=51&adfg=FishingSportFishAK.reelTimes`
+
+**Take Me Fishing — Saltwater Knot Tying Techniques**  
+Source: `https://www.takemefishing.org/blog/september-2023/5-saltwater-fishing-knot-tying-techniques-for-inshore-anglers/`
+
+Validated claims:
+
+- Palomar is appropriate with monofilament, fluorocarbon, and braid.
+- Doubled strands should not be crossed while seating.
+- The knot seats as a snug terminal connection.
+
+## Variation Resolution
+
+Sources agree on the material topology. Minor differences in whether the doubled line is pushed through a large enough eye or passed through and doubled back do not create a separate canonical Knot.
+
+## Research Decision
+
+All three approved line materials are supported. The need to pass the entire terminal item through the doubled loop is retained as a practical limitation.
+
+# Double Uni Knot
+
+**Canonical ID:** `double-uni-knot`  
+**Research Status:** Source validation complete
+
+## Source A — Primary Technical Reference
+
+**Take Me Fishing — How to Tie a Double Uni Knot**  
+Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-a-double-uni-knot/`
+
+Validated claims:
+
+- Two opposing Uni knots join the lines.
+- Lines overlap before either knot is formed.
+- Braid requires additional wraps.
+- Pulling the standing lines slides the two knot bodies together.
+- Best performance is with lines that are not dramatically different in diameter.
+
+## Source B — Independent Cross-Check
+
+**Alaska Department of Fish and Game — Common Fishing Knots**  
+Source: `https://www.adfg.alaska.gov/index.cfm?ID=51&adfg=FishingSportFishAK.reelTimes`
+
+Validated claims:
+
+- Double Uni connects lines of equal or unequal diameter.
+- Supports braided line, monofilament, and fluorocarbon.
+- Correct application is line-to-line.
+
+## Additional Claim-Specific Sources
+
+**Take Me Fishing — Fishing Line Joining Knots**  
+Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/line-joining-knots/`
+
+**Take Me Fishing — Uni-to-Uni Braid to Fluorocarbon**  
+Source: `https://www.takemefishing.org/blog/june-2019/braid-to-fluorocarbon-knot-steps-for-tying-the-uni-to-uni/`
+
+Validated claims:
+
+- `Uni-to-Uni Knot` is an accepted alternate name.
+- Five ordinary wraps is a supported line-joining method.
+- Eight wraps on the braided side is a supported braid-to-leader method.
+- Individual Uni knots are snugged first, then slid together rather than fully locked apart.
+
+## Variation Resolution
+
+Credible sources vary between four and five wraps for ordinary mono/fluoro sides while agreeing that braid benefits from more wraps. This is a nonessential wrap-count variation, not a different Knot. V1 standardizes on **five ordinary wraps and eight braid wraps** for a single beginner-facing method.
+
+## Research Decision
+
+All three approved line materials are supported. Dramatic diameter mismatch is retained as a limitation and points toward the Alberto.
+
+# Uni Knot
+
+**Canonical ID:** `uni-knot`  
+**Research Status:** Source validation complete
+
+## Source A — Primary Technical Reference
+
+**Utah Division of Wildlife Resources — Learn to fish: tying the knot**  
+Source: `https://wildlife.utah.gov/blog/2025/02/21/learn-to-fish-by-tying-knots`
+
+Validated claims:
+
+- Terminal attachment to lure/fly/swivel.
+- Tag end forms a loop around doubled line.
+- Six wraps is a standard beginner method.
+- The formed knot slides down the standing line to the terminal eye.
+
+## Source B — Independent Cross-Check
+
+**Iowa Department of Natural Resources — Knots Every Angler Should Know**  
+Source: `https://www.iowadnr.gov/news-release/2015-02-25/knots-every-angler-should-know`
+
+Validated claims:
+
+- Five to six turns.
+- Terminal use.
+- Reel-arbor use.
+- Uni also forms the basis for a line-to-line connection.
+
+## Additional Claim-Specific Source
+
+**Take Me Fishing — Uni Knot**  
+Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/uni-knot/`
+
+Validated claims:
+
+- `Duncan Knot` is an accepted alternate name.
+- Supports monofilament, fluorocarbon, and braid.
+- Can attach line to a reel arbor.
+- Can attach hooks, lures, or swivels.
+- Double Uni is the line-to-line form.
+
+## Variation Resolution
+
+Five and six wraps are both well-supported. V1 uses **five to six wraps** rather than creating a false single-number precision.
+
+## Research Decision
+
+All three line materials are supported generally. Direct braid-to-smooth-spool security remains equipment-specific and is handled as a limitation/Reel Setup decision rather than removing braid from Uni compatibility altogether.
+
+# Double Surgeon’s Knot
+
+**Canonical ID:** `double-surgeons-knot`  
+**Research Status:** Source validation complete
+
+## Source A — Primary Technical Reference
+
+**Take Me Fishing — Double Surgeon’s Knot**  
+Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/double-surgeons-knot/`
+
+Validated claims:
+
+- Lines overlap in parallel.
+- Both strands form an overhand loop.
+- The line ends pass through the loop twice for the Double Surgeon’s form.
+- All four ends are pulled to seat the knot.
+- Works with equal or unequal diameter lines.
+- `Surgeon's Knot` is a common alternate label for this beginner connection.
+
+## Source B — Independent Cross-Check
+
+**Orvis — Surgeon’s Knot**  
+Source: `https://howtoflyfish.orvis.com/fly-fishing-knots/surgeon-s-knot-video`
+
+Validated claims:
+
+- Four-to-six-inch overlap.
+- A loop is formed in the overlapped strands.
+- Both strands are treated as one and passed through twice.
+- All short and long ends are pulled to tighten.
+- Useful when line diameters differ; bulkier/less clean than a Blood Knot.
+
+## Additional Claim-Specific Sources
+
+**Alaska Department of Fish and Game — Common Fishing Knots**  
+Source: `https://www.adfg.alaska.gov/index.cfm?ID=51&adfg=FishingSportFishAK.reelTimes`
+
+Orvis instructional material also documents Surgeon-family joins involving nylon/monofilament and fluorocarbon tippet.
+
+## Variation Resolution
+
+Single, double, and triple Surgeon-family knots are distinguished by the number of passes. The V1 canonical entity is explicitly the **Double Surgeon’s Knot**, so the method is locked to two complete passes. Later fly-specific triple-surgeon use does not alter this V1 record.
+
+## Research Decision
+
+V1 compatibility is conservatively limited to monofilament and fluorocarbon. Braid-focused beginner joining is directed to Double Uni or Alberto, which have clearer braid-specific evidence and instructions.
+
+# Non-Slip Loop Knot
+
+**Canonical ID:** `non-slip-loop-knot`  
+**Research Status:** Source validation complete
+
+## Source A — Primary Technical Reference
+
+**Orvis — Non-Slip Mono Loop**  
+Source: `https://howtoflyfish.orvis.com/fly-fishing-knots/non-slip-mono-loop?lang=en`
+
+Validated claims:
+
+- Begin with a loose overhand knot.
+- Pass tag through terminal eye and back through original overhand.
+- Set loop size before completing wraps.
+- Wrap count varies with line size.
+- Return through original overhand and seat while retaining an open terminal loop.
+
+## Source B — Independent Cross-Check
+
+**University of Missouri Extension — Angling Skills, Kreh End Loop Knot**  
+Source: `https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pro/4h/Docs/Projects/OutdoorsNature/Sportfishing/supplemental-angling-skills.pdf`
+
+Validated claims:
+
+- Lefty Kreh-developed non-collapsing terminal loop.
+- Same loose-overhand → eye → overhand → standing-line wraps → overhand routing.
+- Passes through the overhand must preserve the intended side/orientation.
+- Wrap count varies from light to heavy material.
+- Used to allow jigs, streamers, bucktails, and lures to move freely.
+
+## Additional Claim-Specific Source
+
+**Take Me Fishing — Saltwater Fishing Knot Tying Techniques**  
+Source: `https://www.takemefishing.org/blog/september-2023/5-saltwater-fishing-knot-tying-techniques-for-inshore-anglers/`
+
+Validated claims:
+
+- Useful for artificial lures where free movement is desired.
+- A lure already using a split ring often does not need a second free loop.
+
+## Variation Resolution
+
+Orvis and Missouri prescribe different wrap counts according to line diameter, but agree that wrap count is material-dependent. V1 standardizes on **five wraps for common freshwater leader sizes** and explicitly documents that unusually light/heavy material may require adjustment.
+
+The project stores `Non-Slip Mono Loop` and Missouri’s exact `Kreh End Loop Knot` as aliases. They are not separate canonical entities.
+
+## Research Decision
+
+Monofilament and fluorocarbon are supported. Braid is not included in the generic V1 terminal-loop record.
+
+# Dropper Loop Knot
+
+**Canonical ID:** `dropper-loop-knot`  
+**Research Status:** Source validation complete
+
+## Source A — Primary Technical Reference
+
+**Take Me Fishing — How to Tie Dropper Loop Knot**  
+Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-dropper-loop-knot/`
+
+Validated claims:
+
+- Form a loop at the desired position.
+- Make five or more wraps while keeping the loop/opening accessible.
+- Push the original branch loop through the central opening.
+- Pull the standing ends in opposite directions to seat.
+- Used for multi-hook, multi-fly, and bottom-fishing systems.
+
+## Source B — Independent Cross-Check
+
+**University of Missouri Extension — Angling Skills**  
+Source: `https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pro/4h/Docs/Projects/OutdoorsNature/Sportfishing/supplemental-angling-skills.pdf`
+
+Validated claims:
+
+- Four-to-seven-wrap Dropper Loop family geometry.
+- Active/original loop passes through the central opening.
+- Appropriate for bait rigs, combination lure rigs, and terminal-tackle branches.
+
+## Additional Application Sources
+
+**Alaska Department of Fish and Game — Dropper Loop**  
+Source: `https://www.adfg.alaska.gov/index.cfm?ID=20&adfg=FishingSportFishAK.reelTimes`
+
+**New Jersey Division of Fish & Wildlife — Reef Fishing**  
+Source: `https://www.nj.gov/dep/fgw/artreeffish101.htm`
+
+Validated claims:
+
+- Multiple Dropper Loops may carry separate flies/jigs on one leader.
+- Official rig guidance explicitly uses Dropper Loops in monofilament leader material.
+
+## Variation Resolution
+
+The wrap-count range varies by instruction source. V1 uses **five wraps**, which lies within the independently supported range and matches the Take Me Fishing beginner method.
+
+## Research Decision
+
+The V1 generic material compatibility is monofilament. This is a specialized in-line branch loop, not the same job as a Non-Slip terminal loop.
+
+# Snell Knot
+
+**Canonical ID:** `snell-knot`  
+**Research Status:** Source validation complete
+
+## Source A — Primary Technical Reference
+
+**Take Me Fishing — How to Tie a Snell Knot**  
+Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-a-snell-knot/`
+
+Validated claims:
+
+- Multiple accepted Snell variants exist.
+- The beginner-oriented **Easy Snell** starts through the eye toward the hook point.
+- A small loop is formed beside the shank.
+- Tag end wraps around hook shank and line five to seven times from point toward eye.
+- Tag passes through the small loop underside-to-topside.
+- Holding the wraps while pulling tag and standing line seats the connection.
+- Mono, fluorocarbon, and braid can be used.
+
+## Source B — Independent Technical Cross-Check
+
+**Mustad — How to Snell a Hook**  
+Source: `https://mustad-fishing.com/us/article/how-to-snell-a-hook`
+
+Validated claims:
+
+- A Snell connection is built as tight coils around the hook shank.
+- The completed geometry provides a direct in-line pull.
+- Eyed hooks can be snelled.
+- Circle hooks, octopus hooks, and tandem-hook arrangements are established Snell applications.
+
+## Additional Material/Application Sources
+
+**Gamakatsu — Heavy Cover Worm Hook**  
+Source: `https://gamakatsu.com/product/heavy-cover-worm-with-tin-keeper/`
+
+**Berkley — Fluorocarbon Line Guide**  
+Source: `https://www.berkley-fishing.com/blogs/news/berkley-freshwater-line-guide-fluorocarbon`
+
+Validated claims:
+
+- Braid Snell use is explicitly supported for suitable welded-eye flipping hooks.
+- Fluorocarbon Snell use is explicitly recognized.
+- Manufacturer hook geometry can materially affect whether a Snell is appropriate.
+
+## Variation Resolution
+
+A major method-selection issue exists: credible sources teach multiple legitimate Snell geometries. The University of Missouri Extension material, for example, demonstrates a different loop-wrapping Snell than Take Me Fishing’s Easy Snell.
+
+These methods are **not merged**.
+
+For V1, the canonical `Snell Knot` deliberately teaches the **Easy Snell** because:
+- it has an explicit step-by-step beginner sequence,
+- the final shank-coil geometry is independently corroborated by manufacturer instruction,
+- it supports the project’s freshwater terminal-hook use cases,
+- naming the broader canonical entity `Snell Knot` remains appropriate while the research record documents the chosen instructional variation.
+
+`Easy Snell` is a selected method, not a separate alias/entity.
+
+## Research Decision
+
+All three approved line materials are supported. The V1 method assumes an eyed hook and remains hook-specific rather than a general terminal-tackle connection.
+
+# Alberto Knot
+
+**Canonical ID:** `alberto-knot`  
+**Research Status:** Source validation complete
+
+## Source A — Primary Technical Reference
+
+**Take Me Fishing — Alberto Fishing Knot**  
+Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/alberto-fishing-knot/`
+
+Validated claims:
+
+- Designed to join braid to heavy monofilament or fluorocarbon leader.
+- Leader is doubled to create the receiving loop.
+- Braid makes seven tight wraps up and seven tight wraps back down.
+- Braid tag must exit the leader loop in the same direction it entered.
+- Pulling all four sections first organizes/tightens the knot; main braid and leader are then pulled to seat it.
+- Appropriate when materials or diameters differ.
+- `Crazy Alberto` is an accepted name.
+
+## Source B — Independent Manufacturer Cross-Check
+
+**Seaguar — Tying the Crazy Alberto Knot**  
+Source: `https://seaguar.com/blogs/knot-guide/tying-the-crazy-alberto-knot`
+
+Validated claims:
+
+- Manufacturer technical instruction recognizes the Crazy Alberto as a braid-to-leader knot.
+- Seaguar’s pro-staff tutorial independently validates the knot family and practical leader application.
+
+**Seaguar — Mark Rose’s Go-To Leader Knot**  
+Source: `https://seaguar.com/blogs/knot-guide/mark-roses-go-to-leader-knot`
+
+Additional independent manufacturer evidence that the Crazy Alberto is an established leader connection.
+
+## Additional Application Source
+
+**Seaguar — Fluorocarbon FAQ / Knot Guide**  
+Source: `https://seaguar.com/pages/faqs`
+
+Validated claim:
+
+- Braid-to-fluorocarbon leader connections are a normal technical use case requiring an appropriate leader knot.
+
+## Variation Resolution
+
+The production tying geometry is anchored to the explicit Take Me Fishing written method. Seaguar independently validates the Crazy Alberto as a braid-to-leader knot through manufacturer tutorial video.
+
+The canonical method is therefore locked to:
+- folded leader loop,
+- seven wraps up,
+- seven wraps back down,
+- braid tag exits the loop in the **same direction** it entered,
+- organize with all four sections,
+- seat with main braid and leader.
+
+No Albright/Modified-Albright instructions are mixed into this method.
+
+## Research Decision
+
+All three material tokens are stored because the knot’s actual supported pairing is braid to monofilament or fluorocarbon. This does not imply that every pairwise combination of the three materials is appropriate.
+
+# V1 Research Closeout
+
+All 10 approved Version 1 Knots now meet the project’s research threshold for canonical content review.
+
+Before Production Package 1:
+
+1. user reviews `docs/workstreams/KNOT-CANONICAL-CONTENT-LOCK.md`;
+2. any requested content corrections are reconciled against this provenance record;
+3. after approval, all 10 records are marked content-locked;
+4. production version metadata is assigned;
+5. `data/knots.js`, `CORE_KNOT_IDS`, and Rig `knotApplications[]` may then be prepared.
+
+Static instructional SVG work remains downstream of content lock and must visualize the locked tying geometry rather than introduce new instructional variants.
