@@ -1,15 +1,15 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.2.0  
+**Document Revision:** 1.3.0  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Latest Finalized Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0  
-**Active Workstream:** `docs/workstreams/KNOT-GUIDE.md` revision 0.3.0  
-**Next Selected Milestone:** Knots  
-**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.2  
+**Active Workstream:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md` — Runtime Revision 3 on `main`, Revision 4 visual correction approved  
+**Active Milestone:** Knots  
+**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3  
 **Session Environment:** Windows Desktop, Brave Browser, GitHub Desktop  
-**Session Status:** Knots planning in progress. Canonical Knot schema and controlled vocabularies approved. Resume with Rig → Knot relationship schema and 20-Rig audit rules.  
+**Session Status:** Knots implementation in progress. Production Package 1 is validated. Production Package 2 Runtime Revision 3 (`0.6.3`) is present on `main` and passed GitHub/static verification but has not completed Brave runtime validation. Before resuming runtime validation, implement approved Runtime Revision 4: remove section-level accenting from `What are you trying to do?`; apply Important Card treatment to `Attach Line to a Reel` and `Tie On a Hook, Swivel, or Lure`; preserve varied card accent bars and Core Knots priority treatment.  
 **Last Updated:** 2026-08-13
 
 # 1. Start Here
@@ -73,17 +73,26 @@ The approved order is:
 
 This order is canonical until explicitly revised.
 
-`ROADMAP.md` revision 0.3.2 is the detailed planning record. `MILESTONES.md` revision 2.1.0 records the same upcoming sequence.
+`ROADMAP.md` revision 0.3.3 remains the canonical sequence. Current implementation state is recorded in this handoff, `MILESTONES.md` revision 2.2.0, and the active Knot workstream records.
 
 # 4. Active Milestone — Knots
 
-**Planning Status: Approved Direction / In Progress**
+**Implementation Status: In Progress**
 
-The active planning record is:
+Planning, research, and canonical content lock are complete.
 
-`docs/workstreams/KNOT-GUIDE.md` revision `0.3.0`
+Current production state:
 
-Production implementation has **not** begun.
+- Production Package 1 — **Validated**: 10 canonical Knots, four Core IDs, all 20 Rigs audited, 31 real tied connections.
+- Production Package 2 Runtime Revision 3 (`0.6.3`) — **Implemented / Unvalidated** on `main`; GitHub integrity and static validation passed.
+- Runtime Revision 4 — **Approved / Not Implemented**; required before continuing Brave validation.
+
+Controlling records:
+
+- `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
+- `docs/workstreams/KNOT-LANDING-PAGE-APPROVAL.md`
+- `docs/workstreams/KNOT-DETAIL-PAGE-APPROVAL.md`
+- `docs/NAVIGATION-PAGE-STANDARD.md`
 
 ## Approved Version 1 Knot Library
 
@@ -132,23 +141,28 @@ Core membership and difficulty are independent concepts.
 
 ## Approved Navigation Direction
 
-The Knot Guide is task-first and beginner-oriented.
+The Knot Guide is task-first, concise, and uses the Rig Guide as the navigation baseline.
 
-Planned landing hierarchy:
+Canonical landing hierarchy:
 
-1. Search all Knots
-2. Get Your Reel Ready
-3. Core Knots — Learn These First
-4. What are you trying to do?
-5. All Knots
+1. **Search all Knots**.
+2. **What are you trying to do?**
+   - **Attach Line to a Reel** — Important Card.
+   - **Tie On a Hook, Swivel, or Lure** — Important Card.
+   - Connect Two Lines / Add a Leader — normal task card.
+   - Make a Loop Connection — normal task card.
+3. Collection cards:
+   - All Knots.
+   - **Core Knots** — approved Core/Important treatment.
+   - Beginner Knots.
+   - Intermediate Knots.
+   - Advanced Knots — Coming Soon.
 
-Task-first discovery leads with **Attach Line to a Reel**, followed by:
+The `What are you trying to do?` section itself remains visually neutral. Important emphasis belongs to deliberately prioritized cards, not to the entire section.
 
-- Tie On a Hook, Swivel, or Lure
-- Connect Two Lines / Add a Leader
-- Make a Loop Connection
+All peer navigation cards retain the established varied accent-bar palette. Individual Core Knot records do not appear directly on the landing page; Core is a collection card that opens the Core browse view.
 
-The approved design direction may be refined during implementation if the actual UI does not flow naturally, provided the change preserves approved functionality, beginner-first intent, data ownership, and scope. Architecture/scope/ownership changes still require explicit approval.
+`Attach Line to a Reel` is the single landing entry to the Reel & Line Setup workflow. The separate `Get Your Reel Ready` landing card is retired; Package 3 upgrades the task destination into the full guided workflow.
 
 ## Approved Canonical Knot Schema
 
@@ -283,23 +297,23 @@ Animations should be user-controlled, non-autoplaying, reduced-motion aware, and
 
 ## Exact Stopping Point — Resume Here
 
-The next planning discussion is:
+**Do not begin Package 3 or Fish Guide. Production Package 2 remains open.**
 
-**Rig → Knot relationship field/schema and 20-Rig connection audit rules.**
+Current `main` state is Runtime Revision 3 (`0.6.3`). GitHub/source/static verification passed, but Brave runtime validation is incomplete.
 
-Do not restart the already approved Version 1 library, Reel & Line Setup, navigation, difficulty taxonomy, canonical Knot schema, controlled vocabularies, tying-step model, or media-policy discussions unless testing or a new requirement exposes a genuine issue.
+The first action next session is Runtime Revision 4:
 
-After Rig → Knot relationship approval, remaining planning topics are:
+1. Re-fetch current `view-renderer.js`, `forest-journal.css`, `tools/validate_knot_package_2.py`, and affected documentation from GitHub `main`.
+2. Remove the section-level Knot accent/priority treatment from **What are you trying to do?**.
+3. Apply the established Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**.
+4. Keep **Connect Two Lines / Add a Leader** and **Make a Loop Connection** as normal task cards.
+5. Preserve the varied navigation-card accent bars and the existing **Core Knots** primary/Core treatment.
+6. Package the correction and its documentation together, have the user push through GitHub Desktop, then re-fetch/verify `main`.
+7. Resume the Package 2 Brave validation checklist, including long `Where You'll Use It` disclosure, Rig ↔ Knot navigation, search, task collections, and Fish/Rig/Tackle regressions.
 
-1. Knot detail-page information hierarchy,
-2. exact search behavior and beginner search vocabulary,
-3. research/source-validation standard for canonical Knot instructions,
-4. diagram/animation production and technical validation workflow,
-5. final milestone validation checklist and implementation sequence.
+Only after Package 2 passes runtime validation should Production Package 3 — **Get Your Reel Ready** — begin.
 
-No production Knot data, JavaScript, CSS, HTML, or instructional media should be implemented until planning is sufficiently settled to avoid unnecessary redesign.
-
-Do not begin Fish Guide implementation until the Knots milestone is completed and validated unless the roadmap is explicitly revised.
+Do not begin Fish Guide until the Knots milestone is finalized and validated.
 
 # 5. What Should I Throw — Canonical Instruction Direction
 
@@ -494,7 +508,10 @@ When My Tackle becomes authoritative:
 
 - Current-state entrypoint: `HANDOFF.md`
 - Canonical development sequence: `ROADMAP.md`
-- Active Knot workstream: `workstreams/KNOT-GUIDE.md`
+- Active Knot production/status workstream: `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
+- Knot landing/navigation approval: `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`
+- Cross-domain navigation standard: `NAVIGATION-PAGE-STANDARD.md`
+- Current Knot session closeout: `workstreams/KNOT-SESSION-CLOSEOUT-2026-08-13.md`
 - Final Rig completion workstream: `workstreams/RIG-GUIDE-COMPLETION.md`
 - Long-term decisions: `DECISIONS.md`
 - Architecture: `ARCHITECTURE.md`

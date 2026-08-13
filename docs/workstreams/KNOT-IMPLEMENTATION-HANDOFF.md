@@ -1,6 +1,6 @@
 # Knot Implementation Handoff
 
-**Status:** Approved / Ready to Resume  
+**Status:** Approved / Session Closeout — Ready to Resume Runtime Revision 4  
 **Date:** 2026-08-13  
 **Repository:** `josjau/freshwater-fishing-companion`  
 **Branch:** `main`  
@@ -33,7 +33,13 @@ Validated Rig/Tackle baseline:
 
 The active milestone is **Knots**.
 
-Knots planning is complete. Production Knot implementation has **not** begun.
+Knots planning, research validation, and canonical content lock are complete. Production implementation is in progress.
+
+Current production state:
+
+- Production Package 1 — **Validated**.
+- Production Package 2 Runtime Revision 3 (`0.6.3`) — **Implemented / Unvalidated** on `main`; GitHub integrity and static validation passed.
+- Production Package 2 Runtime Revision 4 — **Approved / Not Implemented**; this is the first action next session.
 
 # Canonical Post-Rig Roadmap
 
@@ -212,35 +218,39 @@ Rules:
 - Referenced Knot IDs must resolve to active canonical Knot records.
 - Recommendations are curated/selective, usually 1–3, not exhaustive.
 - General tying instructions remain with the Knot; Rig notes are contextual only.
-- All 20 active Rigs must be audited before release.
-- Preliminary estimate was about 31 real tied connection points; final audited count is authoritative.
+- All 20 active Rigs were audited in Production Package 1.
+- Final audited count is exactly 31 real tied connection contexts.
 
-Special audit cases already identified:
+Final special-case audit results:
 
-- Drop Shot likely requires Palomar-specific contextual treatment because the long tag is routed back through the eye; verify during research.
+- Drop Shot uses Palomar-specific contextual treatment because the long tag is routed back through the eye.
 - Double-Jig Crappie has an upper Dropper Loop plus lower terminal connection.
 - Three-Way Rig contains five tied connection points.
-- Bottom-Bouncer trailing harness hardware join is not a Knot application.
+- Bottom-Bouncer trailing harness hardware join is excluded because it is hardware-only.
 - Jika hardware joins through split rings are excluded; line-to-split-ring connection is tied.
 
 # Knot Guide Navigation
 
-Landing hierarchy:
+Canonical landing hierarchy:
 
-1. Search all Knots.
-2. Get Your Reel Ready.
-3. Core Knots — Learn These First.
-4. What are you trying to do?
-5. All Knots.
+1. **Search all Knots**.
+2. **What are you trying to do?**
+   - **Attach Line to a Reel** — Important Card.
+   - **Tie On a Hook, Swivel, or Lure** — Important Card.
+   - Connect Two Lines / Add a Leader — normal task card.
+   - Make a Loop Connection — normal task card.
+3. Collection cards:
+   - All Knots.
+   - **Core Knots** — approved Core/Important treatment.
+   - Beginner Knots.
+   - Intermediate Knots.
+   - Advanced Knots — Coming Soon.
 
-Task-first order:
+The `What are you trying to do?` section itself remains visually neutral. Peer cards retain the established varied accent-bar palette. Important emphasis belongs to deliberately prioritized cards, not the entire special-navigation section.
 
-1. Attach Line to a Reel.
-2. Tie On a Hook, Swivel, or Lure.
-3. Connect Two Lines / Add a Leader.
-4. Make a Loop Connection.
+`Attach Line to a Reel` is the single landing entry to the Reel & Line Setup workflow; there is no separate `Get Your Reel Ready` landing card.
 
-Core is a recommended starter set, not a mandatory course sequence.
+Core is a recommended starter set, not a mandatory course sequence, and is reached through the Core Knots collection card rather than by rendering all four Core Knot records directly on the landing page.
 
 # Knot Detail Page
 
@@ -311,7 +321,7 @@ Do not merge conflicting variations into a hybrid method. Unresolved technical d
 
 Canonical text is original Freshwater Fishing Companion editorial synthesis, not copied source prose.
 
-Create and maintain:
+Maintain:
 
 `docs/KNOT_REFERENCE_SOURCES.md`
 
@@ -470,41 +480,44 @@ Treat these as approved project state:
 - `docs/workstreams/KNOT-IMPLEMENTATION-PLAN.md`
 - `docs/workstreams/DELIVERY-FALLBACK-RULE.md`
 - `docs/DETAIL-PAGE-STANDARD.md`
+- `docs/NAVIGATION-PAGE-STANDARD.md`
+- `docs/workstreams/KNOT-LANDING-PAGE-APPROVAL.md`
+- `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
+- `docs/workstreams/KNOT-SESSION-CLOSEOUT-2026-08-13.md`
 
 The older `docs/workstreams/KNOT-GUIDE.md` revision 0.3.0 predates several later approvals. Do not use its stale “Exact Stopping Point” as the current resume point.
 
 # Known Stale Documentation
 
-The following older documents contain stale pre-Knots-planning statements and must not override the approval records above:
+Older planning documents may retain superseded intermediate decisions and must not override the current production/status records. In particular, `docs/workstreams/KNOT-GUIDE.md` revision 0.3.0 is historical planning context, while `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md`, `KNOT-LANDING-PAGE-APPROVAL.md`, `KNOT-DETAIL-PAGE-APPROVAL.md`, and `docs/NAVIGATION-PAGE-STANDARD.md` control the current Package 2 state.
 
-- `docs/HANDOFF.md` revision 1.2.0 — stale resume point.
-- `docs/workstreams/KNOT-GUIDE.md` revision 0.3.0 — stale remaining-planning statements.
-- `docs/data-model/04-KNOTS.md` revision 0.1.0 — stale Knot schema.
-- `docs/data-model/03-RIGS.md` revision 0.2.4 — stale implementation-count language and lacks approved `knotApplications[]` documentation.
-- `docs/data-model/09-RELATIONSHIPS.md` revision 0.3.2 — lacks approved Rig → Knot relationship section.
-- `docs/MILESTONES.md` revision 2.1.0 — still describes Knots as pre-planning.
-- `docs/ROADMAP.md` revision 0.3.2 — broad Knots direction is valid but does not contain all later approvals.
+Package 1 already reconciled the canonical Knot/Rig relationship data-model documentation. The session-closeout package reconciles `HANDOFF.md` and `MILESTONES.md` to the current implementation boundary. `ROADMAP.md` remains authoritative for milestone order; its broad Knot design direction is supplemented by the later workstream approvals.
 
-Do not make a destructive shortened replacement of these long documents. Re-fetch each immediately before targeted reconciliation, preserve unrelated content, and use the project replacement-integrity safeguards.
+Do not make destructive shortened replacements of long governing documents. Re-fetch immediately before targeted reconciliation, preserve unrelated content, and use the project replacement-integrity safeguards.
 
 # Exact Resume Point
 
-**Planning is complete.**
+**Production Package 2 is still open. Do not begin Package 3 or Fish Guide.**
 
-Do not reopen library/schema/navigation/search/source/media decisions unless implementation or research exposes a genuine defect.
+Current `main` state:
 
-The next work is:
+- Production Package 1 — validated.
+- Production Package 2 Runtime Revision 3 (`0.6.3`) — implemented and statically verified, but Brave runtime validation is incomplete.
+- Approved Runtime Revision 4 — not implemented.
 
-## Research and Canonical Content Lock
+## First Action Next Session — Runtime Revision 4
 
-1. Re-fetch current authoritative documentation/source as needed.
-2. Create `docs/KNOT_REFERENCE_SOURCES.md`.
-3. Research the ten canonical Knots under the two-source standard.
-4. Resolve naming/variation/line-compatibility/application questions.
-5. Draft the complete canonical content for all ten Knot records.
-6. Cross-check all claims and tying sequences.
-7. Only after content lock, prepare Production Package 1.
+1. Re-fetch current `view-renderer.js`, `forest-journal.css`, `tools/validate_knot_package_2.py`, and affected documentation from GitHub `main`.
+2. Remove the section-level accent/priority framing from **What are you trying to do?**.
+3. Apply the established Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**.
+4. Keep **Connect Two Lines / Add a Leader** and **Make a Loop Connection** as normal task cards.
+5. Preserve varied navigation-card accent bars and **Core Knots** primary/Core treatment.
+6. Package source + documentation coherently; user pushes through GitHub Desktop.
+7. Re-fetch and verify exact GitHub blobs.
+8. Resume the full Production Package 2 Brave validation, including long `Where You'll Use It` collapse/expand, Rig ↔ Knot navigation, search/task collections, Parent/Home, and Fish/Rig/Tackle regressions.
 
-Do not start SVG production before each Knot's canonical method is locked.
+Only after Package 2 passes runtime validation should Production Package 3 — **Get Your Reel Ready** — begin.
+
+Do not begin static Knot SVG production before Package 4.
 
 Do not begin Fish Guide until the Knots milestone is finalized and validated.

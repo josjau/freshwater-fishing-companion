@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.3.1
+**Document Revision:** 1.3.2
 **Document Status:** Approved
-**Last Updated:** 2026-08-10
+**Last Updated:** 2026-08-13
 
 # Purpose
 
@@ -214,6 +214,15 @@ Domain identity may still appear in headings, search/results, detail-page accent
 
 Core cards may add the approved Core emphasis on top of the shared Dashboard-derived palette.
 
+An **Important Card** is a deliberately elevated navigation card for a destination that is foundational, required to begin the activity, or otherwise materially more important than peer destinations. Use the shared primary-card hierarchy rather than inventing a separate visual system. Important treatment is selective:
+
+- preserve the card's varied accent-bar position/palette unless a separately approved Core/domain treatment requires otherwise,
+- elevate the individual card rather than automatically accenting its entire surrounding section,
+- do not mark every card in a group as Important,
+- use Important treatment for genuine workflow priority, not decoration.
+
+For detailed landing-page hierarchy, collection-card grouping, and special-navigation rules, follow `NAVIGATION-PAGE-STANDARD.md`.
+
 # Persistent Parent Navigation
 
 Nested subset/detail views keep Parent/Home controls available while the page scrolls. Use the shared compact sticky navigation group rather than requiring the user to return to the top just to leave a long detail page.
@@ -385,4 +394,5 @@ A coherent module may include several related source files and media assets in o
 - `DECISIONS.md`
 - `DEVELOPMENT_WORKFLOW.md`
 - `MEDIA_GUIDE.md`
+- `NAVIGATION-PAGE-STANDARD.md`
 - `CHANGELOG.md`

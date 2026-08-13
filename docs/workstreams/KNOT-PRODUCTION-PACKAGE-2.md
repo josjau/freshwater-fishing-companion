@@ -1,6 +1,6 @@
 # Knot Production Package 2
 
-**Status:** Production Package 2 / Runtime Revision 3 Awaiting Validation  
+**Status:** Production Package 2 / Runtime Revision 3 Implemented / Unvalidated — Revision 4 Visual Correction Approved  
 **Milestone:** Knots  
 **Implementation Version:** 0.6.3  
 **Date:** 2026-08-13
@@ -13,7 +13,7 @@ This package implements:
 
 - Knot Guide landing hierarchy,
 - Rig-style Knot collection cards for All/Core/Beginner/Intermediate/Advanced,
-- shared varied navigation-card accent bars with priority treatment for task-first navigation and Core Knots,
+- shared varied navigation-card accent bars, with Runtime Revision 3 priority styling currently present on the task-first section and Core Knots,
 - task-first discovery,
 - deterministic beginner-oriented search,
 - All Knots browsing,
@@ -151,8 +151,11 @@ Approved revision:
 - Knot browsing now uses Rig-style collection cards in this order: **All Knots**, **Core Knots**, **Beginner Knots**, **Intermediate Knots**, **Advanced Knots**.
 - **Advanced Knots** is visible as Coming Soon because Version 1 contains zero active Advanced Knot records.
 - Peer task/collection cards use the shared varied accent-bar palette rather than a repeated Knot accent.
-- **What are you trying to do?** uses restrained Knot-accent priority framing.
-- **Core Knots** uses the approved primary/Core card treatment with the Knot-domain accent.
+- Runtime Revision 3 currently gives **What are you trying to do?** section-level priority framing. Runtime review rejected that section-level emphasis.
+- The next approved correction removes section-level priority framing from **What are you trying to do?**.
+- **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** will receive the Important Card treatment because both are foundational prerequisites to fishing.
+- **Connect Two Lines / Add a Leader** and **Make a Loop Connection** remain normal task cards.
+- **Core Knots** retains the approved primary/Core card treatment with the Knot-domain accent.
 
 This keeps the beginner's practical job ahead of the taxonomy, keeps the landing page compact as the library grows, and aligns Knot browsing with the established Rig Guide collection model.
 
@@ -182,11 +185,13 @@ Reason: Knot search has approved domain-specific normalization, task-intent voca
 
 **Original Package 2 role:** Knot landing/result/detail rendering plus existing Rig/Tackle renderers.  
 **Revision 3 build milestone:** `Knot Guide — Production Package 2 Revision 3`  
-**Revision 3 role:** preserves the compact task-first/collection landing model, marks **What are you trying to do?** as a priority navigation block, and applies the shared primary/Core treatment to the **Core Knots** collection card while retaining the existing progressive Rig-usage and related-detail navigation behavior.
+**Revision 3 role:** preserves the compact task-first/collection landing model, currently marks **What are you trying to do?** as a priority navigation block, and applies the shared primary/Core treatment to the **Core Knots** collection card while retaining the existing progressive Rig-usage and related-detail navigation behavior.
+
+**Approved Revision 4 correction:** remove the section-level priority hook/treatment and move Important Card emphasis to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** only. Core Knots remains primary/Core.
 
 ## `forest-journal.css`
 
-Adds Knot-specific visual hierarchy while preserving the shared navigation-card palette. Runtime Revision 3 removes the Knot-wide card-accent override that flattened all navigation bars to one color, adds restrained priority framing for **What are you trying to do?**, and adds the approved Core treatment for **Core Knots**. Existing disclosure, related-entity, and Rig Knot-link treatments remain unchanged. Rig-specific density rules remain Rig-specific.
+Adds Knot-specific visual hierarchy while preserving the shared navigation-card palette. Runtime Revision 3 removes the Knot-wide card-accent override that flattened all navigation bars to one color and adds the approved Core treatment for **Core Knots**. The current Revision 3 section-level framing on **What are you trying to do?** is approved for removal in Revision 4; Important Card styling will instead apply to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**. Existing disclosure, related-entity, and Rig Knot-link treatments remain unchanged. Rig-specific density rules remain Rig-specific.
 
 ## `index.html`
 
@@ -222,8 +227,9 @@ The 10 locked canonical records from Package 1 remain authoritative and unchange
 - **What are you trying to do?** renders before all Knot collection cards,
 - **Attach Line to a Reel** is the single reel-readiness landing entry and maps to the transitional Get Your Reel Ready task page.
 - navigation cards do not use a Knot-wide repeated accent override,
-- **What are you trying to do?** carries the priority-section hook,
-- **Core Knots** carries both the shared primary-card and Knot Core hooks,
+- Runtime Revision 3 still carries the **What are you trying to do?** priority-section hook; Revision 4 must remove it,
+- Revision 4 must give **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** the Important Card hook/treatment,
+- **Core Knots** continues to carry both the shared primary-card and Knot Core hooks,
 - `NAVIGATION-PAGE-STANDARD.md` records the cross-domain Search -> special navigation -> collection-card hierarchy and varied-accent/priority rules.
 
 # Brave Runtime Validation After Upload
@@ -235,7 +241,7 @@ After upload and GitHub integrity verification:
 3. Open **Knots** from Home.
 4. Confirm the landing order is Search -> **What are you trying to do?** -> collection cards.
 5. Confirm the collection cards are **All Knots**, **Core Knots**, **Beginner Knots**, **Intermediate Knots**, and **Advanced Knots** (Coming Soon). Confirm there is no separate **Get Your Reel Ready** landing card.
-6. Confirm task and collection cards use varied accent bars, **What are you trying to do?** has the approved priority framing, and **Core Knots** has the stronger Core treatment.
+6. After Revision 4 is uploaded, confirm task and collection cards use varied accent bars; **What are you trying to do?** has no section-level accent frame; **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** have Important Card treatment; and **Core Knots** retains the stronger Core treatment.
 7. Select **Attach Line to a Reel** and confirm the transitional page title is **Get Your Reel Ready** with Arbor Knot first and Uni Knot second; Parent returns to Knots.
 8. Search `palomar`, `tie hook`, `add leader`, `braid`, `mono`, and a no-result term.
 9. Confirm clear-search restores the landing content.
@@ -251,7 +257,9 @@ After upload and GitHub integrity verification:
 
 # Exact Resume Point
 
-If this file is present on GitHub `main` and Package 2 has not yet passed runtime validation, resume with **Production Package 2 GitHub/static/Brave validation**.
+If this file is present on GitHub `main`, first confirm the current deployed/source state is Runtime Revision 3 (`0.6.3`). Package 2 has **not** passed runtime validation.
+
+The exact next production action is **Runtime Revision 4**: remove section-level accent/priority treatment from **What are you trying to do?**, add Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, preserve varied accent bars and Core Knots priority treatment, then upload/verify and resume the full Brave validation checklist.
 
 After Package 2 passes, proceed to **Production Package 3 — Get Your Reel Ready**.
 

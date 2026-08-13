@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Navigation Page Standard
 
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.0.1  
 **Document Status:** Approved  
 **Implementation Status:** Current  
 **Last Updated:** 2026-08-13
@@ -64,10 +64,10 @@ Rules:
 
 Current Knot example:
 
-- Attach Line to a Reel
-- Tie On a Hook, Swivel, or Lure
-- Connect Two Lines / Add a Leader
-- Make a Loop Connection
+- **Attach Line to a Reel** — Important Card; foundational because the reel must have usable line before fishing.
+- **Tie On a Hook, Swivel, or Lure** — Important Card; foundational because terminal tackle must be attached before fishing.
+- Connect Two Lines / Add a Leader — normal task card.
+- Make a Loop Connection — normal task card.
 
 # Category and Collection Cards
 
@@ -81,8 +81,10 @@ Navigation-card grids inherit the shared Dashboard/Rig Guide visual grammar.
 
 - Use the established **varied adjacent accent-bar palette** across peer navigation cards. Do not recolor an entire domain's navigation grid to one repeated domain accent.
 - Domain identity may remain in headings, search/result styling, badges, and detail-page accents without flattening the navigation-card palette.
+- The special-navigation **section itself uses the normal page-section treatment by default**. Do not accent or frame an entire section merely because it contains important tasks.
+- Apply stronger **Important Card** treatment to individual task cards only when a destination is deliberately prioritized because it is foundational, required to begin the activity, or otherwise materially more important than peer tasks.
+- Important Card treatment should remain selective. Do not elevate every task in a special-navigation group or the hierarchy loses meaning.
 - A deliberately prioritized collection such as **Core** uses the approved primary/Core treatment in addition to the shared card palette. The Core card may use the domain accent to make the recommended learning path immediately recognizable.
-- Approved special-navigation blocks that represent a primary beginner workflow, such as Knot **What are you trying to do?**, should receive restrained priority framing or accent treatment so they remain visually prominent above ordinary collection navigation.
 - Priority treatment must remain calm, accessible, and subordinate to page identity. Do not use animation, glow, or novelty styling.
 
 These rules are visual hierarchy, not data semantics. Do not add canonical fields solely to drive presentation.
@@ -171,12 +173,18 @@ The approved Knot Guide follows this hierarchy:
 
 1. Search all Knots.
 2. **What are you trying to do?**
+   - Attach Line to a Reel — Important Card.
+   - Tie On a Hook, Swivel, or Lure — Important Card.
+   - Connect Two Lines / Add a Leader — normal task card.
+   - Make a Loop Connection — normal task card.
 3. Collection cards:
    - All Knots.
-   - Core Knots.
+   - Core Knots — approved Core/Important treatment.
    - Beginner Knots.
    - Intermediate Knots.
    - Advanced Knots — Coming Soon while unavailable.
+
+The **What are you trying to do?** section itself remains visually neutral; priority is communicated through the deliberately elevated individual cards.
 
 Selecting a Knot collection opens the corresponding grouped browse page. Individual Core Knots are not duplicated directly on the landing page.
 

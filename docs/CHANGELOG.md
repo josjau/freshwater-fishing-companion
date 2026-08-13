@@ -1,11 +1,37 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.12.0  
+**Document Revision:** 1.13.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-12
+**Last Updated:** 2026-08-13
 
 # Unreleased
+
+## Knots — Production Packages 1 and 2
+
+**Implementation Status: In Progress / Package 2 Implemented / Unvalidated**
+
+### Added / Changed
+
+- Added and validated Production Package 1 with 10 active canonical Knots, four approved Core Knot IDs, 6 Beginner / 4 Intermediate difficulty distribution, and all 20 active Rigs audited for 31 real tied `knotApplications` connections.
+- Added Production Package 2 Knot task guidance, deterministic Knot search, Knot browse/detail routes, text-based Knot instruction pages, and verified-reference placement inside **How to Tie It**.
+- Added derived **Where You'll Use It** Rig relationships and context-preserving Rig ↔ Knot navigation without storing reverse Knot-to-Rig IDs.
+- Runtime Revision 2 corrected long Rig relationship lists to show four initially with **See all N rigs** / **Show fewer** and changed the Knot landing to Rig-style collection cards.
+- Runtime Revision 3 restored the established varied navigation-card accent bars and added the approved Core Knots priority treatment.
+- Added the canonical cross-domain `NAVIGATION-PAGE-STANDARD.md`: navigation pages use the Rig Guide baseline with Search first, optional special navigation second, and collection/category cards afterward.
+- Approved the next Runtime Revision 4 correction: remove section-level accent/priority framing from **What are you trying to do?**; apply Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**; keep the other two task cards normal; preserve varied accent bars and Core Knots emphasis.
+
+### Validation Status
+
+- Production Package 1 repository/static/runtime validation: passed.
+- Production Package 2 Revision 3 GitHub blob integrity: passed.
+- Production Package 2 Revision 3 static validator: passed.
+- Production Package 2 Brave runtime validation: **not complete**.
+- Runtime Revision 4: **approved / not implemented**.
+- Production Package 3 (**Get Your Reel Ready**) and Package 4 (static Knot SVG/media integration): not started.
+
+See `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`, `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`, `NAVIGATION-PAGE-STANDARD.md`, `MILESTONES.md`, and `HANDOFF.md`.
+
 
 ## Complete Rig Guide
 
@@ -85,8 +111,7 @@ See `workstreams/RIG-GUIDE-COMPLETION.md`, `MEDIA_GUIDE.md`, `RIG_REFERENCE_SOUR
 - All six changed tutorial embeds: passed final runtime closeout.
 - Inline Spinner Mepps-only fallback: passed.
 - Bobber Stop corrected metadata and contextual reference: passed.
-- Beginner/Beginner+/Core collection and detail regressions: passed.
-- Fish Guide/search, Dashboard, desktop navigation/console/focus/layout, and mobile responsive regressions: passed.
+- Beginner/Beginner+/Core, Fish Guide/search, Dashboard, desktop navigation/console/focus/layout, and mobile responsive regressions: passed.
 - Segment is **Validated / Finalized**.
 
 See `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`, `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`, `MEDIA_GUIDE.md`, `RIG_REFERENCE_SOURCES.md`, and `HANDOFF.md`.

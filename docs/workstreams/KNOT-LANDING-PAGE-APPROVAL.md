@@ -1,6 +1,7 @@
 # Knot Landing Page Approval
 
 **Status:** Approved / Runtime Refinement  
+**Implementation Status:** Approved / Not Implemented in Runtime Revision 3; scheduled for Runtime Revision 4  
 **Date:** 2026-08-13
 
 # Purpose
@@ -38,11 +39,14 @@ The landing page uses the same collection-card grammar established by the Rig Gu
 The Knot landing page follows the canonical navigation-card visual standard:
 
 - task and collection card grids use the shared **varied accent-bar palette** rather than one repeated Knot color,
-- **What are you trying to do?** receives restrained Knot-accent priority framing because it is the primary beginner task-navigation block,
+- the **What are you trying to do?** section itself remains visually neutral,
+- **Attach Line to a Reel** receives Important Card treatment because line on the reel is a prerequisite to fishing,
+- **Tie On a Hook, Swivel, or Lure** receives Important Card treatment because terminal tackle attachment is a prerequisite to fishing,
+- **Connect Two Lines / Add a Leader** and **Make a Loop Connection** remain normal task cards,
 - **Core Knots** receives the approved primary/Core card treatment and Knot-domain accent so the recommended learning path is immediately recognizable,
 - ordinary All/Beginner/Intermediate/Advanced collection cards remain peer navigation cards and should not inherit the Core emphasis.
 
-These visual rules are controlled cross-domain by `../NAVIGATION-PAGE-STANDARD.md` and `../STYLE_GUIDE.md`.
+These visual rules are controlled cross-domain by `../NAVIGATION-PAGE-STANDARD.md` and `../STYLE_GUIDE.md`. Important treatment belongs to deliberately prioritized cards, not automatically to the entire special-navigation section.
 
 This approval supersedes older Knot planning/handoff text that shows **Get Your Reel Ready** as a separate landing card, places **What are you trying to do?** below Core Knots, or renders all four Core Knot records directly on the landing page. Those older documents remain useful for other approved decisions but no longer control the landing-page order.
 

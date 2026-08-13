@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.3.2  
+**Document Revision:** 0.3.3  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-12
+**Last Updated:** 2026-08-13
 
 # Purpose
 
@@ -44,6 +44,16 @@ Final workstream:
 
 `workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0
 
+## Active Knot Milestone
+
+**Implementation Status: In Progress**
+
+- Production Package 1 is validated.
+- Production Package 2 Runtime Revision 3 (`0.6.3`) is implemented on `main` and has passed GitHub/static verification, but Brave runtime validation is incomplete.
+- Runtime Revision 4 is approved and not implemented: remove section-level accenting from **What are you trying to do?** and move Important Card emphasis to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** while preserving varied accent bars and Core Knots emphasis.
+- Production Packages 3 and 4 have not begun.
+- Fish Guide remains blocked until the Knots milestone is finalized and validated.
+
 # Canonical Build Sequence After Rig Guide
 
 The approved order is:
@@ -62,7 +72,7 @@ This sequence is deliberate. Do not skip forward into a later persistent-user-da
 
 # 1. Knots
 
-**Next Selected Milestone — Planning In Progress**
+**Active Milestone — Implementation In Progress**
 
 Build the canonical Knot reference library and Knot Guide before expanding recommendation or persistent User Knowledge features.
 
@@ -77,6 +87,18 @@ The Knot milestone should establish:
 - connected relationships to Rigs and later Techniques/Recommendations,
 - responsive/runtime validation,
 - a first-time-angler **Reel & Line Setup** learning workflow that gets a conventional freshwater reel from unlined or replacement-line state to a fishable line system.
+
+### Current Implementation Boundary
+
+The Package 2 landing-page hierarchy is now governed by `NAVIGATION-PAGE-STANDARD.md` and `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`:
+
+1. Search first.
+2. **What are you trying to do?** special navigation.
+3. Collection cards: All, Core, Beginner, Intermediate, Advanced (Coming Soon).
+
+The special-navigation section itself remains visually neutral. **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** are the approved Important Cards because they are foundational prerequisites to fishing. **Core Knots** retains Core/primary emphasis.
+
+Do not begin Package 3 until Package 2 Runtime Revision 4 is implemented and the complete Package 2 runtime/regression checklist passes.
 
 ## Knot Instructional Media Direction
 
@@ -197,7 +219,7 @@ The Version 1 knot discussion currently includes the Arbor Knot as a Core Knot b
 
 Fly fishing and fly-line-specific knot systems are **Parking Lot** for the initial build. Do not expand the first Knot milestone with Albright/Nail/fly-line workflows solely to cover advanced fly-fishing use cases.
 
-Existing `data-model/04-KNOTS.md` is the starting design reference and must be reviewed against the current application architecture before production implementation begins.
+The canonical Knot schema and Rig → Knot relationship model are implemented and documented. Current production/status details are controlled by `workstreams/KNOT-PRODUCTION-PACKAGE-2.md` and `workstreams/KNOT-IMPLEMENTATION-HANDOFF.md`.
 
 # 2. Fish Guide
 
@@ -413,6 +435,10 @@ See `DEVELOPMENT_WORKFLOW.md`.
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
 - `DEVELOPMENT_WORKFLOW.md`
+- `NAVIGATION-PAGE-STANDARD.md`
+- `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
+- `workstreams/KNOT-IMPLEMENTATION-HANDOFF.md`
+- `workstreams/KNOT-SESSION-CLOSEOUT-2026-08-13.md`
 - `data-model/04-KNOTS.md`
 - `data-model/02-FISH.md`
 - `data-model/05-TACKLE.md`
