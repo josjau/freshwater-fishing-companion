@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.3.1  
+**Document Revision:** 0.3.2  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-12
 
@@ -62,7 +62,7 @@ This sequence is deliberate. Do not skip forward into a later persistent-user-da
 
 # 1. Knots
 
-**Next Selected Milestone**
+**Next Selected Milestone — Planning In Progress**
 
 Build the canonical Knot reference library and Knot Guide before expanding recommendation or persistent User Knowledge features.
 
@@ -71,21 +71,127 @@ The Knot milestone should establish:
 - practical Version 1 knot library,
 - beginner-oriented instructions,
 - knot purpose and compatible line types,
-- appropriate instructional media/tutorial strategy,
+- task-first beginner navigation,
+- diagram/animation-first instructional media,
 - search and navigation,
 - connected relationships to Rigs and later Techniques/Recommendations,
 - responsive/runtime validation,
-- a first-time-angler **Reel & Line Setup** learning workflow that explains how to get an empty reel ready to fish.
+- a first-time-angler **Reel & Line Setup** learning workflow that gets a conventional freshwater reel from unlined or replacement-line state to a fishable line system.
 
-The Reel & Line Setup workflow should cover the practical sequence, not just isolated knot definitions:
+## Knot Instructional Media Direction
 
-- choosing/confirming the main line,
-- determining whether backing is needed,
-- attaching line or backing to the reel spool with the Arbor Knot,
-- connecting backing to braided main line with an approved beginner line-to-line knot such as the Double Uni,
-- filling the spool appropriately,
-- identifying when a leader connection is needed,
-- linking directly into the relevant canonical Knot instructions.
+For Knots, project-owned diagrams and controlled animations are preferred over video.
+
+Preferred order:
+
+1. project-owned instructional diagram,
+2. project-owned user-controlled step-through animation,
+3. diagram and animation together when motion materially improves understanding,
+4. external video only when the knot cannot be taught adequately with diagram/animation,
+5. supplemental video may be approved as an exception for more advanced knots when hand position, tensioning, or motion is materially clearer in video.
+
+Core Knots should have a complete non-video instructional path.
+
+Animations should be user-controlled, should not autoplay, should remain understandable with motion disabled, and should support reduced-motion preferences.
+
+## Reel & Line Setup — Approved V1 Direction
+
+Reel & Line Setup is a first-class beginner workflow inside the Knots milestone, not merely an Arbor Knot article.
+
+The endpoint is practical: take a reel that needs line and get the angler to a correctly spooled, usable line system ready to connect to a Rig.
+
+Version 1 should support:
+
+- new/empty reel setup,
+- replacement-line setup,
+- Spinning reels,
+- Spincast reels,
+- Baitcasting reels,
+- an **I'm not sure** reel-identification path,
+- simple reel-recognition help,
+- Monofilament, Fluorocarbon, and Braid selection/identification,
+- an **I'm not sure** line-identification path,
+- basic beginner line-selection guidance when the angler does not already have line,
+- species-based starting pound-test guidance,
+- an all-around beginner recommendation when the user targets multiple common freshwater species,
+- reel/rod compatibility checks,
+- reel-type-aware backing decisions,
+- Arbor Knot integration for spool attachment,
+- approved beginner line-to-line Knot integration such as Double Uni where backing or leader connections require it,
+- line-routing and reel-specific spooling instruction,
+- proper winding tension and spool-fill guidance,
+- optional leader connection,
+- context-preserving navigation into canonical Knot instructions and back into Reel Setup,
+- a final **Reel Ready** checkpoint with direct handoff to the Rig Guide.
+
+The workflow should not require the angler to know technical fishing vocabulary before beginning.
+
+### Beginner Line Guidance
+
+When the angler does not already have line, Reel & Line Setup should provide enough guidance to make a confident first purchase or starting choice.
+
+The beginner path may use target species and reel type to provide:
+
+- recommended starting line type,
+- recommended starting pound-test range,
+- a simple beginner choice where appropriate,
+- short plain-English reasoning,
+- limitations or situations where heavier/lighter line may be needed.
+
+This guidance is for **readiness**, not full fishing optimization.
+
+Future What Should I Throw / Recommendation knowledge may later optimize line choices for cover, lure type, technique, abrasion, sensitivity, depth, presentation, and other conditions.
+
+### How to Read Your Reel
+
+Reel & Line Setup should include a small **How to Read Your Reel** section.
+
+It should teach a beginner how to interpret line-capacity markings without assuming one manufacturer format.
+
+The section should explain:
+
+- how to find line-capacity markings on the reel/spool or manufacturer specifications,
+- how to identify `lb`, `yd`, `m`, `mm`, Mono, and Braid labels,
+- that pound-test values identify line strength while yard/meter values indicate approximate capacity for that line diameter,
+- that manufacturer label order may vary and the printed units must be read rather than assumed,
+- that reel/model-size numbers such as 1000, 2500, 3000, or 4000 are not themselves direct pound-test ratings,
+- how to compare a beginner species-based line recommendation with the reel's actual capacity/rating,
+- that an incompatible reel/line combination should trigger guidance to choose a compatible line or setup rather than silently proceed.
+
+A simple labeled reel/spool diagram should support this explanation.
+
+### Reel-Specific Scope Boundary
+
+Spinning, Spincast, and Baitcasting should each receive complete line-installation/replacement guidance appropriate to their design.
+
+Baitcasting Reel & Line Setup should cover correct spooling only. Detailed brake tuning, spool-tension tuning, backlash prevention, lure-weight configuration, and casting instruction remain outside this workflow and belong to later learning/Technique content.
+
+Fly reels are not part of Version 1.
+
+### Backing and Line-System Guidance
+
+Backing guidance must be reel-type-aware rather than reduced to a universal braid rule.
+
+The workflow should explain the line system visually:
+
+- without backing: Reel spool → Main line → optional leader → Rig,
+- with backing: Reel spool → Backing → Main line → optional leader → Rig.
+
+When backing is appropriate, the workflow should explain what backing is, why it is being used, how it attaches to the spool, how it connects to the main line, and how the user returns to the Reel Setup workflow after viewing the relevant canonical Knot instructions.
+
+### Approved Scope Boundary
+
+Reel & Line Setup owns enough line-selection guidance to get a beginner fishable.
+
+It does not own full fishing optimization.
+
+Excluded from this workflow:
+
+- fly reels and fly-line-specific setup,
+- detailed baitcaster brake/casting instruction,
+- advanced reel maintenance or repair,
+- exhaustive line-selection optimization by technique/cover/lure,
+- product-specific setup beyond directing the user to manufacturer guidance when reel design requires it.
 
 The Version 1 knot discussion currently includes the Arbor Knot as a Core Knot because reel-spool attachment is a prerequisite to fishing, not an optional specialty task.
 
