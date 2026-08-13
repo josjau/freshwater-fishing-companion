@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Knot Guide
 
 **Document:** KNOT-GUIDE.md  
-**Document Revision:** 0.1.0  
+**Document Revision:** 0.2.0  
 **Document Status:** Approved Planning / In Progress  
 **Milestone:** Knots  
 **Last Updated:** 2026-08-12
@@ -26,6 +26,16 @@ The milestone should get the user from questions such as:
 - Which knot should I learn first?
 
 into a clear, technically correct, beginner-oriented workflow.
+
+# Approved Design-Flexibility Rule
+
+The approved information architecture and interaction flow establish the Version 1 design direction, but they are not intended to force a poor user experience during implementation.
+
+During build and runtime validation, layout, ordering, labels, card treatment, and navigation mechanics may be refined when the actual interface demonstrates that the approved concept does not flow naturally.
+
+Such refinements may be made without reopening the entire Knot milestone when they preserve the approved functional intent, beginner-first behavior, data ownership, and feature scope.
+
+Any proposed change that alters architecture, canonical data ownership, Version 1 scope, or the meaning of an approved workflow still requires explicit approval before implementation.
 
 # Approved Version 1 Knot Library
 
@@ -80,6 +90,138 @@ Deferred examples include:
 - fly-fishing and fly-line-specific knot systems.
 
 These may be reconsidered later when a demonstrated feature, Rig, Technique, or fishing method requires them.
+
+# Approved Knot Guide Navigation
+
+The Knot Guide uses **task-first discovery** rather than requiring a beginner to understand knot taxonomy before finding the correct connection.
+
+The planned landing-page hierarchy is:
+
+1. **Search all Knots**
+2. prominent **Get Your Reel Ready** beginner workflow
+3. **Core Knots — Learn These First**
+4. **What are you trying to do?** task-first discovery
+5. **All Knots**
+
+Technical classifications such as terminal, line-to-line, loop, reel-spool, or specialized connection remain useful metadata and filtering concepts, but they are not the primary entry point for a first-time angler.
+
+## Task-First Discovery Order
+
+The task-first discovery area must lead with **Attach Line to a Reel**.
+
+Approved task order:
+
+1. **Attach Line to a Reel**
+   - primary Knot: Arbor Knot,
+   - Uni Knot may appear as an appropriate documented alternative,
+   - prominently links into **Get Your Reel Ready** when the user needs the complete spooling workflow rather than only the attachment knot.
+
+2. **Tie On a Hook, Swivel, or Lure**
+   - Improved Clinch Knot,
+   - Palomar Knot,
+   - Uni Knot,
+   - Snell Knot when the application specifically calls for a snelled hook connection.
+
+3. **Connect Two Lines / Add a Leader**
+   - Double Uni Knot,
+   - Double Surgeon’s Knot,
+   - Alberto Knot.
+
+4. **Make a Loop Connection**
+   - Non-Slip Loop Knot for a free-moving terminal loop,
+   - Dropper Loop Knot for a branch/dropper connection in the line.
+
+The UI should explain the practical difference between candidate knots instead of presenting several names without context.
+
+## Search Position and Intent
+
+Search remains immediately available near the top of the Knot Guide.
+
+Search must support both canonical Knot names and beginner/task language. Exact search vocabulary and ranking rules remain a separate planning decision.
+
+## Core Presentation
+
+Core Knots are a recommended starter set, not a mandatory course sequence.
+
+Core presentation should explain what each Knot unlocks:
+
+- Arbor Knot — get line onto the reel,
+- Improved Clinch Knot — tie on hooks, swivels, and many lures,
+- Palomar Knot — another simple terminal connection across common freshwater setups,
+- Double Uni Knot — connect backing, main line, and leaders.
+
+The interface should not imply that the user must master all four in a fixed numerical order before fishing.
+
+## All Knots
+
+All 10 active Version 1 Knot cards should be available in the **All Knots** view.
+
+Every active Knot card must visibly display its difficulty level.
+
+Cards should remain compact and should primarily answer:
+
+- what the Knot is,
+- what practical connection it solves,
+- whether it is appropriate for the user’s current task,
+- its difficulty level.
+
+Detailed instructional content belongs on the Knot detail view rather than the browse card.
+
+## Advanced Placeholder
+
+Version 1 contains no active Advanced-difficulty Knot records, but the interface should include an **Advanced Knots** placeholder card using language such as **Coming Soon**.
+
+This placeholder is a presentation affordance only:
+
+- it is not a canonical Knot entity,
+- it is not counted in the 10-knot Version 1 library,
+- it must not appear as an active Knot search result,
+- it must not imply that Advanced knots are already available,
+- its exact visual placement may be adjusted during implementation if another placement produces a clearer flow.
+
+The placeholder communicates planned future growth without fabricating content.
+
+# Approved Knot Difficulty Taxonomy
+
+Knot difficulty uses exactly three allowed values:
+
+- **Beginner**
+- **Intermediate**
+- **Advanced**
+
+The Knot Guide does not use the Rig Guide’s `Beginner+` or `Intermediate+` levels.
+
+Difficulty means:
+
+> How difficult the Knot is to learn and reliably tie correctly.
+
+Difficulty does **not** represent knot strength, species difficulty, technique sophistication, or how specialized the Knot’s use may be.
+
+Core membership and difficulty are independent concepts. A Knot may be easy to tie without being Core, and a future Core use case would not automatically redefine tying difficulty.
+
+## Version 1 Difficulty Assignments
+
+### Beginner — 6
+
+- Arbor Knot
+- Improved Clinch Knot
+- Palomar Knot
+- Double Uni Knot
+- Uni Knot
+- Double Surgeon’s Knot
+
+### Intermediate — 4
+
+- Non-Slip Loop Knot
+- Dropper Loop Knot
+- Snell Knot
+- Alberto Knot
+
+### Advanced — 0 Active Knots
+
+No Version 1 canonical Knot is artificially promoted to Advanced merely to populate the tier.
+
+The Advanced taxonomy remains valid for future knots whose tying process genuinely warrants it, while the Version 1 interface uses the approved **Advanced Knots — Coming Soon** placeholder to represent that future expansion.
 
 # Approved Knot Instructional Media Direction
 
@@ -214,15 +356,13 @@ The current draft concepts `strengthRating`, stored `stepCount`, singular `purpo
 
 The following still require explicit approval before implementation begins:
 
-1. final Knot Guide landing-page/task-first navigation,
-2. exact Knot difficulty taxonomy,
-3. exact canonical Knot schema and controlled vocabularies,
-4. exact Rig → Knot relationship field/schema and 20-Rig audit rules,
-5. Knot detail-page information hierarchy,
-6. exact search behavior and beginner search vocabulary,
-7. research/source-validation standard for canonical Knot instructions,
-8. diagram/animation production and technical validation workflow,
-9. final milestone validation checklist and implementation sequence.
+1. exact canonical Knot schema and controlled vocabularies,
+2. exact Rig → Knot relationship field/schema and 20-Rig audit rules,
+3. Knot detail-page information hierarchy,
+4. exact search behavior and beginner search vocabulary,
+5. research/source-validation standard for canonical Knot instructions,
+6. diagram/animation production and technical validation workflow,
+7. final milestone validation checklist and implementation sequence.
 
 # Production Gate
 
