@@ -1,12 +1,12 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.8.1  
+**Document Revision:** 0.8.2  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Active Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 0.4.0  
-**Session Environment:** Windows Desktop, Brave Browser, Mobile Browser, GitHub Desktop  
-**Session Status:** Parked at a clean checkpoint — next session begins with the final interactive Rig runtime closeout.  
+**Session Environment:** Windows Desktop, Edge Browser, GitHub Desktop  
+**Session Status:** Active — final interactive Rig runtime closeout in progress.  
 **Last Updated:** 2026-08-12
 
 # 1. Start Here
@@ -163,9 +163,9 @@ Static validation against the exact deployed artifact passed:
 - all six replacement media records/files present,
 - all six replacement images use the expected production dimensions/mode/background.
 
-# 6. NEXT SESSION FIRST TASK — Final Interactive Runtime Gate
+# 6. CURRENT SESSION FIRST TASK — Final Interactive Runtime Gate
 
-This is the **first task for the next session**. Do not begin My Tackle, Knots, Recommendations, or any other feature work before this gate is completed and the Rig Guide documentation is finalized.
+This is the **first task for the current session**. Do not begin My Tackle, Knots, Recommendations, or any other feature work before this gate is completed and the Rig Guide documentation is finalized.
 
 The Rig Guide must **not** yet be marked `Validated / Finalized` solely from source, deployment, and static artifact checks.
 
@@ -182,7 +182,7 @@ One interactive runtime closeout remains:
 9. confirm mobile layout has no horizontal overflow,
 10. confirm no new application console errors.
 
-The current assistant execution environment cannot perform that interactive browser walkthrough because browser navigation to local/deployed pages is administratively blocked. Do not record a false runtime pass.
+Validation browser for this session: Microsoft Edge on Windows Desktop.
 
 After the user/runtime environment confirms those checks, immediately complete the final documentation closeout:
 
@@ -248,7 +248,7 @@ It must not be treated as permanent My Tackle ownership. Persistent inventory re
 
 There is no next feature milestone yet.
 
-The next session starts with the **Final Interactive Runtime Gate in Section 6**. After that gate passes, complete the Rig Guide documentation closeout before selecting another milestone.
+The current session starts with the **Final Interactive Runtime Gate in Section 6**. After that gate passes, complete the Rig Guide documentation closeout before selecting another milestone.
 
 Do not start My Tackle, Knots, Recommendations, or another feature until the final interactive Rig Guide closeout passes and the documentation is finalized.
 
