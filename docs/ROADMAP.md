@@ -1,15 +1,15 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.2.1  
-**Document Status:** Draft  
-**Last Updated:** 2026-08-08
+**Document Revision:** 0.3.0  
+**Document Status:** Approved  
+**Last Updated:** 2026-08-12
 
 # Purpose
 
-This document defines planned development direction for Freshwater Fishing Companion. It does not override `DECISIONS.md`, `ARCHITECTURE.md`, or the current-state map in `HANDOFF.md`.
+This document defines the canonical planned development direction for Freshwater Fishing Companion. It does not override `DECISIONS.md`, `ARCHITECTURE.md`, or the current-state map in `HANDOFF.md`.
 
-Features may move between releases as priorities change, but a new build segment does not begin until the current segment is finalized and validated.
+Features may move only through an explicit project decision. A new build segment does not begin until the current segment is finalized and validated.
 
 # Development Philosophy
 
@@ -19,97 +19,243 @@ Features may move between releases as priorities change, but a new build segment
 - Actual need before theoretical scale.
 - One source of truth.
 - Finish and validate the current segment before beginning the next.
+- Resolve foundational User Knowledge storage questions before building features that depend on persistent user data.
 
-# Current Approved Near-Term Direction
+# Current Project State
 
-## Documentation / Governance Closeout
+## Complete Rig Guide
 
-**Implementation Status: Validated**
+**Implementation Status: Validated / Finalized**
 
-The required governance closeout was completed before this build segment. Historical checklist:
+The approved initial 20-Rig regional library is complete and validated.
 
-- Push the current documentation package.
-- Verify the actual GitHub files.
-- Validate archive moves and documentation structure.
-- Update `HANDOFF.md` if the resulting repository state differs from the prepared package.
+Current validated Rig/Tackle state:
 
-## Current-State UX Repairs
+- 20 active Rigs,
+- 6 learning tiers,
+- tier counts 6 / 3 / 4 / 4 / 2 / 1,
+- unchanged six-member Core registry and order,
+- 29 active canonical Tackle concepts,
+- 29 active Tackle recognition-media records,
+- final-tier tutorials, recognition media, readiness persistence, desktop layout, mobile-width layout, and console health validated.
 
-**Implementation Status: Validated**
+Final workstream:
 
-Validated scope:
+`workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0
 
-- Mark unimplemented child cards `Coming Soon` or equivalent without misleading active affordances.
-- Change the Dashboard Regulations CTA to `Go to ODWC Regulations ↗`.
-- Restore the previously approved Forest Journal Dashboard styling regression without redesign.
+# Canonical Build Sequence After Rig Guide
 
+The approved order is:
 
-## Core Rigs and Tackle Media
+1. **Knots**
+2. **Fish Guide**
+3. **What Should I Throw**
+4. **Tackle Reference / Find Tackle**
+5. **Settings / User Data Architecture Gate**
+6. **My Tackle**
+7. **Catch Log**
+8. **Global Search**
+9. **Favorites final decision**
 
-**Implementation Status: In Progress**
+This sequence is deliberate. Do not skip forward into a later persistent-user-data feature before its architectural dependencies have been resolved.
 
-- Complete the approved Core 6 dataset.
-- Treat Jighead + Soft Plastic and Inline Spinner Setup as ready-to-fish terminal setups in the Rig Guide.
-- Store Core membership/order once in `CORE_RIG_IDS`.
-- Add the approved Core learning-path visual emphasis.
-- Replace the prior transparent/shadowed Tackle assets with the 17-image neutral-background production set.
-- Preserve text-authoritative Rig assembly and verified external references.
-- Validate the complete segment before continuing.
+# 1. Knots
 
-## Rig / Tackle Integrity
+**Next Selected Milestone**
 
-**Implementation Status: Validated**
+Build the canonical Knot reference library and Knot Guide before expanding recommendation or persistent User Knowledge features.
 
-Validated scope:
+The Knot milestone should establish:
 
-- Derive Tackle `Used In` relationships from `Rig.componentRequirements`.
-- Resolve Rig component display names from canonical Tackle.
-- Remove duplicate inverse/name sources during the deliberate cleanup.
+- practical Version 1 knot library,
+- beginner-oriented instructions,
+- knot purpose and compatible line types,
+- appropriate instructional media/tutorial strategy,
+- search and navigation,
+- connected relationships to Rigs and later Techniques/Recommendations,
+- responsive/runtime validation.
 
-## Regional Rig Expansion
+Existing `data-model/04-KNOTS.md` is the starting design reference and must be reviewed against the current application architecture before production implementation begins.
 
-**Approved / Not Implemented after Core closeout:**
+# 2. Fish Guide
 
-- Expand to the approved 20-Rig library for northeast Oklahoma and southwest Kansas.
-- Include Carolina Rig as a canonical record.
-- Present six Core Rigs as the confidence-building starting set.
+After Knots is finalized, expand the Fish Guide into a complete field-reference experience rather than only search/data foundation.
 
-## My Tackle
+The Fish Guide milestone should deliberately review:
 
-The architecture is approved at a high level, but the detailed owned-item schema remains Open and must be discussed before implementation.
+- supported regional Fish library and scope,
+- identification-safe media,
+- practical identification traits,
+- similar-species navigation,
+- habitat/waterbody/seasonal information,
+- connected Rigs and later lure/recommendation relationships,
+- regulation-resource pathways,
+- current search behavior and detail-page UX.
 
-Approved principles:
+Fish identification accuracy remains governed by the identification-safe media policy.
 
-- Canonical Tackle defines functional type.
-- My Tackle defines actual owned items.
-- Rig Readiness reads My Tackle.
-- My Tackle is the only persistent ownership source.
-- Persistent ownership changes only through explicit My Tackle management workflows.
-- Readiness answers buildability first; optimization comes later.
+# 3. What Should I Throw
+
+After the Fish Guide is finalized, build the primary Decision Knowledge recommendation experience.
+
+The feature should answer the angler's practical question: **What should I throw here and now, and why?**
+
+Recommendation outputs should connect canonical entities rather than duplicate their instructional content.
+
+## Usage Tutorial Direction
+
+Approved instructional ownership:
+
+- **How to Rig It** links to the applicable canonical Rig and its validated build tutorial/instructions.
+- **How to Fish It** links to the applicable canonical Technique and its reusable presentation/retrieve tutorial or instructions.
+- Recommendation records select, rank, and explain; they do not duplicate Rig assembly or Technique presentation instructions.
+
+This preserves the existing Rig/Technique ownership boundary while allowing What Should I Throw to provide a complete practical path from recommendation to setup to presentation.
+
+Exact recommendation inputs, scoring, explanation format, Technique implementation requirements, and tutorial coverage will be finalized during the What Should I Throw design segment.
+
+# 4. Tackle Reference / Find Tackle
+
+Build a lightweight canonical Tackle discovery/reference experience after What Should I Throw.
+
+This is **Reference Knowledge**, not My Tackle ownership and not a child feature owned exclusively by Rigs.
+
+A user should be able to find a component without remembering which Rig uses it.
+
+## Search Scope
+
+Canonical Tackle search should support deliberate identity fields such as:
+
+- canonical name,
+- approved aliases,
+- beginner/common terminology,
+- category,
+- approved search keywords.
+
+## Tackle Result as a Knowledge Gateway
+
+After identifying a Tackle concept, expose pertinent connected knowledge progressively, including where available:
+
+- what the component is,
+- recognition image/help,
+- common variants,
+- related Tackle,
+- **Used In** Rigs derived from canonical Rig component requirements,
+- compatible Fish/Conditions/Techniques when canonical relationships exist,
+- later My Tackle ownership context.
+
+Rig Guide, What Should I Throw, My Tackle, and future Global Search should all link to the same canonical Tackle identity/detail experience rather than create separate competing Tackle definitions.
+
+# 5. Settings / User Data Architecture Gate
+
+Before My Tackle or Catch Log implementation begins, conduct a dedicated architecture/design segment for persistent User Knowledge and Settings.
+
+This gate must resolve at minimum:
+
+- local persistence/storage technology,
+- data retention behavior,
+- behavior when browser/site data is cleared,
+- application-update and schema-migration strategy,
+- backup/export format,
+- restore/import validation and rollback behavior,
+- device-transfer expectations,
+- user/profile identity model,
+- single-user vs future multi-user boundaries,
+- whether any synchronization/account model is required or explicitly deferred,
+- which settings are device-local versus user-profile data,
+- theme architecture and supported themes,
+- other user preferences and their backup/restore behavior.
+
+Current local-first architecture remains the baseline until an explicit architecture decision changes it.
+
+Do not implement My Tackle or Catch Log against an assumed persistence model before this gate is closed.
+
+# 6. My Tackle
+
+Build My Tackle after the Settings/User Data architecture gate.
+
+The existing approved principles remain:
+
+- canonical Tackle defines functional type,
+- My Tackle defines actual owned items,
+- My Tackle becomes the only persistent ownership source of truth,
+- Rig Readiness reads My Tackle,
+- temporary availability never silently creates ownership,
+- persistent ownership changes only through explicit My Tackle workflows,
+- readiness answers buildability first; optimization comes later.
+
+The detailed owned-item schema and storage implementation are intentionally deferred to the dedicated My Tackle design segment after the User Data architecture gate.
+
+# 7. Catch Log
+
+Build Catch Log after My Tackle so it can use the settled User Knowledge persistence architecture and stable relationships.
+
+Catch records should reference canonical entities rather than duplicate Reference Knowledge wherever practical.
+
+The Catch Log design segment must review:
+
+- Fish/Rig/Lure/Technique references,
+- optional My Tackle/Fishing Setup relationships,
+- date/time and measurements,
+- location/privacy model,
+- notes,
+- photo handling and storage implications,
+- backup/restore behavior,
+- migration/versioning requirements.
+
+# 8. Global Search
+
+Global Search is deliberately deferred until the major searchable domains and their canonical entity models are established.
+
+The design should build on the existing relevance-first/connected-knowledge architecture rather than create an undifferentiated cross-domain result dump.
+
+Expected searchable domains may include:
+
+- Fish,
+- Rigs,
+- Knots,
+- canonical Tackle,
+- Lures,
+- Techniques,
+- What Should I Throw/recommendation entry points where appropriate.
+
+Exact grouping, ranking across entity types, ambiguity handling, and Dashboard presentation remain a dedicated design discussion for this milestone.
+
+# 9. Favorites Final Decision
+
+Favorites remains **parked** rather than automatically implemented.
+
+Near project completion, review whether a generic Favorites domain provides enough value after Search, recent/history behavior, My Tackle, Catch Log, connected knowledge, and recommendations exist.
+
+Possible outcomes include:
+
+- keep a generic Favorites feature,
+- replace it with narrower saved concepts such as Saved Rigs, Go-To Lures, or Saved Recommendations,
+- remove the feature if other workflows make it redundant.
+
+Do not build Favorites solely because a placeholder currently exists in the application structure.
 
 # Parking Lot
 
 Intentionally deferred until demonstrated by actual need or a later milestone:
 
-- Heavy fuzzy Search and advanced natural-language intent parsing
-- Global cross-domain result dumps
-- Dedicated Recommendation schema/model document
-- Commercial ProductDefinition architecture
-- Product-level catalog/SKU/retailer modeling
-- Advanced size/style-aware readiness
-- Shared multi-theme CSS architecture and revival of historical themes
-- Automated orphan-asset, broken-ID, and documentation-link validation
-- AI fish identification
-- Actual-size lure calibration
-- Container hierarchy
-- Trip planning
-- Smart packing lists
-- Cloud synchronization
-- Online product pricing
-- Live weather integration
-- Live regulation updates
-- Family sharing
-- Achievement system
+- heavy fuzzy Search and advanced natural-language intent parsing,
+- commercial ProductDefinition architecture,
+- exhaustive manufacturer/product catalogs,
+- SKU/UPC/retailer modeling,
+- advanced size/style-aware readiness,
+- cloud synchronization unless the User Data architecture gate explicitly approves it,
+- automatic cloud backup providers,
+- AI fish identification,
+- actual-size lure calibration,
+- container hierarchy,
+- trip planning,
+- smart packing lists,
+- online product pricing,
+- live weather integration,
+- live regulation updates,
+- family sharing,
+- achievement system.
 
 # Out of Scope for Version 1
 
@@ -138,8 +284,14 @@ See `DEVELOPMENT_WORKFLOW.md`.
 # Related Documents
 
 - `HANDOFF.md`
+- `MILESTONES.md`
 - `PROJECT.md`
 - `SPECIFICATION.md`
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
 - `DEVELOPMENT_WORKFLOW.md`
+- `data-model/04-KNOTS.md`
+- `data-model/02-FISH.md`
+- `data-model/05-TACKLE.md`
+- `data-model/07-USER-DATA.md`
+- `data-model/08-BACKUP.md`
