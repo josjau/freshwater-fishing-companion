@@ -466,8 +466,65 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .knot-usage-list { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
 .knot-usage-list li { display: grid; gap: 2px; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border); }
 .knot-usage-list li:last-child { padding-bottom: 0; border-bottom: 0; }
-.knot-usage-list span,
+.knot-usage-list > li > span,
 .knot-empty-context { color: var(--text-muted); font-size: .92rem; }
+.knot-usage-group { display: grid; gap: var(--space-3); }
+.knot-usage-group + .knot-usage-group { margin-top: var(--space-5); }
+.knot-usage-group__label { color: var(--text-subtle); font-size: .82rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.related-entity-link {
+    display: flex;
+    min-height: var(--touch-target);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    width: 100%;
+    margin: 0;
+    padding: var(--space-2) 0;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+}
+.related-entity-link__title { color: var(--text); font-weight: 800; }
+.related-entity-link__action { flex: 0 0 auto; color: color-mix(in srgb, var(--accent-knots) 82%, white 18%); font-size: .88rem; font-weight: 800; }
+.related-entity-link:hover .related-entity-link__title,
+.related-entity-link:focus-visible .related-entity-link__title { text-decoration: underline; text-underline-offset: 3px; }
+.related-entity-link:focus-visible { outline: 3px solid var(--accent-knots); outline-offset: 3px; border-radius: 6px; }
+.knot-usage-toggle {
+    justify-self: start;
+    min-height: 40px;
+    margin-top: var(--space-2);
+    padding: 6px 12px;
+    border: 1px solid color-mix(in srgb, var(--accent-knots) 55%, var(--border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent-knots) 12%, transparent);
+    color: var(--text);
+    font-weight: 800;
+    cursor: pointer;
+}
+.knot-usage-toggle:hover { background: color-mix(in srgb, var(--accent-knots) 20%, transparent); }
+.knot-usage-toggle:focus-visible { outline: 3px solid var(--accent-knots); outline-offset: 3px; }
+.rig-knot-section { border-color: color-mix(in srgb, var(--accent-knots) 38%, var(--border)); }
+.rig-knot-section__header p { margin-bottom: 0; color: var(--text-muted); }
+.rig-knot-application-list { display: grid; gap: var(--space-4); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+.rig-knot-application-item { display: grid; gap: var(--space-2); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border); }
+.rig-knot-application-item:last-child { padding-bottom: 0; border-bottom: 0; }
+.rig-knot-application-item > p { margin: 0; color: var(--text-muted); font-size: .92rem; }
+.rig-knot-link-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.rig-knot-link {
+    min-height: 40px;
+    margin: 0;
+    padding: 6px 11px;
+    border: 1px solid color-mix(in srgb, var(--accent-knots) 52%, var(--border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent-knots) 12%, transparent);
+    color: var(--text);
+    font-weight: 800;
+    cursor: pointer;
+}
+.rig-knot-link:hover { background: color-mix(in srgb, var(--accent-knots) 20%, transparent); }
+.rig-knot-link:focus-visible { outline: 3px solid var(--accent-knots); outline-offset: 3px; }
 .knot-tying-section { border-color: color-mix(in srgb, var(--accent-knots) 48%, var(--border)); }
 .knot-reference-block { margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--border); }
 .knot-reference-block h4 { margin: 0 0 var(--space-3); font-size: .95rem; }

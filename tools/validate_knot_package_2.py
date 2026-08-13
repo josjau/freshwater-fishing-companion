@@ -57,6 +57,53 @@ assert "Compare strength" not in script, "Legacy strength comparison copy remain
 assert "function searchRecords(" in search, "Generic searchRecords was removed"
 assert "function searchKnotRecords(" in search, "Dedicated Knot search is missing"
 
+css = (ROOT / "forest-journal.css").read_text(encoding="utf-8")
+detail_standard = (ROOT / "docs/DETAIL-PAGE-STANDARD.md").read_text(encoding="utf-8")
+detail_approval = (ROOT / "docs/workstreams/KNOT-DETAIL-PAGE-APPROVAL.md").read_text(encoding="utf-8")
+landing_approval = (ROOT / "docs/workstreams/KNOT-LANDING-PAGE-APPROVAL.md").read_text(encoding="utf-8")
+
+for required_text in [
+    "let detailNavigationStack = [];",
+    "function openRigDetailFromKnot(",
+    "function openKnotDetailFromRig(",
+    "function returnToDetailNavigationContext(",
+]:
+    assert required_text in script, f"Missing related-detail navigation support: {required_text}"
+
+for required_text in [
+    "const KNOT_USAGE_VISIBLE_RIG_LIMIT = 4;",
+    "data-knot-rig-id",
+    "See all ${rigContexts.length} rigs",
+    '"Show fewer"',
+    "Knots You'll Tie",
+    "data-rig-knot-id",
+]:
+    assert required_text in renderer, f"Missing Knot/Rig relationship UI support: {required_text}"
+
+for required_text in [".knot-usage-toggle", ".related-entity-link", ".rig-knot-link"]:
+    assert required_text in css, f"Missing relationship UI style: {required_text}"
+
+assert "See all N rigs" in detail_approval
+assert "context-preserving return stack" in detail_approval
+assert "shows up to four Rig relationships initially" in detail_standard
+
+# Knot landing revision checks.
+assert 'knot-reel-ready-title' not in renderer, "Standalone Get Your Reel Ready landing section remains"
+assert 'knot-reel-ready-card' not in renderer, "Standalone reel-readiness card remains"
+task_heading_index = renderer.index('id="knot-task-title"')
+core_heading_index = renderer.index('id="core-knots-title"')
+all_heading_index = renderer.index('id="all-knots-title"')
+assert task_heading_index < core_heading_index < all_heading_index, "Task-first landing hierarchy is incorrect"
+assert 'Get your reel ready →' in renderer, "Attach Line to a Reel does not expose the reel-readiness action"
+assert 'title: isReelSetupEntry ? "Get Your Reel Ready" : task.title' in script, "Attach Line to a Reel does not map to transitional Get Your Reel Ready page"
+for required_text in [
+    "What are you trying to do?",
+    "Attach Line to a Reel",
+    "single Knot-landing entry point",
+    "should not reintroduce a separate competing",
+]:
+    assert required_text in landing_approval, f"Missing landing guidance: {required_text}"
+
 # Execute data/search logic in Node and return compact JSON for semantic checks.
 node_script = r'''
 const fs = require("fs");
@@ -82,7 +129,24 @@ const output = vm.runInContext(`(() => {
         braid: query("braid"),
         mono: query("mono"),
         beginner: query("beginner"),
-        nonsense: query("zzzz-no-match")
+        nonsense: query("zzzz-no-match"),
+        palomarRigIds: RIG_DATA
+            .filter((rig) => rig.isActive && rig.knotApplications?.some((application) => application.recommendedKnotIds?.includes("palomar-knot")))
+            .sort((first, second) => {
+                const difficultyOrder = ["Beginner", "Beginner+", "Intermediate", "Intermediate+", "Advanced", "Expert"];
+                const firstCore = CORE_RIG_IDS.includes(first.id);
+                const secondCore = CORE_RIG_IDS.includes(second.id);
+                if (firstCore !== secondCore) return firstCore ? -1 : 1;
+                const difficultyDifference = difficultyOrder.indexOf(first.difficulty) - difficultyOrder.indexOf(second.difficulty);
+                if (difficultyDifference !== 0) return difficultyDifference;
+                const tieBreak = (rig) => {
+                    const coreIndex = CORE_RIG_IDS.indexOf(rig.id);
+                    if (coreIndex >= 0) return coreIndex;
+                    return CORE_RIG_IDS.length + RIG_DATA.findIndex((candidate) => candidate.id === rig.id);
+                };
+                return tieBreak(first) - tieBreak(second);
+            })
+            .map((rig) => rig.id)
     };
 })()`, context);
 process.stdout.write(JSON.stringify(output));
@@ -106,8 +170,15 @@ assert "palomar-knot" in data["braid"] and "double-uni-knot" in data["braid"]
 assert "arbor-knot" in data["mono"] and "improved-clinch-knot" in data["mono"]
 assert len(data["beginner"]) == 6
 assert data["nonsense"] == []
+assert len(data["palomarRigIds"]) == 20
+assert data["palomarRigIds"][:4] == [
+    "fixed-bobber-rig",
+    "basic-bottom-rig",
+    "jighead-soft-plastic",
+    "inline-spinner-setup",
+]
 
-print("Production Package 2 validation passed.")
+print("Production Package 2 combined revision validation passed.")
 print(f"Active Knots: {data['knotCount']}")
 print(f"Core Knots: {len(data['coreIds'])}")
 print(f"Task definitions: {data['taskCount']}")

@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Knot Guide — Production Package 2"
+    milestone: "Knot Guide — Production Package 2 Revision"
 });
 
 function buildSearchControlsMarkup(inputId, placeholder) {
@@ -233,19 +233,24 @@ function renderKnotGuideLanding(appMain, config) {
     }
 
     const coreMarkup = config.coreKnots.map(buildKnotResultCardMarkup).join("");
-    const taskMarkup = config.tasks.map((task) => `
-        <button class="dashboard-card knot-task-card" type="button" data-knot-task-id="${task.id}">
-            <span class="dashboard-card__title">${task.title}</span>
-            <span class="dashboard-card__description">${task.description}</span>
-            <span class="dashboard-card__action">Choose this task →</span>
-        </button>
-    `).join("");
+    const taskMarkup = config.tasks.map((task) => {
+        const actionLabel = task.id === "attach-line-to-reel"
+            ? "Get your reel ready →"
+            : "Choose this task →";
+        return `
+            <button class="dashboard-card knot-task-card" type="button" data-knot-task-id="${task.id}">
+                <span class="dashboard-card__title">${task.title}</span>
+                <span class="dashboard-card__description">${task.description}</span>
+                <span class="dashboard-card__action">${actionLabel}</span>
+            </button>
+        `;
+    }).join("");
 
     appMain.innerHTML = `
         <section class="content-view knot-guide-view" aria-labelledby="knots-title">
             <button class="page-navigation" type="button" data-home-navigation>← Home</button>
             <h2 id="knots-title">Knots</h2>
-            <p>Learn dependable fishing knots by name, by task, or from the beginner Core set.</p>
+            <p>Start with the connection you need, search by name, or learn the beginner Core set.</p>
             <form class="search-form section-search-form" data-knot-search-form>
                 <label class="search-label" for="knot-guide-search-input">Search all Knots</label>
                 ${buildSearchControlsMarkup("knot-guide-search-input", "Try Palomar, tie hook, add leader, braid, or beginner")}
@@ -255,26 +260,15 @@ function renderKnotGuideLanding(appMain, config) {
                 <div class="search-results" data-search-results></div>
             </div>
             <div class="knot-guide-content" data-knot-guide-content>
-                <section class="knot-guide-section knot-guide-section--reel" aria-labelledby="knot-reel-ready-title">
-                    <h3 id="knot-reel-ready-title">Get Your Reel Ready</h3>
-                    <p>Start with an empty or newly relined reel and work toward a fishable line system.</p>
-                    <div class="dashboard-grid">
-                        <div class="dashboard-card dashboard-card--unavailable knot-reel-ready-card" aria-disabled="true">
-                            <span class="dashboard-card__title">Get Your Reel Ready</span>
-                            <span class="dashboard-card__description">Reel identification, line guidance, spool attachment, backing decisions, and leader handoffs arrive in Production Package 3.</span>
-                            <span class="dashboard-card__action">Coming Next</span>
-                        </div>
-                    </div>
+                <section class="knot-guide-section knot-guide-section--tasks" aria-labelledby="knot-task-title">
+                    <h3 id="knot-task-title">What are you trying to do?</h3>
+                    <p>Choose the connection you need. Reel setup starts with <strong>Attach Line to a Reel</strong>.</p>
+                    <div class="dashboard-grid knot-task-grid">${taskMarkup}</div>
                 </section>
                 <section class="knot-guide-section" aria-labelledby="core-knots-title">
                     <h3 id="core-knots-title">Core Knots — Learn These First</h3>
                     <p>Four practical knots that cover reel attachment, common terminal connections, and joining lines.</p>
                     <div class="knot-card-grid" data-core-knot-grid>${coreMarkup}</div>
-                </section>
-                <section class="knot-guide-section" aria-labelledby="knot-task-title">
-                    <h3 id="knot-task-title">What are you trying to do?</h3>
-                    <p>Choose the connection you need and see a short, curated Knot list.</p>
-                    <div class="dashboard-grid knot-task-grid">${taskMarkup}</div>
                 </section>
                 <section class="knot-guide-section" aria-labelledby="all-knots-title">
                     <h3 id="all-knots-title">All Knots</h3>
@@ -322,6 +316,129 @@ function renderKnotGuideLanding(appMain, config) {
     appMain.querySelector("[data-knot-browse-all]")?.addEventListener("click", () => config.onBrowseAll?.());
 }
 
+const KNOT_USAGE_VISIBLE_RIG_LIMIT = 4;
+
+function buildKnotUsageMarkup(record, usageContexts) {
+    const taskContexts = Array.isArray(usageContexts?.tasks) ? usageContexts.tasks : [];
+    const rigContexts = Array.isArray(usageContexts?.rigs) ? usageContexts.rigs : [];
+    const taskMarkup = taskContexts.length
+        ? `
+            <div class="knot-usage-group">
+                <span class="knot-usage-group__label">Common tasks</span>
+                ${buildTagList(taskContexts.map((task) => task.title))}
+            </div>
+        `
+        : "";
+
+    if (rigContexts.length === 0) {
+        return `${taskMarkup}<p class="knot-empty-context">No active Rig currently references this Knot.</p>`;
+    }
+
+    const rigListId = `knot-rig-usage-${record.id}`;
+    const rigItems = rigContexts.map((usage, index) => {
+        const isInitiallyHidden = index >= KNOT_USAGE_VISIBLE_RIG_LIMIT;
+        return `
+            <li${isInitiallyHidden ? ' data-knot-rig-usage-extra hidden' : ""}>
+                <button class="related-entity-link knot-rig-link" type="button" data-knot-rig-id="${usage.rigId}">
+                    <span class="related-entity-link__title">${usage.title}</span>
+                    <span class="related-entity-link__action">View Rig →</span>
+                </button>
+                <span>${usage.difficulty} · ${usage.labels.join(" · ")}</span>
+            </li>
+        `;
+    }).join("");
+    const toggleMarkup = rigContexts.length > KNOT_USAGE_VISIBLE_RIG_LIMIT
+        ? `
+            <button
+                class="knot-usage-toggle"
+                type="button"
+                data-knot-usage-toggle
+                data-knot-usage-count="${rigContexts.length}"
+                aria-expanded="false"
+                aria-controls="${rigListId}"
+            >See all ${rigContexts.length} rigs</button>
+        `
+        : "";
+
+    return `
+        ${taskMarkup}
+        <div class="knot-usage-group knot-usage-group--rigs">
+            <span class="knot-usage-group__label">Rigs that use this Knot</span>
+            <ul class="knot-usage-list" id="${rigListId}">${rigItems}</ul>
+            ${toggleMarkup}
+        </div>
+    `;
+}
+
+function initializeKnotUsageControls(appMain, detailConfig) {
+    appMain.querySelectorAll("[data-knot-rig-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+            detailConfig.onRigSelect?.(button.dataset.knotRigId);
+        });
+    });
+
+    const toggle = appMain.querySelector("[data-knot-usage-toggle]");
+    if (!toggle) return;
+
+    const hiddenItems = Array.from(appMain.querySelectorAll("[data-knot-rig-usage-extra]"));
+    toggle.addEventListener("click", () => {
+        const willExpand = toggle.getAttribute("aria-expanded") !== "true";
+        hiddenItems.forEach((item) => {
+            item.hidden = !willExpand;
+        });
+        toggle.setAttribute("aria-expanded", String(willExpand));
+        toggle.textContent = willExpand
+            ? "Show fewer"
+            : `See all ${toggle.dataset.knotUsageCount} rigs`;
+    });
+}
+
+function getKnotRecord(knotId) {
+    if (!knotId || typeof KNOT_DATA === "undefined") return null;
+    const record = findRecordById(KNOT_DATA, knotId);
+    return record?.isActive === true ? record : null;
+}
+
+function buildRigKnotApplications(record) {
+    if (!Array.isArray(record?.knotApplications) || record.knotApplications.length === 0) return "";
+
+    const applicationsMarkup = record.knotApplications.map((application) => {
+        const knotLinks = application.recommendedKnotIds
+            .map((knotId) => {
+                const knot = getKnotRecord(knotId);
+                if (!knot) {
+                    console.warn(`Canonical Knot record was not found: ${knotId}`);
+                    return "";
+                }
+                return `
+                    <button class="rig-knot-link" type="button" data-rig-knot-id="${knot.id}">
+                        ${knot.name} <span aria-hidden="true">→</span>
+                    </button>
+                `;
+            })
+            .filter(Boolean)
+            .join("");
+
+        return `
+            <li class="rig-knot-application-item">
+                <strong>${application.label}</strong>
+                <div class="rig-knot-link-list">${knotLinks}</div>
+                ${application.notes ? `<p>${application.notes}</p>` : ""}
+            </li>
+        `;
+    }).join("");
+
+    return `
+        <section class="detail-section rig-knot-section">
+            <div class="rig-knot-section__header">
+                <h3>Knots You'll Tie</h3>
+                <p>Select a recommended Knot for tying instructions. Parent returns you to this Rig.</p>
+            </div>
+            <ul class="rig-knot-application-list">${applicationsMarkup}</ul>
+        </section>
+    `;
+}
+
 function renderKnotInstructionDetail(appMain, detailConfig) {
     if (!appMain || !detailConfig?.record) {
         console.error("A valid Knot detail record is required.");
@@ -330,7 +447,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
 
     const record = detailConfig.record;
     const isCore = isCoreKnotRecord(record);
-    const usageContexts = Array.isArray(detailConfig.usageContexts) ? detailConfig.usageContexts : [];
+    const usageContexts = detailConfig.usageContexts ?? {};
     const aliasesMarkup = record.aliases?.length
         ? `<p class="knot-aliases"><strong>Also called:</strong> ${record.aliases.join(", ")}</p>`
         : "";
@@ -340,14 +457,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
         if (lineType === "braid") return "Braid";
         return lineType;
     });
-    const usageMarkup = usageContexts.length
-        ? `<ul class="knot-usage-list">${usageContexts.map((usage) => `
-            <li>
-                <strong>${usage.title}</strong>
-                <span>${usage.labels.join(" · ")}</span>
-            </li>
-        `).join("")}</ul>`
-        : '<p class="knot-empty-context">No active Rig currently references this Knot.</p>';
+    const usageMarkup = buildKnotUsageMarkup(record, usageContexts);
     const referencesMarkup = record.referenceLinks?.length
         ? `
             <div class="knot-reference-block">
@@ -409,6 +519,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
     `;
 
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
+    initializeKnotUsageControls(appMain, detailConfig);
     initializeHomeNavigation(appMain);
 }
 
@@ -691,6 +802,7 @@ function renderInstructionDetail(appMain, detailConfig) {
                 </div>
                 <ul class="rig-component-list">${componentsMarkup}</ul>
             </section>
+            ${buildRigKnotApplications(record)}
             <section class="detail-section detail-section--build">
                 <h3>How to Build It</h3>
                 <ol class="detail-steps">${record.assemblySteps.map((step) => `<li>${step}</li>`).join("")}</ol>
@@ -734,6 +846,11 @@ function renderInstructionDetail(appMain, detailConfig) {
     };
 
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
+    appMain.querySelectorAll("[data-rig-knot-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+            detailConfig.onKnotSelect?.(button.dataset.rigKnotId);
+        });
+    });
     appMain.querySelectorAll("[data-component-owned-id]").forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
             detailConfig.onReadinessChange?.(

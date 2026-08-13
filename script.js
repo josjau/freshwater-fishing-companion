@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knot Guide — Production Package 2"
+    milestone: "Knot Guide — Production Package 2 Revision"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -66,6 +66,15 @@ const RIG_COLLECTIONS = Object.freeze({
     })
 });
 
+const RIG_DIFFICULTY_ORDER = Object.freeze([
+    "Beginner",
+    "Beginner+",
+    "Intermediate",
+    "Intermediate+",
+    "Advanced",
+    "Expert"
+]);
+
 let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
 let selectedRigId = null;
@@ -74,6 +83,45 @@ let selectedKnotId = null;
 let selectedKnotBrowseKey = "all";
 let selectedKnotTaskId = null;
 let selectedKnotDetailSource = "guide";
+let detailNavigationStack = [];
+
+function clearDetailNavigationStack() {
+    detailNavigationStack = [];
+}
+
+function peekDetailNavigationContext() {
+    return detailNavigationStack.length > 0
+        ? detailNavigationStack[detailNavigationStack.length - 1]
+        : null;
+}
+
+function pushDetailNavigationContext(context) {
+    if (!context?.route || !context?.label || !context?.state) return;
+    detailNavigationStack.push(context);
+}
+
+function returnToDetailNavigationContext() {
+    const context = detailNavigationStack.pop();
+    if (!context) return false;
+
+    if (context.route === ROUTES.RIG_DETAIL) {
+        selectedRigId = context.state.selectedRigId;
+        selectedRigCollectionKey = context.state.selectedRigCollectionKey;
+        showView(ROUTES.RIG_DETAIL);
+        return true;
+    }
+
+    if (context.route === ROUTES.KNOT_DETAIL) {
+        selectedKnotId = context.state.selectedKnotId;
+        selectedKnotBrowseKey = context.state.selectedKnotBrowseKey;
+        selectedKnotTaskId = context.state.selectedKnotTaskId;
+        selectedKnotDetailSource = context.state.selectedKnotDetailSource;
+        showView(ROUTES.KNOT_DETAIL);
+        return true;
+    }
+
+    return false;
+}
 
 const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView,
@@ -103,6 +151,7 @@ function showView(route) {
     }
 
     if (route === ROUTES.DASHBOARD) {
+        clearDetailNavigationStack();
         currentView = ROUTES.DASHBOARD;
         appMain.innerHTML = dashboardMarkup;
         initializeDashboardRouting();
@@ -211,11 +260,7 @@ function updateRigGuideSearchResults(appMain, query) {
     renderSearchResults(appMain, matches, {
         emptyMessage: "No rigs matched your search.",
         renderRecord: renderRigSearchResultCard,
-        onResultSelect: (rigId) => {
-            selectedRigCollectionKey = "guide";
-            selectedRigId = rigId;
-            showView(ROUTES.RIG_DETAIL);
-        }
+        onResultSelect: (rigId) => openRigDetail(rigId, "guide")
     });
 }
 
@@ -297,6 +342,59 @@ function sortRigCollection(records) {
     return sortRecordsAlphabetically(records);
 }
 
+function openRigDetail(rigId, collectionKey = selectedRigCollectionKey) {
+    clearDetailNavigationStack();
+    selectedRigId = rigId;
+    selectedRigCollectionKey = collectionKey;
+    showView(ROUTES.RIG_DETAIL);
+}
+
+function openRigDetailFromKnot(rigId) {
+    const rig = findRecordById(RIG_DATA, rigId);
+    const knot = findRecordById(KNOT_DATA, selectedKnotId);
+    if (!rig || rig.isActive !== true || !knot || knot.isActive !== true) {
+        console.warn(`Related Rig or Knot could not be opened: ${rigId}`);
+        return;
+    }
+
+    pushDetailNavigationContext({
+        route: ROUTES.KNOT_DETAIL,
+        label: knot.name,
+        state: {
+            selectedKnotId,
+            selectedKnotBrowseKey,
+            selectedKnotTaskId,
+            selectedKnotDetailSource
+        }
+    });
+
+    selectedRigId = rigId;
+    selectedRigCollectionKey = "all";
+    showView(ROUTES.RIG_DETAIL);
+}
+
+function openKnotDetailFromRig(knotId) {
+    const rig = findRecordById(RIG_DATA, selectedRigId);
+    const knot = findRecordById(KNOT_DATA, knotId);
+    if (!rig || rig.isActive !== true || !knot || knot.isActive !== true) {
+        console.warn(`Related Knot or Rig could not be opened: ${knotId}`);
+        return;
+    }
+
+    pushDetailNavigationContext({
+        route: ROUTES.RIG_DETAIL,
+        label: rig.name,
+        state: {
+            selectedRigId,
+            selectedRigCollectionKey
+        }
+    });
+
+    selectedKnotId = knotId;
+    selectedKnotDetailSource = "related-rig";
+    showView(ROUTES.KNOT_DETAIL);
+}
+
 function renderRigBrowseView(appMain) {
     const collection = getRigCollectionConfig();
     renderSearchView(appMain, {
@@ -327,31 +425,33 @@ function updateRigBrowseResults(appMain, query) {
     renderSearchResults(appMain, resultRecords, {
         emptyMessage: "No rigs matched your search.",
         renderRecord: renderRigSearchResultCard,
-        onResultSelect: (rigId) => {
-            selectedRigId = rigId;
-            showView(ROUTES.RIG_DETAIL);
-        }
+        onResultSelect: (rigId) => openRigDetail(rigId, selectedRigCollectionKey)
     });
 }
 
 function renderRigDetailView(appMain) {
     const rig = findRecordById(RIG_DATA, selectedRigId);
     const fromGuideSearch = selectedRigCollectionKey === "guide";
+    const returnContext = peekDetailNavigationContext();
+    const fromRelatedKnot = returnContext?.route === ROUTES.KNOT_DETAIL;
     if (!rig) {
         console.warn(`Rig was not found: ${selectedRigId}`);
+        if (fromRelatedKnot && returnToDetailNavigationContext()) return;
         showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE);
         return;
     }
 
-
     const collection = getRigCollectionConfig();
     renderInstructionDetail(appMain, {
         record: rig,
-        parentLabel: fromGuideSearch ? "Rig Guide" : collection.title,
+        parentLabel: fromRelatedKnot
+            ? returnContext.label
+            : (fromGuideSearch ? "Rig Guide" : collection.title),
         selections: getRigReadinessSelections(rig.id),
-        onParent: () => showView(
-            fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE
-        ),
+        onParent: fromRelatedKnot
+            ? returnToDetailNavigationContext
+            : () => showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE),
+        onKnotSelect: openKnotDetailFromRig,
         onReadinessChange: (tackleId, isOwned) =>
             updateRigReadinessSelection(rig.id, tackleId, isOwned)
     });
@@ -434,6 +534,7 @@ function getCoreKnots(activeKnots = getActiveKnots()) {
 }
 
 function openKnotDetail(knotId, source = "guide") {
+    clearDetailNavigationStack();
     selectedKnotId = knotId;
     selectedKnotDetailSource = source;
     showView(ROUTES.KNOT_DETAIL);
@@ -476,9 +577,12 @@ function getKnotBrowseConfig() {
     if (selectedKnotBrowseKey === "task") {
         const task = getKnotTask(selectedKnotTaskId);
         if (task) {
+            const isReelSetupEntry = task.id === "attach-line-to-reel";
             return {
-                title: task.title,
-                description: task.description,
+                title: isReelSetupEntry ? "Get Your Reel Ready" : task.title,
+                description: isReelSetupEntry
+                    ? "Start with the knots used to secure line or backing to the reel. The full guided reel-setup workflow arrives in Production Package 3 through this same entry point."
+                    : task.description,
                 records: task.knotIds
                     .map((knotId) => findRecordById(getActiveKnots(), knotId))
                     .filter(Boolean)
@@ -522,13 +626,27 @@ function updateKnotBrowseResults(appMain, query) {
     });
 }
 
+function getRigDifficultyRank(difficulty) {
+    const rank = RIG_DIFFICULTY_ORDER.indexOf(difficulty);
+    return rank >= 0 ? rank : Number.MAX_SAFE_INTEGER;
+}
+
+function getRigUsageTieBreakOrder(rigId) {
+    const coreOrder = CORE_RIG_IDS.indexOf(rigId);
+    if (coreOrder >= 0) return coreOrder;
+
+    const dataOrder = RIG_DATA.findIndex((rig) => rig.id === rigId);
+    return CORE_RIG_IDS.length + (dataOrder >= 0 ? dataOrder : RIG_DATA.length);
+}
+
 function getKnotUsageContexts(knotId) {
     const taskContexts = KNOT_TASK_DEFINITIONS
         .filter((task) => task.knotIds.includes(knotId))
         .map((task) => ({
-            title: task.title,
-            labels: ["Knot Guide task"]
+            taskId: task.id,
+            title: task.title
         }));
+
     const rigContexts = RIG_DATA
         .filter((rig) => rig.isActive === true && Array.isArray(rig.knotApplications))
         .map((rig) => {
@@ -536,18 +654,40 @@ function getKnotUsageContexts(knotId) {
                 .filter((application) => application.recommendedKnotIds?.includes(knotId))
                 .map((application) => application.label);
             return labels.length > 0
-                ? { title: rig.name, labels }
+                ? {
+                    rigId: rig.id,
+                    title: rig.name,
+                    difficulty: rig.difficulty,
+                    isCore: CORE_RIG_IDS.includes(rig.id),
+                    labels
+                }
                 : null;
         })
-        .filter(Boolean);
+        .filter(Boolean)
+        .sort((first, second) => {
+            if (first.isCore !== second.isCore) return first.isCore ? -1 : 1;
 
-    return [...taskContexts, ...rigContexts];
+            const difficultyDifference = getRigDifficultyRank(first.difficulty) -
+                getRigDifficultyRank(second.difficulty);
+            if (difficultyDifference !== 0) return difficultyDifference;
+
+            return getRigUsageTieBreakOrder(first.rigId) -
+                getRigUsageTieBreakOrder(second.rigId);
+        });
+
+    return {
+        tasks: taskContexts,
+        rigs: rigContexts
+    };
 }
 
 function renderKnotDetailView(appMain) {
     const knot = findRecordById(KNOT_DATA, selectedKnotId);
+    const returnContext = peekDetailNavigationContext();
+    const fromRelatedRig = returnContext?.route === ROUTES.RIG_DETAIL;
     if (!knot || knot.isActive !== true) {
         console.warn(`Knot was not found: ${selectedKnotId}`);
+        if (fromRelatedRig && returnToDetailNavigationContext()) return;
         showView(ROUTES.KNOTS);
         return;
     }
@@ -557,8 +697,13 @@ function renderKnotDetailView(appMain) {
     renderKnotInstructionDetail(appMain, {
         record: knot,
         usageContexts: getKnotUsageContexts(knot.id),
-        parentLabel: fromBrowse ? browseConfig.title : "Knots",
-        onParent: () => showView(fromBrowse ? ROUTES.KNOT_BROWSE : ROUTES.KNOTS)
+        parentLabel: fromRelatedRig
+            ? returnContext.label
+            : (fromBrowse ? browseConfig.title : "Knots"),
+        onParent: fromRelatedRig
+            ? returnToDetailNavigationContext
+            : () => showView(fromBrowse ? ROUTES.KNOT_BROWSE : ROUTES.KNOTS),
+        onRigSelect: openRigDetailFromKnot
     });
 }
 

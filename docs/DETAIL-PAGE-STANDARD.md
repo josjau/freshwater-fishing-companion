@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Detail Page Standard
 
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.1.0  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-13
 
@@ -24,6 +24,9 @@ Shared expectations include:
 - completion or verification checks where the domain has a meaningful completion state,
 - familiar treatments for common mistakes, notes, limitations, and safety information,
 - related canonical knowledge surfaced in useful context rather than as a generic relationship dump,
+- progressive disclosure for high-cardinality related-entity lists when showing the complete list by default would create unnecessary scrolling,
+- actionable related-entity navigation when moving to that entity materially helps the current task,
+- context-preserving Parent return when a user temporarily leaves one detail page to inspect a related detail page,
 - mobile-first readability and the established field-guide visual grammar.
 
 # Identity Header
@@ -39,13 +42,31 @@ Concise description
 
 Do not overload the identity header with technical metadata.
 
+# Related Knowledge and Context-Preserving Navigation
+
+Related knowledge should behave as a gateway, not a passive relationship dump.
+
+When a related canonical entity can help the user complete or understand the current task:
+
+- make the related entity directly actionable,
+- open explicit related-entity navigation at the top of the destination,
+- preserve the immediately preceding detail context so Parent returns to it,
+- allow nested related-detail movement when useful,
+- clear the related-detail return context when the user intentionally returns Home.
+
+Do not duplicate relationship ownership merely to support this navigation. Derive reverse relationships from the canonical owner whenever the architecture defines one.
+
+For high-cardinality relationship lists, use progressive disclosure instead of forcing a large default scroll. The current Knot **Where You'll Use It** standard shows up to four Rig relationships initially and exposes the remainder through **See all N rigs** / **Show fewer**.
+
+This threshold is a domain/UI rule for the Knot relationship list, not a universal truncation rule for every list in the application.
+
 # Domain Adaptation
 
 The Rig detail page is a baseline, not a rigid template.
 
 A domain may omit, rename, combine, or add sections when its information genuinely requires different treatment. The default approach is to map the domain onto the established Rig flow first and document only justified deviations.
 
-Examples of justified deviations include stronger visual instruction, recognition media, a completion check, or context-preserving return to an interrupted workflow.
+Examples of justified deviations include stronger visual instruction, recognition media, a completion check, progressive disclosure for dense related knowledge, or context-preserving return to an interrupted workflow.
 
 # Design Flexibility
 

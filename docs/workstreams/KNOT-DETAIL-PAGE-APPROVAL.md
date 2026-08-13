@@ -1,6 +1,6 @@
 # Knot Detail Page Approval
 
-**Status:** Approved Planning  
+**Status:** Approved / Runtime Refinement  
 **Date:** 2026-08-13
 
 The Knot detail page should follow the established Rig detail-page workflow as closely as practical.
@@ -15,6 +15,10 @@ Approved flow:
 2. Paired **Best For | Where You'll Use It** section.
    - Best For includes practical uses and concise line compatibility.
    - Where You'll Use It exposes applicable derived Rig/workflow relationships.
+   - Task/workflow context remains compact and visible.
+   - Rig relationships are presented as actionable internal navigation links rather than a static relationship dump.
+   - When more than four active Rigs reference the Knot, show the first four by default and provide **See all N rigs** / **Show fewer** progressive disclosure.
+   - The initial four prioritize Core Rigs, then lower difficulty, then canonical Rig order as the tie-breaker.
 3. **How to Tie It** follows the visual grammar of Rig **How to Build It**.
    - project-owned diagram/controlled animation remains primary where available,
    - authoritative steps remain visibly numbered,
@@ -24,10 +28,31 @@ Approved flow:
 5. **Common Mistakes** uses the established field-guide treatment.
 6. **When to Choose Another Knot** presents practical limitations without creating an unapproved automatic Knot-to-Knot relationship.
 
+# Related Rig Navigation
+
+A Knot detail page may navigate directly to any active Rig surfaced in **Where You'll Use It**.
+
+The related Rig detail page must expose its Rig-owned `knotApplications[]` as **Knots You'll Tie** links so the angler can move from Rig assembly context back into an applicable Knot instruction.
+
+Related-detail navigation uses a context-preserving return stack:
+
+```text
+Knot detail -> Rig detail -> Knot detail -> ...
+```
+
+Each explicit related-entity navigation opens the destination at the top. The Parent control returns to the immediately preceding detail context rather than forcing the user to rediscover it. Home clears the related-detail return context.
+
+This navigation behavior does not change data ownership:
+
+- Rig continues to own `knotApplications[]`.
+- Knot -> Rig usage remains derived at runtime.
+- No reverse Rig IDs are stored in canonical Knot data.
+- No duplicated Knot relationship fields are added to Rig or Knot records.
+
 The page should retain the existing persistent Parent/Home behavior and context-preserving return when entered from Reel & Line Setup or another workflow.
 
 Exact spacing, labels, columns, and compactness may be refined during implementation if the approved hierarchy and beginner-first intent are preserved.
 
 Cross-domain standard: `../DETAIL-PAGE-STANDARD.md`.
 
-Next Knot planning topic: exact search behavior and beginner search vocabulary.
+Next Knot implementation topic after this refinement: Production Package 3 — Get Your Reel Ready.
