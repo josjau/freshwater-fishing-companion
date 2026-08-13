@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 2.0.0  
+**Document Revision:** 2.1.0  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-12
 
@@ -9,7 +9,7 @@
 
 This document preserves milestone history. Historical milestone completion records describe what was validated at that time; later approved architecture may supersede the workflow or media approach without rewriting history.
 
-When a historical milestone conflicts with current architecture, `DECISIONS.md`, `ARCHITECTURE.md`, and `HANDOFF.md` govern the current state.
+When a historical milestone conflicts with current architecture, `DECISIONS.md`, `ARCHITECTURE.md`, `ROADMAP.md`, and `HANDOFF.md` govern the current state.
 
 # Completed
 
@@ -268,19 +268,30 @@ The approved initial Rig Guide is now complete. Further Rig work is enhancement 
 
 # In Progress
 
-No build segment is currently in progress.
+No production build segment is currently in progress.
 
-The project is at a clean milestone boundary.
+The project is at a clean milestone boundary with the next milestone selected.
+
+# Canonical Upcoming Milestone Sequence
+
+The approved development order is:
+
+1. **Knots** — next selected milestone.
+2. **Fish Guide** — full field-guide expansion after Knots.
+3. **What Should I Throw** — recommendation/Decision Knowledge milestone, including the approved `How to Rig It` versus `How to Fish It` instructional split.
+4. **Tackle Reference / Find Tackle** — searchable canonical Tackle discovery independent of remembering a Rig; results expose derived `Used In` Rig relationships and other connected knowledge.
+5. **Settings / User Data Architecture Gate** — settle persistence, retention, backup/restore, schema migration, user/profile model, themes, and preference ownership before persistent User Knowledge features.
+6. **My Tackle** — implement persistent ownership only after the User Data architecture gate.
+7. **Catch Log** — implement after My Tackle on the settled User Knowledge persistence architecture.
+8. **Global Search** — design after the major searchable domains and entity models are established; preserve relevance-first behavior and avoid an undifferentiated result dump.
+9. **Favorites final decision** — defer implementation until near project completion and decide whether to keep, narrow, replace, or remove it based on actual workflow value.
+
+`ROADMAP.md` revision 0.3.0 is the canonical planning record for this sequence and its design gates.
 
 # Next Segment
 
-Select the next milestone deliberately under D039/D040.
+The next milestone is **Knots**.
 
-Current candidates include:
+Before production implementation, review the existing Knot data-model draft against the current architecture, settle the Version 1 knot library and instructional-media approach, and define the Knot workstream scope.
 
-1. My Tackle / persistent ownership foundation.
-2. Knots foundation.
-3. Recommendations foundation.
-4. Another explicitly prioritized project milestone.
-
-The Rig Guide does not require additional completion work before the next milestone is selected.
+Do not begin Fish Guide, What Should I Throw, Tackle Reference, Settings/User Data, My Tackle, Catch Log, Global Search, or Favorites implementation until Knots is completed and validated unless the roadmap is explicitly revised.
