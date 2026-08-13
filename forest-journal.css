@@ -465,6 +465,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .knot-line-types__label { display: block; margin-bottom: var(--space-2); color: var(--text-subtle); font-size: .82rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
 .knot-usage-list { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
 .knot-usage-list li { display: grid; gap: 2px; padding-bottom: var(--space-3); border-bottom: 1px solid var(--border); }
+.knot-usage-list > li[hidden] { display: none !important; }
 .knot-usage-list li:last-child { padding-bottom: 0; border-bottom: 0; }
 .knot-usage-list > li > span,
 .knot-empty-context { color: var(--text-muted); font-size: .92rem; }

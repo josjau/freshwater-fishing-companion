@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Knot Guide — Production Package 2 Revision"
+    milestone: "Knot Guide — Production Package 2 Revision 2"
 });
 
 function buildSearchControlsMarkup(inputId, placeholder) {
@@ -227,12 +227,11 @@ function buildKnotResultCardMarkup(knot) {
 }
 
 function renderKnotGuideLanding(appMain, config) {
-    if (!appMain || !config || !Array.isArray(config.coreKnots) || !Array.isArray(config.tasks)) {
+    if (!appMain || !config || !Array.isArray(config.tasks) || !Array.isArray(config.collections)) {
         console.error("A valid Knot Guide landing configuration is required.");
         return;
     }
 
-    const coreMarkup = config.coreKnots.map(buildKnotResultCardMarkup).join("");
     const taskMarkup = config.tasks.map((task) => {
         const actionLabel = task.id === "attach-line-to-reel"
             ? "Get your reel ready →"
@@ -246,11 +245,30 @@ function renderKnotGuideLanding(appMain, config) {
         `;
     }).join("");
 
+    const collectionMarkup = config.collections.map((collection) => {
+        if (collection.isAvailable !== true) {
+            return `
+                <div class="dashboard-card dashboard-card--unavailable knot-collection-card" aria-disabled="true">
+                    <span class="dashboard-card__title">${collection.title}</span>
+                    <span class="dashboard-card__description">${collection.description}</span>
+                    <span class="dashboard-card__action">Coming Soon</span>
+                </div>
+            `;
+        }
+
+        return `
+            <button class="dashboard-card knot-collection-card" type="button" data-knot-collection-key="${collection.key}">
+                <span class="dashboard-card__title">${collection.title}</span>
+                <span class="dashboard-card__description">${collection.description}</span>
+            </button>
+        `;
+    }).join("");
+
     appMain.innerHTML = `
         <section class="content-view knot-guide-view" aria-labelledby="knots-title">
             <button class="page-navigation" type="button" data-home-navigation>← Home</button>
             <h2 id="knots-title">Knots</h2>
-            <p>Start with the connection you need, search by name, or learn the beginner Core set.</p>
+            <p>Start with the connection you need, search by name, or browse a Knot collection.</p>
             <form class="search-form section-search-form" data-knot-search-form>
                 <label class="search-label" for="knot-guide-search-input">Search all Knots</label>
                 ${buildSearchControlsMarkup("knot-guide-search-input", "Try Palomar, tie hook, add leader, braid, or beginner")}
@@ -265,18 +283,8 @@ function renderKnotGuideLanding(appMain, config) {
                     <p>Choose the connection you need. Reel setup starts with <strong>Attach Line to a Reel</strong>.</p>
                     <div class="dashboard-grid knot-task-grid">${taskMarkup}</div>
                 </section>
-                <section class="knot-guide-section" aria-labelledby="core-knots-title">
-                    <h3 id="core-knots-title">Core Knots — Learn These First</h3>
-                    <p>Four practical knots that cover reel attachment, common terminal connections, and joining lines.</p>
-                    <div class="knot-card-grid" data-core-knot-grid>${coreMarkup}</div>
-                </section>
-                <section class="knot-guide-section" aria-labelledby="all-knots-title">
-                    <h3 id="all-knots-title">All Knots</h3>
-                    <button class="dashboard-card knot-browse-all-card" type="button" data-knot-browse-all>
-                        <span class="dashboard-card__title">Browse All 10 Knots</span>
-                        <span class="dashboard-card__description">View every active Beginner and Intermediate Knot in the Version 1 library.</span>
-                        <span class="dashboard-card__action">Browse all →</span>
-                    </button>
+                <section class="knot-guide-section knot-guide-section--collections" aria-label="Browse Knot collections">
+                    <div class="dashboard-grid knot-collection-grid">${collectionMarkup}</div>
                 </section>
             </div>
         </section>
@@ -307,13 +315,12 @@ function renderKnotGuideLanding(appMain, config) {
     };
     initializeSearchControls(searchForm, searchInput, clearButton, updateSearch);
 
-    appMain.querySelectorAll("[data-core-knot-grid] [data-result-id]").forEach((card) => {
-        card.addEventListener("click", () => config.onKnotSelect?.(card.dataset.resultId));
-    });
     appMain.querySelectorAll("[data-knot-task-id]").forEach((card) => {
         card.addEventListener("click", () => config.onTaskSelect?.(card.dataset.knotTaskId));
     });
-    appMain.querySelector("[data-knot-browse-all]")?.addEventListener("click", () => config.onBrowseAll?.());
+    appMain.querySelectorAll("[data-knot-collection-key]").forEach((card) => {
+        card.addEventListener("click", () => config.onCollectionSelect?.(card.dataset.knotCollectionKey));
+    });
 }
 
 const KNOT_USAGE_VISIBLE_RIG_LIMIT = 4;

@@ -1,8 +1,8 @@
 # Knot Production Package 2
 
-**Status:** Production Package 2 / Combined Runtime Revision Awaiting Validation  
+**Status:** Production Package 2 / Runtime Revision 2 Awaiting Validation  
 **Milestone:** Knots  
-**Implementation Version:** 0.6.1  
+**Implementation Version:** 0.6.2  
 **Date:** 2026-08-13
 
 # Purpose
@@ -12,7 +12,7 @@ Production Package 2 turns the Package 1 Knot data foundation into the first com
 This package implements:
 
 - Knot Guide landing hierarchy,
-- direct Core Knot access,
+- Rig-style Knot collection cards for All/Core/Beginner/Intermediate/Advanced,
 - task-first discovery,
 - deterministic beginner-oriented search,
 - All Knots browsing,
@@ -56,10 +56,16 @@ The revised landing flow is:
 
 1. Search all Knots.
 2. **What are you trying to do?** — four task-first choices.
-3. **Core Knots — Learn These First** — all four Core Knots open directly.
-4. **All Knots** — opens the complete active library.
+3. Collection cards:
+   - **All Knots**.
+   - **Core Knots**.
+   - **Beginner Knots**.
+   - **Intermediate Knots**.
+   - **Advanced Knots** — Coming Soon while no active Advanced records exist.
 
-The former standalone **Get Your Reel Ready** landing card is removed. **Attach Line to a Reel** is now the single Knot-landing entry point for reel readiness. In Production Package 2 Revision, selecting that task opens a transitional **Get Your Reel Ready** task page with Arbor Knot and Uni Knot. Production Package 3 upgrades the same entry into the full guided reel-setup workflow rather than adding a second competing landing card.
+The landing no longer renders the four Core Knot records directly. Core is a collection card, matching the Rig Guide's collection-card interaction model and keeping the landing page compact as the library grows.
+
+The former standalone **Get Your Reel Ready** landing card is removed. **Attach Line to a Reel** is the single Knot-landing entry point for reel readiness. Selecting that task opens a transitional **Get Your Reel Ready** task page with Arbor Knot and Uni Knot. Production Package 3 upgrades the same entry into the full guided reel-setup workflow rather than adding a second competing landing card.
 
 Task-first discovery remains above Knot collections so it stays prominent as the Knot library expands.
 
@@ -102,6 +108,7 @@ Each active Knot detail page presents:
    - Task context remains compact and visible.
    - Up to four Rig relationships display initially.
    - More than four Rigs adds **See all N rigs** / **Show fewer**.
+   - Runtime Revision 2 fixes the hidden-state CSS defect so relationships beyond the first four are actually removed from layout until expanded.
    - Initial Rig ordering prioritizes Core status, lower difficulty, then canonical Rig order.
    - Each Rig is an internal navigation link to that Rig detail page.
 4. **How to Tie It** using the locked ordered `tyingSteps[]`.
@@ -134,24 +141,25 @@ Runtime review also showed that the task-first section would become easier to mi
 
 Approved revision:
 
-- **What are you trying to do?** moves directly below Search and above the Knot lists.
-- The standalone **Get Your Reel Ready** landing card is removed.
-- **Attach Line to a Reel** becomes the single landing entry for reel readiness.
+- **What are you trying to do?** stays directly below Search and above Knot collections.
+- The standalone **Get Your Reel Ready** landing card remains removed.
+- **Attach Line to a Reel** remains the single landing entry for reel readiness.
 - During Package 2, that entry opens a transitional **Get Your Reel Ready** page with the curated Arbor/Uni Knot choices.
 - Production Package 3 upgrades that same task entry into the guided reel workflow.
-- Core Knots remain the first Knot collection after task-first discovery.
-- All Knots remains after Core.
+- Individual Core Knot records are removed from the landing page.
+- Knot browsing now uses Rig-style collection cards in this order: **All Knots**, **Core Knots**, **Beginner Knots**, **Intermediate Knots**, **Advanced Knots**.
+- **Advanced Knots** is visible as Coming Soon because Version 1 contains zero active Advanced Knot records.
 
-This keeps the beginner's practical job ahead of the taxonomy and prevents duplicate reel-readiness entry points.
+This keeps the beginner's practical job ahead of the taxonomy, keeps the landing page compact as the library grows, and aligns Knot browsing with the established Rig Guide collection model.
 
 # Explicit Source Changes
 
 ## `script.js`
 
 **Original Package 2 build milestone:** `Knot Guide — Production Package 2`  
-**Revision build milestone:** `Knot Guide — Production Package 2 Revision`
+**Revision 2 build milestone:** `Knot Guide — Production Package 2 Revision 2`
 
-Reason: the application coordinator now owns cross-detail Rig <-> Knot navigation state in addition to active Knot Guide routes.
+Reason: the application coordinator owns cross-detail Rig <-> Knot navigation state and the five Knot collection routes used by the compact landing-page card model.
 
 **Navigation state change:** hard-coded detail Parent destinations -> context-preserving related-detail return stack.
 
@@ -206,7 +214,7 @@ The 10 locked canonical records from Package 1 remain authoritative and unchange
 - related Rig/Knot navigation hooks and context-stack functions are present,
 - governing detail-page guidance documents contain the approved progressive-disclosure and return-context rules,
 - the Knot landing contains no standalone Get Your Reel Ready card,
-- **What are you trying to do?** renders before Core Knots and All Knots,
+- **What are you trying to do?** renders before all Knot collection cards,
 - **Attach Line to a Reel** is the single reel-readiness landing entry and maps to the transitional Get Your Reel Ready task page.
 
 # Brave Runtime Validation After Upload
@@ -216,8 +224,8 @@ After upload and GitHub integrity verification:
 1. Hard refresh the deployed app in Brave with DevTools Console open.
 2. Confirm `data/knot-guidance.js`, `search.js`, `view-renderer.js`, and `script.js` load without project JavaScript errors.
 3. Open **Knots** from Home.
-4. Confirm the landing order is Search -> **What are you trying to do?** -> **Core Knots — Learn These First** -> **All Knots**.
-5. Confirm there is no separate **Get Your Reel Ready** landing card.
+4. Confirm the landing order is Search -> **What are you trying to do?** -> collection cards.
+5. Confirm the collection cards are **All Knots**, **Core Knots**, **Beginner Knots**, **Intermediate Knots**, and **Advanced Knots** (Coming Soon). Confirm there is no separate **Get Your Reel Ready** landing card.
 6. Select **Attach Line to a Reel** and confirm the transitional page title is **Get Your Reel Ready** with Arbor Knot first and Uni Knot second; Parent returns to Knots.
 7. Search `palomar`, `tie hook`, `add leader`, `braid`, `mono`, and a no-result term.
 8. Confirm clear-search restores the landing content.

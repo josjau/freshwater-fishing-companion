@@ -82,6 +82,7 @@ for required_text in [
 
 for required_text in [".knot-usage-toggle", ".related-entity-link", ".rig-knot-link"]:
     assert required_text in css, f"Missing relationship UI style: {required_text}"
+assert ".knot-usage-list > li[hidden] { display: none !important; }" in css, "Collapsed Knot Rig relationships are not guaranteed hidden"
 
 assert "See all N rigs" in detail_approval
 assert "context-preserving return stack" in detail_approval
@@ -90,17 +91,26 @@ assert "shows up to four Rig relationships initially" in detail_standard
 # Knot landing revision checks.
 assert 'knot-reel-ready-title' not in renderer, "Standalone Get Your Reel Ready landing section remains"
 assert 'knot-reel-ready-card' not in renderer, "Standalone reel-readiness card remains"
-task_heading_index = renderer.index('id="knot-task-title"')
-core_heading_index = renderer.index('id="core-knots-title"')
-all_heading_index = renderer.index('id="all-knots-title"')
-assert task_heading_index < core_heading_index < all_heading_index, "Task-first landing hierarchy is incorrect"
+assert 'data-core-knot-grid' not in renderer, "Individual Core Knot records still render on the landing page"
+assert 'id="knot-task-title"' in renderer, "Task-first section is missing"
+assert 'data-knot-collection-key' in renderer, "Knot collection cards are missing"
+assert renderer.index('knot-guide-section--tasks') < renderer.index('knot-guide-section--collections'), "Task-first section does not precede Knot collection cards"
 assert 'Get your reel ready →' in renderer, "Attach Line to a Reel does not expose the reel-readiness action"
 assert 'title: isReelSetupEntry ? "Get Your Reel Ready" : task.title' in script, "Attach Line to a Reel does not map to transitional Get Your Reel Ready page"
+for collection_key in ["all", "core", "beginner", "intermediate", "advanced"]:
+    assert f'{collection_key}: Object.freeze({{' in script, f"Missing Knot collection: {collection_key}"
+for collection_title in ["All Knots", "Core Knots", "Beginner Knots", "Intermediate Knots", "Advanced Knots"]:
+    assert collection_title in script, f"Missing Knot collection title: {collection_title}"
+assert 'isAvailable: false' in script, "Advanced Knots should remain unavailable in Version 1"
 for required_text in [
     "What are you trying to do?",
     "Attach Line to a Reel",
     "single Knot-landing entry point",
-    "should not reintroduce a separate competing",
+    "All Knots",
+    "Core Knots",
+    "Beginner Knots",
+    "Intermediate Knots",
+    "Advanced Knots",
 ]:
     assert required_text in landing_approval, f"Missing landing guidance: {required_text}"
 
@@ -119,6 +129,7 @@ const output = vm.runInContext(`(() => {
     return {
         knotCount: active.length,
         coreIds: [...CORE_KNOT_IDS],
+        difficultyCounts: active.reduce((counts, knot) => { counts[knot.difficulty] = (counts[knot.difficulty] || 0) + 1; return counts; }, {}),
         taskCount: KNOT_TASK_DEFINITIONS.length,
         taskIds: KNOT_TASK_DEFINITIONS.map((task) => task.id),
         unresolvedTaskIds: KNOT_TASK_DEFINITIONS.flatMap((task) => task.knotIds).filter((id) => !active.some((knot) => knot.id === id)),
@@ -159,6 +170,7 @@ data = json.loads(result.stdout)
 
 assert data["knotCount"] == 10
 assert data["coreIds"] == ["arbor-knot", "improved-clinch-knot", "palomar-knot", "double-uni-knot"]
+assert data["difficultyCounts"] == {"Beginner": 6, "Intermediate": 4}
 assert data["taskCount"] == 4
 assert data["taskIds"] == ["attach-line-to-reel", "terminal-attachment", "line-to-line", "loop-connection"]
 assert data["unresolvedTaskIds"] == []
@@ -178,7 +190,7 @@ assert data["palomarRigIds"][:4] == [
     "inline-spinner-setup",
 ]
 
-print("Production Package 2 combined revision validation passed.")
+print("Production Package 2 runtime revision 2 validation passed.")
 print(f"Active Knots: {data['knotCount']}")
 print(f"Core Knots: {len(data['coreIds'])}")
 print(f"Task definitions: {data['taskCount']}")

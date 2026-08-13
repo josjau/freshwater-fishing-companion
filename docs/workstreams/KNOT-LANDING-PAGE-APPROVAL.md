@@ -15,8 +15,12 @@ The Version 1 Knot landing order is:
 
 1. **Search all Knots**.
 2. **What are you trying to do?**
-3. **Core Knots — Learn These First**.
-4. **All Knots**.
+3. Knot collection cards, in this order:
+   - **All Knots**.
+   - **Core Knots**.
+   - **Beginner Knots**.
+   - **Intermediate Knots**.
+   - **Advanced Knots** — Coming Soon while the active canonical library contains no Advanced records.
 
 The four task-first entries remain:
 
@@ -25,9 +29,11 @@ The four task-first entries remain:
 3. **Connect Two Lines / Add a Leader**.
 4. **Make a Loop Connection**.
 
-Task-first discovery stays above Core and All Knots. Future Knot categories or collections should not be inserted above **What are you trying to do?** unless a later approved design decision explicitly changes this priority.
+Task-first discovery stays above all Knot collection cards. Future Knot categories or collections should not be inserted above **What are you trying to do?** unless a later approved design decision explicitly changes this priority.
 
-This approval supersedes older Knot planning/handoff text that shows **Get Your Reel Ready** as a separate landing card or places **What are you trying to do?** below Core Knots. Those older documents remain useful for other approved decisions but no longer control the landing-page order.
+The landing page uses the same collection-card grammar established by the Rig Guide. It does not render the individual Core Knots directly on the landing page. Selecting **Core Knots**, **Beginner Knots**, **Intermediate Knots**, or **All Knots** opens that collection's browse view.
+
+This approval supersedes older Knot planning/handoff text that shows **Get Your Reel Ready** as a separate landing card, places **What are you trying to do?** below Core Knots, or renders all four Core Knot records directly on the landing page. Those older documents remain useful for other approved decisions but no longer control the landing-page order.
 
 # Reel-Readiness Integration
 
@@ -54,6 +60,8 @@ Production Package 3 upgrades this same entry point into the full guided Reel & 
 # Rationale
 
 Beginner users generally know the connection they need before they know the Knot name. The task-first section therefore has higher navigational priority than Knot collections.
+
+Using collection cards after the task section keeps the Knots experience structurally consistent with the Rig Guide and prevents the landing page from becoming a long record list as the Knot library grows.
 
 Keeping **Get Your Reel Ready** behind **Attach Line to a Reel** also avoids presenting one concept twice at the same hierarchy level. The task is the user-facing entry point; the guided workflow is the destination.
 

@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knot Guide — Production Package 2 Revision"
+    milestone: "Knot Guide — Production Package 2 Revision 2"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -74,6 +74,34 @@ const RIG_DIFFICULTY_ORDER = Object.freeze([
     "Advanced",
     "Expert"
 ]);
+
+const KNOT_COLLECTIONS = Object.freeze({
+    all: Object.freeze({
+        title: "All Knots",
+        description: "Browse every active Version 1 Knot in the library.",
+        isAvailable: true
+    }),
+    core: Object.freeze({
+        title: "Core Knots",
+        description: "Four practical starter knots covering reel attachment, common terminal connections, and joining lines.",
+        isAvailable: true
+    }),
+    beginner: Object.freeze({
+        title: "Beginner Knots",
+        description: "Six approachable knots selected for common freshwater fishing connections.",
+        isAvailable: true
+    }),
+    intermediate: Object.freeze({
+        title: "Intermediate Knots",
+        description: "Four specialized knots for loops, hook-specific tying, and leader connections.",
+        isAvailable: true
+    }),
+    advanced: Object.freeze({
+        title: "Advanced Knots",
+        description: "Advanced Knot instruction will be added when a future approved library expansion requires it.",
+        isAvailable: false
+    })
+});
 
 let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
@@ -541,18 +569,23 @@ function openKnotDetail(knotId, source = "guide") {
 }
 
 function renderKnotsView(appMain) {
+    const collectionCards = Object.entries(KNOT_COLLECTIONS).map(([key, collection]) => ({
+        key,
+        ...collection
+    }));
+
     renderKnotGuideLanding(appMain, {
-        coreKnots: getCoreKnots(),
         tasks: KNOT_TASK_DEFINITIONS,
+        collections: collectionCards,
         onSearch: (query) => updateKnotGuideSearchResults(appMain, query),
-        onKnotSelect: (knotId) => openKnotDetail(knotId, "guide"),
         onTaskSelect: (taskId) => {
             selectedKnotBrowseKey = "task";
             selectedKnotTaskId = taskId;
             showView(ROUTES.KNOT_BROWSE);
         },
-        onBrowseAll: () => {
-            selectedKnotBrowseKey = "all";
+        onCollectionSelect: (collectionKey) => {
+            if (!KNOT_COLLECTIONS[collectionKey]?.isAvailable) return;
+            selectedKnotBrowseKey = collectionKey;
             selectedKnotTaskId = null;
             showView(ROUTES.KNOT_BROWSE);
         }
@@ -574,6 +607,8 @@ function updateKnotGuideSearchResults(appMain, query) {
 }
 
 function getKnotBrowseConfig() {
+    const activeKnots = getActiveKnots();
+
     if (selectedKnotBrowseKey === "task") {
         const task = getKnotTask(selectedKnotTaskId);
         if (task) {
@@ -584,16 +619,31 @@ function getKnotBrowseConfig() {
                     ? "Start with the knots used to secure line or backing to the reel. The full guided reel-setup workflow arrives in Production Package 3 through this same entry point."
                     : task.description,
                 records: task.knotIds
-                    .map((knotId) => findRecordById(getActiveKnots(), knotId))
+                    .map((knotId) => findRecordById(activeKnots, knotId))
                     .filter(Boolean)
             };
         }
     }
 
+    const collection = KNOT_COLLECTIONS[selectedKnotBrowseKey] ?? KNOT_COLLECTIONS.all;
+    let records = activeKnots;
+
+    if (selectedKnotBrowseKey === "core") {
+        records = getCoreKnots(activeKnots);
+    } else if (selectedKnotBrowseKey === "beginner") {
+        records = sortRecordsAlphabetically(activeKnots.filter((knot) => knot.difficulty === "Beginner"));
+    } else if (selectedKnotBrowseKey === "intermediate") {
+        records = sortRecordsAlphabetically(activeKnots.filter((knot) => knot.difficulty === "Intermediate"));
+    } else if (selectedKnotBrowseKey === "advanced") {
+        records = sortRecordsAlphabetically(activeKnots.filter((knot) => knot.difficulty === "Advanced"));
+    } else {
+        records = sortRecordsAlphabetically(activeKnots);
+    }
+
     return {
-        title: "All Knots",
-        description: "Browse every active Version 1 Knot or search within the complete library.",
-        records: sortRecordsAlphabetically(getActiveKnots())
+        title: collection.title,
+        description: collection.description,
+        records
     };
 }
 
