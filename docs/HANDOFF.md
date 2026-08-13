@@ -1,12 +1,12 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.8.2  
+**Document Revision:** 0.9.0  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
-**Active Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 0.4.0  
+**Latest Finalized Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0  
 **Session Environment:** Windows Desktop, Edge Browser, GitHub Desktop  
-**Session Status:** Active — final interactive Rig runtime closeout in progress.  
+**Session Status:** Clean milestone boundary — Complete Rig Guide is Validated / Finalized.  
 **Last Updated:** 2026-08-12
 
 # 1. Start Here
@@ -27,30 +27,66 @@ Permanent rules:
 
 > Production updates are delivered as user-reviewable update packages for the user to apply through GitHub Desktop unless the user explicitly changes this rule later.
 
-# 2. Active Milestone — Complete Rig Guide
+# 2. Current Milestone State — Complete Rig Guide
 
-**Implementation Status: Production Corrections Integrated and GitHub-Verified — Final Interactive Runtime Closeout Pending**
+**Implementation Status: Validated / Finalized**
 
-The full approved initial Rig library and the final correction package are present on `main`.
+The approved initial Rig Guide is complete on `main`.
 
-Verified production state:
+Final validated production state:
 
 - 20 active Rigs,
 - 6 learning tiers active,
 - tier counts: 6 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert,
-- 6 Core Rigs unchanged,
+- 6 Core Rigs unchanged and in the approved order,
 - 29 active canonical Tackle concepts,
 - 29 active Tackle recognition-media records,
-- all seven required build-first YouTube tutorial records integrated,
-- all six user-approved replacement recognition images integrated.
+- all seven final-tier build-first YouTube tutorial records integrated and runtime-validated,
+- all six final-tier replacement recognition images integrated and runtime-validated.
 
 Final production correction commit:
 
 `4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` — `Rig Updates Images and tutorials`
 
-GitHub Pages deployed that commit successfully in workflow run `31646572910`.
+GitHub Pages deployed that production commit successfully in workflow run `31646572910`.
 
-# 3. Session Workflow Safeguards — Effective 2026-08-12
+Final workstream record:
+
+`docs/workstreams/RIG-GUIDE-COMPLETION.md` revision `1.0.0`
+
+# 3. Final Rig Guide Runtime Validation
+
+Validated in Microsoft Edge on Windows Desktop.
+
+Passed:
+
+- All Rigs = 20,
+- tier counts = 6 / 3 / 4 / 4 / 2 / 1,
+- Core = approved six in approved order,
+- all seven final-tier Rig detail pages open normally,
+- all six final-tier Tackle `Name ⓘ` reference panels display the approved replacement images,
+- all seven final-tier tutorials load and play normally,
+- no autoplay occurs before user initiation,
+- all seven `Watch on YouTube ↗` fallbacks work,
+- representative readiness selections persist after leaving and reopening Rigs,
+- desktop layout has no horizontal overflow or unusable content,
+- no new application console errors were observed during normal validation navigation.
+
+Mobile-width validation was performed using Edge device emulation at approximately 375 px.
+
+Passed:
+
+- dense Rig detail content remains usable,
+- no horizontal overflow,
+- no clipped text or controls,
+- recognition image remains contained,
+- tutorial player fits the viewport,
+- Parent/Home navigation remains usable,
+- normal vertical scrolling works correctly.
+
+The Rig Guide requires no additional completion work before another milestone begins.
+
+# 4. Session Workflow Safeguards — Effective 2026-08-12
 
 ## A. GitHub write authority
 
@@ -106,93 +142,7 @@ Expected checkpoint pattern:
 
 Status messages should report actual progress, blockers, or the next active step without becoming noisy.
 
-# 4. Rig Guide Correction Blockers — Resolved
-
-The two blockers recorded at the start of the 2026-08-12 session are now resolved in production.
-
-## A. Six replacement recognition images
-
-The user approved all six replacement concepts and pushed the final production assets:
-
-- `images/tackle/nail-weight-reference.webp`
-- `images/tackle/shaky-head-jighead-reference.webp`
-- `images/tackle/ringed-sinker-reference.webp`
-- `images/tackle/split-ring-reference.webp`
-- `images/tackle/bottom-bouncer-reference.webp`
-- `images/tackle/spinner-harness-reference.webp`
-
-GitHub/deployed-artifact validation confirms the files are present and registered. Static media validation confirms 640 × 440 RGB WebP output with the expected `#f4f0e8` production canvas.
-
-## B. Seven new Rig tutorials
-
-The approved build-first tutorial records are now present in `data/rigs.js`:
-
-- Neko Rig — Wired2Fish — `yxGJLTxa_B0`
-- Shaky Head Rig — Bass Utopia — `zwcZSE3DVAU`
-- Free Rig — Fishin With GRAMPS — `_SyrQJ1i0RA`
-- Double-Jig Crappie Rig — Kansas Angling Experience — `7EVa28J9y-Y`
-- Jika Rig — Mike Iaconelli Fishing — `uSmbuf-q2xg`
-- Punch / Pegged Texas Rig — Wired2Fish — `HzIMkN_xTtM`
-- Bottom-Bouncer / Spinner Rig — Fishing 411 TV — `xRXzhffsHGM`
-
-GitHub/deployed-artifact validation confirms all seven exact IDs and matching external YouTube URLs are present.
-
-# 5. Production Verification
-
-The final production commit changed exactly:
-
-- `data/media.js`
-- `data/rigs.js`
-- six replacement `images/tackle/*.webp` assets
-
-Verified Git blobs after push:
-
-- `data/rigs.js` — `a3fb3b743a4fab665dd606165d90dbbbd387b0ff`
-- `data/media.js` — `710fd2a6a0595405d842b0127c1ed761d4a7533d`
-
-The Pages deployment for the same commit completed successfully.
-
-Static validation against the exact deployed artifact passed:
-
-- active Rig count = 20,
-- tier counts = 6 / 3 / 4 / 4 / 2 / 1,
-- Core membership/order unchanged,
-- active Tackle count = 29,
-- active Tackle recognition-media count = 29,
-- all seven new tutorial records present,
-- all six replacement media records/files present,
-- all six replacement images use the expected production dimensions/mode/background.
-
-# 6. CURRENT SESSION FIRST TASK — Final Interactive Runtime Gate
-
-This is the **first task for the current session**. Do not begin My Tackle, Knots, Recommendations, or any other feature work before this gate is completed and the Rig Guide documentation is finalized.
-
-The Rig Guide must **not** yet be marked `Validated / Finalized` solely from source, deployment, and static artifact checks.
-
-One interactive runtime closeout remains:
-
-1. confirm All Rigs displays 20 records,
-2. confirm tier counts display 6 / 3 / 4 / 4 / 2 / 1,
-3. confirm Core remains the approved six/order,
-4. open all seven new Rig detail pages,
-5. open all six corrected Tackle `Name ⓘ` panels and confirm the replacement images render correctly,
-6. load/play all seven new tutorial embeds and confirm the separate YouTube fallback remains available,
-7. confirm representative readiness selections persist,
-8. confirm desktop layout has no horizontal overflow,
-9. confirm mobile layout has no horizontal overflow,
-10. confirm no new application console errors.
-
-Validation browser for this session: Microsoft Edge on Windows Desktop.
-
-After the user/runtime environment confirms those checks, immediately complete the final documentation closeout:
-
-- mark `workstreams/RIG-GUIDE-COMPLETION.md` Validated / Finalized,
-- update `MILESTONES.md`,
-- update `CHANGELOG.md`,
-- update this handoff to a clean milestone boundary,
-- deliberately choose the next milestone.
-
-# 7. Tutorial Standard
+# 5. Tutorial Standard
 
 Primary embedded Rig tutorials are build-first:
 
@@ -208,7 +158,7 @@ Permanent working principle:
 
 > Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
 
-# 8. Tackle Recognition Media Standard
+# 6. Tackle Recognition Media Standard
 
 Current production rules:
 
@@ -222,9 +172,9 @@ Current production rules:
 - final assets must be checked at realistic phone contextual-popover size,
 - every new/replacement asset must be shown separately in chat and explicitly approved before production packaging.
 
-# 9. Previously Finalized Work
+# 7. Previously Finalized Work
 
-The following remain Validated / Finalized:
+The following are Validated / Finalized:
 
 - Application Foundation
 - Fish Data Foundation
@@ -235,8 +185,9 @@ The following remain Validated / Finalized:
 - Rig/Tackle Data Integrity — Batch 1
 - Core Rigs / Beginner + Beginner+ / Rig UX Finalization
 - Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
+- Complete Rig Guide
 
-# 10. Known Temporary Bridge
+# 8. Known Temporary Bridge
 
 Rig readiness remains transitional local state under:
 
@@ -244,18 +195,32 @@ Rig readiness remains transitional local state under:
 
 It must not be treated as permanent My Tackle ownership. Persistent inventory remains a later milestone.
 
-# 11. Next Milestone
+When My Tackle becomes authoritative:
 
-There is no next feature milestone yet.
+- owned canonical Tackle types satisfy requirements automatically,
+- temporary per-build/session availability must not write permanent ownership,
+- only explicit My Tackle ownership-management actions modify persistent ownership,
+- existing transitional readiness checkmarks must not be automatically treated as permanent inventory ownership without an approved migration decision.
 
-The current session starts with the **Final Interactive Runtime Gate in Section 6**. After that gate passes, complete the Rig Guide documentation closeout before selecting another milestone.
+# 9. Next Milestone
 
-Do not start My Tackle, Knots, Recommendations, or another feature until the final interactive Rig Guide closeout passes and the documentation is finalized.
+No build segment is currently active.
 
-# 12. Governing Documents
+The project is at a clean milestone boundary.
+
+Select the next milestone deliberately before implementation begins. Current candidates include:
+
+1. My Tackle / persistent ownership foundation
+2. Knots foundation
+3. Recommendations foundation
+4. another explicitly selected project priority
+
+Do not automatically begin one of these solely because it appears next in a prior sequence.
+
+# 10. Governing Documents
 
 - Current-state entrypoint: `HANDOFF.md`
-- Active Rig completion workstream: `workstreams/RIG-GUIDE-COMPLETION.md`
+- Final Rig completion workstream: `workstreams/RIG-GUIDE-COMPLETION.md`
 - Long-term decisions: `DECISIONS.md`
 - Architecture: `ARCHITECTURE.md`
 - Workflow / closeout rules: `DEVELOPMENT_WORKFLOW.md`
