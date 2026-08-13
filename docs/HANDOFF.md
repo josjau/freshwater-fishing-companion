@@ -1,12 +1,14 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 0.9.0  
+**Document Revision:** 1.0.0  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Latest Finalized Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0  
+**Next Selected Milestone:** Knots  
+**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.0  
 **Session Environment:** Windows Desktop, Edge Browser, GitHub Desktop  
-**Session Status:** Clean milestone boundary — Complete Rig Guide is Validated / Finalized.  
+**Session Status:** Clean milestone boundary — Knots selected as next milestone.  
 **Last Updated:** 2026-08-12
 
 # 1. Start Here
@@ -23,7 +25,7 @@ Permanent rules:
 
 > The assistant must not write production source, data, image, configuration, CSS, HTML, JavaScript, or other non-Markdown project files directly to GitHub.
 
-> The assistant may write only project-progress Markdown files directly to GitHub, such as handoff, milestone, changelog, validation, and workstream status documents.
+> The assistant may write only project-progress Markdown files directly to GitHub, such as handoff, milestone, changelog, validation, roadmap, and workstream status documents.
 
 > Production updates are delivered as user-reviewable update packages for the user to apply through GitHub Desktop unless the user explicitly changes this rule later.
 
@@ -54,39 +56,123 @@ Final workstream record:
 
 `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision `1.0.0`
 
-# 3. Final Rig Guide Runtime Validation
+# 3. Canonical Upcoming Build Sequence
 
-Validated in Microsoft Edge on Windows Desktop.
+The approved order is:
 
-Passed:
+1. **Knots**
+2. **Fish Guide**
+3. **What Should I Throw**
+4. **Tackle Reference / Find Tackle**
+5. **Settings / User Data Architecture Gate**
+6. **My Tackle**
+7. **Catch Log**
+8. **Global Search**
+9. **Favorites final decision**
 
-- All Rigs = 20,
-- tier counts = 6 / 3 / 4 / 4 / 2 / 1,
-- Core = approved six in approved order,
-- all seven final-tier Rig detail pages open normally,
-- all six final-tier Tackle `Name ⓘ` reference panels display the approved replacement images,
-- all seven final-tier tutorials load and play normally,
-- no autoplay occurs before user initiation,
-- all seven `Watch on YouTube ↗` fallbacks work,
-- representative readiness selections persist after leaving and reopening Rigs,
-- desktop layout has no horizontal overflow or unusable content,
-- no new application console errors were observed during normal validation navigation.
+This order is canonical until explicitly revised.
 
-Mobile-width validation was performed using Edge device emulation at approximately 375 px.
+`ROADMAP.md` revision 0.3.0 is the detailed planning record. `MILESTONES.md` revision 2.1.0 records the same upcoming sequence.
 
-Passed:
+# 4. Next Milestone — Knots
 
-- dense Rig detail content remains usable,
-- no horizontal overflow,
-- no clipped text or controls,
-- recognition image remains contained,
-- tutorial player fits the viewport,
-- Parent/Home navigation remains usable,
-- normal vertical scrolling works correctly.
+Knots is the next selected milestone.
 
-The Rig Guide requires no additional completion work before another milestone begins.
+Before production implementation begins:
 
-# 4. Session Workflow Safeguards — Effective 2026-08-12
+- review `docs/data-model/04-KNOTS.md` against the current architecture,
+- settle the practical Version 1 knot library,
+- define beginner-oriented Knot detail content,
+- decide the Knot instructional-media/tutorial approach,
+- define Knot search/navigation and connected relationships,
+- create the active Knot workstream and validation plan.
+
+Do not begin the Fish Guide implementation until the Knots milestone is completed and validated unless the roadmap is explicitly revised.
+
+# 5. What Should I Throw — Canonical Instruction Direction
+
+When the What Should I Throw milestone begins, recommendations should connect canonical knowledge rather than duplicate instructions.
+
+Approved distinction:
+
+- **How to Rig It** → applicable canonical Rig build instructions/tutorial.
+- **How to Fish It** → applicable canonical Technique presentation/retrieve instructions/tutorial.
+
+Recommendations own selection, ranking, rationale, and context. Rig owns physical assembly/configuration. Technique owns reusable presentation behavior.
+
+Exact recommendation inputs, scoring, explanation format, Technique implementation scope, and usage-tutorial coverage remain design work for that milestone.
+
+# 6. Tackle Reference / Find Tackle — Canonical Direction
+
+Canonical Tackle must be discoverable independently of Rigs.
+
+A user must not need to remember which Rig contains a component in order to find or learn about that component.
+
+The future Tackle Reference / Find Tackle milestone will provide searchable canonical Tackle Reference Knowledge using deliberate fields such as canonical name, aliases, beginner/common terminology, category, and approved keywords.
+
+A Tackle result should act as a connected-knowledge gateway and may expose:
+
+- definition and recognition help,
+- common variants,
+- related Tackle,
+- derived **Used In** Rigs from `Rig.componentRequirements`,
+- Fish/Conditions/Techniques where canonical relationships exist,
+- later My Tackle ownership context.
+
+Rig Guide, What Should I Throw, My Tackle, and Global Search should link to the same canonical Tackle identity/detail experience rather than create competing definitions.
+
+# 7. Settings / User Data Architecture Gate
+
+Before My Tackle or Catch Log implementation begins, a dedicated architecture/design segment must resolve persistent User Knowledge and Settings.
+
+Required topics include:
+
+- local persistence/storage technology,
+- data retention and browser/site-data clearing behavior,
+- application-update/schema migration,
+- backup/export,
+- restore/import validation and rollback,
+- device transfer,
+- user/profile identity,
+- single-user versus future multi-user boundaries,
+- synchronization/account expectations,
+- device-local versus profile-owned settings,
+- supported themes/theme architecture,
+- user preference storage and backup behavior.
+
+Current local-first architecture remains the baseline unless explicitly changed.
+
+Do not implement My Tackle or Catch Log against an assumed persistence architecture before this gate is closed.
+
+# 8. My Tackle / Catch Log Order
+
+My Tackle follows the User Data architecture gate and precedes Catch Log.
+
+My Tackle must establish persistent ownership behavior on the settled User Knowledge storage architecture.
+
+Catch Log then uses that same persistence architecture and references canonical Fish/Rig/Lure/Technique entities rather than duplicating Reference Knowledge wherever practical.
+
+# 9. Global Search
+
+Global Search is intentionally deferred until the major searchable domains and canonical entity models are established.
+
+It must build on the existing relevance-first/connected-knowledge approach and must not become an undifferentiated cross-domain result dump.
+
+Exact cross-domain grouping, ranking, ambiguity handling, and Dashboard presentation remain a dedicated design discussion for that milestone.
+
+# 10. Favorites
+
+Favorites is parked until near project completion.
+
+At that point, decide from actual workflow value whether to:
+
+- keep a generic Favorites feature,
+- replace it with narrower saved concepts,
+- or remove it if Search, history, My Tackle, Catch Log, and recommendations make it redundant.
+
+Do not implement Favorites simply because the current application structure contains a placeholder.
+
+# 11. Session Workflow Safeguards — Effective 2026-08-12
 
 ## A. GitHub write authority
 
@@ -95,6 +181,7 @@ The assistant is **not authorized to write production files directly to GitHub**
 Allowed direct GitHub writes are limited to project-progress Markdown documents, including:
 
 - `docs/HANDOFF.md`
+- `docs/ROADMAP.md`
 - active workstream/status Markdown files
 - validation Markdown files
 - `docs/MILESTONES.md`
@@ -131,18 +218,7 @@ Do not generate an unseen batch and place it directly into the site.
 
 During long or multi-step work, the assistant must post concise visible progress updates at meaningful checkpoints rather than remaining silent through many tool calls.
 
-Expected checkpoint pattern:
-
-- source/audit started,
-- research or candidate selection complete,
-- image candidate ready for review,
-- update package built,
-- GitHub Desktop application ready for user action,
-- post-push verification complete.
-
-Status messages should report actual progress, blockers, or the next active step without becoming noisy.
-
-# 5. Tutorial Standard
+# 12. Rig Tutorial Standard
 
 Primary embedded Rig tutorials are build-first:
 
@@ -158,7 +234,7 @@ Permanent working principle:
 
 > Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
 
-# 6. Tackle Recognition Media Standard
+# 13. Tackle Recognition Media Standard
 
 Current production rules:
 
@@ -172,7 +248,7 @@ Current production rules:
 - final assets must be checked at realistic phone contextual-popover size,
 - every new/replacement asset must be shown separately in chat and explicitly approved before production packaging.
 
-# 7. Previously Finalized Work
+# 14. Previously Finalized Work
 
 The following are Validated / Finalized:
 
@@ -187,13 +263,13 @@ The following are Validated / Finalized:
 - Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
 - Complete Rig Guide
 
-# 8. Known Temporary Bridge
+# 15. Known Temporary Bridge
 
 Rig readiness remains transitional local state under:
 
 `freshwaterFishingCompanion.tackleReadiness.v1`
 
-It must not be treated as permanent My Tackle ownership. Persistent inventory remains a later milestone.
+It must not be treated as permanent My Tackle ownership.
 
 When My Tackle becomes authoritative:
 
@@ -202,24 +278,10 @@ When My Tackle becomes authoritative:
 - only explicit My Tackle ownership-management actions modify persistent ownership,
 - existing transitional readiness checkmarks must not be automatically treated as permanent inventory ownership without an approved migration decision.
 
-# 9. Next Milestone
-
-No build segment is currently active.
-
-The project is at a clean milestone boundary.
-
-Select the next milestone deliberately before implementation begins. Current candidates include:
-
-1. My Tackle / persistent ownership foundation
-2. Knots foundation
-3. Recommendations foundation
-4. another explicitly selected project priority
-
-Do not automatically begin one of these solely because it appears next in a prior sequence.
-
-# 10. Governing Documents
+# 16. Governing Documents
 
 - Current-state entrypoint: `HANDOFF.md`
+- Canonical development sequence: `ROADMAP.md`
 - Final Rig completion workstream: `workstreams/RIG-GUIDE-COMPLETION.md`
 - Long-term decisions: `DECISIONS.md`
 - Architecture: `ARCHITECTURE.md`
