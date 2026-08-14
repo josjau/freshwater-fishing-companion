@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-**Status:** In Progress — Block 3.3 Runtime PASS / UX Revision 1 Implemented / Awaiting Upload  
+**Status:** In Progress — Block 3.3 Functional Runtime PASS / UX Revision 1 Staged for Block 3.4  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -32,6 +32,26 @@ Ownership boundary:
 - Reel Setup workflow progress is transient session-only JavaScript state and is not persisted to `localStorage`.
 
 This separation avoids introducing premature canonical Reel, Line, or Species entities and preserves the approved three-layer Reference / Decision / User Knowledge architecture.
+
+# Incremental Refinement Workflow — Effective 2026-08-13
+
+For non-final build blocks, minor UX, presentation, or targeted code refinements identified during validation should **not** create a separate stop/upload/commit cycle when they can safely travel with the next planned build block.
+
+Required workflow:
+
+1. Record the refinement in the active workstream documentation at the earliest opportunity so the latest iteration survives a lost or hung chat.
+2. Implement the refinement in the working source used to construct the next block.
+3. Include the refinement in the next normal production ZIP alongside that block's planned changes.
+4. Make validation of the carried-forward refinement **Step 1** of the next block's runtime validation before validating the new functionality.
+5. Keep the previous block's already-passed functional validation intact; do not falsely mark the unuploaded refinement as validated.
+6. Prefer this roll-forward approach to reduce unnecessary GitHub Desktop uploads and commits.
+
+Exception:
+
+- If the refinement is discovered during the **final build block for a full section/workstream**, resolve and validate it before closing that section rather than rolling it into an unrelated future section.
+- A genuine defect that blocks continued implementation, corrupts state, breaks established behavior, or makes the next block unsafe may also require immediate correction rather than roll-forward.
+
+This rule applies to the current Block 3.3 selected-choice visual refinement and should be propagated into the broader project workflow documentation during the next consolidated documentation update.
 
 # Approved V1 Workflow Scope
 
@@ -144,7 +164,7 @@ Confirmed:
 
 # Block 3.3 — Line Selection / Beginner Line Guidance
 
-**Status:** Functional Runtime PASS / UX Revision 1 Awaiting Upload
+**Status:** Functional Runtime PASS / UX Revision 1 Staged for Block 3.4
 
 Block 3.3 extends the validated transient Reel Setup state with line selection while keeping the workflow behind the internal `openReelSetup()` entry.
 
@@ -231,7 +251,7 @@ Microsoft Edge validation confirmed:
 - **Start Over** and **Return to Knots** behave correctly,
 - no application-source JavaScript error was reported.
 
-A visual refinement was requested before Block 3.3 closeout: make the selected setup values on **Line Choice Check** more prominent than the explanatory prose.
+A visual refinement was requested after the functional PASS: make the selected setup values on **Line Choice Check** more prominent than the explanatory prose.
 
 ## UX Revision 1 — Selected Choices Summary
 
@@ -252,45 +272,25 @@ Presentation uses only existing Forest Journal theme tokens:
 
 The summary is constructed with safe DOM APIs and `textContent`. No new global CSS rule or theme token is required; the treatment is local to the Reel Setup checkpoint.
 
-UX Revision 1 artifact:
+A standalone UX Revision 1 ZIP was prepared but is now **superseded as a delivery step** by the Incremental Refinement Workflow above. Do not perform a separate upload for that ZIP.
 
-`Freshwater-Fishing-Companion-Knot-Production-Package-3-Block-3.3-UX-Revision-1.zip`
+The revised `script.js` and Package 3 validator changes will be carried into the normal Block 3.4 production package. This keeps commit/upload activity low while preserving the approved refinement.
 
-SHA-256:
+Block 3.4 runtime validation must begin with:
 
-`acffdf61cbbad82edbbc6a2c06536d34bfac92b72eb9f432a71c1386001521e2`
+**Step 1 — Carried-Forward UX Validation**
 
-Package files:
+- reach **Line Choice Check**,
+- confirm `SELECTED CHOICES` appears on its own line/group,
+- confirm the chosen setup mode, reel type, and line type are visually prominent,
+- confirm the beginner guidance/tradeoff text remains separate normal prose,
+- confirm the treatment uses the established Knot theme palette and remains readable in the current Forest Journal theme.
 
-```text
-script.js
-tools/validate_knot_package_3.py
-```
-
-Expected post-upload Git blobs:
-
-```text
-dda2c8b93497809bf5ebb30c75a6dbf7132810bb  script.js
-b5990d909d93436ed7e485841f6cd558b0ec8fe7  tools/validate_knot_package_3.py
-```
-
-Static validation passed:
-
-```text
-Production Package 3 Block 3.3 UX Revision 1 validation passed.
-Entry options: 2
-Reel types: 4
-Physical line types: 3
-Line guidance actions: 2
-Beginner reel recommendations: 4
-Normal Knot landing remains intentionally unwired to Reel Setup.
-```
-
-UX Revision 1 still requires GitHub blob verification and focused Microsoft Edge visual confirmation before Block 3.3 can be formally closed.
+Only after Step 1 passes should the new Block 3.4 target-fish / pound-test behavior be validated.
 
 # Next Build Block — 3.4
 
-After Block 3.3 closes, Block 3.4 will add **Target Fish / Starting Pound-Test Guidance**.
+Block 3.4 will add **Target Fish / Starting Pound-Test Guidance** and will include the staged Block 3.3 UX Revision 1 in the same production package.
 
 Block 3.4 should:
 
@@ -299,15 +299,16 @@ Block 3.4 should:
 - provide an **Easy beginner choice** where appropriate,
 - preserve the selected line type,
 - avoid lure/cover/technique optimization that belongs to later Decision Knowledge,
-- defer the final equipment-capacity check to the dedicated compatibility / **How to Read Your Reel** block.
+- defer the final equipment-capacity check to the dedicated compatibility / **How to Read Your Reel** block,
+- validate the carried-forward selected-choice presentation as runtime validation Step 1.
 
 # Exact Resume Point
 
 Production Package 3 is active.
 
-**Block 3.2 is PASS / VALIDATED. Block 3.3 functional runtime validation passed. UX Revision 1 is implemented and awaiting upload, GitHub blob verification, and focused Microsoft Edge confirmation.**
+**Block 3.2 is PASS / VALIDATED. Block 3.3 functional runtime validation is PASS. The selected-choice UX refinement is documented and staged into Block 3.4 rather than requiring a separate upload. Begin Block 3.4 — Target Fish / Starting Pound-Test Guidance.**
 
-Do not begin Block 3.4 until UX Revision 1 passes validation and Block 3.3 is formally closed.
+Do not separately upload the previously prepared Block 3.3 UX Revision 1 ZIP unless Block 3.4 is abandoned or a blocking defect requires isolated correction.
 
 Do not wire **Attach Line to a Reel** to the new workflow until the guided sequence is sufficiently complete and explicitly reaches its integration block.
 
