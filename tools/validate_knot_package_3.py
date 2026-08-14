@@ -193,12 +193,33 @@ workflow_card_css = re.search(
 )
 if not workflow_card_css:
     fail("forest-journal.css is missing the compact Reel Setup workflow-card treatment")
+require_absent(
+    workflow_card_css.group("body"),
+    "--card-accent:",
+    "workflow-card must inherit the existing positional card palette"
+)
 for needle, label in [
-    ("--card-accent: var(--accent-knots);", "Knot accent"),
-    ("border-color: color-mix", "stronger border"),
+    ("border-color: color-mix(in srgb, var(--card-accent) 72%, var(--border));", "palette-aware stronger border"),
+    ("linear-gradient(105deg, color-mix(in srgb, var(--card-accent) 19%, transparent)", "palette-aware emphasized surface"),
     ("var(--surface-elevated);", "compact existing-height surface")
 ]:
     require_text(workflow_card_css.group("body"), needle, f"workflow-card {label}")
+for index, accent in enumerate([
+    "accent-fish",
+    "accent-rigs",
+    "accent-recommendations",
+    "accent-tackle",
+    "accent-knots",
+    "accent-catch-log",
+    "accent-favorites",
+    "accent-regulations",
+    "accent-settings"
+], start=1):
+    require_text(
+        forest_journal_css,
+        f".dashboard-card:nth-child({index}) {{ --card-accent: var(--{accent}); }}",
+        f"workflow-card palette position {index}"
+    )
 if "min-height:" in workflow_card_css.group("body") or "padding:" in workflow_card_css.group("body"):
     fail("workflow-card treatment must not increase card height or padding")
 
@@ -414,7 +435,7 @@ print("Production Package 3 Block 3.7 validation passed.")
 print(f"Backing choices: {backing_count}")
 print(f"Spooling profiles: {spooling_count}")
 print("Reel Setup navigation: step-aware and sticky/floating.")
-print("Workflow cards: redundant upstream-change cards removed; progression/branch cards receive compact emphasis.")
+print("Workflow cards: redundant upstream-change cards removed; compact emphasis inherits the existing card palette.")
 print("Spooling instructions: key actions receive structured strong-text emphasis.")
 print("Reel-specific spooling: spinning, spincast, baitcasting.")
 print("Canonical Knot handoffs: Arbor Knot and Double Uni Knot.")

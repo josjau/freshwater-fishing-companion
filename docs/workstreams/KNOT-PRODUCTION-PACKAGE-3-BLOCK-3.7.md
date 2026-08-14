@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Block 3.7
 
-**Status:** Runtime Steps 1–4 PASS / Card Hierarchy + Instruction Emphasis Implemented / Runtime Validation Paused  
+**Status:** Runtime Steps 1–4 PASS / Step 5 Functional PASS / Workflow Palette Correction Implemented / Final Visual Validation Pending  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.7 — Reel-Specific Spooling Instructions  
@@ -215,7 +215,7 @@ Production Package 3 Block 3.7 validation passed.
 Backing choices: 3
 Spooling profiles: 3
 Reel Setup navigation: step-aware and sticky/floating.
-Workflow cards: redundant upstream-change cards removed from six Package 3 screens.
+Workflow cards: redundant upstream-change cards removed; compact progression/branch emphasis inherits the existing card palette.
 Reel-specific spooling: spinning, spincast, baitcasting.
 Canonical Knot handoffs: Arbor Knot and Double Uni Knot.
 Reel Setup Knot return context: exact step/state restoration enabled.
@@ -236,7 +236,7 @@ Microsoft Edge runtime validation completed before the UX cleanup request:
 - **Step 3 — Spincast Reel: PASS**
 - **Step 4 — Baitcasting Reel: PASS**
 
-Runtime validation is intentionally paused before the final Step 5 regression so the card-hierarchy and instruction-emphasis correction can be uploaded, GitHub-integrity verified, and tested as part of the same Block 3.7 closeout.
+Runtime Steps 1–4 are PASS. Step 5 functional/state/navigation checks also pass, but final visual validation is paused for one workflow-card palette correction: the emphasized cards were all forced to the Knot accent instead of inheriting the existing Forest Journal card palette.
 
 # Package 3 Workflow-Card Cleanup — Implemented
 
@@ -289,7 +289,7 @@ This correction was built from verified GitHub `main` commit:
 Reel Setup now distinguishes workflow decisions from secondary utility cards without increasing card height or padding.
 
 - progression and genuine branch-choice cards receive the compact `dashboard-card--workflow` treatment,
-- the treatment uses the Knot accent, stronger border/surface emphasis, and stronger title weight,
+- the treatment inherits the existing positional Forest Journal card palette while adding stronger border/surface emphasis and stronger title weight,
 - it intentionally does **not** reuse `dashboard-card--primary`, because that treatment increases card height and would work against the Package 3 scroll-reduction cleanup,
 - help, reset, exit, and ordinary reference cards keep the standard card treatment unless they are themselves a genuine workflow branch.
 
@@ -298,6 +298,20 @@ Examples include entry-mode choices, reel/line/target branches, the equipment-co
 On **Spool Connection Plan**, **Next — Spool the Reel** is now the first option so the primary progression is visible before the optional Arbor Knot / Double Uni Knot reference handoffs.
 
 The disabled **Next — Leader Setup** checkpoint also receives the workflow treatment so the future progression boundary remains visually clear while still unavailable.
+
+## Workflow Card Palette Correction
+
+Final Step 5 visual review found that the compact workflow treatment correctly distinguished progression/branch cards, but every emphasized card shared the Knot accent because `dashboard-card--workflow` overrode `--card-accent`.
+
+The targeted correction:
+
+- removes the workflow-level `--card-accent` override,
+- keeps the compact emphasized border, side rails, surface treatment, title weight, hover state, and unavailable state,
+- changes those workflow styles to consume the inherited `--card-accent`,
+- therefore preserves the existing positional Forest Journal card palette instead of making every workflow card the same color,
+- does not alter card height, padding, JavaScript workflow markers, Reel Setup state, or Decision Knowledge.
+
+The Package 3 validator now rejects a workflow-level forced accent and verifies that all nine existing positional palette assignments remain available. Final runtime validation only needs to confirm that emphasized workflow cards visibly vary across the established palette while retaining the approved hierarchy.
 
 ## Spooling Instruction Emphasis
 
@@ -319,7 +333,7 @@ Runtime validation remains paused until this correction is uploaded and integrit
 
 # Runtime Validation Order
 
-Block 3.7 is **partially runtime validated**: Steps 1–4 are PASS. After this presentation correction is uploaded and GitHub-integrity verified, runtime validation resumes with the final Step 5 regression pass.
+Block 3.7 is **functionally runtime validated through Step 5**, with one final visual palette check pending. After this targeted palette correction is uploaded and GitHub-integrity verified, confirm that workflow emphasis uses the existing multi-color card palette and that no other Step 5 behavior regressed.
 
 ## Step 1 — Block 3.6 Regression Boundary
 
@@ -376,12 +390,12 @@ Confirm:
 
 # Exact Resume Point
 
-Block 3.7 runtime Steps 1–4 are **PASS**. The targeted workflow-card hierarchy and spooling-instruction emphasis correction is implemented and must be uploaded before the final regression pass.
+Block 3.7 runtime Steps 1–4 are **PASS**, and Step 5 functionality/state/navigation checks are **PASS**. The only outstanding item is final visual confirmation that emphasized workflow cards inherit the existing card palette instead of sharing one Knot accent.
 
 Next actions:
 
-1. apply the Block 3.7 card-hierarchy / instruction-emphasis correction ZIP through GitHub Desktop,
+1. apply the Block 3.7 workflow-palette correction ZIP through GitHub Desktop,
 2. commit and push,
 3. re-fetch GitHub `main` and verify the correction blobs,
-4. complete **Step 5 — State / Navigation / Regression**, including the new visual hierarchy and bolded key-instruction checks,
-5. only after runtime PASS close Block 3.7 as **PASS / VALIDATED** and reconcile aggregate Package 3 documentation, including preservation of the deferred scoped-search UX issue for future global-search work.
+4. confirm that emphasized progression/branch cards retain the approved compact hierarchy while visibly inheriting the existing multi-color Forest Journal palette,
+5. if that visual check passes, close Block 3.7 as **PASS / VALIDATED** and reconcile aggregate Package 3 documentation, including preservation of the deferred scoped-search UX issue for future global-search work.
