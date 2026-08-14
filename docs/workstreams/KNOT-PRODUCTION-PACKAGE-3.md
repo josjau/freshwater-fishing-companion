@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-**Status:** In Progress — Block 3.3 Implemented / Unvalidated  
+**Status:** In Progress — Block 3.3 Runtime PASS / UX Revision 1 Implemented / Awaiting Upload  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -232,6 +232,54 @@ Package validation requires:
 
 Runtime validation remains required after the package is applied and GitHub integrity is verified.
 
+## Block 3.3 Runtime / UX Refinement Status
+
+The initial Block 3.3 Microsoft Edge runtime validation passed functionally. During visual review, one required refinement was identified before closing the block: the selected setup choices on **Line Choice Check** were embedded at the beginning of the normal guidance paragraph and did not stand out sufficiently.
+
+UX Revision 1 separates the selected values from the guidance paragraph and presents them as a dedicated **Selected choices** summary:
+
+```text
+Selected choices
+New or Empty Reel · Spinning Reel · Monofilament.
+```
+
+The summary uses the established Knot palette rather than introducing a new theme color:
+
+- left accent border: `--accent-knots`,
+- soft background tint derived from `--accent-knots`,
+- selected-value text: the same `72% --accent-knots / 28% white` mix already used by Knot metadata,
+- small uppercase muted label to distinguish the summary from prose.
+
+The normal beginner guidance, tradeoff, and compatibility warning remain separate description text below the selected-choice summary. The UI uses safe DOM creation and `textContent` for the summary values.
+
+UX Revision 1 artifact:
+
+`Freshwater-Fishing-Companion-Knot-Production-Package-3-Block-3.3-UX-Revision-1.zip`
+
+SHA-256:
+
+`92205960c945ce54afe30909111850eab1e4918f4167e2deabc402d2057bea97`
+
+Changed production/validation files:
+
+- `script.js`,
+- `forest-journal.css`,
+- `tools/validate_knot_package_3.py`.
+
+Static validation passed:
+
+```text
+Production Package 3 Block 3.3 UX Revision 1 validation passed.
+Entry options: 2
+Reel types: 4
+Physical line types: 3
+Line guidance actions: 2
+Beginner reel recommendations: 4
+Normal Knot landing remains intentionally unwired to Reel Setup.
+```
+
+UX Revision 1 still requires GitHub blob verification and a focused Microsoft Edge visual/runtime confirmation before Block 3.3 can be closed.
+
 # Next Build Block — 3.4
 
 After Block 3.3 passes runtime validation, Block 3.4 will add **Target Fish / Starting Pound-Test Guidance**.
@@ -249,9 +297,9 @@ Block 3.4 should:
 
 Production Package 3 is active.
 
-**Block 3.2 is PASS / VALIDATED. Block 3.3 is implemented and awaiting post-upload GitHub integrity verification and Microsoft Edge runtime validation.**
+**Block 3.2 is PASS / VALIDATED. Block 3.3 functional runtime validation passed; UX Revision 1 is implemented and awaiting upload, GitHub blob verification, and focused Microsoft Edge confirmation.**
 
-Do not begin Block 3.4 until Block 3.3 passes validation.
+Do not begin Block 3.4 until UX Revision 1 passes validation and Block 3.3 is formally closed.
 
 Do not wire **Attach Line to a Reel** to the new workflow until the guided sequence is sufficiently complete and explicitly reaches its integration block.
 
