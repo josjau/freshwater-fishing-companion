@@ -1,9 +1,10 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-**Status:** In Progress — Block 3.3 Functional Runtime PASS / Persistent Selected-Choices UX Staged for Block 3.4  
+**Status:** In Progress — Blocks 3.2 through 3.6 PASS / VALIDATED; Next Block 3.7  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
+**Documentation Reconciled Through:** 2026-08-14  
 **Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
 
 # Purpose
@@ -39,19 +40,19 @@ For non-final build blocks, minor UX, presentation, or targeted code refinements
 
 Required workflow:
 
-1. Record the refinement in the active workstream documentation at the earliest opportunity so the latest iteration survives a lost or hung chat.
+1. Record the refinement in the active workstream documentation at the earliest opportunity.
 2. Implement the refinement in the working source used to construct the next block.
 3. Include the refinement in the next normal production ZIP alongside that block's planned changes.
 4. Make validation of the carried-forward refinement **Step 1** of the next block's runtime validation before validating the new functionality.
-5. Keep the previous block's already-passed functional validation intact; do not falsely mark the unuploaded refinement as validated.
+5. Keep the previous block's already-passed functional validation intact; do not falsely mark an unuploaded refinement as validated.
 6. Prefer this roll-forward approach to reduce unnecessary GitHub Desktop uploads and commits.
 
 Exception:
 
-- If the refinement is discovered during the **final build block for a full section/workstream**, resolve and validate it before closing that section rather than rolling it into an unrelated future section.
-- A genuine defect that blocks continued implementation, corrupts state, breaks established behavior, or makes the next block unsafe may also require immediate correction rather than roll-forward.
+- If the refinement is discovered during the final build block for a full section/workstream, resolve and validate it before closing that section rather than rolling it into an unrelated future section.
+- A genuine defect that blocks continued implementation, corrupts state, breaks established behavior, or makes the next block unsafe may also require immediate correction.
 
-This rule applies to the current Block 3.3 selected-choice visual refinement and should be propagated into the broader project workflow documentation during the next consolidated documentation update.
+This workflow was used successfully for the Selected Choices refinements carried from Blocks 3.3 → 3.4 → 3.5. The Block 3.6 sticky-navigation defect was corrected within Block 3.6 because Block 3.6 could not be closed accurately while the defect remained open.
 
 # Approved V1 Workflow Scope
 
@@ -83,54 +84,51 @@ Excluded from V1:
 - casting instruction,
 - lure-specific fishing optimization.
 
-# Persistent Selected-Choices Standard — Staged for Block 3.4
+# Current Reel Setup UX Standards
 
-The selected-choice treatment is a **workflow-wide Reel Setup context pattern**, not a Line Choice Check-only treatment.
+## Persistent Selected Choices — IMPLEMENTED / VALIDATED
 
-Once the user has made the first persistent Reel Setup choice, every subsequent Reel Setup screen must display a dedicated **SELECTED CHOICES** summary near the top of the view, visually separate from descriptive/help prose.
+The selected-choice treatment is a workflow-wide Reel Setup context pattern.
 
-The initial **Get Your Reel Ready** screen does not show the summary because no choice exists yet. After the first choice, the summary remains present for the rest of the workflow unless **Start Over** clears the Reel Setup state.
+Once the user has made the first persistent Reel Setup choice, every subsequent Reel Setup screen displays a dedicated **SELECTED CHOICES** summary near the top of the view, visually separate from descriptive/help prose.
 
-The summary is cumulative and displays only actual persistent workflow selections that have been made so far.
+The initial **Get Your Reel Ready** screen does not show the summary because no choice exists yet.
 
-Examples:
+Implementation rules:
 
-After choosing setup mode, on **What Kind of Reel Do You Have?**:
+- one reusable `renderReelSetupSelectedChoices()` helper owns the treatment,
+- only persistent workflow selections are displayed,
+- temporary help/navigation actions are excluded,
+- changing an upstream persistent selection clears dependent downstream state,
+- Start Over clears the summary because it clears transient Reel Setup state,
+- dynamic values are written with `textContent`,
+- cumulative values wrap rather than overflow.
 
-```text
-SELECTED CHOICES
-New or Empty Reel
-```
+Current approved visual baseline:
 
-After choosing reel type, on **What Line Are You Using?**, **Beginner Line Starting Point**, and **Which Line Looks Like Yours?**:
+- `SELECTED CHOICES` heading and selected values use the same `.78rem` font size,
+- heading uses `--text-subtle`,
+- selected values retain the established Knot accent mix and stronger weight,
+- flat top/bottom divider treatment,
+- no elevated/tinted card background,
+- no rounded-card treatment,
+- no card-style left accent,
+- cumulative wrapping protection.
 
-```text
-SELECTED CHOICES
-New or Empty Reel · Spinning Reel
-```
+Treat this as the baseline for later Package 3 blocks unless runtime testing identifies a genuine usability issue.
 
-After choosing a physical line type, on **Line Choice Check** and subsequent steps:
+## Reel Setup Navigation — IMPLEMENTED / VALIDATED
 
-```text
-SELECTED CHOICES
-New or Empty Reel · Spinning Reel · Monofilament
-```
+Final navigation behavior through Block 3.6:
 
-As Package 3 adds target-fish, starting pound-test, backing, leader, or other persistent decisions, those confirmed selections should append to the same context summary when they remain useful to the user. Temporary navigation/help actions such as **Help Me Choose**, **Change Line Choice**, or **Back** are not selections and must not appear in the summary.
-
-The implementation should use one reusable Reel Setup summary helper rather than duplicating custom summary markup in individual step renderers. This keeps the treatment consistent across existing and future Reel Setup steps.
-
-Presentation uses only established Forest Journal theme tokens:
-
-- left accent: `--accent-knots`,
-- soft background tint derived from `--accent-knots` and `--surface`,
-- selected values: the existing Knot metadata accent mix,
-- small uppercase `--text-subtle` label,
-- normal instructions, recommendations, warnings, and tradeoff prose remain separate text below the summary.
-
-The summary must use safe DOM construction / `textContent` for dynamic values.
-
-This persistent summary is staged into Block 3.4 under the Incremental Refinement Workflow. It does not require a standalone upload before Block 3.4.
+- first Reel Setup screen: `← Knots` plus `Home`,
+- later screens: step-aware previous destination plus `Home`,
+- moving backward only to review preserves current transient selections,
+- changing an upstream selection clears dependent downstream state,
+- Home exits Reel Setup and clears transient state,
+- navigation remains floating/sticky while scrolling,
+- the navigation remains separate from Selected Choices,
+- desktop and narrow/mobile layouts remain usable without content obstruction.
 
 # Block 3.2 — Foundation
 
@@ -154,68 +152,13 @@ Block 3.2 added:
 - foundation checkpoint,
 - `openReelSetup()` internal runtime entry,
 - `tools/validate_knot_package_3.py`,
-- the required `data/reel-guidance.js` load in `index.html`.
+- required `data/reel-guidance.js` load in `index.html`.
 
-The normal Knot landing remains intentionally unwired to Reel Setup at this stage so the validated Production Package 2 behavior remains unchanged while Package 3 is constructed incrementally.
-
-## Foundation Controlled Options
-
-Setup modes:
-
-1. `new-empty-reel` — New or Empty Reel
-2. `replace-existing-line` — Replace Existing Line
-
-Reel types:
-
-1. `spinning` — Spinning Reel
-2. `spincast` — Spincast Reel
-3. `baitcasting` — Baitcasting Reel
-4. `not-sure` — I'm Not Sure
-
-# GitHub Integrity — Block 3.2
-
-After the user applied the Block 3.2 ZIP through GitHub Desktop, the four package files were re-fetched from GitHub `main` and matched the delivered package by Git blob SHA:
-
-```text
-e942e2a217266255d79290084022316bdd5f2546  index.html
-1ca1ebea859ef893b0696921b7a828dd462560a9  script.js
-b09258790691d1a308a72ea59e0baf0f491390f7  data/reel-guidance.js
-e22447dacc4c28bf9b6faa59145343dee57cba85  tools/validate_knot_package_3.py
-```
-
-Static Package 3 foundation validation passed:
-
-```text
-Production Package 3 foundation validation passed.
-Entry options: 2
-Reel types: 4
-Normal Knot landing remains intentionally unwired to Reel Setup.
-```
-
-# Runtime Validation — Block 3.2
-
-**Result:** PASS
-
-Validated in Microsoft Edge through the internal `openReelSetup()` entry.
-
-Confirmed:
-
-- initial **Get Your Reel Ready** page presents the two approved setup modes,
-- setup mode advances to **What Kind of Reel Do You Have?**,
-- all four approved reel-type choices render,
-- reel type advances to the foundation checkpoint,
-- checkpoint summary preserves setup mode and reel type,
-- **Change Reel Type** preserves the selected setup mode,
-- **Start Over** clears transient Reel Setup selections,
-- **Return to Knots** returns to the validated Knot landing,
-- existing **Attach Line to a Reel** production behavior remains unchanged,
-- no project-source JavaScript error was reported.
+Runtime validation confirmed the two setup modes, four reel-type choices, transient-state reset behavior, return to the validated Knot landing, and no application-source JavaScript errors.
 
 # Block 3.3 — Line Selection / Beginner Line Guidance
 
-**Status:** Functional Runtime PASS / Persistent Selected-Choices UX Staged for Block 3.4
-
-Block 3.3 extends the validated transient Reel Setup state with line selection while keeping the workflow behind the internal `openReelSetup()` entry.
+**Status:** Functional Runtime PASS / Follow-On UX Refinements Completed in Blocks 3.4–3.5
 
 Implemented physical line types:
 
@@ -228,125 +171,241 @@ Implemented guidance actions:
 1. `help-me-choose` — Help Me Choose
 2. `not-sure-line` — I'm Not Sure
 
-The Reel Setup session state now owns `lineType` only after the user deliberately identifies or selects a physical line type. The Help and Not Sure choices are workflow actions, not stored line types.
+Key validated behavior:
 
-## Beginner Guidance Behavior
+- Monofilament is presented as an **Easy beginner choice**, not a universal requirement,
+- Help / Not Sure are navigation/guidance actions rather than stored physical line types,
+- line-property tradeoffs remain explicit,
+- Spincast + Braid receives a model-specific compatibility warning,
+- changing Reel Type or Line Type clears dependent downstream state,
+- no production wiring of Attach Line to a Reel occurs yet.
 
-For all four current reel-type states, **Help Me Choose** begins with Monofilament as the project-defined **Easy beginner choice**. This is a starting recommendation rather than a requirement.
+The Persistent Selected Choices requirement first identified during Block 3.3 was implemented in Block 3.4 and visually finalized in Block 3.5.
 
-The recommendation language explicitly preserves the approved boundary:
+# Block 3.4 — Target Fish / Starting Pound-Test Guidance
 
-- line type guidance gets the beginner to a practical starting point,
-- exact pound-test selection is deferred to the target-fish / line-strength block,
-- reel and rod ratings still govern final compatibility,
-- no line type is presented as universally required.
+**Status:** PASS / VALIDATED
 
-Line summaries explain the practical beginner tradeoffs:
+Block 3.4 added six beginner target profiles and starting line-strength reference guidance:
 
-- Monofilament — manageable, knot-friendly, forgiving stretch; lower sensitivity is the primary tradeoff.
-- Fluorocarbon — low visibility, sinking behavior, sensitivity, and abrasion resistance; greater stiffness/manageability demands are the primary beginner tradeoff.
-- Braid — small diameter, very low stretch, high sensitivity; visibility and equipment-specific backing/leader/spool considerations are the primary tradeoffs.
+1. **All-Around Freshwater** — `6–12 lb`; Easy beginner choice `8 lb`.
+2. **Panfish — Bluegill & Crappie** — `4–6 lb`; Easy beginner choice `6 lb`.
+3. **Trout** — `2–4 lb`; Easy beginner choice `4 lb`.
+4. **Bass** — `6–8 lb`; Easy beginner choice `8 lb`.
+5. **Walleye** — `6–10 lb`; Easy beginner choice `8 lb`.
+6. **Catfish** — `17–20 lb`; Easy beginner choice `20 lb` for a heavier general setup.
 
-Spincast + Braid receives an explicit compatibility warning because some spincast reels do not handle braided line properly. The workflow instructs the user to check the actual reel markings or manufacturer guidance before continuing.
+Validated boundaries:
 
-## I'm Not Sure Line Identification
+- values are beginner starting references rather than universal requirements,
+- Braid uses a fish-strength reference instead of pretending the species recommendation is the final braid purchase size,
+- final line compatibility is deferred to the reel/rod equipment check,
+- persistent Selected Choices accumulates correctly,
+- upstream changes clear dependent state,
+- normal Knot landing remains intentionally unwired.
 
-The line-identification path uses simple physical cues rather than pretending visual identification is infallible:
+Authoritative block record:
 
-- Monofilament — smooth single strand, generally softer/stretchier.
-- Fluorocarbon — smooth single strand, generally clearer and stiffer/wirier.
-- Braid — visibly woven/fibrous construction.
+`docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.4.md`
 
-If those cues are not sufficient, the workflow directs the user to **Help Me Choose** instead of forcing a guess.
+# Block 3.5 — Reel/Rod Compatibility + How to Read Your Reel
 
-## Technical Source Basis
+**Status:** PASS / VALIDATED
 
-Block 3.3 guidance is original Freshwater Fishing Companion synthesis checked against current manufacturer education sources:
+Block 3.5 implemented:
 
-- Berkley — Freshwater Line Guide: `https://www.berkley-fishing.com/blogs/news/berkley-freshwater-line-guide`
-- Berkley — Why Use Monofilament: `https://www.berkley-fishing.com/blogs/news/why-use-monofilament`
-- Berkley — Braid Complete Fishing Line Guide: `https://www.berkley-fishing.com/blogs/news/berkley-freshwater-line-guide-braid`
-- Zebco — Spincast Reel Troubleshooting: `https://www.zebco.com/en/troubleshooting/spincast-reels`
+- final flat Selected Choices visual treatment,
+- actual Reel Type **I'm Not Sure** recognition flow,
+- **How to Read Your Reel** guidance,
+- **How to Read Your Rod** guidance,
+- equipment compatibility checkpoint,
+- pause/mismatch branch,
+- compatible-equipment gate into backing decisions.
 
-These sources support the general line-property descriptions, Monofilament beginner-manageability direction, Braid visibility/low-stretch tradeoffs, and the spincast Braid compatibility warning. The default **Easy beginner choice** presentation is project-defined Decision Knowledge and is intentionally labeled as a starting point rather than a universal technical rule.
+Validated behavior includes:
 
-## Block 3.3 Navigation / State Rules
+- Reel capacity order/unit interpretation,
+- separate Mono/Braid capacity awareness,
+- rod line-rating versus lure-rating distinction,
+- unresolved reel type is not stored as a resolved selection,
+- compatible and mismatch branches route correctly,
+- upstream changes clear compatibility state,
+- Spincast + Braid warning remains intact,
+- Braid fish-strength-reference boundary remains intact,
+- no application-source JavaScript errors.
 
-The block preserves:
+Validation record:
 
-- selected setup mode while changing reel type or line type,
-- selected reel type while changing line type,
-- session-only state,
-- **Start Over** clearing setup mode, reel type, and line type,
-- **Return to Knots** clearing transient Reel Setup state,
-- app-wide no-auto-focus behavior,
-- Production Package 2 Knot navigation/search/detail behavior,
-- the intentionally unwired **Attach Line to a Reel** production destination.
+`docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.5-VALIDATION.md`
 
-The old temporary **Reel Setup Foundation Check** is replaced by the real line-selection sequence. It was a Block 3.2 validation checkpoint, not an intended final workflow step.
+# Block 3.6 — Backing Decision + Spool Connection Knot Handoffs
 
-## Block 3.3 Initial Runtime Validation
+**Status:** PASS / VALIDATED
 
-**Result:** Functional PASS
+Block 3.6 added:
 
-Microsoft Edge validation confirmed:
+- `backingChoice` transient Reel Setup state,
+- No Separate Backing path for Monofilament/Fluorocarbon,
+- Monofilament Backing path,
+- guarded Direct Braid — Reel Approved path,
+- Review Reel Markings First branch,
+- Spool Connection Plan,
+- canonical Arbor Knot handoff,
+- canonical Double Uni Knot handoff,
+- exact Reel Setup return-context restoration from Knot detail,
+- step-aware Reel Setup previous navigation,
+- floating/sticky Reel Setup navigation.
 
-- all five line-selection choices display,
-- **Help Me Choose** presents Monofilament as an **Easy beginner choice** rather than a requirement,
-- setup mode, reel type, and selected physical line are preserved correctly,
-- **Change Line Choice** preserves setup mode and reel type,
-- **I'm Not Sure** provides non-forcing identification guidance,
-- Spincast + Braid displays the compatibility warning,
-- **Start Over** and **Return to Knots** behave correctly,
-- no application-source JavaScript error was reported.
+Validated backing behavior:
 
-A visual refinement was requested after the functional PASS. The original refinement targeted **Line Choice Check** only; it has now been expanded into the workflow-wide **Persistent Selected-Choices Standard** documented above.
+```text
+Monofilament / Fluorocarbon
+No Separate Backing  → Spool Connection Plan
+Monofilament Backing → Spool Connection Plan
 
-The previously prepared standalone Line Choice Check UX Revision ZIP is superseded as a delivery step. Do not upload it separately.
+Braid
+Monofilament Backing        → Spool Connection Plan
+Direct Braid — Reel Approved → Spool Connection Plan
+Review Reel Markings First  → Reel guidance
+```
 
-The next Block 3.4 package will carry the reusable selected-choice summary implementation across all applicable existing Reel Setup screens and future Block 3.4 screens.
+Braid does not receive a generic No Separate Backing choice.
 
-Block 3.4 runtime validation must begin with:
+Validated Knot handoffs:
 
-**Step 1 — Carried-Forward Persistent Context Validation**
+```text
+No Separate Backing
+→ Arbor Knot
 
-1. Start Reel Setup and confirm the initial screen has no selected-choice summary before any choice is made.
-2. Choose **New or Empty Reel** and confirm the Reel Type screen shows:
-   - `SELECTED CHOICES`
-   - `New or Empty Reel`
-3. Choose **Spinning Reel** and confirm the Line Selection screen shows:
-   - `New or Empty Reel · Spinning Reel`
-4. Open **Help Me Choose** and **I'm Not Sure** line guidance and confirm the same cumulative summary remains visible.
-5. Choose **Monofilament** and confirm **Line Choice Check** shows:
-   - `New or Empty Reel · Spinning Reel · Monofilament`
-6. Confirm guidance, tradeoffs, and compatibility messages remain visually separate from the selected-choice summary.
-7. Confirm changing a persistent selection updates the summary correctly and **Start Over** clears it.
+Monofilament Backing
+→ Arbor Knot
+→ Double Uni Knot
 
-Only after Step 1 passes should new Block 3.4 target-fish / pound-test functionality be validated.
+Direct Braid — Reel Approved
+→ no generic Arbor Knot direct-braid handoff
+```
 
-# Next Build Block — 3.4
+Validated return context:
 
-Block 3.4 will add **Target Fish / Starting Pound-Test Guidance** and will include the staged persistent selected-choice implementation in the same production package.
+```text
+Spool Connection Plan
+→ canonical Knot detail
+→ ← Spool Connection Plan
+→ exact prior Reel Setup state restored
+```
 
-Block 3.4 should:
+## Block 3.6 Navigation Correction
 
-- ask for a beginner-relevant target-fish group or all-around freshwater choice,
-- provide a **Recommended starting range** rather than false precision,
-- provide an **Easy beginner choice** where appropriate,
-- preserve the selected line type,
-- append confirmed target-fish / line-strength decisions to the persistent selected-choice context when useful,
-- avoid lure/cover/technique optimization that belongs to later Decision Knowledge,
-- defer the final equipment-capacity check to the dedicated compatibility / **How to Read Your Reel** block,
-- validate the workflow-wide selected-choice presentation as runtime validation Step 1.
+The initial Block 3.6 runtime review found that step-aware navigation worked but did not remain floating/sticky while scrolling.
+
+A targeted correction reused the established application navigation CSS treatment for `[data-reel-setup-navigation]` without changing Reel Setup JavaScript semantics.
+
+Verified GitHub `main` correction commit:
+
+`9b58d0342bcbe620cd3e140e0a6ab2ffe67aa3e0`
+
+Verified corrected blobs:
+
+```text
+812af1d17f44154cb716f41e3490fb3738cd8f09  forest-journal.css
+986c2991d7682ab2529393aea50ee7422cafb9e1  tools/validate_knot_package_3.py
+```
+
+Unchanged Block 3.6 JavaScript/data blobs:
+
+```text
+8e891108cbb5848ad9dfdc00d61cb5fecd7f4961  script.js
+43801c4a23786d6eb0940ef6f593d31a97d518bc  data/reel-guidance.js
+```
+
+Microsoft Edge validation on 2026-08-14 confirmed:
+
+- sticky/floating navigation on first and later Reel Setup screens,
+- useful step-aware previous destinations,
+- preserved review-state behavior,
+- dependent-state clearing when upstream choices actually change,
+- Home reset behavior,
+- no desktop or mobile-emulation obstruction,
+- backing-decision paths,
+- canonical Knot handoffs,
+- exact Spool Connection Plan return context,
+- Block 3.5 equipment compatibility regression safety,
+- Selected Choices visual baseline,
+- Spincast + Braid warning,
+- Braid strength-reference boundary,
+- normal Knot landing remains intentionally unwired,
+- no application-source JavaScript errors.
+
+Authoritative block closeout record:
+
+`docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.6.md`
+
+# Current Transient Reel Setup State
+
+Through Block 3.6, Reel Setup transient state includes:
+
+```text
+entryMode
+reelType
+lineType
+targetFish
+equipmentCheck
+backingChoice
+```
+
+The state remains session-only JavaScript state.
+
+State-clearing principle:
+
+- moving backward only to review does not clear current selections,
+- changing an upstream persistent choice clears only dependent downstream state,
+- Home / Start Over clear the Reel Setup state as designed.
+
+# Canonical Knowledge Boundary
+
+Package 3 continues to preserve the approved ownership model:
+
+- canonical Knot tying instructions remain in canonical Knot Reference Knowledge,
+- Reel Setup owns contextual sequence and recommendation logic only,
+- no duplicate Arbor Knot or Double Uni Knot instructions are embedded in Reel Setup Decision Knowledge,
+- direct braid remains equipment/manufacturer specific,
+- target-fish line strength remains a beginner reference until checked against actual equipment.
+
+# Current Integration Boundary
+
+The normal Knot landing remains intentionally unwired to Reel Setup through Block 3.6.
+
+Do not wire **Attach Line to a Reel** to the internal Reel Setup workflow until the approved later Package 3 integration block.
+
+# Next Build Block — 3.7
+
+**Block 3.7 — Reel-Specific Spooling Instructions**
+
+Block 3.7 should begin from the latest verified GitHub `main` state and preserve every validated behavior through Block 3.6.
+
+Planned scope:
+
+- reel-specific line routing,
+- winding direction where relevant,
+- winding tension,
+- spool-fill guidance.
+
+Block 3.7 should not duplicate canonical Knot instructions or broaden into casting, backlash training, lure-specific optimization, or other excluded V1 scope.
 
 # Exact Resume Point
 
 Production Package 3 is active.
 
-**Block 3.2 is PASS / VALIDATED. Block 3.3 functional runtime validation is PASS. The selected-choice refinement is now a documented workflow-wide persistent context standard and is staged into Block 3.4. Begin Block 3.4 — Target Fish / Starting Pound-Test Guidance.**
+**Block 3.2 — PASS / VALIDATED**  
+**Block 3.3 — Functional PASS; follow-on Selected Choices refinements completed and validated**  
+**Block 3.4 — PASS / VALIDATED**  
+**Block 3.5 — PASS / VALIDATED**  
+**Block 3.6 — PASS / VALIDATED**
 
-Do not separately upload the previously prepared Block 3.3 UX Revision ZIP unless Block 3.4 is abandoned or a blocking defect requires isolated correction.
+Next:
 
-Do not wire **Attach Line to a Reel** to the new workflow until the guided sequence is sufficiently complete and explicitly reaches its integration block.
+**Begin Block 3.7 — Reel-Specific Spooling Instructions.**
+
+Before editing any existing production source file for Block 3.7, re-fetch its latest authoritative GitHub `main` contents.
 
 Do not begin Production Package 4 Knot media or Fish Guide while Package 3 remains open.

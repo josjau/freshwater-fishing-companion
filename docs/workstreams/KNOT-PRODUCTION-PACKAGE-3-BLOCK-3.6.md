@@ -1,20 +1,24 @@
 # Knot Production Package 3 — Block 3.6
 
-**Status:** Uploaded / GitHub Integrity PASS / Runtime Validation Partially Started / Navigation Refinement Pending  
+**Status:** PASS / VALIDATED  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.6 — Backing Decision + Spool Attachment / Line-to-Line Knot Handoff Foundation  
-**Date:** 2026-08-13
+**Implementation Date:** 2026-08-13  
+**Validation Closeout Date:** 2026-08-14  
+**Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
 
 # Purpose
 
 Block 3.6 extends the internal **Get Your Reel Ready** workflow from verified reel/rod compatibility into backing selection and canonical Knot handoffs for the spool connection plan.
 
-It also carries forward the Reel Setup navigation correction identified after Block 3.5 validation.
+The block also finalizes Reel Setup navigation so the workflow keeps step-aware previous destinations while using the established floating/sticky application navigation treatment.
 
 The normal Knot landing remains intentionally unwired to Reel Setup until the later Package 3 integration block.
 
-# Delivered Artifact
+# Delivered Artifacts
+
+Original Block 3.6 package:
 
 `Freshwater-Fishing-Companion-Knot-Production-PACKAGE-3-BLOCK-3.6.zip`
 
@@ -22,54 +26,69 @@ SHA-256:
 
 `b6966b9b817c9d238b588cfb2f5b5bb4ffd66bb91d0bf2a5ff2bfd3cd6aa3e31`
 
+Targeted navigation correction:
+
+`Freshwater-Fishing-Companion-Knot-Production-PACKAGE-3-BLOCK-3.6-NAV-CORRECTION.zip`
+
+SHA-256:
+
+`762f41a54b9f76a5c8bc1ceb1b55d2ca3b1f48fe01811ffc516695e2928147d0`
+
+The correction package contained only:
+
+```text
+forest-journal.css
+tools/validate_knot_package_3.py
+```
+
+No wrapper folder or non-repository package artifact was included.
+
 # GitHub Integrity — PASS
 
-The user applied the Block 3.6 package through GitHub Desktop before closing the session.
+The targeted navigation correction was applied through GitHub Desktop and verified against authoritative GitHub `main`.
 
-Post-upload GitHub `main` exactly matched the delivered package:
+Verified `main` commit:
+
+`9b58d0342bcbe620cd3e140e0a6ab2ffe67aa3e0`
+
+Commit message:
+
+`Knots - Production Package 3 - Navigation Fix 3.6`
+
+The commit changed only the two intended files:
+
+```text
+812af1d17f44154cb716f41e3490fb3738cd8f09  forest-journal.css
+986c2991d7682ab2529393aea50ee7422cafb9e1  tools/validate_knot_package_3.py
+```
+
+The Block 3.6 JavaScript and Decision Knowledge remained unchanged during the correction:
 
 ```text
 8e891108cbb5848ad9dfdc00d61cb5fecd7f4961  script.js
 43801c4a23786d6eb0940ef6f593d31a97d518bc  data/reel-guidance.js
-1249d8fa88a25ea2e527954ddc01146ed753e1bb  tools/validate_knot_package_3.py
 ```
 
-# Runtime Observation — Navigation Partially PASS / Refinement Required
+GitHub commit inspection confirmed no unrelated source changes were included in the navigation correction.
 
-Runtime validation began before session close.
+# Reel Setup Navigation — PASS / VALIDATED
 
-The new step-aware Reel Setup navigation is functionally working: the previous-step control changes with workflow position and navigation is useful rather than static.
-
-However, the user observed that the navigation row **does not remain floating/sticky while the page scrolls**.
-
-The earlier Block 3.6 design intentionally made the Reel Setup navigation non-sticky to avoid inheriting the generic breadcrumb behavior. Runtime review shows that this went too far: Reel Setup needs the new **step-aware** behavior **and** the convenient floating/sticky access of the established navigation control.
-
-Required next-session refinement:
-
-- preserve the current step-aware previous destination,
-- preserve the explicit Home control,
-- keep the controls visually separate from `SELECTED CHOICES`,
-- make the Reel Setup navigation remain accessible while scrolling,
-- use the established application sticky/floating navigation language where practical,
-- do not revert to the old generic static behavior,
-- verify that the floating treatment does not obstruct headings, Selected Choices, cards, or narrow/mobile layouts.
-
-This refinement must be completed before Block 3.6 is closed as PASS / VALIDATED.
-
-Under the incremental-refinement workflow, this should be addressed at the start of the next session and validated before continuing the remaining Block 3.6 checklist. Because Block 3.6 itself is still open, do **not** roll this defect into Block 3.7.
-
-# Navigation Target Behavior
-
-The intended final Reel Setup navigation behavior is now:
+The final Reel Setup navigation behavior is:
 
 - first Reel Setup screen: `← Knots` plus `Home`,
 - later Reel Setup screens: step-aware previous destination plus `Home`,
 - previous destination changes as the workflow advances,
-- moving backward to review preserves current transient selections,
-- downstream state is cleared only when the user actually changes an upstream selection,
+- moving backward only to review preserves current transient selections,
+- changing an upstream selection clears dependent downstream state,
 - Home exits Reel Setup and clears transient state,
-- navigation remains visible/accessible while scrolling,
-- navigation remains separate from the persistent `SELECTED CHOICES` context summary.
+- navigation remains floating/sticky and accessible while scrolling,
+- navigation remains separate from the persistent `SELECTED CHOICES` context summary,
+- the floating treatment does not obstruct headings, Selected Choices, or cards,
+- narrow/mobile emulation keeps the navigation inside the viewport and allows wrapping when needed.
+
+The production correction reuses the existing application navigation treatment by attaching `[data-reel-setup-navigation]` to the same sticky/floating CSS container rules used by `.page-navigation-group`.
+
+No Reel Setup JavaScript navigation semantics were changed by the correction.
 
 # Backing Decision
 
@@ -87,20 +106,22 @@ The selected backing choice is appended to the persistent `SELECTED CHOICES` sum
 
 ## Monofilament / Fluorocarbon Main Line
 
-The beginner paths are:
+Validated beginner paths:
 
-- **No Separate Backing** — simplest direct spool attachment path,
-- **Monofilament Backing** — optional when the user deliberately wants to reduce the amount of main line required to fill the spool.
+- **No Separate Backing** — direct spool attachment path,
+- **Monofilament Backing** — optional backing path.
+
+Both advance to **Spool Connection Plan**.
 
 ## Braid Main Line
 
 Braid does not receive a generic **No Separate Backing** option.
 
-The beginner paths are:
+Validated paths:
 
-- **Monofilament Backing** — general safer path when braid could slip on a smooth spool,
-- **Direct Braid — Reel Approved** — only when the exact reel/spool explicitly provides a braid-ready attachment surface or manufacturer-approved direct-braid method,
-- **Review Reel Markings First** — returns to the existing reel guidance when compatibility cannot be verified.
+- **Monofilament Backing** — advances to Spool Connection Plan,
+- **Direct Braid — Reel Approved** — advances only under the explicit braid-ready/manufacturer-approved equipment guard,
+- **Review Reel Markings First** — returns to the reel-capacity guidance when braid-ready attachment cannot be confirmed.
 
 The application does not infer braid-readiness from reel size, reel type, or brand alone.
 
@@ -115,6 +136,8 @@ For Monofilament or Fluorocarbon:
 - canonical **Arbor Knot** is used for main line → reel spool,
 - Reel Setup does not duplicate Arbor Knot tying instructions.
 
+Runtime result: **PASS**.
+
 ## Monofilament Backing
 
 The plan uses:
@@ -124,17 +147,21 @@ The plan uses:
 
 Reel Setup owns only the contextual recommendation and sequence. Canonical Knot records continue to own the tying instructions.
 
+Runtime result: **PASS**.
+
 ## Direct Braid — Reel Approved
 
 No generic spool Knot is prescribed.
 
-The workflow explicitly tells the user to follow the exact reel manufacturer's approved direct-braid attachment method. The generic Arbor Knot is not presented as a direct-braid spool knot.
+The workflow tells the user to follow the exact reel manufacturer's approved direct-braid attachment method. The generic Arbor Knot is not presented as a direct-braid spool knot.
 
-# Knot Detail Context Handoff
+Runtime result: **PASS**.
+
+# Knot Detail Context Handoff — PASS
 
 Block 3.6 extends the existing detail-navigation stack to support Reel Setup.
 
-Flow:
+Validated flow:
 
 ```text
 Spool Connection Plan
@@ -145,6 +172,8 @@ Spool Connection Plan
 ```
 
 The Reel Setup state snapshot is stored only in transient JavaScript navigation context.
+
+Runtime validation confirmed the exact **Spool Connection Plan** return destination and preserved Selected Choices for both Arbor Knot and Double Uni Knot handoffs.
 
 No canonical Knot content is duplicated into `data/reel-guidance.js`.
 
@@ -165,107 +194,113 @@ Primary references:
 
 The app therefore treats direct braid as **equipment-specific**, while monofilament backing remains the safer generic beginner recommendation when braid attachment cannot be verified.
 
+# Static Validation — PASS
+
+The final Block 3.6 validator requires the Reel Setup navigation to be step-aware and sticky/floating.
+
+Validated output target:
+
+```text
+Production Package 3 Block 3.6 validation passed.
+Backing choices: 3
+Reel Setup navigation: step-aware and sticky/floating.
+Canonical Knot handoffs: Arbor Knot and Double Uni Knot.
+Reel Setup Knot return context: exact step/state restoration enabled.
+Normal Knot landing remains intentionally unwired to Reel Setup.
+```
+
+The validator also retains the existing semantic checks for:
+
+- backing decision knowledge,
+- canonical Arbor Knot and Double Uni Knot handoffs,
+- no generic Arbor Knot direct-braid handoff,
+- Selected Choices flat treatment,
+- exact Reel Setup return context,
+- intentionally unwired normal Knot landing,
+- JavaScript syntax for `script.js` and `data/reel-guidance.js`.
+
+# Runtime Validation — PASS
+
+Microsoft Edge runtime validation was completed on 2026-08-14.
+
+## Step 1 — Reel Setup Navigation
+
+**PASS**
+
+Confirmed:
+
+- first screen `← Knots` + `Home`,
+- step-aware later-screen previous destinations,
+- previous navigation changes the workflow step,
+- review navigation preserves current selections,
+- changing upstream choices clears dependent downstream state,
+- sticky/floating behavior while scrolling,
+- no content obstruction on desktop,
+- narrow/mobile emulation remains usable,
+- Home clears transient Reel Setup state.
+
+## Step 2 — Backing Decision
+
+**PASS**
+
+Confirmed Monofilament/Fluorocarbon and Braid paths, including the direct-braid equipment guard and Review Reel Markings First branch.
+
+## Step 3 — Canonical Knot Handoffs
+
+**PASS**
+
+Confirmed:
+
+- No Separate Backing → Arbor Knot,
+- Monofilament Backing → Arbor Knot + Double Uni Knot,
+- Direct Braid — Reel Approved → no generic Arbor Knot direct-braid handoff.
+
+## Step 4 — Exact Return Context
+
+**PASS**
+
+Confirmed canonical Knot detail returns to **Spool Connection Plan** with all Reel Setup selections intact.
+
+## Step 5 — Regression
+
+**PASS**
+
+Confirmed:
+
+- Block 3.5 equipment compatibility remains intact,
+- Selected Choices retains the approved flat treatment,
+- Spincast + Braid warning remains intact,
+- Braid fish-strength-reference boundary remains intact,
+- normal Knot landing remains intentionally unwired,
+- no application-source JavaScript errors were reported.
+
 # Next Checkpoint
 
 The Spool Connection Plan ends at:
 
 **Next — Spool the Reel — Coming Soon**
 
-The next Package 3 block will add reel-specific:
+The next Package 3 block is:
+
+**Block 3.7 — Reel-Specific Spooling Instructions**
+
+Block 3.7 will add reel-specific guidance for:
 
 - line routing,
 - winding direction where relevant,
 - winding tension,
 - spool-fill guidance.
 
-# Static Validation
-
-The original Block 3.6 static validator passed for the uploaded package:
-
-```text
-Production Package 3 Block 3.6 validation passed.
-Backing choices: 3
-Reel Setup navigation: step-aware and non-sticky.
-Canonical Knot handoffs: Arbor Knot and Double Uni Knot.
-Reel Setup Knot return context: exact step/state restoration enabled.
-Normal Knot landing remains intentionally unwired to Reel Setup.
-```
-
-The phrase `step-aware and non-sticky` is now superseded by the runtime refinement above. The validator must be updated with the navigation correction so the final Block 3.6 validation requires **step-aware and floating/sticky** behavior instead.
-
-`node --check` passed for the uploaded Block 3.6 versions of:
-
-- `script.js`
-- `data/reel-guidance.js`
-
-# Runtime Validation Order — NEXT SESSION
-
-Block 3.6 runtime validation is **partially started but not complete**.
-
-At the next session, begin here.
-
-## Step 1A — Fix Floating Reel Setup Navigation
-
-Before completing validation:
-
-1. re-fetch current GitHub `main` versions of `script.js`, the relevant stylesheet, and the Package 3 validator,
-2. implement floating/sticky behavior for the existing step-aware Reel Setup navigation,
-3. keep current previous-step semantics and Home behavior unchanged,
-4. update static validation so non-sticky navigation is no longer considered correct,
-5. package the targeted production correction through the normal ZIP/GitHub Desktop workflow.
-
-## Step 1B — Validate Reel Setup Navigation
-
-After the correction is uploaded and GitHub-integrity verified, validate:
-
-- first screen shows `← Knots` and `Home`,
-- later screens show a useful previous-step label plus `Home`,
-- previous navigation actually changes the Reel Setup step,
-- selections remain visible when moving backward only to review,
-- changing an upstream choice still clears dependent state,
-- navigation remains floating/sticky and accessible while scrolling,
-- navigation does not obstruct content on desktop or mobile emulation,
-- Home exits and clears transient Reel Setup state.
-
-## Step 2 — Backing Decision
-
-Validate Monofilament and Braid paths, including the guarded direct-braid option.
-
-## Step 3 — Canonical Knot Handoffs
-
-Validate:
-
-- No Separate Backing → Arbor Knot,
-- Monofilament Backing → Arbor Knot + Double Uni Knot,
-- direct braid → no generic Arbor handoff.
-
-## Step 4 — Exact Return Context
-
-Open each canonical Knot from Reel Setup and use the parent control to confirm return to **Spool Connection Plan** with all Reel Setup selections intact.
-
-## Step 5 — Regression
-
-Confirm:
-
-- Block 3.5 equipment compatibility remains intact,
-- Selected Choices retains the approved flat treatment,
-- Spincast+Braid warning remains intact,
-- Braid fish-strength-reference boundary remains intact,
-- normal Knot landing remains intentionally unwired,
-- no application-source JavaScript errors appear.
+Block 3.7 must begin from the latest verified GitHub `main` source state and preserve all Block 3.6 validation results.
 
 # Exact Resume Point
 
 **Block 3.5 is PASS / VALIDATED.**
 
-**Block 3.6 is uploaded and GitHub-integrity verified. Runtime validation began and confirmed that step-aware navigation works, but floating/sticky behavior is still required. Block 3.6 remains OPEN.**
+**Block 3.6 is PASS / VALIDATED.**
 
-Next session:
+Production Package 3 remains active.
 
-1. fix Reel Setup floating/sticky navigation first,
-2. upload and verify that targeted Block 3.6 correction,
-3. resume the Block 3.6 Microsoft Edge runtime checklist,
-4. if all steps PASS, close Block 3.6 as PASS / VALIDATED,
-5. only then begin **Block 3.7 — Reel-Specific Spooling Instructions**.
+Next build block:
 
-Do not begin Block 3.7 before Block 3.6 runtime validation passes.
+**Block 3.7 — Reel-Specific Spooling Instructions**.
