@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Block 3.6
 
-**Status:** Uploaded / GitHub Integrity PASS / Runtime Validation Pending  
+**Status:** Uploaded / GitHub Integrity PASS / Runtime Validation Partially Started / Navigation Refinement Pending  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.6 — Backing Decision + Spool Attachment / Line-to-Line Knot Handoff Foundation  
@@ -16,7 +16,7 @@ The normal Knot landing remains intentionally unwired to Reel Setup until the la
 
 # Delivered Artifact
 
-`Freshwater-Fishing-Companion-Knot-Production-Package-3-Block-3.6.zip`
+`Freshwater-Fishing-Companion-Knot-Production-PACKAGE-3-BLOCK-3.6.zip`
 
 SHA-256:
 
@@ -34,26 +34,42 @@ Post-upload GitHub `main` exactly matched the delivered package:
 1249d8fa88a25ea2e527954ddc01146ed753e1bb  tools/validate_knot_package_3.py
 ```
 
-Runtime validation was deliberately deferred to the next session at the user's request.
+# Runtime Observation — Navigation Partially PASS / Refinement Required
 
-# Carried-Forward Navigation Fix
+Runtime validation began before session close.
 
-The generic `renderView()` Home control was not sufficient for a guided Reel Setup workflow because it did not communicate or navigate the user's current workflow position.
+The new step-aware Reel Setup navigation is functionally working: the previous-step control changes with workflow position and navigation is useful rather than static.
 
-Block 3.6 replaces that control inside Reel Setup with a dedicated non-sticky navigation row.
+However, the user observed that the navigation row **does not remain floating/sticky while the page scrolls**.
 
-Behavior:
+The earlier Block 3.6 design intentionally made the Reel Setup navigation non-sticky to avoid inheriting the generic breadcrumb behavior. Runtime review shows that this went too far: Reel Setup needs the new **step-aware** behavior **and** the convenient floating/sticky access of the established navigation control.
 
-- the first Reel Setup screen shows `← Knots` plus `Home`,
-- later steps show a step-aware previous destination plus `Home`,
-- the previous destination changes as the workflow advances,
-- simply moving backward preserves the current transient Reel Setup selections for review,
-- downstream state is cleared only if the user actually makes a different upstream selection through the normal selection handlers,
-- Home exits Reel Setup and clears transient Reel Setup state,
-- the navigation row does not use the sticky `.page-navigation-group` treatment,
-- navigation remains visually and semantically separate from `SELECTED CHOICES`.
+Required next-session refinement:
 
-This navigation fix is Runtime Validation Step 1 for Block 3.6.
+- preserve the current step-aware previous destination,
+- preserve the explicit Home control,
+- keep the controls visually separate from `SELECTED CHOICES`,
+- make the Reel Setup navigation remain accessible while scrolling,
+- use the established application sticky/floating navigation language where practical,
+- do not revert to the old generic static behavior,
+- verify that the floating treatment does not obstruct headings, Selected Choices, cards, or narrow/mobile layouts.
+
+This refinement must be completed before Block 3.6 is closed as PASS / VALIDATED.
+
+Under the incremental-refinement workflow, this should be addressed at the start of the next session and validated before continuing the remaining Block 3.6 checklist. Because Block 3.6 itself is still open, do **not** roll this defect into Block 3.7.
+
+# Navigation Target Behavior
+
+The intended final Reel Setup navigation behavior is now:
+
+- first Reel Setup screen: `← Knots` plus `Home`,
+- later Reel Setup screens: step-aware previous destination plus `Home`,
+- previous destination changes as the workflow advances,
+- moving backward to review preserves current transient selections,
+- downstream state is cleared only when the user actually changes an upstream selection,
+- Home exits Reel Setup and clears transient state,
+- navigation remains visible/accessible while scrolling,
+- navigation remains separate from the persistent `SELECTED CHOICES` context summary.
 
 # Backing Decision
 
@@ -164,7 +180,7 @@ The next Package 3 block will add reel-specific:
 
 # Static Validation
 
-PASS.
+The original Block 3.6 static validator passed for the uploaded package:
 
 ```text
 Production Package 3 Block 3.6 validation passed.
@@ -175,27 +191,40 @@ Reel Setup Knot return context: exact step/state restoration enabled.
 Normal Knot landing remains intentionally unwired to Reel Setup.
 ```
 
-`node --check` passes for:
+The phrase `step-aware and non-sticky` is now superseded by the runtime refinement above. The validator must be updated with the navigation correction so the final Block 3.6 validation requires **step-aware and floating/sticky** behavior instead.
+
+`node --check` passed for the uploaded Block 3.6 versions of:
 
 - `script.js`
 - `data/reel-guidance.js`
 
 # Runtime Validation Order — NEXT SESSION
 
-Runtime validation has **not** yet been performed for Block 3.6.
+Block 3.6 runtime validation is **partially started but not complete**.
 
 At the next session, begin here.
 
-## Step 1 — Reel Setup Navigation Fix
+## Step 1A — Fix Floating Reel Setup Navigation
 
-Validate:
+Before completing validation:
+
+1. re-fetch current GitHub `main` versions of `script.js`, the relevant stylesheet, and the Package 3 validator,
+2. implement floating/sticky behavior for the existing step-aware Reel Setup navigation,
+3. keep current previous-step semantics and Home behavior unchanged,
+4. update static validation so non-sticky navigation is no longer considered correct,
+5. package the targeted production correction through the normal ZIP/GitHub Desktop workflow.
+
+## Step 1B — Validate Reel Setup Navigation
+
+After the correction is uploaded and GitHub-integrity verified, validate:
 
 - first screen shows `← Knots` and `Home`,
 - later screens show a useful previous-step label plus `Home`,
 - previous navigation actually changes the Reel Setup step,
 - selections remain visible when moving backward only to review,
 - changing an upstream choice still clears dependent state,
-- navigation does not remain sticky at the top while scrolling,
+- navigation remains floating/sticky and accessible while scrolling,
+- navigation does not obstruct content on desktop or mobile emulation,
 - Home exits and clears transient Reel Setup state.
 
 ## Step 2 — Backing Decision
@@ -229,13 +258,14 @@ Confirm:
 
 **Block 3.5 is PASS / VALIDATED.**
 
-**Block 3.6 is uploaded and GitHub-integrity verified, but runtime validation is still pending.**
+**Block 3.6 is uploaded and GitHub-integrity verified. Runtime validation began and confirmed that step-aware navigation works, but floating/sticky behavior is still required. Block 3.6 remains OPEN.**
 
 Next session:
 
-1. re-fetch GitHub `main` only if source may have changed since session close,
-2. otherwise begin the Block 3.6 Microsoft Edge runtime checklist above,
-3. if PASS, close Block 3.6 as PASS / VALIDATED,
-4. then begin **Block 3.7 — Reel-Specific Spooling Instructions**.
+1. fix Reel Setup floating/sticky navigation first,
+2. upload and verify that targeted Block 3.6 correction,
+3. resume the Block 3.6 Microsoft Edge runtime checklist,
+4. if all steps PASS, close Block 3.6 as PASS / VALIDATED,
+5. only then begin **Block 3.7 — Reel-Specific Spooling Instructions**.
 
 Do not begin Block 3.7 before Block 3.6 runtime validation passes.
