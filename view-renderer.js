@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Knot Guide — Production Package 2 Revision 4"
+    milestone: "Knot Guide — Production Package 2 Revision 5"
 });
 
 function buildSearchControlsMarkup(inputId, placeholder) {
@@ -179,7 +179,6 @@ function renderSearchView(appMain, searchConfig) {
     const updateSearch = () => searchConfig.onSearch(searchInput?.value ?? "");
     initializeSearchControls(searchForm, searchInput, clearButton, updateSearch);
 
-    searchInput?.focus();
     updateSearch();
 }
 
@@ -401,6 +400,7 @@ function initializeKnotUsageControls(appMain, detailConfig) {
     if (!toggle) return;
 
     const hiddenItems = Array.from(appMain.querySelectorAll("[data-knot-rig-usage-extra]"));
+    const usageGroup = toggle.closest(".knot-at-a-glance__group");
     toggle.addEventListener("click", () => {
         const willExpand = toggle.getAttribute("aria-expanded") !== "true";
         hiddenItems.forEach((item) => {
@@ -410,6 +410,16 @@ function initializeKnotUsageControls(appMain, detailConfig) {
         toggle.textContent = willExpand
             ? "Show fewer"
             : `See all ${toggle.dataset.knotUsageCount} rigs`;
+
+        if (!willExpand && usageGroup) {
+            const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
+            window.requestAnimationFrame(() => {
+                usageGroup.scrollIntoView({
+                    behavior: reduceMotion ? "auto" : "smooth",
+                    block: "start"
+                });
+            });
+        }
     });
 }
 

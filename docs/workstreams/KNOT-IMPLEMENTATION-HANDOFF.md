@@ -1,6 +1,6 @@
 # Knot Implementation Handoff
 
-**Status:** Approved / Ready to Verify Runtime Revision 4  
+**Status:** Approved / Ready to Verify Runtime Revision 5  
 **Date:** 2026-08-13  
 **Repository:** `josjau/freshwater-fishing-companion`  
 **Branch:** `main`  
@@ -38,7 +38,7 @@ Knots planning, research validation, and canonical content lock are complete. Pr
 Current production state:
 
 - Production Package 1 — **Validated**.
-- Production Package 2 Runtime Revision 4 (`0.6.4`) — **Implemented / Unvalidated** in the current coherent update; local static preflight passed.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) — **Implemented / Unvalidated**; Revision 4 functional/regression blocks passed and the two final UX remediation items are implemented here.
 - GitHub blob verification and Microsoft Edge runtime/regression validation remain open.
 
 # Canonical Post-Rig Roadmap
@@ -502,17 +502,19 @@ Do not make destructive shortened replacements of long governing documents. Re-f
 Current `main` state:
 
 - Production Package 1 — validated.
-- Production Package 2 Runtime Revision 4 (`0.6.4`) — implemented / unvalidated in the current coherent update.
-- Revision 4 removes section-level priority framing from **What are you trying to do?**, gives Important Card treatment to the two foundational task cards, and reduces collapsed **Where You'll Use It** Rig relationships from four to two.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) — implemented / unvalidated in the current coherent update.
+- Revision 4 removed section-level priority framing from **What are you trying to do?**, gave Important Card treatment to the two foundational task cards, and reduced collapsed **Where You'll Use It** Rig relationships from four to two.
+- Revision 4 Microsoft Edge functional/regression blocks passed. Review identified two final UX remediations: collapse-context restoration and removal of automatic search focus.
+- Revision 5 implements both remediations without changing canonical Knot/Rig data, task mappings, search ranking, routing, or relationship ownership.
 
-## First Action Next Session — Verify and Validate Runtime Revision 4
+## First Action Next Session — Verify and Validate Runtime Revision 5
 
-1. Re-fetch the Revision 4 production/documentation files from GitHub `main` and verify exact blobs against the delivered package.
+1. Re-fetch the Revision 5 production/documentation files from GitHub `main` and verify exact blobs against the delivered package.
 2. Run `tools/validate_knot_package_2.py` against the verified repository state.
-3. In Microsoft Edge, verify the revised Knot landing visual hierarchy and the two-item **Where You'll Use It** collapsed state.
-4. Confirm Palomar expands from two visible Rigs to all 20 and **Show fewer** restores two.
-5. Complete Rig ↔ Knot navigation, search/task collections, Parent/Home, and Fish/Rig/Tackle regression checks.
-6. Update validation/current-state documentation only after the observed runtime results are known.
+3. In Microsoft Edge, expand Palomar **Where You'll Use It**, scroll deep in the expanded list, select **Show fewer**, and confirm the viewport returns to that relationship group while focus remains on the disclosure control.
+4. Open Fish, Rig, Knot, and scoped browse/search views and confirm no search field auto-focuses merely because the view rendered.
+5. Confirm the DevTools Console has no project-source errors.
+6. If all targeted remediation checks pass, update validation/current-state documentation, close Package 2 as **PASS / VALIDATED**, and proceed to Package 3.
 
 Only after Package 2 passes runtime validation should Production Package 3 — **Get Your Reel Ready** — begin.
 

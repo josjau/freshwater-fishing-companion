@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.13.1  
+**Document Revision:** 1.13.2  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-13
 
@@ -20,13 +20,16 @@
 - Runtime Revision 3 restored the established varied navigation-card accent bars and added the approved Core Knots priority treatment.
 - Added the canonical cross-domain `NAVIGATION-PAGE-STANDARD.md`: navigation pages use the Rig Guide baseline with Search first, optional special navigation second, and collection/category cards afterward.
 - Runtime Revision 4 removes section-level accent/priority framing from **What are you trying to do?**, applies Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, keeps the other two task cards normal, preserves varied accent bars and Core Knots emphasis, and reduces collapsed **Where You'll Use It** Rig relationships from four visible items to two.
+- Runtime Revision 5 adds collapse-context restoration so **Show fewer** returns the viewport to **Where You'll Use It** after a long Rig list contracts, while preserving disclosure-control focus and reduced-motion preferences.
+- Runtime Revision 5 removes automatic search-field focus on view render application-wide. Search fields now receive focus only through deliberate user interaction, preventing navigation from automatically opening mobile software keyboards.
 
 ### Validation Status
 
 - Production Package 1 repository/static/runtime validation: passed.
-- Production Package 2 Revision 3 GitHub blob integrity and static validator: passed before Revision 4.
-- Production Package 2 Revision 4 local static preflight: passed.
-- Production Package 2 Revision 4 GitHub blob verification: **pending post-push**.
+- Production Package 2 Revision 4 GitHub blob integrity: passed.
+- Production Package 2 Revision 4 Microsoft Edge functional/regression blocks: passed; two UX remediation items were identified during review and promoted to Revision 5 before package closeout.
+- Production Package 2 Revision 5 local static preflight: passed.
+- Production Package 2 Revision 5 GitHub blob verification and targeted Edge remediation validation: **pending post-push**.
 - Production Package 2 Microsoft Edge runtime validation: **not complete**.
 - Production Package 3 (**Get Your Reel Ready**) and Package 4 (static Knot SVG/media integration): not started.
 

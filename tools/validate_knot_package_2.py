@@ -78,6 +78,10 @@ for required_text in [
     '"Show fewer"',
     "Knots You'll Tie",
     "data-rig-knot-id",
+    'toggle.closest(".knot-at-a-glance__group")',
+    'window.requestAnimationFrame(() => {',
+    'usageGroup.scrollIntoView({',
+    '"(prefers-reduced-motion: reduce)"',
 ]:
     assert required_text in renderer, f"Missing Knot/Rig relationship UI support: {required_text}"
 
@@ -88,6 +92,18 @@ assert ".knot-usage-list > li[hidden] { display: none !important; }" in css, "Co
 assert "See all N rigs" in detail_approval
 assert "context-preserving return stack" in detail_approval
 assert "shows up to two Rig relationships initially" in detail_standard
+assert "restore the viewport to the relationship group" in detail_standard
+assert "Where You'll Use It" in detail_approval and "viewport" in detail_approval
+
+# Search fields must not take focus merely because a view rendered. The remaining
+# input.focus() call is intentionally inside the user-initiated clear-button path.
+assert "searchInput?.focus();" not in renderer, "Search still auto-focuses when a browse/search view renders"
+assert "searchInput.focus();" not in renderer, "Search still auto-focuses when a browse/search view renders"
+assert "autofocus" not in renderer.lower(), "Renderer contains an automatic-focus HTML attribute"
+assert "autofocus" not in index.lower(), "Application HTML contains an automatic-focus attribute"
+assert ".focus(" not in script, "Application coordinator contains unexpected programmatic focus"
+assert ".focus(" not in search, "Search utilities contain unexpected programmatic focus"
+assert "Do not automatically focus a search input" in navigation_standard
 
 # Knot landing revision checks.
 assert 'knot-reel-ready-title' not in renderer, "Standalone Get Your Reel Ready landing section remains"
@@ -206,7 +222,7 @@ assert data["palomarRigIds"][:2] == [
     "basic-bottom-rig",
 ]
 
-print("Production Package 2 runtime revision 4 validation passed.")
+print("Production Package 2 runtime revision 5 validation passed.")
 print(f"Active Knots: {data['knotCount']}")
 print(f"Core Knots: {len(data['coreIds'])}")
 print(f"Task definitions: {data['taskCount']}")

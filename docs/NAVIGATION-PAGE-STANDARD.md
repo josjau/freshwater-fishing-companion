@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Navigation Page Standard
 
-**Document Revision:** 1.0.1  
+**Document Revision:** 1.0.2  
 **Document Status:** Approved  
 **Implementation Status:** Current  
 **Last Updated:** 2026-08-13
@@ -44,6 +44,8 @@ Requirements:
 - Main-section search covers the implemented domain library.
 - Do not create a separate Search card when the inline search already provides primary search access.
 - Search results may expose individual records directly because the user has expressed a specific retrieval intent.
+- Do not automatically focus a search input when a page, collection, browse view, or card destination renders. Search focus must follow deliberate user interaction so mobile browsers do not open the software keyboard merely because navigation occurred.
+- User-initiated search interactions may retain focus when appropriate; for example, an explicit Clear Search action may return focus to the same search field so the user can continue typing.
 - Clearing search restores the normal landing-page hierarchy.
 
 Search behavior continues to follow `STYLE_GUIDE.md`.

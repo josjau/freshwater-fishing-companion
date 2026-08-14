@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Detail Page Standard
 
-**Document Revision:** 1.1.2  
+**Document Revision:** 1.1.3  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-13
 
@@ -59,6 +59,8 @@ Do not duplicate relationship ownership merely to support this navigation. Deriv
 For high-cardinality relationship lists, use progressive disclosure instead of forcing a large default scroll. The current Knot **Where You'll Use It** standard shows up to two Rig relationships initially and exposes the remainder through **See all N rigs** / **Show fewer**.
 
 Collapsed related items must be removed from the rendered visual layout until expanded. Author CSS must not override the collapsed/hidden state. Expanding must reveal the hidden items and change the control to **Show fewer**; collapsing must restore the initial item limit and the original **See all N rigs** label.
+
+When collapsing a long relationship list, restore the viewport to the relationship group after the shortened layout is applied so the user is not left stranded below content that no longer exists. Keep keyboard focus on the disclosure control and respect the user's reduced-motion preference when repositioning the viewport.
 
 This threshold is a domain/UI rule for the Knot relationship list, not a universal truncation rule for every list in the application.
 

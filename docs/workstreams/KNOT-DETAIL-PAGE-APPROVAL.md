@@ -1,7 +1,7 @@
 # Knot Detail Page Approval
 
 **Status:** Approved / Runtime Refinement  
-**Implementation Status:** Implemented / Unvalidated in Runtime Revision 4  
+**Implementation Status:** Implemented / Unvalidated in Runtime Revision 5  
 **Date:** 2026-08-13
 
 The Knot detail page should follow the established Rig detail-page workflow as closely as practical.
@@ -35,7 +35,7 @@ Approved flow:
 
 Production Package 2 runtime validation exposed a CSS interaction where list items marked `hidden` were still rendered because the Knot usage-list item rule explicitly set `display: grid`. The approved correction requires a scoped hidden-state rule that wins over the normal list-item display rule.
 
-Runtime Revision 2 corrected that hidden-state defect. Runtime Revision 4 deliberately reduces the default visible relationship threshold from four Rigs to two while preserving the same ordering, expansion/collapse behavior, and relationship ownership.
+Runtime Revision 2 corrected that hidden-state defect. Runtime Revision 4 deliberately reduced the default visible relationship threshold from four Rigs to two while preserving the same ordering and relationship ownership. Runtime Revision 5 refines collapse behavior so **Show fewer** restores the two-item state and then repositions the viewport to the **Where You'll Use It** relationship group. Keyboard focus remains on the disclosure control, and viewport motion respects the user's reduced-motion preference.
 
 # Related Rig Navigation
 

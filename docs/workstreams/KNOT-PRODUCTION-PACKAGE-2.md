@@ -1,8 +1,8 @@
 # Knot Production Package 2
 
-**Status:** Production Package 2 / Runtime Revision 4 Implemented / Unvalidated  
+**Status:** Production Package 2 / Runtime Revision 5 Implemented / Unvalidated  
 **Milestone:** Knots  
-**Implementation Version:** 0.6.4  
+**Implementation Version:** 0.6.5  
 **Date:** 2026-08-13
 
 # Purpose
@@ -184,7 +184,9 @@ Reason: Knot search has approved domain-specific normalization, task-intent voca
 
 **Original Package 2 role:** Knot landing/result/detail rendering plus existing Rig/Tackle renderers.  
 **Revision 4 build milestone:** `Knot Guide — Production Package 2 Revision 4`  
-**Revision 4 role:** preserves the compact task-first/collection landing model, removes section-level priority treatment from **What are you trying to do?**, applies the shared Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, retains the primary/Core treatment for **Core Knots**, and reduces the collapsed **Where You'll Use It** Rig list from four items to two.
+**Revision 4 role:** preserves the compact task-first/collection landing model, removes section-level priority treatment from **What are you trying to do?**, applies the shared Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, retains the primary/Core treatment for **Core Knots**, and reduces the collapsed **Where You'll Use It** Rig list from four items to two.  
+**Revision 5 build milestone:** `Knot Guide — Production Package 2 Revision 5`  
+**Revision 5 role:** preserves Revision 4 behavior while restoring the viewport to the **Where You'll Use It** relationship group after **Show fewer** collapses an expanded list and removing automatic search-field focus when shared browse/search views render. The search-focus correction applies application-wide through the shared renderer; deliberate user-initiated focus behavior remains intact.
 
 ## `forest-journal.css`
 
@@ -227,7 +229,9 @@ The 10 locked canonical records from Package 1 remain authoritative and unchange
 - **What are you trying to do?** does not carry a section-level priority hook/treatment,
 - **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** carry the shared Important Card hook/treatment,
 - **Core Knots** continues to carry both the shared primary-card and Knot Core hooks,
-- `NAVIGATION-PAGE-STANDARD.md` records the cross-domain Search -> special navigation -> collection-card hierarchy and varied-accent/priority rules.
+- `NAVIGATION-PAGE-STANDARD.md` records the cross-domain Search -> special navigation -> collection-card hierarchy and varied-accent/priority rules,
+- shared browse/search views do not auto-focus search fields on render,
+- **Show fewer** includes context restoration to the **Where You'll Use It** relationship group and respects reduced-motion preference.
 
 # Edge Runtime Validation After Upload
 
@@ -246,17 +250,18 @@ After upload and GitHub integrity verification:
 11. Open at least one Core and one Intermediate Knot detail.
 12. Confirm Parent/Home navigation works and explicit navigation opens at the top.
 13. On Palomar, confirm **Where You'll Use It** initially shows two Rigs and **See all 20 rigs**.
-14. Expand/collapse the Palomar Rig list and confirm **Show fewer** restores the two-item view.
-15. Open a Rig from Palomar and confirm the Rig opens at the top with Parent labeled for Palomar.
-16. Confirm that Rig shows **Knots You'll Tie**; open a Knot from there and use Parent to return to the Rig, then Parent again to return to the originating Knot.
-17. Confirm Verified References appear inside How to Tie It.
-18. Recheck Fish search, Rig Guide/search/detail, and Tackle reference/readiness for regressions.
+14. Expand the Palomar Rig list, scroll deep in the expanded list, then select **Show fewer**. Confirm the two-item view is restored and the viewport returns to the **Where You'll Use It** relationship group while keyboard focus remains on the disclosure control.
+15. Open Fish, Rig, Knot, and scoped browse/search views and confirm no search input receives focus merely because the view rendered.
+16. Open a Rig from Palomar and confirm the Rig opens at the top with Parent labeled for Palomar.
+17. Confirm that Rig shows **Knots You'll Tie**; open a Knot from there and use Parent to return to the Rig, then Parent again to return to the originating Knot.
+18. Confirm Verified References appear inside How to Tie It.
+19. Recheck Fish search, Rig Guide/search/detail, and Tackle reference/readiness for regressions.
 
 # Exact Resume Point
 
-If this file is present on GitHub `main`, confirm the deployed/source state is Runtime Revision 4 (`0.6.4`). Package 2 has **not** passed runtime validation.
+If this file is present on GitHub `main`, confirm the deployed/source state is Runtime Revision 5 (`0.6.5`). Package 2 has **not** passed final remediation validation.
 
-The exact next action is to verify the Revision 4 GitHub blobs and static validator results, then resume the full Microsoft Edge runtime checklist. Do not make additional source changes unless that validation exposes a genuine defect.
+Runtime Revision 4 completed the broader Microsoft Edge functional/regression checklist. The exact next action is to verify the Revision 5 GitHub blobs and static validator results, then run the two targeted remediation checks: **Show fewer** viewport restoration and application-wide no-auto-focus search behavior. If those checks pass with no project-source console errors, mark Production Package 2 **PASS / VALIDATED**.
 
 After Package 2 passes, proceed to **Production Package 3 — Get Your Reel Ready**.
 

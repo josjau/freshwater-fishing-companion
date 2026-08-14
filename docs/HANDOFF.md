@@ -1,15 +1,15 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.3.1  
+**Document Revision:** 1.3.2  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Latest Finalized Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0  
-**Active Workstream:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md` — Runtime Revision 4 (`0.6.4`) implemented / unvalidated  
+**Active Workstream:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md` — Runtime Revision 5 (`0.6.5`) implemented / unvalidated  
 **Active Milestone:** Knots  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Knots implementation in progress. Production Package 1 is validated. Production Package 2 Runtime Revision 4 (`0.6.4`) is the current implementation state after this coherent update: section-level accenting is removed from `What are you trying to do?`, `Attach Line to a Reel` and `Tie On a Hook, Swivel, or Lure` use Important Card treatment, and `Where You'll Use It` shows two Rigs before progressive disclosure. GitHub blob verification and Microsoft Edge runtime/regression validation remain required.  
+**Session Status:** Knots implementation in progress. Production Package 1 is validated. Production Package 2 Runtime Revision 4 completed the Microsoft Edge functional/regression checklist, which exposed two final UX remediation items. Runtime Revision 5 (`0.6.5`) is the current coherent update: collapsing an expanded `Where You'll Use It` list restores the viewport to that relationship group, and search fields no longer auto-focus on view render anywhere in the application. GitHub blob verification, static validation on `main`, and targeted Microsoft Edge confirmation of these two fixes remain required.  
 **Last Updated:** 2026-08-13
 
 # 1. Start Here
@@ -84,7 +84,7 @@ Planning, research, and canonical content lock are complete.
 Current production state:
 
 - Production Package 1 — **Validated**: 10 canonical Knots, four Core IDs, all 20 Rigs audited, 31 real tied connections.
-- Production Package 2 Runtime Revision 4 (`0.6.4`) — **Implemented / Unvalidated** in the current coherent update; local static preflight passed.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) — **Implemented / Unvalidated** in the current coherent update; Revision 4 functional/regression checks passed and the two final UX remediation items are implemented here.
 - Post-push GitHub blob verification and Microsoft Edge runtime/regression validation are still required before Package 2 can be validated.
 
 Controlling records:
@@ -299,16 +299,16 @@ Animations should be user-controlled, non-autoplaying, reduced-motion aware, and
 
 **Do not begin Package 3 or Fish Guide. Production Package 2 remains open.**
 
-The current coherent update is Runtime Revision 4 (`0.6.4`). Production Package 2 remains unvalidated.
+The current coherent update is Runtime Revision 5 (`0.6.5`). Production Package 2 remains unvalidated until the final remediation checks pass.
 
 Resume in this order:
 
-1. Re-fetch the Revision 4 production/documentation files from GitHub `main` and verify their exact blobs against the delivered package.
+1. Re-fetch the Revision 5 production/documentation files from GitHub `main` and verify their exact blobs against the delivered package.
 2. Run `tools/validate_knot_package_2.py` against the verified repository state.
-3. In Microsoft Edge, confirm the Knot landing uses varied accent bars, no section-level accent frame around **What are you trying to do?**, Important Card treatment on **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, and preserved **Core Knots** treatment.
-4. On Palomar, confirm **Where You'll Use It** shows two Rigs initially, **See all 20 rigs** expands the full list, and **Show fewer** returns to two.
-5. Complete the remaining Package 2 Edge validation checklist, including Rig ↔ Knot navigation, search, task collections, Parent/Home behavior, and Fish/Rig/Tackle regressions.
-6. Record validation results and only then decide whether Package 2 can be marked Validated.
+3. Hard-refresh the deployed app in Microsoft Edge with DevTools Console open.
+4. On Palomar, expand **Where You'll Use It** to all 20 Rigs, scroll deep in the expanded list, then select **Show fewer**. Confirm the list returns to two and the viewport returns to the **Where You'll Use It** relationship group without moving keyboard focus away from the disclosure control.
+5. Open Fish, Rig, Knot, and scoped browse/search views. Confirm no search input receives focus merely because the view opened and no mobile software keyboard would be triggered without deliberate search interaction.
+6. If those targeted checks and the console pass, record Production Package 2 as **PASS / VALIDATED** and proceed to Package 3.
 
 Only after Package 2 passes runtime validation should Production Package 3 — **Get Your Reel Ready** — begin.
 

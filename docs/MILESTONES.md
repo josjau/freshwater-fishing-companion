@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 2.2.1  
+**Document Revision:** 2.2.2  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-13
 
@@ -276,9 +276,10 @@ Current state:
 
 - Planning, research validation, and canonical content lock are complete.
 - Production Package 1 is **Validated**: 10 active canonical Knots, 6 Beginner / 4 Intermediate, four approved Core IDs, all 20 active Rigs audited, and 31 real tied `knotApplications` connections.
-- Production Package 2 Runtime Revision 4 (`0.6.4`) is **Implemented / Unvalidated** in the current coherent update; local static preflight passed and post-push GitHub verification remains required.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) is **Implemented / Unvalidated** in the current coherent update; Runtime Revision 4 completed the Microsoft Edge functional/regression checklist and exposed two final UX remediation items.
 - Package 2 includes task-first Knot navigation, deterministic Knot search, text detail pages, progressive disclosure for long Rig usage lists, and context-preserving Rig ↔ Knot navigation.
-- Revision 4 removes section-level accenting from **What are you trying to do?**, applies Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, preserves normal treatment for the other two task cards, varied accent bars, and Core Knots priority treatment, and reduces collapsed **Where You'll Use It** from four visible Rigs to two.
+- Revision 4 removed section-level accenting from **What are you trying to do?**, applied Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, preserved normal treatment for the other two task cards, varied accent bars, and Core Knots priority treatment, and reduced collapsed **Where You'll Use It** from four visible Rigs to two.
+- Revision 5 restores the viewport to the **Where You'll Use It** relationship group after **Show fewer** collapses a long list and removes automatic search-field focus on view render application-wide so navigation does not summon a mobile software keyboard.
 - Package 3 (**Get Your Reel Ready**) and Package 4 (ten static Knot SVGs/media integration) have not begun.
 
 See:
@@ -313,10 +314,11 @@ The active milestone remains **Knots**. Production Package 2 is not finalized.
 
 Exact next segment:
 
-1. Push the coherent Runtime Revision 4 package through GitHub Desktop.
-2. Re-fetch and verify the exact Revision 4 GitHub blobs.
+1. Push the coherent Runtime Revision 5 remediation package through GitHub Desktop.
+2. Re-fetch and verify the exact Revision 5 GitHub blobs.
 3. Run the Package 2 static validator against the verified repository state.
-4. Complete the Microsoft Edge runtime/regression checklist, including the two-item **Where You'll Use It** collapsed state and Important Card hierarchy.
+4. In Microsoft Edge, confirm **Show fewer** returns the viewport to **Where You'll Use It** and confirm Fish/Rig/Knot/scoped search views do not auto-focus their search fields on navigation.
+5. If the targeted remediation checks and console pass, finalize Production Package 2 and proceed to Package 3.
 5. Correct only defects exposed by validation; otherwise mark Package 2 Validated and close its documentation.
 6. Only after Package 2 is validated may Package 3 — **Get Your Reel Ready** — begin.
 
