@@ -1,10 +1,11 @@
 # Knot Production Package 3 — Block 3.7
 
-**Status:** Runtime Steps 1–4 PASS / Step 5 Functional PASS / Workflow Palette Correction Implemented / Final Visual Validation Pending  
+**Status:** PASS / VALIDATED  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.7 — Reel-Specific Spooling Instructions  
 **Implementation Date:** 2026-08-14  
+**Validation Date:** 2026-08-14  
 **Target Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
 
 # Purpose
@@ -229,14 +230,14 @@ Normal Knot landing remains intentionally unwired to Reel Setup.
 
 # Runtime Validation Progress — 2026-08-14
 
-Microsoft Edge runtime validation completed before the UX cleanup request:
+Microsoft Edge runtime validation sequence completed across the Block 3.7 implementation and correction cycles:
 
 - **Step 1 — Block 3.6 Regression Boundary: PASS**
 - **Step 2 — Spinning Reel: PASS**
 - **Step 3 — Spincast Reel: PASS**
 - **Step 4 — Baitcasting Reel: PASS**
 
-Runtime Steps 1–4 are PASS. Step 5 functional/state/navigation checks also pass, but final visual validation is paused for one workflow-card palette correction: the emphasized cards were all forced to the Knot accent instead of inheriting the existing Forest Journal card palette.
+Runtime Steps 1–4 are PASS. Step 5 functional/state/navigation checks are PASS. The final workflow-card palette correction was uploaded, GitHub-integrity verified, and visually confirmed in Microsoft Edge: emphasized workflow cards retain the approved compact hierarchy while inheriting the existing multi-color Forest Journal palette.
 
 # Package 3 Workflow-Card Cleanup — Implemented
 
@@ -311,7 +312,7 @@ The targeted correction:
 - therefore preserves the existing positional Forest Journal card palette instead of making every workflow card the same color,
 - does not alter card height, padding, JavaScript workflow markers, Reel Setup state, or Decision Knowledge.
 
-The Package 3 validator now rejects a workflow-level forced accent and verifies that all nine existing positional palette assignments remain available. Final runtime validation only needs to confirm that emphasized workflow cards visibly vary across the established palette while retaining the approved hierarchy.
+The Package 3 validator rejects a workflow-level forced accent and verifies that all nine existing positional palette assignments remain available. Final Microsoft Edge validation confirmed that emphasized workflow cards visibly vary across the established palette while retaining the approved hierarchy.
 
 ## Spooling Instruction Emphasis
 
@@ -329,11 +330,11 @@ Emphasis calls attention to items such as:
 
 Equipment-reading guidance remains compatible with the same renderer and continues to use plain text where no explicit emphasis metadata is defined.
 
-Runtime validation remains paused until this correction is uploaded and integrity-verified. After upload, validation resumes with the final **Step 5 — State / Navigation / Regression** pass, which must include visual confirmation of the new card hierarchy and spooling emphasis.
+Runtime validation is complete. The final Step 5 pass confirmed the new card hierarchy, palette behavior, and selective spooling-instruction emphasis with no regression of the previously validated workflow behavior.
 
 # Runtime Validation Order
 
-Block 3.7 is **functionally runtime validated through Step 5**, with one final visual palette check pending. After this targeted palette correction is uploaded and GitHub-integrity verified, confirm that workflow emphasis uses the existing multi-color card palette and that no other Step 5 behavior regressed.
+Block 3.7 is **PASS / VALIDATED**. All five runtime steps passed in Microsoft Edge, including the final workflow-card hierarchy, multi-color palette, and selective instruction-emphasis checks.
 
 ## Step 1 — Block 3.6 Regression Boundary
 
@@ -374,28 +375,47 @@ Confirm:
 - winding tension is clearly distinguished from casting spool-tension/braking controls,
 - fill guidance renders.
 
-## Step 5 — State / Navigation / Regression
+## Step 5 — State / Navigation / Regression — PASS
 
-Confirm:
+Microsoft Edge validation confirmed:
 
 - no new selection appears in `SELECTED CHOICES` merely for viewing spooling instructions,
 - Back returns to Spool Connection Plan without clearing selections,
-- the redundant upstream-change cards listed in the staged Package 3 cleanup are absent,
+- the redundant upstream-change cards listed in the Package 3 cleanup are absent,
 - **My Reel & Rod Support This Setup** is the first option on Check Your Reel & Rod,
+- **Next — Spool the Reel** is the first option on Spool Connection Plan,
+- progression/branch cards receive the approved compact special treatment without increased card height,
+- emphasized workflow cards inherit the existing multi-color Forest Journal palette rather than sharing one forced accent,
+- key Spool Your … Reel phrases receive selective bold emphasis without bolding entire paragraphs,
 - Start Over clears Reel Setup state,
 - Home clears Reel Setup state,
 - **Next — Leader Setup** is visibly unavailable,
 - normal Knot landing remains unchanged/unwired,
 - no application-source JavaScript errors appear.
 
+# Final GitHub / Runtime Evidence
+
+Final runtime-validated GitHub `main` commit before documentation closeout:
+
+`074400b2826da6f2f788b66cdfd8c1fb28f910eb`
+
+Final runtime-validated production / validation blobs:
+
+```text
+356ac9ce0451ef6b9b82e010f998e03feed6aac3  script.js
+499e0416830e9615873c3950b2bad7b08da7ca1f  data/reel-guidance.js
+07de0a2d71ac14dae3a5752a999dd97c27632360  forest-journal.css
+04dcdf7a6c07575f43bbb4d5fb711383910d6496  tools/validate_knot_package_3.py
+```
+
+Microsoft Edge runtime validation on 2026-08-14 passed Steps 1–5, including the final workflow-card palette check.
+
 # Exact Resume Point
 
-Block 3.7 runtime Steps 1–4 are **PASS**, and Step 5 functionality/state/navigation checks are **PASS**. The only outstanding item is final visual confirmation that emphasized workflow cards inherit the existing card palette instead of sharing one Knot accent.
+Block 3.7 — **PASS / VALIDATED**.
 
-Next actions:
+The deferred scoped-search UX issue in this workstream remains a **Parking Lot** item for the later global/deeper-search work; it is not resolved by Block 3.7.
 
-1. apply the Block 3.7 workflow-palette correction ZIP through GitHub Desktop,
-2. commit and push,
-3. re-fetch GitHub `main` and verify the correction blobs,
-4. confirm that emphasized progression/branch cards retain the approved compact hierarchy while visibly inheriting the existing multi-color Forest Journal palette,
-5. if that visual check passes, close Block 3.7 as **PASS / VALIDATED** and reconcile aggregate Package 3 documentation, including preservation of the deferred scoped-search UX issue for future global-search work.
+The next approved Package 3 capability is **optional Leader Setup**. The current approved records do not assign that capability a block number, so the block number should be assigned only when the next Package 3 block is formally opened from the latest verified documentation. After Leader Setup, Package 3 still requires the final **Reel Ready** checkpoint / Rig Guide handoff and later integration of the normal **Attach Line to a Reel** entry.
+
+Do not begin the next Package 3 implementation block until this Block 3.7 documentation closeout is uploaded and GitHub-integrity verified.

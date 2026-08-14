@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-**Status:** In Progress — Blocks 3.2 through 3.6 PASS / VALIDATED; Next Block 3.7  
+**Status:** In Progress — Blocks 3.2 through 3.7 PASS / VALIDATED; Next Capability: Leader Setup  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -119,7 +119,7 @@ Treat this as the baseline for later Package 3 blocks unless runtime testing ide
 
 ## Reel Setup Navigation — IMPLEMENTED / VALIDATED
 
-Final navigation behavior through Block 3.6:
+Final navigation behavior through Block 3.7:
 
 - first Reel Setup screen: `← Knots` plus `Home`,
 - later screens: step-aware previous destination plus `Home`,
@@ -128,7 +128,23 @@ Final navigation behavior through Block 3.6:
 - Home exits Reel Setup and clears transient state,
 - navigation remains floating/sticky while scrolling,
 - the navigation remains separate from Selected Choices,
+- redundant upstream-change cards are removed from screens where the sticky previous-step control already provides the normal review/backtracking path,
 - desktop and narrow/mobile layouts remain usable without content obstruction.
+
+## Workflow Card Hierarchy — IMPLEMENTED / VALIDATED
+
+Reel Setup progression and genuine branch-choice cards receive a compact `dashboard-card--workflow` treatment that preserves normal card dimensions while making the primary workflow path easier to scan.
+
+Validated visual rules:
+
+- no added workflow-card height or padding,
+- stronger border/surface/side-rail emphasis,
+- inherited Forest Journal positional card palette rather than a single forced workflow color,
+- help, reset, exit, and ordinary reference cards remain visually secondary unless they are themselves a genuine workflow branch.
+
+## Spooling Instruction Emphasis — IMPLEMENTED / VALIDATED
+
+The three reel-specific spooling profiles use structured emphasis metadata so key routing, winding, compatibility, fill-limit, and manufacturer-override phrases render selectively in bold. Decision Knowledge remains plain structured text; HTML is not embedded in the data strings.
 
 # Block 3.2 — Foundation
 
@@ -340,9 +356,69 @@ Authoritative block closeout record:
 
 `docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.6.md`
 
+# Block 3.7 — Reel-Specific Spooling Instructions
+
+**Status:** PASS / VALIDATED
+
+Block 3.7 extended the internal Reel Setup workflow from **Spool Connection Plan** into reel-specific physical line-loading guidance for:
+
+- Spinning reels,
+- Spincast reels,
+- Baitcasting reels.
+
+Implemented / validated behavior includes:
+
+- reel-specific line routing before any connection that would trap the line,
+- spinning-reel bail order and monofilament/fluorocarbon twist check,
+- spincast front-cover routing, braid compatibility warning, slow/light-tension winding, and hidden-spool inspection,
+- baitcaster line-guide routing, upright/top-feed filler-spool guidance, firm even packing, and explicit separation of incoming-line winding pressure from casting spool-tension/braking controls,
+- conservative approximately `1/8 inch` spool-fill guidance with manufacturer/model override language,
+- replacement-line reminder without adding another state field,
+- enabled **Next — Spool the Reel** progression,
+- disabled **Next — Leader Setup** checkpoint,
+- selective strong-text emphasis for key spooling instructions,
+- compact progression/branch card hierarchy using the existing Forest Journal multi-color palette,
+- removal of redundant upstream-change cards after sticky previous-step navigation made them unnecessary,
+- **Next — Spool the Reel** promoted to the first Spool Connection Plan option,
+- **My Reel & Rod Support This Setup** promoted to the first Check Your Reel & Rod option,
+- canonical Arbor Knot / Double Uni Knot handoffs preserved,
+- direct-braid guard preserved,
+- exact Reel Setup state restoration from Knot detail preserved,
+- no new persisted or transient selection field for viewing spooling instructions.
+
+Final runtime-validated GitHub `main` commit before documentation closeout:
+
+`074400b2826da6f2f788b66cdfd8c1fb28f910eb`
+
+Final runtime-validated blobs:
+
+```text
+356ac9ce0451ef6b9b82e010f998e03feed6aac3  script.js
+499e0416830e9615873c3950b2bad7b08da7ca1f  data/reel-guidance.js
+07de0a2d71ac14dae3a5752a999dd97c27632360  forest-journal.css
+04dcdf7a6c07575f43bbb4d5fb711383910d6496  tools/validate_knot_package_3.py
+```
+
+Microsoft Edge validation on 2026-08-14 passed:
+
+- Block 3.6 regression boundary,
+- Spinning Reel,
+- Spincast Reel,
+- Baitcasting Reel,
+- state/navigation/regression behavior,
+- workflow-card hierarchy,
+- multi-color workflow-card palette inheritance,
+- selective key-instruction emphasis,
+- normal Knot landing remains intentionally unwired,
+- no application-source JavaScript errors.
+
+Authoritative block closeout record:
+
+`docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.7.md`
+
 # Current Transient Reel Setup State
 
-Through Block 3.6, Reel Setup transient state includes:
+Through Block 3.7, Reel Setup transient selection state includes:
 
 ```text
 entryMode
@@ -353,7 +429,7 @@ equipmentCheck
 backingChoice
 ```
 
-The state remains session-only JavaScript state.
+Workflow position is also held in transient `stepId`. The entire Reel Setup state remains session-only JavaScript state.
 
 State-clearing principle:
 
@@ -373,24 +449,32 @@ Package 3 continues to preserve the approved ownership model:
 
 # Current Integration Boundary
 
-The normal Knot landing remains intentionally unwired to Reel Setup through Block 3.6.
+The normal Knot landing remains intentionally unwired to Reel Setup through Block 3.7.
 
 Do not wire **Attach Line to a Reel** to the internal Reel Setup workflow until the approved later Package 3 integration block.
 
-# Next Build Block — 3.7
+# Deferred Search UX Issue — Parking Lot
 
-**Block 3.7 — Reel-Specific Spooling Instructions**
+Preserve this for the later global/deeper-search workstream:
 
-Block 3.7 should begin from the latest verified GitHub `main` state and preserve every validated behavior through Block 3.6.
+- top-level Rig and Knot search examples operate against the full corresponding library,
+- collection-level searches such as **Core Rigs** or **Core Knots** correctly remain scoped to that collection,
+- generic placeholder/help examples can nevertheless suggest terms that cannot match inside the active collection, making valid global terms appear broken.
 
-Planned scope:
+Future direction:
 
-- reel-specific line routing,
-- winding direction where relevant,
-- winding tension,
-- spool-fill guidance.
+1. make collection-level search examples collection-aware, and
+2. provide an explicit search-scope cue plus a clear route to broader/global search.
 
-Block 3.7 should not duplicate canonical Knot instructions or broaden into casting, backlash training, lure-specific optimization, or other excluded V1 scope.
+This issue affects both Rigs and Knots. It is intentionally deferred and must not be lost when Package 3 advances.
+
+# Next Package 3 Capability — Leader Setup
+
+The next approved V1 capability after Block 3.7 is **optional Leader Setup**.
+
+The current approved Package 3 records do **not** assign this capability a block number. Do not invent one in advance; assign the next block number only when the block is formally opened from the latest verified GitHub documentation.
+
+Leader Setup must preserve every validated behavior through Block 3.7 and must not broaden into excluded casting/backlash/lure-optimization scope. After Leader Setup, Package 3 still requires the final **Reel Ready** checkpoint / Rig Guide handoff and later integration of the normal **Attach Line to a Reel** task into the completed internal Reel Setup workflow.
 
 # Exact Resume Point
 
@@ -400,12 +484,15 @@ Production Package 3 is active.
 **Block 3.3 — Functional PASS; follow-on Selected Choices refinements completed and validated**  
 **Block 3.4 — PASS / VALIDATED**  
 **Block 3.5 — PASS / VALIDATED**  
-**Block 3.6 — PASS / VALIDATED**
+**Block 3.6 — PASS / VALIDATED**  
+**Block 3.7 — PASS / VALIDATED**
 
-Next:
+Next capability:
 
-**Begin Block 3.7 — Reel-Specific Spooling Instructions.**
+**Optional Leader Setup** — block number intentionally not assigned until the next Package 3 block is formally opened.
 
-Before editing any existing production source file for Block 3.7, re-fetch its latest authoritative GitHub `main` contents.
+Before editing any existing production source file for the next Package 3 block, re-fetch its latest authoritative GitHub `main` contents.
+
+Carry forward the deferred Rig/Knot scoped-search UX issue for the later global/deeper-search workstream.
 
 Do not begin Production Package 4 Knot media or Fish Guide while Package 3 remains open.
