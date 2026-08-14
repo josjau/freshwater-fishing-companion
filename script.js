@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knots — Production Package 3 Block 3.4"
+    milestone: "Knots — Production Package 3 Block 3.5"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -557,7 +557,8 @@ function createInitialReelSetupState() {
         entryMode: null,
         reelType: null,
         lineType: null,
-        targetFish: null
+        targetFish: null,
+        equipmentCheck: null
     };
 }
 
@@ -610,6 +611,36 @@ function renderReelSetupView(appMain) {
         return;
     }
 
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.REEL_IDENTIFICATION_HELP) {
+        renderReelSetupReelIdentificationHelpStep(appMain);
+        return;
+    }
+
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK) {
+        renderReelSetupEquipmentCheckStep(appMain);
+        return;
+    }
+
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.READ_REEL) {
+        renderReelSetupReadReelStep(appMain);
+        return;
+    }
+
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.READ_ROD) {
+        renderReelSetupReadRodStep(appMain);
+        return;
+    }
+
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH) {
+        renderReelSetupEquipmentMismatchStep(appMain);
+        return;
+    }
+
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE) {
+        renderReelSetupEquipmentCompleteStep(appMain);
+        return;
+    }
+
     renderReelSetupStartStep(appMain);
 }
 
@@ -643,11 +674,9 @@ function renderReelSetupSelectedChoices(appMain) {
     const selectedChoices = document.createElement("div");
     selectedChoices.dataset.reelSetupSelectedChoices = "true";
     selectedChoices.style.marginBottom = "var(--space-4)";
-    selectedChoices.style.padding = "var(--space-3) var(--space-4)";
-    selectedChoices.style.border = "1px solid color-mix(in srgb, var(--accent-knots) 46%, var(--border))";
-    selectedChoices.style.borderLeft = "5px solid var(--accent-knots)";
-    selectedChoices.style.borderRadius = "var(--radius-small)";
-    selectedChoices.style.background = "color-mix(in srgb, var(--accent-knots) 12%, var(--surface))";
+    selectedChoices.style.padding = "var(--space-3) 0";
+    selectedChoices.style.borderTop = "1px solid var(--border)";
+    selectedChoices.style.borderBottom = "1px solid var(--border)";
 
     const label = document.createElement("span");
     label.textContent = "Selected choices";
@@ -663,8 +692,10 @@ function renderReelSetupSelectedChoices(appMain) {
     values.textContent = labels.join(" · ");
     values.style.display = "block";
     values.style.color = "color-mix(in srgb, var(--accent-knots) 72%, white 28%)";
-    values.style.fontSize = "1.03rem";
-    values.style.lineHeight = "1.4";
+    values.style.fontSize = ".78rem";
+    values.style.fontWeight = "800";
+    values.style.lineHeight = "1.45";
+    values.style.letterSpacing = ".015em";
     values.style.overflowWrap = "anywhere";
 
     selectedChoices.append(label, values);
@@ -674,6 +705,37 @@ function renderReelSetupSelectedChoices(appMain) {
 function renderReelSetupStep(appMain, config) {
     renderView(appMain, config);
     renderReelSetupSelectedChoices(appMain);
+}
+
+function renderReelSetupGuidanceList(appMain, guidance) {
+    const cardGrid = appMain.querySelector("[data-view-card-grid]");
+    if (!cardGrid || !guidance || !Array.isArray(guidance.items)) return;
+
+    const section = document.createElement("section");
+    section.dataset.reelSetupGuidance = "true";
+    section.style.marginBottom = "var(--space-4)";
+    section.style.padding = "var(--space-3) 0 var(--space-4)";
+    section.style.borderBottom = "1px solid var(--border)";
+
+    const heading = document.createElement("h3");
+    heading.textContent = guidance.title;
+    heading.style.marginBottom = "var(--space-2)";
+
+    const summary = document.createElement("p");
+    summary.textContent = guidance.summary;
+    summary.style.color = "var(--text-muted)";
+    summary.style.marginBottom = "var(--space-3)";
+
+    const list = document.createElement("ul");
+    list.className = "detail-list";
+    guidance.items.forEach((item) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = item;
+        list.append(listItem);
+    });
+
+    section.append(heading, summary, list);
+    cardGrid.parentNode.insertBefore(section, cardGrid);
 }
 
 function renderReelSetupStartStep(appMain) {
@@ -716,11 +778,60 @@ function renderReelSetupReelTypeStep(appMain) {
         })),
         onCardSelect: (reelType) => {
             if (!getReelSetupOption(REEL_TYPE_OPTIONS, reelType)) return;
-            reelSetupState.reelType = reelType;
+
             reelSetupState.lineType = null;
             reelSetupState.targetFish = null;
+            reelSetupState.equipmentCheck = null;
+
+            if (reelType === "not-sure") {
+                reelSetupState.reelType = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_IDENTIFICATION_HELP;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
+            reelSetupState.reelType = reelType;
             reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
             showView(ROUTES.REEL_SETUP);
+        }
+    });
+}
+
+function renderReelSetupReelIdentificationHelpStep(appMain) {
+    const actualReelTypes = REEL_TYPE_OPTIONS.filter((option) => option.id !== "not-sure");
+
+    renderReelSetupStep(appMain, {
+        headingId: "reel-setup-title",
+        title: "Which Reel Matches Yours?",
+        description: "Use the physical layout of the reel rather than guessing from brand or size number.",
+        cards: [
+            ...actualReelTypes.map((option) => ({
+                ...option,
+                isAvailable: true
+            })),
+            {
+                id: "back-to-reel-types",
+                title: "Back to Reel Choices",
+                description: "Return to the reel-type list without choosing a reel.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            const reelTypeOption = getReelSetupOption(actualReelTypes, actionId);
+            if (reelTypeOption) {
+                reelSetupState.reelType = reelTypeOption.id;
+                reelSetupState.lineType = null;
+                reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
+            if (actionId === "back-to-reel-types") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
+                showView(ROUTES.REEL_SETUP);
+            }
         }
     });
 }
@@ -741,6 +852,7 @@ function selectReelSetupLineType(lineTypeId) {
     if (!getReelLineType(lineTypeId)) return false;
     reelSetupState.lineType = lineTypeId;
     reelSetupState.targetFish = null;
+    reelSetupState.equipmentCheck = null;
     reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION_COMPLETE;
     showView(ROUTES.REEL_SETUP);
     return true;
@@ -973,6 +1085,7 @@ function renderReelSetupLineSelectionComplete(appMain) {
             if (actionId === "change-line-type") {
                 reelSetupState.lineType = null;
                 reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
                 showView(ROUTES.REEL_SETUP);
                 return;
@@ -982,6 +1095,7 @@ function renderReelSetupLineSelectionComplete(appMain) {
                 reelSetupState.reelType = null;
                 reelSetupState.lineType = null;
                 reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
                 showView(ROUTES.REEL_SETUP);
                 return;
@@ -1039,6 +1153,7 @@ function renderReelSetupTargetFishStep(appMain) {
         onCardSelect: (targetFishId) => {
             if (!getReelSetupTargetFish(targetFishId)) return;
             reelSetupState.targetFish = targetFishId;
+            reelSetupState.equipmentCheck = null;
             reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_GUIDANCE;
             showView(ROUTES.REEL_SETUP);
         }
@@ -1051,6 +1166,7 @@ function renderReelSetupTargetGuidanceStep(appMain) {
 
     if (!lineType || !targetProfile) {
         reelSetupState.targetFish = null;
+        reelSetupState.equipmentCheck = null;
         reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
         renderReelSetupTargetFishStep(appMain);
         return;
@@ -1062,10 +1178,10 @@ function renderReelSetupTargetGuidanceStep(appMain) {
         description: getReelTargetStrengthGuidance(targetProfile, lineType),
         cards: [
             {
-                id: "equipment-check-next",
+                id: "continue-to-equipment-check",
                 title: "Next — Check Reel & Rod Compatibility",
-                description: "The next build block will compare this starting guidance with the line-capacity and rod ratings on your actual equipment.",
-                isAvailable: false
+                description: "Compare this starting guidance with the line-capacity and line-rating markings on your actual equipment.",
+                isAvailable: true
             },
             {
                 id: "change-target-fish",
@@ -1093,8 +1209,16 @@ function renderReelSetupTargetGuidanceStep(appMain) {
             }
         ],
         onCardSelect: (actionId) => {
+            if (actionId === "continue-to-equipment-check") {
+                reelSetupState.equipmentCheck = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
             if (actionId === "change-target-fish") {
                 reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
                 showView(ROUTES.REEL_SETUP);
                 return;
@@ -1103,6 +1227,7 @@ function renderReelSetupTargetGuidanceStep(appMain) {
             if (actionId === "change-line-type") {
                 reelSetupState.lineType = null;
                 reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
                 showView(ROUTES.REEL_SETUP);
                 return;
@@ -1113,6 +1238,408 @@ function renderReelSetupTargetGuidanceStep(appMain) {
                 return;
             }
 
+            if (actionId === "return-to-knots") {
+                resetReelSetupState();
+                showView(ROUTES.KNOTS);
+            }
+        }
+    });
+}
+
+function getReelEquipmentCheckDescription(targetProfile, lineType) {
+    if (!targetProfile || !lineType) return "";
+
+    if (lineType.id === "braid") {
+        return `For ${targetProfile.title}, keep ${targetProfile.recommendedRange} as a fish-strength reference. ` +
+            "Choose an actual braid test only after confirming the reel's Braid capacity and the rod's line rating.";
+    }
+
+    return `Start by checking whether ${targetProfile.easyChoice} ${lineType.title.toLowerCase()} fits both ` +
+        "the reel's capacity guidance and the rod's line rating. If it does not, use the markings on your equipment rather than forcing the starting recommendation.";
+}
+
+function getReelEquipmentConfirmationDescription(targetProfile, lineType) {
+    if (!targetProfile || !lineType) return "";
+
+    if (lineType.id === "braid") {
+        return "You confirmed that the braid size you intend to use fits your reel's Braid capacity and your rod's line rating. The next step decides whether backing is needed before the main line is attached to the spool.";
+    }
+
+    return `You confirmed that your ${lineType.title.toLowerCase()} choice for ${targetProfile.title} fits both ` +
+        "your reel's capacity guidance and your rod's line rating. The next step decides whether backing is needed before the main line is attached to the spool.";
+}
+
+function renderReelSetupEquipmentCheckStep(appMain) {
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
+    const lineType = getReelLineType(reelSetupState.lineType);
+    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
+
+    if (!reelType) {
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_IDENTIFICATION_HELP;
+        renderReelSetupReelIdentificationHelpStep(appMain);
+        return;
+    }
+
+    if (!lineType || !targetProfile) {
+        reelSetupState.equipmentCheck = null;
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
+        renderReelSetupTargetFishStep(appMain);
+        return;
+    }
+
+    renderReelSetupStep(appMain, {
+        headingId: "reel-setup-title",
+        title: "Check Your Reel & Rod",
+        description: getReelEquipmentCheckDescription(targetProfile, lineType),
+        cards: [
+            {
+                id: "read-reel",
+                title: "How to Read Your Reel",
+                description: "Learn how pound-test, yards, meters, diameter, Mono/Braid labels, and reel size numbers differ.",
+                isAvailable: true
+            },
+            {
+                id: "read-rod",
+                title: "How to Read Your Rod",
+                description: "Find the rod's line rating and keep it separate from the lure-weight rating.",
+                isAvailable: true
+            },
+            {
+                id: "confirm-equipment-match",
+                title: "My Reel & Rod Support This Setup",
+                description: "Continue only after the intended line fits both pieces of equipment.",
+                isAvailable: true
+            },
+            {
+                id: "equipment-mismatch",
+                title: "Something Doesn't Match / I'm Not Sure",
+                description: "Pause before spooling and use the markings to adjust the line choice or equipment.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            if (actionId === "read-reel") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
+            if (actionId === "read-rod") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_ROD;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
+            if (actionId === "confirm-equipment-match") {
+                reelSetupState.equipmentCheck = "compatible";
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
+            if (actionId === "equipment-mismatch") {
+                reelSetupState.equipmentCheck = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH;
+                showView(ROUTES.REEL_SETUP);
+            }
+        }
+    });
+}
+
+function renderReelSetupReadReelStep(appMain) {
+    renderReelSetupStep(appMain, {
+        headingId: "reel-setup-title",
+        title: "How to Read Your Reel",
+        description: "Use the printed labels or the exact model's official specification. Capacity formats vary, so read the units before interpreting the numbers.",
+        cards: [
+            {
+                id: "back-to-equipment-check",
+                title: "Back to Equipment Check",
+                description: "Return and compare your reel and rod against the selected line system.",
+                isAvailable: true
+            },
+            {
+                id: "read-rod",
+                title: "How to Read Your Rod",
+                description: "Review the rod line-rating markings next.",
+                isAvailable: true
+            },
+            {
+                id: "equipment-mismatch",
+                title: "Something Doesn't Match / I'm Not Sure",
+                description: "Use the adjustment path before spooling if the reel guidance does not support the intended line.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            if (actionId === "back-to-equipment-check") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "read-rod") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_ROD;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "equipment-mismatch") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH;
+                showView(ROUTES.REEL_SETUP);
+            }
+        }
+    });
+
+    renderReelSetupGuidanceList(appMain, REEL_EQUIPMENT_GUIDANCE.reel);
+}
+
+function renderReelSetupReadRodStep(appMain) {
+    renderReelSetupStep(appMain, {
+        headingId: "reel-setup-title",
+        title: "How to Read Your Rod",
+        description: "The rod's line rating is a separate equipment limit from the reel's line-capacity marking.",
+        cards: [
+            {
+                id: "back-to-equipment-check",
+                title: "Back to Equipment Check",
+                description: "Return and compare your reel and rod against the selected line system.",
+                isAvailable: true
+            },
+            {
+                id: "read-reel",
+                title: "How to Read Your Reel",
+                description: "Review the reel capacity markings next.",
+                isAvailable: true
+            },
+            {
+                id: "equipment-mismatch",
+                title: "Something Doesn't Match / I'm Not Sure",
+                description: "Use the adjustment path before spooling if the rod rating does not support the intended line.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            if (actionId === "back-to-equipment-check") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "read-reel") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "equipment-mismatch") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH;
+                showView(ROUTES.REEL_SETUP);
+            }
+        }
+    });
+
+    renderReelSetupGuidanceList(appMain, REEL_EQUIPMENT_GUIDANCE.rod);
+}
+
+function renderReelSetupEquipmentMismatchStep(appMain) {
+    renderReelSetupStep(appMain, {
+        headingId: "reel-setup-title",
+        title: "Pause Before Spooling",
+        description: "If either piece of equipment does not support the intended line system, adjust the setup before line goes on the reel.",
+        cards: [
+            {
+                id: "read-reel",
+                title: "Review Reel Markings",
+                description: "Return to the reel-capacity guide.",
+                isAvailable: true
+            },
+            {
+                id: "read-rod",
+                title: "Review Rod Markings",
+                description: "Return to the rod line-rating guide.",
+                isAvailable: true
+            },
+            {
+                id: "change-target-fish",
+                title: "Change Target Fish",
+                description: "Choose a different target reference while keeping the reel and line selections.",
+                isAvailable: true
+            },
+            {
+                id: "change-line-type",
+                title: "Change Line Choice",
+                description: "Return to line selection and clear the target-fish guidance.",
+                isAvailable: true
+            },
+            {
+                id: "change-reel-type",
+                title: "Change Reel Type",
+                description: "Return to reel identification while preserving the setup mode.",
+                isAvailable: true
+            },
+            {
+                id: "back-to-equipment-check",
+                title: "Back to Equipment Check",
+                description: "Return after verifying or adjusting the equipment markings.",
+                isAvailable: true
+            },
+            {
+                id: "start-reel-setup-over",
+                title: "Start Over",
+                description: "Clear the temporary Reel Setup state and return to the first step.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            if (actionId === "read-reel") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "read-rod") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_ROD;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "change-target-fish") {
+                reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "change-line-type") {
+                reelSetupState.lineType = null;
+                reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "change-reel-type") {
+                reelSetupState.reelType = null;
+                reelSetupState.lineType = null;
+                reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "back-to-equipment-check") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "start-reel-setup-over") {
+                openReelSetup();
+            }
+        }
+    });
+
+    renderReelSetupGuidanceList(appMain, REEL_EQUIPMENT_GUIDANCE.mismatch);
+}
+
+function renderReelSetupEquipmentCompleteStep(appMain) {
+    const lineType = getReelLineType(reelSetupState.lineType);
+    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
+
+    if (!lineType || !targetProfile || reelSetupState.equipmentCheck !== "compatible") {
+        reelSetupState.equipmentCheck = null;
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
+        renderReelSetupEquipmentCheckStep(appMain);
+        return;
+    }
+
+    renderReelSetupStep(appMain, {
+        headingId: "reel-setup-title",
+        title: "Equipment Compatibility Check",
+        description: getReelEquipmentConfirmationDescription(targetProfile, lineType),
+        cards: [
+            {
+                id: "backing-decision-next",
+                title: "Next — Decide on Backing",
+                description: "The next build block determines whether backing is needed before attaching the main line to the spool.",
+                isAvailable: false
+            },
+            {
+                id: "read-reel",
+                title: "Review Reel Markings",
+                description: "Reopen the reel-capacity guide without clearing your selections.",
+                isAvailable: true
+            },
+            {
+                id: "read-rod",
+                title: "Review Rod Markings",
+                description: "Reopen the rod line-rating guide without clearing your selections.",
+                isAvailable: true
+            },
+            {
+                id: "change-target-fish",
+                title: "Change Target Fish",
+                description: "Choose a different target reference while keeping the reel and line selections.",
+                isAvailable: true
+            },
+            {
+                id: "change-line-type",
+                title: "Change Line Choice",
+                description: "Return to line selection and clear dependent guidance.",
+                isAvailable: true
+            },
+            {
+                id: "change-reel-type",
+                title: "Change Reel Type",
+                description: "Return to reel identification while preserving the setup mode.",
+                isAvailable: true
+            },
+            {
+                id: "start-reel-setup-over",
+                title: "Start Over",
+                description: "Clear the temporary Reel Setup state and return to the first step.",
+                isAvailable: true
+            },
+            {
+                id: "return-to-knots",
+                title: "Return to Knots",
+                description: "Leave the internal Package 3 route and return to the Knot Guide.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            if (actionId === "read-reel") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "read-rod") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_ROD;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "change-target-fish") {
+                reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "change-line-type") {
+                reelSetupState.lineType = null;
+                reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "change-reel-type") {
+                reelSetupState.reelType = null;
+                reelSetupState.lineType = null;
+                reelSetupState.targetFish = null;
+                reelSetupState.equipmentCheck = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "start-reel-setup-over") {
+                openReelSetup();
+                return;
+            }
             if (actionId === "return-to-knots") {
                 resetReelSetupState();
                 showView(ROUTES.KNOTS);

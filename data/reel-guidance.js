@@ -9,7 +9,7 @@
 
 const REEL_GUIDANCE_BUILD_INFO = Object.freeze({
     file: "data/reel-guidance.js",
-    milestone: "Knots — Production Package 3 Block 3.4"
+    milestone: "Knots — Production Package 3 Block 3.5"
 });
 
 const REEL_SETUP_STEP_IDS = Object.freeze({
@@ -20,7 +20,13 @@ const REEL_SETUP_STEP_IDS = Object.freeze({
     LINE_IDENTIFICATION: "line-identification",
     LINE_SELECTION_COMPLETE: "line-selection-complete",
     TARGET_FISH: "target-fish",
-    TARGET_GUIDANCE: "target-guidance"
+    TARGET_GUIDANCE: "target-guidance",
+    REEL_IDENTIFICATION_HELP: "reel-identification-help",
+    EQUIPMENT_CHECK: "equipment-check",
+    READ_REEL: "read-reel",
+    READ_ROD: "read-rod",
+    EQUIPMENT_MISMATCH: "equipment-mismatch",
+    EQUIPMENT_COMPLETE: "equipment-complete"
 });
 
 const REEL_SETUP_ENTRY_OPTIONS = Object.freeze([
@@ -190,11 +196,47 @@ const REEL_TARGET_FISH_PROFILES = Object.freeze([
     })
 ]);
 
+const REEL_EQUIPMENT_GUIDANCE = Object.freeze({
+    reel: Object.freeze({
+        title: "How to Read Your Reel",
+        summary: "Reel capacity markings pair a line size with the approximate amount of that line the spool is designed to hold.",
+        items: Object.freeze([
+            "Find the line-capacity marking on the spool, reel body, package, manual, or official model specification.",
+            "A capacity such as 8 lb / 140 yd or 8-140 pairs line strength with approximate spool capacity.",
+            "Some manufacturers print the order differently. A marking such as 120 yd / 10 lb is yards first and pounds second, so use the printed headings or manual instead of assuming the order.",
+            "Metric capacity may pair line diameter and length, such as 0.25 mm / 160 m.",
+            "If Mono and Braid capacities are listed separately, use the listing for the line type you actually selected.",
+            "Numbers such as 1000, 2500, or 3000 identify reel size or model families; they are not direct pound-test ratings."
+        ])
+    }),
+    rod: Object.freeze({
+        title: "How to Read Your Rod",
+        summary: "Rod markings usually give a recommended line-strength range separately from the lure-weight range.",
+        items: Object.freeze([
+            "Look on the rod blank or official model specification for Line Wt, Line, or Line Rating.",
+            "A marking such as 6-12 lb gives the manufacturer's line-strength range for that rod model.",
+            "Do not confuse line rating with Lure Wt, which is often shown separately in ounces, such as 1/4-5/8 oz.",
+            "Your final line system should fit the rod's line rating as well as the reel's capacity guidance for the line type you selected.",
+            "If the rod marking is missing or unreadable, use the exact model number to check the manufacturer's official specification before spooling."
+        ])
+    }),
+    mismatch: Object.freeze({
+        title: "If the Ratings Do Not Match",
+        summary: "Do not force a line choice that falls outside the guidance for either piece of equipment.",
+        items: Object.freeze([
+            "Use a line choice that fits both the reel capacity guidance and the rod line rating, or change the equipment before spooling.",
+            "If the reel lists capacity by diameter instead of pound-test, compare the diameter printed on the line package or manufacturer specification.",
+            "If you still cannot verify the markings, stop before spooling and look up the exact reel and rod models from their manufacturers."
+        ])
+    })
+});
+
 console.info(
     `[Loaded] ${REEL_GUIDANCE_BUILD_INFO.file} | ` +
     `${REEL_GUIDANCE_BUILD_INFO.milestone} | ` +
     `${REEL_SETUP_ENTRY_OPTIONS.length} entry modes | ` +
     `${REEL_TYPE_OPTIONS.length} reel types | ` +
     `${Object.keys(REEL_LINE_TYPE_GUIDANCE).length} line types | ` +
-    `${REEL_TARGET_FISH_PROFILES.length} target profiles`
+    `${REEL_TARGET_FISH_PROFILES.length} target profiles | ` +
+    `${Object.keys(REEL_EQUIPMENT_GUIDANCE).length} equipment guidance groups`
 );
