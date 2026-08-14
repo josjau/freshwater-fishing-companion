@@ -1,33 +1,35 @@
 # Knot Production Package 3 — Block 3.8
 
-**Status:** OPEN / ARCHITECTURE DEFINED / IMPLEMENTATION NOT STARTED  
+**Status:** IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.8 — Leader Setup  
 **Opening Date:** 2026-08-14  
+**Implementation Date:** 2026-08-14  
 **Target Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
 
 # Purpose
 
 Block 3.8 extends the validated internal **Get Your Reel Ready** workflow from **Spool the Reel** into an optional leader decision and leader-connection setup.
 
-The block must help a beginner answer three questions without over-optimizing for a Rig or technique that has not been selected yet:
+The beginner workflow answers two separate questions in sequence:
 
-1. Do I want a leader on this line system?
-2. If yes, should the beginner starting choice be fluorocarbon or monofilament leader material?
-3. How do I connect that leader to the selected main line while preserving canonical Knot ownership?
+1. **Do I need a leader?**
+2. **If yes, what leader material should I use?**
 
-Block 3.8 does not complete the Reel Setup workflow. The final **Reel Ready** checkpoint / Rig Guide handoff remains a later Package 3 capability.
+That two-stage decision avoids forcing `No Leader`, `Fluorocarbon`, and `Monofilament` into one mixed choice screen.
+
+Block 3.8 does not complete Reel Setup. The final **Reel Ready Check / Rig Guide handoff** remains the next Package 3 capability.
 
 # Authoritative Base
 
-Block 3.8 opens from verified GitHub `main` after the Block 3.7 closeout.
+Block 3.8 production implementation was built from GitHub `main` after the opening workstream record was added.
 
-Base commit:
+Verified base commit:
 
-`d00c33e07172b0d54cdcad605846e87f309576c2`
+`9e68e9e2c5f8e3953d028c650755be49c83deeaf`
 
-Verified current production / validation blobs:
+The production sources were still the Block 3.7 validated blobs:
 
 ```text
 356ac9ce0451ef6b9b82e010f998e03feed6aac3  script.js
@@ -36,30 +38,76 @@ Verified current production / validation blobs:
 04dcdf7a6c07575f43bbb4d5fb711383910d6496  tools/validate_knot_package_3.py
 ```
 
-Block 3.7 documentation is closed as **PASS / VALIDATED**.
+The opening Block 3.8 document blob was:
 
-# Architecture Decision
+`5c9921d1bd4c22a9da2ca8dc06d173761690d3f8`
 
-Block 3.8 preserves the existing Package 3 ownership model:
+# Approved Architecture Change After Opening
 
-- `data/reel-guidance.js` owns Leader Setup Decision Knowledge.
-- `script.js` owns Reel Setup state, rendering, navigation, and canonical Knot handoffs.
+The initial opening document described three peer choices on the first Leader screen. Before production implementation, the approved design was refined.
+
+## Old opening design
+
+```text
+Do You Need a Leader?
+├─ No Leader
+├─ Fluorocarbon Leader
+└─ Monofilament Leader
+```
+
+## Implemented design
+
+```text
+Spool the Reel
+    ↓
+Next — Leader Setup
+    ↓
+Do You Need a Leader?
+├─ No Leader
+│    ↓
+│  Leader Setup
+│
+└─ Add a Leader
+     ↓
+   What Leader Material?
+   ├─ Fluorocarbon Leader
+   └─ Monofilament Leader
+          ↓
+       Leader Setup
+          ↓
+   Next — Reel Ready Check
+```
+
+The design now contains three workflow steps rather than the two proposed in the opening record:
+
+```text
+LEADER_DECISION = "leader-decision"
+LEADER_MATERIAL = "leader-material"
+LEADER_SETUP = "leader-setup"
+```
+
+`Add a Leader` is a navigation branch only. It is not stored as a persistent choice.
+
+# Ownership
+
+Block 3.8 preserves the Package 3 architecture:
+
+- `data/reel-guidance.js` owns leader Decision Knowledge.
+- `script.js` owns state, rendering, transitions, Selected Choices, and canonical Knot handoffs.
 - `data/knots.js` remains the sole owner of canonical Knot tying instructions.
-- `tools/validate_knot_package_3.py` will extend Package 3 regression coverage through Leader Setup.
+- `tools/validate_knot_package_3.py` retains Block 3.7 regression guards and adds Block 3.8 coverage.
 
-No new canonical Leader entity is introduced.
+No canonical Leader entity is introduced.
 
-Leader Setup remains Decision Knowledge inside the guided Reel Setup workflow.
+# Transient State
 
-# New Transient Selection
-
-Block 3.8 will add one persistent session-only selection field:
+Block 3.8 adds one and only one new persistent session-only selection:
 
 ```text
 leaderChoice
 ```
 
-Approved values:
+Approved final values:
 
 ```text
 none
@@ -67,353 +115,340 @@ fluorocarbon-leader
 monofilament-leader
 ```
 
-`leaderChoice` records both whether a leader is used and, when applicable, the selected leader material. A separate `leaderMaterial` field would duplicate the same decision and is not approved.
-
-The field is added after `backingChoice` in Reel Setup state.
-
-`leaderChoice` must appear in **SELECTED CHOICES** after a leader decision is made.
-
-# New Workflow Steps
-
-Block 3.8 will add exactly two Reel Setup steps:
+The Reel Setup selection state is now:
 
 ```text
-LEADER_DECISION = "leader-decision"
-LEADER_SETUP = "leader-setup"
+entryMode
+reelType
+lineType
+targetFish
+equipmentCheck
+backingChoice
+leaderChoice
 ```
 
-Approved flow:
+Workflow position remains in `stepId`.
 
-```text
-Spool the Reel
-    ↓
-Next — Leader Setup
-    ↓
-Do You Want a Leader?
-    ├─ No Leader
-    │    ↓
-    │  Leader Setup
-    │
-    ├─ Fluorocarbon Leader
-    │    ↓
-    │  Leader Setup
-    │
-    └─ Monofilament Leader
-         ↓
-       Leader Setup
-```
+No `leaderMaterial`, `leaderLength`, `leaderStrength`, or `leaderPoundTest` field is added.
 
-The existing disabled **Next — Leader Setup** card on **Spool the Reel** becomes enabled and transitions to `LEADER_DECISION`.
+# Leader Decision
 
-`LEADER_SETUP` ends at a disabled **Next — Reel Ready Check** progression card. That identifies the next Package 3 capability without implementing it in Block 3.8.
+## No Leader — Keep the Main Line
 
-# Leader Decision Model
+This is the simplest direct-main-line path.
 
-## No Leader
+- available for monofilament, fluorocarbon, and braid,
+- stores `leaderChoice = "none"`,
+- moves directly to **Leader Setup**,
+- shows no line-to-line Knot handoff.
 
-**Title:** `No Leader — Keep the Main Line`
+For braid, the decision page explicitly explains that a mono or fluorocarbon leader can reduce terminal-section visibility and provide different abrasion, stretch, or buoyancy behavior without claiming a leader is universally mandatory.
 
-Purpose:
+## Add a Leader
 
-- preserve the simplest beginner path,
-- make clear that a separate leader is optional rather than universally required,
-- remain available for monofilament, fluorocarbon, and braid main line.
+`Add a Leader` does not persist a value. It clears any previously stored `leaderChoice` and opens **What Leader Material?**.
 
-For braid, the description must make the tradeoff explicit: braid is highly visible compared with mono/fluoro, so a leader may be useful when reduced visibility or abrasion resistance matters, but Block 3.8 must not claim a leader is universally mandatory.
+This avoids stale `No Leader` or old material values in **SELECTED CHOICES** while the user is actively choosing a new material.
+
+# Leader Material
+
+The material screen contains exactly two persistent outcomes.
 
 ## Fluorocarbon Leader
 
-**Title:** `Fluorocarbon Leader`
+Guidance emphasizes:
 
-Beginner rationale:
-
-- low underwater visibility,
-- strong abrasion resistance,
-- useful when a less-visible leader is desired,
-- common pairing with braided main line.
-
-Tradeoff:
-
-- fluorocarbon sinks more readily than monofilament and is not the universal choice for every presentation, especially where line buoyancy matters.
+- lower underwater visibility,
+- abrasion resistance,
+- sinks more readily than monofilament,
+- useful with braid and other main-line systems when those properties are desired,
+- not a universal choice for every presentation.
 
 ## Monofilament Leader
 
-**Title:** `Monofilament Leader`
-
-Beginner rationale:
+Guidance emphasizes:
 
 - easy knot handling,
-- more stretch / shock absorption than fluorocarbon or braid,
-- higher buoyancy than fluorocarbon,
-- useful when the user wants a separate leader without automatically choosing sinking fluorocarbon.
+- stretch and shock absorption,
+- greater buoyancy than fluorocarbon,
+- generally more underwater visibility than fluorocarbon.
 
-Tradeoff:
+# Leader Length Boundary
 
-- more visible than fluorocarbon in situations where leader visibility is a concern.
+For either leader material, the page states:
 
-# Contextual Beginner Recommendation
+> Start with about **3–4 feet** of leader as a practical beginner reference.
 
-The decision page may provide contextual guidance but must not silently select a leader.
+This is not stored state and is not presented as a requirement.
 
-Approved direction:
+The guidance explicitly says water clarity, wary fish, cover, species, and the later Rig or presentation can justify a different length.
 
-- **Braid main line:** fluorocarbon leader is the preferred general beginner recommendation when reduced visibility / abrasion resistance is useful; monofilament remains a valid alternative when stretch or buoyancy is more appropriate.
-- **Monofilament main line:** No Leader is the simplest general starting point; fluorocarbon or monofilament leader remains optional when the user deliberately wants a separate leader section.
-- **Fluorocarbon main line:** No Leader is the simplest general starting point; a separate leader is optional rather than assumed.
+# Leader Strength Boundary
 
-This is a starting recommendation only. Final technique-specific optimization belongs later in Decision Knowledge after the user selects a Rig / presentation.
+Block 3.8 does not invent an exact leader pound-test.
 
-# Leader Length Guidance
+Current Reel Setup knows the selected line type and the approved target-fish beginner reference, but not the actual pound-test ultimately loaded on the reel.
 
-Block 3.8 will use a conservative beginner starting reference:
+The page therefore displays:
 
-**About 3–4 feet**
+`Starting strength reference: <target profile Easy beginner choice>`
 
-Required wording boundary:
+and immediately clarifies that this value:
 
-- present `3–4 feet` as a practical starting point, not a universal or required leader length,
-- state that clearer water, wary fish, species, cover, and presentation can justify a different length,
-- do not add a `leaderLength` selection field in Block 3.8.
-
-The goal is to get the beginner to a usable general leader without pretending Package 3 already knows the later Rig / technique context.
-
-# Leader Strength Guidance
-
-Block 3.8 must **not invent a precise leader pound-test selection**.
-
-Current Package 3 state stores:
-
-- line type,
-- target-fish profile,
-- equipment compatibility confirmation,
-
-but it does not store the actual pound-test ultimately placed on the reel.
-
-Therefore:
-
-- do not add `leaderStrength`, `leaderPoundTest`, or similar persistent state,
-- reuse the already-approved target-fish **Easy beginner choice** as a clearly labeled **starting strength reference**,
-- explicitly tell the user that actual leader strength must fit the real main line, target fish, cover, and presentation,
-- do not present the target-fish reference as a measured property of the user's actual spool.
+- reuses the existing target-fish beginner reference,
+- is not a measured property of the actual line on the reel,
+- must be adjusted to the actual main line, target fish, cover, and later Rig / presentation.
 
 # Canonical Knot Handoff
 
-Block 3.8 uses the existing canonical **Double Uni Knot** as the beginner line-to-line handoff.
+When a leader material is selected, **Leader Setup** provides one secondary reference card:
 
-Canonical record rationale already established in `data/knots.js`:
+**View Double Uni Knot**
 
-- Beginner difficulty,
-- `line-to-line` connection type,
+The canonical Double Uni remains appropriate because the existing Knot record is:
+
+- Beginner,
+- `line-to-line`,
 - compatible with monofilament, fluorocarbon, and braid,
-- specifically supports connecting braided main line to monofilament or fluorocarbon leader,
-- appropriate for lines of similar or moderately different diameters.
+- explicitly suitable for braid-to-mono / braid-to-fluoro leader connections,
+- intended for similar or moderately different line diameters.
 
-Leader Setup must not duplicate Double Uni tying instructions.
+Block 3.8 does not duplicate Double Uni tying instructions.
 
-When a leader is selected, the Leader Setup page provides a **View Double Uni Knot** reference action that opens canonical Knot detail and restores the exact `LEADER_SETUP` state on return.
+The Leader Setup guidance warns that a more specialized connection can be preferable if the two lines differ dramatically in diameter.
 
-If the actual lines differ dramatically in diameter, the UI should caution that a more specialized line-to-line connection may be preferable rather than claiming Double Uni is universal.
+The Knot handoff captures the exact Reel Setup state and uses **Leader Setup** as the return label. Existing Spool Connection Plan Knot handoffs retain their existing return label through the new default parameter.
 
-Block 3.8 does not automatically introduce a second line-to-line Knot card merely to provide alternatives. Avoid recreating the scroll-heavy option problem corrected in Block 3.7.
+# No Leader Path
 
-# Leader Setup Page
+When `leaderChoice = "none"`:
 
-## No Leader path
-
-The page confirms:
-
-- no separate leader will be added,
+- Leader Setup confirms that no separate leader will be added,
 - the spooled main line remains the working line for the later Rig connection,
-- leader choice can still be revisited through step-aware previous navigation.
+- no Double Uni card is rendered,
+- **Next — Reel Ready Check** remains visible but disabled,
+- previous navigation returns to **Leader Decision**.
 
-No Knot handoff is shown.
+# Selected Choices
 
-## Leader selected path
+`leaderChoice` is appended to the existing flat **SELECTED CHOICES** summary only after a final leader outcome exists.
 
-The page shows:
+Examples:
 
-- selected leader material,
-- why that material is useful,
-- `3–4 feet` as a beginner starting-length reference,
-- the existing target-fish Easy beginner choice as a starting leader-strength reference,
-- a warning that actual strength / length can change with the real line, fish, cover, water clarity, and presentation,
-- **View Double Uni Knot** as the canonical main-line-to-leader connection handoff.
+```text
+... · No Leader — Keep the Main Line
+... · Fluorocarbon Leader
+... · Monofilament Leader
+```
 
-Key instructions should use the structured selective-bold treatment established in Block 3.7 rather than bolding full paragraphs.
+The intermediate `Add a Leader` branch is never displayed as a stored selection.
 
-# Navigation / State Rules
+# Navigation
 
 Approved previous-step behavior:
 
 ```text
 Leader Decision → Spool the Reel
-Leader Setup    → Leader Decision
+Leader Material → Leader Decision
+Leader Setup + No Leader → Leader Decision
+Leader Setup + selected material → Leader Material
 ```
 
-Rules:
+Back navigation only reviews state and does not clear selections.
 
-- Back for review preserves `leaderChoice`.
-- Choosing a different leader option replaces only `leaderChoice` because no later Package 3 selection exists yet.
-- Start Over clears the full Reel Setup state.
-- Home clears the full Reel Setup state.
-- Return to Knots clears the full Reel Setup state.
-- Opening canonical Double Uni detail from Leader Setup stores the exact Reel Setup snapshot and returns to `LEADER_SETUP`.
+Changing an upstream Reel Setup choice clears downstream `leaderChoice` whenever backing/downstream state is invalidated.
 
-# Existing UX Standards That Remain Mandatory
+Changing the backing choice directly also clears `leaderChoice`.
 
-Block 3.8 inherits all validated Block 3.7 UX rules:
+Home, Start Over, and Return to Knots continue to clear the full Reel Setup state as previously validated.
 
-- sticky/floating step-aware navigation,
-- flat **SELECTED CHOICES** summary,
-- compact progression/branch card treatment,
-- inherited Forest Journal multi-color card palette,
-- ordinary help/reference/reset/exit cards remain visually secondary,
-- avoid redundant upstream-change cards when sticky previous navigation already covers review,
+# Workflow Card / Presentation Rules
+
+Block 3.8 reuses the validated Block 3.7 presentation system without CSS changes:
+
+- compact workflow emphasis for progression and branch cards,
+- inherited Forest Journal positional color palette,
 - progression card first when a page has a clear next action,
-- selective strong-text emphasis for high-attention instructions.
+- reference/reset/exit cards remain visually secondary,
+- sticky/floating step-aware navigation,
+- flat Selected Choices treatment,
+- structured selective bolding for high-attention guidance.
 
-No CSS change is expected unless runtime testing demonstrates a genuine presentation defect.
-
-# Out of Scope — Block 3.8
-
-Do not add:
-
-- final Reel Ready checkpoint,
-- Rig Guide handoff,
-- production wiring of the normal **Attach Line to a Reel** landing entry,
-- lure-specific leader selection,
-- technique-specific leader length,
-- heavy pike/musky wire or bite-leader systems,
-- fly leaders / tippets,
-- saltwater leader systems,
-- swivels as a generic substitute for the line-to-line connection,
-- leader brand/product recommendations,
-- precise leader pound-test state that the application cannot support from the current inputs.
+The disabled **Next — Reel Ready Check** card is first on Leader Setup so the future progression boundary remains obvious without becoming active early.
 
 # Technical Source Basis
 
-Primary manufacturer education used to define the Block 3.8 decision boundaries:
+Block 3.8 Decision Knowledge was checked against current manufacturer education.
+
+Primary sources:
 
 - Berkley — Freshwater Line Guide  
   `https://www.berkley-fishing.com/blogs/news/berkley-freshwater-line-guide`
-- Berkley — Freshwater Line Guide: Braid  
+- Berkley — Braid: A Complete Fishing Line Guide  
   `https://www.berkley-fishing.com/blogs/news/berkley-freshwater-line-guide-braid`
+- Berkley — Fluorocarbon: A Complete Fishing Line Guide  
+  `https://www.berkley-fishing.com/blogs/news/berkley-freshwater-line-guide-fluorocarbon`
 - Berkley — Why Use Fluorocarbon  
   `https://www.berkley-fishing.com/blogs/news/why-use-fluorocarbon`
-- Berkley — Fishing Knots 101  
-  `https://www.berkley-fishing.com/blogs/news/fishing-knots-101`
-- Seaguar — leader-length / leader-material guidance  
+- Seaguar — Gold Label leader-length discussion  
   `https://seaguar.com/blogs/media-center/seaguar-adds-50-yard-spool-size-for-gold-label%C2%AE-100-fluorocarbon-leader`
 
-These external sources support general leader-material and starting-length behavior. Canonical Knot selection and tying instructions remain controlled by the project's existing canonical Knot records.
+Manufacturer guidance supports the key boundaries used here: braid can be paired with fluorocarbon or monofilament leaders to reduce visibility; fluorocarbon is commonly used where lower visibility and abrasion resistance are desired; and 3–4 feet is a historical/common leader baseline that may be lengthened for clearer or more pressured conditions.
 
-# Planned Source Scope
+Canonical Knot instructions remain controlled by project Knot Reference Knowledge rather than manufacturer prose.
 
-Expected Block 3.8 implementation files:
+# Files Changed
+
+Block 3.8 changes exactly these repository files:
 
 ```text
 script.js
 data/reel-guidance.js
 tools/validate_knot_package_3.py
 docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.8.md
+docs/workstreams/KNOT-PRODUCTION-PACKAGE-3.md
 ```
 
-`forest-journal.css` is not expected to change because Block 3.8 should reuse the validated Block 3.7 card and guidance treatments.
+No change is required to:
 
-The aggregate `docs/workstreams/KNOT-PRODUCTION-PACKAGE-3.md` should be reconciled after Block 3.8 runtime validation, not preemptively marked as validated.
+```text
+forest-journal.css
+index.html
+data/knots.js
+```
 
-# Planned Static Validation
+# Static Validation Scope
 
-The Package 3 validator should add guards for:
+The Package 3 validator must confirm:
 
-- `LEADER_DECISION` and `LEADER_SETUP` step registration,
-- `leaderChoice` as the only new persistent selection field,
-- exact three leader choices,
-- enabled **Next — Leader Setup** transition,
-- leader-decision previous-step mapping to Spool the Reel,
-- leader-setup previous-step mapping to Leader Decision,
-- Selected Choices inclusion of the selected leader choice,
-- no leader-strength or leader-length persistent state,
+- all Block 3.7 regression protections remain,
+- three Block 3.8 step IDs exist,
+- `leaderChoice` is the only new selection field,
+- exactly three final leader outcomes exist,
+- the first decision presents only `No Leader` and `Add a Leader` as workflow branches,
+- the material page presents only Fluorocarbon and Monofilament persistent outcomes,
+- `Add a Leader` is not persisted,
+- **Next — Leader Setup** is enabled and transitions to Leader Decision,
+- Selected Choices includes final `leaderChoice`,
+- `leaderLength` / `leaderStrength` / `leaderPoundTest` state is absent,
 - 3–4 ft wording is explicitly a starting reference,
-- target-fish Easy beginner choice reused as a starting strength reference,
-- Double Uni canonical handoff only when a leader is selected,
-- no Knot handoff on No Leader,
-- exact return-context restoration to Leader Setup,
-- disabled **Next — Reel Ready Check** checkpoint,
-- no CSS requirement introduced,
-- all Block 3.7 regression guards remain intact,
+- target-fish `easyChoice` is reused as a starting strength reference,
+- no-leader setup has no Double Uni card,
+- selected-leader setup has exactly one Double Uni reference card,
+- the Double Uni return label is **Leader Setup**,
+- **Next — Reel Ready Check** remains disabled,
+- navigation destinations match the approved two-stage flow,
+- no normal Knot landing wiring occurs,
 - JavaScript syntax passes.
 
-# Planned Runtime Validation
+# Static Validation — PASS
+
+The Block 3.8 implementation passes the Package 3 static validator and JavaScript syntax checks.
+
+Validated Block 3.8 source / validator blobs before runtime validation:
+
+```text
+08cc5fa37738a429a4f1b75e251337075cf1016d  script.js
+ba3cc052e863916d7cc75422ff3c28abf977d222  data/reel-guidance.js
+bb00971da052a94fc1ba5f8a1d1f5718a5badd59  tools/validate_knot_package_3.py
+```
+
+Unchanged supporting blobs used during validation:
+
+```text
+07de0a2d71ac14dae3a5752a999dd97c27632360  forest-journal.css
+e942e2a217266255d79290084022316bdd5f2546  index.html
+```
+
+Validator output:
+
+```text
+Production Package 3 Block 3.8 validation passed.
+Backing choices: 3
+Spooling profiles: 3
+Leader outcomes: 3
+Reel Setup navigation: step-aware and sticky/floating.
+Workflow cards: redundant upstream-change cards removed; compact emphasis inherits the existing card palette.
+Spooling instructions: key actions receive structured strong-text emphasis.
+Leader Setup: two-stage decision, material guidance, and canonical Double Uni handoff enabled.
+Reel-specific spooling: spinning, spincast, baitcasting.
+Canonical Knot handoffs: Arbor Knot and Double Uni Knot.
+Reel Setup Knot return context: exact step/state restoration enabled.
+Normal Knot landing remains intentionally unwired to Reel Setup.
+```
+
+# Runtime Validation Plan
 
 ## Step 1 — Block 3.7 Regression Boundary
 
-Confirm:
+Confirm the validated spooling content, selective bolding, workflow palette, sticky navigation, Selected Choices, and spool-connection Knot return paths remain intact.
 
-- Spool the Reel content and selective bolding remain correct,
-- workflow cards retain multi-color palette treatment,
-- sticky navigation and Selected Choices remain intact,
-- previous Knot handoffs / return context still work.
-
-## Step 2 — Leader Entry
+## Step 2 — Leader Decision
 
 Confirm:
 
 - **Next — Leader Setup** is enabled,
-- it opens **Do You Want a Leader?**,
-- three leader choices render with compact workflow treatment,
+- **Do You Need a Leader?** opens,
+- only **No Leader — Keep the Main Line** and **Add a Leader** are progression/branch choices,
 - Back returns to Spool the Reel without clearing prior selections.
 
 ## Step 3 — No Leader
 
 Confirm:
 
-- No Leader reaches Leader Setup,
-- no Double Uni handoff is shown,
-- Selected Choices includes `No Leader — Keep the Main Line`,
-- **Next — Reel Ready Check** remains unavailable.
+- No Leader opens Leader Setup,
+- Selected Choices adds `No Leader — Keep the Main Line`,
+- no Double Uni card appears,
+- **Next — Reel Ready Check** is unavailable,
+- Back returns to Leader Decision.
 
 ## Step 4 — Fluorocarbon Leader
 
 Confirm:
 
-- fluorocarbon rationale / tradeoff renders,
-- 3–4 ft is presented as a starting point rather than a requirement,
-- target-fish strength is labeled as a starting reference,
-- View Double Uni Knot opens canonical detail,
-- return restores exact Leader Setup state.
+- Add a Leader opens What Leader Material?,
+- Fluorocarbon Leader opens Leader Setup,
+- 3–4 ft wording is clearly a starting point,
+- target-fish strength is clearly a starting reference rather than actual spool strength,
+- selective emphasis is readable,
+- Double Uni opens canonical Knot detail,
+- return restores exact Leader Setup state,
+- Back returns to Leader Material.
 
 ## Step 5 — Monofilament Leader
 
-Confirm:
-
-- monofilament rationale / tradeoff renders,
-- length / strength boundaries match Fluorocarbon Leader behavior,
-- Double Uni handoff and exact return work.
+Confirm the same state/length/strength/Knot-return behavior plus the monofilament-specific stretch, knot-handling, buoyancy, and visibility tradeoffs.
 
 ## Step 6 — State / Navigation / Regression
 
 Confirm:
 
-- leaderChoice can be changed without disturbing earlier valid selections,
-- Back for review preserves leaderChoice,
-- Start Over clears leaderChoice with the full state,
-- Home clears the full state,
-- Return to Knots clears the full state,
+- Add a Leader does not appear in Selected Choices,
+- changing leader outcome replaces only `leaderChoice`,
+- changing backing/upstream choices clears leaderChoice,
+- Start Over / Home / Return to Knots clear Reel Setup,
+- workflow cards retain the approved palette hierarchy,
 - normal Knot landing remains intentionally unwired,
-- no application-source JavaScript errors appear.
+- no application-source JavaScript errors occur.
 
-# Exact Start Point
+# Deferred Search UX Issue — Parking Lot
 
-Block 3.8 is now formally opened.
+The existing Rig/Knot scoped-search issue remains deferred and unchanged:
 
-**Block 3.7 — PASS / VALIDATED / CLOSED**  
-**Block 3.8 — OPEN / ARCHITECTURE DEFINED / IMPLEMENTATION NOT STARTED**
+- collection-level search is correctly scoped,
+- generic examples can imply globally valid terms should work inside that scope,
+- future work should use collection-aware examples plus an explicit scope cue and route to broader/global search.
 
-Implementation must begin from current GitHub `main` commit:
+Do not fold this issue into Block 3.8.
 
-`d00c33e07172b0d54cdcad605846e87f309576c2`
+# Exact Resume Point
 
-Before editing an existing production source file, retrieve its complete authoritative current contents from GitHub. Do not reconstruct production files from partial snippets.
+Block 3.8 production implementation is complete when the five changed files pass static validation and are packaged for GitHub Desktop.
 
-Carry forward the deferred Rig/Knot scoped-search UX issue unchanged; it remains a later global/deeper-search Parking Lot item.
+After upload:
+
+1. verify GitHub `main` and exact Block 3.8 blobs,
+2. run the six-step Microsoft Edge runtime checklist above,
+3. correct genuine defects before closeout,
+4. only after runtime PASS mark Block 3.8 **PASS / VALIDATED**,
+5. then formally open the next Package 3 capability: **Reel Ready Check / Rig Guide handoff**.

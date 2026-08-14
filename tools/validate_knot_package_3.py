@@ -31,7 +31,7 @@ def require_absent(text, needle, label):
 
 def get_function_block(text, function_name, next_function_name):
     match = re.search(
-        rf"function {re.escape(function_name)}\(appMain\) \{{(?P<body>.*?)\n\}}\n\nfunction {re.escape(next_function_name)}",
+        rf"function {re.escape(function_name)}\(appMain\) \{{(?P<body>.*?)\n\}}\n+function {re.escape(next_function_name)}",
         text,
         flags=re.S
     )
@@ -45,6 +45,8 @@ script_js = require("script.js")
 reel_guidance_js = require("data/reel-guidance.js")
 forest_journal_css = require("forest-journal.css")
 block_3_7_workstream = require("docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.7.md")
+block_3_8_workstream = require("docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.8.md")
+package_3_workstream = require("docs/workstreams/KNOT-PRODUCTION-PACKAGE-3.md")
 
 load_markers = [
     'src="data/knot-guidance.js"',
@@ -75,10 +77,18 @@ for needle, label in [
     ('function renderReelSetupBackingDecisionStep(appMain)', "backing decision"),
     ('function renderReelSetupSpoolConnectionPlanStep(appMain)', "spool connection plan"),
     ('function renderReelSetupSpoolingInstructionsStep(appMain)', "reel-specific spooling instructions"),
+    ('function renderReelSetupLeaderDecisionStep(appMain)', "leader decision"),
+    ('function renderReelSetupLeaderMaterialStep(appMain)', "leader material"),
+    ('function renderReelSetupLeaderSetupStep(appMain)', "leader setup"),
     ('function getReelSpoolingGuidance(reelTypeId)', "spooling guidance lookup"),
-    ('function openKnotDetailFromReelSetup(knotId)', "Reel Setup Knot handoff"),
+    ('function getReelLeaderChoice(leaderChoiceId)', "leader choice lookup"),
+    ('function getReelLeaderDecisionGuidance(lineTypeId)', "leader decision guidance lookup"),
+    ('function getReelLeaderSetupGuidance(leaderChoiceId, targetProfile)', "leader setup guidance builder"),
+    ('function openKnotDetailFromReelSetup(knotId, returnLabel = "Spool Connection Plan")', "Reel Setup Knot handoff"),
     ('backingChoice: null', "session-only backing state"),
-    ('REEL_BACKING_CHOICES', "backing decision knowledge")
+    ('leaderChoice: null', "session-only leader state"),
+    ('REEL_BACKING_CHOICES', "backing decision knowledge"),
+    ('REEL_LEADER_CHOICES', "leader decision knowledge")
 ]:
     require_text(script_js, needle, f"script.js {label}")
 
@@ -144,7 +154,7 @@ require_absent(
 spooling_instructions_block = get_function_block(
     script_js,
     "renderReelSetupSpoolingInstructionsStep",
-    "getActiveKnots"
+    "renderReelSetupLeaderDecisionStep"
 )
 require_absent(
     spooling_instructions_block,
@@ -226,7 +236,10 @@ if "min-height:" in workflow_card_css.group("body") or "padding:" in workflow_ca
 for step_id in [
     'BACKING_DECISION: "backing-decision"',
     'SPOOL_CONNECTION_PLAN: "spool-connection-plan"',
-    'SPOOLING_INSTRUCTIONS: "spooling-instructions"'
+    'SPOOLING_INSTRUCTIONS: "spooling-instructions"',
+    'LEADER_DECISION: "leader-decision"',
+    'LEADER_MATERIAL: "leader-material"',
+    'LEADER_SETUP: "leader-setup"'
 ]:
     require_text(reel_guidance_js, step_id, "data/reel-guidance.js step")
 
@@ -244,8 +257,59 @@ backing_count = len(re.findall(r'\bid: "', backing_block.group("body")))
 if backing_count != 3:
     fail(f"expected 3 backing choices, found {backing_count}")
 
+
+for leader_id in ["none", "fluorocarbon-leader", "monofilament-leader"]:
+    require_text(reel_guidance_js, f'id: "{leader_id}"', "leader outcome")
+
+leader_block = re.search(
+    r"const REEL_LEADER_CHOICES = Object\.freeze\(\{(?P<body>.*?)\n\}\);",
+    reel_guidance_js,
+    flags=re.S
+)
+if not leader_block:
+    fail("could not parse REEL_LEADER_CHOICES")
+leader_count = len(re.findall(r'\bid: "', leader_block.group("body")))
+if leader_count != 3:
+    fail(f"expected 3 final leader outcomes, found {leader_count}")
+require_absent(leader_block.group("body"), 'id: "add-leader"', "Add a Leader must not be persisted as a leader outcome")
+
+leader_decision_guidance_block = re.search(
+    r"const REEL_LEADER_DECISION_GUIDANCE = Object\.freeze\(\{(?P<body>.*?)\n\}\);",
+    reel_guidance_js,
+    flags=re.S
+)
+if not leader_decision_guidance_block:
+    fail("could not parse REEL_LEADER_DECISION_GUIDANCE")
+for line_type in ["monofilament", "fluorocarbon", "braid"]:
+    require_text(leader_decision_guidance_block.group("body"), f"{line_type}: Object.freeze", f"leader decision guidance {line_type}")
+
+leader_setup_guidance_block = re.search(
+    r"const REEL_LEADER_SETUP_GUIDANCE = Object\.freeze\(\{(?P<body>.*?)\n\}\);\n\nconst REEL_EQUIPMENT_GUIDANCE",
+    reel_guidance_js,
+    flags=re.S
+)
+if not leader_setup_guidance_block:
+    fail("could not parse REEL_LEADER_SETUP_GUIDANCE")
+leader_material_profile_ids = re.findall(
+    r'^    "(fluorocarbon-leader|monofilament-leader)": Object\.freeze\(\{',
+    leader_setup_guidance_block.group("body"),
+    flags=re.M
+)
+if set(leader_material_profile_ids) != {"fluorocarbon-leader", "monofilament-leader"} or len(leader_material_profile_ids) != 2:
+    fail(f"expected exactly 2 leader material guidance profiles, found {leader_material_profile_ids}")
+if leader_setup_guidance_block.group("body").count("3–4 feet") < 2:
+    fail("both leader material profiles must include the 3–4 feet beginner starting reference")
+for needle, label in [
+    ("practical beginner reference", "leader length is a starting reference"),
+    ("low underwater visibility and useful abrasion resistance", "fluorocarbon properties"),
+    ("more buoyant than fluorocarbon", "monofilament buoyancy tradeoff"),
+    ("more visible underwater than fluorocarbon", "monofilament visibility tradeoff"),
+    ("If the two lines differ dramatically in diameter", "Double Uni diameter boundary")
+]:
+    require_text(leader_setup_guidance_block.group("body"), needle, f"leader setup guidance {label}")
+
 spooling_block = re.search(
-    r"const REEL_SPOOLING_GUIDANCE = Object\.freeze\(\{(?P<body>.*?)\n\}\);\n\nconst REEL_EQUIPMENT_GUIDANCE",
+    r"const REEL_SPOOLING_GUIDANCE = Object\.freeze\(\{(?P<body>.*?)\n\}\);\n+const REEL_LEADER_CHOICES",
     reel_guidance_js,
     flags=re.S
 )
@@ -332,7 +396,86 @@ leader_next_card = re.search(
 )
 if not leader_next_card:
     fail("could not isolate post-spooling Leader Setup checkpoint")
-require_text(leader_next_card.group("body"), 'isAvailable: false', "post-spooling checkpoint remains disabled")
+require_text(leader_next_card.group("body"), 'isAvailable: true', "Block 3.8 Leader Setup entry enabled")
+require_text(leader_next_card.group("body"), 'isWorkflowAction: true', "Leader Setup entry workflow emphasis")
+require_text(
+    spooling_instructions_block,
+    'reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_DECISION;',
+    "Leader Setup entry transition"
+)
+
+
+
+leader_decision_block = get_function_block(
+    script_js,
+    "renderReelSetupLeaderDecisionStep",
+    "renderReelSetupLeaderMaterialStep"
+)
+for needle, label in [
+    ('title: "Do You Need a Leader?"', "leader decision page title"),
+    ('id: noLeader.id', "No Leader branch"),
+    ('id: "add-leader"', "Add a Leader branch"),
+    ('reelSetupState.leaderChoice = "none";', "No Leader persistence"),
+    ('reelSetupState.leaderChoice = null;', "Add a Leader clears stale outcome"),
+    ('reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_MATERIAL;', "Add a Leader material transition")
+]:
+    require_text(leader_decision_block, needle, label)
+require_absent(leader_decision_block, 'reelSetupState.leaderChoice = "add-leader"', "Add a Leader must not persist")
+
+leader_material_block = get_function_block(
+    script_js,
+    "renderReelSetupLeaderMaterialStep",
+    "renderReelSetupLeaderSetupStep"
+)
+for needle, label in [
+    ('title: "What Leader Material?"', "leader material page title"),
+    ('getReelLeaderChoice("fluorocarbon-leader")', "fluorocarbon material choice"),
+    ('getReelLeaderChoice("monofilament-leader")', "monofilament material choice"),
+    ('reelSetupState.leaderChoice = actionId;', "material outcome persistence"),
+    ('reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_SETUP;', "material to setup transition")
+]:
+    require_text(leader_material_block, needle, label)
+require_absent(leader_material_block, 'getReelLeaderChoice("none")', "No Leader must stay on the first decision screen")
+
+leader_setup_block = get_function_block(
+    script_js,
+    "renderReelSetupLeaderSetupStep",
+    "getActiveKnots"
+)
+for needle, label in [
+    ('const hasLeader = leaderChoice.id !== "none";', "No Leader vs leader branch boundary"),
+    ('title: "Leader Setup"', "Leader Setup page title"),
+    ('id: "reel-ready-next"', "Reel Ready checkpoint"),
+    ('title: "Next — Reel Ready Check"', "Reel Ready checkpoint label"),
+    ('isAvailable: false', "Reel Ready checkpoint disabled"),
+    ('if (hasLeader) {', "leader-only reference branch"),
+    ('id: "view-double-uni-knot"', "leader Double Uni reference"),
+    ('openKnotDetailFromReelSetup("double-uni-knot", "Leader Setup")', "Leader Setup Knot return label")
+]:
+    require_text(leader_setup_block, needle, label)
+if leader_setup_block.count('id: "view-double-uni-knot"') != 1:
+    fail("Leader Setup must define exactly one Double Uni reference card")
+
+for needle, label in [
+    ('[REEL_SETUP_STEP_IDS.LEADER_DECISION]: { stepId: REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS, label: "Spool the Reel" }', "Leader Decision previous step"),
+    ('[REEL_SETUP_STEP_IDS.LEADER_MATERIAL]: { stepId: REEL_SETUP_STEP_IDS.LEADER_DECISION, label: "Leader Decision" }', "Leader Material previous step"),
+    ('reelSetupState.leaderChoice === "none"', "Leader Setup dynamic previous step"),
+    ('{ stepId: REEL_SETUP_STEP_IDS.LEADER_DECISION, label: "Leader Decision" }', "No Leader setup previous destination"),
+    ('{ stepId: REEL_SETUP_STEP_IDS.LEADER_MATERIAL, label: "Leader Material" }', "material leader setup previous destination")
+]:
+    require_text(script_js, needle, label)
+
+for needle, label in [
+    ('labels.push(leaderChoice.title)', "leader choice summary value"),
+    ('const strengthLead = `Starting strength reference: ${targetProfile.easyChoice}.`', "target-fish strength reference reuse"),
+    ('not a measured property of the line actually on the reel', "strength false-precision boundary"),
+    ('label: returnLabel', "contextual Reel Setup Knot return label")
+]:
+    require_text(script_js, needle, label)
+
+for forbidden_state in ["leaderLength", "leaderStrength", "leaderPoundTest", "leaderMaterial"]:
+    require_absent(script_js, f"{forbidden_state}:", f"forbidden persistent state {forbidden_state}")
+
 
 for needle, label in [
     ('title: "Monofilament Backing"', "mono backing label"),
@@ -350,19 +493,22 @@ for needle, label in [
     ('cards: REEL_TARGET_FISH_PROFILES.map', "target-fish branch source"),
     ('id: "confirm-equipment-match"', "equipment progression"),
     ('id: "backing-decision-next"', "backing progression"),
-    ('id: "spool-reel-next"', "spooling progression")
+    ('id: "spool-reel-next"', "spooling progression"),
+    ('id: "add-leader"', "leader add branch"),
+    ('id: "reel-ready-next"', "Reel Ready progression boundary")
 ]:
     require_text(script_js, needle, f"workflow-card {label}")
-if script_js.count("isWorkflowAction: true") < 20:
+if script_js.count("isWorkflowAction: true") < 25:
     fail("expected workflow emphasis across Reel Setup progression/branch cards")
 
-# Selected Choices keeps the approved flat treatment and now includes backing.
+# Selected Choices keeps the approved flat treatment and includes backing plus final leader outcome.
 for needle, label in [
     ('values.style.fontSize = ".78rem"', "matched value size"),
     ('label.style.fontSize = ".78rem"', "matched label size"),
     ('selectedChoices.style.borderTop = "1px solid var(--border)"', "flat top divider"),
     ('selectedChoices.style.borderBottom = "1px solid var(--border)"', "flat bottom divider"),
-    ('labels.push(backingChoice.title)', "backing choice summary value")
+    ('labels.push(backingChoice.title)', "backing choice summary value"),
+    ('labels.push(leaderChoice.title)', "leader choice summary value")
 ]:
     require_text(script_js, needle, label)
 
@@ -371,8 +517,8 @@ if 'selectedChoices.style.background =' in script_js:
 if 'selectedChoices.style.borderRadius =' in script_js:
     fail("Selected Choices must not restore rounded-card styling")
 
-# Block 3.7 adds instructional Decision Knowledge only; it must not create a
-# new persisted/transient user-selection field merely to represent reading instructions.
+# Block 3.8 adds exactly one downstream persistent selection: leaderChoice.
+# It must not add separate material/length/strength state for values not actually captured.
 initial_state_match = re.search(
     r"function createInitialReelSetupState\(\) \{\s*return \{(?P<body>.*?)\n    \};\n\}",
     script_js,
@@ -388,10 +534,11 @@ expected_state_fields = [
     "lineType",
     "targetFish",
     "equipmentCheck",
-    "backingChoice"
+    "backingChoice",
+    "leaderChoice"
 ]
 if state_fields != expected_state_fields:
-    fail(f"Block 3.7 must not add spooling-only selection state; found fields {state_fields}")
+    fail(f"Block 3.8 state schema mismatch; expected only leaderChoice after backingChoice, found {state_fields}")
 
 # Knot detail navigation must restore the exact Reel Setup state.
 for needle, label in [
@@ -422,6 +569,26 @@ for needle, label in [
 ]:
     require_text(block_3_7_workstream, needle, f"Block 3.7 workstream {label}")
 
+for needle, label in [
+    ("**Block:** 3.8 — Leader Setup", "block title"),
+    ("IMPLEMENTED / STATIC VALIDATION", "implementation status"),
+    ("Approved Architecture Change After Opening", "approved two-stage correction"),
+    ("LEADER_MATERIAL = \"leader-material\"", "leader material step documentation"),
+    ("Add a Leader", "navigation-only branch documentation"),
+    ("3–4 feet", "leader length boundary"),
+    ("Starting strength reference", "leader strength boundary"),
+    ("Deferred Search UX Issue — Parking Lot", "deferred search issue preserved")
+]:
+    require_text(block_3_8_workstream, needle, f"Block 3.8 workstream {label}")
+
+for needle, label in [
+    ("Block 3.8 — Leader Setup", "aggregate Block 3.8 section"),
+    ("leaderChoice", "aggregate state update"),
+    ("Reel Ready Check / Rig Guide Handoff", "aggregate next capability"),
+    ("Deferred Search UX Issue — Parking Lot", "aggregate deferred search issue")
+]:
+    require_text(package_3_workstream, needle, f"Package 3 aggregate {label}")
+
 for path in ["script.js", "data/reel-guidance.js"]:
     result = subprocess.run(
         ["node", "--check", str(ROOT / path)],
@@ -431,12 +598,14 @@ for path in ["script.js", "data/reel-guidance.js"]:
     if result.returncode != 0:
         fail(f"JavaScript syntax check failed for {path}: {result.stderr.strip()}")
 
-print("Production Package 3 Block 3.7 validation passed.")
+print("Production Package 3 Block 3.8 validation passed.")
 print(f"Backing choices: {backing_count}")
 print(f"Spooling profiles: {spooling_count}")
+print(f"Leader outcomes: {leader_count}")
 print("Reel Setup navigation: step-aware and sticky/floating.")
 print("Workflow cards: redundant upstream-change cards removed; compact emphasis inherits the existing card palette.")
 print("Spooling instructions: key actions receive structured strong-text emphasis.")
+print("Leader Setup: two-stage decision, material guidance, and canonical Double Uni handoff enabled.")
 print("Reel-specific spooling: spinning, spincast, baitcasting.")
 print("Canonical Knot handoffs: Arbor Knot and Double Uni Knot.")
 print("Reel Setup Knot return context: exact step/state restoration enabled.")

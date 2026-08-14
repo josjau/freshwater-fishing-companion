@@ -9,7 +9,7 @@
 
 const REEL_GUIDANCE_BUILD_INFO = Object.freeze({
     file: "data/reel-guidance.js",
-    milestone: "Knots — Production Package 3 Block 3.7"
+    milestone: "Knots — Production Package 3 Block 3.8"
 });
 
 const REEL_SETUP_STEP_IDS = Object.freeze({
@@ -29,7 +29,10 @@ const REEL_SETUP_STEP_IDS = Object.freeze({
     EQUIPMENT_COMPLETE: "equipment-complete",
     BACKING_DECISION: "backing-decision",
     SPOOL_CONNECTION_PLAN: "spool-connection-plan",
-    SPOOLING_INSTRUCTIONS: "spooling-instructions"
+    SPOOLING_INSTRUCTIONS: "spooling-instructions",
+    LEADER_DECISION: "leader-decision",
+    LEADER_MATERIAL: "leader-material",
+    LEADER_SETUP: "leader-setup"
 });
 
 const REEL_SETUP_ENTRY_OPTIONS = Object.freeze([
@@ -310,6 +313,76 @@ const REEL_SPOOLING_GUIDANCE = Object.freeze({
     })
 });
 
+
+const REEL_LEADER_CHOICES = Object.freeze({
+    none: Object.freeze({
+        id: "none",
+        title: "No Leader — Keep the Main Line",
+        description: "Keep the spooled main line as the working line for the later Rig connection. This is the simplest path when a separate leader is not needed."
+    }),
+    "fluorocarbon-leader": Object.freeze({
+        id: "fluorocarbon-leader",
+        title: "Fluorocarbon Leader",
+        description: "Add a fluorocarbon leader when lower underwater visibility and abrasion resistance are useful. Fluorocarbon sinks more readily than monofilament, so it is not automatically the best choice for every presentation."
+    }),
+    "monofilament-leader": Object.freeze({
+        id: "monofilament-leader",
+        title: "Monofilament Leader",
+        description: "Add a monofilament leader when easy knot handling, stretch, shock absorption, or greater buoyancy than fluorocarbon is useful. Monofilament is generally more visible underwater than fluorocarbon."
+    })
+});
+
+const REEL_LEADER_DECISION_GUIDANCE = Object.freeze({
+    monofilament: Object.freeze({
+        summary: "No Leader is the simplest general starting point with monofilament main line. Add a leader only when you deliberately want a separate section with different visibility, abrasion, stretch, or buoyancy characteristics."
+    }),
+    fluorocarbon: Object.freeze({
+        summary: "No Leader is the simplest general starting point with fluorocarbon main line. A separate leader is optional rather than assumed when the main line already provides fluorocarbon behavior."
+    }),
+    braid: Object.freeze({
+        summary: "A leader is optional with braid, but monofilament or fluorocarbon can reduce the visibility of the terminal section and add different abrasion, stretch, or buoyancy behavior. Choose based on the job the leader needs to do."
+    })
+});
+
+const REEL_LEADER_SETUP_GUIDANCE = Object.freeze({
+    "fluorocarbon-leader": Object.freeze({
+        title: "Fluorocarbon Leader Setup",
+        summary: "Build a short fluorocarbon terminal section without treating one leader length or strength as universal.",
+        items: Object.freeze([
+            Object.freeze({
+                text: "Start with about 3–4 feet of leader as a practical beginner reference. Clearer water, wary fish, cover, species, and the later Rig or presentation can justify a different length.",
+                emphasis: Object.freeze(["Start with about 3–4 feet of leader as a practical beginner reference.", "can justify a different length"])
+            }),
+            Object.freeze({
+                text: "Fluorocarbon offers low underwater visibility and useful abrasion resistance, and it sinks more readily than monofilament. That can help in many leader applications, but it is not a universal choice for every presentation.",
+                emphasis: Object.freeze(["low underwater visibility and useful abrasion resistance", "not a universal choice for every presentation"])
+            }),
+            Object.freeze({
+                text: "Use the Double Uni Knot as the beginner line-to-line connection when the main line and leader are reasonably similar or moderately different in diameter. If the two lines differ dramatically in diameter, a more specialized connection may be preferable.",
+                emphasis: Object.freeze(["Double Uni Knot", "If the two lines differ dramatically in diameter"])
+            })
+        ])
+    }),
+    "monofilament-leader": Object.freeze({
+        title: "Monofilament Leader Setup",
+        summary: "Build a short monofilament terminal section when stretch, knot handling, or buoyancy is useful.",
+        items: Object.freeze([
+            Object.freeze({
+                text: "Start with about 3–4 feet of leader as a practical beginner reference. Clearer water, wary fish, cover, species, and the later Rig or presentation can justify a different length.",
+                emphasis: Object.freeze(["Start with about 3–4 feet of leader as a practical beginner reference.", "can justify a different length"])
+            }),
+            Object.freeze({
+                text: "Monofilament is easy to knot, adds stretch and shock absorption, and is more buoyant than fluorocarbon. It is generally more visible underwater than fluorocarbon, so that tradeoff should remain explicit.",
+                emphasis: Object.freeze(["easy to knot, adds stretch and shock absorption, and is more buoyant than fluorocarbon", "more visible underwater than fluorocarbon"])
+            }),
+            Object.freeze({
+                text: "Use the Double Uni Knot as the beginner line-to-line connection when the main line and leader are reasonably similar or moderately different in diameter. If the two lines differ dramatically in diameter, a more specialized connection may be preferable.",
+                emphasis: Object.freeze(["Double Uni Knot", "If the two lines differ dramatically in diameter"])
+            })
+        ])
+    })
+});
+
 const REEL_EQUIPMENT_GUIDANCE = Object.freeze({
     reel: Object.freeze({
         title: "How to Read Your Reel",
@@ -354,5 +427,6 @@ console.info(
     `${REEL_TARGET_FISH_PROFILES.length} target profiles | ` +
     `${Object.keys(REEL_EQUIPMENT_GUIDANCE).length} equipment guidance groups | ` +
     `${Object.keys(REEL_BACKING_CHOICES).length} backing choices | ` +
-    `${Object.keys(REEL_SPOOLING_GUIDANCE).length} spooling profiles`
+    `${Object.keys(REEL_SPOOLING_GUIDANCE).length} spooling profiles | ` +
+    `${Object.keys(REEL_LEADER_CHOICES).length} leader outcomes`
 );

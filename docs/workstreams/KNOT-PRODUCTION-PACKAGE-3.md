@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-**Status:** In Progress — Blocks 3.2 through 3.7 PASS / VALIDATED; Next Capability: Leader Setup  
+**Status:** In Progress — Blocks 3.2 through 3.7 PASS / VALIDATED; Block 3.8 IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -119,7 +119,7 @@ Treat this as the baseline for later Package 3 blocks unless runtime testing ide
 
 ## Reel Setup Navigation — IMPLEMENTED / VALIDATED
 
-Final navigation behavior through Block 3.7:
+Final navigation behavior through Block 3.8:
 
 - first Reel Setup screen: `← Knots` plus `Home`,
 - later screens: step-aware previous destination plus `Home`,
@@ -416,9 +416,50 @@ Authoritative block closeout record:
 
 `docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.7.md`
 
+# Block 3.8 — Leader Setup
+
+**Status:** IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED
+
+Block 3.8 extends the internal Reel Setup workflow from **Spool the Reel** into a two-stage optional leader decision:
+
+```text
+Do You Need a Leader?
+├─ No Leader — Keep the Main Line
+└─ Add a Leader
+     ↓
+   What Leader Material?
+   ├─ Fluorocarbon Leader
+   └─ Monofilament Leader
+          ↓
+       Leader Setup
+```
+
+Implemented architecture:
+
+- new transient `leaderChoice` selection with exactly `none`, `fluorocarbon-leader`, or `monofilament-leader`,
+- `Add a Leader` is navigation only and is never persisted,
+- three workflow steps: Leader Decision, Leader Material, Leader Setup,
+- **Next — Leader Setup** enabled from Spool the Reel,
+- **Next — Reel Ready Check** visible but disabled,
+- `leaderChoice` appended to Selected Choices only after a final leader outcome exists,
+- contextual leader-decision guidance by selected main-line type,
+- fluorocarbon and monofilament material tradeoffs,
+- approximately `3–4 feet` presented only as a beginner starting reference,
+- target-fish `easyChoice` reused only as a starting leader-strength reference because actual spool pound-test is not stored,
+- no `leaderLength`, `leaderStrength`, or `leaderPoundTest` state,
+- canonical Double Uni handoff only when a separate leader is selected,
+- no Knot handoff on No Leader,
+- exact Reel Setup state restoration from Double Uni with **Leader Setup** return label,
+- upstream/backing changes clear downstream leader state,
+- no CSS change; Block 3.8 reuses the validated workflow-card palette and selective-emphasis treatment.
+
+Authoritative implementation record:
+
+`docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.8.md`
+
 # Current Transient Reel Setup State
 
-Through Block 3.7, Reel Setup transient selection state includes:
+Through Block 3.8, Reel Setup transient selection state includes:
 
 ```text
 entryMode
@@ -427,6 +468,7 @@ lineType
 targetFish
 equipmentCheck
 backingChoice
+leaderChoice
 ```
 
 Workflow position is also held in transient `stepId`. The entire Reel Setup state remains session-only JavaScript state.
@@ -449,7 +491,7 @@ Package 3 continues to preserve the approved ownership model:
 
 # Current Integration Boundary
 
-The normal Knot landing remains intentionally unwired to Reel Setup through Block 3.7.
+The normal Knot landing remains intentionally unwired to Reel Setup through Block 3.8.
 
 Do not wire **Attach Line to a Reel** to the internal Reel Setup workflow until the approved later Package 3 integration block.
 
@@ -468,13 +510,13 @@ Future direction:
 
 This issue affects both Rigs and Knots. It is intentionally deferred and must not be lost when Package 3 advances.
 
-# Next Package 3 Capability — Leader Setup
+# Next Package 3 Capability — Reel Ready Check / Rig Guide Handoff
 
-The next approved V1 capability after Block 3.7 is **optional Leader Setup**.
+After Block 3.8 runtime validation, the next approved V1 capability is the final **Reel Ready Check / Rig Guide handoff**.
 
-The current approved Package 3 records do **not** assign this capability a block number. Do not invent one in advance; assign the next block number only when the block is formally opened from the latest verified GitHub documentation.
+That later block must verify the completed line system, present a clear completion state, and hand the user into the Rig Guide without prematurely broadening into casting, lure optimization, or Package 4 Knot media.
 
-Leader Setup must preserve every validated behavior through Block 3.7 and must not broaden into excluded casting/backlash/lure-optimization scope. After Leader Setup, Package 3 still requires the final **Reel Ready** checkpoint / Rig Guide handoff and later integration of the normal **Attach Line to a Reel** task into the completed internal Reel Setup workflow.
+The normal **Attach Line to a Reel** Knot landing entry remains intentionally unwired until the approved Package 3 integration boundary is reached.
 
 # Exact Resume Point
 
@@ -485,14 +527,15 @@ Production Package 3 is active.
 **Block 3.4 — PASS / VALIDATED**  
 **Block 3.5 — PASS / VALIDATED**  
 **Block 3.6 — PASS / VALIDATED**  
-**Block 3.7 — PASS / VALIDATED**
+**Block 3.7 — PASS / VALIDATED**  
+**Block 3.8 — IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED**
 
-Next capability:
+Next:
 
-**Optional Leader Setup** — block number intentionally not assigned until the next Package 3 block is formally opened.
+**Complete Block 3.8 static validation, upload/verify the production package, then run Leader Setup runtime validation.**
 
-Before editing any existing production source file for the next Package 3 block, re-fetch its latest authoritative GitHub `main` contents.
+Carry forward the deferred Rig/Knot scoped-search UX issue for later global/deeper-search work.
 
-Carry forward the deferred Rig/Knot scoped-search UX issue for the later global/deeper-search workstream.
+Do not begin the Reel Ready Check / Rig Guide handoff block until Block 3.8 is runtime validated and documented.
 
 Do not begin Production Package 4 Knot media or Fish Guide while Package 3 remains open.
