@@ -1,10 +1,6 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-<<<<<<< HEAD
-**Status:** In Progress — Block 3.3 Implemented / Unvalidated  
-=======
-**Status:** In Progress — Foundation Block 3.2 PASS / VALIDATED  
->>>>>>> 58f61e3aba38a0ce0ee9e07edef95d5719d98688
+**Status:** In Progress — Block 3.3 Runtime PASS / UX Revision 1 Implemented / Awaiting Upload  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -146,10 +142,9 @@ Confirmed:
 - existing **Attach Line to a Reel** production behavior remains unchanged,
 - no project-source JavaScript error was reported.
 
-<<<<<<< HEAD
 # Block 3.3 — Line Selection / Beginner Line Guidance
 
-**Status:** Implemented / Unvalidated
+**Status:** Functional Runtime PASS / UX Revision 1 Awaiting Upload
 
 Block 3.3 extends the validated transient Reel Setup state with line selection while keeping the workflow behind the internal `openReelSetup()` entry.
 
@@ -221,25 +216,81 @@ The block preserves:
 
 The old temporary **Reel Setup Foundation Check** is replaced by the real line-selection sequence. It was a Block 3.2 validation checkpoint, not an intended final workflow step.
 
-## Block 3.3 Static Validation
+## Block 3.3 Initial Runtime Validation
 
-Package validation requires:
+**Result:** Functional PASS
 
-- exactly 2 setup-mode options,
-- exactly 4 reel-type options,
-- exactly 3 physical line types,
-- exactly 2 line-guidance actions,
-- exactly 4 beginner reel-type recommendations,
-- Monofilament as the current project-defined beginner starting recommendation for each supported/unknown reel state,
-- an explicit Spincast + Braid compatibility warning,
-- valid JavaScript syntax,
-- no production wiring from the Knot landing into Reel Setup yet.
+Microsoft Edge validation confirmed:
 
-Runtime validation remains required after the package is applied and GitHub integrity is verified.
+- all five line-selection choices display,
+- **Help Me Choose** presents Monofilament as an **Easy beginner choice** rather than a requirement,
+- setup mode, reel type, and selected physical line are preserved correctly,
+- **Change Line Choice** preserves setup mode and reel type,
+- **I'm Not Sure** provides non-forcing identification guidance,
+- Spincast + Braid displays the compatibility warning,
+- **Start Over** and **Return to Knots** behave correctly,
+- no application-source JavaScript error was reported.
+
+A visual refinement was requested before Block 3.3 closeout: make the selected setup values on **Line Choice Check** more prominent than the explanatory prose.
+
+## UX Revision 1 — Selected Choices Summary
+
+UX Revision 1 separates the selected values from the guidance paragraph and presents them as a dedicated summary immediately under the **Line Choice Check** heading:
+
+```text
+SELECTED CHOICES
+New or Empty Reel · Spinning Reel · Monofilament.
+```
+
+Presentation uses only existing Forest Journal theme tokens:
+
+- left accent: `--accent-knots`,
+- soft background tint derived from `--accent-knots` and `--surface`,
+- selected values: the same Knot metadata color mix already established elsewhere,
+- small uppercase `--text-subtle` label,
+- normal guidance/tradeoff/compatibility prose remains a separate paragraph below the summary.
+
+The summary is constructed with safe DOM APIs and `textContent`. No new global CSS rule or theme token is required; the treatment is local to the Reel Setup checkpoint.
+
+UX Revision 1 artifact:
+
+`Freshwater-Fishing-Companion-Knot-Production-Package-3-Block-3.3-UX-Revision-1.zip`
+
+SHA-256:
+
+`acffdf61cbbad82edbbc6a2c06536d34bfac92b72eb9f432a71c1386001521e2`
+
+Package files:
+
+```text
+script.js
+tools/validate_knot_package_3.py
+```
+
+Expected post-upload Git blobs:
+
+```text
+dda2c8b93497809bf5ebb30c75a6dbf7132810bb  script.js
+b5990d909d93436ed7e485841f6cd558b0ec8fe7  tools/validate_knot_package_3.py
+```
+
+Static validation passed:
+
+```text
+Production Package 3 Block 3.3 UX Revision 1 validation passed.
+Entry options: 2
+Reel types: 4
+Physical line types: 3
+Line guidance actions: 2
+Beginner reel recommendations: 4
+Normal Knot landing remains intentionally unwired to Reel Setup.
+```
+
+UX Revision 1 still requires GitHub blob verification and focused Microsoft Edge visual confirmation before Block 3.3 can be formally closed.
 
 # Next Build Block — 3.4
 
-After Block 3.3 passes runtime validation, Block 3.4 will add **Target Fish / Starting Pound-Test Guidance**.
+After Block 3.3 closes, Block 3.4 will add **Target Fish / Starting Pound-Test Guidance**.
 
 Block 3.4 should:
 
@@ -249,42 +300,14 @@ Block 3.4 should:
 - preserve the selected line type,
 - avoid lure/cover/technique optimization that belongs to later Decision Knowledge,
 - defer the final equipment-capacity check to the dedicated compatibility / **How to Read Your Reel** block.
-=======
-# Next Build Block — 3.3
-
-Build Block 3.3 will add **line selection and beginner line-choice guidance** on top of the validated state foundation.
-
-Planned controlled line choices:
-
-- Monofilament,
-- Fluorocarbon,
-- Braid,
-- Help Me Choose,
-- I'm Not Sure.
-
-The block must preserve:
-
-- setup mode,
-- selected reel type,
-- session-only state,
-- app-wide no-auto-focus behavior,
-- Production Package 2 navigation/search/detail behavior,
-- the intentionally unwired production Knot entry until the guided workflow is sufficiently complete for public integration.
-
-Technical recommendation values and claims must be based on authoritative sources or clearly labeled as project-defined beginner guidance. Avoid false precision and use language such as **Recommended starting range** and **Easy beginner choice**.
->>>>>>> 58f61e3aba38a0ce0ee9e07edef95d5719d98688
 
 # Exact Resume Point
 
 Production Package 3 is active.
 
-<<<<<<< HEAD
-**Block 3.2 is PASS / VALIDATED. Block 3.3 is implemented and awaiting post-upload GitHub integrity verification and Microsoft Edge runtime validation.**
+**Block 3.2 is PASS / VALIDATED. Block 3.3 functional runtime validation passed. UX Revision 1 is implemented and awaiting upload, GitHub blob verification, and focused Microsoft Edge confirmation.**
 
-Do not begin Block 3.4 until Block 3.3 passes validation.
-=======
-**Block 3.2 is complete and validated. Begin Block 3.3 — Line Selection / Beginner Line Guidance.**
->>>>>>> 58f61e3aba38a0ce0ee9e07edef95d5719d98688
+Do not begin Block 3.4 until UX Revision 1 passes validation and Block 3.3 is formally closed.
 
 Do not wire **Attach Line to a Reel** to the new workflow until the guided sequence is sufficiently complete and explicitly reaches its integration block.
 
