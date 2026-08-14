@@ -1,15 +1,15 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: script.js
-   PURPOSE: Coordinates routes, Fish/Rig/Knot discovery, Knot detail
-   navigation, My Tackle placeholders, and Rig tackle-readiness checks.
+   PURPOSE: Coordinates routes, Fish/Rig/Knot discovery, Reel Setup,
+   Knot detail navigation, My Tackle placeholders, and Rig readiness.
    ========================================================== */
 
 "use strict";
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knot Guide — Production Package 2 Revision 2"
+    milestone: "Knots — Production Package 3 Foundation"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -26,6 +26,7 @@ const ROUTES = Object.freeze({
     KNOTS: "knots",
     KNOT_BROWSE: "knot-browse",
     KNOT_DETAIL: "knot-detail",
+    REEL_SETUP: "reel-setup",
     CATCH_LOG: "catch-log",
     FAVORITES: "favorites",
     SETTINGS: "settings"
@@ -111,6 +112,7 @@ let selectedKnotId = null;
 let selectedKnotBrowseKey = "all";
 let selectedKnotTaskId = null;
 let selectedKnotDetailSource = "guide";
+let reelSetupState = createInitialReelSetupState();
 let detailNavigationStack = [];
 
 function clearDetailNavigationStack() {
@@ -161,6 +163,7 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.KNOTS]: renderKnotsView,
     [ROUTES.KNOT_BROWSE]: renderKnotBrowseView,
     [ROUTES.KNOT_DETAIL]: renderKnotDetailView,
+    [ROUTES.REEL_SETUP]: renderReelSetupView,
     [ROUTES.CATCH_LOG]: renderCatchLogView,
     [ROUTES.FAVORITES]: renderFavoritesView,
     [ROUTES.SETTINGS]: renderSettingsView
@@ -544,6 +547,150 @@ function renderTackleView(appMain) {
             { id: "identify-tackle", title: "Identify Tackle", description: "Use contextual reference help when you are not sure what an item is." },
             { id: "check-rig-readiness", title: "Check Rig Readiness", description: "Review whether you have the components needed for supported rigs." }
         ]
+    });
+}
+
+
+function createInitialReelSetupState() {
+    return {
+        stepId: REEL_SETUP_STEP_IDS.START,
+        entryMode: null,
+        reelType: null
+    };
+}
+
+function resetReelSetupState() {
+    reelSetupState = createInitialReelSetupState();
+}
+
+function openReelSetup() {
+    resetReelSetupState();
+    showView(ROUTES.REEL_SETUP);
+}
+
+function getReelSetupOption(options, optionId) {
+    return options.find((option) => option.id === optionId) ?? null;
+}
+
+function renderReelSetupView(appMain) {
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.REEL_TYPE) {
+        renderReelSetupReelTypeStep(appMain);
+        return;
+    }
+
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.FOUNDATION_COMPLETE) {
+        renderReelSetupFoundationComplete(appMain);
+        return;
+    }
+
+    renderReelSetupStartStep(appMain);
+}
+
+function renderReelSetupStartStep(appMain) {
+    renderView(appMain, {
+        headingId: "reel-setup-title",
+        title: "Get Your Reel Ready",
+        description: "Start by telling us whether this reel is empty or already has line that you want to replace.",
+        cards: REEL_SETUP_ENTRY_OPTIONS.map((option) => ({
+            ...option,
+            isAvailable: true
+        })),
+        onCardSelect: (entryMode) => {
+            if (!getReelSetupOption(REEL_SETUP_ENTRY_OPTIONS, entryMode)) return;
+            reelSetupState.entryMode = entryMode;
+            reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
+            showView(ROUTES.REEL_SETUP);
+        }
+    });
+}
+
+function renderReelSetupReelTypeStep(appMain) {
+    const entryOption = getReelSetupOption(
+        REEL_SETUP_ENTRY_OPTIONS,
+        reelSetupState.entryMode
+    );
+
+    if (!entryOption) {
+        resetReelSetupState();
+        renderReelSetupStartStep(appMain);
+        return;
+    }
+
+    renderView(appMain, {
+        headingId: "reel-setup-title",
+        title: "What Kind of Reel Do You Have?",
+        description: `${entryOption.title} selected. Choose the reel style you are working with.`,
+        cards: REEL_TYPE_OPTIONS.map((option) => ({
+            ...option,
+            isAvailable: true
+        })),
+        onCardSelect: (reelType) => {
+            if (!getReelSetupOption(REEL_TYPE_OPTIONS, reelType)) return;
+            reelSetupState.reelType = reelType;
+            reelSetupState.stepId = REEL_SETUP_STEP_IDS.FOUNDATION_COMPLETE;
+            showView(ROUTES.REEL_SETUP);
+        }
+    });
+}
+
+function renderReelSetupFoundationComplete(appMain) {
+    const entryOption = getReelSetupOption(
+        REEL_SETUP_ENTRY_OPTIONS,
+        reelSetupState.entryMode
+    );
+    const reelTypeOption = getReelSetupOption(
+        REEL_TYPE_OPTIONS,
+        reelSetupState.reelType
+    );
+
+    if (!entryOption || !reelTypeOption) {
+        resetReelSetupState();
+        renderReelSetupStartStep(appMain);
+        return;
+    }
+
+    renderView(appMain, {
+        headingId: "reel-setup-title",
+        title: "Reel Setup Foundation Check",
+        description: `${entryOption.title} · ${reelTypeOption.title}. The next build block extends this verified state into line selection and beginner guidance.`,
+        cards: [
+            {
+                id: "change-reel-type",
+                title: "Change Reel Type",
+                description: "Return to reel identification without losing the selected setup mode.",
+                isAvailable: true
+            },
+            {
+                id: "start-reel-setup-over",
+                title: "Start Over",
+                description: "Clear the temporary Reel Setup state and return to the first step.",
+                isAvailable: true
+            },
+            {
+                id: "return-to-knots",
+                title: "Return to Knots",
+                description: "Leave the internal Package 3 foundation route and return to the Knot Guide.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            if (actionId === "change-reel-type") {
+                reelSetupState.reelType = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
+            if (actionId === "start-reel-setup-over") {
+                openReelSetup();
+                return;
+            }
+
+            if (actionId === "return-to-knots") {
+                resetReelSetupState();
+                showView(ROUTES.KNOTS);
+            }
+        }
     });
 }
 
