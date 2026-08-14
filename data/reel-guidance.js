@@ -9,7 +9,7 @@
 
 const REEL_GUIDANCE_BUILD_INFO = Object.freeze({
     file: "data/reel-guidance.js",
-    milestone: "Knots — Production Package 3 Block 3.5"
+    milestone: "Knots — Production Package 3 Block 3.6"
 });
 
 const REEL_SETUP_STEP_IDS = Object.freeze({
@@ -26,7 +26,9 @@ const REEL_SETUP_STEP_IDS = Object.freeze({
     READ_REEL: "read-reel",
     READ_ROD: "read-rod",
     EQUIPMENT_MISMATCH: "equipment-mismatch",
-    EQUIPMENT_COMPLETE: "equipment-complete"
+    EQUIPMENT_COMPLETE: "equipment-complete",
+    BACKING_DECISION: "backing-decision",
+    SPOOL_CONNECTION_PLAN: "spool-connection-plan"
 });
 
 const REEL_SETUP_ENTRY_OPTIONS = Object.freeze([
@@ -196,6 +198,24 @@ const REEL_TARGET_FISH_PROFILES = Object.freeze([
     })
 ]);
 
+const REEL_BACKING_CHOICES = Object.freeze({
+    none: Object.freeze({
+        id: "none",
+        title: "No Separate Backing",
+        description: "Attach the selected monofilament or fluorocarbon main line directly to the spool for the simplest beginner setup."
+    }),
+    "monofilament-backing": Object.freeze({
+        id: "monofilament-backing",
+        title: "Monofilament Backing",
+        description: "Start with monofilament on the spool, then join it to the selected main line. This is the safer general path when braid could slip on a smooth spool and can also reduce the amount of main line needed to fill a spool."
+    }),
+    "direct-braid-approved": Object.freeze({
+        id: "direct-braid-approved",
+        title: "Direct Braid — Reel Approved",
+        description: "Use this only when the exact reel or spool explicitly provides a braid-ready attachment surface or manufacturer-approved direct-braid method."
+    })
+});
+
 const REEL_EQUIPMENT_GUIDANCE = Object.freeze({
     reel: Object.freeze({
         title: "How to Read Your Reel",
@@ -238,5 +258,6 @@ console.info(
     `${REEL_TYPE_OPTIONS.length} reel types | ` +
     `${Object.keys(REEL_LINE_TYPE_GUIDANCE).length} line types | ` +
     `${REEL_TARGET_FISH_PROFILES.length} target profiles | ` +
-    `${Object.keys(REEL_EQUIPMENT_GUIDANCE).length} equipment guidance groups`
+    `${Object.keys(REEL_EQUIPMENT_GUIDANCE).length} equipment guidance groups | ` +
+    `${Object.keys(REEL_BACKING_CHOICES).length} backing choices`
 );
