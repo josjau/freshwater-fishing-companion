@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 2.2.2  
+**Document Revision:** 2.2.3  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-13
 
@@ -276,7 +276,7 @@ Current state:
 
 - Planning, research validation, and canonical content lock are complete.
 - Production Package 1 is **Validated**: 10 active canonical Knots, 6 Beginner / 4 Intermediate, four approved Core IDs, all 20 active Rigs audited, and 31 real tied `knotApplications` connections.
-- Production Package 2 Runtime Revision 5 (`0.6.5`) is **Implemented / Unvalidated** in the current coherent update; Runtime Revision 4 completed the Microsoft Edge functional/regression checklist and exposed two final UX remediation items.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) is **PASS / VALIDATED**. Runtime Revision 4 completed the full Microsoft Edge functional/regression checklist; Revision 5 passed GitHub blob verification and the two final targeted remediation checks.
 - Package 2 includes task-first Knot navigation, deterministic Knot search, text detail pages, progressive disclosure for long Rig usage lists, and context-preserving Rig ↔ Knot navigation.
 - Revision 4 removed section-level accenting from **What are you trying to do?**, applied Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, preserved normal treatment for the other two task cards, varied accent bars, and Core Knots priority treatment, and reduced collapsed **Where You'll Use It** from four visible Rigs to two.
 - Revision 5 restores the viewport to the **Where You'll Use It** relationship group after **Show fewer** collapses a long list and removes automatic search-field focus on view render application-wide so navigation does not summon a mobile software keyboard.
@@ -296,7 +296,7 @@ See:
 
 The approved development order is:
 
-1. **Knots** — active milestone; Production Package 2 remains open.
+1. **Knots** — active milestone; Production Package 2 is validated and Production Package 3 is next.
 2. **Fish Guide** — full field-guide expansion after Knots.
 3. **What Should I Throw** — recommendation/Decision Knowledge milestone, including the approved `How to Rig It` versus `How to Fish It` instructional split.
 4. **Tackle Reference / Find Tackle** — searchable canonical Tackle discovery independent of remembering a Rig; results expose derived `Used In` Rig relationships and other connected knowledge.
@@ -310,16 +310,14 @@ The approved development order is:
 
 # Next Segment
 
-The active milestone remains **Knots**. Production Package 2 is not finalized.
+The active milestone remains **Knots**. Production Package 2 is **Validated / Finalized**.
 
 Exact next segment:
 
-1. Push the coherent Runtime Revision 5 remediation package through GitHub Desktop.
-2. Re-fetch and verify the exact Revision 5 GitHub blobs.
-3. Run the Package 2 static validator against the verified repository state.
-4. In Microsoft Edge, confirm **Show fewer** returns the viewport to **Where You'll Use It** and confirm Fish/Rig/Knot/scoped search views do not auto-focus their search fields on navigation.
-5. If the targeted remediation checks and console pass, finalize Production Package 2 and proceed to Package 3.
-5. Correct only defects exposed by validation; otherwise mark Package 2 Validated and close its documentation.
-6. Only after Package 2 is validated may Package 3 — **Get Your Reel Ready** — begin.
+1. Re-fetch current GitHub `main` before editing Package 3 source files.
+2. Reconcile the approved Reel & Line Setup requirements with the current validated Package 2 runtime architecture.
+3. Begin Production Package 3 — **Get Your Reel Ready** — from the existing **Attach Line to a Reel** task entry.
+4. Preserve validated Package 2 navigation, search, focus, and relationship behavior unless an approved Package 3 requirement explicitly extends it.
+5. Complete Package 3 validation and documentation closeout before beginning Package 4 static Knot SVG/media integration.
 
 Do not begin Fish Guide, What Should I Throw, Tackle Reference, Settings/User Data, My Tackle, Catch Log, Global Search, or Favorites implementation until Knots is completed and validated unless the roadmap is explicitly revised.

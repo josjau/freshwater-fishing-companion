@@ -1,7 +1,7 @@
 # Knot Detail Page Approval
 
 **Status:** Approved / Runtime Refinement  
-**Implementation Status:** Implemented / Unvalidated in Runtime Revision 5  
+**Implementation Status:** Validated in Runtime Revision 5 (`0.6.5`)  
 **Date:** 2026-08-13
 
 The Knot detail page should follow the established Rig detail-page workflow as closely as practical.

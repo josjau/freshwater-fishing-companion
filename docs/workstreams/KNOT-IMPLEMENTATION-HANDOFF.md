@@ -1,6 +1,6 @@
 # Knot Implementation Handoff
 
-**Status:** Approved / Ready to Verify Runtime Revision 5  
+**Status:** Approved / Production Package 2 Validated — Ready for Production Package 3  
 **Date:** 2026-08-13  
 **Repository:** `josjau/freshwater-fishing-companion`  
 **Branch:** `main`  
@@ -38,8 +38,8 @@ Knots planning, research validation, and canonical content lock are complete. Pr
 Current production state:
 
 - Production Package 1 — **Validated**.
-- Production Package 2 Runtime Revision 5 (`0.6.5`) — **Implemented / Unvalidated**; Revision 4 functional/regression blocks passed and the two final UX remediation items are implemented here.
-- GitHub blob verification and Microsoft Edge runtime/regression validation remain open.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) — **PASS / VALIDATED / FINALIZED**.
+- GitHub blob integrity matched the delivered Revision 5 package; the complete Microsoft Edge functional/regression checklist and both final remediation checks passed.
 
 # Canonical Post-Rig Roadmap
 
@@ -497,26 +497,23 @@ Do not make destructive shortened replacements of long governing documents. Re-f
 
 # Exact Resume Point
 
-**Production Package 2 is still open. Do not begin Package 3 or Fish Guide.**
+**Production Package 2 is PASS / VALIDATED / FINALIZED. Production Package 3 is now unblocked.**
 
 Current `main` state:
 
 - Production Package 1 — validated.
-- Production Package 2 Runtime Revision 5 (`0.6.5`) — implemented / unvalidated in the current coherent update.
-- Revision 4 removed section-level priority framing from **What are you trying to do?**, gave Important Card treatment to the two foundational task cards, and reduced collapsed **Where You'll Use It** Rig relationships from four to two.
-- Revision 4 Microsoft Edge functional/regression blocks passed. Review identified two final UX remediations: collapse-context restoration and removal of automatic search focus.
-- Revision 5 implements both remediations without changing canonical Knot/Rig data, task mappings, search ranking, routing, or relationship ownership.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) — validated and finalized.
+- Revision 4 removed section-level priority framing from **What are you trying to do?**, gave Important Card treatment to the two foundational task cards, reduced collapsed **Where You'll Use It** Rig relationships from four to two, and passed the full Microsoft Edge functional/regression checklist.
+- Revision 5 added collapse-context restoration and removed automatic search focus application-wide without changing canonical Knot/Rig data, task mappings, search ranking, routing, or relationship ownership.
+- Revision 5 GitHub blob verification and both targeted Microsoft Edge remediation checks passed.
 
-## First Action Next Session — Verify and Validate Runtime Revision 5
+## First Action Next Session — Begin Production Package 3
 
-1. Re-fetch the Revision 5 production/documentation files from GitHub `main` and verify exact blobs against the delivered package.
-2. Run `tools/validate_knot_package_2.py` against the verified repository state.
-3. In Microsoft Edge, expand Palomar **Where You'll Use It**, scroll deep in the expanded list, select **Show fewer**, and confirm the viewport returns to that relationship group while focus remains on the disclosure control.
-4. Open Fish, Rig, Knot, and scoped browse/search views and confirm no search field auto-focuses merely because the view rendered.
-5. Confirm the DevTools Console has no project-source errors.
-6. If all targeted remediation checks pass, update validation/current-state documentation, close Package 2 as **PASS / VALIDATED**, and proceed to Package 3.
-
-Only after Package 2 passes runtime validation should Production Package 3 — **Get Your Reel Ready** — begin.
+1. Re-fetch current source and governing Reel & Line Setup documentation from GitHub `main`.
+2. Confirm Package 3 scope against the approved Reel & Line Setup architecture before editing.
+3. Build Production Package 3 — **Get Your Reel Ready** — from the existing **Attach Line to a Reel** task entry.
+4. Preserve the validated Package 2 behavior unless an approved Package 3 requirement explicitly extends it.
+5. Validate and close Package 3 before beginning Package 4 static Knot SVG/media integration.
 
 Do not begin static Knot SVG production before Package 4.
 

@@ -1,6 +1,6 @@
 # Knot Production Package 2
 
-**Status:** Production Package 2 / Runtime Revision 5 Implemented / Unvalidated  
+**Status:** Production Package 2 / Runtime Revision 5 — PASS / VALIDATED / FINALIZED  
 **Milestone:** Knots  
 **Implementation Version:** 0.6.5  
 **Date:** 2026-08-13
@@ -257,12 +257,19 @@ After upload and GitHub integrity verification:
 18. Confirm Verified References appear inside How to Tie It.
 19. Recheck Fish search, Rig Guide/search/detail, and Tackle reference/readiness for regressions.
 
-# Exact Resume Point
+# Final Validation Result
 
-If this file is present on GitHub `main`, confirm the deployed/source state is Runtime Revision 5 (`0.6.5`). Package 2 has **not** passed final remediation validation.
+**Production Package 2 is PASS / VALIDATED / FINALIZED at Runtime Revision 5 (`0.6.5`).**
 
-Runtime Revision 4 completed the broader Microsoft Edge functional/regression checklist. The exact next action is to verify the Revision 5 GitHub blobs and static validator results, then run the two targeted remediation checks: **Show fewer** viewport restoration and application-wide no-auto-focus search behavior. If those checks pass with no project-source console errors, mark Production Package 2 **PASS / VALIDATED**.
+Validated closeout state:
 
-After Package 2 passes, proceed to **Production Package 3 — Get Your Reel Ready**.
+- Revision 5 production/documentation blobs on GitHub `main` matched the delivered package.
+- Runtime Revision 4 completed the broader Microsoft Edge functional/regression checklist successfully.
+- Runtime Revision 5 targeted validation passed for **Show fewer** viewport/context restoration.
+- Runtime Revision 5 targeted validation passed for application-wide removal of automatic search-field focus on view render.
+- Manual search focus still works through deliberate user interaction.
+- Package 2 introduced no new canonical Knot/Rig data, task-mapping, search-ranking, routing, or relationship-ownership changes after Revision 4.
+
+Proceed next to **Production Package 3 — Get Your Reel Ready**.
 
 Do not begin static Knot SVG production until Production Package 4.

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.13.2  
+**Document Revision:** 1.13.3  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-13
 
@@ -9,7 +9,7 @@
 
 ## Knots — Production Packages 1 and 2
 
-**Implementation Status: In Progress / Package 2 Implemented / Unvalidated**
+**Implementation Status: In Progress / Package 2 Validated / Finalized**
 
 ### Added / Changed
 
@@ -29,8 +29,9 @@
 - Production Package 2 Revision 4 GitHub blob integrity: passed.
 - Production Package 2 Revision 4 Microsoft Edge functional/regression blocks: passed; two UX remediation items were identified during review and promoted to Revision 5 before package closeout.
 - Production Package 2 Revision 5 local static preflight: passed.
-- Production Package 2 Revision 5 GitHub blob verification and targeted Edge remediation validation: **pending post-push**.
-- Production Package 2 Microsoft Edge runtime validation: **not complete**.
+- Production Package 2 Revision 5 GitHub blob verification: passed; all 10 delivered Revision 5 files matched GitHub `main` by blob SHA.
+- Production Package 2 Microsoft Edge runtime validation: passed, including the complete Revision 4 functional/regression checklist and both Revision 5 targeted remediation checks.
+- Production Package 2 status: **PASS / VALIDATED / FINALIZED**.
 - Production Package 3 (**Get Your Reel Ready**) and Package 4 (static Knot SVG/media integration): not started.
 
 See `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`, `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`, `NAVIGATION-PAGE-STANDARD.md`, `MILESTONES.md`, and `HANDOFF.md`.

@@ -1,15 +1,15 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.3.2  
+**Document Revision:** 1.3.3  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
-**Latest Finalized Workstream:** `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0  
-**Active Workstream:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md` — Runtime Revision 5 (`0.6.5`) implemented / unvalidated  
+**Latest Finalized Workstream:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2-VALIDATION.md` — Production Package 2 PASS / VALIDATED  
+**Active Workstream:** `docs/workstreams/KNOT-IMPLEMENTATION-HANDOFF.md` — Production Package 2 validated; Production Package 3 is the next approved segment  
 **Active Milestone:** Knots  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Knots implementation in progress. Production Package 1 is validated. Production Package 2 Runtime Revision 4 completed the Microsoft Edge functional/regression checklist, which exposed two final UX remediation items. Runtime Revision 5 (`0.6.5`) is the current coherent update: collapsing an expanded `Where You'll Use It` list restores the viewport to that relationship group, and search fields no longer auto-focus on view render anywhere in the application. GitHub blob verification, static validation on `main`, and targeted Microsoft Edge confirmation of these two fixes remain required.  
+**Session Status:** Knots implementation remains in progress. Production Packages 1 and 2 are validated. Runtime Revision 5 (`0.6.5`) is the finalized Package 2 implementation: GitHub blob integrity matched the delivered package, the broader Microsoft Edge functional/regression checklist passed, and both final remediation checks passed — `Show fewer` restores context to `Where You'll Use It`, and search fields do not auto-focus on view render application-wide. Production Package 3 — **Get Your Reel Ready** — is now the next approved build segment.  
 **Last Updated:** 2026-08-13
 
 # 1. Start Here
@@ -73,7 +73,7 @@ The approved order is:
 
 This order is canonical until explicitly revised.
 
-`ROADMAP.md` revision 0.3.3 remains the canonical sequence. Current implementation state is recorded in this handoff, `MILESTONES.md` revision 2.2.0, and the active Knot workstream records.
+`ROADMAP.md` revision 0.3.3 remains the canonical sequence. Current implementation state is recorded in this handoff, `MILESTONES.md` revision 2.2.3, and the active Knot workstream records.
 
 # 4. Active Milestone — Knots
 
@@ -84,8 +84,8 @@ Planning, research, and canonical content lock are complete.
 Current production state:
 
 - Production Package 1 — **Validated**: 10 canonical Knots, four Core IDs, all 20 Rigs audited, 31 real tied connections.
-- Production Package 2 Runtime Revision 5 (`0.6.5`) — **Implemented / Unvalidated** in the current coherent update; Revision 4 functional/regression checks passed and the two final UX remediation items are implemented here.
-- Post-push GitHub blob verification and Microsoft Edge runtime/regression validation are still required before Package 2 can be validated.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) — **PASS / VALIDATED**. Revision 4 passed the full Microsoft Edge functional/regression checklist; Revision 5 passed GitHub blob verification and the two targeted remediation checks.
+- Production Package 3 — **Get Your Reel Ready** — is approved as the next build segment and has not yet begun.
 
 Controlling records:
 
@@ -297,20 +297,23 @@ Animations should be user-controlled, non-autoplaying, reduced-motion aware, and
 
 ## Exact Stopping Point — Resume Here
 
-**Do not begin Package 3 or Fish Guide. Production Package 2 remains open.**
+**Production Package 2 is PASS / VALIDATED and closed. Production Package 3 is now unblocked.**
 
-The current coherent update is Runtime Revision 5 (`0.6.5`). Production Package 2 remains unvalidated until the final remediation checks pass.
+Final Package 2 state:
+
+- Runtime Revision 5 (`0.6.5`) is the validated implementation.
+- Revision 5 GitHub blobs exactly matched the delivered package.
+- The broader Microsoft Edge functional/regression checklist passed.
+- Final targeted remediation validation passed for both **Show fewer** context restoration and application-wide no-auto-focus search behavior.
+- No additional Package 2 production correction is planned unless a later regression exposes a genuine defect.
 
 Resume in this order:
 
-1. Re-fetch the Revision 5 production/documentation files from GitHub `main` and verify their exact blobs against the delivered package.
-2. Run `tools/validate_knot_package_2.py` against the verified repository state.
-3. Hard-refresh the deployed app in Microsoft Edge with DevTools Console open.
-4. On Palomar, expand **Where You'll Use It** to all 20 Rigs, scroll deep in the expanded list, then select **Show fewer**. Confirm the list returns to two and the viewport returns to the **Where You'll Use It** relationship group without moving keyboard focus away from the disclosure control.
-5. Open Fish, Rig, Knot, and scoped browse/search views. Confirm no search input receives focus merely because the view opened and no mobile software keyboard would be triggered without deliberate search interaction.
-6. If those targeted checks and the console pass, record Production Package 2 as **PASS / VALIDATED** and proceed to Package 3.
-
-Only after Package 2 passes runtime validation should Production Package 3 — **Get Your Reel Ready** — begin.
+1. Re-fetch current GitHub `main` before changing any source file for Package 3.
+2. Review the approved Reel & Line Setup direction and confirm the Package 3 implementation boundary against current architecture.
+3. Begin Production Package 3 — **Get Your Reel Ready** — using **Attach Line to a Reel** as the single landing entry.
+4. Preserve the validated Package 2 navigation, search, detail-page, relationship, and focus behavior unless Package 3 explicitly requires an approved extension.
+5. Validate Package 3 before beginning Package 4 static Knot media work.
 
 Do not begin Fish Guide until the Knots milestone is finalized and validated.
 
