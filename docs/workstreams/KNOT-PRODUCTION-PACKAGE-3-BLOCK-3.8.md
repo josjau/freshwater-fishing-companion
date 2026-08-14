@@ -1,11 +1,12 @@
 # Knot Production Package 3 — Block 3.8
 
-**Status:** IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED  
+**Status:** PASS / VALIDATED  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.8 — Leader Setup  
 **Opening Date:** 2026-08-14  
 **Implementation Date:** 2026-08-14  
+**Validation Date:** 2026-08-14  
 **Target Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
 
 # Purpose
@@ -377,59 +378,101 @@ Reel Setup Knot return context: exact step/state restoration enabled.
 Normal Knot landing remains intentionally unwired to Reel Setup.
 ```
 
-# Runtime Validation Plan
+# Runtime Validation — PASS
 
-## Step 1 — Block 3.7 Regression Boundary
+Microsoft Edge runtime validation on 2026-08-14 passed the complete six-step Block 3.8 checklist.
 
-Confirm the validated spooling content, selective bolding, workflow palette, sticky navigation, Selected Choices, and spool-connection Knot return paths remain intact.
+## Step 1 — Block 3.7 Regression Boundary: PASS
 
-## Step 2 — Leader Decision
+Confirmed:
 
-Confirm:
+- Spool the Reel retains the validated reel-specific instructions and selective bolding,
+- workflow cards retain the stronger treatment and inherited multi-color Forest Journal palette,
+- sticky Previous/Home navigation remains correct,
+- existing Reel Setup selections remain intact,
+- prior Spool Connection Plan Knot handoffs and exact return context remain functional.
 
-- **Next — Leader Setup** is enabled,
+## Step 2 — Leader Decision: PASS
+
+Confirmed:
+
+- **Next — Leader Setup** is enabled on Spool the Reel,
 - **Do You Need a Leader?** opens,
-- only **No Leader — Keep the Main Line** and **Add a Leader** are progression/branch choices,
-- Back returns to Spool the Reel without clearing prior selections.
+- the only leader-decision workflow choices are **No Leader — Keep the Main Line** and **Add a Leader**,
+- both use the approved workflow-card treatment,
+- Back returns to **Spool the Reel** without clearing prior selections.
 
-## Step 3 — No Leader
+## Step 3 — No Leader: PASS
 
-Confirm:
+Confirmed:
 
-- No Leader opens Leader Setup,
-- Selected Choices adds `No Leader — Keep the Main Line`,
-- no Double Uni card appears,
-- **Next — Reel Ready Check** is unavailable,
-- Back returns to Leader Decision.
+- **No Leader — Keep the Main Line** opens Leader Setup,
+- **SELECTED CHOICES** adds `No Leader — Keep the Main Line`,
+- no **View Double Uni Knot** card appears,
+- **Next — Reel Ready Check** is visible but unavailable,
+- Back returns to **Do You Need a Leader?** with the selection preserved.
 
-## Step 4 — Fluorocarbon Leader
+## Step 4 — Fluorocarbon Leader: PASS
 
-Confirm:
+Confirmed:
 
-- Add a Leader opens What Leader Material?,
-- Fluorocarbon Leader opens Leader Setup,
-- 3–4 ft wording is clearly a starting point,
-- target-fish strength is clearly a starting reference rather than actual spool strength,
-- selective emphasis is readable,
-- Double Uni opens canonical Knot detail,
-- return restores exact Leader Setup state,
-- Back returns to Leader Material.
+- **Add a Leader** opens **What Leader Material?**,
+- `Add a Leader` itself is not stored in **SELECTED CHOICES**,
+- **Fluorocarbon Leader** opens Leader Setup,
+- approximately `3–4 feet` is presented as a starting reference rather than a requirement,
+- fluorocarbon visibility / abrasion benefits and sinking tradeoff are explicit,
+- target-fish strength is labeled only as a starting strength reference,
+- actual conditions / main line / cover / later Rig or presentation are identified as adjustment factors,
+- selective emphasis remains readable,
+- **View Double Uni Knot** opens canonical Knot detail,
+- return restores the exact Leader Setup state and Fluorocarbon Leader selection.
 
-## Step 5 — Monofilament Leader
+## Step 5 — Monofilament Leader: PASS
 
-Confirm the same state/length/strength/Knot-return behavior plus the monofilament-specific stretch, knot-handling, buoyancy, and visibility tradeoffs.
+Confirmed:
 
-## Step 6 — State / Navigation / Regression
+- Back to **What Leader Material?** works,
+- selecting **Monofilament Leader** replaces the Fluorocarbon choice rather than accumulating both,
+- Leader Setup explains knot handling, stretch / shock absorption, buoyancy, and visibility tradeoff,
+- the same `3–4 feet` starting-length and strength-reference boundaries remain,
+- Double Uni handoff and exact return context remain functional.
 
-Confirm:
+## Step 6 — State / Navigation / Regression: PASS
 
-- Add a Leader does not appear in Selected Choices,
-- changing leader outcome replaces only `leaderChoice`,
-- changing backing/upstream choices clears leaderChoice,
-- Start Over / Home / Return to Knots clear Reel Setup,
-- workflow cards retain the approved palette hierarchy,
-- normal Knot landing remains intentionally unwired,
-- no application-source JavaScript errors occur.
+Confirmed:
+
+- changing leader material changes only `leaderChoice`,
+- backward review navigation preserves `leaderChoice`,
+- changing backing or an upstream line-system choice clears stale `leaderChoice`,
+- Start Over clears the full Reel Setup state,
+- Home clears the full Reel Setup state,
+- Return to Knots clears the full Reel Setup state,
+- **Next — Reel Ready Check** remains unavailable for every Block 3.8 outcome,
+- normal Knot landing remains intentionally unwired to Reel Setup,
+- no application-source JavaScript errors appear in Microsoft Edge DevTools.
+
+# Final GitHub / Runtime Evidence
+
+Runtime-validated GitHub `main` commit:
+
+`d0ba94c7a4db8fb46c11193558a2dee91ce174d3`
+
+Runtime-validated Block 3.8 source / validator blobs:
+
+```text
+08cc5fa37738a429a4f1b75e251337075cf1016d  script.js
+ba3cc052e863916d7cc75422ff3c28abf977d222  data/reel-guidance.js
+bb00971da052a94fc1ba5f8a1d1f5718a5badd59  tools/validate_knot_package_3.py
+```
+
+Unchanged supporting blobs:
+
+```text
+07de0a2d71ac14dae3a5752a999dd97c27632360  forest-journal.css
+e942e2a217266255d79290084022316bdd5f2546  index.html
+```
+
+Block 3.8 is therefore **PASS / VALIDATED**.
 
 # Deferred Search UX Issue — Parking Lot
 
@@ -443,12 +486,11 @@ Do not fold this issue into Block 3.8.
 
 # Exact Resume Point
 
-Block 3.8 production implementation is complete when the five changed files pass static validation and are packaged for GitHub Desktop.
+Block 3.8 — **PASS / VALIDATED**.
 
-After upload:
+The deferred Rig/Knot scoped-search UX issue in this workstream remains a **Parking Lot** item for later global/deeper-search work.
 
-1. verify GitHub `main` and exact Block 3.8 blobs,
-2. run the six-step Microsoft Edge runtime checklist above,
-3. correct genuine defects before closeout,
-4. only after runtime PASS mark Block 3.8 **PASS / VALIDATED**,
-5. then formally open the next Package 3 capability: **Reel Ready Check / Rig Guide handoff**.
+The next approved Package 3 capability is the final **Reel Ready Check / Rig Guide Handoff**. Its block number should be assigned only when that block is formally opened from the latest verified GitHub documentation.
+
+Do not begin that implementation block until this Block 3.8 documentation closeout is uploaded and GitHub-integrity verified.
+

@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-**Status:** In Progress — Blocks 3.2 through 3.7 PASS / VALIDATED; Block 3.8 IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED  
+**Status:** In Progress — Blocks 3.2 through 3.8 PASS / VALIDATED; Next Capability: Reel Ready Check / Rig Guide Handoff  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -418,7 +418,7 @@ Authoritative block closeout record:
 
 # Block 3.8 — Leader Setup
 
-**Status:** IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED
+**Status:** PASS / VALIDATED
 
 Block 3.8 extends the internal Reel Setup workflow from **Spool the Reel** into a two-stage optional leader decision:
 
@@ -453,7 +453,32 @@ Implemented architecture:
 - upstream/backing changes clear downstream leader state,
 - no CSS change; Block 3.8 reuses the validated workflow-card palette and selective-emphasis treatment.
 
-Authoritative implementation record:
+Microsoft Edge runtime validation on 2026-08-14 passed all six Block 3.8 checks, including:
+
+- Block 3.7 spooling / palette / sticky-navigation regression safety,
+- two-stage Leader Decision behavior,
+- No Leader path with no unnecessary Knot handoff,
+- Fluorocarbon Leader guidance and exact Double Uni return context,
+- Monofilament Leader guidance and choice replacement behavior,
+- `leaderChoice` persistence / clearing rules,
+- Start Over / Home / Return to Knots reset behavior,
+- disabled **Next — Reel Ready Check** boundary,
+- normal Knot landing remains intentionally unwired,
+- no application-source JavaScript errors.
+
+Runtime-validated GitHub `main` commit:
+
+`d0ba94c7a4db8fb46c11193558a2dee91ce174d3`
+
+Runtime-validated Block 3.8 blobs:
+
+```text
+08cc5fa37738a429a4f1b75e251337075cf1016d  script.js
+ba3cc052e863916d7cc75422ff3c28abf977d222  data/reel-guidance.js
+bb00971da052a94fc1ba5f8a1d1f5718a5badd59  tools/validate_knot_package_3.py
+```
+
+Authoritative implementation / closeout record:
 
 `docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.8.md`
 
@@ -512,7 +537,7 @@ This issue affects both Rigs and Knots. It is intentionally deferred and must no
 
 # Next Package 3 Capability — Reel Ready Check / Rig Guide Handoff
 
-After Block 3.8 runtime validation, the next approved V1 capability is the final **Reel Ready Check / Rig Guide handoff**.
+With Block 3.8 runtime validation complete, the next approved V1 capability is the final **Reel Ready Check / Rig Guide handoff**.
 
 That later block must verify the completed line system, present a clear completion state, and hand the user into the Rig Guide without prematurely broadening into casting, lure optimization, or Package 4 Knot media.
 
@@ -528,14 +553,14 @@ Production Package 3 is active.
 **Block 3.5 — PASS / VALIDATED**  
 **Block 3.6 — PASS / VALIDATED**  
 **Block 3.7 — PASS / VALIDATED**  
-**Block 3.8 — IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED**
+**Block 3.8 — PASS / VALIDATED**
 
 Next:
 
-**Complete Block 3.8 static validation, upload/verify the production package, then run Leader Setup runtime validation.**
+**Formally open the Reel Ready Check / Rig Guide Handoff block from the latest verified GitHub state.**
 
 Carry forward the deferred Rig/Knot scoped-search UX issue for later global/deeper-search work.
 
-Do not begin the Reel Ready Check / Rig Guide handoff block until Block 3.8 is runtime validated and documented.
+Do not begin the Reel Ready Check / Rig Guide handoff block until this Block 3.8 documentation closeout is uploaded and GitHub-integrity verified.
 
 Do not begin Production Package 4 Knot media or Fish Guide while Package 3 remains open.
