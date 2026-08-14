@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Block 3.6
 
-**Status:** Implemented / Unvalidated  
+**Status:** Uploaded / GitHub Integrity PASS / Runtime Validation Pending  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.6 — Backing Decision + Spool Attachment / Line-to-Line Knot Handoff Foundation  
@@ -22,13 +22,19 @@ SHA-256:
 
 `b6966b9b817c9d238b588cfb2f5b5bb4ffd66bb91d0bf2a5ff2bfd3cd6aa3e31`
 
-Expected post-upload Git blobs:
+# GitHub Integrity — PASS
+
+The user applied the Block 3.6 package through GitHub Desktop before closing the session.
+
+Post-upload GitHub `main` exactly matched the delivered package:
 
 ```text
 8e891108cbb5848ad9dfdc00d61cb5fecd7f4961  script.js
 43801c4a23786d6eb0940ef6f593d31a97d518bc  data/reel-guidance.js
 1249d8fa88a25ea2e527954ddc01146ed753e1bb  tools/validate_knot_package_3.py
 ```
+
+Runtime validation was deliberately deferred to the next session at the user's request.
 
 # Carried-Forward Navigation Fix
 
@@ -174,9 +180,11 @@ Normal Knot landing remains intentionally unwired to Reel Setup.
 - `script.js`
 - `data/reel-guidance.js`
 
-# Runtime Validation Order
+# Runtime Validation Order — NEXT SESSION
 
-After GitHub integrity verification, Microsoft Edge validation should run in this order.
+Runtime validation has **not** yet been performed for Block 3.6.
+
+At the next session, begin here.
 
 ## Step 1 — Reel Setup Navigation Fix
 
@@ -219,11 +227,15 @@ Confirm:
 
 # Exact Resume Point
 
-Block 3.6 is **Implemented / Unvalidated**.
+**Block 3.5 is PASS / VALIDATED.**
 
-After upload:
+**Block 3.6 is uploaded and GitHub-integrity verified, but runtime validation is still pending.**
 
-1. verify the three package blobs against GitHub `main`,
-2. run runtime validation beginning with the navigation fix,
-3. if passed, close Block 3.6 as PASS / VALIDATED,
-4. begin the next Package 3 block: **Reel-Specific Spooling Instructions**.
+Next session:
+
+1. re-fetch GitHub `main` only if source may have changed since session close,
+2. otherwise begin the Block 3.6 Microsoft Edge runtime checklist above,
+3. if PASS, close Block 3.6 as PASS / VALIDATED,
+4. then begin **Block 3.7 — Reel-Specific Spooling Instructions**.
+
+Do not begin Block 3.7 before Block 3.6 runtime validation passes.
