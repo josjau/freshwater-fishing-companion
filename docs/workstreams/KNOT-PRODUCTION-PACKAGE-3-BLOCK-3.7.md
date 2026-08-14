@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Block 3.7
 
-**Status:** Runtime Steps 1–3 PASS / UX Cleanup Implemented / Runtime Validation Paused  
+**Status:** Runtime Steps 1–4 PASS / Card Hierarchy + Instruction Emphasis Implemented / Runtime Validation Paused  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.7 — Reel-Specific Spooling Instructions  
@@ -37,7 +37,7 @@ Base source blobs:
 986c2991d7682ab2529393aea50ee7422cafb9e1  tools/validate_knot_package_3.py
 ```
 
-Block 3.7 does not modify `forest-journal.css`, `index.html`, canonical Knot data, or the normal Knot landing.
+The original Block 3.7 implementation did not modify `forest-journal.css`, `index.html`, canonical Knot data, or the normal Knot landing. The later workflow-card hierarchy correction adds a targeted `forest-journal.css` treatment only; `index.html`, canonical Knot data, and the normal Knot landing remain unchanged.
 
 # Architecture
 
@@ -234,8 +234,9 @@ Microsoft Edge runtime validation completed before the UX cleanup request:
 - **Step 1 — Block 3.6 Regression Boundary: PASS**
 - **Step 2 — Spinning Reel: PASS**
 - **Step 3 — Spincast Reel: PASS**
+- **Step 4 — Baitcasting Reel: PASS**
 
-Runtime validation is intentionally paused before Step 4 so the cleanup below can be uploaded, GitHub-integrity verified, and tested as part of the same Block 3.7 closeout.
+Runtime validation is intentionally paused before the final Step 5 regression so the card-hierarchy and instruction-emphasis correction can be uploaded, GitHub-integrity verified, and tested as part of the same Block 3.7 closeout.
 
 # Package 3 Workflow-Card Cleanup — Implemented
 
@@ -274,9 +275,51 @@ Future search UX requirement:
 
 This affects both **Rigs** and **Knots** and should be carried into the future global/deeper-search workstream.
 
+# Workflow Card Hierarchy / Instruction Emphasis — Implemented
+
+Runtime review after **Step 4 — Baitcasting Reel: PASS** identified two additional presentation improvements before the final Block 3.7 regression.
+
+This correction was built from verified GitHub `main` commit:
+
+`527acbc5ac228a6fba24fda1fc9a214caf24d4c9`
+
+
+## Compact Progression / Branch Card Treatment
+
+Reel Setup now distinguishes workflow decisions from secondary utility cards without increasing card height or padding.
+
+- progression and genuine branch-choice cards receive the compact `dashboard-card--workflow` treatment,
+- the treatment uses the Knot accent, stronger border/surface emphasis, and stronger title weight,
+- it intentionally does **not** reuse `dashboard-card--primary`, because that treatment increases card height and would work against the Package 3 scroll-reduction cleanup,
+- help, reset, exit, and ordinary reference cards keep the standard card treatment unless they are themselves a genuine workflow branch.
+
+Examples include entry-mode choices, reel/line/target branches, the equipment-confirmation progression, backing choices, and **Next — Spool the Reel**.
+
+On **Spool Connection Plan**, **Next — Spool the Reel** is now the first option so the primary progression is visible before the optional Arbor Knot / Double Uni Knot reference handoffs.
+
+The disabled **Next — Leader Setup** checkpoint also receives the workflow treatment so the future progression boundary remains visually clear while still unavailable.
+
+## Spooling Instruction Emphasis
+
+The three **Spool Your … Reel** guidance profiles now carry structured emphasis metadata for key phrases. The renderer uses real `<strong>` elements rather than embedding HTML in Decision Knowledge strings.
+
+Emphasis calls attention to items such as:
+
+- required guide / bail / front-cover routing before attachment,
+- spinning-reel twist checks,
+- spincast braid compatibility,
+- incoming-line winding tension,
+- the baitcaster winding-tension vs casting-control distinction,
+- the approximately `1/8 inch` fill boundary,
+- exact manufacturer/model instructions when they differ.
+
+Equipment-reading guidance remains compatible with the same renderer and continues to use plain text where no explicit emphasis metadata is defined.
+
+Runtime validation remains paused until this correction is uploaded and integrity-verified. After upload, validation resumes with the final **Step 5 — State / Navigation / Regression** pass, which must include visual confirmation of the new card hierarchy and spooling emphasis.
+
 # Runtime Validation Order
 
-Block 3.7 is **partially runtime validated**: Steps 1–3 are PASS. After this UX correction is uploaded and GitHub-integrity verified, runtime validation resumes at Step 4 and then completes the Step 5 regression pass.
+Block 3.7 is **partially runtime validated**: Steps 1–4 are PASS. After this presentation correction is uploaded and GitHub-integrity verified, runtime validation resumes with the final Step 5 regression pass.
 
 ## Step 1 — Block 3.6 Regression Boundary
 
@@ -333,13 +376,12 @@ Confirm:
 
 # Exact Resume Point
 
-Block 3.7 runtime Steps 1–3 are **PASS**. The targeted Package 3 workflow-card cleanup is implemented in the correction package and must be uploaded before runtime validation continues.
+Block 3.7 runtime Steps 1–4 are **PASS**. The targeted workflow-card hierarchy and spooling-instruction emphasis correction is implemented and must be uploaded before the final regression pass.
 
 Next actions:
 
-1. apply the Block 3.7 UX cleanup ZIP through GitHub Desktop,
+1. apply the Block 3.7 card-hierarchy / instruction-emphasis correction ZIP through GitHub Desktop,
 2. commit and push,
 3. re-fetch GitHub `main` and verify the correction blobs,
-4. validate the cleaned card sets and resume with **Step 4 — Baitcasting Reel**,
-5. complete Step 5 regression validation,
-6. only after runtime PASS close Block 3.7 as **PASS / VALIDATED** and reconcile aggregate Package 3 documentation, including preservation of the deferred scoped-search UX issue for future global-search work.
+4. complete **Step 5 — State / Navigation / Regression**, including the new visual hierarchy and bolded key-instruction checks,
+5. only after runtime PASS close Block 3.7 as **PASS / VALIDATED** and reconcile aggregate Package 3 documentation, including preservation of the deferred scoped-search UX issue for future global-search work.

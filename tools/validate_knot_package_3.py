@@ -44,6 +44,7 @@ index_html = require("index.html")
 script_js = require("script.js")
 reel_guidance_js = require("data/reel-guidance.js")
 forest_journal_css = require("forest-journal.css")
+block_3_7_workstream = require("docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.7.md")
 
 load_markers = [
     'src="data/knot-guidance.js"',
@@ -69,6 +70,8 @@ for needle, label in [
     ('backButton.textContent = "← Knots"', "start-step Knots return"),
     ('homeButton.textContent = "Home"', "explicit Home action"),
     ('function renderReelSetupSelectedChoices(appMain)', "selected choices renderer"),
+    ('function applyReelSetupWorkflowCardTreatment(appMain, config)', "workflow-card treatment"),
+    ('function appendReelSetupGuidanceText(listItem, item)', "spooling emphasis renderer"),
     ('function renderReelSetupBackingDecisionStep(appMain)', "backing decision"),
     ('function renderReelSetupSpoolConnectionPlanStep(appMain)', "spool connection plan"),
     ('function renderReelSetupSpoolingInstructionsStep(appMain)', "reel-specific spooling instructions"),
@@ -183,6 +186,22 @@ require_text(
     "Reel Setup navigation button spacing"
 )
 
+workflow_card_css = re.search(
+    r"\.dashboard-card\.dashboard-card--workflow\s*\{(?P<body>.*?)\n\}",
+    forest_journal_css,
+    flags=re.S
+)
+if not workflow_card_css:
+    fail("forest-journal.css is missing the compact Reel Setup workflow-card treatment")
+for needle, label in [
+    ("--card-accent: var(--accent-knots);", "Knot accent"),
+    ("border-color: color-mix", "stronger border"),
+    ("var(--surface-elevated);", "compact existing-height surface")
+]:
+    require_text(workflow_card_css.group("body"), needle, f"workflow-card {label}")
+if "min-height:" in workflow_card_css.group("body") or "padding:" in workflow_card_css.group("body"):
+    fail("workflow-card treatment must not increase card height or padding")
+
 for step_id in [
     'BACKING_DECISION: "backing-decision"',
     'SPOOL_CONNECTION_PLAN: "spool-connection-plan"',
@@ -238,6 +257,15 @@ for needle, label in [
 if spooling_block.group("body").count("1/8 inch") < 3:
     fail("each reel-specific spooling profile must include a conservative spool-fill reference")
 
+if spooling_block.group("body").count("emphasis: Object.freeze([") < 18:
+    fail("each Block 3.7 spooling instruction must carry explicit key-phrase emphasis metadata")
+for needle, label in [
+    ('Open the bail before securing the line to the spool.', "spinning bail emphasis"),
+    ('Braided line may not work correctly on some spincast reels', "spincast braid emphasis"),
+    ("not an instruction to change the reel's casting spool-tension knob or braking system", "baitcasting control-boundary emphasis")
+]:
+    require_text(spooling_block.group("body"), needle, f"spooling emphasis {label}")
+
 for needle, label in [
     ('title: "Do You Need Backing?"', "backing page title"),
     ('Braid can slip on a smooth spool.', "smooth-spool braid guard"),
@@ -246,6 +274,7 @@ for needle, label in [
     ('knotId: "double-uni-knot"', "Double Uni handoff"),
     ('generic Arbor Knot is not presented as a direct-braid spool knot', "no generic direct-braid Arbor"),
     ('title: "Next — Spool the Reel"', "spooling transition"),
+    ('renderedCards[index]?.classList.add("dashboard-card--workflow")', "workflow-card class application"),
     ('reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS;', "spooling transition handler"),
     ('[REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS]: { stepId: REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN, label: "Spool Connection Plan" }', "spooling previous-step mapping"),
     ('title: "Next — Leader Setup"', "post-spooling checkpoint")
@@ -260,6 +289,20 @@ spool_next_card = re.search(
 if not spool_next_card:
     fail("could not isolate Next — Spool the Reel card")
 require_text(spool_next_card.group("body"), 'isAvailable: true', "enabled spooling transition")
+require_text(spool_next_card.group("body"), 'isWorkflowAction: true', "spooling transition workflow emphasis")
+
+spool_plan_match = re.search(
+    r"function renderReelSetupSpoolConnectionPlanStep\(appMain\) \{(?P<body>.*?)\n\}\n\nfunction renderReelSetupSpoolingInstructionsStep",
+    script_js,
+    flags=re.S
+)
+if not spool_plan_match:
+    fail("could not isolate Spool Connection Plan for card-order validation")
+spool_plan_body = spool_plan_match.group("body")
+next_index = spool_plan_body.find('id: "spool-reel-next"')
+knot_map_index = spool_plan_body.find("...plan.knotActions.map")
+if next_index < 0 or knot_map_index < 0 or next_index > knot_map_index:
+    fail("Next — Spool the Reel must be the first option before Knot reference actions")
 
 leader_next_card = re.search(
     r'\{\s*id: "leader-setup-next",(?P<body>.*?)\n            \},',
@@ -276,6 +319,21 @@ for needle, label in [
     ('exact reel or spool explicitly provides a braid-ready attachment surface', "direct-braid equipment guard")
 ]:
     require_text(reel_guidance_js, needle, label)
+
+# Reel Setup branch/progression cards receive compact workflow emphasis while
+# help/reset/exit cards retain the standard card treatment.
+for needle, label in [
+    ('isWorkflowAction: true', "workflow marker"),
+    ('cards: REEL_SETUP_ENTRY_OPTIONS.map', "entry branch source"),
+    ('cards: REEL_TYPE_OPTIONS.map', "reel-type branch source"),
+    ('cards: REEL_TARGET_FISH_PROFILES.map', "target-fish branch source"),
+    ('id: "confirm-equipment-match"', "equipment progression"),
+    ('id: "backing-decision-next"', "backing progression"),
+    ('id: "spool-reel-next"', "spooling progression")
+]:
+    require_text(script_js, needle, f"workflow-card {label}")
+if script_js.count("isWorkflowAction: true") < 20:
+    fail("expected workflow emphasis across Reel Setup progression/branch cards")
 
 # Selected Choices keeps the approved flat treatment and now includes backing.
 for needle, label in [
@@ -336,6 +394,13 @@ if not render_knots_match:
 if "openReelSetup" in render_knots_match.group("body") or "ROUTES.REEL_SETUP" in render_knots_match.group("body"):
     fail("Package 3 Reel Setup must remain internally accessed until the guided workflow integration block")
 
+for needle, label in [
+    ("Deferred Search UX Issue — Parking Lot", "deferred scoped-search issue"),
+    ("Workflow Card Hierarchy / Instruction Emphasis — Implemented", "card hierarchy correction"),
+    ("Step 4 — Baitcasting Reel: PASS", "runtime Step 4 result")
+]:
+    require_text(block_3_7_workstream, needle, f"Block 3.7 workstream {label}")
+
 for path in ["script.js", "data/reel-guidance.js"]:
     result = subprocess.run(
         ["node", "--check", str(ROOT / path)],
@@ -349,7 +414,8 @@ print("Production Package 3 Block 3.7 validation passed.")
 print(f"Backing choices: {backing_count}")
 print(f"Spooling profiles: {spooling_count}")
 print("Reel Setup navigation: step-aware and sticky/floating.")
-print("Workflow cards: redundant upstream-change cards removed from six Package 3 screens.")
+print("Workflow cards: redundant upstream-change cards removed; progression/branch cards receive compact emphasis.")
+print("Spooling instructions: key actions receive structured strong-text emphasis.")
 print("Reel-specific spooling: spinning, spincast, baitcasting.")
 print("Canonical Knot handoffs: Arbor Knot and Double Uni Knot.")
 print("Reel Setup Knot return context: exact step/state restoration enabled.")

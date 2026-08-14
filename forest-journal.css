@@ -172,6 +172,30 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .dashboard-card:nth-child(8) { --card-accent: var(--accent-regulations); }
 .dashboard-card:nth-child(9) { --card-accent: var(--accent-settings); }
 
+.dashboard-card.dashboard-card--workflow {
+    --card-accent: var(--accent-knots);
+    border-color: color-mix(in srgb, var(--accent-knots) 72%, var(--border));
+    background:
+        linear-gradient(105deg, color-mix(in srgb, var(--accent-knots) 19%, transparent) 0, transparent 44%),
+        var(--surface-elevated);
+    box-shadow: 0 8px 22px rgba(14, 18, 13, 0.24);
+}
+.dashboard-card.dashboard-card--workflow::before { width: 6px; }
+.dashboard-card.dashboard-card--workflow::after { width: 2px; }
+.dashboard-card.dashboard-card--workflow .dashboard-card__title { color: #fff2e4; font-weight: 800; }
+.dashboard-card.dashboard-card--workflow:hover {
+    border-color: var(--accent-knots);
+    background:
+        linear-gradient(105deg, color-mix(in srgb, var(--accent-knots) 27%, transparent) 0, transparent 48%),
+        var(--surface-hover);
+}
+.dashboard-card.dashboard-card--workflow.dashboard-card--unavailable {
+    border-color: color-mix(in srgb, var(--accent-knots) 48%, var(--border));
+    background:
+        linear-gradient(105deg, color-mix(in srgb, var(--accent-knots) 11%, transparent) 0, transparent 42%),
+        var(--surface-elevated);
+}
+
 .rig-guide-view .rig-guide-core-card {
     border-color: color-mix(in srgb, var(--accent-rigs) 72%, var(--border));
     background:

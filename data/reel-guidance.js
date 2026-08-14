@@ -222,36 +222,90 @@ const REEL_SPOOLING_GUIDANCE = Object.freeze({
         title: "Spool Your Spinning Reel",
         summary: "Feed line onto the fixed spool under steady tension while controlling line twist and stopping short of the spool lip.",
         items: Object.freeze([
-            "Route the line through the first rod guide above the reel before winding so the line approaches the reel in the normal path.",
-            "Open the bail before securing the line to the spool. After the spool connection is complete, close the bail before you begin winding.",
-            "For monofilament or fluorocarbon, start with the filler spool lying flat so the line comes off counterclockwise. After about 15 handle turns, pause and check for coils or twist; if twist forms, flip the filler spool and continue. Braid does not rely on the same memory-direction check, but it should still feed cleanly without loose loops.",
-            "Keep steady pressure on the incoming line with your fingers or a soft cloth so the line packs evenly without slack.",
-            "Stop when the line is about 1/8 inch below the spool's outer lip. Do not fill the line flush with or beyond the lip.",
-            "If the exact reel manufacturer's instructions specify a different line-loading method or fill level, follow the instructions for that reel model."
+            Object.freeze({
+                text: "Route the line through the first rod guide above the reel before winding so the line approaches the reel in the normal path.",
+                emphasis: Object.freeze(["Route the line through the first rod guide above the reel before winding"])
+            }),
+            Object.freeze({
+                text: "Open the bail before securing the line to the spool. After the spool connection is complete, close the bail before you begin winding.",
+                emphasis: Object.freeze(["Open the bail before securing the line to the spool.", "close the bail before you begin winding"])
+            }),
+            Object.freeze({
+                text: "For monofilament or fluorocarbon, start with the filler spool lying flat so the line comes off counterclockwise. After about 15 handle turns, pause and check for coils or twist; if twist forms, flip the filler spool and continue. Braid does not rely on the same memory-direction check, but it should still feed cleanly without loose loops.",
+                emphasis: Object.freeze(["start with the filler spool lying flat so the line comes off counterclockwise", "pause and check for coils or twist", "flip the filler spool and continue"])
+            }),
+            Object.freeze({
+                text: "Keep steady pressure on the incoming line with your fingers or a soft cloth so the line packs evenly without slack.",
+                emphasis: Object.freeze(["Keep steady pressure on the incoming line"])
+            }),
+            Object.freeze({
+                text: "Stop when the line is about 1/8 inch below the spool's outer lip. Do not fill the line flush with or beyond the lip.",
+                emphasis: Object.freeze(["Stop when the line is about 1/8 inch below the spool's outer lip."])
+            }),
+            Object.freeze({
+                text: "If the exact reel manufacturer's instructions specify a different line-loading method or fill level, follow the instructions for that reel model.",
+                emphasis: Object.freeze(["follow the instructions for that reel model"])
+            })
         ])
     }),
     spincast: Object.freeze({
         title: "Spool Your Spincast Reel",
         summary: "Use the reel's front-cover line path, wind slowly under light tension, and inspect the hidden spool as it fills.",
         items: Object.freeze([
-            "Remove the front cover using the method specified for your reel, and feed the line through the cover opening before the line is secured to the spool.",
-            "Reattach the front cover before normal winding so the reel's pickup system guides line onto the enclosed spool. If your setup uses backing and a backing-to-main-line connection, follow the exact reel's line-change procedure so the connection passes cleanly through the cover and pickup system.",
-            "Use only a line type and size that the actual spincast reel supports. Braided line may not work correctly on some spincast reels even when it works on other reel types.",
-            "Hold the incoming line between your thumb and forefinger with light, steady tension and wind slowly so the line lays on without loose coils.",
-            "Periodically remove the front cover and inspect the spool. Stop when the line is about 1/8 inch below the top of the spool rather than filling it completely to the edge.",
-            "If the exact reel manufacturer's instructions differ, use the model-specific cover, routing, and fill procedure."
+            Object.freeze({
+                text: "Remove the front cover using the method specified for your reel, and feed the line through the cover opening before the line is secured to the spool.",
+                emphasis: Object.freeze(["feed the line through the cover opening before the line is secured to the spool"])
+            }),
+            Object.freeze({
+                text: "Reattach the front cover before normal winding so the reel's pickup system guides line onto the enclosed spool. If your setup uses backing and a backing-to-main-line connection, follow the exact reel's line-change procedure so the connection passes cleanly through the cover and pickup system.",
+                emphasis: Object.freeze(["Reattach the front cover before normal winding", "follow the exact reel's line-change procedure"])
+            }),
+            Object.freeze({
+                text: "Use only a line type and size that the actual spincast reel supports. Braided line may not work correctly on some spincast reels even when it works on other reel types.",
+                emphasis: Object.freeze(["Use only a line type and size that the actual spincast reel supports.", "Braided line may not work correctly on some spincast reels"])
+            }),
+            Object.freeze({
+                text: "Hold the incoming line between your thumb and forefinger with light, steady tension and wind slowly so the line lays on without loose coils.",
+                emphasis: Object.freeze(["light, steady tension", "wind slowly"])
+            }),
+            Object.freeze({
+                text: "Periodically remove the front cover and inspect the spool. Stop when the line is about 1/8 inch below the top of the spool rather than filling it completely to the edge.",
+                emphasis: Object.freeze(["Periodically remove the front cover and inspect the spool.", "Stop when the line is about 1/8 inch below the top of the spool"])
+            }),
+            Object.freeze({
+                text: "If the exact reel manufacturer's instructions differ, use the model-specific cover, routing, and fill procedure.",
+                emphasis: Object.freeze(["use the model-specific cover, routing, and fill procedure"])
+            })
         ])
     }),
     baitcasting: Object.freeze({
         title: "Spool Your Baitcasting Reel",
         summary: "Feed line straight through the reel's line guide, pack it firmly and evenly, and leave a small margin below the spool edge.",
         items: Object.freeze([
-            "Route the line through the rod guides and through the baitcaster's line guide before it reaches the spool. Do not bypass the reel's line guide.",
-            "Keep the filler spool upright on its edge so the line feeds off the top of the filler spool and travels straight toward the reel.",
-            "Apply constant, firm pressure to the incoming line while winding so it packs tightly and evenly. Use a soft cloth or towel instead of bare fingers when greater pressure is needed, especially with braid.",
-            "Winding tension here means pressure on the incoming fishing line. It is not an instruction to change the reel's casting spool-tension knob or braking system.",
-            "Stop when the line is about 1/8 inch below the spool's outer edge or at the reel manufacturer's specified fill mark. Underfilling reduces performance; overfilling increases the chance of line-control problems.",
-            "If the exact reel manufacturer's instructions specify a different attachment, line-feed, or fill method, follow that model-specific guidance."
+            Object.freeze({
+                text: "Route the line through the rod guides and through the baitcaster's line guide before it reaches the spool. Do not bypass the reel's line guide.",
+                emphasis: Object.freeze(["through the baitcaster's line guide", "Do not bypass the reel's line guide."])
+            }),
+            Object.freeze({
+                text: "Keep the filler spool upright on its edge so the line feeds off the top of the filler spool and travels straight toward the reel.",
+                emphasis: Object.freeze(["Keep the filler spool upright on its edge", "line feeds off the top of the filler spool"])
+            }),
+            Object.freeze({
+                text: "Apply constant, firm pressure to the incoming line while winding so it packs tightly and evenly. Use a soft cloth or towel instead of bare fingers when greater pressure is needed, especially with braid.",
+                emphasis: Object.freeze(["Apply constant, firm pressure to the incoming line", "packs tightly and evenly"])
+            }),
+            Object.freeze({
+                text: "Winding tension here means pressure on the incoming fishing line. It is not an instruction to change the reel's casting spool-tension knob or braking system.",
+                emphasis: Object.freeze(["Winding tension here means pressure on the incoming fishing line.", "not an instruction to change the reel's casting spool-tension knob or braking system"])
+            }),
+            Object.freeze({
+                text: "Stop when the line is about 1/8 inch below the spool's outer edge or at the reel manufacturer's specified fill mark. Underfilling reduces performance; overfilling increases the chance of line-control problems.",
+                emphasis: Object.freeze(["Stop when the line is about 1/8 inch below the spool's outer edge or at the reel manufacturer's specified fill mark."])
+            }),
+            Object.freeze({
+                text: "If the exact reel manufacturer's instructions specify a different attachment, line-feed, or fill method, follow that model-specific guidance.",
+                emphasis: Object.freeze(["follow that model-specific guidance"])
+            })
         ])
     })
 });

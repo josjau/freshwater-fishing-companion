@@ -795,10 +795,44 @@ function renderReelSetupNavigation(appMain) {
     genericHomeButton.replaceWith(navigation);
 }
 
+function applyReelSetupWorkflowCardTreatment(appMain, config) {
+    const renderedCards = appMain.querySelectorAll("[data-view-card-grid] > .dashboard-card");
+    config.cards.forEach((card, index) => {
+        if (card.isWorkflowAction !== true) return;
+        renderedCards[index]?.classList.add("dashboard-card--workflow");
+    });
+}
+
 function renderReelSetupStep(appMain, config) {
     renderView(appMain, config);
+    applyReelSetupWorkflowCardTreatment(appMain, config);
     renderReelSetupNavigation(appMain);
     renderReelSetupSelectedChoices(appMain);
+}
+
+function appendReelSetupGuidanceText(listItem, item) {
+    const text = typeof item === "string" ? item : item?.text;
+    const emphasis = Array.isArray(item?.emphasis) ? item.emphasis : [];
+    if (!text) return;
+
+    let cursor = 0;
+    emphasis.forEach((phrase) => {
+        const phraseIndex = text.indexOf(phrase, cursor);
+        if (phraseIndex < 0) return;
+
+        if (phraseIndex > cursor) {
+            listItem.append(document.createTextNode(text.slice(cursor, phraseIndex)));
+        }
+
+        const strong = document.createElement("strong");
+        strong.textContent = phrase;
+        listItem.append(strong);
+        cursor = phraseIndex + phrase.length;
+    });
+
+    if (cursor < text.length) {
+        listItem.append(document.createTextNode(text.slice(cursor)));
+    }
 }
 
 function renderReelSetupGuidanceList(appMain, guidance) {
@@ -824,7 +858,7 @@ function renderReelSetupGuidanceList(appMain, guidance) {
     list.className = "detail-list";
     guidance.items.forEach((item) => {
         const listItem = document.createElement("li");
-        listItem.textContent = item;
+        appendReelSetupGuidanceText(listItem, item);
         list.append(listItem);
     });
 
@@ -839,7 +873,8 @@ function renderReelSetupStartStep(appMain) {
         description: "Start by telling us whether this reel is empty or already has line that you want to replace.",
         cards: REEL_SETUP_ENTRY_OPTIONS.map((option) => ({
             ...option,
-            isAvailable: true
+            isAvailable: true,
+            isWorkflowAction: true
         })),
         onCardSelect: (entryMode) => {
             if (!getReelSetupOption(REEL_SETUP_ENTRY_OPTIONS, entryMode)) return;
@@ -868,7 +903,8 @@ function renderReelSetupReelTypeStep(appMain) {
         description: "Choose the reel style you are working with.",
         cards: REEL_TYPE_OPTIONS.map((option) => ({
             ...option,
-            isAvailable: true
+            isAvailable: true,
+            isWorkflowAction: true
         })),
         onCardSelect: (reelType) => {
             if (!getReelSetupOption(REEL_TYPE_OPTIONS, reelType)) return;
@@ -902,7 +938,8 @@ function renderReelSetupReelIdentificationHelpStep(appMain) {
         cards: [
             ...actualReelTypes.map((option) => ({
                 ...option,
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             })),
             {
                 id: "back-to-reel-types",
@@ -975,11 +1012,13 @@ function renderReelSetupLineSelectionStep(appMain) {
         id: lineType.id,
         title: lineType.title,
         description: lineType.selectionDescription,
-        isAvailable: true
+        isAvailable: true,
+        isWorkflowAction: true
     }));
     const guidanceCards = REEL_LINE_GUIDANCE_ACTIONS.map((action) => ({
         ...action,
-        isAvailable: true
+        isAvailable: true,
+        isWorkflowAction: true
     }));
 
     renderReelSetupStep(appMain, {
@@ -1030,19 +1069,22 @@ function renderReelSetupLineHelpStep(appMain) {
                 id: "use-recommended-line",
                 title: `Use ${recommendedLine.title}`,
                 description: recommendedLine.selectionDescription,
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "compare-line-types",
                 title: "Compare the Line Types",
                 description: "Return to Monofilament, Fluorocarbon, and Braid to choose directly.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "identify-existing-line",
                 title: "I'm Not Sure What Line I Have",
                 description: "Use simple visual and handling cues before choosing.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             }
         ],
         onCardSelect: (actionId) => {
@@ -1070,7 +1112,8 @@ function renderReelSetupLineIdentificationStep(appMain) {
         id: lineType.id,
         title: lineType.title,
         description: lineType.identificationCue,
-        isAvailable: true
+        isAvailable: true,
+        isWorkflowAction: true
     }));
 
     renderReelSetupStep(appMain, {
@@ -1083,7 +1126,8 @@ function renderReelSetupLineIdentificationStep(appMain) {
                 id: "help-me-choose",
                 title: "Still Not Sure — Help Me Choose",
                 description: "Use the beginner starting recommendation for your selected reel type.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "back-to-line-selection",
@@ -1145,7 +1189,8 @@ function renderReelSetupLineSelectionComplete(appMain) {
                 id: "continue-to-target-fish",
                 title: "Continue — Choose Target Fish",
                 description: "Use your target fish to set a beginner starting line-strength range.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "start-reel-setup-over",
@@ -1213,7 +1258,8 @@ function renderReelSetupTargetFishStep(appMain) {
             id: profile.id,
             title: profile.title,
             description: profile.description,
-            isAvailable: true
+            isAvailable: true,
+            isWorkflowAction: true
         })),
         onCardSelect: (targetFishId) => {
             if (!getReelSetupTargetFish(targetFishId)) return;
@@ -1248,7 +1294,8 @@ function renderReelSetupTargetGuidanceStep(appMain) {
                 id: "continue-to-equipment-check",
                 title: "Next — Check Reel & Rod Compatibility",
                 description: "Compare this starting guidance with the line-capacity and line-rating markings on your actual equipment.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "start-reel-setup-over",
@@ -1336,7 +1383,8 @@ function renderReelSetupEquipmentCheckStep(appMain) {
                 id: "confirm-equipment-match",
                 title: "My Reel & Rod Support This Setup",
                 description: "Continue only after the intended line fits both pieces of equipment.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "read-reel",
@@ -1354,7 +1402,8 @@ function renderReelSetupEquipmentCheckStep(appMain) {
                 id: "equipment-mismatch",
                 title: "Something Doesn't Match / I'm Not Sure",
                 description: "Pause before spooling and use the markings to adjust the line choice or equipment.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             }
         ],
         onCardSelect: (actionId) => {
@@ -1409,7 +1458,8 @@ function renderReelSetupReadReelStep(appMain) {
                 id: "equipment-mismatch",
                 title: "Something Doesn't Match / I'm Not Sure",
                 description: "Use the adjustment path before spooling if the reel guidance does not support the intended line.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             }
         ],
         onCardSelect: (actionId) => {
@@ -1455,7 +1505,8 @@ function renderReelSetupReadRodStep(appMain) {
                 id: "equipment-mismatch",
                 title: "Something Doesn't Match / I'm Not Sure",
                 description: "Use the adjustment path before spooling if the rod rating does not support the intended line.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             }
         ],
         onCardSelect: (actionId) => {
@@ -1501,19 +1552,22 @@ function renderReelSetupEquipmentMismatchStep(appMain) {
                 id: "change-target-fish",
                 title: "Change Target Fish",
                 description: "Choose a different target reference while keeping the reel and line selections.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "change-line-type",
                 title: "Change Line Choice",
                 description: "Return to line selection and clear the target-fish guidance.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "change-reel-type",
                 title: "Change Reel Type",
                 description: "Return to reel identification while preserving the setup mode.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "back-to-equipment-check",
@@ -1601,7 +1655,8 @@ function renderReelSetupEquipmentCompleteStep(appMain) {
                 id: "backing-decision-next",
                 title: "Next — Decide on Backing",
                 description: "Choose whether the selected main line should attach directly to the spool or use monofilament backing first.",
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "start-reel-setup-over",
@@ -1650,11 +1705,13 @@ function getReelBackingCards(lineType) {
         return [
             {
                 ...REEL_BACKING_CHOICES["monofilament-backing"],
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 ...REEL_BACKING_CHOICES["direct-braid-approved"],
-                isAvailable: true
+                isAvailable: true,
+                isWorkflowAction: true
             },
             {
                 id: "review-reel-guidance",
@@ -1668,11 +1725,13 @@ function getReelBackingCards(lineType) {
     return [
         {
             ...REEL_BACKING_CHOICES.none,
-            isAvailable: true
+            isAvailable: true,
+            isWorkflowAction: true
         },
         {
             ...REEL_BACKING_CHOICES["monofilament-backing"],
-            isAvailable: true
+            isAvailable: true,
+            isWorkflowAction: true
         }
     ];
 }
@@ -1799,18 +1858,19 @@ function renderReelSetupSpoolConnectionPlanStep(appMain) {
         title: "Spool Connection Plan",
         description: plan.description,
         cards: [
+            {
+                id: "spool-reel-next",
+                title: "Next — Spool the Reel",
+                description: "Follow the reel-specific routing, winding-tension, and spool-fill steps before moving on to the rest of the line system.",
+                isAvailable: true,
+                isWorkflowAction: true
+            },
             ...plan.knotActions.map((action) => ({
                 id: action.id,
                 title: action.title,
                 description: action.description,
                 isAvailable: true
             })),
-            {
-                id: "spool-reel-next",
-                title: "Next — Spool the Reel",
-                description: "Follow the reel-specific routing, winding-tension, and spool-fill steps before moving on to the rest of the line system.",
-                isAvailable: true
-            },
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
@@ -1873,7 +1933,8 @@ function renderReelSetupSpoolingInstructionsStep(appMain) {
                 id: "leader-setup-next",
                 title: "Next — Leader Setup",
                 description: "A later Package 3 block will decide whether this line system needs a leader before the final Reel Ready checkpoint.",
-                isAvailable: false
+                isAvailable: false,
+                isWorkflowAction: true
             },
             {
                 id: "start-reel-setup-over",
