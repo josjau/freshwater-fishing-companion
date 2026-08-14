@@ -9,7 +9,7 @@
 
 const REEL_GUIDANCE_BUILD_INFO = Object.freeze({
     file: "data/reel-guidance.js",
-    milestone: "Knots — Production Package 3 Block 3.8"
+    milestone: "Knots — Production Package 3 Block 3.9"
 });
 
 const REEL_SETUP_STEP_IDS = Object.freeze({
@@ -32,7 +32,8 @@ const REEL_SETUP_STEP_IDS = Object.freeze({
     SPOOLING_INSTRUCTIONS: "spooling-instructions",
     LEADER_DECISION: "leader-decision",
     LEADER_MATERIAL: "leader-material",
-    LEADER_SETUP: "leader-setup"
+    LEADER_SETUP: "leader-setup",
+    REEL_READY_CHECK: "reel-ready-check"
 });
 
 const REEL_SETUP_ENTRY_OPTIONS = Object.freeze([
@@ -383,6 +384,33 @@ const REEL_LEADER_SETUP_GUIDANCE = Object.freeze({
     })
 });
 
+const REEL_READY_CHECK_GUIDANCE = Object.freeze({
+    title: "Final Reel Check",
+    summary: "The app cannot physically inspect your reel. Use these checks to confirm the completed line system before moving on to a Rig.",
+    items: Object.freeze([
+        Object.freeze({
+            text: "Confirm the line follows the reel-specific routing you completed and passes cleanly through the rod guides needed for the finished setup.",
+            emphasis: Object.freeze(["Confirm the line follows the reel-specific routing you completed"])
+        }),
+        Object.freeze({
+            text: "Confirm the line is packed evenly and the spool is not overfilled. Use the reel manufacturer's fill mark or model-specific guidance when it differs from the general starting reference.",
+            emphasis: Object.freeze(["Confirm the line is packed evenly and the spool is not overfilled.", "reel manufacturer's fill mark or model-specific guidance"])
+        }),
+        Object.freeze({
+            text: "Confirm every spool, backing, and main-line connection used in this setup is secure before fishing.",
+            emphasis: Object.freeze(["Confirm every spool, backing, and main-line connection used in this setup is secure"])
+        }),
+        Object.freeze({
+            text: "Confirm the finished main-line system still fits the reel capacity guidance and rod line rating you checked earlier. Re-check the equipment before fishing if the actual line changed.",
+            emphasis: Object.freeze(["Confirm the finished main-line system still fits the reel capacity guidance and rod line rating you checked earlier."])
+        })
+    ]),
+    leaderConnectionItem: Object.freeze({
+        text: "Because you selected a separate leader, confirm the main-line-to-leader connection is secure and trimmed cleanly before attaching the later Rig.",
+        emphasis: Object.freeze(["confirm the main-line-to-leader connection is secure and trimmed cleanly"])
+    })
+});
+
 const REEL_EQUIPMENT_GUIDANCE = Object.freeze({
     reel: Object.freeze({
         title: "How to Read Your Reel",
@@ -428,5 +456,6 @@ console.info(
     `${Object.keys(REEL_EQUIPMENT_GUIDANCE).length} equipment guidance groups | ` +
     `${Object.keys(REEL_BACKING_CHOICES).length} backing choices | ` +
     `${Object.keys(REEL_SPOOLING_GUIDANCE).length} spooling profiles | ` +
-    `${Object.keys(REEL_LEADER_CHOICES).length} leader outcomes`
+    `${Object.keys(REEL_LEADER_CHOICES).length} leader outcomes | ` +
+    `${REEL_READY_CHECK_GUIDANCE.items.length} final-check items`
 );

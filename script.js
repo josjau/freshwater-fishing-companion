@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knots — Production Package 3 Block 3.8"
+    milestone: "Knots — Production Package 3 Block 3.9"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -575,6 +575,7 @@ function resetReelSetupState() {
 }
 
 function openReelSetup() {
+    clearDetailNavigationStack();
     resetReelSetupState();
     showView(ROUTES.REEL_SETUP);
 }
@@ -679,6 +680,11 @@ function renderReelSetupView(appMain) {
         return;
     }
 
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.REEL_READY_CHECK) {
+        renderReelSetupReelReadyCheckStep(appMain);
+        return;
+    }
+
     renderReelSetupStartStep(appMain);
 }
 
@@ -763,7 +769,8 @@ function getReelSetupPreviousStep() {
         [REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN]: { stepId: REEL_SETUP_STEP_IDS.BACKING_DECISION, label: "Backing Choice" },
         [REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS]: { stepId: REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN, label: "Spool Connection Plan" },
         [REEL_SETUP_STEP_IDS.LEADER_DECISION]: { stepId: REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS, label: "Spool the Reel" },
-        [REEL_SETUP_STEP_IDS.LEADER_MATERIAL]: { stepId: REEL_SETUP_STEP_IDS.LEADER_DECISION, label: "Leader Decision" }
+        [REEL_SETUP_STEP_IDS.LEADER_MATERIAL]: { stepId: REEL_SETUP_STEP_IDS.LEADER_DECISION, label: "Leader Decision" },
+        [REEL_SETUP_STEP_IDS.REEL_READY_CHECK]: { stepId: REEL_SETUP_STEP_IDS.LEADER_SETUP, label: "Leader Setup" }
     };
 
     if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LEADER_SETUP) {
@@ -2205,8 +2212,8 @@ function renderReelSetupLeaderSetupStep(appMain) {
         {
             id: "reel-ready-next",
             title: "Next — Reel Ready Check",
-            description: "The next Package 3 capability will verify the completed line system and hand off to the Rig Guide.",
-            isAvailable: false,
+            description: "Review the completed line system with a final physical checklist before choosing a Rig.",
+            isAvailable: true,
             isWorkflowAction: true
         }
     ];
@@ -2241,6 +2248,11 @@ function renderReelSetupLeaderSetupStep(appMain) {
         description,
         cards,
         onCardSelect: (actionId) => {
+            if (actionId === "reel-ready-next") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_READY_CHECK;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
             if (actionId === "view-double-uni-knot" && hasLeader) {
                 openKnotDetailFromReelSetup("double-uni-knot", "Leader Setup");
                 return;
@@ -2259,6 +2271,85 @@ function renderReelSetupLeaderSetupStep(appMain) {
     if (guidance) {
         renderReelSetupGuidanceList(appMain, guidance);
     }
+}
+
+function getReelReadyCheckGuidance(leaderChoice) {
+    const items = [...REEL_READY_CHECK_GUIDANCE.items];
+
+    if (leaderChoice?.id && leaderChoice.id !== "none") {
+        items.splice(3, 0, REEL_READY_CHECK_GUIDANCE.leaderConnectionItem);
+    }
+
+    return {
+        title: REEL_READY_CHECK_GUIDANCE.title,
+        summary: REEL_READY_CHECK_GUIDANCE.summary,
+        items
+    };
+}
+
+function renderReelSetupReelReadyCheckStep(appMain) {
+    const entryOption = getReelSetupOption(REEL_SETUP_ENTRY_OPTIONS, reelSetupState.entryMode);
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
+    const lineType = getReelLineType(reelSetupState.lineType);
+    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
+    const backingChoice = getReelBackingChoice(reelSetupState.backingChoice);
+    const leaderChoice = getReelLeaderChoice(reelSetupState.leaderChoice);
+
+    if (!entryOption || !reelType || !lineType || !targetProfile || !backingChoice || !leaderChoice || reelSetupState.equipmentCheck !== "compatible") {
+        resetReelSetupState();
+        renderReelSetupStartStep(appMain);
+        return;
+    }
+
+    const guidance = getReelReadyCheckGuidance(leaderChoice);
+
+    renderReelSetupStep(appMain, {
+        headingId: "reel-setup-title",
+        title: "Reel Ready Check",
+        description: "Your selected setup is summarized above. Complete the physical checks below; when they are satisfied, finish Reel Setup and choose a Rig.",
+        cards: [
+            {
+                id: "reel-ready-choose-rig",
+                title: "My Reel Is Ready — Choose a Rig",
+                description: "Finish Reel Setup and open the normal Rig Guide. No Rig will be selected automatically.",
+                isAvailable: true,
+                isWorkflowAction: true
+            },
+            {
+                id: "start-reel-setup-over",
+                title: "Start Over",
+                description: "Clear the temporary Reel Setup state and return to the first step.",
+                isAvailable: true
+            },
+            {
+                id: "return-to-knots",
+                title: "Return to Knots",
+                description: "Leave Reel Setup and return to the Knot Guide.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            if (actionId === "reel-ready-choose-rig") {
+                resetReelSetupState();
+                clearDetailNavigationStack();
+                selectedRigId = null;
+                selectedRigCollectionKey = "all";
+                showView(ROUTES.RIGS);
+                return;
+            }
+            if (actionId === "start-reel-setup-over") {
+                openReelSetup();
+                return;
+            }
+            if (actionId === "return-to-knots") {
+                resetReelSetupState();
+                clearDetailNavigationStack();
+                showView(ROUTES.KNOTS);
+            }
+        }
+    });
+
+    renderReelSetupGuidanceList(appMain, guidance);
 }
 
 function getActiveKnots() {
@@ -2293,6 +2384,13 @@ function renderKnotsView(appMain) {
         collections: collectionCards,
         onSearch: (query) => updateKnotGuideSearchResults(appMain, query),
         onTaskSelect: (taskId) => {
+            if (taskId === "attach-line-to-reel") {
+                selectedKnotBrowseKey = "all";
+                selectedKnotTaskId = null;
+                openReelSetup();
+                return;
+            }
+
             selectedKnotBrowseKey = "task";
             selectedKnotTaskId = taskId;
             showView(ROUTES.KNOT_BROWSE);
@@ -2326,12 +2424,9 @@ function getKnotBrowseConfig() {
     if (selectedKnotBrowseKey === "task") {
         const task = getKnotTask(selectedKnotTaskId);
         if (task) {
-            const isReelSetupEntry = task.id === "attach-line-to-reel";
             return {
-                title: isReelSetupEntry ? "Get Your Reel Ready" : task.title,
-                description: isReelSetupEntry
-                    ? "Start with the knots used to secure line or backing to the reel. The full guided reel-setup workflow arrives in Production Package 3 through this same entry point."
-                    : task.description,
+                title: task.title,
+                description: task.description,
                 records: task.knotIds
                     .map((knotId) => findRecordById(activeKnots, knotId))
                     .filter(Boolean)

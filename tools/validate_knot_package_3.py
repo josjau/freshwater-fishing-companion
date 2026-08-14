@@ -46,6 +46,7 @@ reel_guidance_js = require("data/reel-guidance.js")
 forest_journal_css = require("forest-journal.css")
 block_3_7_workstream = require("docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.7.md")
 block_3_8_workstream = require("docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.8.md")
+block_3_9_workstream = require("docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.9.md")
 package_3_workstream = require("docs/workstreams/KNOT-PRODUCTION-PACKAGE-3.md")
 
 load_markers = [
@@ -80,6 +81,8 @@ for needle, label in [
     ('function renderReelSetupLeaderDecisionStep(appMain)', "leader decision"),
     ('function renderReelSetupLeaderMaterialStep(appMain)', "leader material"),
     ('function renderReelSetupLeaderSetupStep(appMain)', "leader setup"),
+    ('function renderReelSetupReelReadyCheckStep(appMain)', "Reel Ready Check"),
+    ('function getReelReadyCheckGuidance(leaderChoice)', "Reel Ready checklist builder"),
     ('function getReelSpoolingGuidance(reelTypeId)', "spooling guidance lookup"),
     ('function getReelLeaderChoice(leaderChoiceId)', "leader choice lookup"),
     ('function getReelLeaderDecisionGuidance(lineTypeId)', "leader decision guidance lookup"),
@@ -88,7 +91,8 @@ for needle, label in [
     ('backingChoice: null', "session-only backing state"),
     ('leaderChoice: null', "session-only leader state"),
     ('REEL_BACKING_CHOICES', "backing decision knowledge"),
-    ('REEL_LEADER_CHOICES', "leader decision knowledge")
+    ('REEL_LEADER_CHOICES', "leader decision knowledge"),
+    ('REEL_READY_CHECK_GUIDANCE', "Reel Ready checklist knowledge")
 ]:
     require_text(script_js, needle, f"script.js {label}")
 
@@ -239,7 +243,8 @@ for step_id in [
     'SPOOLING_INSTRUCTIONS: "spooling-instructions"',
     'LEADER_DECISION: "leader-decision"',
     'LEADER_MATERIAL: "leader-material"',
-    'LEADER_SETUP: "leader-setup"'
+    'LEADER_SETUP: "leader-setup"',
+    'REEL_READY_CHECK: "reel-ready-check"'
 ]:
     require_text(reel_guidance_js, step_id, "data/reel-guidance.js step")
 
@@ -284,7 +289,7 @@ for line_type in ["monofilament", "fluorocarbon", "braid"]:
     require_text(leader_decision_guidance_block.group("body"), f"{line_type}: Object.freeze", f"leader decision guidance {line_type}")
 
 leader_setup_guidance_block = re.search(
-    r"const REEL_LEADER_SETUP_GUIDANCE = Object\.freeze\(\{(?P<body>.*?)\n\}\);\n\nconst REEL_EQUIPMENT_GUIDANCE",
+    r"const REEL_LEADER_SETUP_GUIDANCE = Object\.freeze\(\{(?P<body>.*?)\n\}\);\n\nconst REEL_READY_CHECK_GUIDANCE",
     reel_guidance_js,
     flags=re.S
 )
@@ -307,6 +312,38 @@ for needle, label in [
     ("If the two lines differ dramatically in diameter", "Double Uni diameter boundary")
 ]:
     require_text(leader_setup_guidance_block.group("body"), needle, f"leader setup guidance {label}")
+
+
+ready_guidance_block = re.search(
+    r"const REEL_READY_CHECK_GUIDANCE = Object\.freeze\(\{(?P<body>.*?)\n\}\);\n\nconst REEL_EQUIPMENT_GUIDANCE",
+    reel_guidance_js,
+    flags=re.S
+)
+if not ready_guidance_block:
+    fail("could not parse REEL_READY_CHECK_GUIDANCE")
+ready_body = ready_guidance_block.group("body")
+for needle, label in [
+    ('title: "Final Reel Check"', "final-check title"),
+    ("cannot physically inspect your reel", "user-confirmation boundary"),
+    ("reel-specific routing", "routing check"),
+    ("spool is not overfilled", "spool-fill check"),
+    ("spool, backing, and main-line connection", "connection-security check"),
+    ("reel capacity guidance and rod line rating", "equipment-limit check"),
+    ("leaderConnectionItem", "conditional leader check"),
+    ("main-line-to-leader connection is secure", "leader-connection security")
+]:
+    require_text(ready_body, needle, f"Reel Ready guidance {label}")
+
+ready_items_match = re.search(
+    r"items: Object\.freeze\(\[(?P<body>.*?)\n    \]\),",
+    ready_body,
+    flags=re.S
+)
+if not ready_items_match:
+    fail("could not isolate Reel Ready base checklist items")
+ready_base_count = ready_items_match.group("body").count("Object.freeze({")
+if ready_base_count != 4:
+    fail(f"expected exactly 4 base Reel Ready checklist items, found {ready_base_count}")
 
 spooling_block = re.search(
     r"const REEL_SPOOLING_GUIDANCE = Object\.freeze\(\{(?P<body>.*?)\n\}\);\n+const REEL_LEADER_CHOICES",
@@ -440,14 +477,15 @@ require_absent(leader_material_block, 'getReelLeaderChoice("none")', "No Leader 
 leader_setup_block = get_function_block(
     script_js,
     "renderReelSetupLeaderSetupStep",
-    "getActiveKnots"
+    "getReelReadyCheckGuidance"
 )
 for needle, label in [
     ('const hasLeader = leaderChoice.id !== "none";', "No Leader vs leader branch boundary"),
     ('title: "Leader Setup"', "Leader Setup page title"),
     ('id: "reel-ready-next"', "Reel Ready checkpoint"),
     ('title: "Next — Reel Ready Check"', "Reel Ready checkpoint label"),
-    ('isAvailable: false', "Reel Ready checkpoint disabled"),
+    ('isAvailable: true', "Reel Ready checkpoint enabled"),
+    ('reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_READY_CHECK;', "Leader Setup to Reel Ready transition"),
     ('if (hasLeader) {', "leader-only reference branch"),
     ('id: "view-double-uni-knot"', "leader Double Uni reference"),
     ('openKnotDetailFromReelSetup("double-uni-knot", "Leader Setup")', "Leader Setup Knot return label")
@@ -459,6 +497,7 @@ if leader_setup_block.count('id: "view-double-uni-knot"') != 1:
 for needle, label in [
     ('[REEL_SETUP_STEP_IDS.LEADER_DECISION]: { stepId: REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS, label: "Spool the Reel" }', "Leader Decision previous step"),
     ('[REEL_SETUP_STEP_IDS.LEADER_MATERIAL]: { stepId: REEL_SETUP_STEP_IDS.LEADER_DECISION, label: "Leader Decision" }', "Leader Material previous step"),
+    ('[REEL_SETUP_STEP_IDS.REEL_READY_CHECK]: { stepId: REEL_SETUP_STEP_IDS.LEADER_SETUP, label: "Leader Setup" }', "Reel Ready previous step"),
     ('reelSetupState.leaderChoice === "none"', "Leader Setup dynamic previous step"),
     ('{ stepId: REEL_SETUP_STEP_IDS.LEADER_DECISION, label: "Leader Decision" }', "No Leader setup previous destination"),
     ('{ stepId: REEL_SETUP_STEP_IDS.LEADER_MATERIAL, label: "Leader Material" }', "material leader setup previous destination")
@@ -476,6 +515,40 @@ for needle, label in [
 for forbidden_state in ["leaderLength", "leaderStrength", "leaderPoundTest", "leaderMaterial"]:
     require_absent(script_js, f"{forbidden_state}:", f"forbidden persistent state {forbidden_state}")
 
+
+ready_builder_match = re.search(
+    r"function getReelReadyCheckGuidance\(leaderChoice\) \{(?P<body>.*?)\n\}\n\nfunction renderReelSetupReelReadyCheckStep",
+    script_js,
+    flags=re.S
+)
+if not ready_builder_match:
+    fail("could not isolate getReelReadyCheckGuidance")
+for needle, label in [
+    ('const items = [...REEL_READY_CHECK_GUIDANCE.items];', "base checklist copy"),
+    ('leaderChoice.id !== "none"', "leader conditional"),
+    ('REEL_READY_CHECK_GUIDANCE.leaderConnectionItem', "leader checklist insertion")
+]:
+    require_text(ready_builder_match.group("body"), needle, f"Reel Ready builder {label}")
+
+ready_check_block = get_function_block(
+    script_js,
+    "renderReelSetupReelReadyCheckStep",
+    "getActiveKnots"
+)
+for needle, label in [
+    ('title: "Reel Ready Check"', "page title"),
+    ('id: "reel-ready-choose-rig"', "Rig Guide handoff action"),
+    ('title: "My Reel Is Ready — Choose a Rig"', "handoff label"),
+    ('No Rig will be selected automatically.', "no automatic Rig recommendation"),
+    ('resetReelSetupState();', "completion state reset"),
+    ('clearDetailNavigationStack();', "detail-context reset"),
+    ('selectedRigId = null;', "no selected Rig"),
+    ('selectedRigCollectionKey = "all";', "normal Rig Guide landing context"),
+    ('showView(ROUTES.RIGS);', "Rig Guide route"),
+    ('renderReelSetupGuidanceList(appMain, guidance);', "final checklist rendering")
+]:
+    require_text(ready_check_block, needle, f"Reel Ready Check {label}")
+require_absent(ready_check_block, "openRigDetail(", "Reel Ready must not auto-open a Rig")
 
 for needle, label in [
     ('title: "Monofilament Backing"', "mono backing label"),
@@ -495,7 +568,8 @@ for needle, label in [
     ('id: "backing-decision-next"', "backing progression"),
     ('id: "spool-reel-next"', "spooling progression"),
     ('id: "add-leader"', "leader add branch"),
-    ('id: "reel-ready-next"', "Reel Ready progression boundary")
+    ('id: "reel-ready-next"', "Reel Ready progression"),
+    ('id: "reel-ready-choose-rig"', "Rig Guide completion progression")
 ]:
     require_text(script_js, needle, f"workflow-card {label}")
 if script_js.count("isWorkflowAction: true") < 25:
@@ -517,8 +591,8 @@ if 'selectedChoices.style.background =' in script_js:
 if 'selectedChoices.style.borderRadius =' in script_js:
     fail("Selected Choices must not restore rounded-card styling")
 
-# Block 3.8 adds exactly one downstream persistent selection: leaderChoice.
-# It must not add separate material/length/strength state for values not actually captured.
+# Block 3.9 adds no persistent selection or completion state.
+# The Block 3.8 leaderChoice remains the final Reel Setup selection field.
 initial_state_match = re.search(
     r"function createInitialReelSetupState\(\) \{\s*return \{(?P<body>.*?)\n    \};\n\}",
     script_js,
@@ -538,7 +612,13 @@ expected_state_fields = [
     "leaderChoice"
 ]
 if state_fields != expected_state_fields:
-    fail(f"Block 3.8 state schema mismatch; expected only leaderChoice after backingChoice, found {state_fields}")
+    fail(f"Block 3.9 state schema mismatch; no new persistent state is allowed after leaderChoice, found {state_fields}")
+
+require_absent(script_js, "reelReady:", "forbidden Reel Ready completion state reelReady")
+
+require_absent(script_js, "setupComplete:", "forbidden Reel Ready completion state setupComplete")
+
+require_absent(script_js, "reelReadyConfirmed:", "forbidden Reel Ready completion state reelReadyConfirmed")
 
 # Knot detail navigation must restore the exact Reel Setup state.
 for needle, label in [
@@ -551,16 +631,39 @@ for needle, label in [
 ]:
     require_text(script_js, needle, label)
 
-# The normal Knot landing remains unwired until the integration block.
+# Block 3.9 is the production integration boundary: Attach Line to a Reel
+# enters Reel Setup directly, while all other Knot tasks keep task browse.
 render_knots_match = re.search(
     r"function renderKnotsView\(appMain\) \{(?P<body>.*?)\n\}\n\nfunction updateKnotGuideSearchResults",
     script_js,
     flags=re.S
 )
 if not render_knots_match:
-    fail("could not isolate renderKnotsView for the integration guard")
-if "openReelSetup" in render_knots_match.group("body") or "ROUTES.REEL_SETUP" in render_knots_match.group("body"):
-    fail("Package 3 Reel Setup must remain internally accessed until the guided workflow integration block")
+    fail("could not isolate renderKnotsView for production-entry validation")
+render_knots_body = render_knots_match.group("body")
+for needle, label in [
+    ('if (taskId === "attach-line-to-reel")', "Attach Line task interception"),
+    ('openReelSetup();', "Reel Setup production entry"),
+    ('selectedKnotBrowseKey = "task";', "other-task browse state"),
+    ('showView(ROUTES.KNOT_BROWSE);', "other-task browse route")
+]:
+    require_text(render_knots_body, needle, f"Knot Guide production entry {label}")
+if render_knots_body.find('openReelSetup();') > render_knots_body.find('selectedKnotBrowseKey = "task";'):
+    fail("Attach Line to a Reel interception must occur before generic Knot task-browse routing")
+
+knot_browse_config_match = re.search(
+    r"function getKnotBrowseConfig\(\) \{(?P<body>.*?)\n\}\n\nfunction renderKnotBrowseView",
+    script_js,
+    flags=re.S
+)
+if not knot_browse_config_match:
+    fail("could not isolate getKnotBrowseConfig")
+for needle, label in [
+    ('isReelSetupEntry', "temporary Reel Setup task-browse special case"),
+    ('full guided reel-setup workflow arrives', "obsolete Reel Setup placeholder"),
+    ('title: isReelSetupEntry ? "Get Your Reel Ready"', "temporary Get Your Reel Ready browse title")
+]:
+    require_absent(knot_browse_config_match.group("body"), needle, label)
 
 for needle, label in [
     ("Deferred Search UX Issue — Parking Lot", "deferred scoped-search issue"),
@@ -571,7 +674,7 @@ for needle, label in [
 
 for needle, label in [
     ("**Block:** 3.8 — Leader Setup", "block title"),
-    ("IMPLEMENTED / STATIC VALIDATION", "implementation status"),
+    ("**Status:** PASS / VALIDATED", "closed Block 3.8 status"),
     ("Approved Architecture Change After Opening", "approved two-stage correction"),
     ("LEADER_MATERIAL = \"leader-material\"", "leader material step documentation"),
     ("Add a Leader", "navigation-only branch documentation"),
@@ -582,9 +685,22 @@ for needle, label in [
     require_text(block_3_8_workstream, needle, f"Block 3.8 workstream {label}")
 
 for needle, label in [
+    ("**Block:** 3.9 — Reel Ready Check / Rig Guide Handoff + Production Entry Integration", "block title"),
+    ("IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED", "implementation status"),
+    ("Attach Line to a Reel", "production entry"),
+    ("My Reel Is Ready — Choose a Rig", "Rig Guide handoff"),
+    ("REEL_READY_CHECK = \"reel-ready-check\"", "Reel Ready step documentation"),
+    ("normal users can enter, complete, and exit", "no-DevTools completion gate"),
+    ("Deferred Search UX Issue — Parking Lot", "deferred search issue preserved")
+]:
+    require_text(block_3_9_workstream, needle, f"Block 3.9 workstream {label}")
+
+for needle, label in [
     ("Block 3.8 — Leader Setup", "aggregate Block 3.8 section"),
-    ("leaderChoice", "aggregate state update"),
-    ("Reel Ready Check / Rig Guide Handoff", "aggregate next capability"),
+    ("Block 3.9 — Reel Ready Check / Rig Guide Handoff + Production Entry Integration", "aggregate Block 3.9 section"),
+    ("Block 3.9 IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED", "aggregate current status"),
+    ("Attach Line to a Reel", "aggregate production entry"),
+    ("My Reel Is Ready — Choose a Rig", "aggregate Rig Guide handoff"),
     ("Deferred Search UX Issue — Parking Lot", "aggregate deferred search issue")
 ]:
     require_text(package_3_workstream, needle, f"Package 3 aggregate {label}")
@@ -598,7 +714,7 @@ for path in ["script.js", "data/reel-guidance.js"]:
     if result.returncode != 0:
         fail(f"JavaScript syntax check failed for {path}: {result.stderr.strip()}")
 
-print("Production Package 3 Block 3.8 validation passed.")
+print("Production Package 3 Block 3.9 validation passed.")
 print(f"Backing choices: {backing_count}")
 print(f"Spooling profiles: {spooling_count}")
 print(f"Leader outcomes: {leader_count}")
@@ -606,7 +722,10 @@ print("Reel Setup navigation: step-aware and sticky/floating.")
 print("Workflow cards: redundant upstream-change cards removed; compact emphasis inherits the existing card palette.")
 print("Spooling instructions: key actions receive structured strong-text emphasis.")
 print("Leader Setup: two-stage decision, material guidance, and canonical Double Uni handoff enabled.")
+print(f"Reel Ready Check: {ready_base_count} base checks plus conditional leader connection check.")
+print("Production entry: Attach Line to a Reel opens Reel Setup directly; other Knot tasks retain browse routing.")
+print("Rig Guide handoff: final completion clears Reel Setup state and opens the normal Rig Guide landing.")
 print("Reel-specific spooling: spinning, spincast, baitcasting.")
 print("Canonical Knot handoffs: Arbor Knot and Double Uni Knot.")
 print("Reel Setup Knot return context: exact step/state restoration enabled.")
-print("Normal Knot landing remains intentionally unwired to Reel Setup.")
+print("Normal UI path no longer requires DevTools for Reel Setup entry.")

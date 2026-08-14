@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-**Status:** In Progress — Blocks 3.2 through 3.8 PASS / VALIDATED; Next Capability: Reel Ready Check / Rig Guide Handoff  
+**Status:** In Progress — Blocks 3.2 through 3.8 PASS / VALIDATED; Block 3.9 IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -194,7 +194,7 @@ Key validated behavior:
 - line-property tradeoffs remain explicit,
 - Spincast + Braid receives a model-specific compatibility warning,
 - changing Reel Type or Line Type clears dependent downstream state,
-- no production wiring of Attach Line to a Reel occurs yet.
+- at the Block 3.3 boundary, production wiring of Attach Line to a Reel had not yet occurred.
 
 The Persistent Selected Choices requirement first identified during Block 3.3 was implemented in Block 3.4 and visually finalized in Block 3.5.
 
@@ -218,7 +218,7 @@ Validated boundaries:
 - final line compatibility is deferred to the reel/rod equipment check,
 - persistent Selected Choices accumulates correctly,
 - upstream changes clear dependent state,
-- normal Knot landing remains intentionally unwired.
+- at the Block 3.4 boundary, the normal Knot landing remained intentionally unwired.
 
 Authoritative block record:
 
@@ -349,7 +349,7 @@ Microsoft Edge validation on 2026-08-14 confirmed:
 - Selected Choices visual baseline,
 - Spincast + Braid warning,
 - Braid strength-reference boundary,
-- normal Knot landing remains intentionally unwired,
+- at the Block 3.6 boundary, the normal Knot landing remained intentionally unwired,
 - no application-source JavaScript errors.
 
 Authoritative block closeout record:
@@ -409,7 +409,7 @@ Microsoft Edge validation on 2026-08-14 passed:
 - workflow-card hierarchy,
 - multi-color workflow-card palette inheritance,
 - selective key-instruction emphasis,
-- normal Knot landing remains intentionally unwired,
+- at the Block 3.7 boundary, the normal Knot landing remained intentionally unwired,
 - no application-source JavaScript errors.
 
 Authoritative block closeout record:
@@ -463,7 +463,7 @@ Microsoft Edge runtime validation on 2026-08-14 passed all six Block 3.8 checks,
 - `leaderChoice` persistence / clearing rules,
 - Start Over / Home / Return to Knots reset behavior,
 - disabled **Next — Reel Ready Check** boundary,
-- normal Knot landing remains intentionally unwired,
+- at the Block 3.8 boundary, the normal Knot landing remained intentionally unwired,
 - no application-source JavaScript errors.
 
 Runtime-validated GitHub `main` commit:
@@ -482,9 +482,46 @@ Authoritative implementation / closeout record:
 
 `docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.8.md`
 
+# Block 3.9 — Reel Ready Check / Rig Guide Handoff + Production Entry Integration
+
+**Status:** IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED
+
+Block 3.9 is the final Package 3 integration block. It completes the internal Reel Setup workflow and makes it accessible through the normal application UI.
+
+Implemented production behavior:
+
+- new `REEL_READY_CHECK = "reel-ready-check"` workflow step,
+- **Next — Reel Ready Check** enabled from Leader Setup,
+- step-aware Back from Reel Ready Check to Leader Setup,
+- existing **SELECTED CHOICES** retained as the final setup summary,
+- four base physical confirmation checks for routing, spool fill / line lay, applicable spool/backing/main-line connection security, and reel/rod limits,
+- a separate main-line-to-leader security check added only when a leader was selected,
+- explicit wording that the application cannot physically inspect or certify the reel,
+- no new Reel Setup selection/completion field and no Reel Setup persistence,
+- primary **My Reel Is Ready — Choose a Rig** completion action,
+- completion clears transient Reel Setup state and stale detail-navigation context,
+- completion opens the normal Rig Guide landing without auto-selecting or recommending a Rig,
+- existing Knot Guide **Attach Line to a Reel** task now opens `openReelSetup()` directly,
+- only `attach-line-to-reel` is intercepted; all other Knot tasks retain normal task-browse behavior,
+- obsolete temporary **Get Your Reel Ready** Knot-browse placeholder removed,
+- no separate **Get Your Reel Ready** landing card added,
+- no CSS, HTML, canonical Knot, or Knot-guidance data change required.
+
+Prepared Block 3.9 source / validator blobs:
+
+```text
+d23c05a879fc6b27e0e6c53905e126f34efbce6b  script.js
+ad5fbe60f82879792843ed2668d297fd10005a09  data/reel-guidance.js
+ec9e56a8bac09265c6ee384abc7bc13755b43d0f  tools/validate_knot_package_3.py
+```
+
+Authoritative implementation record:
+
+`docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.9.md`
+
 # Current Transient Reel Setup State
 
-Through Block 3.8, Reel Setup transient selection state includes:
+Through Block 3.9, Reel Setup transient selection state remains:
 
 ```text
 entryMode
@@ -496,7 +533,7 @@ backingChoice
 leaderChoice
 ```
 
-Workflow position is also held in transient `stepId`. The entire Reel Setup state remains session-only JavaScript state.
+Workflow position is also held in transient `stepId`, now including the final `reel-ready-check` step. Block 3.9 adds no selection/completion field. The entire Reel Setup state remains session-only JavaScript state.
 
 State-clearing principle:
 
@@ -514,11 +551,17 @@ Package 3 continues to preserve the approved ownership model:
 - direct braid remains equipment/manufacturer specific,
 - target-fish line strength remains a beginner reference until checked against actual equipment.
 
-# Current Integration Boundary
+# Production Integration Boundary — Block 3.9
 
-The normal Knot landing remains intentionally unwired to Reel Setup through Block 3.8.
+Block 3.9 is the approved Package 3 integration boundary.
 
-Do not wire **Attach Line to a Reel** to the internal Reel Setup workflow until the approved later Package 3 integration block.
+The existing Knot Guide **Attach Line to a Reel** task now enters `openReelSetup()` directly. Normal users therefore no longer need DevTools to start Reel Setup once the Block 3.9 package is uploaded.
+
+The temporary task-browse placeholder is removed. Other Knot tasks continue to use the existing Knot Browse path.
+
+The final Reel Ready action clears Reel Setup state and opens the normal Rig Guide landing without selecting a Rig automatically.
+
+This integration remains **runtime unvalidated** until the Block 3.9 Microsoft Edge checklist passes.
 
 # Deferred Search UX Issue — Parking Lot
 
@@ -535,13 +578,17 @@ Future direction:
 
 This issue affects both Rigs and Knots. It is intentionally deferred and must not be lost when Package 3 advances.
 
-# Next Package 3 Capability — Reel Ready Check / Rig Guide Handoff
+# Block 3.9 Completion Boundary
 
-With Block 3.8 runtime validation complete, the next approved V1 capability is the final **Reel Ready Check / Rig Guide handoff**.
+Block 3.9 now contains the final approved Package 3 capability set:
 
-That later block must verify the completed line system, present a clear completion state, and hand the user into the Rig Guide without prematurely broadening into casting, lure optimization, or Package 4 Knot media.
+1. **Reel Ready Check**,
+2. **Rig Guide Handoff**,
+3. **Production Entry Integration: Knots → Attach Line to a Reel → `openReelSetup()`**.
 
-The normal **Attach Line to a Reel** Knot landing entry remains intentionally unwired until the approved Package 3 integration boundary is reached.
+No additional Package 3 feature block is planned after Block 3.9. If runtime validation passes, close Block 3.9 and mark Production Package 3 **Get Your Reel Ready** functionally complete.
+
+Do not begin Package 4 Knot instructional media until Block 3.9 is runtime validated, documented, and GitHub-integrity verified.
 
 # Exact Resume Point
 
@@ -553,14 +600,17 @@ Production Package 3 is active.
 **Block 3.5 — PASS / VALIDATED**  
 **Block 3.6 — PASS / VALIDATED**  
 **Block 3.7 — PASS / VALIDATED**  
-**Block 3.8 — PASS / VALIDATED**
+**Block 3.8 — PASS / VALIDATED**  
+**Block 3.9 — IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED**
 
 Next:
 
-**Formally open the Reel Ready Check / Rig Guide Handoff block from the latest verified GitHub state.**
+1. upload the complete Block 3.9 production package through GitHub Desktop,
+2. verify GitHub `main` and the expected Block 3.9 blobs,
+3. run the six-step Microsoft Edge Block 3.9 runtime checklist,
+4. correct only genuine defects before closeout,
+5. after PASS, close Block 3.9 and Production Package 3 documentation.
 
 Carry forward the deferred Rig/Knot scoped-search UX issue for later global/deeper-search work.
 
-Do not begin the Reel Ready Check / Rig Guide handoff block until this Block 3.8 documentation closeout is uploaded and GitHub-integrity verified.
-
-Do not begin Production Package 4 Knot media or Fish Guide while Package 3 remains open.
+Do not begin Production Package 4 Knot media or Fish Guide while Package 3 remains runtime unvalidated.
