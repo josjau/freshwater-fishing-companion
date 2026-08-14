@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Block 3.4
 
-**Status:** Implemented / Unvalidated  
+**Status:** Runtime PASS / Selected-Choices Visual Refinement Staged for Next Block  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.4 — Target Fish / Starting Pound-Test Guidance  
@@ -12,9 +12,26 @@ Block 3.4 extends the internal **Get Your Reel Ready** workflow with beginner ta
 
 The production **Attach Line to a Reel** Knot entry remains intentionally unwired until the later Package 3 integration block.
 
-# Carried-Forward UX — Persistent Selected Choices
+# Block 3.4 Runtime Result
 
-The selected-choice summary now applies across the Reel Setup workflow after the first persistent choice rather than appearing only at **Line Choice Check**.
+**Result:** PASS
+
+Microsoft Edge runtime validation confirmed:
+
+- the persistent Selected Choices summary appears only after the first persistent selection,
+- setup mode, reel type, line type, and target fish accumulate correctly,
+- Help / Not Sure actions do not become persistent selections,
+- all six target-fish profiles render,
+- all approved starting ranges and Easy beginner choices render correctly,
+- Braid uses a fish-strength reference rather than pretending the species value is a final braid purchase size,
+- upstream selection changes clear dependent downstream state correctly,
+- Start Over clears the complete transient Reel Setup state,
+- the normal Knot landing remains intentionally unwired to Reel Setup,
+- no application-source JavaScript error was reported.
+
+# Persistent Selected Choices — Current Behavior
+
+The selected-choice summary applies across the Reel Setup workflow after the first persistent choice.
 
 Expected progression:
 
@@ -39,7 +56,7 @@ SELECTED CHOICES
 New or Empty Reel · Spinning Reel · Monofilament · Bass
 ```
 
-Implementation rules:
+Implementation rules remain:
 
 - one reusable `renderReelSetupSelectedChoices()` helper owns the treatment,
 - `renderReelSetupStep()` applies it consistently to existing and future Reel Setup steps,
@@ -49,11 +66,64 @@ Implementation rules:
 - dynamic values are written with `textContent`,
 - selected values may wrap rather than overflow.
 
-## UI Scaling Watch
+# Selected-Choices Visual Refinement — Staged for Next Block
 
-The selected-value text currently retains the approved `1.03rem` presentation from the first UX revision and uses `overflow-wrap: anywhere` as a safety guard.
+Desktop and Edge mobile-emulation review found the current selected-value typography too large and the current container too card-like.
 
-As additional selections accumulate in later Package 3 blocks, evaluate the summary on desktop and mobile. If the summary becomes visually dominant or wraps poorly, adjust the value typography or layout using the existing theme palette. Do not reduce readability preemptively; make the adjustment from observed runtime behavior.
+The next production block must carry the following refinement before adding further Reel Setup decisions.
+
+## Typography
+
+- Reduce the selected-values text from `1.03rem` to the **same font size used by the `SELECTED CHOICES` heading**.
+- The heading and selected values must **not use the same color**.
+- Keep `SELECTED CHOICES` as the quieter structural label using the existing subtle/muted theme text treatment.
+- Keep the selected values visually stronger through the established Knot accent color treatment and/or font weight rather than larger type.
+- Preserve wrapping for long cumulative selections.
+
+## Structure / Visual Treatment
+
+The Selected Choices region must **not look like a dashboard card or nested card**.
+
+Use the established Knot detail **Best For / Where You'll Use It** area as the visual reference. The authoritative implementation uses:
+
+- one section-level treatment,
+- flat internal content groups,
+- spacing and divider lines for structure,
+- no separate rounded card around each internal group.
+
+For Reel Setup Selected Choices, the intended direction is therefore:
+
+- flat contextual section,
+- no separate elevated background fill,
+- no rounded card-style container,
+- no shadow,
+- no dashboard-card treatment,
+- modest vertical spacing,
+- a simple divider/border treatment consistent with the application's at-a-glance sections,
+- Knot accent reserved for the actual selected-value text or a restrained accent detail,
+- heading remains visually distinct from values by color rather than size.
+
+Do not duplicate the full Knot detail component or make Reel Setup depend on Knot detail markup. Reuse the **visual language**, not the component ownership.
+
+## Validation Requirement
+
+This refinement is rolled into the next Package 3 production block under the Incremental Refinement Workflow.
+
+Runtime validation for the next block must begin with:
+
+**Step 1 — Selected Choices Visual Refinement**
+
+Confirm in both normal desktop width and Edge device emulation:
+
+1. `SELECTED CHOICES` and the selected-value text use the same font size.
+2. Heading and values use clearly different colors.
+3. Selected values remain more prominent through color/weight, not larger type.
+4. The region reads like a flat at-a-glance/context section rather than a card.
+5. No shadow, rounded-card appearance, or elevated-card background remains.
+6. Cumulative values wrap cleanly as additional Reel Setup selections are added.
+7. The selected-choice summary remains present on every applicable Reel Setup step after the first persistent selection.
+
+Only after Step 1 passes should the new functionality in the next block be validated.
 
 # Block 3.4 Target Profiles
 
@@ -142,7 +212,7 @@ Changing an upstream persistent selection clears dependent downstream state:
 
 # Static Validation
 
-The Package 3 validator now checks:
+The Package 3 validator checks:
 
 - 2 setup modes,
 - 4 reel types,
@@ -159,7 +229,7 @@ The Package 3 validator now checks:
 - JavaScript syntax,
 - no public Knot landing wiring to Reel Setup yet.
 
-Expected validator output:
+Validated output:
 
 ```text
 Production Package 3 Block 3.4 validation passed.
@@ -173,33 +243,22 @@ Persistent Selected Choices summary: enabled after first persistent choice.
 Normal Knot landing remains intentionally unwired to Reel Setup.
 ```
 
-# Runtime Validation Order
+# Next Build Block
 
-After GitHub integrity verification, Microsoft Edge validation should run in this order:
+Begin the next Package 3 block:
 
-## Step 1 — Carried-Forward Persistent Context
+**Reel/Rod Compatibility + How to Read Your Reel**
 
-Validate the cumulative **SELECTED CHOICES** summary from setup mode through target fish, including Help / Not Sure screens, change-selection behavior, Start Over, wrapping/readability, and visual prominence.
-
-## Step 2 — Target-Fish Guidance
-
-Validate all six target cards, their starting ranges, Easy beginner choice wording, and target-selection state behavior.
-
-## Step 3 — Braid Boundary
-
-Validate that Braid uses **Recommended fish-strength reference** wording and explicitly defers the final braid test until equipment compatibility rather than treating the species-based Easy beginner choice as a final purchase size.
-
-## Step 4 — Regression
-
-Confirm existing Package 3 line-selection behavior and validated Package 2 Knot behavior remain intact with no application-source JavaScript errors.
+The block must include the staged Selected Choices visual refinement described above in the same production package.
 
 # Exact Resume Point
 
-Block 3.4 is **Implemented / Unvalidated**.
+Block 3.4 is **PASS / VALIDATED**.
 
-After upload:
+The next Package 3 block should:
 
-1. verify package blobs against GitHub `main`,
-2. run Block 3.4 runtime validation beginning with persistent Selected Choices,
-3. if passed, document Block 3.4 as PASS / VALIDATED,
-4. then begin the next Package 3 block: **Reel/Rod Compatibility + How to Read Your Reel**.
+1. apply the staged Selected Choices visual refinement,
+2. implement Reel/Rod Compatibility + How to Read Your Reel,
+3. keep the production Knot landing unwired until the later integration block,
+4. validate the selected-choice visual refinement first,
+5. then validate the new compatibility guidance.
