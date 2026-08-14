@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knots — Production Package 3 Block 3.6"
+    milestone: "Knots — Production Package 3 Block 3.7"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -658,6 +658,11 @@ function renderReelSetupView(appMain) {
         return;
     }
 
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS) {
+        renderReelSetupSpoolingInstructionsStep(appMain);
+        return;
+    }
+
     renderReelSetupStartStep(appMain);
 }
 
@@ -737,7 +742,8 @@ function getReelSetupPreviousStep() {
         [REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH]: { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK, label: "Reel & Rod Check" },
         [REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE]: { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK, label: "Reel & Rod Check" },
         [REEL_SETUP_STEP_IDS.BACKING_DECISION]: { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE, label: "Equipment Check" },
-        [REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN]: { stepId: REEL_SETUP_STEP_IDS.BACKING_DECISION, label: "Backing Choice" }
+        [REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN]: { stepId: REEL_SETUP_STEP_IDS.BACKING_DECISION, label: "Backing Choice" },
+        [REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS]: { stepId: REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN, label: "Spool Connection Plan" }
     };
 
     return previousSteps[reelSetupState.stepId] ?? null;
@@ -1765,6 +1771,10 @@ function getReelBackingChoice(backingChoiceId) {
     return REEL_BACKING_CHOICES[backingChoiceId] ?? null;
 }
 
+function getReelSpoolingGuidance(reelTypeId) {
+    return REEL_SPOOLING_GUIDANCE[reelTypeId] ?? null;
+}
+
 function getReelBackingCards(lineType) {
     if (!lineType) return [];
 
@@ -1930,8 +1940,8 @@ function renderReelSetupSpoolConnectionPlanStep(appMain) {
             {
                 id: "spool-reel-next",
                 title: "Next — Spool the Reel",
-                description: "The next build block adds reel-specific line routing, winding tension, and spool-fill instructions.",
-                isAvailable: false
+                description: "Follow the reel-specific routing, winding-tension, and spool-fill steps before moving on to the rest of the line system.",
+                isAvailable: true
             },
             {
                 id: "change-backing-choice",
@@ -1958,6 +1968,11 @@ function renderReelSetupSpoolConnectionPlanStep(appMain) {
                 openKnotDetailFromReelSetup(knotAction.knotId);
                 return;
             }
+            if (actionId === "spool-reel-next") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
             if (actionId === "change-backing-choice") {
                 reelSetupState.backingChoice = null;
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.BACKING_DECISION;
@@ -1974,6 +1989,74 @@ function renderReelSetupSpoolConnectionPlanStep(appMain) {
             }
         }
     });
+}
+
+function renderReelSetupSpoolingInstructionsStep(appMain) {
+    const entryOption = getReelSetupOption(REEL_SETUP_ENTRY_OPTIONS, reelSetupState.entryMode);
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
+    const lineType = getReelLineType(reelSetupState.lineType);
+    const backingChoice = getReelBackingChoice(reelSetupState.backingChoice);
+    const guidance = getReelSpoolingGuidance(reelSetupState.reelType);
+
+    if (!entryOption || !reelType || !lineType || !backingChoice || !guidance || reelSetupState.equipmentCheck !== "compatible") {
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN;
+        renderReelSetupSpoolConnectionPlanStep(appMain);
+        return;
+    }
+
+    const replacementNote = reelSetupState.entryMode === "replace-existing-line"
+        ? "Remove the old line completely before beginning the fresh line system. "
+        : "";
+
+    renderReelSetupStep(appMain, {
+        headingId: "reel-setup-title",
+        title: "Spool the Reel",
+        description: `${replacementNote}Use the ${reelType.title.toLowerCase()} procedure below for line routing, winding tension, and fill level. Treat the previous Spool Connection Plan as the connection sequence; route the line correctly before making any spool connection that would prevent the line from passing through the required guide, bail, or cover opening.`,
+        cards: [
+            {
+                id: "leader-setup-next",
+                title: "Next — Leader Setup",
+                description: "A later Package 3 block will decide whether this line system needs a leader before the final Reel Ready checkpoint.",
+                isAvailable: false
+            },
+            {
+                id: "change-backing-choice",
+                title: "Change Backing Choice",
+                description: "Return to the backing decision and rebuild the spool connection plan before winding line.",
+                isAvailable: true
+            },
+            {
+                id: "start-reel-setup-over",
+                title: "Start Over",
+                description: "Clear the temporary Reel Setup state and return to the first step.",
+                isAvailable: true
+            },
+            {
+                id: "return-to-knots",
+                title: "Return to Knots",
+                description: "Leave the internal Package 3 route and return to the Knot Guide.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            if (actionId === "change-backing-choice") {
+                reelSetupState.backingChoice = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.BACKING_DECISION;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+            if (actionId === "start-reel-setup-over") {
+                openReelSetup();
+                return;
+            }
+            if (actionId === "return-to-knots") {
+                resetReelSetupState();
+                showView(ROUTES.KNOTS);
+            }
+        }
+    });
+
+    renderReelSetupGuidanceList(appMain, guidance);
 }
 
 function getActiveKnots() {
