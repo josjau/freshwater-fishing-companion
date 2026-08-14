@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-**Status:** In Progress — Blocks 3.2 through 3.8 PASS / VALIDATED; Block 3.9 IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED  
+**Status:** PASS / VALIDATED / FUNCTIONALLY COMPLETE — Blocks 3.2 through 3.9 PASS / VALIDATED  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -484,7 +484,7 @@ Authoritative implementation / closeout record:
 
 # Block 3.9 — Reel Ready Check / Rig Guide Handoff + Production Entry Integration
 
-**Status:** IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED
+**Status:** PASS / VALIDATED
 
 Block 3.9 is the final Package 3 integration block. It completes the internal Reel Setup workflow and makes it accessible through the normal application UI.
 
@@ -515,9 +515,30 @@ ad5fbe60f82879792843ed2668d297fd10005a09  data/reel-guidance.js
 ec9e56a8bac09265c6ee384abc7bc13755b43d0f  tools/validate_knot_package_3.py
 ```
 
-Authoritative implementation record:
+Authoritative implementation / closeout record:
 
 `docs/workstreams/KNOT-PRODUCTION-PACKAGE-3-BLOCK-3.9.md`
+
+Microsoft Edge runtime validation on 2026-08-14 passed all six Block 3.9 gates:
+
+- Blocks 3.2–3.8 Reel Setup regression safety,
+- normal **Knots → Attach Line to a Reel → Get Your Reel Ready** production entry without DevTools,
+- enabled Reel Ready Check and preserved backward review state,
+- correct No Leader and separate-leader final checklists,
+- clean **My Reel Is Ready — Choose a Rig** handoff to the normal Rig Guide with Reel Setup state cleared,
+- Start Over / Return to Knots / Home reset behavior, responsive layout, and no application-source JavaScript errors.
+
+Runtime-validated GitHub `main` production commit:
+
+`0e2daa24776770a3f549b1cfe8de004aa22c4ddd`
+
+Runtime-validated Block 3.9 blobs:
+
+```text
+d23c05a879fc6b27e0e6c53905e126f34efbce6b  script.js
+ad5fbe60f82879792843ed2668d297fd10005a09  data/reel-guidance.js
+ec9e56a8bac09265c6ee384abc7bc13755b43d0f  tools/validate_knot_package_3.py
+```
 
 # Current Transient Reel Setup State
 
@@ -561,7 +582,7 @@ The temporary task-browse placeholder is removed. Other Knot tasks continue to u
 
 The final Reel Ready action clears Reel Setup state and opens the normal Rig Guide landing without selecting a Rig automatically.
 
-This integration remains **runtime unvalidated** until the Block 3.9 Microsoft Edge checklist passes.
+This integration is **PASS / VALIDATED** after the Block 3.9 Microsoft Edge checklist passed on 2026-08-14.
 
 # Deferred Search UX Issue — Parking Lot
 
@@ -578,21 +599,21 @@ Future direction:
 
 This issue affects both Rigs and Knots. It is intentionally deferred and must not be lost when Package 3 advances.
 
-# Block 3.9 Completion Boundary
+# Block 3.9 Completion Boundary — SATISFIED
 
-Block 3.9 now contains the final approved Package 3 capability set:
+Block 3.9 contains and has runtime validated the final approved Package 3 capability set:
 
 1. **Reel Ready Check**,
 2. **Rig Guide Handoff**,
 3. **Production Entry Integration: Knots → Attach Line to a Reel → `openReelSetup()`**.
 
-No additional Package 3 feature block is planned after Block 3.9. If runtime validation passes, close Block 3.9 and mark Production Package 3 **Get Your Reel Ready** functionally complete.
+No additional Package 3 feature block is planned after Block 3.9. Production Package 3 **Get Your Reel Ready** is functionally complete.
 
-Do not begin Package 4 Knot instructional media until Block 3.9 is runtime validated, documented, and GitHub-integrity verified.
+Production Package 4 Knot instructional media remains the next Knots production package and must begin only after this documentation closeout is uploaded and GitHub-integrity verified.
 
 # Exact Resume Point
 
-Production Package 3 is active.
+Production Package 3 **Get Your Reel Ready** is functionally complete.
 
 **Block 3.2 — PASS / VALIDATED**  
 **Block 3.3 — Functional PASS; follow-on Selected Choices refinements completed and validated**  
@@ -601,16 +622,30 @@ Production Package 3 is active.
 **Block 3.6 — PASS / VALIDATED**  
 **Block 3.7 — PASS / VALIDATED**  
 **Block 3.8 — PASS / VALIDATED**  
-**Block 3.9 — IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED**
+**Block 3.9 — PASS / VALIDATED**
 
-Next:
+The production user entry is now:
 
-1. upload the complete Block 3.9 production package through GitHub Desktop,
-2. verify GitHub `main` and the expected Block 3.9 blobs,
-3. run the six-step Microsoft Edge Block 3.9 runtime checklist,
-4. correct only genuine defects before closeout,
-5. after PASS, close Block 3.9 and Production Package 3 documentation.
+```text
+Knots
+→ Attach Line to a Reel
+→ Get Your Reel Ready
+```
+
+and the completed workflow hands off through:
+
+```text
+Reel Ready Check
+→ My Reel Is Ready — Choose a Rig
+→ Rig Guide
+```
+
+Normal Reel Setup use no longer requires DevTools.
 
 Carry forward the deferred Rig/Knot scoped-search UX issue for later global/deeper-search work.
 
-Do not begin Production Package 4 Knot media or Fish Guide while Package 3 remains runtime unvalidated.
+Next production package:
+
+**Production Package 4 — Knot instructional media.**
+
+Do not begin Package 4 implementation until this Package 3 documentation closeout is uploaded and GitHub-integrity verified.

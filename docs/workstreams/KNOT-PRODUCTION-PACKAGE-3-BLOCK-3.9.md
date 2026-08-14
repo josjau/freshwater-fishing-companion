@@ -1,11 +1,12 @@
 # Knot Production Package 3 — Block 3.9
 
-**Status:** IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED  
+**Status:** PASS / VALIDATED  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.9 — Reel Ready Check / Rig Guide Handoff + Production Entry Integration  
 **Opening Date:** 2026-08-14  
 **Implementation Date:** 2026-08-14  
+**Validation Date:** 2026-08-14  
 **Target Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
 
 # Purpose
@@ -318,80 +319,112 @@ ec9e56a8bac09265c6ee384abc7bc13755b43d0f  tools/validate_knot_package_3.py
 
 The validator output is recorded in the production-package validation report delivered with this build.
 
-# Required Runtime Validation
+# Runtime Validation — PASS
 
-## Step 1 — Blocks 3.2–3.8 Regression
+Microsoft Edge runtime validation on 2026-08-14 passed the complete six-step Block 3.9 checklist on Windows Desktop with the production package uploaded to GitHub.
 
-Run the established Reel Setup workflow through Leader Setup and confirm previously validated behavior remains correct, including state clearing, sticky navigation, Selected Choices, backing logic, spooling guidance, leader branches, Knot handoffs, and exact return context.
+## Step 1 — Blocks 3.2–3.8 Regression: PASS
 
-## Step 2 — Production Entry
+Confirmed the established Reel Setup workflow remains regression-safe through Leader Setup, including:
 
-From a normal application launch without DevTools:
+- dependent-state clearing,
+- sticky/floating navigation,
+- Selected Choices,
+- backing logic,
+- reel-specific spooling guidance,
+- leader branches,
+- canonical Arbor Knot / Double Uni Knot handoffs,
+- exact Reel Setup return context.
 
-1. open **Knots**,
-2. select **Attach Line to a Reel**,
-3. confirm **Get Your Reel Ready** opens directly,
-4. confirm the temporary Arbor/Uni task-browse placeholder does not appear,
-5. return to Knots and confirm every other Knot task still opens its normal task-browse flow.
+## Step 2 — Production Entry: PASS
 
-## Step 3 — Reel Ready Entry
+Confirmed from a normal application launch without DevTools:
 
-Complete a valid Reel Setup path and confirm:
+- **Knots → Attach Line to a Reel** opens **Get Your Reel Ready** directly,
+- the temporary Arbor/Uni task-browse placeholder does not appear,
+- the user no longer needs to run `openReelSetup()` manually,
+- all other Knot task cards retain their normal task-browse behavior.
+
+## Step 3 — Reel Ready Entry: PASS
+
+Confirmed:
 
 - **Next — Reel Ready Check** is enabled,
-- it opens **Reel Ready Check**,
+- it opens the final **Reel Ready Check** step,
 - Selected Choices remains correct,
-- Back returns to **Leader Setup** without clearing the selections.
+- Back returns to **Leader Setup** without clearing the current selections.
 
-## Step 4 — Final Checklist
+## Step 4 — Final Checklist: PASS
 
-Validate both paths:
+Validated both final-check paths.
 
 ### No Leader
 
-Confirm the final checklist includes routing, spool fill / line lay, applicable spool/backing/main-line connection security, and reel/rod limits without showing an unnecessary leader-connection item.
+Confirmed the checklist includes:
+
+- reel/rod line routing,
+- spool fill / even line lay,
+- applicable spool/backing/main-line connection security,
+- reel-capacity / rod-line-rating confirmation,
+- no unnecessary leader-connection item.
 
 ### Separate Leader
 
-Confirm the same base checks plus the conditional main-line-to-leader security check.
+Confirmed the same base checks plus the conditional main-line-to-leader connection-security check.
 
-For both paths, confirm the screen clearly presents the checklist as user confirmation rather than automated physical verification and does not duplicate Knot instructions.
+For both paths, the screen presents the checklist as user physical confirmation rather than claiming automated inspection, and it does not duplicate canonical Knot tying instructions.
 
-## Step 5 — Rig Guide Handoff
+## Step 5 — Rig Guide Handoff: PASS
 
-Select **My Reel Is Ready — Choose a Rig** and confirm:
+Confirmed **My Reel Is Ready — Choose a Rig**:
 
-- the normal Rig Guide landing opens,
-- no Rig is automatically selected,
-- no recommendation is injected from Reel Setup,
-- Reel Setup state is cleared,
-- entering **Attach Line to a Reel** again starts a fresh Reel Setup session.
+- opens the normal Rig Guide landing,
+- does not automatically select a Rig,
+- does not inject a Reel Setup-derived recommendation,
+- clears Reel Setup state,
+- allows a later **Attach Line to a Reel** entry to begin with a fresh Reel Setup session.
 
-## Step 6 — Exit / Navigation Regression
+## Step 6 — Exit / Navigation Regression: PASS
 
-Confirm:
+Confirmed:
 
 - Start Over clears and restarts Reel Setup,
 - Return to Knots clears Reel Setup and returns to the Knot Guide,
 - Home clears Reel Setup and returns to the dashboard,
-- workflow-card hierarchy/palette remains correct,
+- workflow-card hierarchy and palette remain correct,
 - desktop and narrow/mobile layouts remain usable,
-- no application-source JavaScript errors occur in Microsoft Edge DevTools.
+- no application-source JavaScript errors appear in Microsoft Edge DevTools.
 
-# Completion Gate
+# Final GitHub / Runtime Evidence
 
-Block 3.9 is complete only when:
+Runtime-validated GitHub `main` production commit:
+
+`0e2daa24776770a3f549b1cfe8de004aa22c4ddd`
+
+Runtime-validated Block 3.9 source / validator blobs:
+
+```text
+d23c05a879fc6b27e0e6c53905e126f34efbce6b  script.js
+ad5fbe60f82879792843ed2668d297fd10005a09  data/reel-guidance.js
+ec9e56a8bac09265c6ee384abc7bc13755b43d0f  tools/validate_knot_package_3.py
+```
+
+Block 3.9 is therefore **PASS / VALIDATED**.
+
+# Completion Gate — SATISFIED
+
+All Block 3.9 functional runtime gates are satisfied:
 
 1. Reel Ready Check is runtime validated,
 2. Rig Guide handoff is runtime validated,
 3. **Attach Line to a Reel** is runtime validated as the production UI entry,
 4. normal use no longer requires DevTools,
 5. Blocks 3.2–3.8 remain regression-safe,
-6. the production upload and documentation are GitHub-integrity verified.
+6. the production upload is GitHub-integrity verified.
 
-When Block 3.9 closes **PASS / VALIDATED**, Production Package 3 **Get Your Reel Ready** is functionally complete.
+With this documentation closeout uploaded and GitHub-integrity verified, Block 3.9 and Production Package 3 **Get Your Reel Ready** are complete.
 
-Package 4 Knot instructional media remains a separate package and must not be mixed into this block.
+Package 4 Knot instructional media remains a separate package and is not part of Block 3.9.
 
 # Deferred Search UX Issue — Parking Lot
 
@@ -407,16 +440,28 @@ This affects both Rigs and Knots and is not part of Block 3.9.
 
 # Exact Resume Point
 
-**Block 3.9 — IMPLEMENTED / STATIC VALIDATION PASS / RUNTIME UNVALIDATED.**
+**Block 3.9 — PASS / VALIDATED.**
 
-Next:
+**Production Package 3 — Get Your Reel Ready is functionally complete.**
 
-1. upload the Block 3.9 production package through GitHub Desktop,
-2. verify GitHub `main` and all expected Block 3.9 blobs,
-3. run the six-step Microsoft Edge runtime validation above,
-4. correct only genuine defects before closeout,
-5. after runtime PASS, update Block 3.9 and Package 3 documentation to **PASS / VALIDATED**.
+The complete Version 1 Reel Setup path is now available through the normal application UI:
 
-Do not split Production Entry Integration into another task.
+```text
+Knots
+→ Attach Line to a Reel
+→ Get Your Reel Ready
+→ completed Reel Setup workflow
+→ Reel Ready Check
+→ My Reel Is Ready — Choose a Rig
+→ Rig Guide
+```
 
-Do not consider Package 3 complete until normal users can enter, complete, and exit the entire Reel Setup workflow through the application UI without DevTools.
+No DevTools entry is required.
+
+The deferred Rig/Knot scoped-search UX issue remains a Parking Lot item for later global/deeper-search work.
+
+Next production package:
+
+**Production Package 4 — Knot instructional media.**
+
+Do not begin Package 4 implementation until this Block 3.9 / Package 3 documentation closeout is uploaded and GitHub-integrity verified.
