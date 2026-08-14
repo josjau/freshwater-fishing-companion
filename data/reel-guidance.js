@@ -9,7 +9,7 @@
 
 const REEL_GUIDANCE_BUILD_INFO = Object.freeze({
     file: "data/reel-guidance.js",
-    milestone: "Knots — Production Package 3 Block 3.3"
+    milestone: "Knots — Production Package 3 Block 3.4"
 });
 
 const REEL_SETUP_STEP_IDS = Object.freeze({
@@ -18,7 +18,9 @@ const REEL_SETUP_STEP_IDS = Object.freeze({
     LINE_SELECTION: "line-selection",
     LINE_HELP: "line-help",
     LINE_IDENTIFICATION: "line-identification",
-    LINE_SELECTION_COMPLETE: "line-selection-complete"
+    LINE_SELECTION_COMPLETE: "line-selection-complete",
+    TARGET_FISH: "target-fish",
+    TARGET_GUIDANCE: "target-guidance"
 });
 
 const REEL_SETUP_ENTRY_OPTIONS = Object.freeze([
@@ -131,10 +133,68 @@ const REEL_LINE_COMPATIBILITY_NOTES = Object.freeze({
     })
 });
 
+const REEL_TARGET_FISH_PROFILES = Object.freeze([
+    Object.freeze({
+        id: "all-around-freshwater",
+        title: "All-Around Freshwater",
+        description: "A general starting point when you want one beginner setup for several common freshwater fish.",
+        recommendedRange: "6–12 lb",
+        easyChoice: "8 lb",
+        guidance: "Eight-pound test is a practical all-around beginner reference for a medium-light freshwater setup.",
+        caution: "Final line strength still has to fit the rod and reel ratings."
+    }),
+    Object.freeze({
+        id: "panfish",
+        title: "Panfish — Bluegill & Crappie",
+        description: "Light freshwater fish that are commonly targeted with small hooks, jigs, and bobber rigs.",
+        recommendedRange: "4–6 lb",
+        easyChoice: "6 lb",
+        guidance: "This range overlaps established light-line guidance for bluegill and crappie while remaining approachable for a beginner.",
+        caution: "Heavy cover or frequent snags may justify moving heavier after the equipment check."
+    }),
+    Object.freeze({
+        id: "trout",
+        title: "Trout",
+        description: "A light-line starting point for common stocked and stream trout situations.",
+        recommendedRange: "2–4 lb",
+        easyChoice: "4 lb",
+        guidance: "Clear-water trout are commonly approached with very light line, so four-pound test is the more forgiving end of this beginner range.",
+        caution: "Use a properly set drag and confirm your equipment is designed for line this light."
+    }),
+    Object.freeze({
+        id: "bass",
+        title: "Bass",
+        description: "A simple beginner starting point for largemouth and similar freshwater bass fishing.",
+        recommendedRange: "6–8 lb",
+        easyChoice: "8 lb",
+        guidance: "Eight-pound test is a manageable starting point on a basic medium-action bass setup before cover and technique-specific optimization.",
+        caution: "Heavy vegetation, wood, or specialized presentations can require substantially heavier line later."
+    }),
+    Object.freeze({
+        id: "walleye",
+        title: "Walleye",
+        description: "A medium-light starting range for common spinning-reel walleye approaches.",
+        recommendedRange: "6–10 lb",
+        easyChoice: "8 lb",
+        guidance: "Eight-pound test sits near the middle of a common six- to ten-pound walleye setup range.",
+        caution: "Technique, depth, and leader choice can change the final system."
+    }),
+    Object.freeze({
+        id: "catfish",
+        title: "Catfish",
+        description: "A heavier rod-and-reel starting point for general catfish fishing rather than trophy-specific tackle.",
+        recommendedRange: "17–20 lb",
+        easyChoice: "20 lb",
+        guidance: "Catfish commonly justify heavier line than panfish, trout, bass, or walleye; twenty-pound test is a conservative beginner reference for a heavier setup.",
+        caution: "Large blue or flathead catfish, strong current, or heavy cover can require much heavier specialized gear."
+    })
+]);
+
 console.info(
     `[Loaded] ${REEL_GUIDANCE_BUILD_INFO.file} | ` +
     `${REEL_GUIDANCE_BUILD_INFO.milestone} | ` +
     `${REEL_SETUP_ENTRY_OPTIONS.length} entry modes | ` +
     `${REEL_TYPE_OPTIONS.length} reel types | ` +
-    `${Object.keys(REEL_LINE_TYPE_GUIDANCE).length} line types`
+    `${Object.keys(REEL_LINE_TYPE_GUIDANCE).length} line types | ` +
+    `${REEL_TARGET_FISH_PROFILES.length} target profiles`
 );

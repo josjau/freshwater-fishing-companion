@@ -45,14 +45,21 @@ for needle, label in [
     ('REEL_SETUP: "reel-setup"', "route"),
     ('[ROUTES.REEL_SETUP]: renderReelSetupView', "renderer map"),
     ('function openReelSetup()', "entry helper"),
-    ('function renderReelSetupView(appMain)', "Reel Setup renderer"),
+    ('function renderReelSetupStep(appMain, config)', "shared Reel Setup renderer"),
+    ('function renderReelSetupSelectedChoices(appMain)', "persistent selected choices renderer"),
+    ('function getReelSetupSelectedChoiceLabels()', "selected choices label builder"),
     ('function renderReelSetupLineSelectionStep(appMain)', "line selection step"),
     ('function renderReelSetupLineHelpStep(appMain)', "line help step"),
     ('function renderReelSetupLineIdentificationStep(appMain)', "line identification step"),
     ('function renderReelSetupLineSelectionComplete(appMain)', "line selection checkpoint"),
+    ('function renderReelSetupTargetFishStep(appMain)', "target fish step"),
+    ('function renderReelSetupTargetGuidanceStep(appMain)', "target guidance step"),
+    ('function getReelTargetStrengthGuidance(targetProfile, lineType)', "line strength guidance helper"),
     ('lineType: null', "session-only line state"),
+    ('targetFish: null', "session-only target state"),
     ('REEL_LINE_TYPE_GUIDANCE', "line type guidance"),
-    ('REEL_BEGINNER_LINE_RECOMMENDATIONS', "beginner recommendations")
+    ('REEL_BEGINNER_LINE_RECOMMENDATIONS', "beginner line recommendations"),
+    ('REEL_TARGET_FISH_PROFILES', "target fish profiles")
 ]:
     require_text(script_js, needle, f"script.js {label}")
 
@@ -60,7 +67,9 @@ for step_id in [
     'LINE_SELECTION: "line-selection"',
     'LINE_HELP: "line-help"',
     'LINE_IDENTIFICATION: "line-identification"',
-    'LINE_SELECTION_COMPLETE: "line-selection-complete"'
+    'LINE_SELECTION_COMPLETE: "line-selection-complete"',
+    'TARGET_FISH: "target-fish"',
+    'TARGET_GUIDANCE: "target-guidance"'
 ]:
     require_text(reel_guidance_js, step_id, "data/reel-guidance.js step")
 
@@ -75,7 +84,13 @@ for expected_id in [
     "fluorocarbon",
     "braid",
     "help-me-choose",
-    "not-sure-line"
+    "not-sure-line",
+    "all-around-freshwater",
+    "panfish",
+    "trout",
+    "bass",
+    "walleye",
+    "catfish"
 ]:
     require_text(reel_guidance_js, f'"{expected_id}"', "data/reel-guidance.js option")
 
@@ -104,7 +119,12 @@ recommendation_block = re.search(
     reel_guidance_js,
     flags=re.S
 )
-if not all([entry_block, reel_block, line_block, action_block, recommendation_block]):
+target_block = re.search(
+    r"const REEL_TARGET_FISH_PROFILES = Object\.freeze\(\[(?P<body>.*?)\n\]\);",
+    reel_guidance_js,
+    flags=re.S
+)
+if not all([entry_block, reel_block, line_block, action_block, recommendation_block, target_block]):
     fail("could not parse one or more Package 3 controlled guidance structures")
 
 entry_count = len(re.findall(r'\bid: "', entry_block.group("body")))
@@ -112,6 +132,7 @@ reel_count = len(re.findall(r'\bid: "', reel_block.group("body")))
 line_count = len(re.findall(r'\bid: "', line_block.group("body")))
 action_count = len(re.findall(r'\bid: "', action_block.group("body")))
 recommendation_count = len(re.findall(r'\blineTypeId: "', recommendation_block.group("body")))
+target_count = len(re.findall(r'\bid: "', target_block.group("body")))
 
 if entry_count != 2:
     fail(f"expected 2 Reel Setup entry options, found {entry_count}")
@@ -123,15 +144,50 @@ if action_count != 2:
     fail(f"expected 2 line-guidance actions, found {action_count}")
 if recommendation_count != 4:
     fail(f"expected 4 reel-type beginner recommendations, found {recommendation_count}")
+if target_count != 6:
+    fail(f"expected 6 beginner target-fish profiles, found {target_count}")
 
 if recommendation_block.group("body").count('lineTypeId: "monofilament"') != 4:
     fail("expected all four beginner reel recommendations to start with monofilament")
+
+for required_range in ["6–12 lb", "4–6 lb", "2–4 lb", "6–8 lb", "6–10 lb", "17–20 lb"]:
+    require_text(target_block.group("body"), required_range, "target-fish starting range")
+
+for easy_choice in ['easyChoice: "8 lb"', 'easyChoice: "6 lb"', 'easyChoice: "4 lb"', 'easyChoice: "20 lb"']:
+    require_text(target_block.group("body"), easy_choice, "target-fish easy choice")
 
 require_text(
     reel_guidance_js,
     "braided line may not work properly on some spincast reels",
     "spincast braid compatibility warning"
 )
+
+for needle, label in [
+    ('if (labels.length === 0) return;', "no summary before first choice"),
+    ('selectedChoices.dataset.reelSetupSelectedChoices = "true"', "selected choices hook"),
+    ('label.textContent = "Selected choices"', "selected choices label"),
+    ('values.textContent = labels.join(" · ")', "cumulative selected values"),
+    ('labels.push(entryOption.title)', "setup mode summary value"),
+    ('labels.push(reelTypeOption.title)', "reel type summary value"),
+    ('labels.push(lineType.title)', "line type summary value"),
+    ('labels.push(targetFish.title)', "target fish summary value"),
+    ('borderLeft = "5px solid var(--accent-knots)"', "selected choices Knot accent"),
+    ('color-mix(in srgb, var(--accent-knots) 72%, white 28%)', "selected choices value color"),
+    ('values.style.overflowWrap = "anywhere"', "selected choices wrapping protection"),
+    ('renderReelSetupSelectedChoices(appMain);', "summary applied after shared Reel Setup render")
+]:
+    require_text(script_js, needle, f"persistent selected choices {label}")
+
+if script_js.count("function renderReelSetupSelectedChoices(appMain)") != 1:
+    fail("expected one reusable selected-choice summary renderer")
+
+require_text(script_js, 'title: "What Are You Fishing For?"', "target fish page title")
+require_text(script_js, 'title: "Starting Line Strength"', "line strength page title")
+require_text(script_js, 'Recommended starting range:', "mono/fluoro starting range wording")
+require_text(script_js, 'Easy beginner choice:', "mono/fluoro easy choice wording")
+require_text(script_js, 'Recommended fish-strength reference:', "braid strength-reference wording")
+require_text(script_js, 'do not treat ${targetProfile.easyChoice} as the final braid purchase size', "braid no-false-precision guard")
+require_text(script_js, 'title: "Next — Check Reel & Rod Compatibility"', "next-block checkpoint")
 
 render_knots_match = re.search(
     r"function renderKnotsView\(appMain\) \{(?P<body>.*?)\n\}\n\nfunction updateKnotGuideSearchResults",
@@ -141,7 +197,7 @@ render_knots_match = re.search(
 if not render_knots_match:
     fail("could not isolate renderKnotsView for the integration guard")
 if "openReelSetup" in render_knots_match.group("body") or "ROUTES.REEL_SETUP" in render_knots_match.group("body"):
-    fail("Block 3.3 must remain internally accessed until the guided workflow integration block")
+    fail("Block 3.4 must remain internally accessed until the guided workflow integration block")
 
 for path in ["script.js", "data/reel-guidance.js"]:
     result = subprocess.run(
@@ -152,16 +208,12 @@ for path in ["script.js", "data/reel-guidance.js"]:
     if result.returncode != 0:
         fail(f"JavaScript syntax check failed for {path}: {result.stderr.strip()}")
 
-require_text(script_js, 'selectedChoices.dataset.reelSetupSelectedChoices = "true"', "selected choices summary")
-require_text(script_js, 'label.textContent = "Selected choices"', "selected choices label")
-require_text(script_js, 'values.textContent = `${entryOption.title} · ${reelTypeOption.title} · ${lineType.title}.`', "selected choices values")
-require_text(script_js, 'borderLeft = "5px solid var(--accent-knots)"', "selected choices Knot accent")
-require_text(script_js, 'color-mix(in srgb, var(--accent-knots) 72%, white 28%)', "selected choices value color")
-
-print("Production Package 3 Block 3.3 UX Revision 1 validation passed.")
+print("Production Package 3 Block 3.4 validation passed.")
 print(f"Entry options: {entry_count}")
 print(f"Reel types: {reel_count}")
 print(f"Physical line types: {line_count}")
 print(f"Line guidance actions: {action_count}")
 print(f"Beginner reel recommendations: {recommendation_count}")
+print(f"Target-fish profiles: {target_count}")
+print("Persistent Selected Choices summary: enabled after first persistent choice.")
 print("Normal Knot landing remains intentionally unwired to Reel Setup.")
