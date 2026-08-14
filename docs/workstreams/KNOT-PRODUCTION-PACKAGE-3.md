@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
-**Status:** In Progress — Block 3.3 Runtime PASS / UX Revision 1 Implemented / Awaiting Upload  
+**Status:** In Progress — Block 3.3 Functional Runtime PASS / Persistent Selected-Choices UX Staged for Block 3.4  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -33,6 +33,26 @@ Ownership boundary:
 
 This separation avoids introducing premature canonical Reel, Line, or Species entities and preserves the approved three-layer Reference / Decision / User Knowledge architecture.
 
+# Incremental Refinement Workflow — Effective 2026-08-13
+
+For non-final build blocks, minor UX, presentation, or targeted code refinements identified during validation should **not** create a separate stop/upload/commit cycle when they can safely travel with the next planned build block.
+
+Required workflow:
+
+1. Record the refinement in the active workstream documentation at the earliest opportunity so the latest iteration survives a lost or hung chat.
+2. Implement the refinement in the working source used to construct the next block.
+3. Include the refinement in the next normal production ZIP alongside that block's planned changes.
+4. Make validation of the carried-forward refinement **Step 1** of the next block's runtime validation before validating the new functionality.
+5. Keep the previous block's already-passed functional validation intact; do not falsely mark the unuploaded refinement as validated.
+6. Prefer this roll-forward approach to reduce unnecessary GitHub Desktop uploads and commits.
+
+Exception:
+
+- If the refinement is discovered during the **final build block for a full section/workstream**, resolve and validate it before closing that section rather than rolling it into an unrelated future section.
+- A genuine defect that blocks continued implementation, corrupts state, breaks established behavior, or makes the next block unsafe may also require immediate correction rather than roll-forward.
+
+This rule applies to the current Block 3.3 selected-choice visual refinement and should be propagated into the broader project workflow documentation during the next consolidated documentation update.
+
 # Approved V1 Workflow Scope
 
 Package 3 will support:
@@ -62,6 +82,55 @@ Excluded from V1:
 - backlash-prevention instruction,
 - casting instruction,
 - lure-specific fishing optimization.
+
+# Persistent Selected-Choices Standard — Staged for Block 3.4
+
+The selected-choice treatment is a **workflow-wide Reel Setup context pattern**, not a Line Choice Check-only treatment.
+
+Once the user has made the first persistent Reel Setup choice, every subsequent Reel Setup screen must display a dedicated **SELECTED CHOICES** summary near the top of the view, visually separate from descriptive/help prose.
+
+The initial **Get Your Reel Ready** screen does not show the summary because no choice exists yet. After the first choice, the summary remains present for the rest of the workflow unless **Start Over** clears the Reel Setup state.
+
+The summary is cumulative and displays only actual persistent workflow selections that have been made so far.
+
+Examples:
+
+After choosing setup mode, on **What Kind of Reel Do You Have?**:
+
+```text
+SELECTED CHOICES
+New or Empty Reel
+```
+
+After choosing reel type, on **What Line Are You Using?**, **Beginner Line Starting Point**, and **Which Line Looks Like Yours?**:
+
+```text
+SELECTED CHOICES
+New or Empty Reel · Spinning Reel
+```
+
+After choosing a physical line type, on **Line Choice Check** and subsequent steps:
+
+```text
+SELECTED CHOICES
+New or Empty Reel · Spinning Reel · Monofilament
+```
+
+As Package 3 adds target-fish, starting pound-test, backing, leader, or other persistent decisions, those confirmed selections should append to the same context summary when they remain useful to the user. Temporary navigation/help actions such as **Help Me Choose**, **Change Line Choice**, or **Back** are not selections and must not appear in the summary.
+
+The implementation should use one reusable Reel Setup summary helper rather than duplicating custom summary markup in individual step renderers. This keeps the treatment consistent across existing and future Reel Setup steps.
+
+Presentation uses only established Forest Journal theme tokens:
+
+- left accent: `--accent-knots`,
+- soft background tint derived from `--accent-knots` and `--surface`,
+- selected values: the existing Knot metadata accent mix,
+- small uppercase `--text-subtle` label,
+- normal instructions, recommendations, warnings, and tradeoff prose remain separate text below the summary.
+
+The summary must use safe DOM construction / `textContent` for dynamic values.
+
+This persistent summary is staged into Block 3.4 under the Incremental Refinement Workflow. It does not require a standalone upload before Block 3.4.
 
 # Block 3.2 — Foundation
 
@@ -144,7 +213,7 @@ Confirmed:
 
 # Block 3.3 — Line Selection / Beginner Line Guidance
 
-**Status:** Functional Runtime PASS / UX Revision 1 Awaiting Upload
+**Status:** Functional Runtime PASS / Persistent Selected-Choices UX Staged for Block 3.4
 
 Block 3.3 extends the validated transient Reel Setup state with line selection while keeping the workflow behind the internal `openReelSetup()` entry.
 
@@ -231,66 +300,33 @@ Microsoft Edge validation confirmed:
 - **Start Over** and **Return to Knots** behave correctly,
 - no application-source JavaScript error was reported.
 
-A visual refinement was requested before Block 3.3 closeout: make the selected setup values on **Line Choice Check** more prominent than the explanatory prose.
+A visual refinement was requested after the functional PASS. The original refinement targeted **Line Choice Check** only; it has now been expanded into the workflow-wide **Persistent Selected-Choices Standard** documented above.
 
-## UX Revision 1 — Selected Choices Summary
+The previously prepared standalone Line Choice Check UX Revision ZIP is superseded as a delivery step. Do not upload it separately.
 
-UX Revision 1 separates the selected values from the guidance paragraph and presents them as a dedicated summary immediately under the **Line Choice Check** heading:
+The next Block 3.4 package will carry the reusable selected-choice summary implementation across all applicable existing Reel Setup screens and future Block 3.4 screens.
 
-```text
-SELECTED CHOICES
-New or Empty Reel · Spinning Reel · Monofilament.
-```
+Block 3.4 runtime validation must begin with:
 
-Presentation uses only existing Forest Journal theme tokens:
+**Step 1 — Carried-Forward Persistent Context Validation**
 
-- left accent: `--accent-knots`,
-- soft background tint derived from `--accent-knots` and `--surface`,
-- selected values: the same Knot metadata color mix already established elsewhere,
-- small uppercase `--text-subtle` label,
-- normal guidance/tradeoff/compatibility prose remains a separate paragraph below the summary.
+1. Start Reel Setup and confirm the initial screen has no selected-choice summary before any choice is made.
+2. Choose **New or Empty Reel** and confirm the Reel Type screen shows:
+   - `SELECTED CHOICES`
+   - `New or Empty Reel`
+3. Choose **Spinning Reel** and confirm the Line Selection screen shows:
+   - `New or Empty Reel · Spinning Reel`
+4. Open **Help Me Choose** and **I'm Not Sure** line guidance and confirm the same cumulative summary remains visible.
+5. Choose **Monofilament** and confirm **Line Choice Check** shows:
+   - `New or Empty Reel · Spinning Reel · Monofilament`
+6. Confirm guidance, tradeoffs, and compatibility messages remain visually separate from the selected-choice summary.
+7. Confirm changing a persistent selection updates the summary correctly and **Start Over** clears it.
 
-The summary is constructed with safe DOM APIs and `textContent`. No new global CSS rule or theme token is required; the treatment is local to the Reel Setup checkpoint.
-
-UX Revision 1 artifact:
-
-`Freshwater-Fishing-Companion-Knot-Production-Package-3-Block-3.3-UX-Revision-1.zip`
-
-SHA-256:
-
-`acffdf61cbbad82edbbc6a2c06536d34bfac92b72eb9f432a71c1386001521e2`
-
-Package files:
-
-```text
-script.js
-tools/validate_knot_package_3.py
-```
-
-Expected post-upload Git blobs:
-
-```text
-dda2c8b93497809bf5ebb30c75a6dbf7132810bb  script.js
-b5990d909d93436ed7e485841f6cd558b0ec8fe7  tools/validate_knot_package_3.py
-```
-
-Static validation passed:
-
-```text
-Production Package 3 Block 3.3 UX Revision 1 validation passed.
-Entry options: 2
-Reel types: 4
-Physical line types: 3
-Line guidance actions: 2
-Beginner reel recommendations: 4
-Normal Knot landing remains intentionally unwired to Reel Setup.
-```
-
-UX Revision 1 still requires GitHub blob verification and focused Microsoft Edge visual confirmation before Block 3.3 can be formally closed.
+Only after Step 1 passes should new Block 3.4 target-fish / pound-test functionality be validated.
 
 # Next Build Block — 3.4
 
-After Block 3.3 closes, Block 3.4 will add **Target Fish / Starting Pound-Test Guidance**.
+Block 3.4 will add **Target Fish / Starting Pound-Test Guidance** and will include the staged persistent selected-choice implementation in the same production package.
 
 Block 3.4 should:
 
@@ -298,16 +334,18 @@ Block 3.4 should:
 - provide a **Recommended starting range** rather than false precision,
 - provide an **Easy beginner choice** where appropriate,
 - preserve the selected line type,
+- append confirmed target-fish / line-strength decisions to the persistent selected-choice context when useful,
 - avoid lure/cover/technique optimization that belongs to later Decision Knowledge,
-- defer the final equipment-capacity check to the dedicated compatibility / **How to Read Your Reel** block.
+- defer the final equipment-capacity check to the dedicated compatibility / **How to Read Your Reel** block,
+- validate the workflow-wide selected-choice presentation as runtime validation Step 1.
 
 # Exact Resume Point
 
 Production Package 3 is active.
 
-**Block 3.2 is PASS / VALIDATED. Block 3.3 functional runtime validation passed. UX Revision 1 is implemented and awaiting upload, GitHub blob verification, and focused Microsoft Edge confirmation.**
+**Block 3.2 is PASS / VALIDATED. Block 3.3 functional runtime validation is PASS. The selected-choice refinement is now a documented workflow-wide persistent context standard and is staged into Block 3.4. Begin Block 3.4 — Target Fish / Starting Pound-Test Guidance.**
 
-Do not begin Block 3.4 until UX Revision 1 passes validation and Block 3.3 is formally closed.
+Do not separately upload the previously prepared Block 3.3 UX Revision ZIP unless Block 3.4 is abandoned or a blocking defect requires isolated correction.
 
 Do not wire **Attach Line to a Reel** to the new workflow until the guided sequence is sufficiently complete and explicitly reaches its integration block.
 
