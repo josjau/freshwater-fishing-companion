@@ -152,7 +152,13 @@ for path in ["script.js", "data/reel-guidance.js"]:
     if result.returncode != 0:
         fail(f"JavaScript syntax check failed for {path}: {result.stderr.strip()}")
 
-print("Production Package 3 Block 3.3 validation passed.")
+require_text(script_js, 'selectedChoices.dataset.reelSetupSelectedChoices = "true"', "selected choices summary")
+require_text(script_js, 'label.textContent = "Selected choices"', "selected choices label")
+require_text(script_js, 'values.textContent = `${entryOption.title} · ${reelTypeOption.title} · ${lineType.title}.`', "selected choices values")
+require_text(script_js, 'borderLeft = "5px solid var(--accent-knots)"', "selected choices Knot accent")
+require_text(script_js, 'color-mix(in srgb, var(--accent-knots) 72%, white 28%)', "selected choices value color")
+
+print("Production Package 3 Block 3.3 UX Revision 1 validation passed.")
 print(f"Entry options: {entry_count}")
 print(f"Reel types: {reel_count}")
 print(f"Physical line types: {line_count}")

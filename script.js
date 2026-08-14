@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knots — Production Package 3 Block 3.3"
+    milestone: "Knots — Production Package 3 Block 3.3 UX Revision 1"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -854,7 +854,7 @@ function renderReelSetupLineSelectionComplete(appMain) {
     renderView(appMain, {
         headingId: "reel-setup-title",
         title: "Line Choice Check",
-        description: `${entryOption.title} · ${reelTypeOption.title} · ${lineType.title}. ${lineType.beginnerGuidance} ${lineType.tradeoff}${compatibilityText}`,
+        description: `${lineType.beginnerGuidance} ${lineType.tradeoff}${compatibilityText}`,
         cards: [
             {
                 id: "change-line-type",
@@ -908,6 +908,39 @@ function renderReelSetupLineSelectionComplete(appMain) {
             }
         }
     });
+
+    const contentView = appMain.querySelector(".content-view");
+    const description = contentView?.querySelector("h2 + p");
+    if (contentView && description) {
+        const selectedChoices = document.createElement("div");
+        selectedChoices.dataset.reelSetupSelectedChoices = "true";
+        selectedChoices.style.marginBottom = "var(--space-4)";
+        selectedChoices.style.padding = "var(--space-3) var(--space-4)";
+        selectedChoices.style.border = "1px solid color-mix(in srgb, var(--accent-knots) 46%, var(--border))";
+        selectedChoices.style.borderLeft = "5px solid var(--accent-knots)";
+        selectedChoices.style.borderRadius = "var(--radius-small)";
+        selectedChoices.style.background = "color-mix(in srgb, var(--accent-knots) 12%, var(--surface))";
+
+        const label = document.createElement("span");
+        label.textContent = "Selected choices";
+        label.style.display = "block";
+        label.style.marginBottom = "var(--space-1)";
+        label.style.color = "var(--text-subtle)";
+        label.style.fontSize = ".78rem";
+        label.style.fontWeight = "800";
+        label.style.letterSpacing = ".06em";
+        label.style.textTransform = "uppercase";
+
+        const values = document.createElement("strong");
+        values.textContent = `${entryOption.title} · ${reelTypeOption.title} · ${lineType.title}.`;
+        values.style.display = "block";
+        values.style.color = "color-mix(in srgb, var(--accent-knots) 72%, white 28%)";
+        values.style.fontSize = "1.03rem";
+        values.style.lineHeight = "1.4";
+
+        selectedChoices.append(label, values);
+        contentView.insertBefore(selectedChoices, description);
+    }
 }
 
 function getActiveKnots() {
