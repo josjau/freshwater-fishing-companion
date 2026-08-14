@@ -1,6 +1,10 @@
 # Knot Production Package 3 — Get Your Reel Ready
 
+<<<<<<< HEAD
 **Status:** In Progress — Block 3.3 Implemented / Unvalidated  
+=======
+**Status:** In Progress — Foundation Block 3.2 PASS / VALIDATED  
+>>>>>>> 58f61e3aba38a0ce0ee9e07edef95d5719d98688
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Build Phase Started:** 2026-08-13  
@@ -142,6 +146,7 @@ Confirmed:
 - existing **Attach Line to a Reel** production behavior remains unchanged,
 - no project-source JavaScript error was reported.
 
+<<<<<<< HEAD
 # Block 3.3 — Line Selection / Beginner Line Guidance
 
 **Status:** Implemented / Unvalidated
@@ -244,14 +249,42 @@ Block 3.4 should:
 - preserve the selected line type,
 - avoid lure/cover/technique optimization that belongs to later Decision Knowledge,
 - defer the final equipment-capacity check to the dedicated compatibility / **How to Read Your Reel** block.
+=======
+# Next Build Block — 3.3
+
+Build Block 3.3 will add **line selection and beginner line-choice guidance** on top of the validated state foundation.
+
+Planned controlled line choices:
+
+- Monofilament,
+- Fluorocarbon,
+- Braid,
+- Help Me Choose,
+- I'm Not Sure.
+
+The block must preserve:
+
+- setup mode,
+- selected reel type,
+- session-only state,
+- app-wide no-auto-focus behavior,
+- Production Package 2 navigation/search/detail behavior,
+- the intentionally unwired production Knot entry until the guided workflow is sufficiently complete for public integration.
+
+Technical recommendation values and claims must be based on authoritative sources or clearly labeled as project-defined beginner guidance. Avoid false precision and use language such as **Recommended starting range** and **Easy beginner choice**.
+>>>>>>> 58f61e3aba38a0ce0ee9e07edef95d5719d98688
 
 # Exact Resume Point
 
 Production Package 3 is active.
 
+<<<<<<< HEAD
 **Block 3.2 is PASS / VALIDATED. Block 3.3 is implemented and awaiting post-upload GitHub integrity verification and Microsoft Edge runtime validation.**
 
 Do not begin Block 3.4 until Block 3.3 passes validation.
+=======
+**Block 3.2 is complete and validated. Begin Block 3.3 — Line Selection / Beginner Line Guidance.**
+>>>>>>> 58f61e3aba38a0ce0ee9e07edef95d5719d98688
 
 Do not wire **Attach Line to a Reel** to the new workflow until the guided sequence is sufficiently complete and explicitly reaches its integration block.
 
