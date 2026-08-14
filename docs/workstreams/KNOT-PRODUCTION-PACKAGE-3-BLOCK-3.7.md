@@ -1,6 +1,6 @@
 # Knot Production Package 3 — Block 3.7
 
-**Status:** Implemented / Static Validation PASS / Runtime Unvalidated  
+**Status:** Runtime Steps 1–3 PASS / UX Cleanup Implemented / Runtime Validation Paused  
 **Milestone:** Knots  
 **Package:** Production Package 3  
 **Block:** 3.7 — Reel-Specific Spooling Instructions  
@@ -198,6 +198,8 @@ The Block 3.7 Package 3 validator retains all existing Block 3.6 checks and adds
 - enabled **Next — Spool the Reel** transition,
 - step-aware return to **Spool Connection Plan**,
 - disabled **Next — Leader Setup** checkpoint,
+- removal of redundant upstream-change cards on the six approved Package 3 screens,
+- primary placement of **My Reel & Rod Support This Setup** on Check Your Reel & Rod,
 - unchanged Reel Setup selection-state schema,
 - sticky/floating navigation regression safety,
 - Selected Choices regression safety,
@@ -213,6 +215,7 @@ Production Package 3 Block 3.7 validation passed.
 Backing choices: 3
 Spooling profiles: 3
 Reel Setup navigation: step-aware and sticky/floating.
+Workflow cards: redundant upstream-change cards removed from six Package 3 screens.
 Reel-specific spooling: spinning, spincast, baitcasting.
 Canonical Knot handoffs: Arbor Knot and Double Uni Knot.
 Reel Setup Knot return context: exact step/state restoration enabled.
@@ -224,9 +227,56 @@ Normal Knot landing remains intentionally unwired to Reel Setup.
 - `script.js`
 - `data/reel-guidance.js`
 
+# Runtime Validation Progress — 2026-08-14
+
+Microsoft Edge runtime validation completed before the UX cleanup request:
+
+- **Step 1 — Block 3.6 Regression Boundary: PASS**
+- **Step 2 — Spinning Reel: PASS**
+- **Step 3 — Spincast Reel: PASS**
+
+Runtime validation is intentionally paused before Step 4 so the cleanup below can be uploaded, GitHub-integrity verified, and tested as part of the same Block 3.7 closeout.
+
+# Package 3 Workflow-Card Cleanup — Implemented
+
+Runtime review found that several Reel Setup screens duplicated upstream-change navigation as full-size cards even after the workflow gained a persistent sticky previous-step control. The duplicate cards created unnecessary vertical scrolling and made secondary navigation compete visually with the actual workflow actions.
+
+The approved correction removes redundant upstream-change cards rather than shrinking them. The sticky previous-step control owns normal backtracking/review; cards remain for forward progress, help/mismatch branches, Start Over, Return to Knots, and other genuinely distinct actions.
+
+Implemented changes:
+
+- **Line Choice Check** — remove `Change Line Choice` and `Change Reel Type`.
+- **Starting Line Strength** — remove `Change Target Fish` and `Change Line Choice`.
+- **Check Your Reel & Rod** — move `My Reel & Rod Support This Setup` to the first card position; keep the two reading-help cards and mismatch branch.
+- **Equipment Compatibility Check** — remove `Review Reel Markings`, `Review Rod Markings`, `Change Target Fish`, `Change Line Choice`, and `Change Reel Type`.
+- **Spool Connection Plan** — remove `Change Backing Choice`.
+- **Spool the Reel** — remove `Change Backing Choice`.
+
+`Start Over` and `Return to Knots` remain available where currently implemented. No state schema, Decision Knowledge, canonical Knot handoff, or sticky-navigation semantics change.
+
+The Package 3 validator enforces these screen-specific removals and the primary-action-first order on **Check Your Reel & Rod**.
+
+# Deferred Search UX Issue — Parking Lot
+
+Preserve this issue for the later deeper/global-search work. Do not fold it into the Block 3.7 production correction.
+
+Observed behavior:
+
+- top-level Rig and Knot search suggestions work against the full corresponding library,
+- after drilling into a scoped collection such as **Core Rigs** or **Core Knots**, the search correctly searches only records in that collection,
+- however, the search-box placeholder/help examples remain generic and can suggest terms that have no possible match inside the active collection,
+- this makes valid global terms appear broken even though the scoped search itself is functioning as designed.
+
+Future search UX requirement:
+
+1. make collection-level placeholder/example terms collection-aware, and
+2. add an explicit scope cue so the user can tell that the current search is limited to the selected Rig/Knot collection, with a clear route back to broader search when appropriate.
+
+This affects both **Rigs** and **Knots** and should be carried into the future global/deeper-search workstream.
+
 # Runtime Validation Order
 
-Block 3.7 remains **Runtime Unvalidated** until the uploaded GitHub package is integrity-verified and tested in Microsoft Edge.
+Block 3.7 is **partially runtime validated**: Steps 1–3 are PASS. After this UX correction is uploaded and GitHub-integrity verified, runtime validation resumes at Step 4 and then completes the Step 5 regression pass.
 
 ## Step 1 — Block 3.6 Regression Boundary
 
@@ -273,7 +323,8 @@ Confirm:
 
 - no new selection appears in `SELECTED CHOICES` merely for viewing spooling instructions,
 - Back returns to Spool Connection Plan without clearing selections,
-- Change Backing Choice clears only `backingChoice` and returns to the backing decision,
+- the redundant upstream-change cards listed in the staged Package 3 cleanup are absent,
+- **My Reel & Rod Support This Setup** is the first option on Check Your Reel & Rod,
 - Start Over clears Reel Setup state,
 - Home clears Reel Setup state,
 - **Next — Leader Setup** is visibly unavailable,
@@ -282,12 +333,13 @@ Confirm:
 
 # Exact Resume Point
 
-Block 3.7 is **Implemented / Static Validation PASS / Runtime Unvalidated**.
+Block 3.7 runtime Steps 1–3 are **PASS**. The targeted Package 3 workflow-card cleanup is implemented in the correction package and must be uploaded before runtime validation continues.
 
 Next actions:
 
-1. apply the Block 3.7 ZIP through GitHub Desktop,
+1. apply the Block 3.7 UX cleanup ZIP through GitHub Desktop,
 2. commit and push,
-3. re-fetch GitHub `main` and verify the delivered Block 3.7 blobs,
-4. run the Microsoft Edge Block 3.7 runtime checklist above,
-5. only after runtime PASS close Block 3.7 as **PASS / VALIDATED** and reconcile aggregate Package 3 documentation.
+3. re-fetch GitHub `main` and verify the correction blobs,
+4. validate the cleaned card sets and resume with **Step 4 — Baitcasting Reel**,
+5. complete Step 5 regression validation,
+6. only after runtime PASS close Block 3.7 as **PASS / VALIDATED** and reconcile aggregate Package 3 documentation, including preservation of the deferred scoped-search UX issue for future global-search work.

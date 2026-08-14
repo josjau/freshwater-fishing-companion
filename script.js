@@ -1148,18 +1148,6 @@ function renderReelSetupLineSelectionComplete(appMain) {
                 isAvailable: true
             },
             {
-                id: "change-line-type",
-                title: "Change Line Choice",
-                description: "Return to the line-selection step without losing the setup mode or reel type.",
-                isAvailable: true
-            },
-            {
-                id: "change-reel-type",
-                title: "Change Reel Type",
-                description: "Return to reel identification while preserving the setup mode.",
-                isAvailable: true
-            },
-            {
                 id: "start-reel-setup-over",
                 title: "Start Over",
                 description: "Clear the temporary Reel Setup state and return to the first step.",
@@ -1179,27 +1167,6 @@ function renderReelSetupLineSelectionComplete(appMain) {
                 return;
             }
 
-            if (actionId === "change-line-type") {
-                reelSetupState.lineType = null;
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "change-reel-type") {
-                reelSetupState.reelType = null;
-                reelSetupState.lineType = null;
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
             if (actionId === "start-reel-setup-over") {
                 openReelSetup();
                 return;
@@ -1211,7 +1178,6 @@ function renderReelSetupLineSelectionComplete(appMain) {
             }
         }
     });
-
 }
 
 function getReelTargetStrengthGuidance(targetProfile, lineType) {
@@ -1285,18 +1251,6 @@ function renderReelSetupTargetGuidanceStep(appMain) {
                 isAvailable: true
             },
             {
-                id: "change-target-fish",
-                title: "Change Target Fish",
-                description: "Return to the target-fish choices while keeping your reel and line selections.",
-                isAvailable: true
-            },
-            {
-                id: "change-line-type",
-                title: "Change Line Choice",
-                description: "Return to line selection; the target-fish choice will be cleared because the guidance depends on the line system.",
-                isAvailable: true
-            },
-            {
                 id: "start-reel-setup-over",
                 title: "Start Over",
                 description: "Clear the temporary Reel Setup state and return to the first step.",
@@ -1314,25 +1268,6 @@ function renderReelSetupTargetGuidanceStep(appMain) {
                 reelSetupState.equipmentCheck = null;
                 reelSetupState.backingChoice = null;
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "change-target-fish") {
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "change-line-type") {
-                reelSetupState.lineType = null;
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
                 showView(ROUTES.REEL_SETUP);
                 return;
             }
@@ -1386,7 +1321,7 @@ function renderReelSetupEquipmentCheckStep(appMain) {
 
     if (!lineType || !targetProfile) {
         reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
+        reelSetupState.backingChoice = null;
         reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
         renderReelSetupTargetFishStep(appMain);
         return;
@@ -1397,6 +1332,12 @@ function renderReelSetupEquipmentCheckStep(appMain) {
         title: "Check Your Reel & Rod",
         description: getReelEquipmentCheckDescription(targetProfile, lineType),
         cards: [
+            {
+                id: "confirm-equipment-match",
+                title: "My Reel & Rod Support This Setup",
+                description: "Continue only after the intended line fits both pieces of equipment.",
+                isAvailable: true
+            },
             {
                 id: "read-reel",
                 title: "How to Read Your Reel",
@@ -1410,12 +1351,6 @@ function renderReelSetupEquipmentCheckStep(appMain) {
                 isAvailable: true
             },
             {
-                id: "confirm-equipment-match",
-                title: "My Reel & Rod Support This Setup",
-                description: "Continue only after the intended line fits both pieces of equipment.",
-                isAvailable: true
-            },
-            {
                 id: "equipment-mismatch",
                 title: "Something Doesn't Match / I'm Not Sure",
                 description: "Pause before spooling and use the markings to adjust the line choice or equipment.",
@@ -1423,6 +1358,13 @@ function renderReelSetupEquipmentCheckStep(appMain) {
             }
         ],
         onCardSelect: (actionId) => {
+            if (actionId === "confirm-equipment-match") {
+                reelSetupState.equipmentCheck = "compatible";
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
             if (actionId === "read-reel") {
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
                 showView(ROUTES.REEL_SETUP);
@@ -1431,13 +1373,6 @@ function renderReelSetupEquipmentCheckStep(appMain) {
 
             if (actionId === "read-rod") {
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_ROD;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "confirm-equipment-match") {
-                reelSetupState.equipmentCheck = "compatible";
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE;
                 showView(ROUTES.REEL_SETUP);
                 return;
             }
@@ -1669,36 +1604,6 @@ function renderReelSetupEquipmentCompleteStep(appMain) {
                 isAvailable: true
             },
             {
-                id: "read-reel",
-                title: "Review Reel Markings",
-                description: "Reopen the reel-capacity guide without clearing your selections.",
-                isAvailable: true
-            },
-            {
-                id: "read-rod",
-                title: "Review Rod Markings",
-                description: "Reopen the rod line-rating guide without clearing your selections.",
-                isAvailable: true
-            },
-            {
-                id: "change-target-fish",
-                title: "Change Target Fish",
-                description: "Choose a different target reference while keeping the reel and line selections.",
-                isAvailable: true
-            },
-            {
-                id: "change-line-type",
-                title: "Change Line Choice",
-                description: "Return to line selection and clear dependent guidance.",
-                isAvailable: true
-            },
-            {
-                id: "change-reel-type",
-                title: "Change Reel Type",
-                description: "Return to reel identification while preserving the setup mode.",
-                isAvailable: true
-            },
-            {
                 id: "start-reel-setup-over",
                 title: "Start Over",
                 description: "Clear the temporary Reel Setup state and return to the first step.",
@@ -1715,43 +1620,6 @@ function renderReelSetupEquipmentCompleteStep(appMain) {
             if (actionId === "backing-decision-next") {
                 reelSetupState.backingChoice = null;
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.BACKING_DECISION;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "read-reel") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "read-rod") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_ROD;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "change-target-fish") {
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "change-line-type") {
-                reelSetupState.lineType = null;
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "change-reel-type") {
-                reelSetupState.reelType = null;
-                reelSetupState.lineType = null;
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
                 showView(ROUTES.REEL_SETUP);
                 return;
             }
@@ -1920,7 +1788,7 @@ function renderReelSetupSpoolConnectionPlanStep(appMain) {
     const plan = getReelSpoolConnectionPlan(lineType, backingChoice);
 
     if (!lineType || !backingChoice || !plan || reelSetupState.equipmentCheck !== "compatible") {
-                reelSetupState.backingChoice = null;
+        reelSetupState.backingChoice = null;
         reelSetupState.stepId = REEL_SETUP_STEP_IDS.BACKING_DECISION;
         renderReelSetupBackingDecisionStep(appMain);
         return;
@@ -1944,12 +1812,6 @@ function renderReelSetupSpoolConnectionPlanStep(appMain) {
                 isAvailable: true
             },
             {
-                id: "change-backing-choice",
-                title: "Change Backing Choice",
-                description: "Return to the backing decision while preserving the verified reel, rod, line, and target selections.",
-                isAvailable: true
-            },
-            {
                 id: "start-reel-setup-over",
                 title: "Start Over",
                 description: "Clear the temporary Reel Setup state and return to the first step.",
@@ -1970,12 +1832,6 @@ function renderReelSetupSpoolConnectionPlanStep(appMain) {
             }
             if (actionId === "spool-reel-next") {
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "change-backing-choice") {
-                reelSetupState.backingChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.BACKING_DECISION;
                 showView(ROUTES.REEL_SETUP);
                 return;
             }
@@ -2020,12 +1876,6 @@ function renderReelSetupSpoolingInstructionsStep(appMain) {
                 isAvailable: false
             },
             {
-                id: "change-backing-choice",
-                title: "Change Backing Choice",
-                description: "Return to the backing decision and rebuild the spool connection plan before winding line.",
-                isAvailable: true
-            },
-            {
                 id: "start-reel-setup-over",
                 title: "Start Over",
                 description: "Clear the temporary Reel Setup state and return to the first step.",
@@ -2039,12 +1889,6 @@ function renderReelSetupSpoolingInstructionsStep(appMain) {
             }
         ],
         onCardSelect: (actionId) => {
-            if (actionId === "change-backing-choice") {
-                reelSetupState.backingChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.BACKING_DECISION;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
             if (actionId === "start-reel-setup-over") {
                 openReelSetup();
                 return;

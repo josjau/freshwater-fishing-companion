@@ -24,6 +24,22 @@ def require_text(text, needle, label):
         fail(f"{label}: missing {needle!r}")
 
 
+def require_absent(text, needle, label):
+    if needle in text:
+        fail(f"{label}: unexpected {needle!r}")
+
+
+def get_function_block(text, function_name, next_function_name):
+    match = re.search(
+        rf"function {re.escape(function_name)}\(appMain\) \{{(?P<body>.*?)\n\}}\n\nfunction {re.escape(next_function_name)}",
+        text,
+        flags=re.S
+    )
+    if not match:
+        fail(f"could not isolate {function_name}")
+    return match.group("body")
+
+
 index_html = require("index.html")
 script_js = require("script.js")
 reel_guidance_js = require("data/reel-guidance.js")
@@ -62,6 +78,76 @@ for needle, label in [
     ('REEL_BACKING_CHOICES', "backing decision knowledge")
 ]:
     require_text(script_js, needle, f"script.js {label}")
+
+# Package 3 workflow-card cleanup: previous-step navigation owns ordinary
+# backtracking, so these screens do not duplicate upstream changes as cards.
+line_choice_check_block = get_function_block(
+    script_js,
+    "renderReelSetupLineSelectionComplete",
+    "getReelTargetStrengthGuidance"
+)
+for needle, label in [
+    ('id: "change-line-type"', "Line Choice Check Change Line Choice"),
+    ('id: "change-reel-type"', "Line Choice Check Change Reel Type")
+]:
+    require_absent(line_choice_check_block, needle, label)
+
+starting_strength_block = get_function_block(
+    script_js,
+    "renderReelSetupTargetGuidanceStep",
+    "getReelEquipmentCheckDescription"
+)
+for needle, label in [
+    ('id: "change-target-fish"', "Starting Line Strength Change Target Fish"),
+    ('id: "change-line-type"', "Starting Line Strength Change Line Choice")
+]:
+    require_absent(starting_strength_block, needle, label)
+
+equipment_check_block = get_function_block(
+    script_js,
+    "renderReelSetupEquipmentCheckStep",
+    "renderReelSetupReadReelStep"
+)
+confirm_position = equipment_check_block.find('id: "confirm-equipment-match"')
+read_reel_position = equipment_check_block.find('id: "read-reel"')
+if confirm_position < 0 or read_reel_position < 0 or confirm_position > read_reel_position:
+    fail("Check Your Reel & Rod must present the confirmed-equipment forward action first")
+
+equipment_complete_block = get_function_block(
+    script_js,
+    "renderReelSetupEquipmentCompleteStep",
+    "getReelBackingChoice"
+)
+for needle, label in [
+    ('id: "read-reel"', "Equipment Compatibility Check Review Reel Markings"),
+    ('id: "read-rod"', "Equipment Compatibility Check Review Rod Markings"),
+    ('id: "change-target-fish"', "Equipment Compatibility Check Change Target Fish"),
+    ('id: "change-line-type"', "Equipment Compatibility Check Change Line Choice"),
+    ('id: "change-reel-type"', "Equipment Compatibility Check Change Reel Type")
+]:
+    require_absent(equipment_complete_block, needle, label)
+
+spool_connection_block = get_function_block(
+    script_js,
+    "renderReelSetupSpoolConnectionPlanStep",
+    "renderReelSetupSpoolingInstructionsStep"
+)
+require_absent(
+    spool_connection_block,
+    'id: "change-backing-choice"',
+    "Spool Connection Plan Change Backing Choice"
+)
+
+spooling_instructions_block = get_function_block(
+    script_js,
+    "renderReelSetupSpoolingInstructionsStep",
+    "getActiveKnots"
+)
+require_absent(
+    spooling_instructions_block,
+    'id: "change-backing-choice"',
+    "Spool the Reel Change Backing Choice"
+)
 
 # Reel Setup keeps its step-aware JavaScript navigation while reusing the
 # established sticky/floating application navigation treatment.
@@ -263,6 +349,7 @@ print("Production Package 3 Block 3.7 validation passed.")
 print(f"Backing choices: {backing_count}")
 print(f"Spooling profiles: {spooling_count}")
 print("Reel Setup navigation: step-aware and sticky/floating.")
+print("Workflow cards: redundant upstream-change cards removed from six Package 3 screens.")
 print("Reel-specific spooling: spinning, spincast, baitcasting.")
 print("Canonical Knot handoffs: Arbor Knot and Double Uni Knot.")
 print("Reel Setup Knot return context: exact step/state restoration enabled.")
