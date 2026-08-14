@@ -9,7 +9,7 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knots — Production Package 3 Foundation"
+    milestone: "Knots — Production Package 3 Block 3.3"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -555,7 +555,8 @@ function createInitialReelSetupState() {
     return {
         stepId: REEL_SETUP_STEP_IDS.START,
         entryMode: null,
-        reelType: null
+        reelType: null,
+        lineType: null
     };
 }
 
@@ -578,8 +579,23 @@ function renderReelSetupView(appMain) {
         return;
     }
 
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.FOUNDATION_COMPLETE) {
-        renderReelSetupFoundationComplete(appMain);
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LINE_SELECTION) {
+        renderReelSetupLineSelectionStep(appMain);
+        return;
+    }
+
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LINE_HELP) {
+        renderReelSetupLineHelpStep(appMain);
+        return;
+    }
+
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LINE_IDENTIFICATION) {
+        renderReelSetupLineIdentificationStep(appMain);
+        return;
+    }
+
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LINE_SELECTION_COMPLETE) {
+        renderReelSetupLineSelectionComplete(appMain);
         return;
     }
 
@@ -627,13 +643,34 @@ function renderReelSetupReelTypeStep(appMain) {
         onCardSelect: (reelType) => {
             if (!getReelSetupOption(REEL_TYPE_OPTIONS, reelType)) return;
             reelSetupState.reelType = reelType;
-            reelSetupState.stepId = REEL_SETUP_STEP_IDS.FOUNDATION_COMPLETE;
+            reelSetupState.lineType = null;
+            reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
             showView(ROUTES.REEL_SETUP);
         }
     });
 }
 
-function renderReelSetupFoundationComplete(appMain) {
+function getReelLineType(lineTypeId) {
+    return REEL_LINE_TYPE_GUIDANCE[lineTypeId] ?? null;
+}
+
+function getReelBeginnerLineRecommendation(reelTypeId) {
+    return REEL_BEGINNER_LINE_RECOMMENDATIONS[reelTypeId] ?? null;
+}
+
+function getReelLineCompatibilityNote(reelTypeId, lineTypeId) {
+    return REEL_LINE_COMPATIBILITY_NOTES[reelTypeId]?.[lineTypeId] ?? null;
+}
+
+function selectReelSetupLineType(lineTypeId) {
+    if (!getReelLineType(lineTypeId)) return false;
+    reelSetupState.lineType = lineTypeId;
+    reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION_COMPLETE;
+    showView(ROUTES.REEL_SETUP);
+    return true;
+}
+
+function renderReelSetupLineSelectionStep(appMain) {
     const entryOption = getReelSetupOption(
         REEL_SETUP_ENTRY_OPTIONS,
         reelSetupState.entryMode
@@ -649,15 +686,186 @@ function renderReelSetupFoundationComplete(appMain) {
         return;
     }
 
+    const lineCards = Object.values(REEL_LINE_TYPE_GUIDANCE).map((lineType) => ({
+        id: lineType.id,
+        title: lineType.title,
+        description: lineType.selectionDescription,
+        isAvailable: true
+    }));
+    const guidanceCards = REEL_LINE_GUIDANCE_ACTIONS.map((action) => ({
+        ...action,
+        isAvailable: true
+    }));
+
     renderView(appMain, {
         headingId: "reel-setup-title",
-        title: "Reel Setup Foundation Check",
-        description: `${entryOption.title} · ${reelTypeOption.title}. The next build block extends this verified state into line selection and beginner guidance.`,
+        title: "What Line Are You Using?",
+        description: `${entryOption.title} · ${reelTypeOption.title}. Choose the line you plan to spool, or use beginner help if you are not sure.`,
+        cards: [...lineCards, ...guidanceCards],
+        onCardSelect: (optionId) => {
+            if (getReelLineType(optionId)) {
+                selectReelSetupLineType(optionId);
+                return;
+            }
+
+            if (optionId === "help-me-choose") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_HELP;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
+            if (optionId === "not-sure-line") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_IDENTIFICATION;
+                showView(ROUTES.REEL_SETUP);
+            }
+        }
+    });
+}
+
+function renderReelSetupLineHelpStep(appMain) {
+    const reelTypeOption = getReelSetupOption(
+        REEL_TYPE_OPTIONS,
+        reelSetupState.reelType
+    );
+    const recommendation = getReelBeginnerLineRecommendation(reelSetupState.reelType);
+    const recommendedLine = getReelLineType(recommendation?.lineTypeId);
+
+    if (!reelTypeOption || !recommendation || !recommendedLine) {
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
+        renderReelSetupLineSelectionStep(appMain);
+        return;
+    }
+
+    renderView(appMain, {
+        headingId: "reel-setup-title",
+        title: "Beginner Line Starting Point",
+        description: `${recommendation.label}: ${recommendedLine.title}. ${recommendation.reason} This is a starting point, not a required line; line strength and equipment compatibility are checked later.`,
         cards: [
+            {
+                id: "use-recommended-line",
+                title: `Use ${recommendedLine.title}`,
+                description: recommendedLine.selectionDescription,
+                isAvailable: true
+            },
+            {
+                id: "compare-line-types",
+                title: "Compare the Line Types",
+                description: "Return to Monofilament, Fluorocarbon, and Braid to choose directly.",
+                isAvailable: true
+            },
+            {
+                id: "identify-existing-line",
+                title: "I'm Not Sure What Line I Have",
+                description: "Use simple visual and handling cues before choosing.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (actionId) => {
+            if (actionId === "use-recommended-line") {
+                selectReelSetupLineType(recommendedLine.id);
+                return;
+            }
+
+            if (actionId === "compare-line-types") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
+            if (actionId === "identify-existing-line") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_IDENTIFICATION;
+                showView(ROUTES.REEL_SETUP);
+            }
+        }
+    });
+}
+
+function renderReelSetupLineIdentificationStep(appMain) {
+    const identificationCards = Object.values(REEL_LINE_TYPE_GUIDANCE).map((lineType) => ({
+        id: lineType.id,
+        title: lineType.title,
+        description: lineType.identificationCue,
+        isAvailable: true
+    }));
+
+    renderView(appMain, {
+        headingId: "reel-setup-title",
+        title: "Which Line Looks Like Yours?",
+        description: "Use these cues only as a practical check. If you still cannot identify the line confidently, choose Help Me Choose instead of guessing.",
+        cards: [
+            ...identificationCards,
+            {
+                id: "help-me-choose",
+                title: "Still Not Sure — Help Me Choose",
+                description: "Use the beginner starting recommendation for your selected reel type.",
+                isAvailable: true
+            },
+            {
+                id: "back-to-line-selection",
+                title: "Back to Line Choices",
+                description: "Return without selecting a line type.",
+                isAvailable: true
+            }
+        ],
+        onCardSelect: (optionId) => {
+            if (getReelLineType(optionId)) {
+                selectReelSetupLineType(optionId);
+                return;
+            }
+
+            if (optionId === "help-me-choose") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_HELP;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
+            if (optionId === "back-to-line-selection") {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
+                showView(ROUTES.REEL_SETUP);
+            }
+        }
+    });
+}
+
+function renderReelSetupLineSelectionComplete(appMain) {
+    const entryOption = getReelSetupOption(
+        REEL_SETUP_ENTRY_OPTIONS,
+        reelSetupState.entryMode
+    );
+    const reelTypeOption = getReelSetupOption(
+        REEL_TYPE_OPTIONS,
+        reelSetupState.reelType
+    );
+    const lineType = getReelLineType(reelSetupState.lineType);
+
+    if (!entryOption || !reelTypeOption || !lineType) {
+        reelSetupState.lineType = null;
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
+        renderReelSetupLineSelectionStep(appMain);
+        return;
+    }
+
+    const compatibilityNote = getReelLineCompatibilityNote(
+        reelSetupState.reelType,
+        reelSetupState.lineType
+    );
+    const compatibilityText = compatibilityNote ? ` ${compatibilityNote}` : "";
+
+    renderView(appMain, {
+        headingId: "reel-setup-title",
+        title: "Line Choice Check",
+        description: `${entryOption.title} · ${reelTypeOption.title} · ${lineType.title}. ${lineType.beginnerGuidance} ${lineType.tradeoff}${compatibilityText}`,
+        cards: [
+            {
+                id: "change-line-type",
+                title: "Change Line Choice",
+                description: "Return to the line-selection step without losing the setup mode or reel type.",
+                isAvailable: true
+            },
             {
                 id: "change-reel-type",
                 title: "Change Reel Type",
-                description: "Return to reel identification without losing the selected setup mode.",
+                description: "Return to reel identification while preserving the setup mode.",
                 isAvailable: true
             },
             {
@@ -669,13 +877,21 @@ function renderReelSetupFoundationComplete(appMain) {
             {
                 id: "return-to-knots",
                 title: "Return to Knots",
-                description: "Leave the internal Package 3 foundation route and return to the Knot Guide.",
+                description: "Leave the internal Package 3 route and return to the Knot Guide.",
                 isAvailable: true
             }
         ],
         onCardSelect: (actionId) => {
+            if (actionId === "change-line-type") {
+                reelSetupState.lineType = null;
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
+                showView(ROUTES.REEL_SETUP);
+                return;
+            }
+
             if (actionId === "change-reel-type") {
                 reelSetupState.reelType = null;
+                reelSetupState.lineType = null;
                 reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
                 showView(ROUTES.REEL_SETUP);
                 return;

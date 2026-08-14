@@ -37,26 +37,32 @@ load_markers = [
 ]
 positions = [index_html.find(marker) for marker in load_markers]
 if any(position < 0 for position in positions):
-    fail("index.html is missing a required Package 3 foundation script load")
+    fail("index.html is missing a required Package 3 script load")
 if positions != sorted(positions):
-    fail("Package 3 foundation script load order is incorrect")
+    fail("Package 3 script load order is incorrect")
 
-require_text(script_js, 'REEL_SETUP: "reel-setup"', "script.js route")
-require_text(script_js, '[ROUTES.REEL_SETUP]: renderReelSetupView', "script.js renderer map")
-require_text(script_js, 'function openReelSetup()', "script.js entry helper")
-require_text(script_js, 'function renderReelSetupView(appMain)', "script.js Reel Setup renderer")
-require_text(script_js, 'REEL_SETUP_ENTRY_OPTIONS', "script.js entry options")
-require_text(script_js, 'REEL_TYPE_OPTIONS', "script.js reel types")
+for needle, label in [
+    ('REEL_SETUP: "reel-setup"', "route"),
+    ('[ROUTES.REEL_SETUP]: renderReelSetupView', "renderer map"),
+    ('function openReelSetup()', "entry helper"),
+    ('function renderReelSetupView(appMain)', "Reel Setup renderer"),
+    ('function renderReelSetupLineSelectionStep(appMain)', "line selection step"),
+    ('function renderReelSetupLineHelpStep(appMain)', "line help step"),
+    ('function renderReelSetupLineIdentificationStep(appMain)', "line identification step"),
+    ('function renderReelSetupLineSelectionComplete(appMain)', "line selection checkpoint"),
+    ('lineType: null', "session-only line state"),
+    ('REEL_LINE_TYPE_GUIDANCE', "line type guidance"),
+    ('REEL_BEGINNER_LINE_RECOMMENDATIONS', "beginner recommendations")
+]:
+    require_text(script_js, needle, f"script.js {label}")
 
-render_knots_match = re.search(
-    r"function renderKnotsView\(appMain\) \{(?P<body>.*?)\n\}\n\nfunction updateKnotGuideSearchResults",
-    script_js,
-    flags=re.S
-)
-if not render_knots_match:
-    fail("could not isolate renderKnotsView for the foundation wiring guard")
-if "openReelSetup" in render_knots_match.group("body") or "ROUTES.REEL_SETUP" in render_knots_match.group("body"):
-    fail("Package 3 foundation must remain hidden until the guided workflow is ready")
+for step_id in [
+    'LINE_SELECTION: "line-selection"',
+    'LINE_HELP: "line-help"',
+    'LINE_IDENTIFICATION: "line-identification"',
+    'LINE_SELECTION_COMPLETE: "line-selection-complete"'
+]:
+    require_text(reel_guidance_js, step_id, "data/reel-guidance.js step")
 
 for expected_id in [
     "new-empty-reel",
@@ -64,9 +70,14 @@ for expected_id in [
     "spinning",
     "spincast",
     "baitcasting",
-    "not-sure"
+    "not-sure",
+    "monofilament",
+    "fluorocarbon",
+    "braid",
+    "help-me-choose",
+    "not-sure-line"
 ]:
-    require_text(reel_guidance_js, f'id: "{expected_id}"', "data/reel-guidance.js")
+    require_text(reel_guidance_js, f'"{expected_id}"', "data/reel-guidance.js option")
 
 entry_block = re.search(
     r"const REEL_SETUP_ENTRY_OPTIONS = Object\.freeze\(\[(?P<body>.*?)\n\]\);",
@@ -78,14 +89,59 @@ reel_block = re.search(
     reel_guidance_js,
     flags=re.S
 )
-if not entry_block or not reel_block:
-    fail("could not parse Reel Setup controlled option arrays")
+line_block = re.search(
+    r"const REEL_LINE_TYPE_GUIDANCE = Object\.freeze\(\{(?P<body>.*?)\n\}\);",
+    reel_guidance_js,
+    flags=re.S
+)
+action_block = re.search(
+    r"const REEL_LINE_GUIDANCE_ACTIONS = Object\.freeze\(\[(?P<body>.*?)\n\]\);",
+    reel_guidance_js,
+    flags=re.S
+)
+recommendation_block = re.search(
+    r"const REEL_BEGINNER_LINE_RECOMMENDATIONS = Object\.freeze\(\{(?P<body>.*?)\n\}\);",
+    reel_guidance_js,
+    flags=re.S
+)
+if not all([entry_block, reel_block, line_block, action_block, recommendation_block]):
+    fail("could not parse one or more Package 3 controlled guidance structures")
+
 entry_count = len(re.findall(r'\bid: "', entry_block.group("body")))
 reel_count = len(re.findall(r'\bid: "', reel_block.group("body")))
+line_count = len(re.findall(r'\bid: "', line_block.group("body")))
+action_count = len(re.findall(r'\bid: "', action_block.group("body")))
+recommendation_count = len(re.findall(r'\blineTypeId: "', recommendation_block.group("body")))
+
 if entry_count != 2:
     fail(f"expected 2 Reel Setup entry options, found {entry_count}")
 if reel_count != 4:
     fail(f"expected 4 supported reel-type options, found {reel_count}")
+if line_count != 3:
+    fail(f"expected 3 physical line types, found {line_count}")
+if action_count != 2:
+    fail(f"expected 2 line-guidance actions, found {action_count}")
+if recommendation_count != 4:
+    fail(f"expected 4 reel-type beginner recommendations, found {recommendation_count}")
+
+if recommendation_block.group("body").count('lineTypeId: "monofilament"') != 4:
+    fail("expected all four beginner reel recommendations to start with monofilament")
+
+require_text(
+    reel_guidance_js,
+    "braided line may not work properly on some spincast reels",
+    "spincast braid compatibility warning"
+)
+
+render_knots_match = re.search(
+    r"function renderKnotsView\(appMain\) \{(?P<body>.*?)\n\}\n\nfunction updateKnotGuideSearchResults",
+    script_js,
+    flags=re.S
+)
+if not render_knots_match:
+    fail("could not isolate renderKnotsView for the integration guard")
+if "openReelSetup" in render_knots_match.group("body") or "ROUTES.REEL_SETUP" in render_knots_match.group("body"):
+    fail("Block 3.3 must remain internally accessed until the guided workflow integration block")
 
 for path in ["script.js", "data/reel-guidance.js"]:
     result = subprocess.run(
@@ -96,7 +152,10 @@ for path in ["script.js", "data/reel-guidance.js"]:
     if result.returncode != 0:
         fail(f"JavaScript syntax check failed for {path}: {result.stderr.strip()}")
 
-print("Production Package 3 foundation validation passed.")
+print("Production Package 3 Block 3.3 validation passed.")
 print(f"Entry options: {entry_count}")
 print(f"Reel types: {reel_count}")
+print(f"Physical line types: {line_count}")
+print(f"Line guidance actions: {action_count}")
+print(f"Beginner reel recommendations: {recommendation_count}")
 print("Normal Knot landing remains intentionally unwired to Reel Setup.")
