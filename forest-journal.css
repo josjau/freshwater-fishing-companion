@@ -591,3 +591,61 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* =========================================================
+   KNOT GUIDE — PRODUCTION PACKAGE 4 MEDIA
+   ========================================================= */
+
+.knot-media-section {
+    border-color: color-mix(in srgb, var(--accent-knots) 58%, var(--border));
+    background:
+        linear-gradient(120deg, color-mix(in srgb, var(--accent-knots) 15%, transparent), transparent 58%),
+        var(--surface);
+}
+.knot-media-section__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+    margin-bottom: var(--space-4);
+}
+.knot-media-section__header h3 { margin-bottom: var(--space-2); }
+.knot-media-section__header p:last-child { margin-bottom: 0; color: var(--text-muted); }
+.knot-media-section__eyebrow {
+    margin-bottom: var(--space-1);
+    color: color-mix(in srgb, var(--accent-knots) 72%, white 28%);
+    font-size: .8rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.knot-media-section__type {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    padding: 4px 9px;
+    border: 1px solid color-mix(in srgb, var(--accent-knots) 58%, var(--border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent-knots) 13%, transparent);
+    color: var(--text-muted);
+    font-size: .82rem;
+    font-weight: 800;
+}
+.knot-media-link {
+    display: flex;
+    min-height: var(--touch-target);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--accent-knots);
+    border-radius: var(--radius-small);
+    background: color-mix(in srgb, var(--accent-knots) 18%, var(--surface-elevated));
+    color: var(--text);
+    font-weight: 800;
+    text-decoration: none;
+}
+.knot-media-link:hover { background: color-mix(in srgb, var(--accent-knots) 26%, var(--surface-hover)); }
+.knot-media-link:focus-visible { outline: 3px solid var(--accent-knots); outline-offset: 3px; }
