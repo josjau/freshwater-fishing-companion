@@ -1,9 +1,12 @@
 # Freshwater Fishing Companion — Knot Reference Sources
 
-**Document Status:** Research Provenance / Complete for V1 Production Package 1  
+**Document Status:** Approved  
+**Implementation Status:** Validated  
+**Document Role:** Research Provenance  
 **Milestone:** Knots  
 **Started:** 2026-08-13  
-**Updated:** 2026-08-13
+**Reconciled Through:** Production Package 4  
+**Updated:** 2026-08-14
 
 # Purpose
 
@@ -12,6 +15,8 @@ This document preserves technical research provenance for the canonical Version 
 It does not replace production `referenceLinks[]` and does not independently own canonical Knot instructions. Its purpose is to record the evidence used to validate each Knot's tying geometry, accepted applications, line compatibility, limitations, variation decisions, common failure modes, and final-state checks.
 
 Research follows `docs/workstreams/KNOT-RESEARCH-VALIDATION-APPROVAL.md`.
+
+Production Package 4 reopened only the Dropper Loop wrap-count presentation and the selected Snell instructional variant. Those two research decisions are reconciled below to the validated production records in `data/knots.js`.
 
 # Research Rules
 
@@ -34,8 +39,8 @@ Every canonical Knot requires at least two independent credible technical source
 | Uni Knot | Source validation complete | Locked |
 | Double Surgeon’s Knot | Source validation complete | Locked |
 | Non-Slip Loop Knot | Source validation complete | Locked |
-| Dropper Loop Knot | Source validation complete | Locked |
-| Snell Knot | Source validation complete | Locked |
+| Dropper Loop Knot | Source validation complete / Package 4 reconciled | Locked |
+| Snell Knot | Source validation complete / Package 4 variant reconciled | Locked |
 | Alberto Knot | Source validation complete | Locked |
 
 # Arbor Knot
@@ -88,7 +93,7 @@ Different sources divide the prose into different numbers of steps, but the topo
 
 ## Research Decision
 
-Canonical content may use monofilament and fluorocarbon compatibility. Generic braid compatibility is omitted; Reel & Line Setup will own the equipment-specific braid/backing branch.
+Canonical content may use monofilament and fluorocarbon compatibility. Generic braid compatibility is omitted; Reel & Line Setup owns the equipment-specific braid/backing branch.
 
 # Improved Clinch Knot
 
@@ -399,9 +404,22 @@ Monofilament and fluorocarbon are supported. Braid is not included in the generi
 # Dropper Loop Knot
 
 **Canonical ID:** `dropper-loop-knot`  
-**Research Status:** Source validation complete
+**Research Status:** Source validation complete / Package 4 reconciled
 
-## Source A — Primary Technical Reference
+## Source A — Selected V1 Method and Visual Reference
+
+**Animated Knots by Grog — Dropper Loop Knot**  
+Source: `https://www.animatedknots.com/dropper-loop-knot`
+
+Validated claims:
+
+- Form a large loop at the desired branch position.
+- Wind one side of the loop around the other **about six times** while retaining the central opening.
+- Push the original branch loop through that central opening.
+- Pull the standing sections in opposite directions to seat the coils while retaining the branch loop.
+- The completed geometry is an in-line branch loop rather than a terminal loop.
+
+## Source B — Independent Cross-Check
 
 **Take Me Fishing — How to Tie Dropper Loop Knot**  
 Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-dropper-loop-knot/`
@@ -414,18 +432,10 @@ Validated claims:
 - Pull the standing ends in opposite directions to seat.
 - Used for multi-hook, multi-fly, and bottom-fishing systems.
 
-## Source B — Independent Cross-Check
+## Additional Claim-Specific Sources
 
 **University of Missouri Extension — Angling Skills**  
 Source: `https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pro/4h/Docs/Projects/OutdoorsNature/Sportfishing/supplemental-angling-skills.pdf`
-
-Validated claims:
-
-- Four-to-seven-wrap Dropper Loop family geometry.
-- Active/original loop passes through the central opening.
-- Appropriate for bait rigs, combination lure rigs, and terminal-tackle branches.
-
-## Additional Application Sources
 
 **Alaska Department of Fish and Game — Dropper Loop**  
 Source: `https://www.adfg.alaska.gov/index.cfm?ID=20&adfg=FishingSportFishAK.reelTimes`
@@ -435,36 +445,37 @@ Source: `https://www.nj.gov/dep/fgw/artreeffish101.htm`
 
 Validated claims:
 
+- Independent instruction supports a four-to-seven-wrap Dropper Loop family range.
 - Multiple Dropper Loops may carry separate flies/jigs on one leader.
 - Official rig guidance explicitly uses Dropper Loops in monofilament leader material.
 
 ## Variation Resolution
 
-The wrap-count range varies by instruction source. V1 uses **five wraps**, which lies within the independently supported range and matches the Take Me Fishing beginner method.
+Credible instructions use a small range of wrap counts. Production Package 4 explicitly approved **about six wraps** so the canonical page matches the selected Animated Knots instructional animation. Six lies inside the independently supported four-to-seven range and remains consistent with Take Me Fishing's five-or-more instruction.
 
 ## Research Decision
 
-The V1 generic material compatibility is monofilament. This is a specialized in-line branch loop, not the same job as a Non-Slip terminal loop.
+The V1 generic material compatibility remains monofilament. This is a specialized in-line branch loop, not the same job as a Non-Slip terminal loop.
 
 # Snell Knot
 
 **Canonical ID:** `snell-knot`  
-**Research Status:** Source validation complete
+**Research Status:** Source validation complete / Package 4 variant reconciled
 
-## Source A — Primary Technical Reference
+## Source A — Selected V1 Method and Visual Reference
 
-**Take Me Fishing — How to Tie a Snell Knot**  
-Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-a-snell-knot/`
+**Animated Knots by Grog — Snell Knot**  
+Source: `https://www.animatedknots.com/snell-knot`
 
 Validated claims:
 
-- Multiple accepted Snell variants exist.
-- The beginner-oriented **Easy Snell** starts through the eye toward the hook point.
-- A small loop is formed beside the shank.
-- Tag end wraps around hook shank and line five to seven times from point toward eye.
-- Tag passes through the small loop underside-to-topside.
-- Holding the wraps while pulling tag and standing line seats the connection.
-- Mono, fluorocarbon, and braid can be used.
+- Pass the leader through the hook eye and through the eye a second time in the same direction.
+- Leave a large controlled loop beside the hook shank.
+- Hold the eye and two line sections together.
+- Wrap the large loop around the hook shank and doubled line seven to eight times.
+- Pull the standing line to shrink the remaining loop beneath the coils.
+- Lubricate and pull the standing line and tag end to seat the coils.
+- The completed geometry provides a direct in-line pull from line to hook shank.
 
 ## Source B — Independent Technical Cross-Check
 
@@ -477,6 +488,24 @@ Validated claims:
 - The completed geometry provides a direct in-line pull.
 - Eyed hooks can be snelled.
 - Circle hooks, octopus hooks, and tandem-hook arrangements are established Snell applications.
+
+## Additional Method Corroboration
+
+**Tackle Tactics — Snell Knot (Traditional)**  
+Source: `https://www.tackletactics.com.au/blogs/learn-to-fish/snell-knot-traditional`
+
+Validated claims:
+
+- Independently demonstrates the traditional loop-wrapped Snell family.
+- Uses a large loop wrapped repeatedly around the shank and line before tightening.
+
+**Take Me Fishing — How to Tie a Snell Knot**  
+Source: `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-a-snell-knot/`
+
+Use in the current research record:
+
+- retains useful application and general material-compatibility evidence,
+- teaches an Easy Snell tying sequence that is **not** the selected Version 1 tying method after Production Package 4.
 
 ## Additional Material/Application Sources
 
@@ -494,21 +523,21 @@ Validated claims:
 
 ## Variation Resolution
 
-A major method-selection issue exists: credible sources teach multiple legitimate Snell geometries. The University of Missouri Extension material, for example, demonstrates a different loop-wrapping Snell than Take Me Fishing’s Easy Snell.
+Multiple legitimate Snell geometries exist and must not be blended.
 
-These methods are **not merged**.
+Production Package 4 explicitly superseded the earlier Easy Snell selection and locked the **traditional loop-wrapped Snell** demonstrated by Animated Knots:
 
-For V1, the canonical `Snell Knot` deliberately teaches the **Easy Snell** because:
-- it has an explicit step-by-step beginner sequence,
-- the final shank-coil geometry is independently corroborated by manufacturer instruction,
-- it supports the project’s freshwater terminal-hook use cases,
-- naming the broader canonical entity `Snell Knot` remains appropriate while the research record documents the chosen instructional variation.
+1. two eye passes in the same direction,
+2. one large controlled loop beside the shank,
+3. seven to eight loop wraps around the shank and doubled line,
+4. standing-line pull collapses the remaining loop beneath the coils,
+5. standing line and tag end seat the finished Snell.
 
-`Easy Snell` is a selected method, not a separate alias/entity.
+Take Me Fishing's Easy Snell remains a legitimate variant and research source, but it is no longer the canonical Version 1 tying sequence.
 
 ## Research Decision
 
-All three approved line materials are supported. The V1 method assumes an eyed hook and remains hook-specific rather than a general terminal-tackle connection.
+All three approved line materials remain supported. Difficulty remains `Intermediate`. The V1 method assumes an eyed hook and remains hook-specific rather than a general terminal-tackle connection.
 
 # Alberto Knot
 
@@ -576,6 +605,9 @@ All three material tokens are stored because the knot’s actual supported pairi
 
 All 10 approved Version 1 Knots meet the project’s research threshold and are content-locked.
 
-Production Package 1 assigns Version `0.5.0` metadata and implements the locked library in `data/knots.js` together with the ordered `CORE_KNOT_IDS` registry and the approved Rig-owned `knotApplications[]` relationship layer.
+Production Package 1 created the canonical library in `data/knots.js` with Version `0.5.0` metadata. Production Package 4 later reopened and reconciled only two instructional decisions:
 
-Static instructional SVG work remains downstream of content lock and must visualize the locked tying geometry rather than introduce new instructional variants.
+- Dropper Loop uses **about six wraps** to match the approved Animated Knots method while remaining inside the independently supported range.
+- Snell uses the approved **traditional loop-wrapped seven-to-eight-wrap method** instead of the earlier Easy Snell selection.
+
+Package 4 also replaced the former mandatory-static-SVG direction with verified external instructional media. Canonical text remains authoritative, and third-party copyrighted artwork or animations are not copied or rehosted without separate rights.
