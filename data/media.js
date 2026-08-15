@@ -1,15 +1,15 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/media.js
-   PURPOSE: Owns active neutral-background Tackle reference imagery
-   used by contextual Name ⓘ help interactions.
+   PURPOSE: Owns cross-entity production media and verified
+   external instructional-media records.
    ========================================================== */
 
 "use strict";
 
 const MEDIA_DATA_BUILD_INFO = Object.freeze({
     file: "data/media.js",
-    milestone: "Rig Guide Completion"
+    milestone: "Knot Guide — Production Package 4"
 });
 
 const MEDIA_DATA = Object.freeze([
@@ -707,6 +707,246 @@ const MEDIA_DATA = Object.freeze([
         productionStatus: "Approved neutral-background Tackle reference",
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.1",
+        isActive: true
+    },
+    {
+        id: "arbor-knot-animated-knots",
+        ownerType: "knot",
+        ownerId: "arbor-knot",
+        type: "external-animation",
+        provider: "Animated Knots by Grog",
+        title: "Arbor Knot step-by-step animation",
+        externalUrl: "https://www.animatedknots.com/arbor-knot",
+        actionLabel: "View step-by-step animation",
+        rights: {
+            status: "External linking approved; provider FAQ permits one animation-sequence image to be used as the link. No animation rehosting or broader frame reuse approved.",
+            type: "Copyrighted",
+            creator: "Grog LLC",
+            sourceUrl: "https://www.animatedknots.com/faq",
+            localReuseAllowed: false,
+            linkPreviewAllowed: true,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true
+    },
+    {
+        id: "improved-clinch-knot-animated-knots",
+        ownerType: "knot",
+        ownerId: "improved-clinch-knot",
+        type: "external-animation",
+        provider: "Animated Knots by Grog",
+        title: "Improved Clinch Knot step-by-step animation",
+        externalUrl: "https://www.animatedknots.com/improved-clinch-knot",
+        actionLabel: "View step-by-step animation",
+        rights: {
+            status: "External linking approved; provider FAQ permits one animation-sequence image to be used as the link. No animation rehosting or broader frame reuse approved.",
+            type: "Copyrighted",
+            creator: "Grog LLC",
+            sourceUrl: "https://www.animatedknots.com/faq",
+            localReuseAllowed: false,
+            linkPreviewAllowed: true,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true
+    },
+    {
+        id: "palomar-knot-animated-knots",
+        ownerType: "knot",
+        ownerId: "palomar-knot",
+        type: "external-animation",
+        provider: "Animated Knots by Grog",
+        title: "Palomar Knot step-by-step animation",
+        externalUrl: "https://www.animatedknots.com/palomar-knot",
+        actionLabel: "View step-by-step animation",
+        rights: {
+            status: "External linking approved; provider FAQ permits one animation-sequence image to be used as the link. No animation rehosting or broader frame reuse approved.",
+            type: "Copyrighted",
+            creator: "Grog LLC",
+            sourceUrl: "https://www.animatedknots.com/faq",
+            localReuseAllowed: false,
+            linkPreviewAllowed: true,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true
+    },
+    {
+        id: "double-uni-knot-pro-knot",
+        ownerType: "knot",
+        ownerId: "double-uni-knot",
+        type: "external-diagram",
+        provider: "Bass Pro Shops / Pro-Knot",
+        title: "Double Uni Knot illustrated instructions",
+        externalUrl: "https://1source.basspro.com/news-tips/fishing-knots-how-tie/7675/fishing-knot-library-how-tie-double-uni-knot-4-easy-steps",
+        actionLabel: "View illustrated instructions",
+        rights: {
+            status: "External reference only; no local artwork reuse permission established.",
+            type: "Copyrighted",
+            creator: "Bass Pro Shops / Pro-Knot",
+            sourceUrl: "https://1source.basspro.com/news-tips/fishing-knots-how-tie/7675/fishing-knot-library-how-tie-double-uni-knot-4-easy-steps",
+            localReuseAllowed: false,
+            linkPreviewAllowed: false,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source; exact 5 ordinary / 8 braid method retained",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true
+    },
+    {
+        id: "uni-knot-animated-knots",
+        ownerType: "knot",
+        ownerId: "uni-knot",
+        type: "external-animation",
+        provider: "Animated Knots by Grog",
+        title: "Uni Knot step-by-step animation",
+        externalUrl: "https://www.animatedknots.com/uni-knot",
+        actionLabel: "View step-by-step animation",
+        rights: {
+            status: "External linking approved; provider FAQ permits one animation-sequence image to be used as the link. No animation rehosting or broader frame reuse approved.",
+            type: "Copyrighted",
+            creator: "Grog LLC",
+            sourceUrl: "https://www.animatedknots.com/faq",
+            localReuseAllowed: false,
+            linkPreviewAllowed: true,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true
+    },
+    {
+        id: "double-surgeons-knot-animated-knots",
+        ownerType: "knot",
+        ownerId: "double-surgeons-knot",
+        type: "external-animation",
+        provider: "Animated Knots by Grog",
+        title: "Surgeon's Join step-by-step animation",
+        externalUrl: "https://www.animatedknots.com/surgeons-join-knot",
+        actionLabel: "View step-by-step animation",
+        rights: {
+            status: "External linking approved; provider FAQ permits one animation-sequence image to be used as the link. No animation rehosting or broader frame reuse approved.",
+            type: "Copyrighted",
+            creator: "Grog LLC",
+            sourceUrl: "https://www.animatedknots.com/faq",
+            localReuseAllowed: false,
+            linkPreviewAllowed: true,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source; line-to-line Surgeon's Join only",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true
+    },
+    {
+        id: "non-slip-loop-knot-animated-knots",
+        ownerType: "knot",
+        ownerId: "non-slip-loop-knot",
+        type: "external-animation",
+        provider: "Animated Knots by Grog",
+        title: "Non-Slip Mono Knot step-by-step animation",
+        externalUrl: "https://www.animatedknots.com/non-slip-mono-knot",
+        actionLabel: "View step-by-step animation",
+        rights: {
+            status: "External linking approved; provider FAQ permits one animation-sequence image to be used as the link. No animation rehosting or broader frame reuse approved.",
+            type: "Copyrighted",
+            creator: "Grog LLC",
+            sourceUrl: "https://www.animatedknots.com/faq",
+            localReuseAllowed: false,
+            linkPreviewAllowed: true,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true
+    },
+    {
+        id: "dropper-loop-knot-animated-knots",
+        ownerType: "knot",
+        ownerId: "dropper-loop-knot",
+        type: "external-animation",
+        provider: "Animated Knots by Grog",
+        title: "Dropper Loop Knot step-by-step animation",
+        externalUrl: "https://www.animatedknots.com/dropper-loop-knot",
+        actionLabel: "View step-by-step animation",
+        rights: {
+            status: "External linking approved; provider FAQ permits one animation-sequence image to be used as the link. No animation rehosting or broader frame reuse approved.",
+            type: "Copyrighted",
+            creator: "Grog LLC",
+            sourceUrl: "https://www.animatedknots.com/faq",
+            localReuseAllowed: false,
+            linkPreviewAllowed: true,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source; canonical page reconciled to about six wraps",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true
+    },
+    {
+        id: "snell-knot-animated-knots",
+        ownerType: "knot",
+        ownerId: "snell-knot",
+        type: "external-animation",
+        provider: "Animated Knots by Grog",
+        title: "Snell Knot step-by-step animation",
+        externalUrl: "https://www.animatedknots.com/snell-knot",
+        actionLabel: "View step-by-step animation",
+        rights: {
+            status: "External linking approved; provider FAQ permits one animation-sequence image to be used as the link. No animation rehosting or broader frame reuse approved.",
+            type: "Copyrighted",
+            creator: "Grog LLC",
+            sourceUrl: "https://www.animatedknots.com/faq",
+            localReuseAllowed: false,
+            linkPreviewAllowed: true,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source; traditional loop-wrapped 7–8 turn method",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true
+    },
+    {
+        id: "alberto-knot-knots-3d",
+        ownerType: "knot",
+        ownerId: "alberto-knot",
+        type: "external-3d-instruction",
+        provider: "Knots 3D",
+        title: "Alberto Knot interactive 3D instructions",
+        externalUrl: "https://knots3d.com/en/alberto-knot",
+        actionLabel: "View interactive 3D instructions",
+        rights: {
+            status: "External reference only; no published redistribution or embed permission established for project reuse.",
+            type: "Copyrighted",
+            creator: "Nynix LLC / Knots3D.com",
+            sourceUrl: "https://knots3d.com/en/alberto-knot",
+            localReuseAllowed: false,
+            linkPreviewAllowed: false,
+            attributionRequired: true,
+            reviewedDate: "2026-08-14"
+        },
+        productionStatus: "Approved external Knot instructional source; published minimum seven wraps in each direction matches canonical method",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
         isActive: true
     }
 ]);
