@@ -1,6 +1,6 @@
 # Knot Production Package 4 — 10-Knot Visual Source Audit
 
-**Status:** OPEN / AUDIT PASSES 1–3 COMPLETE / CANDIDATES NOT FULLY USER-APPROVED  
+**Status:** DIAGRAM-FIRST SEARCH COMPLETE / USER VISUAL REVIEW PENDING  
 **Milestone:** Knots  
 **Package:** Production Package 4  
 **Opened:** 2026-08-14  
@@ -29,9 +29,9 @@ A candidate is rejected when it teaches a legitimate Knot variation that does no
 For each Knot record:
 
 - confirm canonical method/topology,
-- record serious diagram candidates first,
-- if no diagram passes, record animation candidates,
-- if no diagram/animation passes, record video candidates,
+- search serious diagram candidates first,
+- if no diagram passes, search animation candidates,
+- if no diagram/animation passes, search video candidates,
 - verify the actual depicted tying method step by step,
 - record creator/source,
 - record reuse or embedding status,
@@ -41,26 +41,39 @@ For each Knot record:
 
 # Candidate Status Legend
 
-- **PASS — preferred candidate:** technically matches the canonical method and has an acceptable production delivery path.
-- **PASS — external candidate:** technically matches the canonical method but must remain on the source site unless separate reuse rights are confirmed.
-- **PASS — reference only:** technically useful for geometry verification but is not currently suitable as the production visual.
-- **HOLD — requires deeper audit:** promising candidate but one or more critical geometry, rights, or method details remain unresolved.
+- **PASS — preferred candidate:** technically matches the canonical method and is the best current review candidate.
+- **PASS — reusable candidate:** technically matches and has verified rights suitable for local project use.
+- **PASS — external candidate:** technically matches but must remain on the source site unless separate reuse rights are confirmed.
+- **PASS — reference only:** useful for geometry verification but not currently preferred for production presentation.
 - **REJECT:** wrong method/variation, obscured geometry, inadequate source quality, or unacceptable rights/delivery path.
 
-# Current Audit Summary
+# Diagram-First Search Outcome
 
-| Knot | Best candidate currently identified | Type | Current verdict |
-|---|---|---|---|
-| Arbor Knot | Animated Knots by Grog — Arbor Knot | Step-controlled animation | PASS — external candidate |
-| Improved Clinch Knot | U.S. Fish & Wildlife Service — The Improved Clinch Knot | Diagram | PASS — preferred candidate |
-| Palomar Knot | U.S. Fish & Wildlife Service — Fishing Is Fun for Everyone | Diagram | PASS — preferred candidate |
-| Double Uni Knot | Bass Pro Shops illustrated Double Uni instructions | Diagram | PASS — external candidate |
-| Uni Knot | Animated Knots / Orvis Uni animation | Step-controlled animation | PASS — external candidate |
-| Double Surgeon’s Knot | Animated Knots Surgeon’s Join / Orvis Surgeon’s Knot | Step-controlled animation | PASS — external candidate |
-| Non-Slip Loop Knot | Animated Knots Non-Slip Mono / Orvis Non-Slip Mono Loop | Step-controlled animation | PASS — external candidate |
-| Dropper Loop Knot | Rhode Island illustrated five-wrap instructions | Diagram | PASS — external candidate |
-| Snell Knot | Traditional loop-wrapped Snell candidate — Animated Knots with illustrated-source corroboration | Animation + illustrated references | HOLD — canonical variant change proposed |
-| Alberto Knot | NetKnots — Alberto Knot | Diagram + animation | PASS — external candidate |
+The diagram-first search is complete for all ten Version 1 Knots.
+
+**Result:** every Version 1 Knot now has at least one technically viable diagram source for user review. No Knot currently requires video as the primary candidate.
+
+Two candidates have clearly verified Public Domain reuse rights:
+
+- Improved Clinch Knot — U.S. Fish & Wildlife Service,
+- Palomar Knot — U.S. Fish & Wildlife Service.
+
+The remaining preferred diagram candidates are external-reference candidates unless separate reuse permission is established.
+
+# Current Review Set
+
+| Knot | Preferred visual candidate | Format | Technical status | Delivery status |
+|---|---|---|---|---|
+| Arbor Knot | Tackle Tactics — Arbor Knot | Step-by-step diagram | PASS | External |
+| Improved Clinch Knot | U.S. Fish & Wildlife Service — The Improved Clinch Knot | Diagram | PASS | Public Domain / reusable |
+| Palomar Knot | U.S. Fish & Wildlife Service — Fishing Is Fun for Everyone | Diagram | PASS | Public Domain / reusable |
+| Double Uni Knot | Bass Pro Shops / Pro-Knot — Double Uni | Step-by-step diagram | PASS | External |
+| Uni Knot | In-Fisherman — Uni-Knot | Illustrated sequence | PASS | External |
+| Double Surgeon’s Knot | Bass Pro Shops / Pro-Knot — Surgeon’s Knot | Step-by-step diagram | PASS | External |
+| Non-Slip Loop Knot | Bass Pro Shops / Pro-Knot — Non-Slip Loop | Step-by-step diagram | PASS | External |
+| Dropper Loop Knot | Rhode Island Saltwater Regulation Guide / Pro-Knot | Step-by-step diagram | PASS | External / copyrighted illustration |
+| Snell Knot | NetKnots — Snell Knot Traditional | Diagram + animation | PASS | External / copyrighted illustration |
+| Alberto Knot | NetKnots — Alberto Knot | Diagram + animation | PASS | External / copyrighted illustration |
 
 # 1. Arbor Knot
 
@@ -73,23 +86,30 @@ For each Knot record:
 - stopper seats against the sliding knot,
 - continued pull cinches the line loop snugly around the spool arbor.
 
-## Candidate — Animated Knots by Grog
+## Preferred diagram — Tackle Tactics
 
 Source:
+`https://www.tackletactics.com.au/blogs/learn-to-fish/arbor-knot`
+
+The illustrated sequence shows:
+
+1. line around the spool,
+2. tag under the main line to begin the first overhand,
+3. tag through the loop to complete the first overhand around the standing line,
+4. first overhand left movable rather than fully locked,
+5. second overhand formed in the tag end,
+6. the two-knot assembly worked down and tightened at the spool.
+
+**Technical verdict:** PASS. The diagram preserves the required two-overhand-knot topology and the spool relationship.
+
+**Rights verdict:** External candidate. No local reuse permission has been established.
+
+## Fallback
+
+Animated Knots by Grog:
 `https://www.animatedknots.com/arbor-knot`
 
-The source explicitly describes:
-
-- line around the arbor,
-- first overhand around the standing line,
-- second overhand stopper in the free end,
-- knots sliding tight against the arbor.
-
-**Technical verdict:** PASS against the locked topology.
-
-**Delivery verdict:** External candidate. The site states All Rights Reserved; do not copy, extract frames, or bundle its animation without separate permission. It may serve as a verified external visual destination and as a technical geometry reference.
-
-**Important:** This source supersedes the earlier incorrect generated Arbor drawings as the geometry reference.
+**Fallback status:** PASS — external step-controlled animation/reference.
 
 # 2. Improved Clinch Knot
 
@@ -101,23 +121,23 @@ The source explicitly describes:
 - tag through newly created larger loop,
 - moisten and seat orderly coils against terminal eye.
 
-## Preferred candidate — U.S. Fish & Wildlife Service
+## Preferred diagram — U.S. Fish & Wildlife Service
 
 Source:
 `https://www.fws.gov/media/improved-clinch-knot`
 
-The FWS image explicitly shows/describes:
+The FWS asset shows/describes:
 
 - five turns,
 - small eye-side loop pass,
-- large second-loop pass,
+- larger second-loop pass,
 - wet and tighten.
 
 **Technical verdict:** PASS.
 
-**Rights verdict:** PASS. FWS marks the asset Public Domain.
+**Rights verdict:** PASS — Public Domain.
 
-**Current preference:** Strong Package 4 candidate because it is a real diagram, matches V1, and is legally reusable.
+**Current preference:** locally reusable Package 4 diagram candidate.
 
 # 3. Palomar Knot
 
@@ -129,113 +149,125 @@ The FWS image explicitly shows/describes:
 - doubled strands remain uncrossed,
 - moisten and seat against eye.
 
-## Preferred candidate — U.S. Fish & Wildlife Service
+## Preferred diagram — U.S. Fish & Wildlife Service
 
 Source record:
 `https://www.fws.gov/media/fishing-fun-everyone-its-easy-learn-how`
 
-The user supplied the Palomar instructional figure from the FWS **Fishing Is Fun for Everyone** material for direct visual review.
+The user supplied the Palomar instructional figure from the FWS **Fishing Is Fun for Everyone** material for direct review.
 
-The reviewed figure shows four instructional states:
+The reviewed figure shows:
 
-1. doubled line passes through the hook eye,
-2. loose overhand knot is tied in the doubled line without twisting/tightening,
-3. the doubled loop passes completely over the hook,
-4. the loose end and standing line are pulled to seat the completed knot.
+1. doubled line through the hook eye,
+2. loose overhand in the doubled line without twisting/tightening,
+3. doubled loop passed completely over the hook,
+4. final seated Palomar after wetting and pulling the loose/standing sections.
 
-The figure keeps the hook and doubled-line geometry visible and does not introduce a conflicting loop, wrap, crossing, or attachment path.
+**Technical verdict:** PASS against the locked V1 topology.
 
-**Technical verdict:** PASS against the locked V1 Palomar topology.
+**Visual verdict:** PASS — unobstructed, discrete states, no camera/hand occlusion.
 
-**Visual verdict:** PASS. The diagram is unobstructed, uses discrete tying states, and avoids camera-angle/hand-occlusion problems.
+**Rights verdict:** PASS — FWS identifies the publication as Public Domain.
 
-**Rights verdict:** PASS at publication level. The FWS source record marks the brochure Public Domain.
-
-**Current preference:** Preferred Package 4 Palomar diagram.
-
-## Secondary candidates
-
-Animated Knots by Grog:
-`https://www.animatedknots.com/palomar-knot`
-
-Wikimedia Commons photographic sequence:
-`https://commons.wikimedia.org/wiki/File:PalomarKnotSequence.jpg`
-
-Animated Knots remains a useful external animation/reference. The Wikimedia photographic sequence is CC BY-SA 3.0 and technically useful, but the FWS Public Domain diagram better satisfies the diagram-first requirement.
-
-A claimed open-source Palomar SVG has not been verified and should not be assumed to exist without an exact file record.
+**Current preference:** locally reusable Package 4 diagram candidate.
 
 # 4. Double Uni Knot
 
 ## Canonical V1 geometry
 
 - overlap lines,
-- first Uni around both lines,
-- **five wraps for ordinary mono/fluoro; eight wraps when that side is braid**,
-- repeat on opposite side,
-- snug but do not fully lock knots apart,
+- form first Uni around both lines,
+- five wraps for ordinary mono/fluoro; eight wraps when that side is braid,
+- form opposing Uni the same way,
 - moisten,
-- pull standing lines so opposing Uni bodies slide together and seat.
+- pull standing lines so the two knot bodies slide together and seat.
 
-## Candidate — Bass Pro Shops illustrated instructions
+## Preferred diagram — Bass Pro Shops / Pro-Knot
 
 Source:
 `https://1source.basspro.com/news-tips/fishing-knots-how-tie/7675/fishing-knot-library-how-tie-double-uni-knot-4-easy-steps`
 
-The illustrated instruction explicitly states **5 turns with mono and 8 turns with braid**, then shows the opposing Uni knots sliding together.
+The illustrated instruction explicitly uses:
 
-**Technical verdict:** PASS for the V1 braid-to-mono/fluoro use case and required wrap counts.
+- 5 turns with mono,
+- 8 turns with braid,
+- opposing Uni bodies,
+- final sliding/seating of the two knot bodies.
 
-**Rights verdict:** External candidate. No local reuse right has been established; do not copy or bundle the diagrams without permission.
+**Technical verdict:** PASS against the locked V1 wrap-count rule.
 
-Take Me Fishing remains a canonical technical source, but its current public instruction uses four ordinary wraps / eight braid wraps. That legitimate variation is not selected as the Package 4 visual because V1 intentionally uses five ordinary wraps.
+**Rights verdict:** External candidate. Bass Pro/Pro-Knot material is not approved for local copying.
+
+## Rejected variation for preferred media
+
+Take Me Fishing currently uses four ordinary wraps and eight braid wraps. That is a legitimate Double Uni variation, but it does not match the project's locked five/eight beginner standard closely enough to be the preferred diagram.
 
 # 5. Uni Knot
 
 ## Canonical V1 geometry
 
-- line through attachment eye,
-- tag forms loop over doubled section,
-- five to six wraps around doubled line and through loop,
-- moisten and pull tag to form Uni body,
-- standing line slides knot to attachment point.
+- line through terminal eye,
+- tag returns parallel and forms a loop over the doubled section,
+- five to six wraps around both line sections and through the loop,
+- pull tag to form the Uni body,
+- pull standing line to slide and seat the finished knot at the eye.
 
-## Candidates
+## Preferred diagram — In-Fisherman
 
-Animated Knots:
-`https://www.animatedknots.com/uni-knot`
+Source:
+`https://www.in-fisherman.com/editorial/uni-knot/156319`
 
-Orvis:
+The illustrated sequence uses:
+
+- line through the eye,
+- loop/circle over the doubled line,
+- six turns around both strands and through the circle,
+- tag-end tightening of the wrap body,
+- standing-line pull that slides the completed knot to the hook eye.
+
+**Technical verdict:** PASS. Six turns falls inside the locked V1 five-to-six range, and the final slide-to-eye behavior is explicitly illustrated/described.
+
+**Rights verdict:** External candidate. No local reuse right has been established.
+
+## Fallback
+
+Orvis Uni Knot animation:
 `https://howtoflyfish.orvis.com/fly-fishing-knots/uni-knot-animation`
 
-Both use five wraps and the expected sliding Uni topology.
-
-**Technical verdict:** PASS within the V1 five-to-six range.
-
-**Delivery verdict:** PASS — external candidate. Continue diagram search before choosing animation because diagrams remain higher priority.
+**Fallback status:** PASS — external step-controlled animation.
 
 # 6. Double Surgeon’s Knot
 
 ## Canonical V1 geometry
 
-- lines overlap in parallel,
-- both strands form one overhand loop,
-- both line ends pass through the same loop a second time,
-- all four ends pull evenly to seat.
+- overlap the two lines in parallel,
+- form a simple loop from the overlapped pair,
+- pass both ends through the same loop twice,
+- moisten,
+- pull all four ends to seat.
 
-## Candidates
+## Preferred diagram — Bass Pro Shops / Pro-Knot
 
-Animated Knots Surgeon’s Join:
-`https://www.animatedknots.com/surgeons-join-knot`
+Source:
+`https://1source.basspro.com/news-tips/fishing-knots-how-tie/7673/fishing-knot-library-how-tie-surgeons-fishing-knot`
+
+The illustrated four-step sequence explicitly shows/describes:
+
+1. line and leader overlapped,
+2. simple loop formed,
+3. both the tag end and entire leader passed through the loop **two times**,
+4. knot moistened and all four ends pulled tight.
+
+**Technical verdict:** PASS. This is the correct line-to-line Double Surgeon’s / Surgeon’s Join, not the Surgeon’s End Loop.
+
+**Rights verdict:** External candidate. Bass Pro/Pro-Knot material is copyrighted and not approved for local copying.
+
+## Fallback
 
 Orvis Surgeon’s Knot animation:
 `https://howtoflyfish.orvis.com/fly-fishing-knots/surgeon-s-knot-animation`
 
-Both describe the two-pass line-to-line Surgeon’s Join rather than the unrelated Surgeon’s Loop.
-
-**Technical verdict:** PASS.
-
-**Delivery verdict:** PASS — external candidate. Continue diagram search first; do not substitute Double Surgeon’s Loop artwork for the line-to-line canonical entity.
+**Fallback status:** PASS — external step-controlled animation.
 
 # 7. Non-Slip Loop Knot
 
@@ -243,203 +275,183 @@ Both describe the two-pass line-to-line Surgeon’s Join rather than the unrelat
 
 - loose overhand in line,
 - tag through terminal eye,
-- tag returns through original overhand in the correct orientation,
+- tag returns through original overhand in the intended orientation,
 - five wraps around standing line,
-- tag returns through original overhand with the same intended routing orientation,
-- tighten while retaining fixed open terminal loop.
+- tag returns through original overhand from the same intended side,
+- seat while keeping the terminal loop open.
 
-## Candidates
+## Preferred diagram — Bass Pro Shops / Pro-Knot
 
-Animated Knots Non-Slip Mono:
-`https://www.animatedknots.com/non-slip-mono-knot`
+Source:
+`https://1source.basspro.com/news-tips/fishing-knots-how-tie/7632/fishing-knot-library-how-tie-non-slip-loop-knot`
 
-Orvis Non-Slip Mono Loop:
+The step-by-step diagram/instructions show:
+
+1. loose overhand, tag through hook eye and back through the overhand,
+2. 5–6 wraps around the standing part, followed by the return through the overhand from the same side it previously exited,
+3. final seating while retaining the open terminal loop.
+
+**Technical verdict:** PASS. The project's five-wrap standard is contained within the illustrated source's 5–6 range and the critical same-side routing is explicit.
+
+**Rights verdict:** External candidate. Bass Pro/Pro-Knot material is copyrighted and not approved for local copying.
+
+## Rejected visually similar source
+
+An In4Adventure tutorial adds an additional pass through a newly created loop after the standing-line wraps. That changes the topology toward a Rapala-style sequence and does not match the project's locked Non-Slip Loop method.
+
+**Verdict:** REJECT for Package 4 V1.
+
+## Fallback
+
+Orvis Non-Slip Mono Loop animation:
 `https://howtoflyfish.orvis.com/fly-fishing-knots/non-slip-mono-loop`
 
-Animated Knots uses about five wraps and the correct overhand/eye/return/wrap/return topology. Orvis explicitly supports five wraps for a broad common line-size range.
-
-**Technical verdict:** PASS for V1 common freshwater method.
-
-**Delivery verdict:** PASS — external candidate. Continue diagram search first.
+**Fallback status:** PASS — external animation/reference.
 
 # 8. Dropper Loop Knot
 
 ## Canonical V1 geometry
 
-- form large loop at branch location,
-- wind one side around the other **five times** while central opening remains accessible,
-- push bottom of original branch loop through central opening,
-- moisten and pull standing sections apart while retaining branch loop.
+- form a large loop at the branch location,
+- wind one side around the other five times while retaining the center opening,
+- push the bottom of the original branch loop through the center opening,
+- moisten and pull standing sections in opposite directions while retaining the branch loop.
 
-## Candidate — Rhode Island fishing-regulations illustration
+## Preferred diagram — Rhode Island Saltwater Regulation Guide / Pro-Knot
 
-Source:
+Source page:
 `https://www.eregulations.com/rhodeisland/fishing/saltwater/fishing-knots`
 
-The instruction explicitly shows/describes five or more wraps, then the original loop through the central opening and final opposing pull.
+The illustrated instructions show:
+
+- a loop at the desired position,
+- 5+ wraps while a new central opening is maintained,
+- bottom of the original loop pushed through that opening,
+- opposite-direction pull until the coils tighten and the branch loop stands out.
 
 **Technical verdict:** PASS at the canonical five-wrap state.
 
-**Rights verdict:** External candidate only. The page identifies the illustrations as copyrighted John E. Sherry material; no repository reuse right has been established.
-
-Animated Knots and other strong sources commonly display approximately six turns. Those remain useful references but are not preferred over the exact five-wrap diagram for V1.
+**Rights verdict:** External candidate only. The regulation guide explicitly credits/copyrights the illustrations to John E. Sherry; no repository reuse right has been established.
 
 # 9. Snell Knot
 
-## Current canonical V1 method — Easy Snell
+## Approved V1 method — Traditional loop-wrapped Snell
 
-The current GitHub record teaches the **Easy Snell** method:
+The former Easy Snell method is superseded by `docs/workstreams/KNOT-SNELL-VARIANT-APPROVAL.md`.
 
-- tag through hook eye toward hook point,
-- small loop beside hook,
-- tag behind shank,
-- five to seven wraps around hook shank and line from point toward eye,
-- tag through small loop from underside to topside,
-- hold wraps and pull tag/standing line to tighten.
-
-Current difficulty:
+Difficulty remains:
 
 ```text
 Intermediate
 ```
 
-Take Me Fishing remains a strong exact-method reference for this version:
-`https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-a-snell-knot/`
+Locked method:
 
-The problem is visual availability: the small loop and direction-sensitive underside-to-topside final tag pass are less consistently represented in clean external diagrams.
+1. pass the leader through the hook eye,
+2. pass through the eye a second time in the same direction, leaving a large loop,
+3. hold the eye and doubled line together,
+4. wrap the large loop around the hook shank seven to eight times,
+5. pull the standing line to shrink the remaining loop beneath the coils,
+6. moisten and tighten with the standing line/tag end, then trim.
 
-## Proposed replacement canonical method — Traditional loop-wrapped Snell
+## Preferred diagram — NetKnots, Snell Knot Traditional
 
-Primary animation reference:
+Source:
+`https://www.netknots.com/fishing_knots/snell-knot-traditional`
+
+The NetKnots diagram/instructions show:
+
+- leader ends routed through the eye to form a loop below the hook,
+- loop used to wrap around the hook shank and leader,
+- 7–8 turns,
+- controlled pull through the eye to collapse and tighten the loop,
+- final aligned Snell state.
+
+**Technical verdict:** PASS against the newly approved traditional Snell family and locked 7–8-wrap standard.
+
+**Rights verdict:** External candidate. NetKnots identifies its illustration as copyrighted / All Rights Reserved.
+
+## Primary fallback
+
+Animated Knots by Grog — Snell Knot:
 `https://www.animatedknots.com/snell-knot`
 
-Animated Knots demonstrates:
-
-1. pass the leader through the eye,
-2. pass it through the eye again in the same direction, leaving a large loop,
-3. hold the eye and doubled line,
-4. wrap the large loop around the hook shank seven or eight times,
-5. pull the standing line to shrink the loop under the coils,
-6. lubricate and pull both ends to tighten.
-
-Independent illustrated/text corroboration includes:
-
-Mossy Oak — **Snelling a Hook**:
-`https://www.mossyoak.com/our-obsession/blogs/fishing/5-of-the-best-fishermans-knots-to-know`
-
-Mossy Oak describes the same core visual structure: line through the eye twice, a large loop hanging beside the hook, loop wrapped repeatedly around the hook shank, then the standing line pulled to collapse the loop beneath the coils.
-
-Tackle Tactics — **Snell Knot (Traditional)**:
-`https://www.tackletactics.com.au/blogs/learn-to-fish/snell-knot-traditional`
-
-Tackle Tactics provides a seven-state illustrated sequence using the same traditional loop-wrapped family and approximately six to seven wraps. Its exact routing should remain a corroborating source rather than be blended into the Animated Knots method where the details differ.
-
-## Difficulty comparison
-
-The proposed traditional loop-wrapped variant does **not** justify increasing the project's difficulty rank.
-
-Both the current Easy Snell and proposed traditional Snell require:
-
-- hook-eye orientation awareness,
-- maintaining orderly coils around the shank,
-- controlling a loop while wrapping,
-- holding the coils while tightening,
-- verifying the final line/shank alignment.
-
-The traditional method adds a second eye pass and manipulation of a larger loop, but it removes the Easy Snell's small-loop underside-to-topside tag return. The dexterity burden changes rather than materially increases.
-
-**Recommended difficulty if changed:** `Intermediate` — unchanged.
-
-## Visual-source recommendation
-
-The traditional loop-wrapped Snell is currently the stronger Package 4 choice because:
-
-- the large loop is visibly distinct from the standing/tag sections,
-- the loop-to-shank wraps are easy to represent as discrete visual states,
-- the tightening action is clear in step-controlled animation,
-- multiple independent sources document the same knot family,
-- the critical geometry is less dependent on a tiny, easily obscured final tag pass.
-
-**Audit verdict:** HOLD — canonical variant switch proposed. The project should not change `data/knots.js` until the exact replacement method and source wording are explicitly approved.
+**Fallback status:** PASS — strongest current step-controlled animation for the approved traditional Snell.
 
 # 10. Alberto Knot
 
 ## Canonical V1 geometry
 
-- folded mono/fluoro leader loop,
-- braid tag through loop,
-- seven wraps up doubled leader,
-- seven wraps back down,
-- braid tag exits leader loop in same direction it entered,
-- organize/tighten with all four sections,
-- seat with main braid and leader.
+- fold mono/fluoro leader to form a loop,
+- braid tag enters loop,
+- seven wraps up the doubled leader,
+- seven wraps back down over the first wrap column,
+- braid tag exits the leader loop in the same direction it entered,
+- organize, tighten and seat.
 
-## Candidate — NetKnots
+## Preferred diagram — NetKnots
 
 Source:
 `https://www.netknots.com/fishing_knots/alberto-knot`
 
-The source explicitly describes:
+The illustration/instructions explicitly show:
 
 - leader loop,
-- seven wraps away,
-- seven wraps back,
-- tag exits the loop the same way it entered,
-- tighten and seat.
-
-The page contains both an illustration and an animation.
+- seven wraps away from the loop,
+- seven wraps back toward the loop,
+- tag exiting through the loop in the same direction as entry,
+- final tightening/seating.
 
 **Technical verdict:** PASS against the locked V1 topology.
 
-**Delivery verdict:** PASS — external candidate unless separate reuse rights are established. Do not copy/bundle its artwork without permission.
+**Rights verdict:** External candidate. NetKnots artwork is copyrighted / All Rights Reserved.
 
-# Cross-Source Findings
+## Fallback
 
-## Oklahoma Department of Wildlife Conservation
+The same NetKnots page includes an animation of the illustrated method.
 
-ODWC provides a strong discovery/index source for step-by-step fishing-knot animation and includes Arbor, Improved Clinch, Palomar, Uni, Dropper Loop, Non-Slip Mono, Snell, and Surgeon-family knots.
+# Rights and Delivery Summary
 
-Source:
-`https://www.wildlifedepartment.com/fishing/resources/learn-fish/how-tie-every-fishing-knot`
+## Locally reusable candidates already established
 
-ODWC is valuable as an authoritative fishing-education gateway, but each linked method still requires individual canonical-method verification. Inclusion on the ODWC list alone does not constitute approval.
+1. **Improved Clinch Knot — USFWS — Public Domain**
+2. **Palomar Knot — USFWS — Public Domain**
 
-## Animated Knots by Grog
+These may be evaluated for local bundling in Package 4 after user visual approval and production-format review.
 
-Animated Knots provides unusually clear step-controlled topology and is useful as an external visual reference for several V1 knots.
+## External-only candidates unless permission is obtained
 
-The site states copyright / All Rights Reserved, so its artwork/frames must not be copied into the repository without permission.
+- Arbor — Tackle Tactics,
+- Double Uni — Bass Pro / Pro-Knot,
+- Uni — In-Fisherman,
+- Double Surgeon’s — Bass Pro / Pro-Knot,
+- Non-Slip Loop — Bass Pro / Pro-Knot,
+- Dropper Loop — John E. Sherry / Pro-Knot via Rhode Island guide,
+- Snell — NetKnots / John E. Sherry,
+- Alberto — NetKnots.
 
-## U.S. Fish & Wildlife Service
+These sources may be used as technical references and external destinations. Their artwork must not be copied, extracted, modified, or bundled unless separate rights are established.
 
-FWS is currently the strongest source for locally reusable Package 4 diagrams because relevant assets/publications are explicitly marked Public Domain.
+# Review Decision Needed
 
-# Audit Pass 3 Decisions
+The user should review the ten preferred candidates and mark each:
 
-## Palomar
+- **Approve candidate**,
+- **Reject candidate / continue search**,
+- **Approve method but not presentation**.
 
-The previously unresolved FWS figure has now been directly reviewed from the user-supplied image.
+Approval of an external candidate does not automatically authorize local copying. It approves the technical/presentation choice; the production delivery mechanism still follows the recorded rights status.
 
-**Result:** PASS — preferred candidate. No remaining technical-geometry concern exists for the FWS Palomar diagram.
+# Post-Review Production Gate
 
-## Snell
+Do not modify `data/media.js`, Knot detail rendering, production CSS, or production media assets until the preferred candidate set is explicitly user-approved.
 
-The user has approved consideration of a different Snell variant when better visuals justify the change.
+After candidate approval:
 
-The traditional loop-wrapped Snell now has a materially stronger visual-source set than the current Easy Snell: a step-controlled Animated Knots animation plus independent illustrated/text sources.
+1. reconcile the approved Snell canonical method into `data/knots.js`, `docs/KNOT_REFERENCE_SOURCES.md`, and `docs/workstreams/KNOT-CANONICAL-CONTENT-LOCK.md`,
+2. determine local-vs-external delivery for each approved candidate,
+3. implement the Media registry and Knot detail presentation,
+4. validate in Microsoft Edge at desktop and narrow/mobile widths,
+5. produce the normal repo-root Package 4 ZIP for GitHub Desktop review.
 
-**Result:** canonical variant change is recommended for consideration; difficulty remains `Intermediate`. No canonical source file has yet been changed.
-
-# Remaining Audit Work Before User Candidate Approval
-
-1. Decide whether to replace the current Easy Snell canonical method with the traditional loop-wrapped Snell and lock one exact routing/wrap standard.
-2. Continue diagram-first searches for Uni, Double Surgeon’s, Non-Slip Loop, and Alberto before settling for external animation.
-3. Present the strongest candidate set to the user; no unreviewed candidate becomes production-approved from this document alone.
-
-# Production Gate
-
-Do not modify `data/media.js`, Knot detail rendering, production CSS, or repository media assets until the candidate set has been presented to the user and explicitly approved.
-
-Do not change the canonical Snell source record until the exact replacement method is explicitly approved.
-
-The earlier generated Knot drawings are exploratory artifacts only and are not approved Package 4 media.
+The earlier generated Knot drawings remain rejected exploratory artifacts and are not approved Package 4 media.
