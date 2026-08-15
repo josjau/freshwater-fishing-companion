@@ -1,6 +1,6 @@
 # Knot Production Package 4 — 10-Knot Visual Source Audit
 
-**Status:** OPEN / AUDIT PASSES 1–2 COMPLETE / CANDIDATES NOT USER-APPROVED  
+**Status:** OPEN / AUDIT PASSES 1–3 COMPLETE / CANDIDATES NOT FULLY USER-APPROVED  
 **Milestone:** Knots  
 **Package:** Production Package 4  
 **Opened:** 2026-08-14  
@@ -22,7 +22,7 @@ For every Knot, evaluate media in this order:
 
 Canonical Knot text remains authoritative.
 
-A candidate is rejected when it teaches a legitimate variation that does not match the locked Version 1 method.
+A candidate is rejected when it teaches a legitimate Knot variation that does not match the locked Version 1 method unless the canonical method is deliberately revised and documented first.
 
 # Audit Requirements Per Knot
 
@@ -53,13 +53,13 @@ For each Knot record:
 |---|---|---|---|
 | Arbor Knot | Animated Knots by Grog — Arbor Knot | Step-controlled animation | PASS — external candidate |
 | Improved Clinch Knot | U.S. Fish & Wildlife Service — The Improved Clinch Knot | Diagram | PASS — preferred candidate |
-| Palomar Knot | U.S. Fish & Wildlife Service beginner-fishing material | Diagram | HOLD — isolate/review figure |
+| Palomar Knot | U.S. Fish & Wildlife Service — Fishing Is Fun for Everyone | Diagram | PASS — preferred candidate |
 | Double Uni Knot | Bass Pro Shops illustrated Double Uni instructions | Diagram | PASS — external candidate |
 | Uni Knot | Animated Knots / Orvis Uni animation | Step-controlled animation | PASS — external candidate |
 | Double Surgeon’s Knot | Animated Knots Surgeon’s Join / Orvis Surgeon’s Knot | Step-controlled animation | PASS — external candidate |
 | Non-Slip Loop Knot | Animated Knots Non-Slip Mono / Orvis Non-Slip Mono Loop | Step-controlled animation | PASS — external candidate |
 | Dropper Loop Knot | Rhode Island illustrated five-wrap instructions | Diagram | PASS — external candidate |
-| Snell Knot — Easy Snell | Take Me Fishing Easy Snell | Illustrated instructions / video | PASS — external candidate pending visual presentation audit |
+| Snell Knot | Traditional loop-wrapped Snell candidate — Animated Knots with illustrated-source corroboration | Animation + illustrated references | HOLD — canonical variant change proposed |
 | Alberto Knot | NetKnots — Alberto Knot | Diagram + animation | PASS — external candidate |
 
 # 1. Arbor Knot
@@ -117,7 +117,7 @@ The FWS image explicitly shows/describes:
 
 **Rights verdict:** PASS. FWS marks the asset Public Domain.
 
-**Current preference:** Strongest Package 4 candidate found so far because it is a real diagram, exact enough for V1, and legally reusable.
+**Current preference:** Strong Package 4 candidate because it is a real diagram, matches V1, and is legally reusable.
 
 # 3. Palomar Knot
 
@@ -129,19 +129,41 @@ The FWS image explicitly shows/describes:
 - doubled strands remain uncrossed,
 - moisten and seat against eye.
 
-## Candidate sources
+## Preferred candidate — U.S. Fish & Wildlife Service
 
-U.S. Fish & Wildlife Service beginner fishing material:
+Source record:
 `https://www.fws.gov/media/fishing-fun-everyone-its-easy-learn-how`
+
+The user supplied the Palomar instructional figure from the FWS **Fishing Is Fun for Everyone** material for direct visual review.
+
+The reviewed figure shows four instructional states:
+
+1. doubled line passes through the hook eye,
+2. loose overhand knot is tied in the doubled line without twisting/tightening,
+3. the doubled loop passes completely over the hook,
+4. the loose end and standing line are pulled to seat the completed knot.
+
+The figure keeps the hook and doubled-line geometry visible and does not introduce a conflicting loop, wrap, crossing, or attachment path.
+
+**Technical verdict:** PASS against the locked V1 Palomar topology.
+
+**Visual verdict:** PASS. The diagram is unobstructed, uses discrete tying states, and avoids camera-angle/hand-occlusion problems.
+
+**Rights verdict:** PASS at publication level. The FWS source record marks the brochure Public Domain.
+
+**Current preference:** Preferred Package 4 Palomar diagram.
+
+## Secondary candidates
 
 Animated Knots by Grog:
 `https://www.animatedknots.com/palomar-knot`
 
-Both describe the same essential doubled-line → overhand → terminal-through-loop topology.
+Wikimedia Commons photographic sequence:
+`https://commons.wikimedia.org/wiki/File:PalomarKnotSequence.jpg`
 
-**Technical verdict:** PASS at method level.
+Animated Knots remains a useful external animation/reference. The Wikimedia photographic sequence is CC BY-SA 3.0 and technically useful, but the FWS Public Domain diagram better satisfies the diagram-first requirement.
 
-**Rights/presentation verdict:** HOLD. The FWS publication is Public Domain and therefore promising for a reusable diagram, but the exact Palomar figure should be isolated and visually reviewed before selection. Animated Knots is useful as an external animation/reference but not for local copying.
+A claimed open-source Palomar SVG has not been verified and should not be assumed to exist without an exact file record.
 
 # 4. Double Uni Knot
 
@@ -262,11 +284,11 @@ The instruction explicitly shows/describes five or more wraps, then the original
 
 Animated Knots and other strong sources commonly display approximately six turns. Those remain useful references but are not preferred over the exact five-wrap diagram for V1.
 
-# 9. Snell Knot — Easy Snell
+# 9. Snell Knot
 
-## Canonical V1 geometry
+## Current canonical V1 method — Easy Snell
 
-The project deliberately teaches the **Easy Snell** method:
+The current GitHub record teaches the **Easy Snell** method:
 
 - tag through hook eye toward hook point,
 - small loop beside hook,
@@ -275,29 +297,70 @@ The project deliberately teaches the **Easy Snell** method:
 - tag through small loop from underside to topside,
 - hold wraps and pull tag/standing line to tighten.
 
-## Preferred method candidate — Take Me Fishing
+Current difficulty:
 
-Source:
+```text
+Intermediate
+```
+
+Take Me Fishing remains a strong exact-method reference for this version:
 `https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-a-snell-knot/`
 
-Take Me Fishing explicitly labels and teaches the Easy Snell method with the same:
+The problem is visual availability: the small loop and direction-sensitive underside-to-topside final tag pass are less consistently represented in clean external diagrams.
 
-- eye-to-point entry direction,
-- small loop,
-- tag behind shank,
-- five to seven point-to-eye wraps,
-- underside-to-topside loop return,
-- hold-wraps-and-tighten finish.
+## Proposed replacement canonical method — Traditional loop-wrapped Snell
 
-**Technical verdict:** PASS.
+Primary animation reference:
+`https://www.animatedknots.com/snell-knot`
 
-**Presentation/delivery verdict:** PASS — external candidate pending direct visual audit of the page's illustrated/video presentation. No local reuse right has been established.
+Animated Knots demonstrates:
 
-## Rejected generic Snell candidate — Animated Knots
+1. pass the leader through the eye,
+2. pass it through the eye again in the same direction, leaving a large loop,
+3. hold the eye and doubled line,
+4. wrap the large loop around the hook shank seven or eight times,
+5. pull the standing line to shrink the loop under the coils,
+6. lubricate and pull both ends to tighten.
 
-Animated Knots passes through the eye twice and wraps a formed loop around the hook shank seven or eight times. That is a legitimate Snell variation but **not the selected Easy Snell method**.
+Independent illustrated/text corroboration includes:
 
-**Verdict:** REJECT for Package 4 V1.
+Mossy Oak — **Snelling a Hook**:
+`https://www.mossyoak.com/our-obsession/blogs/fishing/5-of-the-best-fishermans-knots-to-know`
+
+Mossy Oak describes the same core visual structure: line through the eye twice, a large loop hanging beside the hook, loop wrapped repeatedly around the hook shank, then the standing line pulled to collapse the loop beneath the coils.
+
+Tackle Tactics — **Snell Knot (Traditional)**:
+`https://www.tackletactics.com.au/blogs/learn-to-fish/snell-knot-traditional`
+
+Tackle Tactics provides a seven-state illustrated sequence using the same traditional loop-wrapped family and approximately six to seven wraps. Its exact routing should remain a corroborating source rather than be blended into the Animated Knots method where the details differ.
+
+## Difficulty comparison
+
+The proposed traditional loop-wrapped variant does **not** justify increasing the project's difficulty rank.
+
+Both the current Easy Snell and proposed traditional Snell require:
+
+- hook-eye orientation awareness,
+- maintaining orderly coils around the shank,
+- controlling a loop while wrapping,
+- holding the coils while tightening,
+- verifying the final line/shank alignment.
+
+The traditional method adds a second eye pass and manipulation of a larger loop, but it removes the Easy Snell's small-loop underside-to-topside tag return. The dexterity burden changes rather than materially increases.
+
+**Recommended difficulty if changed:** `Intermediate` — unchanged.
+
+## Visual-source recommendation
+
+The traditional loop-wrapped Snell is currently the stronger Package 4 choice because:
+
+- the large loop is visibly distinct from the standing/tag sections,
+- the loop-to-shank wraps are easy to represent as discrete visual states,
+- the tightening action is clear in step-controlled animation,
+- multiple independent sources document the same knot family,
+- the critical geometry is less dependent on a tiny, easily obscured final tag pass.
+
+**Audit verdict:** HOLD — canonical variant switch proposed. The project should not change `data/knots.js` until the exact replacement method and source wording are explicitly approved.
 
 # 10. Alberto Knot
 
@@ -351,15 +414,32 @@ The site states copyright / All Rights Reserved, so its artwork/frames must not 
 
 FWS is currently the strongest source for locally reusable Package 4 diagrams because relevant assets/publications are explicitly marked Public Domain.
 
+# Audit Pass 3 Decisions
+
+## Palomar
+
+The previously unresolved FWS figure has now been directly reviewed from the user-supplied image.
+
+**Result:** PASS — preferred candidate. No remaining technical-geometry concern exists for the FWS Palomar diagram.
+
+## Snell
+
+The user has approved consideration of a different Snell variant when better visuals justify the change.
+
+The traditional loop-wrapped Snell now has a materially stronger visual-source set than the current Easy Snell: a step-controlled Animated Knots animation plus independent illustrated/text sources.
+
+**Result:** canonical variant change is recommended for consideration; difficulty remains `Intermediate`. No canonical source file has yet been changed.
+
 # Remaining Audit Work Before User Candidate Approval
 
-1. Isolate and visually inspect the Public Domain Palomar diagram from the FWS material.
+1. Decide whether to replace the current Easy Snell canonical method with the traditional loop-wrapped Snell and lock one exact routing/wrap standard.
 2. Continue diagram-first searches for Uni, Double Surgeon’s, Non-Slip Loop, and Alberto before settling for external animation.
-3. Directly inspect the Take Me Fishing Easy Snell visual/video presentation to ensure no critical geometry is hidden despite the written method matching exactly.
-4. Present the strongest visual candidates to the user; no candidate becomes production-approved from this document alone.
+3. Present the strongest candidate set to the user; no unreviewed candidate becomes production-approved from this document alone.
 
 # Production Gate
 
 Do not modify `data/media.js`, Knot detail rendering, production CSS, or repository media assets until the candidate set has been presented to the user and explicitly approved.
+
+Do not change the canonical Snell source record until the exact replacement method is explicitly approved.
 
 The earlier generated Knot drawings are exploratory artifacts only and are not approved Package 4 media.
