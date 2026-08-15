@@ -1,16 +1,24 @@
 # Freshwater Fishing Companion — Knot Canonical Content Lock
 
-**Document Status:** Content Locked / Production Package 1  
+**Document Status:** Approved  
+**Implementation Status:** Validated  
 **Milestone:** Knots  
-**Updated:** 2026-08-13
+**Original Lock:** Production Package 1  
+**Reconciled Through:** Production Package 4  
+**Updated:** 2026-08-14
 
 # Purpose
 
-This document is the complete pre-production content-lock record for all 10 approved Version 1 canonical Knots.
+This document is the canonical content-lock record for all 10 approved Version 1 canonical Knots.
 
 Research provenance is maintained separately in `docs/KNOT_REFERENCE_SOURCES.md`.
 
-The user approved the complete 10-Knot content set by uploading the consolidated research/content-lock package. Production Package 1 transfers these locked records into `data/knots.js` using Version 0.5.0 metadata.
+Production Package 1 established the initial locked records in `data/knots.js` using Version 0.5.0 metadata. Production Package 4 later reopened only two instructional decisions and re-locked them after user approval and runtime validation:
+
+- Dropper Loop wrap count changed from five wraps to **about six wraps** to match the selected Animated Knots instructional method while remaining inside the independently supported technical range.
+- Snell changed from the earlier Easy Snell selection to the approved **traditional loop-wrapped seven-to-eight-wrap Snell**.
+
+All other canonical Version 1 records remain unchanged from the Production Package 1 lock.
 
 # Lock Standard
 
@@ -35,8 +43,8 @@ A Knot is ready for content lock only when:
 | Uni Knot | Complete | Locked |
 | Double Surgeon’s Knot | Complete | Locked |
 | Non-Slip Loop Knot | Complete | Locked |
-| Dropper Loop Knot | Complete | Locked |
-| Snell Knot | Complete | Locked |
+| Dropper Loop Knot | Complete / Package 4 reconciled | Locked |
+| Snell Knot | Complete / Package 4 variant reconciled | Locked |
 | Alberto Knot | Complete | Locked |
 
 # Locked Canonical Records
@@ -543,7 +551,7 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `dropper-loop-knot`  
 **Difficulty:** Intermediate  
-**Status:** Locked
+**Status:** Locked / Package 4 Reconciled
 
 ```js
 {
@@ -579,7 +587,7 @@ A Knot is ready for content lock only when:
     ],
     "tyingSteps": [
         "Form a fairly large loop in the line at the location where the branch is needed.",
-        "Wind one side of the loop around the other five times while keeping the central opening and the original branch loop accessible.",
+        "Wind one side of the loop around the other about six times while keeping the central opening and the original branch loop accessible.",
         "Push the bottom of the original branch loop through the central opening created by the wraps.",
         "Moisten the knot and pull the two standing-line sections in opposite directions while keeping the branch loop open until the coils seat firmly."
     ],
@@ -595,12 +603,12 @@ A Knot is ready for content lock only when:
     ],
     "referenceLinks": [
         {
-            "label": "Take Me Fishing — Dropper Loop Knot",
-            "url": "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-dropper-loop-knot/"
+            "label": "Animated Knots — Dropper Loop Knot",
+            "url": "https://www.animatedknots.com/dropper-loop-knot"
         },
         {
-            "label": "Alaska Department of Fish and Game — Dropper Loop",
-            "url": "https://www.adfg.alaska.gov/index.cfm?ID=20&adfg=FishingSportFishAK.reelTimes"
+            "label": "Take Me Fishing — Dropper Loop Knot",
+            "url": "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-dropper-loop-knot/"
         }
     ]
 }
@@ -610,7 +618,7 @@ A Knot is ready for content lock only when:
 
 **Canonical ID:** `snell-knot`  
 **Difficulty:** Intermediate  
-**Status:** Locked
+**Status:** Locked / Package 4 Reconciled
 
 ```js
 {
@@ -644,30 +652,31 @@ A Knot is ready for content lock only when:
     ],
     "limitations": [
         "The Snell is a hook-specific connection rather than a general knot for attaching swivels or lures.",
-        "Several legitimate Snell variants exist. Version 1 intentionally teaches the Easy Snell method and does not combine it with other Snell geometries.",
+        "Several legitimate Snell variants exist. Version 1 intentionally teaches the traditional loop-wrapped Snell method and does not combine it with other Snell geometries.",
         "The Version 1 method assumes an eyed hook; hook-eye orientation and hook design should be appropriate for the intended snelled presentation."
     ],
     "tyingSteps": [
-        "Run the tag end through the hook eye toward the hook point.",
-        "Form a small loop beside the hook and bring the tag end behind the hook shank, leaving enough tag end to make the wraps.",
-        "Wrap the tag end around both the hook shank and line five to seven times, working from the hook point toward the eye.",
-        "Pass the tag end through the small loop from the underside to the topside.",
-        "Hold the wraps in place and pull the tag end and standing line to tighten the coils around the shank, then trim the excess tag end."
+        "Pass the leader through the hook eye, then pass it through the eye a second time in the same direction, leaving a large loop beside the hook.",
+        "Hold the hook eye and the two line sections together so the large loop remains controlled beside the hook shank.",
+        "Wrap the large loop around the hook shank and the doubled line seven to eight times, keeping the coils orderly and adjacent.",
+        "Hold the wraps in place and pull the standing line to shrink the remaining loop beneath the coils.",
+        "Moisten the connection and pull the standing line and tag end steadily so the coils tighten evenly around the hook shank.",
+        "Seat the Snell firmly, confirm the coils remain aligned with the hook shank, then trim the excess tag end."
     ],
     "commonMistakes": [
-        "Starting through the hook eye in the wrong direction for the selected Easy Snell method.",
-        "Letting the five to seven shank wraps overlap or spread apart instead of forming compact ordered coils.",
-        "Routing the tag end through the small loop in the wrong direction or releasing the wraps before the knot is tightened."
+        "Passing the leader through the hook eye in opposite directions instead of making both eye passes in the same direction.",
+        "Letting the seven to eight loop wraps overlap or spread apart instead of forming compact ordered coils around the shank.",
+        "Releasing the wraps while collapsing the remaining loop, which can let the coils cross or loosen before the knot is seated."
     ],
     "finalChecks": [
-        "Five to seven orderly coils are seated tightly around the hook shank.",
-        "The knot body remains on the shank and the standing line leaves the eye in line with the hook shank.",
-        "A firm pull on the standing line tightens the connection without causing the coils to unravel or shift."
+        "Seven to eight orderly coils are seated tightly around the hook shank.",
+        "The remaining loop has collapsed beneath the coils and no loose loop remains beside the shank.",
+        "The standing line leaves the hook eye in line with the shank, and a firm test pull tightens the connection without shifting the coils."
     ],
     "referenceLinks": [
         {
-            "label": "Take Me Fishing — Easy Snell Knot",
-            "url": "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-a-snell-knot/"
+            "label": "Animated Knots — Snell Knot",
+            "url": "https://www.animatedknots.com/snell-knot"
         },
         {
             "label": "Mustad — How to Snell a Hook",
@@ -752,8 +761,6 @@ A Knot is ready for content lock only when:
 }
 ```
 
-
-
 # Cross-Library Content Decisions
 
 ## Line compatibility
@@ -773,25 +780,20 @@ A Knot is ready for content lock only when:
 
 - **Double Uni:** credible sources vary between four and five ordinary wraps while agreeing on additional wraps for braid. V1 standardizes on five ordinary wraps and eight for braid as a clear beginner method within the verified range.
 - **Non-Slip Loop:** wrap count changes with line diameter. V1 uses five wraps for common freshwater leader sizes and explicitly notes that unusually light/heavy material may require adjustment.
-- **Snell:** multiple legitimate Snell methods exist. V1 selects the **Easy Snell** method documented by Take Me Fishing. Other accepted Snell methods are recorded as variations and are not merged into the canonical steps.
+- **Dropper Loop:** credible sources support a small wrap-count range. Package 4 standardizes on **about six wraps** to match the approved Animated Knots visual method while remaining inside the independently supported range.
+- **Snell:** multiple legitimate Snell methods exist. Package 4 supersedes the earlier Easy Snell selection and locks the **traditional loop-wrapped Snell** with two same-direction eye passes, seven to eight loop wraps around the shank/doubled line, and standing-line collapse of the remaining loop beneath the coils.
 - **Alberto:** V1 uses seven wraps up and seven back down, with the braid tag exiting the leader loop in the same direction it entered.
 
 ## Deployment metadata
 
-Production Package 1 assigns `createdVersion` and `lastModifiedVersion` as `0.5.0` for all 10 initial canonical Knot records. This records the first production implementation of the locked library and does not change the approved schema.
-
+Production Package 1 assigned `createdVersion` and `lastModifiedVersion` as `0.5.0` for all 10 initial canonical Knot records. Package 4 did not change the existing version metadata fields in `data/knots.js`; the later method corrections are documented through Package 4 workstream records and Git history.
 
 # Lock Effect
 
-All 10 canonical Knot content records are locked for Production Package 1.
+All 10 canonical Knot content records are locked for Version 1.
 
-Production Package 1 may:
+Production Package 4 re-locked the Dropper Loop and Snell records after explicit user approval, production-source reconciliation, GitHub verification, and runtime validation of the external instructional-media presentation.
 
-1. create `data/knots.js` with the locked records and ordered `CORE_KNOT_IDS`;
-2. assign Version `0.5.0` implementation metadata;
-3. add the approved Rig-owned `knotApplications[]` relationships;
-4. load the canonical Knot dataset without yet exposing the full Knot Guide UI.
+Canonical text remains authoritative. Approved external media must match the locked method; a legitimate alternate variant is not used as the instructional destination when it conflicts with the Version 1 method.
 
-Later diagram/animation work must visualize these locked `tyingSteps[]` rather than creating a second instructional method.
-
-If testing or later technical research exposes a genuine defect, the affected record may be reopened through an explicit documented correction.
+If testing or later technical research exposes a genuine defect, the affected record may be reopened only through an explicit documented correction.
