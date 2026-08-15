@@ -488,7 +488,7 @@ const KNOT_DATA = Object.freeze([
         ],
         tyingSteps: [
             "Form a fairly large loop in the line at the location where the branch is needed.",
-            "Wind one side of the loop around the other five times while keeping the central opening and the original branch loop accessible.",
+            "Wind one side of the loop around the other about six times while keeping the central opening and the original branch loop accessible.",
             "Push the bottom of the original branch loop through the central opening created by the wraps.",
             "Moisten the knot and pull the two standing-line sections in opposite directions while keeping the branch loop open until the coils seat firmly."
         ],
@@ -504,12 +504,12 @@ const KNOT_DATA = Object.freeze([
         ],
         referenceLinks: [
             {
-                label: "Take Me Fishing — Dropper Loop Knot",
-                url: "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-dropper-loop-knot/"
+                label: "Animated Knots — Dropper Loop Knot",
+                url: "https://www.animatedknots.com/dropper-loop-knot"
             },
             {
-                label: "Alaska Department of Fish and Game — Dropper Loop",
-                url: "https://www.adfg.alaska.gov/index.cfm?ID=20&adfg=FishingSportFishAK.reelTimes"
+                label: "Take Me Fishing — Dropper Loop Knot",
+                url: "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-dropper-loop-knot/"
             }
         ]
     },
@@ -544,30 +544,31 @@ const KNOT_DATA = Object.freeze([
         ],
         limitations: [
             "The Snell is a hook-specific connection rather than a general knot for attaching swivels or lures.",
-            "Several legitimate Snell variants exist. Version 1 intentionally teaches the Easy Snell method and does not combine it with other Snell geometries.",
+            "Several legitimate Snell variants exist. Version 1 intentionally teaches the traditional loop-wrapped Snell method and does not combine it with other Snell geometries.",
             "The Version 1 method assumes an eyed hook; hook-eye orientation and hook design should be appropriate for the intended snelled presentation."
         ],
         tyingSteps: [
-            "Run the tag end through the hook eye toward the hook point.",
-            "Form a small loop beside the hook and bring the tag end behind the hook shank, leaving enough tag end to make the wraps.",
-            "Wrap the tag end around both the hook shank and line five to seven times, working from the hook point toward the eye.",
-            "Pass the tag end through the small loop from the underside to the topside.",
-            "Hold the wraps in place and pull the tag end and standing line to tighten the coils around the shank, then trim the excess tag end."
+            "Pass the leader through the hook eye, then pass it through the eye a second time in the same direction, leaving a large loop beside the hook.",
+            "Hold the hook eye and the two line sections together so the large loop remains controlled beside the hook shank.",
+            "Wrap the large loop around the hook shank and the doubled line seven to eight times, keeping the coils orderly and adjacent.",
+            "Hold the wraps in place and pull the standing line to shrink the remaining loop beneath the coils.",
+            "Moisten the connection and pull the standing line and tag end steadily so the coils tighten evenly around the hook shank.",
+            "Seat the Snell firmly, confirm the coils remain aligned with the hook shank, then trim the excess tag end."
         ],
         commonMistakes: [
-            "Starting through the hook eye in the wrong direction for the selected Easy Snell method.",
-            "Letting the five to seven shank wraps overlap or spread apart instead of forming compact ordered coils.",
-            "Routing the tag end through the small loop in the wrong direction or releasing the wraps before the knot is tightened."
+            "Passing the leader through the hook eye in opposite directions instead of making both eye passes in the same direction.",
+            "Letting the seven to eight loop wraps overlap or spread apart instead of forming compact ordered coils around the shank.",
+            "Releasing the wraps while collapsing the remaining loop, which can let the coils cross or loosen before the knot is seated."
         ],
         finalChecks: [
-            "Five to seven orderly coils are seated tightly around the hook shank.",
-            "The knot body remains on the shank and the standing line leaves the eye in line with the hook shank.",
-            "A firm pull on the standing line tightens the connection without causing the coils to unravel or shift."
+            "Seven to eight orderly coils are seated tightly around the hook shank.",
+            "The remaining loop has collapsed beneath the coils and no loose loop remains beside the shank.",
+            "The standing line leaves the hook eye in line with the shank, and a firm test pull tightens the connection without shifting the coils."
         ],
         referenceLinks: [
             {
-                label: "Take Me Fishing — Easy Snell Knot",
-                url: "https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-a-snell-knot/"
+                label: "Animated Knots — Snell Knot",
+                url: "https://www.animatedknots.com/snell-knot"
             },
             {
                 label: "Mustad — How to Snell a Hook",
