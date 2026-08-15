@@ -1,6 +1,6 @@
 # Knot Production Package 4 — 10-Knot Visual Source Audit
 
-**Status:** OPEN / AUDIT PASS 1 COMPLETE / CANDIDATES NOT USER-APPROVED  
+**Status:** OPEN / AUDIT PASSES 1–2 COMPLETE / CANDIDATES NOT USER-APPROVED  
 **Milestone:** Knots  
 **Package:** Production Package 4  
 **Opened:** 2026-08-14  
@@ -47,19 +47,19 @@ For each Knot record:
 - **HOLD — requires deeper audit:** promising candidate but one or more critical geometry, rights, or method details remain unresolved.
 - **REJECT:** wrong method/variation, obscured geometry, inadequate source quality, or unacceptable rights/delivery path.
 
-# Audit Pass 1 Summary
+# Current Audit Summary
 
-| Knot | Best candidate found in Pass 1 | Type | Pass-1 verdict |
+| Knot | Best candidate currently identified | Type | Current verdict |
 |---|---|---|---|
 | Arbor Knot | Animated Knots by Grog — Arbor Knot | Step-controlled animation | PASS — external candidate |
 | Improved Clinch Knot | U.S. Fish & Wildlife Service — The Improved Clinch Knot | Diagram | PASS — preferred candidate |
-| Palomar Knot | U.S. Fish & Wildlife Service beginner-fishing material + Animated Knots Palomar | Diagram / animation | HOLD — extract/audit best diagram presentation |
-| Double Uni Knot | Existing sources vary on ordinary wrap count | Diagram / video references | HOLD — exact 5 ordinary / 8 braid candidate still needed |
+| Palomar Knot | U.S. Fish & Wildlife Service beginner-fishing material | Diagram | HOLD — isolate/review figure |
+| Double Uni Knot | Bass Pro Shops illustrated Double Uni instructions | Diagram | PASS — external candidate |
 | Uni Knot | Animated Knots / Orvis Uni animation | Step-controlled animation | PASS — external candidate |
 | Double Surgeon’s Knot | Animated Knots Surgeon’s Join / Orvis Surgeon’s Knot | Step-controlled animation | PASS — external candidate |
 | Non-Slip Loop Knot | Animated Knots Non-Slip Mono / Orvis Non-Slip Mono Loop | Step-controlled animation | PASS — external candidate |
-| Dropper Loop Knot | Several strong animations use about six wraps | Animation | HOLD — canonical V1 is five wraps; exact candidate still needed |
-| Snell Knot — Easy Snell | Common Snell animations use a different loop-wrapping variation | Animation | REJECT current common animation; exact Easy Snell candidate required |
+| Dropper Loop Knot | Rhode Island illustrated five-wrap instructions | Diagram | PASS — external candidate |
+| Snell Knot — Easy Snell | Take Me Fishing Easy Snell | Illustrated instructions / video | PASS — external candidate pending visual presentation audit |
 | Alberto Knot | NetKnots — Alberto Knot | Diagram + animation | PASS — external candidate |
 
 # 1. Arbor Knot
@@ -155,13 +155,18 @@ Both describe the same essential doubled-line → overhand → terminal-through-
 - moisten,
 - pull standing lines so opposing Uni bodies slide together and seat.
 
-## Pass-1 finding
+## Candidate — Bass Pro Shops illustrated instructions
 
-Take Me Fishing currently publishes four ordinary wraps / eight braid wraps. That is a legitimate Double Uni variation but does not exactly match the locked V1 five-ordinary-wrap method.
+Source:
+`https://1source.basspro.com/news-tips/fishing-knots-how-tie/7675/fishing-knot-library-how-tie-double-uni-knot-4-easy-steps`
 
-Other public diagrams found in Pass 1 also commonly use four wraps.
+The illustrated instruction explicitly states **5 turns with mono and 8 turns with braid**, then shows the opposing Uni knots sliding together.
 
-**Verdict:** HOLD. Do not select a four-wrap visual merely because the overall knot is correct. Continue searching for a candidate that visibly supports the V1 five ordinary / eight braid method.
+**Technical verdict:** PASS for the V1 braid-to-mono/fluoro use case and required wrap counts.
+
+**Rights verdict:** External candidate. No local reuse right has been established; do not copy or bundle the diagrams without permission.
+
+Take Me Fishing remains a canonical technical source, but its current public instruction uses four ordinary wraps / eight braid wraps. That legitimate variation is not selected as the Package 4 visual because V1 intentionally uses five ordinary wraps.
 
 # 5. Uni Knot
 
@@ -244,13 +249,18 @@ Animated Knots uses about five wraps and the correct overhand/eye/return/wrap/re
 - push bottom of original branch loop through central opening,
 - moisten and pull standing sections apart while retaining branch loop.
 
-## Pass-1 finding
+## Candidate — Rhode Island fishing-regulations illustration
 
-Animated Knots and several other strong animation sources use approximately six turns. That is a legitimate Dropper Loop variation, but V1 intentionally standardized on five wraps.
+Source:
+`https://www.eregulations.com/rhodeisland/fishing/saltwater/fishing-knots`
 
-NetKnots text allows five or more wraps but its displayed animation/illustration should be audited carefully before adoption.
+The instruction explicitly shows/describes five or more wraps, then the original loop through the central opening and final opposing pull.
 
-**Verdict:** HOLD. Continue searching for a visual that clearly uses the V1 five-wrap state rather than silently changing canonical instructions.
+**Technical verdict:** PASS at the canonical five-wrap state.
+
+**Rights verdict:** External candidate only. The page identifies the illustrations as copyrighted John E. Sherry material; no repository reuse right has been established.
+
+Animated Knots and other strong sources commonly display approximately six turns. Those remain useful references but are not preferred over the exact five-wrap diagram for V1.
 
 # 9. Snell Knot — Easy Snell
 
@@ -265,16 +275,29 @@ The project deliberately teaches the **Easy Snell** method:
 - tag through small loop from underside to topside,
 - hold wraps and pull tag/standing line to tighten.
 
-## Rejected candidate — Animated Knots Snell
+## Preferred method candidate — Take Me Fishing
 
 Source:
-`https://www.animatedknots.com/snell-knot`
+`https://www.takemefishing.org/how-to-fish/how-tie-fishing-knots/how-to-tie-a-snell-knot/`
 
-Its method passes through the eye twice and wraps a formed loop around the hook shank seven or eight times. That is a legitimate Snell variation but **not the selected Easy Snell method**.
+Take Me Fishing explicitly labels and teaches the Easy Snell method with the same:
+
+- eye-to-point entry direction,
+- small loop,
+- tag behind shank,
+- five to seven point-to-eye wraps,
+- underside-to-topside loop return,
+- hold-wraps-and-tighten finish.
+
+**Technical verdict:** PASS.
+
+**Presentation/delivery verdict:** PASS — external candidate pending direct visual audit of the page's illustrated/video presentation. No local reuse right has been established.
+
+## Rejected generic Snell candidate — Animated Knots
+
+Animated Knots passes through the eye twice and wraps a formed loop around the hook shank seven or eight times. That is a legitimate Snell variation but **not the selected Easy Snell method**.
 
 **Verdict:** REJECT for Package 4 V1.
-
-Continue searching specifically for an Easy Snell visual matching the canonical method. Do not choose a generic Snell candidate based on name alone.
 
 # 10. Alberto Knot
 
@@ -328,15 +351,12 @@ The site states copyright / All Rights Reserved, so its artwork/frames must not 
 
 FWS is currently the strongest source for locally reusable Package 4 diagrams because relevant assets/publications are explicitly marked Public Domain.
 
-# Remaining Pass-2 Work
+# Remaining Audit Work Before User Candidate Approval
 
-Priority unresolved searches:
-
-1. **Double Uni** — exact five ordinary / eight braid visual.
-2. **Dropper Loop** — exact five-wrap visual.
-3. **Easy Snell** — exact selected Easy Snell geometry.
-4. **Palomar** — isolate/review the best Public Domain FWS diagram treatment.
-5. Continue diagram-first searches for Uni, Double Surgeon’s, Non-Slip Loop, and Alberto before settling for external animation.
+1. Isolate and visually inspect the Public Domain Palomar diagram from the FWS material.
+2. Continue diagram-first searches for Uni, Double Surgeon’s, Non-Slip Loop, and Alberto before settling for external animation.
+3. Directly inspect the Take Me Fishing Easy Snell visual/video presentation to ensure no critical geometry is hidden despite the written method matching exactly.
+4. Present the strongest visual candidates to the user; no candidate becomes production-approved from this document alone.
 
 # Production Gate
 
