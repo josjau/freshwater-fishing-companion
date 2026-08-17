@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Site-Wide Floating Navigation Standard
 
 **Document Status:** Approved  
-**Implementation Status:** Correction Built / Runtime Validation Pending  
+**Implementation Status:** Runtime Validation In Progress / Shared Appearance PASS  
 **Recorded:** 2026-08-14  
 **Last Updated:** 2026-08-17  
 **Scope:** Site-wide navigation UX
@@ -96,22 +96,41 @@ That implementation is therefore superseded by the shared-component correction:
 - nested Parent/Home behavior remains unchanged,
 - Reel Setup retains its specialized control behavior while continuing to share the established floating-container visual treatment.
 
-This correction is built but must still pass deployed Brave runtime validation before implementation status becomes `Validated`.
+# Runtime Validation Result — Shared Appearance
+
+**Status:** PASS
+
+The corrected deployment from commit `05dc0b46cede3b47d82d869493d154564156ac7a` passed the first Brave runtime validation block on 2026-08-17.
+
+Confirmed:
+
+- Rig Guide root uses one visible shared floating `← Home` container,
+- Knot Guide root uses the same treatment,
+- Fish Guide root uses the same treatment,
+- an additional root view uses the same treatment,
+- a representative nested Rig or Knot view retains Parent + Home inside the same visual container,
+- root and nested navigation now read as one shared component rather than separate visual systems.
+
+This closes the original root-versus-nested visibility defect. Extended runtime checks remain before the site-wide implementation is marked fully `Validated`.
 
 # Required Runtime Validation
 
-After deployment, validate:
+Completed in the shared-appearance block:
 
-1. Rig Guide root — one visible floating `← Home` container.
-2. Knot Guide root — one visible floating `← Home` container.
-3. Fish Guide root — one visible floating `← Home` container.
-4. At least one additional root view — same treatment.
-5. Representative Rig browse/detail — Parent + Home remain floating and visually unchanged.
-6. Representative Knot browse/detail — Parent + Home remain floating and visually unchanged.
-7. Reel Setup — specialized Previous/Home controls remain usable and retain the established floating presentation.
-8. Narrow viewport — controls wrap or fit without horizontal overflow or obscuring content.
-9. Keyboard navigation — visible focus and operable controls.
-10. Forward, Parent, and Home transitions — destination opens at the top as required by D051.
+1. Rig Guide root — one visible floating `← Home` container. **PASS**
+2. Knot Guide root — one visible floating `← Home` container. **PASS**
+3. Fish Guide root — one visible floating `← Home` container. **PASS**
+4. At least one additional root view — same treatment. **PASS**
+5. Representative nested view — Parent + Home remain floating and use the same visual treatment. **PASS**
+
+Remaining extended checks:
+
+6. Representative Rig browse/detail — Parent + Home remain functionally correct.
+7. Representative Knot browse/detail — Parent + Home remain functionally correct.
+8. Reel Setup — specialized Previous/Home controls remain usable and retain the established floating presentation.
+9. Narrow viewport — controls wrap or fit without horizontal overflow or obscuring content.
+10. Keyboard navigation — visible focus and operable controls.
+11. Forward, Parent, and Home transitions — destination opens at the top as required by D051.
 
 # Permanent Principle
 
