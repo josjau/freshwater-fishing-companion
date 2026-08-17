@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Site-Wide Floating Navigation Standard
 
 **Document Status:** Approved  
-**Implementation Status:** Runtime Validation In Progress / Shared Appearance PASS  
+**Implementation Status:** Runtime Validation In Progress / Reel Setup Correction Built  
 **Recorded:** 2026-08-14  
 **Last Updated:** 2026-08-17  
 **Scope:** Site-wide navigation UX
@@ -73,6 +73,14 @@ Both controls live inside the same shared floating navigation container.
 
 The Parent destination must represent the meaningful immediate application context for that view. Home returns to the Dashboard.
 
+# Specialized Workflow Rule
+
+Specialized workflows may replace the standard Root/Nested controls with workflow-specific navigation such as Reel Setup's Previous/Home pattern.
+
+When a specialized workflow is rendered from a standard view shell, its custom navigation must replace the entire standard floating-navigation container rather than replacing only a button inside that container. This prevents nested floating shells and preserves one visible navigation surface.
+
+The specialized control behavior may differ, but the workflow should retain the established site-wide floating visual treatment unless a deliberate documented exception is approved.
+
 # Future Page Rule
 
 New application pages must select one of these patterns during implementation:
@@ -94,7 +102,7 @@ That implementation is therefore superseded by the shared-component correction:
 - root and nested renderer markup use the shared `buildPageNavigationMarkup()` helper,
 - the temporary root-specific sticky CSS selector is removed,
 - nested Parent/Home behavior remains unchanged,
-- Reel Setup retains its specialized control behavior while continuing to share the established floating-container visual treatment.
+- Reel Setup retains specialized Previous/Home behavior while sharing the established floating-container visual treatment.
 
 # Runtime Validation Result — Shared Appearance
 
@@ -111,27 +119,76 @@ Confirmed:
 - a representative nested Rig or Knot view retains Parent + Home inside the same visual container,
 - root and nested navigation now read as one shared component rather than separate visual systems.
 
-This closes the original root-versus-nested visibility defect. Extended runtime checks remain before the site-wide implementation is marked fully `Validated`.
+This closes the original root-versus-nested visibility defect.
+
+# Validation Block 2 Results
+
+## Block 2A — Rig Nested Navigation
+
+**Status:** PASS
+
+Runtime validation confirmed:
+
+- Rig browse and detail Parent + Home controls remain floating,
+- no duplicate navigation appears,
+- Parent returns to the Rig browse/collection view at the top,
+- Home returns to the Dashboard at the top.
+
+## Block 2B — Knot Nested Navigation
+
+**Status:** PASS
+
+Runtime validation confirmed:
+
+- Knot browse and detail Parent + Home controls remain floating,
+- no duplicate navigation appears,
+- Parent returns to the Knot browse/collection view at the top,
+- Home returns to the Dashboard at the top.
+
+## Block 2C — Reel Setup Navigation
+
+**Status:** FAIL FOUND / CORRECTION BUILT / RUNTIME RETEST PENDING
+
+Runtime review found an extra larger outer floating bubble around Reel Setup's Previous/Home controls beginning on **Get Your Reel Ready** and continuing throughout the Reel Setup workflow.
+
+Root cause:
+
+- `renderView()` now supplies the standard `.page-navigation-group` shell,
+- `renderReelSetupNavigation()` replaced only the generic Home button,
+- the standard group therefore remained around Reel Setup's custom `[data-reel-setup-navigation]` container,
+- both containers received the floating visual treatment, creating nested shells.
+
+Corrective implementation in `script.js`:
+
+- resolve the standard navigation group with `genericHomeButton.closest(".page-navigation-group")`,
+- require that group before conversion,
+- replace the entire standard group with Reel Setup's custom navigation container,
+- keep Reel Setup's existing Previous/Home routing unchanged,
+- make no CSS or shared Root/Nested navigation changes.
+
+The correction is built from the current GitHub-authoritative `script.js` and must be pushed, deployed, and rerun through Validation Block 2C before extended validation continues.
 
 # Required Runtime Validation
 
-Completed in the shared-appearance block:
+Completed:
 
 1. Rig Guide root — one visible floating `← Home` container. **PASS**
 2. Knot Guide root — one visible floating `← Home` container. **PASS**
 3. Fish Guide root — one visible floating `← Home` container. **PASS**
 4. At least one additional root view — same treatment. **PASS**
-5. Representative nested view — Parent + Home remain floating and use the same visual treatment. **PASS**
+5. Representative nested shared appearance — same visual treatment. **PASS**
+6. Representative Rig browse/detail Parent + Home behavior and top reset. **PASS**
+7. Representative Knot browse/detail Parent + Home behavior and top reset. **PASS**
 
-Remaining extended checks:
+Pending after the Reel Setup correction deploys:
 
-6. Representative Rig browse/detail — Parent + Home remain functionally correct.
-7. Representative Knot browse/detail — Parent + Home remain functionally correct.
-8. Reel Setup — specialized Previous/Home controls remain usable and retain the established floating presentation.
-9. Narrow viewport — controls wrap or fit without horizontal overflow or obscuring content.
-10. Keyboard navigation — visible focus and operable controls.
-11. Forward, Parent, and Home transitions — destination opens at the top as required by D051.
+8. Reel Setup — one specialized Previous/Home floating container with no outer duplicate shell.
+9. Reel Setup — Previous and Home remain functionally correct and top-reset correctly.
+10. Narrow viewport — controls wrap or fit without horizontal overflow or obscuring content.
+11. Keyboard navigation — visible focus and operable controls.
+12. Representative Knot → related Rig / Reel Setup traversal.
+13. Normal-navigation console health.
 
 # Permanent Principle
 
-> Floating navigation is a shared site-wide component for all non-Dashboard application views; root and nested pages use the same visible container treatment, and individual pages should not opt out or invent a separate treatment unless a deliberate documented exception exists.
+> Floating navigation is a shared site-wide component for all non-Dashboard application views; root and nested pages use the same visible container treatment, specialized workflows replace rather than nest the standard container, and individual pages should not invent a separate treatment unless a deliberate documented exception exists.

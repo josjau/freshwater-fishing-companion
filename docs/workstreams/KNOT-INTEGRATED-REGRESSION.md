@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Knot Integrated Regression
 
 **Document Status:** Approved  
-**Implementation Status:** Source Regression PASS / Shared Navigation Appearance PASS / Extended Runtime Validation Pending  
+**Implementation Status:** Source Regression PASS / Shared Navigation Appearance PASS / Reel Setup Correction Built / Extended Runtime Validation Pending  
 **Milestone:** Knots  
 **Recorded:** 2026-08-17  
 **Runtime Environment:** Windows Desktop + Brave Browser + GitHub Desktop
@@ -16,11 +16,15 @@ The goal is to verify that the current GitHub `main` still contains the approved
 
 GitHub `main` is authoritative.
 
-Current shared-navigation source baseline:
+Current shared-navigation source baseline under runtime validation:
 
 `05dc0b46cede3b47d82d869493d154564156ac7a` — `Site-wide Floating Nav Fix`
 
 GitHub Pages successfully deployed that commit before runtime validation began.
+
+The current documentation baseline before the Reel Setup correction package is:
+
+`9a530eaccfbfd55973342424a186d0430a4e75d7`
 
 # Integrated Source Regression
 
@@ -83,6 +87,7 @@ Confirmed:
 
 **Regression Status:** PASS  
 **Shared Navigation Appearance Status:** PASS  
+**Reel Setup Navigation Correction Status:** BUILT / RUNTIME RETEST PENDING  
 **Extended Runtime Status:** PENDING
 
 The shared-navigation correction intentionally changed `view-renderer.js` to centralize standard Root and Nested navigation markup through `buildPageNavigationMarkup()`.
@@ -93,7 +98,9 @@ The shared helper defines:
 - nested view navigation — `← Parent` + `Home` inside the same `.page-navigation-group`,
 - one shared visual/structural component for future standard renderer-based views.
 
-The application coordinator and route behavior were not changed by this correction.
+Validation Block 2 found one integration defect in the specialized Reel Setup conversion path. `renderReelSetupNavigation()` still replaced only the generic Home button after `renderView()` began wrapping that button in `.page-navigation-group`. The remaining standard group then wrapped Reel Setup's dedicated `[data-reel-setup-navigation]` container, producing a second larger floating shell.
+
+The targeted `script.js` correction now replaces the entire standard `.page-navigation-group` with Reel Setup's dedicated navigation container. No routing logic, CSS, standard Root navigation, or standard Nested navigation is changed by this correction.
 
 ## Load Order
 
@@ -115,7 +122,7 @@ This preserves the intentional Knot media renderer integration layer.
 
 # Site-Wide Floating Navigation Correction
 
-**Source Status:** PASS  
+**Source Status:** PASS WITH TARGETED REEL SETUP FOLLOW-UP BUILT  
 **Shared Appearance Runtime Status:** PASS  
 **Extended Runtime Status:** PENDING
 
@@ -128,7 +135,7 @@ The shared-component correction then:
 - kept a single non-duplicative `← Home` control on Root pages,
 - preserved Parent + Home controls on Nested pages,
 - removed the temporary root-specific sticky selector from `forest-journal.css`,
-- left Reel Setup's specialized navigation behavior unchanged,
+- retained Reel Setup's specialized navigation behavior,
 - established the shared container as the required visual pattern for future Root and Nested pages.
 
 ## Runtime Result — Shared Appearance
@@ -147,18 +154,67 @@ Confirmed:
 
 The prior Root-versus-Nested visibility mismatch is resolved.
 
+# Validation Block 2
+
+## Block 2A — Rig Nested Navigation
+
+**Status:** PASS
+
+Confirmed:
+
+- Rig browse/detail Parent + Home controls remain floating,
+- no duplicate navigation appears,
+- Parent returns to the Rig browse/collection page at the top,
+- Home returns to the Dashboard at the top.
+
+## Block 2B — Knot Nested Navigation
+
+**Status:** PASS
+
+Confirmed:
+
+- Knot browse/detail Parent + Home controls remain floating,
+- no duplicate navigation appears,
+- Parent returns to the Knot browse/collection page at the top,
+- Home returns to the Dashboard at the top.
+
+## Block 2C — Reel Setup Navigation
+
+**Status:** FAIL FOUND / CORRECTION BUILT / RUNTIME RETEST PENDING
+
+Observed from **Get Your Reel Ready** and throughout Reel Setup:
+
+- the intended Previous/Home floating navigation remained present,
+- an extra larger outer floating bubble surrounded it.
+
+Root cause:
+
+- `renderView()` now creates the shared `.page-navigation-group`,
+- `renderReelSetupNavigation()` replaced only `[data-home-navigation]`,
+- the shared group remained in the DOM,
+- Reel Setup's dedicated `[data-reel-setup-navigation]` container was inserted inside that remaining shared shell,
+- both containers received the approved floating-container styling.
+
+Targeted correction:
+
+- resolve `genericNavigationGroup` from the generic Home button with `.closest(".page-navigation-group")`,
+- require the standard group before conversion,
+- replace `genericNavigationGroup` with the Reel Setup navigation container instead of replacing only the Home button,
+- preserve all existing Previous/Home behavior and Reel Setup state transitions,
+- make no CSS change.
+
+The source correction is built from GitHub-authoritative `script.js` blob `d23c05a879fc6b27e0e6c53905e126f34efbce6b` and requires push/deployment before Block 2C can be rerun.
+
 # Remaining Extended Runtime Validation
 
-The following checks still remain before final navigation and Knots milestone closeout:
+After the Reel Setup correction successfully deploys:
 
-1. Representative Rig browse/detail — Parent + Home functionality.
-2. Representative Knot browse/detail — Parent + Home functionality.
-3. Reel Setup — specialized Previous/Home behavior and floating treatment.
-4. Narrow viewport — no horizontal overflow or content obstruction.
-5. Keyboard navigation — visible focus and operable controls.
-6. Forward, Parent, and Home transitions — destination opens at the top.
-7. Representative Knot landing → collection → detail → related Rig / Reel Setup traversal.
-8. Normal-navigation console health.
+1. Rerun Block 2C — confirm exactly one Reel Setup floating navigation container.
+2. Confirm Reel Setup Previous and Home behavior and top reset.
+3. Narrow viewport — no horizontal overflow or content obstruction.
+4. Keyboard navigation — visible focus and operable controls.
+5. Representative Knot landing → collection → detail → related Rig / Reel Setup traversal.
+6. Normal-navigation console health.
 
 # Current Result
 
@@ -166,15 +222,24 @@ The following checks still remain before final navigation and Knots milestone cl
 
 **SHARED NAVIGATION APPEARANCE: PASS**
 
+**RIG NESTED NAVIGATION: PASS**
+
+**KNOT NESTED NAVIGATION: PASS**
+
+**REEL SETUP NAVIGATION: CORRECTION BUILT / RUNTIME RETEST PENDING**
+
 **EXTENDED RUNTIME VALIDATION: PENDING**
 
 No integrated Knot data, media, route, or instructional-content regression was found.
 
-The Knots implementation remains functionally complete through Production Package 4. Final milestone closeout remains pending extended runtime validation and final global documentation reconciliation.
+The Knots implementation remains functionally complete through Production Package 4. Final milestone closeout remains pending the Reel Setup navigation retest, remaining extended runtime validation, and final global documentation reconciliation.
 
 # Next Step
 
-1. Complete extended Brave navigation/runtime validation.
-2. Confirm normal-navigation console health.
-3. Reconcile final milestone-level records.
-4. Formally close the Knots milestone before beginning Fish Guide implementation.
+1. Push and verify the targeted Reel Setup navigation correction.
+2. Confirm successful GitHub Pages deployment.
+3. Rerun Validation Block 2C.
+4. Complete remaining extended Brave navigation/runtime validation.
+5. Confirm normal-navigation console health.
+6. Reconcile final milestone-level records.
+7. Formally close the Knots milestone before beginning Fish Guide implementation.

@@ -785,7 +785,8 @@ function getReelSetupPreviousStep() {
 function renderReelSetupNavigation(appMain) {
     const contentView = appMain.querySelector(".content-view");
     const genericHomeButton = contentView?.querySelector("[data-home-navigation]");
-    if (!contentView || !genericHomeButton) return;
+    const genericNavigationGroup = genericHomeButton?.closest(".page-navigation-group");
+    if (!contentView || !genericHomeButton || !genericNavigationGroup) return;
 
     const navigation = document.createElement("div");
     navigation.dataset.reelSetupNavigation = "true";
@@ -825,7 +826,7 @@ function renderReelSetupNavigation(appMain) {
     });
 
     navigation.append(backButton, homeButton);
-    genericHomeButton.replaceWith(navigation);
+    genericNavigationGroup.replaceWith(navigation);
 }
 
 function applyReelSetupWorkflowCardTreatment(appMain, config) {
