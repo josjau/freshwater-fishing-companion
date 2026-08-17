@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Knot Integrated Regression
 
 **Document Status:** Approved  
-**Implementation Status:** Source Regression PASS / Shared Navigation Correction Built / Runtime Validation Pending  
+**Implementation Status:** Source Regression PASS / Shared Navigation Appearance PASS / Extended Runtime Validation Pending  
 **Milestone:** Knots  
 **Recorded:** 2026-08-17  
 **Runtime Environment:** Windows Desktop + Brave Browser + GitHub Desktop
@@ -16,11 +16,11 @@ The goal is to verify that the current GitHub `main` still contains the approved
 
 GitHub `main` is authoritative.
 
-Current package baseline:
+Current shared-navigation source baseline:
 
-`1105ce62cb092041cc632674a422034eec857337` — `Knots - Integrated Regression Source Pass`
+`05dc0b46cede3b47d82d869493d154564156ac7a` — `Site-wide Floating Nav Fix`
 
-The Knot source/data/media baseline remained unchanged through that commit. The navigation correction package built from this baseline changes only the shared renderer navigation markup, the temporary root-navigation CSS exception, and the documentation that governs the site-wide navigation standard.
+GitHub Pages successfully deployed that commit before runtime validation began.
 
 # Integrated Source Regression
 
@@ -82,22 +82,18 @@ Confirmed:
 ## Shared Renderer and Application Coordinator
 
 **Regression Status:** PASS  
-**Navigation Correction Status:** BUILT / RUNTIME PENDING
+**Shared Navigation Appearance Status:** PASS  
+**Extended Runtime Status:** PENDING
 
-Baseline blobs before the new shared-navigation package:
+The shared-navigation correction intentionally changed `view-renderer.js` to centralize standard Root and Nested navigation markup through `buildPageNavigationMarkup()`.
 
-- `view-renderer.js` — `793d8563ae338de0aa59335fcac1c520df3eb4e6`
-- `script.js` — `d23c05a879fc6b27e0e6c53905e126f34efbce6b`
-
-The new navigation package intentionally changes `view-renderer.js` to centralize standard root and nested navigation markup through `buildPageNavigationMarkup()`.
-
-The shared helper now defines:
+The shared helper defines:
 
 - root view navigation — one `← Home` control inside `.page-navigation-group`,
 - nested view navigation — `← Parent` + `Home` inside the same `.page-navigation-group`,
 - one shared visual/structural component for future standard renderer-based views.
 
-The application coordinator and route behavior are not changed by this correction.
+The application coordinator and route behavior were not changed by this correction.
 
 ## Load Order
 
@@ -119,57 +115,66 @@ This preserves the intentional Knot media renderer integration layer.
 
 # Site-Wide Floating Navigation Correction
 
-**Source Status:** CORRECTION BUILT  
-**Runtime Status:** PENDING
+**Source Status:** PASS  
+**Shared Appearance Runtime Status:** PASS  
+**Extended Runtime Status:** PENDING
 
-The first root-navigation correction made bare root Home buttons sticky. Runtime review on 2026-08-17 confirmed that the root control was reachable, but its presentation was less visible than nested navigation because the root button did not receive the nested `.page-navigation-group` container treatment.
+The first root-navigation correction made bare root Home buttons sticky. Runtime review found that the Root treatment was materially less visible than the Nested `.page-navigation-group` treatment.
 
-That finding is treated as a validation failure requiring correction before closeout.
+The shared-component correction then:
 
-The newest correction:
+- added shared `buildPageNavigationMarkup()` generation to `view-renderer.js`,
+- used the same `.page-navigation-group` container for standard Root and Nested renderer-based views,
+- kept a single non-duplicative `← Home` control on Root pages,
+- preserved Parent + Home controls on Nested pages,
+- removed the temporary root-specific sticky selector from `forest-journal.css`,
+- left Reel Setup's specialized navigation behavior unchanged,
+- established the shared container as the required visual pattern for future Root and Nested pages.
 
-- adds shared `buildPageNavigationMarkup()` generation to `view-renderer.js`,
-- uses the same `.page-navigation-group` container for standard root and nested renderer-based views,
-- keeps a single non-duplicative `← Home` control on root pages,
-- preserves Parent + Home controls on nested pages,
-- removes the temporary root-specific sticky selector from `forest-journal.css`,
-- leaves Reel Setup's specialized navigation behavior unchanged,
-- establishes the shared container as the required visual pattern for future root and nested pages.
+## Runtime Result — Shared Appearance
 
-Required Brave runtime validation remains:
+**Status:** PASS
 
-- Rig Guide root — shared floating Home container,
-- Knot Guide root — shared floating Home container,
-- Fish Guide root — shared floating Home container,
-- one additional root view such as My Tackle or Settings — shared floating Home container,
-- representative nested Rig or Knot view — existing Parent + Home controls remain correct,
-- Reel Setup navigation remains correct,
-- no horizontal overflow or content obstruction at narrow widths,
-- keyboard focus remains visible and usable.
+The deployed correction passed the first Brave runtime validation block on 2026-08-17.
 
-# GitHub Pages Deployment Note
+Confirmed:
 
-The earlier GitHub Pages service incident is no longer blocking validation. GitHub Pages successfully deployed commit `1105ce62cb092041cc632674a422034eec857337` in workflow run `32061454791`.
+- Rig Guide root uses the shared floating Home container,
+- Knot Guide root uses the same treatment,
+- Fish Guide root uses the same treatment,
+- an additional root view uses the same treatment,
+- a representative nested Rig or Knot page retains Parent + Home inside the same visual component.
 
-The new shared-navigation correction must be pushed and successfully deployed before its runtime validation begins.
+The prior Root-versus-Nested visibility mismatch is resolved.
+
+# Remaining Extended Runtime Validation
+
+The following checks still remain before final navigation and Knots milestone closeout:
+
+1. Representative Rig browse/detail — Parent + Home functionality.
+2. Representative Knot browse/detail — Parent + Home functionality.
+3. Reel Setup — specialized Previous/Home behavior and floating treatment.
+4. Narrow viewport — no horizontal overflow or content obstruction.
+5. Keyboard navigation — visible focus and operable controls.
+6. Forward, Parent, and Home transitions — destination opens at the top.
+7. Representative Knot landing → collection → detail → related Rig / Reel Setup traversal.
+8. Normal-navigation console health.
 
 # Current Result
 
 **INTEGRATED KNOT SOURCE REGRESSION: PASS**
 
-**SITE-WIDE SHARED NAVIGATION CORRECTION: BUILT / NOT YET RUNTIME-VALIDATED**
+**SHARED NAVIGATION APPEARANCE: PASS**
+
+**EXTENDED RUNTIME VALIDATION: PENDING**
 
 No integrated Knot data, media, route, or instructional-content regression was found.
 
-The Knots implementation remains functionally complete through Production Package 4. Final milestone closeout remains pending the corrected shared-navigation deployment/runtime pass and subsequent global documentation reconciliation.
+The Knots implementation remains functionally complete through Production Package 4. Final milestone closeout remains pending extended runtime validation and final global documentation reconciliation.
 
 # Next Step
 
-After the shared-navigation correction is pushed and GitHub-verified:
-
-1. confirm a successful GitHub Pages deployment,
-2. rerun the Brave floating-navigation validation block,
-3. run a representative Knot landing → collection → detail → related Rig / Reel Setup regression,
-4. confirm normal-navigation console health,
-5. reconcile final milestone-level records,
-6. formally close the Knots milestone before beginning Fish Guide implementation.
+1. Complete extended Brave navigation/runtime validation.
+2. Confirm normal-navigation console health.
+3. Reconcile final milestone-level records.
+4. Formally close the Knots milestone before beginning Fish Guide implementation.
