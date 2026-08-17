@@ -113,6 +113,14 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 }
 .page-navigation-group .page-navigation,
 [data-reel-setup-navigation] .page-navigation { margin-bottom: 0; }
+.content-view > .page-navigation[data-home-navigation] {
+    position: sticky;
+    z-index: 20;
+    top: var(--space-2);
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+}
 .page-navigation:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, transparent); }
 .page-navigation:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
