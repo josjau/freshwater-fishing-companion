@@ -1,8 +1,8 @@
 # Freshwater Fishing Companion — Navigation Page Standard
 
-**Document Revision:** 1.0.3  
+**Document Revision:** 1.0.4  
 **Document Status:** Approved  
-**Implementation Status:** Current / Shared Floating Navigation Runtime Validation Pending  
+**Implementation Status:** Current / Shared Floating Navigation Appearance PASS / Extended Runtime Validation Pending  
 **Last Updated:** 2026-08-17
 
 # Purpose
@@ -52,6 +52,18 @@ Rules:
 - Parent/Home routing continues to follow D051 top-reset behavior.
 
 The Dashboard itself is the normal exception because it is already the application root destination.
+
+## Runtime Validation Status
+
+The deployed shared-navigation correction passed its first Brave appearance validation on 2026-08-17.
+
+Confirmed:
+
+- representative Root pages use the same visible floating-container treatment,
+- representative Nested pages retain Parent + Home inside that same visual component,
+- the prior Root-versus-Nested visibility mismatch is resolved.
+
+Extended checks for functional nested navigation, Reel Setup, narrow viewport behavior, keyboard focus, and top-reset routing remain pending before the site-wide navigation implementation is marked fully `Validated`.
 
 # Search
 
