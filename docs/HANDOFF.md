@@ -1,16 +1,17 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.3.3  
+**Document Revision:** 1.3.4  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
-**Latest Finalized Workstream:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2-VALIDATION.md` — Production Package 2 PASS / VALIDATED  
-**Active Workstream:** `docs/workstreams/KNOT-IMPLEMENTATION-HANDOFF.md` — Production Package 2 validated; Production Package 3 is the next approved segment  
+**Current GitHub Baseline:** `82f37285ff978eca1a92edfd129cebb9aff5105c` — `Site-Wide Navigation Fix - Reel Setup Fix`  
+**Latest Completed Production Package:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4.md` — Production Package 4 PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED  
+**Active Workstream:** `docs/workstreams/KNOT-INTEGRATED-REGRESSION.md` — integrated Knot source regression PASS; extended runtime validation in progress; Reel Setup navigation correction deployed with Block 2C runtime retest pending  
 **Active Milestone:** Knots  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3  
-**Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Knots implementation remains in progress. Production Packages 1 and 2 are validated. Runtime Revision 5 (`0.6.5`) is the finalized Package 2 implementation: GitHub blob integrity matched the delivered package, the broader Microsoft Edge functional/regression checklist passed, and both final remediation checks passed — `Show fewer` restores context to `Where You'll Use It`, and search fields do not auto-focus on view render application-wide. Production Package 3 — **Get Your Reel Ready** — is now the next approved build segment.  
-**Last Updated:** 2026-08-13
+**Session Environment:** Windows Desktop, Brave Browser, GitHub Desktop  
+**Session Status:** Knot Production Packages 1–4 are functionally complete. The shared site-wide floating-navigation appearance passed runtime validation. Validation Block 2A Rig nested navigation and Block 2B Knot nested navigation passed. Block 2C found a duplicate outer floating shell in Reel Setup; the targeted `script.js` correction was uploaded, GitHub-verified, and successfully deployed by GitHub Pages. The next session must begin by rerunning Validation Block 2C before continuing remaining extended runtime checks and final Knots milestone documentation closeout.  
+**Last Updated:** 2026-08-17
 
 # 1. Start Here
 
@@ -73,23 +74,38 @@ The approved order is:
 
 This order is canonical until explicitly revised.
 
-`ROADMAP.md` revision 0.3.3 remains the canonical sequence. Current implementation state is recorded in this handoff, `MILESTONES.md` revision 2.2.3, and the active Knot workstream records.
+`ROADMAP.md` revision 0.3.3 remains the canonical sequence. Current implementation state is recorded in this handoff, the active Knot workstream records, and milestone-level records that still require final reconciliation after runtime validation completes.
 
 # 4. Active Milestone — Knots
 
-**Implementation Status: In Progress**
+**Implementation Status: Production Packages 1–4 Functionally Complete / Milestone Runtime Closeout In Progress**
 
-Planning, research, and canonical content lock are complete.
+Planning, research, canonical content lock, Reel Setup, Knot media integration, and integrated source regression are complete.
 
 Current production state:
 
-- Production Package 1 — **Validated**: 10 canonical Knots, four Core IDs, all 20 Rigs audited, 31 real tied connections.
-- Production Package 2 Runtime Revision 5 (`0.6.5`) — **PASS / VALIDATED**. Revision 4 passed the full Microsoft Edge functional/regression checklist; Revision 5 passed GitHub blob verification and the two targeted remediation checks.
-- Production Package 3 — **Get Your Reel Ready** — is approved as the next build segment and has not yet begun.
+- Production Package 1 — **PASS / VALIDATED / CLOSED**: 10 canonical Knots, four Core IDs, all 20 Rigs audited, 31 real tied connections.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) — **PASS / VALIDATED / CLOSED**: landing, browse, detail, search, relationship, and focus behavior validated.
+- Production Package 3 — **Get Your Reel Ready** — **PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED**.
+- Production Package 4 — **Knot Instructional Media** — **PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED** with approved media coverage for all 10 Version 1 Knots.
+- Integrated Knot source regression — **PASS**.
+- Shared floating-navigation appearance — **PASS**.
+- Validation Block 2A Rig nested navigation — **PASS**.
+- Validation Block 2B Knot nested navigation — **PASS**.
+- Validation Block 2C Reel Setup — initial runtime **FAIL** due to a duplicate outer floating shell; targeted source correction is **uploaded / GitHub-verified / Pages-deployed / runtime retest pending**.
+
+Current production/navigation baseline:
+
+`82f37285ff978eca1a92edfd129cebb9aff5105c` — `Site-Wide Navigation Fix - Reel Setup Fix`
+
+GitHub Pages deployment for that exact commit completed successfully in workflow run `32070148684`.
 
 Controlling records:
 
-- `docs/workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
+- `docs/workstreams/KNOT-INTEGRATED-REGRESSION.md`
+- `docs/workstreams/SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md`
+- `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4.md`
+- `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4-VISUAL-SOURCE-AUDIT.md`
 - `docs/workstreams/KNOT-LANDING-PAGE-APPROVAL.md`
 - `docs/workstreams/KNOT-DETAIL-PAGE-APPROVAL.md`
 - `docs/NAVIGATION-PAGE-STANDARD.md`
@@ -133,9 +149,9 @@ Version 1 assignments:
 - Intermediate: 4
 - Advanced: 0 active Knots
 
-The UI should include an **Advanced Knots — Coming Soon** placeholder, but that placeholder is not a canonical Knot entity and is not part of the 10-knot count.
+The UI includes an **Advanced Knots — Coming Soon** placeholder, but that placeholder is not a canonical Knot entity and is not part of the 10-knot count.
 
-Every active Knot card in **All Knots** should visibly display its difficulty.
+Every active Knot card in **All Knots** visibly displays its difficulty.
 
 Core membership and difficulty are independent concepts.
 
@@ -251,7 +267,7 @@ Media
     ownerId: canonical Knot ID
 ```
 
-The exact animation media implementation remains a later planning topic.
+The current production media registry uses this ownership model for the Version 1 Knot instructional-media records.
 
 ## Approved Reel & Line Setup Direction
 
@@ -281,39 +297,48 @@ Baitcasting scope covers correct spooling only; detailed brake tuning, backlash 
 
 ## Approved Knot Media Direction
 
-Knot instruction is diagram/animation-first.
+Canonical in-app tying steps remain authoritative.
 
-Preferred hierarchy:
+Production Package 4 uses verified external instructional destinations selected through a strict method-match gate. A source is rejected if it teaches a legitimate variation that does not match the locked canonical Version 1 method unless the canonical method is deliberately changed and documented first.
 
-1. project-owned instructional diagram,
-2. project-owned user-controlled step-through animation,
-3. diagram and animation together where motion materially improves understanding,
-4. video only when the knot cannot be taught adequately with diagram/animation,
-5. supplemental video exception may be approved for more advanced knots where hand position, tensioning, or motion materially benefits from video.
+Approved hierarchy:
 
-Core Knots require a complete non-video instructional path.
+1. verified diagrams,
+2. verified animations,
+3. verified video,
+4. custom project diagram only as a last resort.
 
-Animations should be user-controlled, non-autoplaying, reduced-motion aware, and understandable when motion is disabled.
+Current Version 1 media coverage is complete for all 10 Knots using approved external destinations. Third-party instructional artwork, animation, 3D assets, or video are not copied, bundled, rehosted, extracted, or redistributed by the project.
 
 ## Exact Stopping Point — Resume Here
 
-**Production Package 2 is PASS / VALIDATED and closed. Production Package 3 is now unblocked.**
+**Production Packages 1–4 are functionally complete. The Knots milestone is in extended runtime validation.**
 
-Final Package 2 state:
+Current validated state:
 
-- Runtime Revision 5 (`0.6.5`) is the validated implementation.
-- Revision 5 GitHub blobs exactly matched the delivered package.
-- The broader Microsoft Edge functional/regression checklist passed.
-- Final targeted remediation validation passed for both **Show fewer** context restoration and application-wide no-auto-focus search behavior.
-- No additional Package 2 production correction is planned unless a later regression exposes a genuine defect.
+- Shared Root/Nested floating-navigation appearance — **PASS**.
+- Validation Block 2A — Rig nested navigation / Parent + Home / top reset — **PASS**.
+- Validation Block 2B — Knot nested navigation / Parent + Home / top reset — **PASS**.
+- Validation Block 2C — Reel Setup — duplicate outer floating shell found during runtime review.
+- Targeted Reel Setup correction replaced the entire standard `.page-navigation-group` with the specialized Reel Setup navigation container instead of nesting the specialized container inside it.
+- Correction commit `82f37285ff978eca1a92edfd129cebb9aff5105c` is GitHub-verified and successfully deployed by Pages.
+- **Block 2C runtime retest has not yet been performed.**
 
-Resume in this order:
+Resume in this exact order:
 
-1. Re-fetch current GitHub `main` before changing any source file for Package 3.
-2. Review the approved Reel & Line Setup direction and confirm the Package 3 implementation boundary against current architecture.
-3. Begin Production Package 3 — **Get Your Reel Ready** — using **Attach Line to a Reel** as the single landing entry.
-4. Preserve the validated Package 2 navigation, search, detail-page, relationship, and focus behavior unless Package 3 explicitly requires an approved extension.
-5. Validate Package 3 before beginning Package 4 static Knot media work.
+1. Re-fetch current GitHub `main` and confirm no newer production source supersedes commit `82f37285ff978eca1a92edfd129cebb9aff5105c`.
+2. Rerun **Validation Block 2C** in Brave:
+   - confirm exactly one Reel Setup floating navigation container,
+   - confirm Previous works and destination opens at the top,
+   - confirm Home works and Dashboard opens at the top.
+3. Continue remaining extended validation:
+   - narrow viewport / no horizontal overflow or content obstruction,
+   - keyboard focus and operability,
+   - representative Knot → related Rig / Reel Setup traversal,
+   - normal-navigation console health.
+4. After all runtime checks pass, reconcile `CHANGELOG.md`, `HANDOFF.md`, `MILESTONES.md`, `MEDIA_GUIDE.md`, and any other milestone-level records that remain stale.
+5. Formally close the Knots milestone.
+6. Only then begin Fish Guide implementation.
 
 Do not begin Fish Guide until the Knots milestone is finalized and validated.
 
@@ -498,27 +523,3 @@ Rig readiness remains transitional local state under:
 `freshwaterFishingCompanion.tackleReadiness.v1`
 
 It must not be treated as permanent My Tackle ownership.
-
-When My Tackle becomes authoritative:
-
-- owned canonical Tackle types satisfy requirements automatically,
-- temporary per-build/session availability must not write permanent ownership,
-- only explicit My Tackle ownership-management actions modify persistent ownership,
-- existing transitional readiness checkmarks must not be automatically treated as permanent inventory ownership without an approved migration decision.
-
-# 16. Governing Documents
-
-- Current-state entrypoint: `HANDOFF.md`
-- Canonical development sequence: `ROADMAP.md`
-- Active Knot production/status workstream: `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
-- Knot landing/navigation approval: `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`
-- Cross-domain navigation standard: `NAVIGATION-PAGE-STANDARD.md`
-- Current Knot session closeout: `workstreams/KNOT-SESSION-CLOSEOUT-2026-08-13.md`
-- Final Rig completion workstream: `workstreams/RIG-GUIDE-COMPLETION.md`
-- Long-term decisions: `DECISIONS.md`
-- Architecture: `ARCHITECTURE.md`
-- Workflow / closeout rules: `DEVELOPMENT_WORKFLOW.md`
-- UI/coding conventions: `STYLE_GUIDE.md`
-- Media/tutorial standards: `MEDIA_GUIDE.md`
-- Rig sources: `RIG_REFERENCE_SOURCES.md`
-- Milestones/history: `MILESTONES.md` / `CHANGELOG.md`
