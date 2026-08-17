@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.4.1  
+**Document Revision:** 0.4.2  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-11
+**Last Updated:** 2026-08-17
 
 # Purpose
 
@@ -63,7 +63,7 @@ This document records long-term architectural decisions.
 | D048 | Dashboard-Derived Section Card Design | Approved |
 | D049 | Verified Rig Tutorial Embed Policy | Approved |
 | D050 | Standard Search Field and Clear Control | Approved |
-| D051 | Persistent Parent Navigation and Top-Reset View Transitions | Approved |
+| D051 | Persistent Navigation and Top-Reset View Transitions | Approved |
 | D052 | Rig Detail Compact Density | Approved |
 | D053 | Rig Media Completeness and Tutorial Audit | Approved |
 | D054 | Intermediate Rig Tier Membership | Approved |
@@ -684,9 +684,20 @@ A search field near the top of the Dashboard is approved future direction, but i
 
 Permanent principle: **search is a direct field interaction, not an extra navigation destination.**
 
-# D051 – Persistent Parent Navigation and Top-Reset View Transitions
+# D051 – Persistent Navigation and Top-Reset View Transitions
 
-Nested views keep their Parent/Home controls available while the user scrolls. The shared control group uses a compact sticky/floating treatment that remains legible, keyboard accessible, touch usable, and visually subordinate to the page content.
+Every non-Dashboard application view keeps its applicable navigation controls available while the user scrolls.
+
+The canonical visual treatment is one shared compact sticky/floating navigation container that remains legible, keyboard accessible, touch usable, responsive, and visually subordinate to page content.
+
+Standard view rules are:
+
+- Root application views use the shared floating container with one non-duplicative `← Home` control because Parent and Home would resolve to the same Dashboard destination.
+- Nested browse, search, detail, and other child views use the same shared floating container with `← Parent` and `Home` controls.
+- Renderer-based standard views should generate this markup through the shared navigation helper rather than maintain root-specific and nested-specific markup paths.
+- Specialized workflows may use dedicated control behavior when justified, but should preserve the same floating-container visual treatment unless a deliberate documented exception is approved.
+- A bare sticky navigation button is not the normal root-page pattern.
+- The Dashboard is the normal exception because it is already the application root destination.
 
 All explicit application view transitions start the destination at the top, including:
 
@@ -696,7 +707,7 @@ All explicit application view transitions start the destination at the top, incl
 
 The earlier runtime behavior that restored a parent's remembered scroll position is superseded. Application view routing no longer needs per-view or per-Rig remembered scroll-position state for Parent navigation.
 
-Permanent principle: **navigation stays reachable while scrolling, and every destination opens from a predictable top position.**
+Permanent principle: **navigation uses one shared visible floating treatment across root and nested views, stays reachable while scrolling, and every destination opens from a predictable top position.**
 
 # D052 – Rig Detail Compact Density
 

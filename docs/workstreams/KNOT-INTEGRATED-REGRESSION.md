@@ -1,14 +1,14 @@
 # Freshwater Fishing Companion — Knot Integrated Regression
 
 **Document Status:** Approved  
-**Implementation Status:** Source Regression PASS / Runtime Navigation Validation Pending  
+**Implementation Status:** Source Regression PASS / Shared Navigation Correction Built / Runtime Validation Pending  
 **Milestone:** Knots  
 **Recorded:** 2026-08-17  
 **Runtime Environment:** Windows Desktop + Brave Browser + GitHub Desktop
 
 # Purpose
 
-This workstream records the integrated source-level regression pass after completion of Knot Production Packages 1–4 and after the site-wide floating-navigation correction.
+This workstream records the integrated source-level regression pass after completion of Knot Production Packages 1–4 and the site-wide floating-navigation correction work.
 
 The goal is to verify that the current GitHub `main` still contains the approved Knot data, media, routing, renderer integration, and navigation behavior before final milestone runtime closeout.
 
@@ -16,13 +16,11 @@ The goal is to verify that the current GitHub `main` still contains the approved
 
 GitHub `main` is authoritative.
 
-Source baseline inspected during this pass:
+Current package baseline:
 
-`d01d8c2aaf45fe12c07663d5b6625d762faf83a1` — `Sticky Home Navigation Fix - Site-wide`
+`1105ce62cb092041cc632674a422034eec857337` — `Knots - Integrated Regression Source Pass`
 
-The commit changes only `forest-journal.css` and adds sticky positioning to the existing root-view Home control.
-
-No Knot, Reel Setup, Rig, data, renderer, route, or media source file changed in that commit.
+The Knot source/data/media baseline remained unchanged through that commit. The navigation correction package built from this baseline changes only the shared renderer navigation markup, the temporary root-navigation CSS exception, and the documentation that governs the site-wide navigation standard.
 
 # Integrated Source Regression
 
@@ -83,24 +81,23 @@ Confirmed:
 
 ## Shared Renderer and Application Coordinator
 
-**Status:** PASS
+**Regression Status:** PASS  
+**Navigation Correction Status:** BUILT / RUNTIME PENDING
 
-Verified current blobs:
+Baseline blobs before the new shared-navigation package:
 
 - `view-renderer.js` — `793d8563ae338de0aa59335fcac1c520df3eb4e6`
 - `script.js` — `d23c05a879fc6b27e0e6c53905e126f34efbce6b`
 
-These remain unchanged from the validated Knot implementation baseline.
+The new navigation package intentionally changes `view-renderer.js` to centralize standard root and nested navigation markup through `buildPageNavigationMarkup()`.
 
-Confirmed source architecture still supports:
+The shared helper now defines:
 
-- Knot landing search and task navigation,
-- Knot collection browse views,
-- Knot detail routing,
-- Rig ↔ Knot contextual navigation,
-- Reel Setup context preservation,
-- Parent/Home nested navigation,
-- top-reset view transitions.
+- root view navigation — one `← Home` control inside `.page-navigation-group`,
+- nested view navigation — `← Parent` + `Home` inside the same `.page-navigation-group`,
+- one shared visual/structural component for future standard renderer-based views.
+
+The application coordinator and route behavior are not changed by this correction.
 
 ## Load Order
 
@@ -122,46 +119,57 @@ This preserves the intentional Knot media renderer integration layer.
 
 # Site-Wide Floating Navigation Correction
 
-**Source Status:** PASS  
+**Source Status:** CORRECTION BUILT  
 **Runtime Status:** PENDING
 
-The current root-view correction is contained only in `forest-journal.css` and applies sticky positioning to the existing direct child Home navigation control used by root application views.
+The first root-navigation correction made bare root Home buttons sticky. Runtime review on 2026-08-17 confirmed that the root control was reachable, but its presentation was less visible than nested navigation because the root button did not receive the nested `.page-navigation-group` container treatment.
 
-Nested browse/detail views continue to use the existing `.page-navigation-group` sticky behavior.
+That finding is treated as a validation failure requiring correction before closeout.
 
-Reel Setup continues to use its existing dedicated sticky navigation container.
+The newest correction:
+
+- adds shared `buildPageNavigationMarkup()` generation to `view-renderer.js`,
+- uses the same `.page-navigation-group` container for standard root and nested renderer-based views,
+- keeps a single non-duplicative `← Home` control on root pages,
+- preserves Parent + Home controls on nested pages,
+- removes the temporary root-specific sticky selector from `forest-journal.css`,
+- leaves Reel Setup's specialized navigation behavior unchanged,
+- establishes the shared container as the required visual pattern for future root and nested pages.
 
 Required Brave runtime validation remains:
 
-- Rig Guide root — floating Home,
-- Knot Guide root — floating Home,
-- Fish Guide root — floating Home,
-- one additional root view such as My Tackle or Settings — floating Home,
+- Rig Guide root — shared floating Home container,
+- Knot Guide root — shared floating Home container,
+- Fish Guide root — shared floating Home container,
+- one additional root view such as My Tackle or Settings — shared floating Home container,
 - representative nested Rig or Knot view — existing Parent + Home controls remain correct,
-- no horizontal overflow or content obstruction at narrow widths.
+- Reel Setup navigation remains correct,
+- no horizontal overflow or content obstruction at narrow widths,
+- keyboard focus remains visible and usable.
 
 # GitHub Pages Deployment Note
 
-The first Pages deployment attempt for commit `d01d8c2aaf45fe12c07663d5b6625d762faf83a1` encountered a GitHub-side deployment-service failure and subsequently remained queued before job creation.
+The earlier GitHub Pages service incident is no longer blocking validation. GitHub Pages successfully deployed commit `1105ce62cb092041cc632674a422034eec857337` in workflow run `32061454791`.
 
-This is tracked as an infrastructure/runtime-validation blocker only. No production-source defect has been identified from that Pages failure.
-
-The next legitimate repository update should be allowed to trigger a fresh Pages deployment. Once a successful deployment is available, complete the pending Brave runtime navigation checks before final Knots milestone closeout.
+The new shared-navigation correction must be pushed and successfully deployed before its runtime validation begins.
 
 # Current Result
 
-**SOURCE REGRESSION: PASS**
+**INTEGRATED KNOT SOURCE REGRESSION: PASS**
 
-No integrated Knot source regression was found.
+**SITE-WIDE SHARED NAVIGATION CORRECTION: BUILT / NOT YET RUNTIME-VALIDATED**
 
-The Knots implementation remains functionally complete through Production Package 4. Final milestone closeout is blocked only by the pending deployed-site navigation/runtime validation and subsequent global documentation reconciliation.
+No integrated Knot data, media, route, or instructional-content regression was found.
+
+The Knots implementation remains functionally complete through Production Package 4. Final milestone closeout remains pending the corrected shared-navigation deployment/runtime pass and subsequent global documentation reconciliation.
 
 # Next Step
 
-After the next successful GitHub Pages deployment:
+After the shared-navigation correction is pushed and GitHub-verified:
 
-1. run the pending Brave floating-navigation checks,
-2. run a representative Knot landing → collection → detail → related Rig / Reel Setup regression,
-3. confirm normal-navigation console health,
-4. reconcile `CHANGELOG.md`, `HANDOFF.md`, `MILESTONES.md`, and other milestone-level records,
-5. formally close the Knots milestone before beginning Fish Guide implementation.
+1. confirm a successful GitHub Pages deployment,
+2. rerun the Brave floating-navigation validation block,
+3. run a representative Knot landing → collection → detail → related Rig / Reel Setup regression,
+4. confirm normal-navigation console health,
+5. reconcile final milestone-level records,
+6. formally close the Knots milestone before beginning Fish Guide implementation.

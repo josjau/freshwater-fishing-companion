@@ -27,6 +27,20 @@ function buildSearchControlsMarkup(inputId, placeholder) {
     `;
 }
 
+function buildPageNavigationMarkup(parentLabel = null) {
+    const parentMarkup = parentLabel
+        ? `<button class="page-navigation" type="button" data-parent-navigation>← ${parentLabel}</button>`
+        : "";
+    const homeLabel = parentLabel ? "Home" : "← Home";
+
+    return `
+        <div class="page-navigation-group">
+            ${parentMarkup}
+            <button class="page-navigation" type="button" data-home-navigation>${homeLabel}</button>
+        </div>
+    `;
+}
+
 function initializeSearchControls(form, input, clearButton, onUpdate) {
     if (!input || typeof onUpdate !== "function") return;
 
@@ -94,7 +108,7 @@ function renderView(appMain, viewConfig) {
 
     appMain.innerHTML = `
         <section class="content-view" aria-labelledby="${viewConfig.headingId}">
-            <button class="page-navigation" type="button" data-home-navigation>← Home</button>
+            ${buildPageNavigationMarkup()}
             <h2 id="${viewConfig.headingId}">${viewConfig.title}</h2>
             <p>${viewConfig.description}</p>
             ${searchMarkup}
@@ -154,10 +168,7 @@ function renderSearchView(appMain, searchConfig) {
 
     appMain.innerHTML = `
         <section class="content-view" aria-labelledby="${searchConfig.headingId}">
-            <div class="page-navigation-group">
-                <button class="page-navigation" type="button" data-parent-navigation>← ${searchConfig.parentLabel}</button>
-                <button class="page-navigation" type="button" data-home-navigation>Home</button>
-            </div>
+            ${buildPageNavigationMarkup(searchConfig.parentLabel)}
             <h2 id="${searchConfig.headingId}">${searchConfig.title}</h2>
             <p>${searchConfig.description}</p>
             <form class="search-form" data-search-form>
@@ -278,7 +289,7 @@ function renderKnotGuideLanding(appMain, config) {
 
     appMain.innerHTML = `
         <section class="content-view knot-guide-view" aria-labelledby="knots-title">
-            <button class="page-navigation" type="button" data-home-navigation>← Home</button>
+            ${buildPageNavigationMarkup()}
             <h2 id="knots-title">Knots</h2>
             <p>Start with the connection you need, search by name, or browse a Knot collection.</p>
             <form class="search-form section-search-form" data-knot-search-form>
@@ -503,10 +514,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--knot" aria-labelledby="knot-detail-title">
-            <div class="page-navigation-group">
-                <button class="page-navigation" type="button" data-parent-navigation>← ${detailConfig.parentLabel}</button>
-                <button class="page-navigation" type="button" data-home-navigation>Home</button>
-            </div>
+            ${buildPageNavigationMarkup(detailConfig.parentLabel)}
             <header class="detail-header knot-detail-header${isCore ? " detail-header--core knot-detail-header--core" : ""}">
                 ${isCore ? '<p class="detail-core-badge">Core Knot</p>' : ""}
                 <p class="detail-eyebrow">${record.difficulty}</p>
@@ -806,10 +814,7 @@ function renderInstructionDetail(appMain, detailConfig) {
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--rig-compact" aria-labelledby="rig-detail-title">
-            <div class="page-navigation-group">
-                <button class="page-navigation" type="button" data-parent-navigation>← ${detailConfig.parentLabel}</button>
-                <button class="page-navigation" type="button" data-home-navigation>Home</button>
-            </div>
+            ${buildPageNavigationMarkup(detailConfig.parentLabel)}
             <header class="detail-header${isCoreRig ? " detail-header--core" : ""}">
                 ${isCoreRig ? '<p class="detail-core-badge">Core Rig</p>' : ""}
                 <p class="detail-eyebrow">${record.difficulty}</p>

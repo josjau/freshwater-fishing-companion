@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Navigation Page Standard
 
-**Document Revision:** 1.0.2  
+**Document Revision:** 1.0.3  
 **Document Status:** Approved  
-**Implementation Status:** Current  
-**Last Updated:** 2026-08-13
+**Implementation Status:** Current / Shared Floating Navigation Runtime Validation Pending  
+**Last Updated:** 2026-08-17
 
 # Purpose
 
@@ -33,6 +33,25 @@ A section landing/navigation page should use this order whenever the domain supp
 4. **Category / collection cards** — broad destinations that lead to grouped records.
 
 The hierarchy should remain concise and visually uncluttered. New record categories or features should not be inserted above Search or approved special-navigation sections without an explicit design decision.
+
+# Persistent Navigation Component
+
+Every non-Dashboard application view uses the site-wide floating-navigation standard defined in `workstreams/SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md`.
+
+The canonical visual component is the shared floating navigation container.
+
+Rules:
+
+- Root section pages use the shared floating container with one non-duplicative `← Home` control.
+- Nested browse, search, and detail pages use the same shared floating container with `← Parent` and `Home` controls.
+- Renderer-based pages should use the shared `buildPageNavigationMarkup()` path rather than duplicating navigation markup.
+- A bare sticky navigation button is not the normal root-page treatment.
+- New sections and new nested pages inherit this standard automatically; they should not create a separate navigation appearance merely because the page is new or belongs to a different domain.
+- Specialized workflows may retain dedicated navigation behavior when justified, but should reuse the established floating-container visual treatment unless an explicit documented exception is approved.
+- Navigation must remain keyboard accessible, touch usable, responsive, and visible without obscuring content.
+- Parent/Home routing continues to follow D051 top-reset behavior.
+
+The Dashboard itself is the normal exception because it is already the application root destination.
 
 # Search
 
@@ -117,7 +136,7 @@ A browse page should:
 - clearly identify the selected collection,
 - provide scoped Search when useful,
 - display the collection's individual records,
-- preserve the established Parent/Home navigation pattern,
+- preserve the established shared Parent/Home floating-navigation pattern,
 - use a predictable sort or approved curated order,
 - open selected records into their detail views.
 
@@ -165,6 +184,7 @@ A domain may deviate when a materially better user workflow exists, but the exce
 - beginner-first usability,
 - scalable grouping,
 - accessible actionable/unavailable behavior,
+- the shared floating-navigation component or a deliberately documented equivalent,
 - predictable Parent/Home navigation.
 
 Material deviations from this standard should be documented in the relevant workstream approval before production implementation.
@@ -190,12 +210,15 @@ The **What are you trying to do?** section itself remains visually neutral; prio
 
 Selecting a Knot collection opens the corresponding grouped browse page. Individual Core Knots are not duplicated directly on the landing page.
 
+The Knot root uses the same shared floating navigation container as nested Knot browse/detail pages, with one non-duplicative `← Home` control on the root and Parent + Home controls on nested views.
+
 The Knot-specific implementation details remain controlled by `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`.
 
 # Related Documents
 
 - `STYLE_GUIDE.md`
 - `DETAIL-PAGE-STANDARD.md`
+- `workstreams/SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md`
 - `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`
 - `workstreams/KNOT-SEARCH-APPROVAL.md`
 - `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
