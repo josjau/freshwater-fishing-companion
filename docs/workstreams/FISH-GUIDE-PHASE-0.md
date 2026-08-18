@@ -303,6 +303,61 @@ Examples include:
 
 Official state species lists do not automatically become the Companion's Version 1 library.
 
+# Block 0.3B — Catfish Group Audit
+
+**Status:** APPROVED / LOCKED / COMPLETE
+
+## Version 1 Inclusion
+
+Include in Version 1:
+
+1. Channel Catfish
+2. Blue Catfish
+3. Flathead Catfish
+4. Black Bullhead
+5. Yellow Bullhead
+
+Brown Bullhead is **deferred, not rejected**.
+
+Brown Bullhead is a Parking Lot item that must be deliberately revisited before the final Version 1 Fish library is closed. Its current exclusion is not permanent.
+
+Do not create a generic `bullhead` canonical Fish record. Black Bullhead and Yellow Bullhead remain separate species records.
+
+## Approved Catfish Identification / Confusion Relationships
+
+Create exactly these four Version 1 pairwise relationships under `FISH_IDENTIFICATION_RELATIONSHIPS`:
+
+```text
+channel-catfish ↔ blue-catfish
+black-bullhead ↔ yellow-bullhead
+flathead-catfish ↔ black-bullhead
+flathead-catfish ↔ yellow-bullhead
+```
+
+Do not create an exhaustive catfish comparison matrix.
+
+The approved relationships are limited to pairs with genuine beginner field-identification value.
+
+Primary identification direction:
+
+- Channel Catfish vs Blue Catfish — emphasize the curved versus straighter anal-fin edge as the primary beginner discriminator, with other verified traits added only when useful.
+- Black Bullhead vs Yellow Bullhead — emphasize lower-jaw barbel color rather than relying on variable overall body color.
+- Flathead Catfish vs Black Bullhead — emphasize the Flathead's broad flattened head and projecting lower jaw versus the bullhead body/jaw profile.
+- Flathead Catfish vs Yellow Bullhead — use the same Flathead jaw/head distinction plus the Yellow Bullhead's light lower-jaw barbels where useful.
+
+No Version 1 pairwise relationship is currently required for:
+
+```text
+channel-catfish ↔ flathead-catfish
+blue-catfish ↔ flathead-catfish
+channel-catfish ↔ black-bullhead
+channel-catfish ↔ yellow-bullhead
+blue-catfish ↔ black-bullhead
+blue-catfish ↔ yellow-bullhead
+```
+
+If Brown Bullhead is later promoted into Version 1, the bullhead comparison set must be re-audited before implementation.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -315,18 +370,18 @@ Approved blocks:
 - Block 0.2C-1 — Fish identification/confusion relationship architecture
 - Block 0.2C-2 — Fish-to-Rig guidance architecture
 - Block 0.3A — species-library audit framework
+- Block 0.3B — Catfish group audit
 
 ## Next Block
 
-**Block 0.3B — Catfish Group Audit**
+**Block 0.3C — Black Bass Group Audit**
 
 Begin with:
 
-- Channel Catfish
-- Blue Catfish
-- Flathead Catfish
-- Bullhead scope
+- Largemouth Bass
+- Smallmouth Bass
+- Spotted Bass
 
-The goal is to determine Version 1 inclusion and identify the pairwise confusion relationships needed under `FISH_IDENTIFICATION_RELATIONSHIPS`.
+The goal is to confirm Version 1 inclusion and determine the minimum genuine pairwise identification/confusion relationships required among the three black-bass species.
 
 Do not begin production Fish source edits before Phase 0 design lock is complete.
