@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Site-Wide Floating Navigation Standard
 
 **Document Status:** Approved  
-**Implementation Status:** Runtime Validation In Progress / Reel Setup Correction Validated  
+**Implementation Status:** Runtime Validation In Progress / Narrow Viewport PASS  
 **Recorded:** 2026-08-14  
 **Last Updated:** 2026-08-17  
 **Scope:** Site-wide navigation UX
@@ -176,23 +176,37 @@ Retest confirmed:
 - Home remains functional,
 - Previous and Home destinations open at the top as required.
 
+## Block 2D — Narrow Viewport
+
+**Status:** PASS
+
+Microsoft Edge runtime validation confirmed at a phone-width layout:
+
+- no horizontal page scrolling,
+- floating navigation remains within the viewport,
+- controls fit or wrap cleanly,
+- no navigation control is clipped,
+- floating navigation does not obscure essential page content,
+- cards and text remain readable,
+- both Reel Setup and a representative nested Knot Detail remain usable.
+
 # Required Runtime Validation
 
 Completed:
 
 1. Rig Guide root — one visible floating `← Home` container. **PASS**
-2. Knot Guide root — one visible floating `← Home` container. **PASS**
-3. Fish Guide root — one visible floating `← Home` container. **PASS**
+2. Knot Guide root — same treatment. **PASS**
+3. Fish Guide root — same treatment. **PASS**
 4. At least one additional root view — same treatment. **PASS**
 5. Representative nested shared appearance — same visual treatment. **PASS**
 6. Representative Rig browse/detail Parent + Home behavior and top reset. **PASS**
 7. Representative Knot browse/detail Parent + Home behavior and top reset. **PASS**
 8. Reel Setup — one specialized Previous/Home floating container with no outer duplicate shell. **PASS**
 9. Reel Setup — Previous and Home remain functionally correct and top-reset correctly. **PASS**
+10. Narrow viewport — no horizontal overflow or content obstruction. **PASS**
 
 Remaining extended checks:
 
-10. Narrow viewport — controls wrap or fit without horizontal overflow or obscuring content.
 11. Keyboard navigation — visible focus and operable controls.
 12. Representative Knot → related Rig / Reel Setup traversal.
 13. Normal-navigation console health.
