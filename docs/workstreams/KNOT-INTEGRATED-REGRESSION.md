@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Knot Integrated Regression
 
 **Document Status:** Approved  
-**Implementation Status:** Source Regression PASS / Shared Navigation Appearance PASS / Reel Setup Correction Validated / Extended Runtime Validation Pending  
+**Implementation Status:** Source Regression PASS / Shared Navigation Appearance PASS / Reel Setup Correction Validated / Keyboard Navigation PASS / Extended Runtime Validation Pending  
 **Milestone:** Knots  
 **Recorded:** 2026-08-17  
 **Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
@@ -88,6 +88,8 @@ Confirmed:
 **Regression Status:** PASS  
 **Shared Navigation Appearance Status:** PASS  
 **Reel Setup Navigation Correction Status:** PASS  
+**Narrow Viewport Status:** PASS  
+**Keyboard Navigation Status:** PASS  
 **Extended Runtime Status:** PENDING
 
 The shared-navigation correction intentionally changed `view-renderer.js` to centralize standard Root and Nested navigation markup through `buildPageNavigationMarkup()`.
@@ -127,6 +129,8 @@ This preserves the intentional Knot media renderer integration layer.
 **Source Status:** PASS  
 **Shared Appearance Runtime Status:** PASS  
 **Reel Setup Runtime Status:** PASS  
+**Narrow Viewport Status:** PASS  
+**Keyboard Navigation Status:** PASS  
 **Extended Runtime Status:** PENDING
 
 The first root-navigation correction made bare root Home buttons sticky. Runtime review found that the Root treatment was materially less visible than the Nested `.page-navigation-group` treatment.
@@ -211,14 +215,38 @@ Runtime retest confirmed:
 - Home remains functional,
 - Previous and Home destinations open at the top.
 
+## Block 2D — Narrow Viewport
+
+**Status:** PASS
+
+Microsoft Edge runtime validation confirmed:
+
+- no horizontal page overflow,
+- floating navigation remains within the viewport,
+- controls fit or wrap cleanly,
+- no navigation controls are clipped,
+- essential content remains unobscured,
+- Reel Setup and representative nested Knot Detail views remain usable.
+
+## Block 2E — Keyboard Navigation
+
+**Status:** PASS
+
+Microsoft Edge keyboard-only validation confirmed:
+
+- Reel Setup floating-navigation controls receive visible focus,
+- focus order remains sensible,
+- Previous and Home are keyboard-operable,
+- representative Knot Detail Parent and Home controls receive visible focus,
+- Parent and Home are keyboard-operable,
+- no keyboard trap or hidden/ambiguous navigation focus was observed.
+
 # Remaining Extended Runtime Validation
 
 The following checks still remain before final navigation and Knots milestone closeout:
 
-1. Narrow viewport — no horizontal overflow or content obstruction.
-2. Keyboard navigation — visible focus and operable controls.
-3. Representative Knot landing → collection → detail → related Rig / Reel Setup traversal.
-4. Normal-navigation console health.
+1. Representative Knot landing → collection → detail → related Rig / Reel Setup traversal.
+2. Normal-navigation console health.
 
 # Current Result
 
@@ -232,17 +260,19 @@ The following checks still remain before final navigation and Knots milestone cl
 
 **REEL SETUP NAVIGATION: PASS AFTER CORRECTION**
 
+**NARROW VIEWPORT: PASS**
+
+**KEYBOARD NAVIGATION: PASS**
+
 **EXTENDED RUNTIME VALIDATION: PENDING**
 
 No integrated Knot data, media, route, or instructional-content regression was found.
 
-The Knots implementation remains functionally complete through Production Package 4. Final milestone closeout remains pending the remaining extended runtime validation and final global documentation reconciliation.
+The Knots implementation remains functionally complete through Production Package 4. Final milestone closeout remains pending the remaining integrated traversal and console-health checks plus final global documentation reconciliation.
 
 # Next Step
 
-1. Complete narrow-viewport validation.
-2. Complete keyboard navigation validation.
-3. Complete representative Knot → related Rig / Reel Setup traversal.
-4. Confirm normal-navigation console health.
-5. Reconcile final milestone-level records.
-6. Formally close the Knots milestone before beginning Fish Guide implementation.
+1. Complete representative Knot landing → collection → detail → related Rig / Reel Setup traversal.
+2. Confirm normal-navigation console health.
+3. Reconcile final milestone-level records.
+4. Formally close the Knots milestone before beginning Fish Guide implementation.
