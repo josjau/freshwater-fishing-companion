@@ -20,19 +20,24 @@ No production Fish source changes are authorized by this workstream alone.
 
 # Block 0.1 — Version 1 Regional Scope Boundary
 
-**Status:** APPROVED
+**Status:** APPROVED / CORRECTED / LOCKED
 
-Version 1 content prioritization covers the union of three primary regions:
+Version 1 content prioritization covers the union of four primary regions forming the project's Four-State Ozark focus:
 
 - Northeast Oklahoma
-- Southwest Kansas
+- Southeast Kansas
+- Southwest Missouri
 - Northwest Arkansas
+
+This four-state scope supersedes the earlier three-region wording that incorrectly identified Southwest Kansas and omitted Southwest Missouri.
 
 Approved inclusion rule:
 
-> Version 1 Fish Guide includes freshwater fish that a new angler is reasonably likely to catch, intentionally target, or commonly confuse with another supported species in northeast Oklahoma, southwest Kansas, or northwest Arkansas.
+> Version 1 Fish Guide includes freshwater fish that a new angler is reasonably likely to catch, intentionally target, or commonly confuse with another supported species in northeast Oklahoma, southeast Kansas, southwest Missouri, or northwest Arkansas.
 
-A species may qualify through any one of the three regions. It does not need to be common in all three.
+A species may qualify through any one of the four regions. It does not need to be common in all four.
+
+The four-state scope reflects shared Ozark-region fishing environments and adjoining watershed systems, but species inclusion must still be based on verified regional occurrence and practical angling value. Do not assume every river or fish population is hydrologically connected across the entire four-state area.
 
 Inclusion is based on practical field value rather than exhaustive biological coverage.
 
@@ -44,7 +49,7 @@ A Fish belongs in Version 1 when one or more of the following apply:
 4. Regional importance.
 5. Connected-knowledge value for Rig, recommendation, habitat, or future Catch Log workflows.
 
-The canonical Fish entity remains geographically neutral. Do not add state-specific Boolean fields such as `isOklahomaFish`, `isKansasFish`, or `isArkansasFish`.
+The canonical Fish entity remains geographically neutral. Do not add state-specific Boolean fields such as `isOklahomaFish`, `isKansasFish`, `isMissouriFish`, or `isArkansasFish`.
 
 The existing 12 Fish records are seed data subject to audit and are not automatically grandfathered into the final Version 1 library.
 
@@ -139,6 +144,7 @@ regulationResourceIds
 imageIds
 isOklahomaFish
 isKansasFish
+isMissouriFish
 isArkansasFish
 searchKeywords
 averageWeight
@@ -303,9 +309,21 @@ Examples include:
 
 Official state species lists do not automatically become the Companion's Version 1 library.
 
+## Four-State Scope Correction Checkpoint
+
+The Block 0.1 correction from Southwest Kansas to Southeast Kansas and the addition of Southwest Missouri occurred after Blocks 0.3B and 0.3C were approved.
+
+Therefore:
+
+- Blocks 0.3B and 0.3C remain approved and are not automatically reopened.
+- Their inclusion and identification outcomes must receive a targeted four-state geography revalidation before the final Version 1 species library is locked.
+- Revalidation should change an approved decision only if authoritative Southeast Kansas or Southwest Missouri evidence exposes a genuine omission, conflict, or identification requirement.
+- Block 0.3D and all subsequent species audits use the corrected four-state scope immediately.
+- Before final Version 1 library lock, perform a four-state gap audit to catch species whose importance becomes apparent only after adding Southeast Kansas or Southwest Missouri.
+
 # Block 0.3B — Catfish Group Audit
 
-**Status:** APPROVED / LOCKED / COMPLETE
+**Status:** APPROVED / LOCKED / COMPLETE — FOUR-STATE GEOGRAPHY REVALIDATION REQUIRED BEFORE FINAL LIBRARY LOCK
 
 ## Version 1 Inclusion
 
@@ -360,7 +378,7 @@ If Brown Bullhead is later promoted into Version 1, the bullhead comparison set 
 
 # Block 0.3C — Black Bass Group Audit
 
-**Status:** APPROVED / LOCKED / COMPLETE
+**Status:** APPROVED / LOCKED / COMPLETE — FOUR-STATE GEOGRAPHY REVALIDATION REQUIRED BEFORE FINAL LIBRARY LOCK
 
 ## Version 1 Inclusion
 
@@ -409,26 +427,37 @@ Supporting rules:
 
 Approved blocks:
 
-- Block 0.1 — regional scope boundary
+- Block 0.1 — Four-State Ozark regional scope boundary (corrected)
 - Block 0.2A — Fish entity and relationship ownership
 - Block 0.2B — canonical Version 1 Fish schema
 - Block 0.2C-1 — Fish identification/confusion relationship architecture
 - Block 0.2C-2 — Fish-to-Rig guidance architecture
 - Block 0.3A — species-library audit framework
-- Block 0.3B — Catfish group audit
-- Block 0.3C — Black Bass group audit
+- Block 0.3B — Catfish group audit, pending final four-state geography revalidation
+- Block 0.3C — Black Bass group audit, pending final four-state geography revalidation
 
-## Next Block
+## Current Open Block
 
 **Block 0.3D — Sunfish Group Audit**
 
-Begin with:
+Use the corrected Four-State Ozark scope:
+
+- Northeast Oklahoma
+- Southeast Kansas
+- Southwest Missouri
+- Northwest Arkansas
+
+Current discussion candidates include:
 
 - Bluegill
 - Redear Sunfish
 - Green Sunfish
+- Longear Sunfish
+- Rock Bass
+- Ozark Bass
+- Warmouth
 
-Evaluate whether Warmouth and Rock Bass have enough practical regional or identification value to enter the Version 1 discussion during this group audit.
+Warmouth must be reevaluated under the corrected geography; the prior tentative Defer recommendation is withdrawn.
 
 The goal is to confirm Version 1 inclusion and determine the minimum genuine pairwise identification/confusion relationships required among the approved sunfish-group species.
 
