@@ -886,6 +886,189 @@ Decorative Fish media
 
 This coverage standard is intentionally adaptable. During source acquisition, canonical record authoring, implementation, or runtime review, a Fish may receive a different or expanded media treatment when verified identification needs demonstrate that the default treatment is insufficient. Any material exception must preserve identification accuracy, licensing/provenance requirements, and the established Media registry ownership model.
 
+# Block 0.4B — Fish Media Source, Licensing, Provenance, and Diagnostic-Media Rules
+
+**Status:** APPROVED / LOCKED
+
+Fish media must be both technically verified and rights-verified. Technical authority and reuse permission are separate checks; an authoritative website does not automatically make every hosted image reusable.
+
+## Source Hierarchy
+
+For primary Fish identification media, use this preferred acquisition order:
+
+1. Confirmed public-domain photograph from an authoritative or otherwise trustworthy source.
+2. CC0 photograph.
+3. CC BY photograph with all required attribution preserved.
+4. Photograph with explicit documented permission sufficient for local project bundling and intended use.
+5. CC BY-SA photograph only when the project deliberately accepts and can satisfy the applicable ShareAlike obligations.
+6. When no suitable photograph can be legally bundled, use a verified scientific illustration or an original project identification illustration built from independently verified anatomical references.
+
+Verify rights on the individual asset, not merely the site, agency, repository, or organization hosting it.
+
+Wikimedia Commons is a discovery/repository source rather than a license category. For any Commons asset, record and comply with the individual file's actual creator, license, attribution, and reuse requirements.
+
+## Normally Accepted Local-Bundling Rights
+
+Preferred production-friendly rights categories are:
+
+```text
+Public Domain
+CC0
+CC BY
+Explicit project-compatible permission
+```
+
+CC BY-SA is conditional rather than preferred because modified or derivative assets may carry ShareAlike obligations.
+
+Do not normally bundle Fish media under:
+
+```text
+CC BY-NC
+CC BY-NC-SA
+CC BY-ND
+CC BY-NC-ND
+All Rights Reserved without explicit permission
+Unknown or ambiguous licensing
+```
+
+A source that is unsuitable for repository bundling may still be used as technical identification/reference evidence where lawful, but it must not be copied into the production repository without suitable rights.
+
+## Local Bundling and External References
+
+Primary Fish identification media should be locally bundled whenever reuse rights permit.
+
+Rules:
+
+- A remotely hotlinked third-party image does not satisfy the required primary-media coverage standard.
+- Third-party imagery with unclear or insufficient reuse rights must not be copied into the repository.
+- Third-party images must not be hotlinked as normal production imagery merely to avoid licensing or storage work.
+- When a trustworthy authoritative visual is useful but local reuse rights are unavailable, the application may link to the authoritative source page or dedicated media page as a supplemental external reference.
+- If no reusable primary photograph can be acquired, prefer a verified reusable scientific illustration or validated original project identification illustration rather than weakening the licensing standard.
+
+## Media Provenance
+
+Fish media reuses the existing `data/media.js` Media registry and existing `license` object rather than creating a separate Fish-specific provenance system.
+
+Retain the existing license fields:
+
+```text
+status
+type
+creator
+sourceUrl
+licenseUrl
+attributionRequired
+commercialUseAllowed
+modificationAllowed
+reviewedDate
+```
+
+Add these fields to the Media license/provenance model when Fish media implementation begins:
+
+```text
+attributionText
+changesMade
+```
+
+`attributionText` stores the exact approved credit line when attribution is required.
+
+`changesMade` records material processing or adaptation relevant to licensing and provenance, such as cropping, resizing, format conversion, or annotation. Use `None` when no meaningful change was made.
+
+Do not add additional provenance fields unless implementation demonstrates a concrete requirement.
+
+## Media Role
+
+Add a Media-level semantic field:
+
+```text
+role
+```
+
+Fish-related Version 1 values are:
+
+```text
+primary-identification
+supplemental-identification
+comparison
+```
+
+Rules:
+
+- Every active Version 1 Fish has exactly one active `primary-identification` media record.
+- A Fish may have zero or more `supplemental-identification` records.
+- An identification relationship may have zero or more `comparison` media records.
+- Do not infer primary/supporting meaning from file order, filenames, or `productionStatus`.
+
+## Diagnostic-Media Ownership
+
+Species-specific diagnostic media belongs to the Fish:
+
+```text
+ownerType: "fish"
+ownerId: <canonical Fish ID>
+role: "supplemental-identification"
+```
+
+Pairwise comparison media belongs to the identification relationship rather than arbitrarily to one Fish:
+
+```text
+ownerType: "fish-identification"
+ownerId: <FISH_IDENTIFICATION_RELATIONSHIPS.id>
+role: "comparison"
+```
+
+This preserves single-owner relationship architecture and allows both Fish detail pages to derive the same comparison media from the one canonical relationship record.
+
+## Canonical Text Remains Authoritative
+
+Diagnostic media illustrates canonical identification facts; it does not independently define them.
+
+- `Fish.identificationTraits[]` remains the source for what a Fish looks like.
+- `FISH_IDENTIFICATION_RELATIONSHIPS.distinctions[]` remains the source for how a supported pair differs.
+- A photo, illustration, annotation, or comparison diagram must not silently introduce a new identification rule that is absent from or conflicts with the canonical text.
+- If verified research requires a different distinction, correct the canonical identification data first and then update the associated media.
+
+## Original Diagnostic Drawings and Diagrams
+
+Original project drawings, scientific-style illustrations, and focused diagnostic diagrams are allowed when they improve understanding of features that a normal photograph does not show clearly.
+
+Likely use cases include:
+
+- mouth-hinge position,
+- anal-fin shape,
+- dorsal-spine count or pattern,
+- tongue tooth patches,
+- cheek scaling,
+- opercular/ear-flap details,
+- tail markings,
+- other approved diagnostic structures.
+
+Original diagnostic artwork must be built from verified anatomical/reference evidence. Do not trace or closely reproduce copyrighted artwork unless the source license explicitly permits that derivative use.
+
+For difficult anatomy, validate the project graphic against more than one authoritative reference whenever practical.
+
+## Identification-Photo Processing Limits
+
+Permitted normal production processing includes:
+
+- crop,
+- resize,
+- compression,
+- format conversion,
+- minor exposure or color correction when needed for faithful reproduction.
+
+Do not use edits that can alter diagnostic evidence, including:
+
+- generative fill on the Fish,
+- changing markings,
+- changing fin shape,
+- changing body proportions,
+- adding or removing spots/bars,
+- changing mouth position,
+- artificially recoloring diagnostic areas.
+
+Arrows, circles, reference lines, or similar annotations are acceptable when they are clearly overlays and the underlying diagnostic Fish pixels remain intact. When substantial annotation is needed, prefer a separate diagnostic diagram rather than heavily modifying the primary photograph.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -903,17 +1086,19 @@ Completed and locked Phase 0 work:
 - Final Version 1 species library — **30 Fish / LOCKED**
 - Version 1 identification graph — **20 pairwise relationships / LOCKED**
 - Block 0.4A — Fish Media Coverage Standard
+- Block 0.4B — Fish Media Source, Licensing, Provenance, and Diagnostic-Media Rules
 
 ## Next Discussion
 
-**Block 0.4B — Fish Media Source, Licensing, Provenance, and Diagnostic-Media Rules**
+**Block 0.5 — Fish Landing / Browse / Search Information Architecture**
 
 Do not begin production Fish source edits yet.
 
 At the next discussion:
 
-1. Define the accepted source hierarchy for primary and supplemental Fish media.
-2. Define licensing/provenance records required for locally bundled media.
-3. Decide when externally hosted authoritative media may be linked rather than bundled.
-4. Define how pairwise identification diagrams/comparison graphics relate to Fish-owned media and `FISH_IDENTIFICATION_RELATIONSHIPS`.
-5. Preserve Block 0.4A as the default coverage rule while allowing verified species-specific exceptions when necessary.
+1. Define the Fish Guide landing-page hierarchy under the shared Navigation Page Standard.
+2. Decide which browse collections are useful for a 30-Fish library.
+3. Decide whether Browse by Family and Browse by Habitat remain useful, are renamed, or are removed.
+4. Define alphabetical/category browsing, collection sort rules, and scoped browse behavior.
+5. Define Fish search fields and search-result information density.
+6. Preserve the existing shared floating-navigation, search-first, mobile-first, and connected-knowledge standards.
