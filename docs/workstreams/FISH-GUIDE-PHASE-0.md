@@ -500,6 +500,37 @@ Northern Rock Bass
 
 Do not silently rename the established project species during implementation. Resolve the display-name choice when canonical Fish records are authored, preserving the alternate legitimate common name in `aliases[]` as appropriate.
 
+# Block 0.3E — Crappie Group Audit
+
+**Status:** APPROVED / LOCKED / COMPLETE
+
+All Block 0.3E decisions use the corrected Four-State Ozark scope.
+
+## Version 1 Inclusion
+
+Include in Version 1:
+
+1. Black Crappie
+2. White Crappie
+
+Do not create a separate Version 1 canonical Fish record for Black Crappie × White Crappie hybrids. Hybrid crappie may be reconsidered later only if the Four-State Gap Audit or subsequent usability work demonstrates a practical identification requirement.
+
+## Approved Crappie Identification / Confusion Relationship
+
+Create this Version 1 pairwise relationship under `FISH_IDENTIFICATION_RELATIONSHIPS`:
+
+```text
+black-crappie ↔ white-crappie
+```
+
+Approved beginner identification direction:
+
+- Black Crappie — irregular/scattered dark spotting without an organized vertical-bar pattern.
+- White Crappie — dark markings organized into distinct vertical bars or bands.
+- When markings are unclear, use dorsal-spine count as the structural confirmation: Black Crappie generally have 7–8 dorsal spines; White Crappie generally have 5–6.
+- Use the visible marking pattern as the first beginner-facing cue and spine count as confirmation rather than requiring spine counting as the first identification step.
+- Water clarity and habitat preference may support species context but must not be used as the identifying characteristic because the two species can occupy the same fishery.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -515,16 +546,18 @@ Approved blocks:
 - Block 0.3B — Catfish group audit, pending final four-state geography revalidation
 - Block 0.3C — Black Bass group audit, pending final four-state geography revalidation
 - Block 0.3D — Sunfish group audit
+- Block 0.3E — Crappie group audit
 
 ## Next Block
 
-**Block 0.3E — Crappie Group Audit**
+**Block 0.3F — Temperate Bass Group Audit**
 
 Begin with:
 
-- Black Crappie
-- White Crappie
+- White Bass
+- Striped Bass
+- Hybrid Striped Bass / Wiper
 
-The goal is to confirm Version 1 inclusion and determine whether a dedicated Black Crappie ↔ White Crappie identification/confusion relationship is required under the Four-State Ozark scope.
+The goal is to confirm Version 1 inclusion and determine the minimum genuine pairwise identification/confusion relationships required among the supported temperate-bass species under the Four-State Ozark scope.
 
 Do not begin production Fish source edits before Phase 0 design lock is complete.
