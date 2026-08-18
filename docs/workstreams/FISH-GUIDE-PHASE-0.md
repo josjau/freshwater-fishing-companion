@@ -358,6 +358,51 @@ blue-catfish ↔ yellow-bullhead
 
 If Brown Bullhead is later promoted into Version 1, the bullhead comparison set must be re-audited before implementation.
 
+# Block 0.3C — Black Bass Group Audit
+
+**Status:** APPROVED / LOCKED / COMPLETE
+
+## Version 1 Inclusion
+
+Include in Version 1:
+
+1. Largemouth Bass
+2. Smallmouth Bass
+3. Spotted Bass
+
+No Black Bass candidate is classified Evaluate or Defer in Version 1.
+
+Do not create separate Version 1 canonical Fish records for Florida-strain Largemouth Bass, other black-bass strains, or hybrids unless a later demonstrated identification or regulatory requirement explicitly reopens this decision.
+
+## Approved Black Bass Identification / Confusion Relationships
+
+Create exactly these three Version 1 pairwise relationships under `FISH_IDENTIFICATION_RELATIONSHIPS`:
+
+```text
+largemouth-bass ↔ spotted-bass
+largemouth-bass ↔ smallmouth-bass
+smallmouth-bass ↔ spotted-bass
+```
+
+All three relationships are justified because the species overlap regionally and are genuinely confusable to beginner anglers.
+
+## Approved Primary Identification Standard
+
+For the Black Bass group, use mouth-hinge position relative to the rear edge of the eye as the primary beginner-facing structural discriminator:
+
+```text
+Largemouth Bass → mouth hinge extends behind the rear edge of the eye
+Spotted Bass    → mouth hinge aligns approximately with the rear edge of the eye
+Smallmouth Bass → mouth hinge ends in front of the rear edge of the eye
+```
+
+Supporting rules:
+
+- Body color is supporting information, not the primary identification criterion, because coloration can vary with water conditions and individual fish.
+- Tongue tooth patch may be used as secondary confirmation where useful, but it is not sufficient by itself to separate Smallmouth Bass from Spotted Bass.
+- Habitat may support identification context but must not replace physical identification traits.
+- Prefer authoritative structural traits over variable coloration when a reliable structural discriminator exists.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -371,17 +416,20 @@ Approved blocks:
 - Block 0.2C-2 — Fish-to-Rig guidance architecture
 - Block 0.3A — species-library audit framework
 - Block 0.3B — Catfish group audit
+- Block 0.3C — Black Bass group audit
 
 ## Next Block
 
-**Block 0.3C — Black Bass Group Audit**
+**Block 0.3D — Sunfish Group Audit**
 
 Begin with:
 
-- Largemouth Bass
-- Smallmouth Bass
-- Spotted Bass
+- Bluegill
+- Redear Sunfish
+- Green Sunfish
 
-The goal is to confirm Version 1 inclusion and determine the minimum genuine pairwise identification/confusion relationships required among the three black-bass species.
+Evaluate whether Warmouth and Rock Bass have enough practical regional or identification value to enter the Version 1 discussion during this group audit.
+
+The goal is to confirm Version 1 inclusion and determine the minimum genuine pairwise identification/confusion relationships required among the approved sunfish-group species.
 
 Do not begin production Fish source edits before Phase 0 design lock is complete.
