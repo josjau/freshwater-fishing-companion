@@ -531,6 +531,44 @@ Approved beginner identification direction:
 - Use the visible marking pattern as the first beginner-facing cue and spine count as confirmation rather than requiring spine counting as the first identification step.
 - Water clarity and habitat preference may support species context but must not be used as the identifying characteristic because the two species can occupy the same fishery.
 
+# Block 0.3F — Temperate Bass Group Audit
+
+**Status:** APPROVED / LOCKED / COMPLETE
+
+All Block 0.3F decisions use the corrected Four-State Ozark scope.
+
+## Version 1 Inclusion
+
+Include in Version 1:
+
+1. White Bass
+2. Striped Bass
+3. Hybrid Striped Bass
+
+`Wiper` and `Whiterock Bass` are legitimate regional/common-name candidates for `Hybrid Striped Bass.aliases[]`; the exact canonical display-name/alias set will be finalized when the canonical Fish records are authored.
+
+Yellow Bass is **deferred** for Version 1. It has legitimate Four-State Ozark occurrence, including southwest-Missouri occurrence, but current evidence does not establish enough common angling or identification value to justify inclusion in the initial Fish Guide. It does not require mandatory reconsideration unless the Four-State Gap Audit finds materially stronger local evidence.
+
+## Approved Temperate Bass Identification / Confusion Relationships
+
+Create exactly these three Version 1 pairwise relationships under `FISH_IDENTIFICATION_RELATIONSHIPS`:
+
+```text
+white-bass ↔ striped-bass
+white-bass ↔ hybrid-striped-bass
+striped-bass ↔ hybrid-striped-bass
+```
+
+A complete three-way comparison set is justified for this group because all three are practical regional angling species with similar overall appearance and genuine beginner field-identification overlap.
+
+Approved identification direction:
+
+- White Bass — emphasize the deeper/arched body, comparatively weaker striping, and a single tongue tooth patch.
+- Striped Bass — emphasize the more elongated/slender body, strong mostly continuous horizontal stripes, and two distinct parallel tongue tooth patches.
+- Hybrid Striped Bass — emphasize the intermediate/deeper body and characteristically broken or discontinuous horizontal stripes.
+- Do not use a universal `Hybrid Striped Bass = two tongue patches` rule. Agency descriptions within the Four-State region indicate variation in hybrid tongue-patch configuration, so tongue patches are supporting evidence rather than the single decisive hybrid identifier.
+- Use multiple physical traits when distinguishing the hybrid from either parent rather than relying on one inherited characteristic.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -547,17 +585,18 @@ Approved blocks:
 - Block 0.3C — Black Bass group audit, pending final four-state geography revalidation
 - Block 0.3D — Sunfish group audit
 - Block 0.3E — Crappie group audit
+- Block 0.3F — Temperate Bass group audit
 
 ## Next Block
 
-**Block 0.3F — Temperate Bass Group Audit**
+**Block 0.3G — Walleye / Sauger Group Audit**
 
 Begin with:
 
-- White Bass
-- Striped Bass
-- Hybrid Striped Bass / Wiper
+- Walleye
+- Saugeye
+- Sauger
 
-The goal is to confirm Version 1 inclusion and determine the minimum genuine pairwise identification/confusion relationships required among the supported temperate-bass species under the Four-State Ozark scope.
+The goal is to confirm Version 1 inclusion and determine the minimum genuine identification/confusion relationships required among the supported Walleye/Sauger-group species under the Four-State Ozark scope.
 
 Do not begin production Fish source edits before Phase 0 design lock is complete.
