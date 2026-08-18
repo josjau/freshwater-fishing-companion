@@ -2,14 +2,14 @@
    FRESHWATER FISHING COMPANION
    FILE: script.js
    PURPOSE: Coordinates routes, Fish/Rig/Knot discovery, Reel Setup,
-   Knot detail navigation, My Tackle placeholders, and Rig readiness.
+   connected knowledge navigation, Tackle placeholders, and Rig readiness.
    ========================================================== */
 
 "use strict";
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knots — Production Package 3 Block 3.9"
+    milestone: "Knots — Connected Knowledge Navigation Closeout"
 });
 
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
@@ -26,6 +26,7 @@ const ROUTES = Object.freeze({
     KNOTS: "knots",
     KNOT_BROWSE: "knot-browse",
     KNOT_DETAIL: "knot-detail",
+    LINE_TYPE_DETAIL: "line-type-detail",
     REEL_SETUP: "reel-setup",
     CATCH_LOG: "catch-log",
     FAVORITES: "favorites",
@@ -112,6 +113,7 @@ let selectedKnotId = null;
 let selectedKnotBrowseKey = "all";
 let selectedKnotTaskId = null;
 let selectedKnotDetailSource = "guide";
+let selectedLineTypeId = null;
 let reelSetupState = createInitialReelSetupState();
 let detailNavigationStack = [];
 
@@ -169,6 +171,7 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.KNOTS]: renderKnotsView,
     [ROUTES.KNOT_BROWSE]: renderKnotBrowseView,
     [ROUTES.KNOT_DETAIL]: renderKnotDetailView,
+    [ROUTES.LINE_TYPE_DETAIL]: renderLineTypeDetailView,
     [ROUTES.REEL_SETUP]: renderReelSetupView,
     [ROUTES.CATCH_LOG]: renderCatchLogView,
     [ROUTES.FAVORITES]: renderFavoritesView,
@@ -545,12 +548,11 @@ function renderRecommendationsView(appMain) {
 function renderTackleView(appMain) {
     renderView(appMain, {
         headingId: "tackle-title",
-        title: "My Tackle",
-        description: "Catalog, organize, and track the fishing equipment and consumable tackle you own.",
+        title: "Tackle",
+        description: "Learn about fishing tackle and manage the equipment and consumables you own.",
         cards: [
-            { id: "view-tackle-inventory", title: "View My Inventory", description: "Browse the equipment and tackle currently recorded." },
-            { id: "add-tackle", title: "Add Tackle", description: "Record a new piece of equipment or consumable tackle." },
-            { id: "identify-tackle", title: "Identify Tackle", description: "Use contextual reference help when you are not sure what an item is." },
+            { id: "find-tackle", title: "Tackle Reference / Find Tackle", description: "Learn what tackle is, how to recognize it, and where it is used." },
+            { id: "view-tackle-inventory", title: "My Tackle", description: "Browse and manage the equipment and tackle you own." },
             { id: "check-rig-readiness", title: "Check Rig Readiness", description: "Review whether you have the components needed for supported rigs." }
         ]
     });
@@ -808,9 +810,12 @@ function renderReelSetupNavigation(appMain) {
             showView(ROUTES.REEL_SETUP);
         });
     } else {
-        backButton.textContent = "← Knots";
+        const returnContext = peekDetailNavigationContext();
+        const fromKnotDetail = returnContext?.route === ROUTES.KNOT_DETAIL;
+        backButton.textContent = fromKnotDetail ? `← ${returnContext.label}` : "← Knots";
         backButton.addEventListener("click", () => {
             resetReelSetupState();
+            if (fromKnotDetail && returnToDetailNavigationContext()) return;
             showView(ROUTES.KNOTS);
         });
     }
@@ -2374,6 +2379,67 @@ function openKnotDetail(knotId, source = "guide") {
     showView(ROUTES.KNOT_DETAIL);
 }
 
+function pushCurrentKnotDetailContext() {
+    const knot = findRecordById(KNOT_DATA, selectedKnotId);
+    if (!knot || knot.isActive !== true) return false;
+
+    pushDetailNavigationContext({
+        route: ROUTES.KNOT_DETAIL,
+        label: knot.name,
+        state: {
+            selectedKnotId,
+            selectedKnotBrowseKey,
+            selectedKnotTaskId,
+            selectedKnotDetailSource
+        }
+    });
+    return true;
+}
+
+function openKnotTaskFromDetail(taskId) {
+    const task = getKnotTask(taskId);
+    if (!task || !pushCurrentKnotDetailContext()) return;
+
+    if (taskId === "attach-line-to-reel") {
+        resetReelSetupState();
+        showView(ROUTES.REEL_SETUP);
+        return;
+    }
+
+    selectedKnotBrowseKey = "task";
+    selectedKnotTaskId = taskId;
+    showView(ROUTES.KNOT_BROWSE);
+}
+
+function openLineTypeDetailFromKnot(lineTypeId) {
+    const lineType = getReelLineType(lineTypeId);
+    if (!lineType || !pushCurrentKnotDetailContext()) return;
+
+    selectedLineTypeId = lineTypeId;
+    showView(ROUTES.LINE_TYPE_DETAIL);
+}
+
+function renderLineTypeDetailView(appMain) {
+    const lineType = getReelLineType(selectedLineTypeId);
+    const returnContext = peekDetailNavigationContext();
+    const fromKnotDetail = returnContext?.route === ROUTES.KNOT_DETAIL;
+
+    if (!lineType) {
+        console.warn(`Line Type was not found: ${selectedLineTypeId}`);
+        if (fromKnotDetail && returnToDetailNavigationContext()) return;
+        showView(ROUTES.TACKLE);
+        return;
+    }
+
+    renderLineTypeReferenceDetail(appMain, {
+        record: lineType,
+        parentLabel: fromKnotDetail ? returnContext.label : "Tackle",
+        onParent: fromKnotDetail
+            ? returnToDetailNavigationContext
+            : () => showView(ROUTES.TACKLE)
+    });
+}
+
 function renderKnotsView(appMain) {
     const collectionCards = Object.entries(KNOT_COLLECTIONS).map(([key, collection]) => ({
         key,
@@ -2459,6 +2525,8 @@ function getKnotBrowseConfig() {
 
 function renderKnotBrowseView(appMain) {
     const browseConfig = getKnotBrowseConfig();
+    const returnContext = peekDetailNavigationContext();
+    const fromKnotDetail = selectedKnotBrowseKey === "task" && returnContext?.route === ROUTES.KNOT_DETAIL;
     renderSearchView(appMain, {
         headingId: "knot-browse-title",
         inputId: "knot-browse-search-input",
@@ -2466,8 +2534,10 @@ function renderKnotBrowseView(appMain) {
         description: browseConfig.description,
         label: "Search this Knot group",
         placeholder: "Try Palomar, leader, braid, or beginner",
-        parentLabel: "Knots",
-        onParent: () => showView(ROUTES.KNOTS),
+        parentLabel: fromKnotDetail ? returnContext.label : "Knots",
+        onParent: fromKnotDetail
+            ? returnToDetailNavigationContext
+            : () => showView(ROUTES.KNOTS),
         onSearch: (query) => updateKnotBrowseResults(appMain, query)
     });
 }
@@ -2565,7 +2635,9 @@ function renderKnotDetailView(appMain) {
         onParent: hasReturnContext
             ? returnToDetailNavigationContext
             : () => showView(fromBrowse ? ROUTES.KNOT_BROWSE : ROUTES.KNOTS),
-        onRigSelect: openRigDetailFromKnot
+        onRigSelect: openRigDetailFromKnot,
+        onTaskSelect: openKnotTaskFromDetail,
+        onLineTypeSelect: openLineTypeDetailFromKnot
     });
 }
 

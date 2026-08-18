@@ -9,7 +9,7 @@
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
     file: "view-renderer.js",
-    milestone: "Knot Guide — Production Package 2 Revision 5"
+    milestone: "Knots — Connected Knowledge Navigation Closeout"
 });
 
 function buildSearchControlsMarkup(inputId, placeholder) {
@@ -355,7 +355,13 @@ function buildKnotUsageMarkup(record, usageContexts) {
         ? `
             <div class="knot-usage-group">
                 <span class="knot-usage-group__label">Common tasks</span>
-                ${buildTagList(taskContexts.map((task) => task.title))}
+                <div class="internal-knowledge-link-list">
+                    ${taskContexts.map((task) => `
+                        <button class="internal-knowledge-link" type="button" data-knot-task-link-id="${task.taskId}">
+                            ${task.title} <span aria-hidden="true">→</span>
+                        </button>
+                    `).join("")}
+                </div>
             </div>
         `
         : "";
@@ -369,9 +375,8 @@ function buildKnotUsageMarkup(record, usageContexts) {
         const isInitiallyHidden = index >= KNOT_USAGE_VISIBLE_RIG_LIMIT;
         return `
             <li${isInitiallyHidden ? ' data-knot-rig-usage-extra hidden' : ""}>
-                <button class="related-entity-link knot-rig-link" type="button" data-knot-rig-id="${usage.rigId}">
-                    <span class="related-entity-link__title">${usage.title}</span>
-                    <span class="related-entity-link__action">View Rig →</span>
+                <button class="internal-knowledge-link knot-rig-link" type="button" data-knot-rig-id="${usage.rigId}">
+                    ${usage.title} <span aria-hidden="true">→</span>
                 </button>
                 <span>${usage.difficulty} · ${usage.labels.join(" · ")}</span>
             </li>
@@ -404,6 +409,16 @@ function initializeKnotUsageControls(appMain, detailConfig) {
     appMain.querySelectorAll("[data-knot-rig-id]").forEach((button) => {
         button.addEventListener("click", () => {
             detailConfig.onRigSelect?.(button.dataset.knotRigId);
+        });
+    });
+    appMain.querySelectorAll("[data-knot-task-link-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+            detailConfig.onTaskSelect?.(button.dataset.knotTaskLinkId);
+        });
+    });
+    appMain.querySelectorAll("[data-line-type-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+            detailConfig.onLineTypeSelect?.(button.dataset.lineTypeId);
         });
     });
 
@@ -452,7 +467,7 @@ function buildRigKnotApplications(record) {
                     return "";
                 }
                 return `
-                    <button class="rig-knot-link" type="button" data-rig-knot-id="${knot.id}">
+                    <button class="internal-knowledge-link rig-knot-link" type="button" data-rig-knot-id="${knot.id}">
                         ${knot.name} <span aria-hidden="true">→</span>
                     </button>
                 `;
@@ -492,12 +507,23 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
     const aliasesMarkup = record.aliases?.length
         ? `<p class="knot-aliases"><strong>Also called:</strong> ${record.aliases.join(", ")}</p>`
         : "";
-    const lineTypeLabels = (record.compatibleLineTypes ?? []).map((lineType) => {
-        if (lineType === "monofilament") return "Monofilament";
-        if (lineType === "fluorocarbon") return "Fluorocarbon";
-        if (lineType === "braid") return "Braid";
-        return lineType;
-    });
+    const lineTypeLinksMarkup = (record.compatibleLineTypes ?? []).length
+        ? `
+            <div class="internal-knowledge-link-list">
+                ${(record.compatibleLineTypes ?? []).map((lineTypeId) => {
+                    const lineType = typeof REEL_LINE_TYPE_GUIDANCE !== "undefined"
+                        ? REEL_LINE_TYPE_GUIDANCE[lineTypeId]
+                        : null;
+                    const label = lineType?.title ?? lineTypeId;
+                    return `
+                        <button class="internal-knowledge-link" type="button" data-line-type-id="${lineTypeId}">
+                            ${label} <span aria-hidden="true">→</span>
+                        </button>
+                    `;
+                }).join("")}
+            </div>
+        `
+        : "";
     const usageMarkup = buildKnotUsageMarkup(record, usageContexts);
     const referencesMarkup = record.referenceLinks?.length
         ? `
@@ -528,7 +554,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
                     <ul class="detail-list">${record.bestFor.map((item) => `<li>${item}</li>`).join("")}</ul>
                     <div class="knot-line-types">
                         <span class="knot-line-types__label">Line compatibility</span>
-                        ${buildTagList(lineTypeLabels)}
+                        ${lineTypeLinksMarkup}
                     </div>
                 </div>
                 <div class="knot-at-a-glance__group">
@@ -558,6 +584,40 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
 
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
     initializeKnotUsageControls(appMain, detailConfig);
+    initializeHomeNavigation(appMain);
+}
+
+function renderLineTypeReferenceDetail(appMain, detailConfig) {
+    if (!appMain || !detailConfig?.record) {
+        console.error("A valid Line Type reference record is required.");
+        return;
+    }
+
+    const record = detailConfig.record;
+    appMain.innerHTML = `
+        <article class="detail-view detail-view--line-type" aria-labelledby="line-type-detail-title">
+            ${buildPageNavigationMarkup(detailConfig.parentLabel)}
+            <header class="detail-header line-type-detail-header">
+                <p class="detail-eyebrow">Fishing Line</p>
+                <h2 id="line-type-detail-title">${record.title}</h2>
+                <p>${record.selectionDescription}</p>
+            </header>
+            <section class="detail-section">
+                <h3>How to Recognize It</h3>
+                <p>${record.identificationCue}</p>
+            </section>
+            <section class="detail-section">
+                <h3>Beginner Guidance</h3>
+                <p>${record.beginnerGuidance}</p>
+            </section>
+            <section class="detail-section detail-section--supporting">
+                <h3>Tradeoff</h3>
+                <p>${record.tradeoff}</p>
+            </section>
+        </article>
+    `;
+
+    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
     initializeHomeNavigation(appMain);
 }
 
