@@ -423,7 +423,7 @@ Supporting rules:
 
 # Block 0.3D — Sunfish Group Audit
 
-**Status:** IN PROGRESS
+**Status:** APPROVED / LOCKED / COMPLETE
 
 All Block 0.3D decisions use the corrected Four-State Ozark scope:
 
@@ -432,49 +432,73 @@ All Block 0.3D decisions use the corrected Four-State Ozark scope:
 - Southwest Missouri
 - Northwest Arkansas
 
-## Approved Subdecision — Warmouth and Ozark Bass
-
-**Status:** APPROVED / LOCKED
+## Version 1 Inclusion
 
 Include in Version 1:
 
-1. Warmouth
-2. Ozark Bass
+1. Bluegill
+2. Redear Sunfish
+3. Green Sunfish
+4. Longear Sunfish
+5. Rock Bass
+6. Warmouth
+7. Ozark Bass
 
 Canonical identity rule:
 
 - Rock Bass and Ozark Bass are separate canonical Fish species.
 - `Ozark Bass` must not be stored as an alias of `Rock Bass`.
 
-Approved identification/confusion relationships added by this subdecision:
+Shadow Bass is not silently rejected. It remains unresolved and is assigned to the required Four-State Gap Audit before final Version 1 library lock.
+
+## Approved Sunfish Identification / Confusion Relationships
+
+Create exactly these four Version 1 pairwise relationships under `FISH_IDENTIFICATION_RELATIONSHIPS`:
 
 ```text
+bluegill ↔ redear-sunfish
+bluegill ↔ green-sunfish
 warmouth ↔ rock-bass
 rock-bass ↔ ozark-bass
 ```
 
-Identification direction:
+Approved identification direction:
 
+- Bluegill vs Redear Sunfish — use the Bluegill's black ear flap and rear soft-dorsal blotch versus the Redear's red/orange-edged ear flap and supporting fin/body traits.
+- Bluegill vs Green Sunfish — emphasize the Bluegill's deeper body and smaller mouth versus the Green Sunfish's noticeably larger mouth and blue-green facial markings.
 - Warmouth vs Rock Bass — use structural traits, including the Warmouth's three anal-fin spines versus the Rock Bass's higher anal-fin spine count, rather than relying primarily on coloration.
-- Rock Bass vs Ozark Bass — retain as a dedicated pairwise comparison because they are close relatives and common-name/regulatory grouping can obscure the species distinction; exact final distinction text must use verified authoritative species-level traits.
+- Rock Bass vs Ozark Bass — retain a dedicated pairwise comparison because they are close relatives and common-name/regulatory grouping can obscure the species distinction; exact final distinction text must use verified authoritative species-level traits.
 
-Do not automatically create `warmouth ↔ ozark-bass`. Add that relationship only if the detailed identification audit demonstrates genuine beginner field confusion that is not adequately handled by Fish-owned identification traits and the approved comparison paths.
+Do not create an exhaustive Sunfish comparison matrix.
 
-Shadow Bass remains unresolved and is assigned to the required Four-State Gap Audit before final Version 1 library lock.
+No additional Version 1 pairwise relationship is initially required for:
 
-## Remaining Block 0.3D Work
+```text
+longear-sunfish ↔ bluegill
+longear-sunfish ↔ green-sunfish
+longear-sunfish ↔ redear-sunfish
+green-sunfish ↔ warmouth
+green-sunfish ↔ rock-bass
+warmouth ↔ ozark-bass
+```
 
-Block 0.3D is not yet complete. The remaining Sunfish-group discussion must finalize the Version 1 status and minimum identification relationship set for the broader candidate group, including:
+These species should first rely on their Fish-owned `identificationTraits[]` plus the approved comparison relationships. Add another relationship only if later detailed content work or usability testing demonstrates genuine beginner field confusion not adequately handled by the existing graph.
 
-- Bluegill
-- Redear Sunfish
-- Green Sunfish
-- Longear Sunfish
-- Rock Bass
-- Warmouth — already approved Include V1
-- Ozark Bass — already approved Include V1
+## Rock Bass Canonical-Name Decision
 
-Previously proposed relationships such as `bluegill ↔ redear-sunfish` and `bluegill ↔ green-sunfish` remain proposals until explicitly approved as part of the completed Block 0.3D relationship set.
+The Version 1 species inclusion is locked, but the beginner-facing canonical display name remains a later data-content decision:
+
+```text
+Rock Bass
+```
+
+versus:
+
+```text
+Northern Rock Bass
+```
+
+Do not silently rename the established project species during implementation. Resolve the display-name choice when canonical Fish records are authored, preserving the alternate legitimate common name in `aliases[]` as appropriate.
 
 # Exact Stopping Point — Resume Here
 
@@ -490,12 +514,17 @@ Approved blocks:
 - Block 0.3A — species-library audit framework
 - Block 0.3B — Catfish group audit, pending final four-state geography revalidation
 - Block 0.3C — Black Bass group audit, pending final four-state geography revalidation
-- Block 0.3D Warmouth/Ozark Bass subdecision — approved and locked
+- Block 0.3D — Sunfish group audit
 
-## Current Open Block
+## Next Block
 
-**Block 0.3D — Sunfish Group Audit**
+**Block 0.3E — Crappie Group Audit**
 
-Next task: finalize the remaining Sunfish Version 1 inclusion set and the minimum required pairwise identification/confusion relationships under the corrected Four-State Ozark scope.
+Begin with:
+
+- Black Crappie
+- White Crappie
+
+The goal is to confirm Version 1 inclusion and determine whether a dedicated Black Crappie ↔ White Crappie identification/confusion relationship is required under the Four-State Ozark scope.
 
 Do not begin production Fish source edits before Phase 0 design lock is complete.
