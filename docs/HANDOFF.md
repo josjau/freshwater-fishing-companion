@@ -1,16 +1,17 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.3.4  
+**Document Revision:** 1.4.0  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
-**Current GitHub Baseline:** `82f37285ff978eca1a92edfd129cebb9aff5105c` — `Site-Wide Navigation Fix - Reel Setup Fix`  
+**Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
 **Latest Completed Production Package:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4.md` — Production Package 4 PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED  
-**Active Workstream:** `docs/workstreams/KNOT-INTEGRATED-REGRESSION.md` — integrated Knot source regression PASS; extended runtime validation in progress; Reel Setup navigation correction deployed with Block 2C runtime retest pending  
-**Active Milestone:** Knots  
-**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3  
-**Session Environment:** Windows Desktop, Brave Browser, GitHub Desktop  
-**Session Status:** Knot Production Packages 1–4 are functionally complete. The shared site-wide floating-navigation appearance passed runtime validation. Validation Block 2A Rig nested navigation and Block 2B Knot nested navigation passed. Block 2C found a duplicate outer floating shell in Reel Setup; the targeted `script.js` correction was uploaded, GitHub-verified, and successfully deployed by GitHub Pages. The next session must begin by rerunning Validation Block 2C before continuing remaining extended runtime checks and final Knots milestone documentation closeout.  
+**Completed Workstream:** `docs/workstreams/KNOT-INTEGRATED-REGRESSION.md` — PASS / VALIDATED / CLOSED  
+**Completed Milestone:** Knots  
+**Next Approved Milestone:** Fish Guide  
+**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3 remains the approved milestone sequence; current completion state is recorded here and in the Knot closeout workstream.  
+**Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
+**Session Status:** Knots Production Packages 1–4, site-wide floating navigation, connected-knowledge navigation, Dashboard/Tackle information architecture, keyboard behavior, and final console-health validation all passed. The Knots milestone is formally closed. The next session begins with Fish Guide planning from current GitHub `main`.  
 **Last Updated:** 2026-08-17
 
 # 1. Start Here
@@ -25,17 +26,17 @@ Permanent rules:
 
 > Finish cleanly or deliberately park; do not leave half-finalized project areas behind.
 
-> The assistant must not write production source, data, image, configuration, CSS, HTML, JavaScript, or other non-Markdown project files directly to GitHub.
+> The assistant must not write production source, data, image, configuration, CSS, HTML, JavaScript, or other non-Markdown project files directly to GitHub unless the user explicitly changes that rule for the specific action.
 
-> The assistant may write only project-progress Markdown files directly to GitHub, such as handoff, milestone, changelog, validation, roadmap, and workstream status documents.
+> The assistant may write project-progress Markdown files directly to GitHub, such as handoff, milestone, changelog, validation, roadmap, and workstream status documents.
 
-> Production updates are delivered as user-reviewable update packages for the user to apply through GitHub Desktop unless the user explicitly changes this rule later.
+> Production updates normally remain user-reviewable update packages applied through GitHub Desktop unless the user explicitly authorizes a different workflow.
 
 # 2. Current Milestone State — Complete Rig Guide
 
 **Implementation Status: Validated / Finalized**
 
-The approved initial Rig Guide is complete on `main`.
+The approved initial Rig Guide remains complete on `main`.
 
 Final validated production state:
 
@@ -48,22 +49,20 @@ Final validated production state:
 - all seven final-tier build-first YouTube tutorial records integrated and runtime-validated,
 - all six final-tier replacement recognition images integrated and runtime-validated.
 
-Final production correction commit:
+Final Rig production correction commit:
 
 `4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` — `Rig Updates Images and tutorials`
 
-GitHub Pages deployed that production commit successfully in workflow run `31646572910`.
-
-Final workstream record:
+Final Rig workstream record:
 
 `docs/workstreams/RIG-GUIDE-COMPLETION.md` revision `1.0.0`
 
 # 3. Canonical Upcoming Build Sequence
 
-The approved order is:
+The approved order remains:
 
-1. **Knots**
-2. **Fish Guide**
+1. **Knots** — completed / validated / closed
+2. **Fish Guide** — next approved milestone
 3. **What Should I Throw**
 4. **Tackle Reference / Find Tackle**
 5. **Settings / User Data Architecture Gate**
@@ -72,37 +71,50 @@ The approved order is:
 8. **Global Search**
 9. **Favorites final decision**
 
-This order is canonical until explicitly revised.
+The milestone ordering has not changed. `ROADMAP.md` revision 0.3.3 remains the canonical sequence; this handoff records the current completion state.
 
-`ROADMAP.md` revision 0.3.3 remains the canonical sequence. Current implementation state is recorded in this handoff, the active Knot workstream records, and milestone-level records that still require final reconciliation after runtime validation completes.
+# 4. Completed Milestone — Knots
 
-# 4. Active Milestone — Knots
+**Implementation Status: PASS / VALIDATED / FINALIZED / CLOSED**
 
-**Implementation Status: Production Packages 1–4 Functionally Complete / Milestone Runtime Closeout In Progress**
+Planning, research, canonical content lock, Reel Setup, Knot media integration, connected-knowledge navigation, integrated source regression, and extended Microsoft Edge runtime validation are complete.
 
-Planning, research, canonical content lock, Reel Setup, Knot media integration, and integrated source regression are complete.
-
-Current production state:
+Validated production state:
 
 - Production Package 1 — **PASS / VALIDATED / CLOSED**: 10 canonical Knots, four Core IDs, all 20 Rigs audited, 31 real tied connections.
-- Production Package 2 Runtime Revision 5 (`0.6.5`) — **PASS / VALIDATED / CLOSED**: landing, browse, detail, search, relationship, and focus behavior validated.
+- Production Package 2 Runtime Revision 5 (`0.6.5`) — **PASS / VALIDATED / CLOSED**: landing, browse, detail, search, relationship, disclosure, and focus behavior validated.
 - Production Package 3 — **Get Your Reel Ready** — **PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED**.
 - Production Package 4 — **Knot Instructional Media** — **PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED** with approved media coverage for all 10 Version 1 Knots.
 - Integrated Knot source regression — **PASS**.
-- Shared floating-navigation appearance — **PASS**.
-- Validation Block 2A Rig nested navigation — **PASS**.
-- Validation Block 2B Knot nested navigation — **PASS**.
-- Validation Block 2C Reel Setup — initial runtime **FAIL** due to a duplicate outer floating shell; targeted source correction is **uploaded / GitHub-verified / Pages-deployed / runtime retest pending**.
+- Shared Root/Nested floating-navigation appearance — **PASS**.
+- Reel Setup duplicate-shell correction — **PASS AFTER CORRECTION**.
+- Narrow-viewport navigation — **PASS**.
+- Keyboard navigation — **PASS**.
+- Dashboard/Tackle information-architecture validation — **PASS**.
+- Knot connected-knowledge navigation — **PASS**.
+- Rig → Knot → Rig regression — **PASS**.
+- Reel Setup → Knot → Reel Setup regression — **PASS**.
+- Minimal Line Type reference/detail routing — **PASS**.
+- Connected-link keyboard interaction — **PASS**.
+- Normal-navigation console health — **PASS**.
 
-Current production/navigation baseline:
+Final validated production source baseline:
 
-`82f37285ff978eca1a92edfd129cebb9aff5105c` — `Site-Wide Navigation Fix - Reel Setup Fix`
+`e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`
 
-GitHub Pages deployment for that exact commit completed successfully in workflow run `32070148684`.
+The final two validation refinements after the connected-knowledge source merge were:
 
-Controlling records:
+- `3e7cb0364325da8941b0917b8c2237f1ce19097f` — Dashboard emphasized cards moved to the first four positions in the approved order: **Fish Guide, Knots, Rig Guide, Tackle**.
+- `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — connected-knowledge pills reduced in size and Rig relationship pills constrained to content width.
+
+Those final two corrections changed only `index.html` and `forest-journal.css`; JavaScript, renderer, routing, and canonical data remained unchanged.
+
+Controlling closeout record:
 
 - `docs/workstreams/KNOT-INTEGRATED-REGRESSION.md`
+
+Other controlling Knot records remain:
+
 - `docs/workstreams/SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md`
 - `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4.md`
 - `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4-VISUAL-SOURCE-AUDIT.md`
@@ -151,9 +163,7 @@ Version 1 assignments:
 
 The UI includes an **Advanced Knots — Coming Soon** placeholder, but that placeholder is not a canonical Knot entity and is not part of the 10-knot count.
 
-Every active Knot card in **All Knots** visibly displays its difficulty.
-
-Core membership and difficulty are independent concepts.
+Core membership and difficulty remain independent concepts.
 
 ## Approved Navigation Direction
 
@@ -176,9 +186,7 @@ Canonical landing hierarchy:
 
 The `What are you trying to do?` section itself remains visually neutral. Important emphasis belongs to deliberately prioritized cards, not to the entire section.
 
-All peer navigation cards retain the established varied accent-bar palette. Individual Core Knot records do not appear directly on the landing page; Core is a collection card that opens the Core browse view.
-
-`Attach Line to a Reel` is the single landing entry to the Reel & Line Setup workflow. The separate `Get Your Reel Ready` landing card is retired; Package 3 upgrades the task destination into the full guided workflow.
+`Attach Line to a Reel` is the single landing entry to the Reel & Line Setup workflow.
 
 ## Approved Canonical Knot Schema
 
@@ -247,13 +255,10 @@ Do not store `strengthRating`, `stepCount`, `relatedRigIds`, `relatedTechniqueId
 `tyingSteps[]` is an ordered array of authoritative instruction strings.
 
 - array position owns step order,
-- the UI must display numbered steps beginning at 1,
-- the visual treatment should match the established Rig Guide **How to Build It** numbered-step pattern,
+- the UI displays numbered steps beginning at 1,
 - step numbers are derived and not stored,
 - `stepCount` is derived from `tyingSteps.length`,
-- step numbers are not embedded in the instruction strings.
-
-If future animation work requires persistent step identity, step objects with stable IDs may be introduced, but display numbers remain derived.
+- step numbers are not embedded in instruction strings.
 
 ## Approved Knot Media Ownership
 
@@ -271,7 +276,7 @@ The current production media registry uses this ownership model for the Version 
 
 ## Approved Reel & Line Setup Direction
 
-Reel & Line Setup is a first-class guided workflow inside the Knots milestone.
+Reel & Line Setup is a first-class guided workflow inside the completed Knots milestone.
 
 Version 1 includes:
 
@@ -310,38 +315,6 @@ Approved hierarchy:
 
 Current Version 1 media coverage is complete for all 10 Knots using approved external destinations. Third-party instructional artwork, animation, 3D assets, or video are not copied, bundled, rehosted, extracted, or redistributed by the project.
 
-## Exact Stopping Point — Resume Here
-
-**Production Packages 1–4 are functionally complete. The Knots milestone is in extended runtime validation.**
-
-Current validated state:
-
-- Shared Root/Nested floating-navigation appearance — **PASS**.
-- Validation Block 2A — Rig nested navigation / Parent + Home / top reset — **PASS**.
-- Validation Block 2B — Knot nested navigation / Parent + Home / top reset — **PASS**.
-- Validation Block 2C — Reel Setup — duplicate outer floating shell found during runtime review.
-- Targeted Reel Setup correction replaced the entire standard `.page-navigation-group` with the specialized Reel Setup navigation container instead of nesting the specialized container inside it.
-- Correction commit `82f37285ff978eca1a92edfd129cebb9aff5105c` is GitHub-verified and successfully deployed by Pages.
-- **Block 2C runtime retest has not yet been performed.**
-
-Resume in this exact order:
-
-1. Re-fetch current GitHub `main` and confirm no newer production source supersedes commit `82f37285ff978eca1a92edfd129cebb9aff5105c`.
-2. Rerun **Validation Block 2C** in Brave:
-   - confirm exactly one Reel Setup floating navigation container,
-   - confirm Previous works and destination opens at the top,
-   - confirm Home works and Dashboard opens at the top.
-3. Continue remaining extended validation:
-   - narrow viewport / no horizontal overflow or content obstruction,
-   - keyboard focus and operability,
-   - representative Knot → related Rig / Reel Setup traversal,
-   - normal-navigation console health.
-4. After all runtime checks pass, reconcile `CHANGELOG.md`, `HANDOFF.md`, `MILESTONES.md`, `MEDIA_GUIDE.md`, and any other milestone-level records that remain stale.
-5. Formally close the Knots milestone.
-6. Only then begin Fish Guide implementation.
-
-Do not begin Fish Guide until the Knots milestone is finalized and validated.
-
 # 5. What Should I Throw — Canonical Instruction Direction
 
 When the What Should I Throw milestone begins, recommendations should connect canonical knowledge rather than duplicate instructions.
@@ -352,8 +325,6 @@ Approved distinction:
 - **How to Fish It** → applicable canonical Technique presentation/retrieve instructions/tutorial.
 
 Recommendations own selection, ranking, rationale, and context. Rig owns physical assembly/configuration. Technique owns reusable presentation behavior.
-
-Exact recommendation inputs, scoring, explanation format, Technique implementation scope, and usage-tutorial coverage remain design work for that milestone.
 
 # 6. Tackle Reference / Find Tackle — Canonical Direction
 
@@ -371,8 +342,6 @@ A Tackle result should act as a connected-knowledge gateway and may expose:
 - derived **Used In** Rigs from `Rig.componentRequirements`,
 - Fish/Conditions/Techniques where canonical relationships exist,
 - later My Tackle ownership context.
-
-Rig Guide, What Should I Throw, My Tackle, and Global Search should link to the same canonical Tackle identity/detail experience rather than create competing definitions.
 
 # 7. Settings / User Data Architecture Gate
 
@@ -395,8 +364,6 @@ Required topics include:
 
 Current local-first architecture remains the baseline unless explicitly changed.
 
-Do not implement My Tackle or Catch Log against an assumed persistence architecture before this gate is closed.
-
 # 8. My Tackle / Catch Log Order
 
 My Tackle follows the User Data architecture gate and precedes Catch Log.
@@ -411,65 +378,33 @@ Global Search is intentionally deferred until the major searchable domains and c
 
 It must build on the existing relevance-first/connected-knowledge approach and must not become an undifferentiated cross-domain result dump.
 
-Exact cross-domain grouping, ranking, ambiguity handling, and Dashboard presentation remain a dedicated design discussion for that milestone.
-
 # 10. Favorites
 
 Favorites is parked until near project completion.
 
-At that point, decide from actual workflow value whether to:
+At that point, decide from actual workflow value whether to keep, narrow, replace, or remove it.
 
-- keep a generic Favorites feature,
-- replace it with narrower saved concepts,
-- or remove it if Search, history, My Tackle, Catch Log, and recommendations make it redundant.
-
-Do not implement Favorites simply because the current application structure contains a placeholder.
-
-# 11. Session Workflow Safeguards — Effective 2026-08-12
+# 11. Session Workflow Safeguards
 
 ## A. GitHub write authority
 
-The assistant is **not authorized to write production files directly to GitHub**.
+Allowed direct GitHub writes are limited to project-progress Markdown documents unless the user explicitly authorizes a specific production-file write.
 
-Allowed direct GitHub writes are limited to project-progress Markdown documents, including:
-
-- `docs/HANDOFF.md`
-- `docs/ROADMAP.md`
-- active workstream/status Markdown files
-- validation Markdown files
-- `docs/MILESTONES.md`
-- `docs/CHANGELOG.md`
-- other project-progress Markdown records when needed for continuity
-
-For production changes:
+Normal production workflow:
 
 1. fetch the latest authoritative files from GitHub,
-2. prepare the complete reviewed update locally,
-3. package the changed files into a ZIP or equivalent user-reviewable update package,
-4. provide the package to the user,
-5. the user applies/pushes the package through GitHub Desktop,
-6. re-fetch GitHub afterward to verify the applied production state.
-
-Do not silently switch back to direct production GitHub writes.
+2. prepare the complete reviewed update,
+3. package changed production files into a user-reviewable update package,
+4. user applies/pushes through GitHub Desktop,
+5. re-fetch GitHub afterward to verify the applied production state.
 
 ## B. Image review before site integration
 
 No newly created or replacement image may be added to a production update package before the user has visually reviewed and approved it.
 
-Required workflow:
-
-1. create one candidate image at a time,
-2. show the candidate directly in this chat as its own separate image,
-3. inspect the candidate for geometry, composition, and style against the established media standard,
-4. wait for explicit user approval or revision request,
-5. only after approval prepare the production-format asset,
-6. after all affected images are approved, include them in the update package for GitHub Desktop.
-
-Do not generate an unseen batch and place it directly into the site.
-
 ## C. Long-process status updates
 
-During long or multi-step work, the assistant must post concise visible progress updates at meaningful checkpoints rather than remaining silent through many tool calls.
+During long or multi-step work, post concise visible progress updates at meaningful checkpoints.
 
 # 12. Rig Tutorial Standard
 
@@ -493,7 +428,7 @@ Current production rules:
 
 - real-photo-first when technically correct and legally reusable,
 - otherwise original semi-photorealistic catalog-style recognition media anchored to verified geometry,
-- precise illustration is only an explicitly reviewed mechanical exception and may not be used to justify a visually rejected flat/vector result,
+- precise illustration is only an explicitly reviewed mechanical exception,
 - normal production assets must not use flat/vector/cartoon/clip-art treatment,
 - current Tackle references use 640 × 440 RGB WebP,
 - exact canonical reference-media canvas is `#f4f0e8`,
@@ -501,7 +436,7 @@ Current production rules:
 - final assets must be checked at realistic phone contextual-popover size,
 - every new/replacement asset must be shown separately in chat and explicitly approved before production packaging.
 
-# 14. Previously Finalized Work
+# 14. Finalized Work
 
 The following are Validated / Finalized:
 
@@ -515,6 +450,7 @@ The following are Validated / Finalized:
 - Core Rigs / Beginner + Beginner+ / Rig UX Finalization
 - Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
 - Complete Rig Guide
+- **Knots — Production Packages 1–4 plus integrated navigation/runtime closeout**
 
 # 15. Known Temporary Bridge
 
@@ -523,3 +459,14 @@ Rig readiness remains transitional local state under:
 `freshwaterFishingCompanion.tackleReadiness.v1`
 
 It must not be treated as permanent My Tackle ownership.
+
+# 16. Exact Resume Point — Next Session
+
+The Knots milestone is closed. Do not reopen it unless a real defect or an explicitly approved enhancement requires it.
+
+Begin the next session with **Fish Guide** planning:
+
+1. Re-fetch current GitHub `main` and verify the authoritative baseline.
+2. Review existing Fish data, search, media, detail-page behavior, and Fish-related architecture before proposing source edits.
+3. Decide the next Fish Guide milestone/build segment based on current project state rather than assumptions from older plans.
+4. Preserve the validated Dashboard order, site-wide floating navigation, connected-knowledge behavior, Rig/Knot navigation, and Reel Setup behavior unless an approved Fish Guide requirement explicitly changes them.

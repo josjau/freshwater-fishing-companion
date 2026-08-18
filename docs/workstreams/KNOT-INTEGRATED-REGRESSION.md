@@ -1,30 +1,48 @@
 # Freshwater Fishing Companion — Knot Integrated Regression
 
 **Document Status:** Approved  
-**Implementation Status:** Source Regression PASS / Shared Navigation Appearance PASS / Reel Setup Correction Validated / Keyboard Navigation PASS / Extended Runtime Validation Pending  
+**Implementation Status:** PASS / VALIDATED / CLOSED  
 **Milestone:** Knots  
 **Recorded:** 2026-08-17  
 **Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
 
 # Purpose
 
-This workstream records the integrated source-level regression pass after completion of Knot Production Packages 1–4 and the site-wide floating-navigation correction work.
+This workstream records the integrated source-level and runtime regression closeout after completion of Knot Production Packages 1–4, the site-wide floating-navigation correction work, the connected-knowledge navigation work, and the final Dashboard/Tackle information-architecture refinements.
 
-The goal is to verify that the current GitHub `main` still contains the approved Knot data, media, routing, renderer integration, and navigation behavior before final milestone runtime closeout.
+The goal was to verify that the authoritative GitHub `main` contains the approved Knot data, media, routing, renderer integration, navigation behavior, and connected-knowledge behavior before formally closing the Knots milestone.
 
 # Authoritative Baseline
 
 GitHub `main` is authoritative.
 
-Current shared-navigation source baseline under runtime validation:
+Historical shared-navigation source baseline:
 
 `05dc0b46cede3b47d82d869493d154564156ac7a` — `Site-wide Floating Nav Fix`
 
-GitHub Pages successfully deployed that commit before runtime validation began.
-
-The targeted Reel Setup navigation correction was deployed in:
+Targeted Reel Setup navigation correction:
 
 `82f37285ff978eca1a92edfd129cebb9aff5105c` — `Site-Wide Navigation Fix - Reel Setup Fix`
+
+Connected-knowledge / Dashboard source merge baseline:
+
+`f94bdae6620db70b5c95495004fecd78a9d5a8f6` — merge containing the approved connected-knowledge navigation and Dashboard/Tackle source changes.
+
+Final validation refinements:
+
+- `3e7cb0364325da8941b0917b8c2237f1ce19097f` — `Dashboard - prioritize primary guide cards`
+- `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`
+
+**Final validated production source baseline:**
+
+`e7a00db6936eba2aa11277a1a4d923d5f2e7cb32`
+
+The final two validation refinements changed only:
+
+- `index.html` — Dashboard priority-card ordering,
+- `forest-journal.css` — compact connected-knowledge pill sizing/content-width behavior.
+
+No JavaScript, renderer, canonical data, or routing files changed during those final two corrections.
 
 # Integrated Source Regression
 
@@ -32,9 +50,7 @@ The targeted Reel Setup navigation correction was deployed in:
 
 **Status:** PASS
 
-Verified current `data/knots.js` blob:
-
-`7a71071e1cc016d1608db6be25c4ca0928fb1d13`
+Verified canonical `data/knots.js` content remained unchanged through the final source corrections.
 
 Confirmed:
 
@@ -49,11 +65,7 @@ Confirmed:
 
 **Status:** PASS
 
-Verified current `data/media.js` blob:
-
-`42b3765e44416144ffdd9c245124f6311bf46a6a`
-
-Confirmed all ten Knot instructional-media records remain present:
+Confirmed all ten approved Knot instructional-media records remain present:
 
 1. Arbor — Animated Knots by Grog
 2. Improved Clinch — Animated Knots by Grog
@@ -66,15 +78,11 @@ Confirmed all ten Knot instructional-media records remain present:
 9. Snell — Animated Knots by Grog
 10. Alberto — Knots 3D
 
-The current rights boundary remains external-link-only unless a record explicitly states otherwise. No third-party Knot instructional media is copied, rehosted, or bundled into the repository.
+The rights boundary remains external-link-only unless a record explicitly states otherwise. No third-party Knot instructional media is copied, rehosted, or bundled into the repository.
 
 ## Knot Media Renderer
 
 **Status:** PASS
-
-Verified current `knot-media-renderer.js` blob:
-
-`09ba08ac82e9040caee90185c32a559ba414a689`
 
 Confirmed:
 
@@ -88,11 +96,12 @@ Confirmed:
 **Regression Status:** PASS  
 **Shared Navigation Appearance Status:** PASS  
 **Reel Setup Navigation Correction Status:** PASS  
+**Connected-Knowledge Navigation Status:** PASS  
 **Narrow Viewport Status:** PASS  
 **Keyboard Navigation Status:** PASS  
-**Extended Runtime Status:** PENDING
+**Extended Runtime Status:** PASS
 
-The shared-navigation correction intentionally changed `view-renderer.js` to centralize standard Root and Nested navigation markup through `buildPageNavigationMarkup()`.
+The shared-navigation correction centralized standard Root and Nested navigation markup through `buildPageNavigationMarkup()`.
 
 The shared helper defines:
 
@@ -102,17 +111,29 @@ The shared helper defines:
 
 Validation Block 2 found one integration defect in the specialized Reel Setup conversion path. `renderReelSetupNavigation()` still replaced only the generic Home button after `renderView()` began wrapping that button in `.page-navigation-group`. The remaining standard group then wrapped Reel Setup's dedicated `[data-reel-setup-navigation]` container, producing a second larger floating shell.
 
-The targeted `script.js` correction now replaces the entire standard `.page-navigation-group` with Reel Setup's dedicated navigation container. No routing logic, CSS, standard Root navigation, or standard Nested navigation is changed by this correction.
+The targeted `script.js` correction replaced the entire standard `.page-navigation-group` with Reel Setup's dedicated navigation container. Routing logic and state transitions were preserved.
 
-The correction was successfully retested in Microsoft Edge on Windows Desktop.
+The later connected-knowledge source update added:
+
+- clickable Knot **Common Tasks** links,
+- compact **Rigs that use this Knot** links,
+- clickable **Line Compatibility** links,
+- minimal Line Type reference/detail pages,
+- context-preserving Knot → Rig → Knot navigation,
+- context-preserving Knot → task/Reel Setup → Knot navigation,
+- preserved Rig → Knot → Rig navigation,
+- preserved Reel Setup → Knot → Reel Setup navigation.
+
+Final validated current blobs after the connected-knowledge source merge and validation refinements include:
+
+- `script.js` — `e781ba9d86eff1565d1f4a8d7f9b811f3636f11c`
+- `view-renderer.js` — `5cc7911573654671bf0556995cdaeb6117d2fdfc`
+- `index.html` — `b0c07a971d37cc6f4d08397ea873d8f458b67871`
+- `forest-journal.css` — `5e0f51e10f9c6bc496fbe08826563c4c2e3f1cbc`
 
 ## Load Order
 
 **Status:** PASS
-
-Verified current `index.html` blob:
-
-`dc63b6d33fc4bcdb71ee0d4c9a7f1a42ae8db9e4`
 
 The required load order remains:
 
@@ -122,7 +143,7 @@ The required load order remains:
 4. `knot-media-renderer.js`,
 5. `script.js`.
 
-This preserves the intentional Knot media renderer integration layer.
+The final Dashboard ordering correction did not alter script load order.
 
 # Site-Wide Floating Navigation Correction
 
@@ -131,7 +152,7 @@ This preserves the intentional Knot media renderer integration layer.
 **Reel Setup Runtime Status:** PASS  
 **Narrow Viewport Status:** PASS  
 **Keyboard Navigation Status:** PASS  
-**Extended Runtime Status:** PENDING
+**Extended Runtime Status:** PASS
 
 The first root-navigation correction made bare root Home buttons sticky. Runtime review found that the Root treatment was materially less visible than the Nested `.page-navigation-group` treatment.
 
@@ -149,15 +170,13 @@ The shared-component correction then:
 
 **Status:** PASS
 
-The deployed correction passed the first Brave runtime validation block on 2026-08-17.
-
 Confirmed:
 
 - Rig Guide root uses the shared floating Home container,
 - Knot Guide root uses the same treatment,
 - Fish Guide root uses the same treatment,
 - an additional root view uses the same treatment,
-- a representative nested Rig or Knot page retains Parent + Home inside the same visual component.
+- representative nested Rig and Knot pages retain Parent + Home inside the same visual component.
 
 The prior Root-versus-Nested visibility mismatch is resolved.
 
@@ -241,12 +260,118 @@ Microsoft Edge keyboard-only validation confirmed:
 - Parent and Home are keyboard-operable,
 - no keyboard trap or hidden/ambiguous navigation focus was observed.
 
-# Remaining Extended Runtime Validation
+# Extended Runtime Validation
 
-The following checks still remain before final navigation and Knots milestone closeout:
+**Status:** PASS
 
-1. Representative Knot landing → collection → detail → related Rig / Reel Setup traversal.
-2. Normal-navigation console health.
+The final integrated runtime review used the current connected-knowledge/Dashboard source and validated the following.
+
+## Dashboard Priority Information Architecture
+
+**Status:** PASS
+
+The four emphasized Dashboard cards are now the first four cards, in this exact order:
+
+1. Fish Guide
+2. Knots
+3. Rig Guide
+4. Tackle
+
+**What Should I Throw?** remains standard/non-emphasized.
+
+The Dashboard root label is **Tackle**, not **My Tackle**.
+
+## Tackle Root
+
+**Status:** PASS
+
+The Tackle root presents:
+
+- **Tackle Reference / Find Tackle**,
+- **My Tackle**,
+- **Check Rig Readiness**.
+
+The Tackle domain is therefore the root knowledge/ownership gateway while **My Tackle** remains the inventory child concept.
+
+## Knot Connected Knowledge — Visible Treatment
+
+**Status:** PASS AFTER FINAL UI REFINEMENT
+
+Validated on Palomar Knot:
+
+- Common Tasks are clickable,
+- Rig relationships are clickable,
+- Line Compatibility items are clickable,
+- the obsolete `View Rig →` treatment is removed.
+
+Runtime review identified two visual refinements:
+
+1. connected-knowledge pills were too large,
+2. a Rig relationship pill stretched across its CSS Grid row rather than fitting its text.
+
+Final CSS correction reduced connected-link minimum height/padding/font sizing and added content-width alignment through `width: fit-content` and `justify-self: start` while retaining `max-width: 100%` for narrow screens.
+
+The corrected compact treatment passed runtime validation.
+
+## Connected Link Destinations and Contextual Return
+
+**Status:** PASS
+
+Validated:
+
+- Knot Common Task links open the expected task/workflow,
+- Knot Rig links open the expected Rig detail,
+- Knot Line Compatibility links open the expected minimal Line Type reference/detail view,
+- Rig opened from a Knot returns to the originating Knot,
+- Line Type opened from a Knot returns to the originating Knot,
+- Common Task/Reel Setup opened from a Knot returns to the originating Knot when applicable.
+
+## Existing Navigation Regressions
+
+**Status:** PASS
+
+Confirmed:
+
+- Rig → Knot → originating Rig remains functional,
+- Reel Setup → Knot → originating Reel Setup context remains functional.
+
+## Line Type Reference View
+
+**Status:** PASS
+
+Confirmed:
+
+- selected line type is clearly identified,
+- the view contains usable minimal reference content rather than an empty placeholder,
+- Parent returns to the originating Knot,
+- Home returns to the Dashboard,
+- no broken/blank layout or visible application error text was observed.
+
+## Connected-Knowledge Keyboard Interaction
+
+**Status:** PASS
+
+Confirmed:
+
+- Common Tasks, Rig relationship links, and Line Compatibility links receive visible keyboard focus,
+- Enter activates the same destination as pointer interaction,
+- contextual Parent navigation remains functional.
+
+## Normal-Navigation Console Health
+
+**Status:** PASS
+
+The final Microsoft Edge console-health pass covered normal traversal through:
+
+- Dashboard → Knots,
+- Palomar Knot,
+- related Rig,
+- return to Palomar,
+- Line Compatibility,
+- return to Palomar,
+- Attach Line to a Reel / Reel Setup.
+
+No red application JavaScript errors were generated by normal navigation.
 
 # Current Result
 
@@ -264,15 +389,27 @@ The following checks still remain before final navigation and Knots milestone cl
 
 **KEYBOARD NAVIGATION: PASS**
 
-**EXTENDED RUNTIME VALIDATION: PENDING**
+**CONNECTED-KNOWLEDGE NAVIGATION: PASS**
 
-No integrated Knot data, media, route, or instructional-content regression was found.
+**DASHBOARD / TACKLE IA: PASS**
 
-The Knots implementation remains functionally complete through Production Package 4. Final milestone closeout remains pending the remaining integrated traversal and console-health checks plus final global documentation reconciliation.
+**NORMAL-NAVIGATION CONSOLE HEALTH: PASS**
+
+**EXTENDED RUNTIME VALIDATION: PASS**
+
+**KNOTS MILESTONE: PASS / VALIDATED / FINALIZED / CLOSED**
+
+No integrated Knot data, media, route, instructional-content, navigation, connected-knowledge, or console-health regression remains open.
 
 # Next Step
 
-1. Complete representative Knot landing → collection → detail → related Rig / Reel Setup traversal.
-2. Confirm normal-navigation console health.
-3. Reconcile final milestone-level records.
-4. Formally close the Knots milestone before beginning Fish Guide implementation.
+The Knots milestone is closed.
+
+The next approved milestone is **Fish Guide**.
+
+At the start of the next session:
+
+1. Re-fetch current GitHub `main` before proposing any source edits.
+2. Review the canonical Fish Guide scope against the current architecture and existing Fish data/search implementation.
+3. Select the first Fish Guide planning/build segment deliberately rather than carrying forward an assumed implementation plan.
+4. Preserve the validated site-wide navigation, Dashboard priority order, connected-knowledge navigation, and Knot/Reel Setup behavior unless a later approved requirement explicitly changes them.
