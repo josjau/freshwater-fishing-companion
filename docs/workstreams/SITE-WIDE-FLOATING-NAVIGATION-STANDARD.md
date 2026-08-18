@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Site-Wide Floating Navigation Standard
 
 **Document Status:** Approved  
-**Implementation Status:** Runtime Validation In Progress / Narrow Viewport PASS  
+**Implementation Status:** Runtime Validation In Progress / Keyboard Navigation PASS  
 **Recorded:** 2026-08-14  
 **Last Updated:** 2026-08-17  
 **Scope:** Site-wide navigation UX
@@ -190,6 +190,19 @@ Microsoft Edge runtime validation confirmed at a phone-width layout:
 - cards and text remain readable,
 - both Reel Setup and a representative nested Knot Detail remain usable.
 
+## Block 2E — Keyboard Navigation
+
+**Status:** PASS
+
+Microsoft Edge keyboard-only validation confirmed:
+
+- floating navigation controls receive clearly visible focus,
+- focus order through Reel Setup remains sensible,
+- Previous and Home activate correctly with keyboard input,
+- representative Knot Detail Parent and Home controls receive visible focus,
+- Parent and Home activate correctly from the keyboard,
+- focus does not become hidden behind the floating navigation or become visually ambiguous.
+
 # Required Runtime Validation
 
 Completed:
@@ -204,10 +217,10 @@ Completed:
 8. Reel Setup — one specialized Previous/Home floating container with no outer duplicate shell. **PASS**
 9. Reel Setup — Previous and Home remain functionally correct and top-reset correctly. **PASS**
 10. Narrow viewport — no horizontal overflow or content obstruction. **PASS**
+11. Keyboard navigation — visible focus and operable controls. **PASS**
 
 Remaining extended checks:
 
-11. Keyboard navigation — visible focus and operable controls.
 12. Representative Knot → related Rig / Reel Setup traversal.
 13. Normal-navigation console health.
 
