@@ -421,6 +421,61 @@ Supporting rules:
 - Habitat may support identification context but must not replace physical identification traits.
 - Prefer authoritative structural traits over variable coloration when a reliable structural discriminator exists.
 
+# Block 0.3D — Sunfish Group Audit
+
+**Status:** IN PROGRESS
+
+All Block 0.3D decisions use the corrected Four-State Ozark scope:
+
+- Northeast Oklahoma
+- Southeast Kansas
+- Southwest Missouri
+- Northwest Arkansas
+
+## Approved Subdecision — Warmouth and Ozark Bass
+
+**Status:** APPROVED / LOCKED
+
+Include in Version 1:
+
+1. Warmouth
+2. Ozark Bass
+
+Canonical identity rule:
+
+- Rock Bass and Ozark Bass are separate canonical Fish species.
+- `Ozark Bass` must not be stored as an alias of `Rock Bass`.
+
+Approved identification/confusion relationships added by this subdecision:
+
+```text
+warmouth ↔ rock-bass
+rock-bass ↔ ozark-bass
+```
+
+Identification direction:
+
+- Warmouth vs Rock Bass — use structural traits, including the Warmouth's three anal-fin spines versus the Rock Bass's higher anal-fin spine count, rather than relying primarily on coloration.
+- Rock Bass vs Ozark Bass — retain as a dedicated pairwise comparison because they are close relatives and common-name/regulatory grouping can obscure the species distinction; exact final distinction text must use verified authoritative species-level traits.
+
+Do not automatically create `warmouth ↔ ozark-bass`. Add that relationship only if the detailed identification audit demonstrates genuine beginner field confusion that is not adequately handled by Fish-owned identification traits and the approved comparison paths.
+
+Shadow Bass remains unresolved and is assigned to the required Four-State Gap Audit before final Version 1 library lock.
+
+## Remaining Block 0.3D Work
+
+Block 0.3D is not yet complete. The remaining Sunfish-group discussion must finalize the Version 1 status and minimum identification relationship set for the broader candidate group, including:
+
+- Bluegill
+- Redear Sunfish
+- Green Sunfish
+- Longear Sunfish
+- Rock Bass
+- Warmouth — already approved Include V1
+- Ozark Bass — already approved Include V1
+
+Previously proposed relationships such as `bluegill ↔ redear-sunfish` and `bluegill ↔ green-sunfish` remain proposals until explicitly approved as part of the completed Block 0.3D relationship set.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -435,30 +490,12 @@ Approved blocks:
 - Block 0.3A — species-library audit framework
 - Block 0.3B — Catfish group audit, pending final four-state geography revalidation
 - Block 0.3C — Black Bass group audit, pending final four-state geography revalidation
+- Block 0.3D Warmouth/Ozark Bass subdecision — approved and locked
 
 ## Current Open Block
 
 **Block 0.3D — Sunfish Group Audit**
 
-Use the corrected Four-State Ozark scope:
-
-- Northeast Oklahoma
-- Southeast Kansas
-- Southwest Missouri
-- Northwest Arkansas
-
-Current discussion candidates include:
-
-- Bluegill
-- Redear Sunfish
-- Green Sunfish
-- Longear Sunfish
-- Rock Bass
-- Ozark Bass
-- Warmouth
-
-Warmouth must be reevaluated under the corrected geography; the prior tentative Defer recommendation is withdrawn.
-
-The goal is to confirm Version 1 inclusion and determine the minimum genuine pairwise identification/confusion relationships required among the approved sunfish-group species.
+Next task: finalize the remaining Sunfish Version 1 inclusion set and the minimum required pairwise identification/confusion relationships under the corrected Four-State Ozark scope.
 
 Do not begin production Fish source edits before Phase 0 design lock is complete.
