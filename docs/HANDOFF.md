@@ -1,18 +1,18 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.4.0  
+**Document Revision:** 1.5.0  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
 **Latest Completed Production Package:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4.md` — Production Package 4 PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED  
 **Completed Workstream:** `docs/workstreams/KNOT-INTEGRATED-REGRESSION.md` — PASS / VALIDATED / CLOSED  
 **Completed Milestone:** Knots  
-**Next Approved Milestone:** Fish Guide  
-**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3 remains the approved milestone sequence; current completion state is recorded here and in the Knot closeout workstream.  
+**Current Milestone:** Fish Guide — Phase 0 In Progress; Version 1 species library LOCKED  
+**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3 remains the approved milestone sequence.  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Knots Production Packages 1–4, site-wide floating navigation, connected-knowledge navigation, Dashboard/Tackle information architecture, keyboard behavior, and final console-health validation all passed. The Knots milestone is formally closed. The next session begins with Fish Guide planning from current GitHub `main`.  
-**Last Updated:** 2026-08-17
+**Session Status:** Fish Guide Phase 0 architecture and species-library work is in progress. The Four-State Ozark scope, Fish schema, relationship ownership, Fish-to-Rig guidance architecture, all species-group audits, Catfish/Black Bass Four-State revalidation, and the final Four-State gap audit are complete. Version 1 is locked at 30 canonical Fish with 20 approved pairwise identification relationships. No Fish production source has been changed.  
+**Last Updated:** 2026-08-18
 
 # 1. Start Here
 
@@ -31,6 +31,8 @@ Permanent rules:
 > The assistant may write project-progress Markdown files directly to GitHub, such as handoff, milestone, changelog, validation, roadmap, and workstream status documents.
 
 > Production updates normally remain user-reviewable update packages applied through GitHub Desktop unless the user explicitly authorizes a different workflow.
+
+> Every repository file write must pass post-write integrity validation from authoritative GitHub after the write. A successful write response alone is not sufficient.
 
 # 2. Current Milestone State — Complete Rig Guide
 
@@ -62,7 +64,7 @@ Final Rig workstream record:
 The approved order remains:
 
 1. **Knots** — completed / validated / closed
-2. **Fish Guide** — next approved milestone
+2. **Fish Guide** — current milestone
 3. **What Should I Throw**
 4. **Tackle Reference / Find Tackle**
 5. **Settings / User Data Architecture Gate**
@@ -315,7 +317,81 @@ Approved hierarchy:
 
 Current Version 1 media coverage is complete for all 10 Knots using approved external destinations. Third-party instructional artwork, animation, 3D assets, or video are not copied, bundled, rehosted, extracted, or redistributed by the project.
 
-# 5. What Should I Throw — Canonical Instruction Direction
+# 5. Current Milestone — Fish Guide Phase 0
+
+**Implementation Status: Phase 0 In Progress / Species Library LOCKED**
+
+Controlling workstream:
+
+- `docs/workstreams/FISH-GUIDE-PHASE-0.md`
+
+Locked Four-State Ozark scope:
+
+- Northeast Oklahoma
+- Southeast Kansas
+- Southwest Missouri
+- Northwest Arkansas
+
+Locked Version 1 Fish architecture includes:
+
+- canonical Fish schema,
+- Fish-owned `identificationTraits[]`, `habitatTags[]`, and `waterbodyTypes[]`,
+- separate `FISH_IDENTIFICATION_RELATIONSHIPS` Reference Knowledge registry,
+- separate `FISH_RIG_GUIDANCE` Decision Knowledge registry,
+- media ownership through the shared Media registry rather than Fish-owned image IDs,
+- no state-specific geography Boolean fields on Fish.
+
+The final Version 1 species library is locked at **30 canonical Fish**:
+
+1. Channel Catfish
+2. Blue Catfish
+3. Flathead Catfish
+4. Black Bullhead
+5. Yellow Bullhead
+6. Largemouth Bass
+7. Smallmouth Bass
+8. Spotted Bass
+9. Bluegill
+10. Redear Sunfish
+11. Green Sunfish
+12. Longear Sunfish
+13. Rock Bass
+14. Warmouth
+15. Ozark Bass
+16. Black Crappie
+17. White Crappie
+18. White Bass
+19. Striped Bass
+20. Hybrid Striped Bass
+21. Walleye
+22. Saugeye
+23. Sauger
+24. Rainbow Trout
+25. Brown Trout
+26. Common Carp
+27. Freshwater Drum
+28. Paddlefish
+29. Longnose Gar
+30. Spotted Gar
+
+The approved Version 1 identification graph contains **20 pairwise relationships**.
+
+Final combined audit results:
+
+- Block 0.3J — Paddlefish Include V1; Alligator Gar and Yellow Perch deferred.
+- Block 0.3K — Catfish and Black Bass Four-State revalidation PASS / NO CHANGE.
+- Block 0.3L — Longnose Gar and Spotted Gar promoted to V1; `longnose-gar ↔ spotted-gar` added; all other mandatory gap-audit candidates resolved as deferred.
+
+No Fish production source/data/media/UI files have been changed during Phase 0.
+
+Important unresolved canonical-content choices remain deliberately open:
+
+- `Rock Bass` versus `Northern Rock Bass` beginner-facing canonical display name,
+- final `Hybrid Striped Bass` alias set, including `Wiper` and `Whiterock Bass` candidates.
+
+Fish Guide Phase 0 is **not yet closed**. Remaining Phase 0 work includes Fish media direction, browse/detail information architecture, connected-knowledge presentation boundaries as needed, and reconciliation of governing Fish data-model documentation with the locked decisions.
+
+# 6. What Should I Throw — Canonical Instruction Direction
 
 When the What Should I Throw milestone begins, recommendations should connect canonical knowledge rather than duplicate instructions.
 
@@ -326,7 +402,7 @@ Approved distinction:
 
 Recommendations own selection, ranking, rationale, and context. Rig owns physical assembly/configuration. Technique owns reusable presentation behavior.
 
-# 6. Tackle Reference / Find Tackle — Canonical Direction
+# 7. Tackle Reference / Find Tackle — Canonical Direction
 
 Canonical Tackle must be discoverable independently of Rigs.
 
@@ -343,7 +419,7 @@ A Tackle result should act as a connected-knowledge gateway and may expose:
 - Fish/Conditions/Techniques where canonical relationships exist,
 - later My Tackle ownership context.
 
-# 7. Settings / User Data Architecture Gate
+# 8. Settings / User Data Architecture Gate
 
 Before My Tackle or Catch Log implementation begins, a dedicated architecture/design segment must resolve persistent User Knowledge and Settings.
 
@@ -364,7 +440,7 @@ Required topics include:
 
 Current local-first architecture remains the baseline unless explicitly changed.
 
-# 8. My Tackle / Catch Log Order
+# 9. My Tackle / Catch Log Order
 
 My Tackle follows the User Data architecture gate and precedes Catch Log.
 
@@ -372,19 +448,19 @@ My Tackle must establish persistent ownership behavior on the settled User Knowl
 
 Catch Log then uses that same persistence architecture and references canonical Fish/Rig/Lure/Technique entities rather than duplicating Reference Knowledge wherever practical.
 
-# 9. Global Search
+# 10. Global Search
 
 Global Search is intentionally deferred until the major searchable domains and canonical entity models are established.
 
 It must build on the existing relevance-first/connected-knowledge approach and must not become an undifferentiated cross-domain result dump.
 
-# 10. Favorites
+# 11. Favorites
 
 Favorites is parked until near project completion.
 
 At that point, decide from actual workflow value whether to keep, narrow, replace, or remove it.
 
-# 11. Session Workflow Safeguards
+# 12. Session Workflow Safeguards
 
 ## A. GitHub write authority
 
@@ -398,15 +474,19 @@ Normal production workflow:
 4. user applies/pushes through GitHub Desktop,
 5. re-fetch GitHub afterward to verify the applied production state.
 
-## B. Image review before site integration
+## B. Post-write integrity validation
+
+Every file write must be re-fetched from authoritative GitHub and checked for intact beginning/end content, intended changes, preserved unrelated content, and absence of accidental truncation before the write is considered complete.
+
+## C. Image review before site integration
 
 No newly created or replacement image may be added to a production update package before the user has visually reviewed and approved it.
 
-## C. Long-process status updates
+## D. Long-process status updates
 
 During long or multi-step work, post concise visible progress updates at meaningful checkpoints.
 
-# 12. Rig Tutorial Standard
+# 13. Rig Tutorial Standard
 
 Primary embedded Rig tutorials are build-first:
 
@@ -422,7 +502,7 @@ Permanent working principle:
 
 > Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
 
-# 13. Tackle Recognition Media Standard
+# 14. Tackle Recognition Media Standard
 
 Current production rules:
 
@@ -436,7 +516,7 @@ Current production rules:
 - final assets must be checked at realistic phone contextual-popover size,
 - every new/replacement asset must be shown separately in chat and explicitly approved before production packaging.
 
-# 14. Finalized Work
+# 15. Finalized Work
 
 The following are Validated / Finalized:
 
@@ -452,7 +532,16 @@ The following are Validated / Finalized:
 - Complete Rig Guide
 - **Knots — Production Packages 1–4 plus integrated navigation/runtime closeout**
 
-# 15. Known Temporary Bridge
+The following Fish Guide Phase 0 work is Approved / Locked but not production-implemented:
+
+- Four-State Ozark geographic scope,
+- canonical Version 1 Fish schema,
+- Fish identification/confusion relationship architecture,
+- Fish-to-Rig guidance architecture,
+- final 30-Fish Version 1 species library,
+- final 20-relationship Version 1 identification graph.
+
+# 16. Known Temporary Bridge
 
 Rig readiness remains transitional local state under:
 
@@ -460,13 +549,15 @@ Rig readiness remains transitional local state under:
 
 It must not be treated as permanent My Tackle ownership.
 
-# 16. Exact Resume Point — Next Session
+# 17. Exact Resume Point — Next Session
 
-The Knots milestone is closed. Do not reopen it unless a real defect or an explicitly approved enhancement requires it.
+The Knots milestone remains closed. Do not reopen it unless a real defect or an explicitly approved enhancement requires it.
 
-Begin the next session with **Fish Guide** planning:
+Resume **Fish Guide Phase 0** from the locked species-library state:
 
-1. Re-fetch current GitHub `main` and verify the authoritative baseline.
-2. Review existing Fish data, search, media, detail-page behavior, and Fish-related architecture before proposing source edits.
-3. Decide the next Fish Guide milestone/build segment based on current project state rather than assumptions from older plans.
-4. Preserve the validated Dashboard order, site-wide floating navigation, connected-knowledge behavior, Rig/Knot navigation, and Reel Setup behavior unless an approved Fish Guide requirement explicitly changes them.
+1. Re-fetch current GitHub `main`, `docs/HANDOFF.md`, and `docs/workstreams/FISH-GUIDE-PHASE-0.md`.
+2. Treat the 30-Fish Version 1 species library and 20 approved identification relationships as locked unless Phase 0 is explicitly reopened.
+3. Continue the remaining Phase 0 design/documentation work before any Fish production source edit: Fish media direction, browse/detail information architecture, and governing Fish data-model/documentation reconciliation.
+4. Resolve the `Rock Bass` versus `Northern Rock Bass` display-name choice and final `Hybrid Striped Bass` alias set during canonical record authoring; do not silently choose them earlier.
+5. Re-fetch any existing production Fish source file immediately before proposing its first implementation edit.
+6. Preserve the validated Dashboard order, site-wide floating navigation, connected-knowledge behavior, Rig/Knot navigation, and Reel Setup behavior unless an approved Fish Guide requirement explicitly changes them.
