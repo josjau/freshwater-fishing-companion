@@ -2,6 +2,7 @@
 
 **Document Status:** Approved  
 **Implementation Status:** Phase 0 In Progress  
+**Species-Library Status:** Version 1 LOCKED  
 **Milestone:** Fish Guide  
 **Recorded:** 2026-08-18  
 **Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
@@ -323,7 +324,7 @@ Therefore:
 
 # Block 0.3B — Catfish Group Audit
 
-**Status:** APPROVED / LOCKED / COMPLETE — FOUR-STATE GEOGRAPHY REVALIDATION REQUIRED BEFORE FINAL LIBRARY LOCK
+**Status:** APPROVED / LOCKED / COMPLETE — FOUR-STATE REVALIDATION PASSED
 
 ## Version 1 Inclusion
 
@@ -378,7 +379,7 @@ If Brown Bullhead is later promoted into Version 1, the bullhead comparison set 
 
 # Block 0.3C — Black Bass Group Audit
 
-**Status:** APPROVED / LOCKED / COMPLETE — FOUR-STATE GEOGRAPHY REVALIDATION REQUIRED BEFORE FINAL LIBRARY LOCK
+**Status:** APPROVED / LOCKED / COMPLETE — FOUR-STATE REVALIDATION PASSED
 
 ## Version 1 Inclusion
 
@@ -685,39 +686,190 @@ Add the following cluster to the required Four-State Gap Audit:
 
 If a counterpart is later promoted into Version 1, add only the specific Common Carp comparison relationship or relationships justified by genuine field confusion rather than creating an exhaustive matrix.
 
+# Block 0.3J — Remaining Regional Candidate Audit
+
+**Status:** APPROVED / LOCKED / COMPLETE
+
+## Version 1 Inclusion
+
+Include in Version 1:
+
+1. Paddlefish
+
+Paddlefish independently satisfies the Four-State Ozark threshold through major regional fisheries and practical angling importance.
+
+No Version 1 pairwise identification relationship is required for Paddlefish. Its long paddle-shaped snout, smooth/scaleless body, large mouth, and strongly forked tail provide sufficient Fish-owned identification value.
+
+## Deferred Candidates
+
+Defer from Version 1:
+
+- Alligator Gar
+- Yellow Perch
+
+Alligator Gar is a legitimate regional species in the broader four-state area but its practical fishery is not centered strongly enough inside the approved Four-State Ozark footprint to justify initial-library inclusion.
+
+Yellow Perch is a legitimate species but does not demonstrate enough practical Four-State Ozark beginner-angling or identification value to justify Version 1 inclusion.
+
+# Block 0.3K — Four-State Geography Revalidation
+
+**Status:** APPROVED / LOCKED / COMPLETE
+
+The targeted revalidation required by the Block 0.1 geographic correction is complete.
+
+## Catfish Revalidation
+
+**Result:** PASS / NO CHANGE
+
+Retain the Block 0.3B Version 1 set:
+
+- Channel Catfish
+- Blue Catfish
+- Flathead Catfish
+- Black Bullhead
+- Yellow Bullhead
+
+Retain the four approved Catfish identification relationships without expansion.
+
+No authoritative Southeast Kansas or Southwest Missouri evidence exposed a missing V1 Catfish species or a required additional comparison relationship.
+
+## Black Bass Revalidation
+
+**Result:** PASS / NO CHANGE
+
+Retain the Block 0.3C Version 1 set:
+
+- Largemouth Bass
+- Smallmouth Bass
+- Spotted Bass
+
+Retain the complete three-way Black Bass identification graph without expansion.
+
+No authoritative Southeast Kansas or Southwest Missouri evidence exposed a missing V1 Black Bass species or a required additional comparison relationship.
+
+The revalidation requirement attached to Blocks 0.3B and 0.3C is satisfied and closed.
+
+# Block 0.3L — Final Four-State Gap Audit
+
+**Status:** APPROVED / LOCKED / COMPLETE
+
+This final gap audit supersedes earlier pending/unresolved language in Blocks 0.3D, 0.3G, 0.3H, and 0.3I where a candidate was explicitly assigned to the Four-State Gap Audit.
+
+## Promoted to Version 1
+
+Add:
+
+1. Longnose Gar
+2. Spotted Gar
+
+These species provide sufficient Four-State Ozark occurrence and beginner-identification value to justify Version 1 inclusion.
+
+Create this Version 1 pairwise identification relationship:
+
+```text
+longnose-gar ↔ spotted-gar
+```
+
+Approved beginner identification direction:
+
+- Longnose Gar — emphasize the extremely long, narrow snout.
+- Spotted Gar — emphasize the shorter/broader snout plus conspicuous round dark spots on the top of the head and paired fins.
+
+## Final Deferred Gap-Audit Candidates
+
+The mandatory revisit is complete for the following candidates. They remain outside Version 1:
+
+- Brown Bullhead
+- Shadow Bass
+- Brook Trout
+- Cutthroat Trout
+- Tiger Trout
+- Grass Carp
+- Smallmouth Buffalo
+- Bigmouth Buffalo
+- Quillback
+- Bighead Carp
+- Shortnose Gar
+
+Earlier independently deferred candidates also remain outside Version 1:
+
+- Yellow Bass
+- Alligator Gar
+- Yellow Perch
+
+No additional carp/buffalo or trout comparison matrix is created because no additional species from those clusters is promoted into Version 1.
+
+# Final Version 1 Species-Library Lock
+
+**Status:** APPROVED / LOCKED
+
+The Fish Guide Version 1 species library contains **30 canonical Fish**:
+
+1. Channel Catfish
+2. Blue Catfish
+3. Flathead Catfish
+4. Black Bullhead
+5. Yellow Bullhead
+6. Largemouth Bass
+7. Smallmouth Bass
+8. Spotted Bass
+9. Bluegill
+10. Redear Sunfish
+11. Green Sunfish
+12. Longear Sunfish
+13. Rock Bass
+14. Warmouth
+15. Ozark Bass
+16. Black Crappie
+17. White Crappie
+18. White Bass
+19. Striped Bass
+20. Hybrid Striped Bass
+21. Walleye
+22. Saugeye
+23. Sauger
+24. Rainbow Trout
+25. Brown Trout
+26. Common Carp
+27. Freshwater Drum
+28. Paddlefish
+29. Longnose Gar
+30. Spotted Gar
+
+The approved Version 1 identification graph contains **20 pairwise relationships**.
+
+Species-library lock does not silently resolve later canonical-content choices already identified in this workstream. In particular:
+
+- the beginner-facing `Rock Bass` versus `Northern Rock Bass` display-name choice remains a canonical record-authoring decision;
+- `Hybrid Striped Bass` alias choices such as `Wiper` and `Whiterock Bass` remain to be finalized when canonical records are authored.
+
+No production `data/fish.js`, identification-registry, guidance-registry, media, HTML, CSS, or JavaScript changes are authorized merely by locking the species library.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
 
-Approved blocks:
+Completed and locked Phase 0 work:
 
-- Block 0.1 — Four-State Ozark regional scope boundary (corrected)
+- Block 0.1 — Four-State Ozark regional scope boundary
 - Block 0.2A — Fish entity and relationship ownership
 - Block 0.2B — canonical Version 1 Fish schema
 - Block 0.2C-1 — Fish identification/confusion relationship architecture
 - Block 0.2C-2 — Fish-to-Rig guidance architecture
-- Block 0.3A — species-library audit framework
-- Block 0.3B — Catfish group audit, pending final four-state geography revalidation
-- Block 0.3C — Black Bass group audit, pending final four-state geography revalidation
-- Block 0.3D — Sunfish group audit
-- Block 0.3E — Crappie group audit
-- Block 0.3F — Temperate Bass group audit
-- Block 0.3G — Walleye / Sauger group audit
-- Block 0.3H — Trout group audit
-- Block 0.3I — Common Carp / Freshwater Drum group audit
+- Blocks 0.3A–0.3J — species-library audits
+- Block 0.3K — Four-State Catfish/Black Bass geography revalidation
+- Block 0.3L — final Four-State gap audit
+- Final Version 1 species library — **30 Fish / LOCKED**
+- Version 1 identification graph — **20 pairwise relationships / LOCKED**
 
-## Next Block
+## Next Session
 
-**Block 0.3J — Remaining Regional Candidate Audit**
+Do not begin production Fish source edits yet.
 
-Begin with the still-unaudited secondary candidates:
+At the start of the next session:
 
-- Paddlefish
-- Alligator Gar
-- Yellow Perch
-
-The goal is to determine whether each species independently meets the Four-State Ozark Version 1 inclusion threshold, whether any additional closely related candidate must be considered alongside it, and whether any genuine identification/confusion relationships are required.
-
-After the remaining regional-candidate audit is closed, complete the targeted Four-State geography revalidation and required Four-State Gap Audit before locking the final Version 1 species library.
-
-Do not begin production Fish source edits before Phase 0 design lock is complete.
+1. Re-fetch current GitHub `main` and this workstream.
+2. Treat the 30-Fish Version 1 species library and 20 approved identification relationships as locked unless Phase 0 is explicitly reopened.
+3. Continue the remaining Fish Guide Phase 0 design/documentation work required by the Phase 0 scope, including Fish media direction, browse/detail information architecture, and reconciliation of governing Fish data-model documentation with the locked decisions.
+4. Resolve canonical record-authoring details such as the Rock Bass display-name choice and Hybrid Striped Bass alias set at the appropriate content-authoring step rather than silently changing them.
+5. Only after the remaining Phase 0 design/documentation gates are closed should production Fish source implementation begin.
