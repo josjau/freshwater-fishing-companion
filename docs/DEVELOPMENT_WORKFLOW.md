@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.1.4  
+**Document Revision:** 1.1.5  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-10
+**Last Updated:** 2026-08-18
 
 # Purpose
 
@@ -149,6 +149,34 @@ For repository-side checking, `tools/validate_replacement_integrity.py` provides
 
 For assistant-generated packages, the equivalent baseline comparison must be run before the ZIP is created. A package that fails the gate must not be delivered.
 
+# Post-Write Integrity Validation
+
+Every file write must be validated from the authoritative remote repository after the write. A successful write/commit response alone is not sufficient evidence that the file is intact.
+
+This rule applies to:
+
+- direct assistant Markdown writes to GitHub,
+- user commits/pushes through GitHub Desktop,
+- corrective/restoration writes,
+- any other workflow that changes an existing or newly created repository file.
+
+After every file write:
+
+1. Re-fetch the written file from the target branch/commit.
+2. Confirm the file is non-empty unless an empty file was explicitly intended.
+3. Confirm the returned blob SHA matches the new repository state.
+4. Verify the beginning and end of the file so accidental prefix/tail loss is detected.
+5. Verify every approved inserted/replaced section is present.
+6. For existing files, compare the post-write file against the exact pre-write GitHub baseline and confirm unrelated headings/content remain preserved.
+7. Treat any unexpected shrinkage, missing heading, missing tail, empty content, unrelated deletion, or malformed replacement as a failed write.
+8. When tool output is display-truncated, use targeted line-range/chunk fetches or other repository comparisons to validate the omitted regions; never interpret display truncation as proof that repository content is missing.
+9. If validation fails, stop further work on that file, restore from the immediately preceding authoritative GitHub version, reapply only the approved change, and repeat the full post-write validation.
+10. Do not mark the file, block, segment, or documentation closeout complete until the post-write integrity validation passes.
+
+For a targeted edit, the validation should confirm both sides of the change: the intended new content is present and previously existing unrelated content remains intact.
+
+This post-write gate is mandatory even when pre-write replacement-integrity checks passed. Pre-write checks prevent bad payloads; post-write checks prove the authoritative repository received the intended complete file.
+
 # User Repository Workflow
 
 The user normally updates the repository through GitHub Desktop.
@@ -266,6 +294,7 @@ After push:
 
 - Verify the actual commit.
 - Verify the affected files on `main`.
+- Apply the mandatory Post-Write Integrity Validation gate to every written file.
 - Do not assume local/staged work reached GitHub.
 - Rule out GitHub Pages deployment lag before altering otherwise-correct source.
 - Confirm the active workstream/HANDOFF state accurately describes what is now on `main`; correct stale status before starting another build segment.
@@ -283,7 +312,7 @@ Closeout sequence:
 3. Reconcile all affected governing documents and `HANDOFF.md` with the already-current active workstream state.
 4. Return complete replacement documentation files as part of the coherent segment package whenever practical.
 5. User reviews, commits, and pushes.
-6. Verify the actual GitHub files after push.
+6. Verify the actual GitHub files after push using the mandatory Post-Write Integrity Validation gate.
 7. Confirm that Planned, In Progress, Implemented / Unvalidated, Partially Validated, Validated, Finalized, Approved / Not Implemented, and Open states are represented accurately where applicable.
 8. Only then mark the segment finalized.
 
@@ -327,7 +356,7 @@ When a permanent standard is agreed:
 2. Add an architectural decision when it has long-term structural impact.
 3. Update cross-references and `HANDOFF.md` when current state or future work changes.
 4. Include those documentation changes with the active coherent package when practical.
-5. Verify the documentation after push.
+5. Verify the documentation after push using the mandatory Post-Write Integrity Validation gate.
 
 A new chat should be able to reconstruct the project's operating rules and current implementation state from GitHub alone.
 
