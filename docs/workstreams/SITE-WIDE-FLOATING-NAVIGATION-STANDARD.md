@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Site-Wide Floating Navigation Standard
 
 **Document Status:** Approved  
-**Implementation Status:** Runtime Validation In Progress / Reel Setup Correction Built  
+**Implementation Status:** Runtime Validation In Progress / Reel Setup Correction Validated  
 **Recorded:** 2026-08-14  
 **Last Updated:** 2026-08-17  
 **Scope:** Site-wide navigation UX
@@ -147,13 +147,13 @@ Runtime validation confirmed:
 
 ## Block 2C — Reel Setup Navigation
 
-**Status:** FAIL FOUND / CORRECTION BUILT / RUNTIME RETEST PENDING
+**Status:** PASS AFTER CORRECTION
 
-Runtime review found an extra larger outer floating bubble around Reel Setup's Previous/Home controls beginning on **Get Your Reel Ready** and continuing throughout the Reel Setup workflow.
+Initial runtime review found an extra larger outer floating bubble around Reel Setup's Previous/Home controls beginning on **Get Your Reel Ready** and continuing throughout the Reel Setup workflow.
 
 Root cause:
 
-- `renderView()` now supplies the standard `.page-navigation-group` shell,
+- `renderView()` supplied the standard `.page-navigation-group` shell,
 - `renderReelSetupNavigation()` replaced only the generic Home button,
 - the standard group therefore remained around Reel Setup's custom `[data-reel-setup-navigation]` container,
 - both containers received the floating visual treatment, creating nested shells.
@@ -166,7 +166,15 @@ Corrective implementation in `script.js`:
 - keep Reel Setup's existing Previous/Home routing unchanged,
 - make no CSS or shared Root/Nested navigation changes.
 
-The correction is built from the current GitHub-authoritative `script.js` and must be pushed, deployed, and rerun through Validation Block 2C before extended validation continues.
+The targeted correction was deployed in commit `82f37285ff978eca1a92edfd129cebb9aff5105c` and successfully retested in Microsoft Edge on Windows Desktop.
+
+Retest confirmed:
+
+- exactly one Reel Setup floating navigation container,
+- no duplicate outer shell,
+- Previous remains functional,
+- Home remains functional,
+- Previous and Home destinations open at the top as required.
 
 # Required Runtime Validation
 
@@ -179,11 +187,11 @@ Completed:
 5. Representative nested shared appearance — same visual treatment. **PASS**
 6. Representative Rig browse/detail Parent + Home behavior and top reset. **PASS**
 7. Representative Knot browse/detail Parent + Home behavior and top reset. **PASS**
+8. Reel Setup — one specialized Previous/Home floating container with no outer duplicate shell. **PASS**
+9. Reel Setup — Previous and Home remain functionally correct and top-reset correctly. **PASS**
 
-Pending after the Reel Setup correction deploys:
+Remaining extended checks:
 
-8. Reel Setup — one specialized Previous/Home floating container with no outer duplicate shell.
-9. Reel Setup — Previous and Home remain functionally correct and top-reset correctly.
 10. Narrow viewport — controls wrap or fit without horizontal overflow or obscuring content.
 11. Keyboard navigation — visible focus and operable controls.
 12. Representative Knot → related Rig / Reel Setup traversal.
