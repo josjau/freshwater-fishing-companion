@@ -845,6 +845,47 @@ Species-library lock does not silently resolve later canonical-content choices a
 
 No production `data/fish.js`, identification-registry, guidance-registry, media, HTML, CSS, or JavaScript changes are authorized merely by locking the species library.
 
+# Block 0.4A — Fish Media Coverage Standard
+
+**Status:** APPROVED / LOCKED — ADJUSTABLE WHEN VERIFIED SPECIES NEEDS REQUIRE IT
+
+Every Version 1 Fish must have at least one primary identification image.
+
+Primary media rules:
+
+- Prefer a trustworthy real photograph whenever a technically suitable and legally usable photograph is available.
+- The primary image should show a representative fish clearly enough to support the approved Fish-owned `identificationTraits[]` and normal beginner recognition.
+- Primary identification evidence must remain technically accurate and must not alter, stylize, invent, or obscure diagnostic features.
+- AI-generated or approximate photorealistic Fish imagery must not serve as primary identification evidence.
+
+Supplemental diagnostic media is added only when it materially improves identification or comparison value. It is not required uniformly for all 30 Fish.
+
+Supplemental media may include:
+
+- additional verified photographs,
+- close-up photographs of diagnostic features,
+- accurate drawings or scientific illustrations,
+- focused diagrams or comparison graphics showing key distinguishing features.
+
+Examples of features that may justify supplemental media include mouth position, fin markings, tongue patches, cheek scaling, tail markings, opercular/ear-flap details, dorsal-spine patterns, and other approved pairwise distinctions that are difficult to see in a normal side-view photograph.
+
+Media roles:
+
+```text
+Primary identification media
+→ Required for every Version 1 Fish
+→ Prefer real photographs where possible
+
+Supplemental diagnostic media
+→ Optional per Fish or comparison
+→ Use photographs, drawings, scientific illustrations, or focused diagrams when they clarify key distinguishing features
+
+Decorative Fish media
+→ Not required for Version 1
+```
+
+This coverage standard is intentionally adaptable. During source acquisition, canonical record authoring, implementation, or runtime review, a Fish may receive a different or expanded media treatment when verified identification needs demonstrate that the default treatment is insufficient. Any material exception must preserve identification accuracy, licensing/provenance requirements, and the established Media registry ownership model.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -861,15 +902,18 @@ Completed and locked Phase 0 work:
 - Block 0.3L — final Four-State gap audit
 - Final Version 1 species library — **30 Fish / LOCKED**
 - Version 1 identification graph — **20 pairwise relationships / LOCKED**
+- Block 0.4A — Fish Media Coverage Standard
 
-## Next Session
+## Next Discussion
+
+**Block 0.4B — Fish Media Source, Licensing, Provenance, and Diagnostic-Media Rules**
 
 Do not begin production Fish source edits yet.
 
-At the start of the next session:
+At the next discussion:
 
-1. Re-fetch current GitHub `main` and this workstream.
-2. Treat the 30-Fish Version 1 species library and 20 approved identification relationships as locked unless Phase 0 is explicitly reopened.
-3. Continue the remaining Fish Guide Phase 0 design/documentation work required by the Phase 0 scope, including Fish media direction, browse/detail information architecture, and reconciliation of governing Fish data-model documentation with the locked decisions.
-4. Resolve canonical record-authoring details such as the Rock Bass display-name choice and Hybrid Striped Bass alias set at the appropriate content-authoring step rather than silently changing them.
-5. Only after the remaining Phase 0 design/documentation gates are closed should production Fish source implementation begin.
+1. Define the accepted source hierarchy for primary and supplemental Fish media.
+2. Define licensing/provenance records required for locally bundled media.
+3. Decide when externally hosted authoritative media may be linked rather than bundled.
+4. Define how pairwise identification diagrams/comparison graphics relate to Fish-owned media and `FISH_IDENTIFICATION_RELATIONSHIPS`.
+5. Preserve Block 0.4A as the default coverage rule while allowing verified species-specific exceptions when necessary.
