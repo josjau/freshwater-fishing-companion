@@ -509,15 +509,20 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .internal-knowledge-link,
 .rig-knot-link {
     display: inline-flex;
-    min-height: 40px;
+    min-height: 32px;
     align-items: center;
+    justify-self: start;
+    width: fit-content;
+    max-width: 100%;
     margin: 0;
-    padding: 6px 11px;
+    padding: 3px 9px;
     border: 1px solid color-mix(in srgb, var(--accent) 45%, white 15%);
     border-radius: 999px;
     background: var(--accent-soft);
     color: var(--text);
+    font-size: .86rem;
     font-weight: 800;
+    line-height: 1.2;
     text-align: left;
     cursor: pointer;
 }
