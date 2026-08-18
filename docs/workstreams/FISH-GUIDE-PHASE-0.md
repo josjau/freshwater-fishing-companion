@@ -640,6 +640,51 @@ Approved beginner identification direction:
 
 If Brook Trout, Cutthroat Trout, or Tiger Trout is later promoted during the Four-State Gap Audit, re-audit the trout identification graph rather than automatically creating a complete pairwise matrix.
 
+# Block 0.3I — Common Carp / Freshwater Drum Group Audit
+
+**Status:** APPROVED / LOCKED / COMPLETE
+
+All Block 0.3I decisions use the corrected Four-State Ozark scope.
+
+Common Carp and Freshwater Drum are evaluated independently as practical regional Fish rather than as a biological group.
+
+## Version 1 Inclusion
+
+Include in Version 1:
+
+1. Common Carp
+2. Freshwater Drum
+
+Both existing seed records independently satisfy the Version 1 practical-value threshold and are not retained merely because they were present in the seed library.
+
+## Identification / Confusion Relationships
+
+No Version 1 pairwise identification relationship is required for either Common Carp or Freshwater Drum at this stage.
+
+This is intentional. `FISH_IDENTIFICATION_RELATIONSHIPS` is confusion-driven and optional per Fish; canonical Fish do not need manufactured relationship records when their own `identificationTraits[]` provide sufficient field-identification value.
+
+Approved Fish-owned identification direction:
+
+- Common Carp — emphasize the heavy/deep body, long dorsal fin, large dark-edged scales that can create a crosshatched appearance, and barbels/whiskers at the corners of the mouth.
+- Freshwater Drum — emphasize the silvery deep body, pronounced hump behind the head, blunt snout, pale lips, and long dorsal fin divided into distinct portions.
+- A Freshwater Drum's croaking/drumming sound may be useful supporting information but must not be treated as a required or primary identification trait.
+
+Do not create a `common-carp ↔ freshwater-drum` relationship. They are not a genuine beginner field-confusion pair.
+
+## Four-State Carp / Buffalo Gap-Audit Cluster
+
+Common Carp exposes a legitimate regional identification issue with other carp-like and sucker-family fishes. Do not expand Version 1 automatically during this block.
+
+Add the following cluster to the required Four-State Gap Audit:
+
+- Grass Carp
+- Smallmouth Buffalo
+- Bigmouth Buffalo
+- Quillback
+- additional carp/buffalo counterparts only when authoritative Four-State evidence demonstrates practical regional angling or beginner-identification value
+
+If a counterpart is later promoted into Version 1, add only the specific Common Carp comparison relationship or relationships justified by genuine field confusion rather than creating an exhaustive matrix.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -659,16 +704,20 @@ Approved blocks:
 - Block 0.3F — Temperate Bass group audit
 - Block 0.3G — Walleye / Sauger group audit
 - Block 0.3H — Trout group audit
+- Block 0.3I — Common Carp / Freshwater Drum group audit
 
 ## Next Block
 
-**Block 0.3I — Common Carp / Freshwater Drum Group Audit**
+**Block 0.3J — Remaining Regional Candidate Audit**
 
-Begin with the two unresolved seed records:
+Begin with the still-unaudited secondary candidates:
 
-- Common Carp
-- Freshwater Drum
+- Paddlefish
+- Alligator Gar
+- Yellow Perch
 
-The goal is to determine whether each species provides enough Four-State Ozark angling, beginner-identification, or connected-knowledge value to remain in the Version 1 Fish library and whether either needs a dedicated identification/confusion relationship with another supported Fish.
+The goal is to determine whether each species independently meets the Four-State Ozark Version 1 inclusion threshold, whether any additional closely related candidate must be considered alongside it, and whether any genuine identification/confusion relationships are required.
+
+After the remaining regional-candidate audit is closed, complete the targeted Four-State geography revalidation and required Four-State Gap Audit before locking the final Version 1 species library.
 
 Do not begin production Fish source edits before Phase 0 design lock is complete.
