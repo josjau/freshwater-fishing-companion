@@ -608,6 +608,38 @@ Approved group identification direction:
 
 No additional Walleye/Sauger-family canonical Fish is required for this block. Yellow Perch remains outside this identification cluster and may be evaluated independently if the Four-State Gap Audit finds sufficient regional significance.
 
+# Block 0.3H — Trout Group Audit
+
+**Status:** APPROVED / LOCKED / COMPLETE
+
+All Block 0.3H decisions use the corrected Four-State Ozark scope.
+
+## Version 1 Inclusion
+
+Include in Version 1:
+
+1. Rainbow Trout
+2. Brown Trout
+
+Brook Trout, Cutthroat Trout, and Tiger Trout are not silently rejected. They remain assigned to the required Four-State Gap Audit before final Version 1 library lock so any practical northwest-Arkansas significance can be explicitly confirmed or dismissed.
+
+## Approved Trout Identification / Confusion Relationship
+
+Create this Version 1 pairwise relationship under `FISH_IDENTIFICATION_RELATIONSHIPS`:
+
+```text
+rainbow-trout ↔ brown-trout
+```
+
+Approved beginner identification direction:
+
+- Rainbow Trout — emphasize the pink/red or iridescent lateral band, numerous black spots, and black spotting that continues onto the tail.
+- Brown Trout — emphasize the golden/brown body, red/orange side spots often mixed with darker spots, and few or no black spots on the tail.
+- Use body and spot pattern as the first beginner-facing identification cue, then use tail spotting as confirmation.
+- Habitat, stocking location, and water temperature may support context but must not replace physical identification traits.
+
+If Brook Trout, Cutthroat Trout, or Tiger Trout is later promoted during the Four-State Gap Audit, re-audit the trout identification graph rather than automatically creating a complete pairwise matrix.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -626,16 +658,17 @@ Approved blocks:
 - Block 0.3E — Crappie group audit
 - Block 0.3F — Temperate Bass group audit
 - Block 0.3G — Walleye / Sauger group audit
+- Block 0.3H — Trout group audit
 
 ## Next Block
 
-**Block 0.3H — Trout Group Audit**
+**Block 0.3I — Common Carp / Freshwater Drum Group Audit**
 
-Begin with:
+Begin with the two unresolved seed records:
 
-- Rainbow Trout
-- Brown Trout
+- Common Carp
+- Freshwater Drum
 
-The goal is to confirm Version 1 inclusion, check whether any additional trout species materially belong in the Four-State Ozark scope, and determine whether a dedicated Rainbow Trout ↔ Brown Trout identification/confusion relationship is required.
+The goal is to determine whether each species provides enough Four-State Ozark angling, beginner-identification, or connected-knowledge value to remain in the Version 1 Fish library and whether either needs a dedicated identification/confusion relationship with another supported Fish.
 
 Do not begin production Fish source edits before Phase 0 design lock is complete.
