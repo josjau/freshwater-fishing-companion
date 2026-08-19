@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.1.6  
+**Document Revision:** 1.1.7  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-18
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -136,6 +136,34 @@ Deferred candidates must be labeled as deferred candidates rather than loosely d
 If the decision is distributed across several documents, `DECISIONS.md` owns the durable decision summary and the relevant architecture, style, data-model, workstream, or handoff documents carry only the context needed for their roles.
 
 Permanent principle: **record enough decision context that a future session can recover both what was decided and why without relying on chat history.**
+
+# Repository Artifact Retirement and Archival
+
+`archive/` at repository root is the single canonical repository archive. `archive/README.md` owns the directory-level archive policy; D033/D034 own the durable architectural decision.
+
+Whole-file replacement does **not** create an archive obligation by itself. Git history preserves ordinary prior committed versions of JavaScript, CSS, HTML, data, Markdown, and other tracked files. Copying every previous revision into `archive/` would duplicate Git history and create stale authoritative-looking files.
+
+Whenever implementation, migration, cleanup, or closeout retires an existing repository artifact, explicitly classify it as one of:
+
+1. **GIT HISTORY ONLY** — an ordinary prior revision; no archive copy is created.
+2. **ARCHIVE** — an independently useful historical/audit/provenance/reconstruction artifact that should remain directly discoverable under `archive/`.
+3. **DELETE** — no continuing repository value beyond Git history.
+
+Examples of appropriate archive material include completed package manifests and package-specific validation records, audit logs retained for provenance, superseded handoffs/workstreams that would mislead if left active, and historical design/reference artifacts with reconstruction or design-lineage value.
+
+Do not archive every old source/document revision, temporary `.tmp`/`.bak` files with no continuing value, accidental duplicate trees, or deferred candidates that remain part of future product planning.
+
+If the disposition is **ARCHIVE**, closeout is incomplete until:
+
+1. the correct existing archive category is selected, or a new category is created only because a real artifact now requires it,
+2. the archive copy/path is created before removal of the active copy when loss risk exists,
+3. the archived path is verified on authoritative GitHub `main`,
+4. the former active/current path is removed or clearly no longer masquerades as current,
+5. the archival action and reason are recorded in the relevant workstream/decision/closeout documentation.
+
+Additional archive categories are not created speculatively.
+
+Permanent principle: **Git history preserves ordinary revisions; the repository archive preserves independently useful historical artifacts.**
 
 # Full-File Replacement Integrity
 
@@ -330,11 +358,12 @@ Closeout sequence:
 1. Identify all decisions, current-state changes, deferred work, known failures, corrections, and open issues produced by the segment.
 2. Fetch the latest relevant documentation from GitHub.
 3. Reconcile all affected governing documents and `HANDOFF.md` with the already-current active workstream state.
-4. Return complete replacement documentation files as part of the coherent segment package whenever practical.
-5. User reviews, commits, and pushes.
-6. Verify the actual GitHub files after push using the mandatory Post-Write Integrity Validation gate.
-7. Confirm that Planned, In Progress, Implemented / Unvalidated, Partially Validated, Validated, Finalized, Approved / Not Implemented, and Open states are represented accurately where applicable.
-8. Only then mark the segment finalized.
+4. Classify every repository artifact retired by the segment as **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**; complete and verify any required archival move before closeout.
+5. Return complete replacement documentation files as part of the coherent segment package whenever practical.
+6. User reviews, commits, and pushes.
+7. Verify the actual GitHub files after push using the mandatory Post-Write Integrity Validation gate.
+8. Confirm that Planned, In Progress, Implemented / Unvalidated, Partially Validated, Validated, Finalized, Approved / Not Implemented, and Open states are represented accurately where applicable.
+9. Only then mark the segment finalized.
 
 Conversation agreement, local files, staged files, preflight checks, or implementation alone do not satisfy this closeout rule.
 
