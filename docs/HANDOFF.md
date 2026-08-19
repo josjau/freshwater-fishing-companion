@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.5.7  
+**Document Revision:** 1.5.8  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
@@ -10,10 +10,10 @@
 **Completed Milestone:** Knots  
 **Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
 **Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
-**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.8 — current cleanup dispositions/actions  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.9 — current cleanup dispositions/actions  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.4 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Repository cleanup discussions are active. Sections 1–3 are complete and GitHub-verified. Theme concepts are organized under `themes/concepts/`; repository-root `archive/` is canonical with retirement/archive safeguards documented; production entrypoint and asset reachability passed with no source cleanup required. Next discussion is Section 4 — Tackle ↔ Media Relationship Ownership. Fish Guide Phase 0 remains paused.  
+**Session Status:** Repository cleanup discussions are active. Sections 1–3 are complete and GitHub-verified. Section 4 Tackle ↔ Media ownership is APPROVED and documented under D056, but production implementation is still pending: Tackle `mediaIds[]` must be removed and renderer lookup must derive Media through `ownerType` + `ownerId` before Section 4 can close. Fish Guide Phase 0 remains paused.  
 **Last Updated:** 2026-08-19
 
 # 1. Start Here
@@ -37,6 +37,8 @@ Permanent rules:
 > Every repository file write must pass post-write integrity validation from authoritative GitHub after the write. A successful write response alone is not sufficient.
 
 > Material durable decisions must preserve the decision, reason, current implementation status, deferred/future trigger, and canonical owner/document. Architecturally meaningful non-actions must be recorded rather than left for future sessions to infer.
+
+> Every canonical fact or relationship has one authoritative semantic owner. Ownership must belong to the entity/domain for which the information is intrinsically meaningful; UI, search, reverse navigation, reporting, or implementation convenience do not justify a second canonical owner. D056 governs this site-wide rule.
 
 > Retired repository artifacts must be explicitly classified as **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**. Ordinary prior file revisions remain in Git history; independently useful historical artifacts are preserved under repository-root `archive/` and verified before closeout.
 
@@ -357,7 +359,7 @@ Locked/approved Fish architecture now includes:
 - no state-specific geography Boolean fields on Fish,
 - Fish category membership stored as `categoryId`, not duplicated display text,
 - Fish-owned `FISH_CATEGORY_DATA` registry for category identity/presentation/order,
-- no category-level `isActive`; individual Fish.isActive owns Fish lifecycle,
+- no category-level `isActive`; individual Fish `isActive` owns Fish lifecycle,
 - canonical `northern-rock-bass` / `Northern Rock Bass` identity,
 - shared aliases allowed where regionally legitimate, including `Goggle-Eye`,
 - Hybrid Striped Bass aliases `Wiper` and `Whiterock Bass`,
@@ -511,13 +513,19 @@ D055 and `DEVELOPMENT_WORKFLOW.md` require every material durable decision to pr
 
 Architecturally meaningful non-actions must be recorded. Deferred candidates must not later be misclassified as abandoned solely because implementation or restructuring was intentionally postponed.
 
-## F. Repository artifact retirement and archive discipline
+## F. Semantic single-owner rule
+
+D056 requires every canonical fact and relationship to have one authoritative semantic owner. Ownership follows domain meaning rather than UI, search, reverse-navigation, reporting, caching, or implementation convenience.
+
+Inverse views should be derived from the canonical owner. Any future duplicate representation or cache/index requires an explicit semantic/architectural justification and remains non-authoritative unless a later decision changes ownership.
+
+## G. Repository artifact retirement and archive discipline
 
 `archive/` at repository root is the only canonical repository archive. Ordinary prior revisions remain recoverable through Git history and are not copied into the archive solely because a file was replaced wholesale.
 
 Every retired artifact is classified **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**. An **ARCHIVE** disposition is incomplete until the archive path is created and verified on GitHub `main`, the old active/current path no longer masquerades as current, and the reason/action are documented.
 
-## G. Repository cleanup gate
+## H. Repository cleanup gate
 
 The 2026-08-18 audit proved the existing documentation/cleanup rules were not strict enough to prevent drift. Until stronger safeguards are reviewed and approved:
 
@@ -597,12 +605,12 @@ It must not be treated as permanent My Tackle ownership.
 
 # 17. Active Gate — Repository Audit Cleanup
 
-**Status:** SECTIONS 1–3 COMPLETE / SECTION 4 NEXT / FISH PAUSED
+**Status:** SECTIONS 1–3 COMPLETE / SECTION 4 APPROVED — IMPLEMENTATION PENDING / FISH PAUSED
 
 Controlling documents:
 
 - `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` — immutable audit-time findings snapshot; its original `OPEN` labels describe the audit baseline.
-- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.8` — current authoritative cleanup dispositions, rationale, status, and completed actions.
+- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.9` — current authoritative cleanup dispositions, rationale, status, and completed actions.
 
 Completed cleanup decisions:
 
@@ -615,35 +623,48 @@ Completed cleanup decisions:
 - D055 Durable Decision Context Preservation — approved permanent safeguard.
 - Section 3 production entrypoint and asset reachability — **PASS**; current `index.html` production load targets all exist; no production source cleanup required.
 - `docs/ARCHITECTURE.md` revision `0.4.3` — corrected current source tree, Knot/Reel load order, and root archive placement.
-- `docs/DECISIONS.md` revision `0.4.4` — D033/D034 reconciled to the canonical root archive and Git-history/archive distinction.
+- `docs/DECISIONS.md` revision `0.4.5` — D056 added as the permanent semantic single-owner site-wide rule.
 - `docs/DEVELOPMENT_WORKFLOW.md` revision `1.1.7` — repository artifact retirement/archive procedure promoted to permanent workflow.
+- `docs/data-model/09-RELATIONSHIPS.md` revision `0.3.4` — site-wide semantic ownership test and entity-to-Media ownership rules documented.
+- `docs/data-model/05-TACKLE.md` revision `0.1.4` — approved Tackle schema removes `mediaIds`; production 29/29 state corrected; duplicate current implementation identified as transitional.
 
-Next cleanup discussion:
+Section 4 approved state:
 
-> **Section 4 — Tackle ↔ Media Relationship Ownership**
+- Media is the canonical owner of entity-to-media attachment through `ownerType` + `ownerId`.
+- Tackle `mediaIds[]` is approved for removal.
+- renderer media lookup must derive from Media ownership.
+- no Tackle-Media join registry and no speculative Media role/order fields are approved.
+- removed `mediaIds[]` history is **GIT HISTORY ONLY**.
+- Section 4 remains open until the production refactor is pushed and runtime/regression validated.
 
-The wider audit still covers relationship ownership duplication, obsolete schema fields, governing/data-model synchronization, future Draft ownership risks, workstream status, stale branch, `.gitignore`, repository-wide validation, optional CI, documentation safeguards, and external-reference/media freshness.
+Next cleanup action:
+
+> **Implement and validate the approved Section 4 Tackle ↔ Media production refactor. Do not begin Section 5 yet.**
+
+The wider audit still covers obsolete Rig schema fields, governing/data-model synchronization, future Draft ownership risks, workstream status, stale branch, `.gitignore`, repository-wide validation, optional CI, documentation safeguards, and external-reference/media freshness.
 
 # 18. Exact Resume Point — Next Session
 
 Do **not** resume the six remaining Fish Guide audit topics yet.
 
-Resume the **Repository Audit Cleanup Gate**:
+Resume the **Repository Audit Cleanup Gate — Section 4 implementation**:
 
 1. Re-fetch current GitHub `main`.
 2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, and `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` first.
 3. Treat the cleanup audit as the immutable findings snapshot and the decision log as the current authority for reviewed dispositions/actions.
-4. Continue with **Section 4 — Tackle ↔ Media Relationship Ownership** unless the user explicitly selects another cleanup item.
-5. Preserve the completed Section 2 repository-organization rules: Forest Journal is the only supported theme; deferred candidates live under `themes/concepts/`; repository-root `archive/` is canonical; ordinary prior revisions remain in Git history; archived artifacts must have independent historical value and verified archive disposition.
-6. Preserve the completed Section 3 finding: current production entrypoint/loaded-source reachability passed and requires no production source cleanup.
-7. For each finding, explicitly decide `KEEP`, `UPDATE`, `MOVE / ARCHIVE`, `DELETE`, `REFACTOR`, or `DEFER` as applicable.
-8. Apply D055: record Decision, Reason, Current Status, Future Trigger, and Canonical Owner for every material decision or meaningful deferral.
-9. Apply the retirement rule whenever an existing artifact is displaced: explicitly classify it **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE** and verify any archive move before closeout.
-10. Treat the user’s ownership requirement as permanent during cleanup: each domain owns only data it should own; inverse/connected knowledge is derived or referenced from a single canonical owner rather than duplicated for UI/Search convenience.
-11. Discuss and approve the remaining stronger safeguards before the cleanup gate closes. At minimum address canonical document roles, closeout reconciliation, repository-wide integrity validation, `.gitignore`/artifact prevention, workstream/archive status discipline, and whether any CI/check automation is worthwhile.
-12. Make no production/schema deletion or refactor solely from an audit recommendation without explicit approval.
-13. After all approved cleanup/synchronization is implemented, perform a fresh read-only repository re-audit.
-14. Only after that re-audit passes and the cleanup document is closed should the project return to Fish Guide Phase 0 and its six remaining architecture questions.
+4. Preserve D056: every canonical fact/relationship has one semantic owner; ownership follows meaning, not UI/search/reverse-navigation convenience.
+5. Re-fetch authoritative `data/tackle.js`, `data/media.js`, and `view-renderer.js` immediately before source work.
+6. Remove Tackle `mediaIds[]` from the production Tackle schema.
+7. Change Tackle recognition-media lookup to derive active Media from `ownerType === "tackle"` and `ownerId === tackle.id`.
+8. Keep `data/media.js` owner metadata canonical and unchanged unless validation finds a genuine defect.
+9. Do not add a Tackle-Media join registry or speculative Media role/order field.
+10. Treat removed `mediaIds[]` as **GIT HISTORY ONLY**.
+11. Deliver production changes as a user-reviewable GitHub Desktop package unless the user explicitly authorizes direct source writes.
+12. After push, re-fetch and validate the source, then run contextual Tackle recognition-media runtime/regression checks.
+13. Reconcile `ARCHITECTURE.md`, the audit decision log, and `HANDOFF.md` to the validated implementation.
+14. Only after Section 4 is fully implemented and closed proceed to Section 5.
+15. After all approved cleanup/synchronization is complete, perform a fresh read-only repository re-audit.
+16. Only after that re-audit passes and the cleanup document is closed should the project return to Fish Guide Phase 0 and its six remaining architecture questions.
 
 Fish state to preserve while paused:
 
