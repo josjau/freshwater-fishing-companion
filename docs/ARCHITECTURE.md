@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.4.1
+**Document Revision:** 0.4.2
 **Document Status:** Approved
-**Last Updated:** 2026-08-18
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -17,9 +17,13 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
 
     index.html
     forest-journal.css
-    forest-copper.css
-    forest-gold.css
-    legacy-dark-theme.css
+
+    themes/
+        README.md
+        concepts/
+            forest-copper.css
+            forest-gold.css
+            legacy-dark-theme.css
 
     data/
         fish.js
@@ -66,19 +70,17 @@ Required JavaScript load order:
 
 **Current:** Forest Journal is the only production-supported Version 1 theme and remains the active visual/reference baseline.
 
-`forest-copper.css`, `forest-gold.css`, and `legacy-dark-theme.css` are intentionally retained **deferred theme candidates** from earlier theme exploration. They are not abandoned historical artifacts, are not currently loaded as supported production themes, are not required to maintain parity with current Forest Journal components, and are not part of the supported production validation matrix.
+`themes/concepts/forest-copper.css`, `themes/concepts/forest-gold.css`, and `themes/concepts/legacy-dark-theme.css` are intentionally retained **deferred theme candidates** from earlier theme exploration. They are not abandoned historical artifacts, are not currently loaded as supported production themes, are not required to maintain parity with current Forest Journal components, and are not part of the supported production validation matrix.
 
 Multi-theme implementation was deliberately deferred while the application remains under active functional development. Maintaining several complete theme implementations during rapid component, navigation, media, accessibility, and responsive-layout changes would multiply synchronization work and regression risk before the shared UI structure is stable.
 
-A broader theme-tree/shared CSS restructuring was also deliberately postponed rather than forgotten or rejected. The absence of that structure in current production does not mean the future theme architecture was abandoned.
+**Current repository organization:** the deferred candidates are grouped under `themes/concepts/`, with `themes/README.md` documenting their purpose and deferred status. `forest-journal.css` remains at repository root because it is the active production stylesheet. This organizational structure may be modified later if the final theme architecture requires it.
 
 **Approved / Not Implemented:** the final theme architecture will be designed during the Settings / User Preferences architecture gate. That work should centralize shared base/layout/component behavior once where practical and limit individual theme files primarily to theme-specific design tokens and intentional visual overrides. Forest Journal remains the reference implementation for future parity requirements.
 
 Theme selection, persistence, device/profile ownership, backup/restore behavior, and the final set of supported themes are all deferred to that Settings / User Preferences gate. Existing candidate files do not guarantee that every candidate will ultimately ship.
 
 The canonical reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
-
-**Approved repository-organization direction / not yet implemented:** deferred candidate files may be moved out of repository root into a clearly labeled theme-concept structure such as `themes/concepts/`, while `forest-journal.css` remains at its current production path until an approved production CSS restructuring requires otherwise.
 
 # Archive Architecture
 
