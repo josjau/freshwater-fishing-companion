@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.6  
+**Document Revision:** 1.0.7  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -281,10 +281,10 @@ When an artifact is classified **ARCHIVE**, closeout is incomplete until:
 
 - `archive/README.md` owns the directory-level archive operating policy.
 - `docs/DECISIONS.md` D033/D034 must be reconciled to the root `archive/` convention during governing-document synchronization.
-- `docs/ARCHITECTURE.md` must show `archive/` at repository root rather than under `docs/` during governing-document synchronization.
+- `docs/ARCHITECTURE.md` now shows `archive/` at repository root and documents the Git-history-versus-archive distinction.
 - `docs/DEVELOPMENT_WORKFLOW.md` must incorporate the retirement-classification/archive-verification rule during workflow synchronization.
 
-The audit decision is effective immediately even where those broader governing documents still contain pre-audit wording; this decision log is the current cleanup authority.
+The audit decision is effective immediately even where broader governing documents still contain pre-audit wording; this decision log is the current cleanup authority.
 
 # Audit Safeguard — Architectural Decision Context Preservation
 
@@ -316,7 +316,8 @@ Remaining stale references in broader governing documents are explicitly tracked
 
 # Section 3 — Production Entrypoint and Asset Reachability
 
-**Status:** REVIEWED / RECOMMENDATION PENDING USER DECISION
+**Decision:** PASS / KEEP CURRENT PRODUCTION ENTRYPOINT / NO SOURCE CLEANUP REQUIRED  
+**Status:** APPROVED / COMPLETED / GITHUB-VERIFIED
 
 ## Verified production entrypoint
 
@@ -358,30 +359,36 @@ The root `tools/` directory currently contains the existing Knot package validat
 
 The separate Tackle-to-Media relationship-ownership problem is **not** an asset-reachability failure. It remains the next architectural audit item because current Tackle records and Media records both encode the association.
 
-## Documentation drift found
+## Documentation correction completed
 
-`docs/ARCHITECTURE.md` does not currently describe the production source tree accurately. Its source-structure/load-order section omits:
+`docs/ARCHITECTURE.md` revision `0.4.3` now records the actual production source tree and exact current `index.html` JavaScript load order, including:
 
 - `data/knots.js`,
 - `data/knot-guidance.js`,
 - `data/reel-guidance.js`,
-- `knot-media-renderer.js`,
+- `knot-media-renderer.js`.
 
-and still depicts the older archive placement under `docs/` rather than the approved repository-root `archive/` convention.
+It also records the approved repository-root `archive/` convention and the Git-history-versus-archive distinction.
 
-This is a documentation synchronization defect, not evidence that the production entrypoint should be changed.
+Architecture correction commit:
 
-## Recommended disposition
+`6b605a18ef00f11b89b90af109e01eb61d6e7131`
 
-> **KEEP CURRENT PRODUCTION ENTRYPOINT / NO SOURCE CLEANUP REQUIRED / UPDATE GOVERNING SOURCE-STRUCTURE DOCUMENTATION**
+Post-write verification confirmed the corrected source tree/load-order section and preserved document tail.
 
-Recommended status if approved:
+## Future safeguard
 
-- production entrypoint/loaded-source reachability: **PASS**,
-- production source deletion/move: **NONE**,
-- governing documentation: **UPDATE REQUIRED** during the documentation synchronization work,
-- future repository-wide validator: include an entrypoint/local-asset reachability check so missing loaded files and orphan production assets are detected mechanically.
+The future repository-wide integrity validator should include:
+
+- `index.html` local stylesheet/script target existence,
+- local production-media path existence,
+- orphan production asset detection with an explicit allowlist for intentional reserved/deferred content,
+- exclusion/awareness of intentional non-runtime directories such as `archive/`, `docs/`, `tools/`, and `themes/concepts/`.
+
+# Section 3 Closeout
+
+Production entrypoint and asset reachability pass. No production source deletion, move, or runtime change is required for this section.
 
 # Next Audit Discussion
 
-After Section 3 disposition is approved, proceed to **Section 4 — Tackle ↔ Media Relationship Ownership**.
+Proceed to **Section 4 — Tackle ↔ Media Relationship Ownership**.
