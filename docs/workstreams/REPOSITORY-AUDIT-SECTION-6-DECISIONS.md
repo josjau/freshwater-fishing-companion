@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Section 6 Decisions
 
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.0.1  
 **Document Status:** Approved  
 **Implementation Status:** Governing Synchronization In Progress  
 **Recorded:** 2026-08-19
@@ -173,6 +173,57 @@ When such a case is audited, determine whether it belongs in:
 - or another deliberately approved structure.
 
 Do not force a specialized fishing system into the Rig model merely to achieve regional completeness.
+
+# Decision 5 — D051 Context-Preserving Parent Navigation
+
+## Decision
+
+Retire the former site-wide Parent-to-top transition rule. The canonical standard for standard application views is now:
+
+```text
+Forward navigation
+-> newly opened destination starts at top
+
+Parent navigation
+-> restores the immediately preceding standard application view
+-> restores that view's applicable UI state
+-> restores that view's prior scroll position
+
+Home navigation
+-> Dashboard starts at top
+-> contextual return state is cleared
+```
+
+A saved scroll position belongs only to the source context being restored and must never be transferred to a newly opened destination.
+
+Persistent/floating navigation controls remain the site-wide visual standard.
+
+Specialized workflows may use separately approved navigation semantics when workflow state requires them. Reel Setup is an approved example of a specialized navigation context. Such exceptions must remain deliberate and documented and do not redefine the standard Parent behavior for ordinary application views.
+
+## Reason
+
+Parent is a contextual return action, not merely another forward transition to a parent route. Restoring the prior standard application context reduces unnecessary re-navigation and preserves the user's place while still preventing the earlier defect where a new destination inherited the source page's scroll position.
+
+Specialized guided workflows may require step-aware return semantics that cannot be represented accurately by the generic standard-view rule.
+
+## Current Implementation Status
+
+**Approved architecture / governing synchronization pending.**
+
+`docs/NAVIGATION-PAGE-STANDARD.md` already records the newer standard. `docs/DETAIL-PAGE-STANDARD.md` already uses context-preserving Parent behavior.
+
+The broader production routing implementation still contains the older all-transitions top-reset behavior in places. Section 6 changes documentation only; production implementation of the revised standard remains a later deliberate source package and validation task.
+
+## Future Trigger
+
+Implement and validate the site-wide standard when navigation production source is deliberately reopened. Any new specialized workflow must document its exception rather than silently diverging.
+
+## Canonical Owner
+
+- `docs/DECISIONS.md` — revised D051
+- `docs/NAVIGATION-PAGE-STANDARD.md` — operational page-navigation standard
+- `docs/STYLE_GUIDE.md` — UI behavior summary
+- specialized workflow records where an approved exception exists
 
 # Section 6 Synchronization Rule
 
