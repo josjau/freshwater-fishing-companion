@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.1.5  
+**Document Revision:** 1.1.6  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-18
 
@@ -116,6 +116,26 @@ When a decision is finalized during an active build segment:
 6. If a decision is deliberately parked rather than implemented now, document the parked decision in the same active segment package.
 
 The user should not have to repeatedly ask for documentation that is a foreseeable consequence of an approved in-stream decision.
+
+# Durable Decision Context
+
+A durable decision is not sufficiently documented when the repository records only the final outcome but omits the context needed to interpret that outcome later.
+
+For every material architectural, product, data-model, workflow, UI, deferment, rejection, or structural decision, the canonical documentation must preserve at least:
+
+1. **Decision** — what was approved.
+2. **Reason** — why the project chose it, including the material tradeoff, risk, or maintenance burden being avoided or accepted.
+3. **Current implementation status** — for example Current, Approved / Not Implemented, Deferred, Superseded, or other applicable state.
+4. **Deferred/future trigger** — the milestone, architecture gate, condition, evidence, or dependency that should cause the decision to be revisited.
+5. **Canonical owner/document** — the governing file that owns the durable interpretation after reconciliation.
+
+When the project deliberately decides **not** to make a structural change yet, record that non-action when it is architecturally meaningful. An absent implementation or absent directory structure must not later be interpreted as forgotten, rejected, or obsolete when it was deliberately deferred.
+
+Deferred candidates must be labeled as deferred candidates rather than loosely described as historical or inactive when that wording could imply abandonment.
+
+If the decision is distributed across several documents, `DECISIONS.md` owns the durable decision summary and the relevant architecture, style, data-model, workstream, or handoff documents carry only the context needed for their roles.
+
+Permanent principle: **record enough decision context that a future session can recover both what was decided and why without relying on chat history.**
 
 # Full-File Replacement Integrity
 
