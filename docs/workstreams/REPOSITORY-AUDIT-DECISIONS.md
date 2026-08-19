@@ -1,9 +1,10 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.3  
+**Document Revision:** 1.0.4  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
-**Recorded:** 2026-08-18
+**Recorded:** 2026-08-18  
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -119,14 +120,14 @@ No canonical production source or canonical governing/data-model document was re
 ## 2.1 Deferred Theme Concepts
 
 **Decision:** RETAIN AS DEFERRED THEME CANDIDATES / MOVE TO A CLEAR THEME-CONCEPT STRUCTURE  
-**Status:** APPROVED / GOVERNING DOCUMENTATION RECONCILED / FILE MOVE NOT YET IMPLEMENTED  
+**Status:** COMPLETED / GITHUB-VERIFIED  
 **Current production theme:** `forest-journal.css` only
 
 Files covered by this decision:
 
-- `forest-copper.css`
-- `forest-gold.css`
-- `legacy-dark-theme.css`
+- `themes/concepts/forest-copper.css`
+- `themes/concepts/forest-gold.css`
+- `themes/concepts/legacy-dark-theme.css`
 
 ### Preserved user/project context
 
@@ -152,14 +153,16 @@ When theme implementation is deliberately reopened:
 - shared base/layout/component behavior should be centralized once where practical,
 - individual production theme files should primarily own theme-specific design tokens and intentional overrides rather than duplicate full application structure,
 - Forest Journal remains the reference implementation from which future visual parity requirements are derived,
-- the exact final CSS tree must be designed and validated at that later architecture gate rather than prematurely frozen now,
+- the exact final CSS tree may be modified deliberately at that later architecture gate rather than treated as frozen now,
 - the canonical reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
 
-### Approved repository organization direction
+### Implemented repository organization
 
-The three deferred candidates should no longer be interpreted as root-level production stylesheets. The approved cleanup direction is to move them into a clearly labeled theme-concept location, currently proposed as:
+The approved deferred-theme structure is now:
 
 ```text
+forest-journal.css
+
 themes/
     README.md
     concepts/
@@ -168,19 +171,41 @@ themes/
         legacy-dark-theme.css
 ```
 
-`forest-journal.css` remains at repository root until a later approved production CSS restructuring requires changing its path. The candidate-file move is a repository-organization/source action and has **not** been executed by this documentation-only update.
+`forest-journal.css` remains at repository root and remains the only stylesheet loaded by current `index.html`.
 
-### Governing-document reconciliation completed
+The three concept files were copied first and GitHub-verified by matching their original blob SHAs before the root copies were deleted. The move therefore preserved their contents byte-for-byte.
 
-The durable theme interpretation and rationale have now been promoted into:
+Theme-structure commits:
 
-- `docs/ARCHITECTURE.md` revision 0.4.1,
-- `docs/STYLE_GUIDE.md` revision 1.3.3,
-- `docs/DECISIONS.md` revision 0.4.3 through expanded D035,
-- `docs/DEVELOPMENT_WORKFLOW.md` revision 1.1.6,
-- `docs/HANDOFF.md` revision 1.5.3.
+- `themes/README.md` created — `27bfa3068da09554e51a1c5740b111682353d8ea`
+- Forest Copper concept copied — `aba6d778802da695bb8a391d9086c14d185562d7`
+- Forest Gold concept copied — `113fcc1f256d21feb55078d498fa755e92e79e1b`
+- Legacy Dark concept copied — `9648ceb210b72e013cb3517ce5e29c5fb9bd4352`
+- root Forest Copper removed — `52f971b03259bdc29a82cdea68f28c9bcca1422c`
+- root Forest Gold removed — `0a97340dc8b4b8cb9608329024e426b12aa77bf6`
+- root Legacy Dark removed — `c8015d4790c2565d4e15266e5ff3e7f0272a1cf5`
 
-The governing wording now distinguishes **deferred theme candidate** from **historical/abandoned artifact** and preserves the reason multi-theme implementation was postponed.
+Post-change verification:
+
+- `themes/README.md` exists.
+- `themes/concepts/` contains exactly the three deferred CSS candidates.
+- each moved CSS file retains the same blob SHA as its former root copy,
+- the former root `forest-copper.css` path returns Not Found; the other two root removals were committed in the same approved move sequence,
+- `index.html` still loads only `forest-journal.css`; no production theme behavior changed.
+
+This structure is organizational, not the final multi-theme runtime architecture. It may be revised later when the Settings / User Preferences architecture gate deliberately reopens theme implementation.
+
+### Governing-document reconciliation
+
+The durable theme interpretation and rationale are governed by:
+
+- `docs/ARCHITECTURE.md`,
+- `docs/STYLE_GUIDE.md`,
+- `docs/DECISIONS.md` D035,
+- `docs/DEVELOPMENT_WORKFLOW.md`,
+- `docs/HANDOFF.md`.
+
+`themes/README.md` is the local directory-level explanation of the deferred-theme structure.
 
 # Audit Safeguard — Architectural Decision Context Preservation
 
