@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.3.3
+**Document Revision:** 0.3.4
 **Document Status:** Draft
-**Decision Baseline:** D025, D026, D037, D043, D044
+**Decision Baseline:** D025, D026, D037, D043, D044, D056
 
 ---
 
@@ -101,6 +101,48 @@ Examples:
 
 ---
 
+# Site-Wide Semantic Ownership Rule
+
+D056 establishes a permanent site-wide ownership standard:
+
+> Every canonical fact or relationship has exactly one authoritative owner, and that owner must be the entity or domain for which the information is intrinsically meaningful.
+
+Ownership is not assigned merely because a field is convenient for rendering, search, reverse navigation, caching, or the current implementation shape.
+
+When deciding ownership, ask:
+
+1. **What does this fact or relationship actually describe?**
+2. **Which entity/domain would still logically own it if the current UI disappeared?**
+3. **Which owner can explain why the information belongs there without referring to presentation convenience?**
+4. **Can every other required view derive or reference the information from that owner?**
+
+If two records store the same semantic fact in opposite directions, one must be designated canonical and the other direction should normally be derived.
+
+A second stored copy is allowed only when it represents a genuinely different semantic relationship or when an explicit architecture decision documents why duplication is required. Performance or scale may justify a derived cache/index later, but that cache must remain non-authoritative and reproducible from the canonical owner.
+
+Examples:
+
+```text
+Rig component requirement owns:
+    Rig -> Tackle usage
+
+Media record owns:
+    Media -> entity attachment
+
+My Tackle owns:
+    persistent user ownership
+
+Knot owns:
+    reusable tying instructions
+
+Rig owns:
+    physical connection context that recommends a Knot
+```
+
+Permanent principle: **ownership follows meaning, not convenience.**
+
+---
+
 # Relationship Principles
 
 The Companion shall follow these relationship rules:
@@ -110,8 +152,11 @@ The Companion shall follow these relationship rules:
 - User records reference canonical entities whenever practical.
 - Tackle items are not required to belong to a Rig.
 - Rigs act as recipes that reference existing canonical Tackle concepts.
-- The canonical owner of a relationship stores it once when that direction is sufficient.
+- Every canonical fact or relationship has one authoritative semantic owner.
+- The owner must be the entity/domain for which the information is intrinsically meaningful.
+- The canonical owner stores the relationship once when that direction is sufficient.
 - Inverse navigation should be derived rather than independently maintained when it represents the same relationship.
+- UI, search, reporting, and convenience do not by themselves justify duplicated canonical storage.
 - Relationships should support related knowledge without forcing every possible connection.
 - Required relationships must be validated.
 - Ordinary production relationship IDs should resolve to existing canonical records once the relevant implementation is complete.
@@ -185,6 +230,45 @@ Bidirectional UI navigation does not imply bidirectional canonical storage.
 
 ---
 
+# Entity-to-Media Relationship Ownership
+
+Media owns canonical entity-to-media attachment because the relationship describes **what entity a Media record belongs to**.
+
+Canonical storage:
+
+```text
+Media.ownerType
+Media.ownerId
+```
+
+Examples:
+
+```text
+ownerType: "tackle"
+ownerId: "fixed-bobber"
+
+ownerType: "knot"
+ownerId: "palomar-knot"
+```
+
+Canonical Tackle, Knot, Fish, Rig, Lure, Technique, or other entity records do not maintain inverse media-ID arrays solely to locate Media that already identifies its canonical owner.
+
+Derived lookup:
+
+```text
+Current entity ID
+    -> find active Media where ownerType matches the domain
+    -> ownerId equals the entity ID
+```
+
+Multiple Media records may share the same `ownerType` + `ownerId` when a demonstrated feature requires several assets. If role, ordering, presentation priority, or other media-specific semantics become necessary, those fields belong to Media or to an explicitly justified relationship entity because they describe the media attachment, not the referenced domain entity.
+
+Do not add role/order fields speculatively before a demonstrated multi-media requirement exists.
+
+Current Section 4 cleanup applies this rule to Tackle: existing Tackle `mediaIds[]` are transitional duplicate storage and are approved for removal from production. Their historical prior versions remain in Git history; no archive artifact is required.
+
+---
+
 # Rig-to-Knot Relationship Ownership
 
 `Rig.knotApplications[]` is the authoritative source for contextual Rig-to-Knot recommendations.
@@ -247,7 +331,6 @@ A separate requirement-level `id` is not introduced unless independent requireme
 
 ---
 
-
 # Core Learning-Path Relationship
 
 Core membership is a curated relationship from the Core learning group to canonical Rig IDs.
@@ -262,7 +345,7 @@ CORE_RIG_IDS
 Derived presentation:
 
 ```text
-Core Rigs — Master These First
+Core Rigs
     -> ordered cards
     -> Core badges
     -> Core detail emphasis
@@ -316,6 +399,8 @@ Lure or Tackle
 
 A weak or incidental relationship is not automatically a reason for an entity to appear as a primary Search result.
 
+Search metadata must not become a second canonical owner of relationship facts merely to improve discoverability. Search should consume canonical owners or deliberately derived indexes.
+
 ---
 
 # My Tackle and Readiness Relationships
@@ -354,6 +439,8 @@ For the approved 20-Rig expansion, Carolina Rig is an approved near-term canonic
 
 For every Rig component requirement, `tackleId` must be present and resolve to canonical Tackle. Validation should detect unresolved canonical IDs as data defects.
 
+Every active Media record with an entity owner must resolve `ownerType` and `ownerId` to the expected canonical domain/entity according to that domain's lifecycle rules.
+
 ---
 
 # User Knowledge Trust Boundary
@@ -373,10 +460,15 @@ Relationship validation should include, where applicable:
 - Referenced ID exists.
 - Referenced entity is of the expected type.
 - Required relationships are present.
+- Every canonical relationship has an identifiable semantic owner.
+- Ownership is not duplicated merely for UI, reverse navigation, search, or convenience.
 - A stored inverse does not create a second source of truth without an approved reason.
+- Any non-authoritative derived cache/index can be regenerated from the canonical owner.
 - No manual Tackle `rigIds` inverse exists solely for Rig usage.
 - Every current Rig component `tackleId` resolves.
 - Derived `Used In` output matches active Rig requirements.
+- Canonical entities do not store inverse media-ID arrays solely to locate Media records that already own the attachment.
+- Every Media `ownerType`/`ownerId` resolves to the appropriate canonical owner when applicable.
 - Every `CORE_RIG_IDS` entry resolves to one active canonical Rig and appears only once.
 - Core presentation order matches the registry order.
 - Every active Rig has a deliberate `knotApplications[]` audit result.
@@ -398,7 +490,7 @@ Potential future relationship infrastructure includes:
 - More sophisticated graph/cache infrastructure
 - ProductDefinition relationships when an approved commercial-product feature requires them
 
-These are deferred until demonstrated by actual need.
+These are deferred until demonstrated by actual need. Any future index/cache remains derived and non-authoritative unless a later explicit architecture decision changes ownership.
 
 ---
 
@@ -409,6 +501,7 @@ These are deferred until demonstrated by actual need.
 - 03-RIGS.md
 - 03A-TECHNIQUES.md
 - 03B-CONDITIONS.md
+- 04-KNOTS.md
 - 05-TACKLE.md
 - 05A-INVENTORY.md
 - 06-LURES.md

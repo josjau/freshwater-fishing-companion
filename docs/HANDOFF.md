@@ -1,18 +1,20 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.4.0  
+**Document Revision:** 1.5.8  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
 **Latest Completed Production Package:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4.md` — Production Package 4 PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED  
 **Completed Workstream:** `docs/workstreams/KNOT-INTEGRATED-REGRESSION.md` — PASS / VALIDATED / CLOSED  
 **Completed Milestone:** Knots  
-**Next Approved Milestone:** Fish Guide  
-**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3 remains the approved milestone sequence; current completion state is recorded here and in the Knot closeout workstream.  
+**Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
+**Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.9 — current cleanup dispositions/actions  
+**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.4 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Knots Production Packages 1–4, site-wide floating navigation, connected-knowledge navigation, Dashboard/Tackle information architecture, keyboard behavior, and final console-health validation all passed. The Knots milestone is formally closed. The next session begins with Fish Guide planning from current GitHub `main`.  
-**Last Updated:** 2026-08-17
+**Session Status:** Repository cleanup discussions are active. Sections 1–3 are complete and GitHub-verified. Section 4 Tackle ↔ Media ownership is APPROVED and documented under D056, but production implementation is still pending: Tackle `mediaIds[]` must be removed and renderer lookup must derive Media through `ownerType` + `ownerId` before Section 4 can close. Fish Guide Phase 0 remains paused.  
+**Last Updated:** 2026-08-19
 
 # 1. Start Here
 
@@ -31,6 +33,18 @@ Permanent rules:
 > The assistant may write project-progress Markdown files directly to GitHub, such as handoff, milestone, changelog, validation, roadmap, and workstream status documents.
 
 > Production updates normally remain user-reviewable update packages applied through GitHub Desktop unless the user explicitly authorizes a different workflow.
+
+> Every repository file write must pass post-write integrity validation from authoritative GitHub after the write. A successful write response alone is not sufficient.
+
+> Material durable decisions must preserve the decision, reason, current implementation status, deferred/future trigger, and canonical owner/document. Architecturally meaningful non-actions must be recorded rather than left for future sessions to infer.
+
+> Every canonical fact or relationship has one authoritative semantic owner. Ownership must belong to the entity/domain for which the information is intrinsically meaningful; UI, search, reverse navigation, reporting, or implementation convenience do not justify a second canonical owner. D056 governs this site-wide rule.
+
+> Retired repository artifacts must be explicitly classified as **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**. Ordinary prior file revisions remain in Git history; independently useful historical artifacts are preserved under repository-root `archive/` and verified before closeout.
+
+Temporary cleanup gate:
+
+> **Do not resume Fish Guide Phase 0 discussion or begin new feature implementation while `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` remains open. Review cleanup findings and maintenance safeguards point by point first.**
 
 # 2. Current Milestone State — Complete Rig Guide
 
@@ -62,7 +76,7 @@ Final Rig workstream record:
 The approved order remains:
 
 1. **Knots** — completed / validated / closed
-2. **Fish Guide** — next approved milestone
+2. **Fish Guide** — current milestone, Phase 0 temporarily paused for repository cleanup
 3. **What Should I Throw**
 4. **Tackle Reference / Find Tackle**
 5. **Settings / User Data Architecture Gate**
@@ -71,7 +85,7 @@ The approved order remains:
 8. **Global Search**
 9. **Favorites final decision**
 
-The milestone ordering has not changed. `ROADMAP.md` revision 0.3.3 remains the canonical sequence; this handoff records the current completion state.
+The milestone ordering has not changed. `ROADMAP.md` revision 0.3.4 is the current roadmap document; this handoff records the newer cleanup gate and current continuation state.
 
 # 4. Completed Milestone — Knots
 
@@ -315,7 +329,71 @@ Approved hierarchy:
 
 Current Version 1 media coverage is complete for all 10 Knots using approved external destinations. Third-party instructional artwork, animation, 3D assets, or video are not copied, bundled, rehosted, extracted, or redistributed by the project.
 
-# 5. What Should I Throw — Canonical Instruction Direction
+# 5. Current Milestone — Fish Guide Phase 0
+
+**Implementation Status: Phase 0 In Progress / Species Library LOCKED / Architecture Audit OPEN / TEMPORARILY PAUSED FOR REPOSITORY CLEANUP**
+
+Controlling records:
+
+- `docs/workstreams/FISH-GUIDE-PHASE-0.md`
+- `docs/workstreams/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
+- `docs/data-model/02-FISH.md`
+- `docs/NAVIGATION-PAGE-STANDARD.md`
+
+Locked Four-State Ozark Fish scope:
+
+- Northeast Oklahoma
+- Southeast Kansas
+- Southwest Missouri
+- Northwest Arkansas
+
+Locked/approved Fish architecture now includes:
+
+- 30 canonical Version 1 Fish,
+- 20 approved pairwise identification relationships,
+- Fish-owned `identificationTraits[]`, `habitatTags[]`, and `waterbodyTypes[]`,
+- exact controlled habitat/waterbody vocabularies,
+- separate `FISH_IDENTIFICATION_RELATIONSHIPS` Reference Knowledge registry,
+- separate `FISH_RIG_GUIDANCE` Decision Knowledge registry,
+- media ownership through the shared Media registry rather than Fish-owned image IDs,
+- no state-specific geography Boolean fields on Fish,
+- Fish category membership stored as `categoryId`, not duplicated display text,
+- Fish-owned `FISH_CATEGORY_DATA` registry for category identity/presentation/order,
+- no category-level `isActive`; individual Fish `isActive` owns Fish lifecycle,
+- canonical `northern-rock-bass` / `Northern Rock Bass` identity,
+- shared aliases allowed where regionally legitimate, including `Goggle-Eye`,
+- Hybrid Striped Bass aliases `Wiper` and `Whiterock Bass`,
+- hierarchical scoped Search with context-correct helper/empty-state text,
+- revised standard navigation: Forward opens new destinations at top; Parent restores prior view state + scroll; Home opens Dashboard at top and clears context.
+
+The final Version 1 species library remains 30 Fish; item 13 is now canonically **Northern Rock Bass** rather than the earlier planning display name Rock Bass.
+
+No Fish production source/data/media/UI files have been changed during Phase 0.
+
+## Approved 2026-08-18 Audit Revisions
+
+The following are approved and locked in `FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`:
+
+1. **Context-Preserving Parent Navigation** — Forward = destination top; Parent = prior state + scroll; Home = Dashboard top/reset; never transfer source scroll into a new destination.
+2. **Fish Habitat / Water Ownership** — retain Fish-owned `habitatTags[]` and `waterbodyTypes[]`; do not collapse them into generic current-condition references.
+3. **Fish Category Registry / Lifecycle Ownership** — `category` → `categoryId`; Fish category registry owns grouping identity/presentation/order; individual Fish owns `isActive`.
+4. **Northern Rock Bass Canonical Identity** — `northern-rock-bass`; `Northern Rock Bass`; `Rock Bass` and `Goggle-Eye` aliases; shared aliases permitted.
+5. **Hierarchical Scoped Search** — deeper navigation narrows eligible search scope; helper text/examples/empty states must reflect that scope; Search never silently broadens; future global/relationship-aware Search must consume canonical owners rather than duplicate relationship knowledge.
+
+## Remaining Phase 0 Audit / Clarification Items
+
+These remain open but are **not the next-session discussion until repository cleanup closes**:
+
+1. **Identification relationship ID convention** — deterministic stable IDs and duplicate/reversed-pair validation.
+2. **Fish-to-Rig guidance optionality and source naming** — whether every Fish needs guidance; `data/fish-guidance.js` vs more explicit naming; guidance-record ID convention.
+3. **Fish activation / staged release readiness** — whether V1 inclusion and runtime `isActive` should be separated during staged implementation so incomplete Fish/media cannot surface prematurely.
+4. **Fish media requiredness/naming** — conditional `role`, null semantics for attribution/changes, media/file naming, alt-text standard, responsive derivatives if any.
+5. **Four-State scope reconciliation outside Fish** — older project/Rig docs still contain Northeast Oklahoma + Southwest Kansas wording; decide whether to establish a project-wide Four-State V1 scope and revalidate existing Rig coverage without silently changing the Rig library.
+6. **Fish source documentation + integrity validation** — exact `FISH_REFERENCE_SOURCES.md` requirements and repeatable Fish data-integrity validator scope.
+
+Block 0.7 remains not fully closed. Do not begin production Fish implementation yet.
+
+# 6. What Should I Throw — Canonical Instruction Direction
 
 When the What Should I Throw milestone begins, recommendations should connect canonical knowledge rather than duplicate instructions.
 
@@ -326,7 +404,7 @@ Approved distinction:
 
 Recommendations own selection, ranking, rationale, and context. Rig owns physical assembly/configuration. Technique owns reusable presentation behavior.
 
-# 6. Tackle Reference / Find Tackle — Canonical Direction
+# 7. Tackle Reference / Find Tackle — Canonical Direction
 
 Canonical Tackle must be discoverable independently of Rigs.
 
@@ -343,7 +421,7 @@ A Tackle result should act as a connected-knowledge gateway and may expose:
 - Fish/Conditions/Techniques where canonical relationships exist,
 - later My Tackle ownership context.
 
-# 7. Settings / User Data Architecture Gate
+# 8. Settings / User Data Architecture Gate
 
 Before My Tackle or Catch Log implementation begins, a dedicated architecture/design segment must resolve persistent User Knowledge and Settings.
 
@@ -362,9 +440,20 @@ Required topics include:
 - supported themes/theme architecture,
 - user preference storage and backup behavior.
 
+Theme context already approved for that future gate:
+
+- Forest Journal is the only production-supported theme today and remains the visual/reference baseline.
+- Forest Copper, Forest Gold, and Legacy Dark are intentionally retained deferred theme candidates under `themes/concepts/`, not abandoned historical artifacts.
+- `themes/README.md` records the local directory purpose and deferred status.
+- Multi-theme implementation was deliberately postponed to avoid duplicated maintenance/regression work while the application structure is still changing.
+- The current `themes/concepts/` organization is intentionally lightweight and may be revised when final theme implementation begins.
+- Future production theme architecture should centralize shared base/layout/component behavior where practical and keep individual themes focused primarily on tokens/intentional overrides.
+- Theme selection, persistence, device/profile ownership, backup/restore behavior, and the final supported-theme set must be resolved here.
+- The fixed reference-media surface `#f4f0e8` remains a cross-theme invariant.
+
 Current local-first architecture remains the baseline unless explicitly changed.
 
-# 8. My Tackle / Catch Log Order
+# 9. My Tackle / Catch Log Order
 
 My Tackle follows the User Data architecture gate and precedes Catch Log.
 
@@ -372,19 +461,21 @@ My Tackle must establish persistent ownership behavior on the settled User Knowl
 
 Catch Log then uses that same persistence architecture and references canonical Fish/Rig/Lure/Technique entities rather than duplicating Reference Knowledge wherever practical.
 
-# 9. Global Search
+# 10. Global Search
 
 Global Search is intentionally deferred until the major searchable domains and canonical entity models are established.
 
 It must build on the existing relevance-first/connected-knowledge approach and must not become an undifferentiated cross-domain result dump.
 
-# 10. Favorites
+The 2026-08-18 hierarchical scoped-search approval adds an explicit future constraint: Global Search should orchestrate domain-specific search providers and canonical relationship owners rather than requiring local domain Search to be rewritten or duplicating relationship facts as search metadata.
+
+# 11. Favorites
 
 Favorites is parked until near project completion.
 
 At that point, decide from actual workflow value whether to keep, narrow, replace, or remove it.
 
-# 11. Session Workflow Safeguards
+# 12. Session Workflow Safeguards
 
 ## A. GitHub write authority
 
@@ -398,15 +489,54 @@ Normal production workflow:
 4. user applies/pushes through GitHub Desktop,
 5. re-fetch GitHub afterward to verify the applied production state.
 
-## B. Image review before site integration
+## B. Post-write integrity validation
+
+Every file write must be re-fetched from authoritative GitHub and checked for intact beginning/end content, intended changes, preserved unrelated content, and absence of accidental truncation before the write is considered complete.
+
+## C. Image review before site integration
 
 No newly created or replacement image may be added to a production update package before the user has visually reviewed and approved it.
 
-## C. Long-process status updates
+## D. Long-process status updates
 
 During long or multi-step work, post concise visible progress updates at meaningful checkpoints.
 
-# 12. Rig Tutorial Standard
+## E. Durable decision context
+
+D055 and `DEVELOPMENT_WORKFLOW.md` require every material durable decision to preserve:
+
+1. the decision,
+2. the reason,
+3. current implementation status,
+4. deferred/future trigger,
+5. canonical owner/document.
+
+Architecturally meaningful non-actions must be recorded. Deferred candidates must not later be misclassified as abandoned solely because implementation or restructuring was intentionally postponed.
+
+## F. Semantic single-owner rule
+
+D056 requires every canonical fact and relationship to have one authoritative semantic owner. Ownership follows domain meaning rather than UI, search, reverse-navigation, reporting, caching, or implementation convenience.
+
+Inverse views should be derived from the canonical owner. Any future duplicate representation or cache/index requires an explicit semantic/architectural justification and remains non-authoritative unless a later decision changes ownership.
+
+## G. Repository artifact retirement and archive discipline
+
+`archive/` at repository root is the only canonical repository archive. Ordinary prior revisions remain recoverable through Git history and are not copied into the archive solely because a file was replaced wholesale.
+
+Every retired artifact is classified **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**. An **ARCHIVE** disposition is incomplete until the archive path is created and verified on GitHub `main`, the old active/current path no longer masquerades as current, and the reason/action are documented.
+
+## H. Repository cleanup gate
+
+The 2026-08-18 audit proved the existing documentation/cleanup rules were not strict enough to prevent drift. Until stronger safeguards are reviewed and approved:
+
+- no new feature implementation begins,
+- cleanup dispositions are reviewed point by point,
+- no audit-proposed deletion/move/schema refactor occurs without approval,
+- all cleanup documentation writes retain the existing fetch-before-edit and post-write validation rules.
+
+The safeguard-design agenda is owned by `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` and includes canonical document roles, milestone closeout reconciliation, status-consistency checks, `.gitignore`, repository-wide integrity validation, optional CI, branch/archive hygiene, and external-reference freshness maintenance.
+
+# 13. Rig Tutorial Standard
 
 Primary embedded Rig tutorials are build-first:
 
@@ -422,7 +552,7 @@ Permanent working principle:
 
 > Tutorial preferred, trustworthy external visual/reference as backup, authoritative text always required.
 
-# 13. Tackle Recognition Media Standard
+# 14. Tackle Recognition Media Standard
 
 Current production rules:
 
@@ -436,7 +566,7 @@ Current production rules:
 - final assets must be checked at realistic phone contextual-popover size,
 - every new/replacement asset must be shown separately in chat and explicitly approved before production packaging.
 
-# 14. Finalized Work
+# 15. Finalized Work
 
 The following are Validated / Finalized:
 
@@ -452,7 +582,20 @@ The following are Validated / Finalized:
 - Complete Rig Guide
 - **Knots — Production Packages 1–4 plus integrated navigation/runtime closeout**
 
-# 15. Known Temporary Bridge
+The following Fish Guide Phase 0 work is Approved / Locked but not production-implemented:
+
+- Four-State Ozark Fish geographic scope,
+- revised canonical Version 1 Fish schema using `categoryId`,
+- Fish category registry ownership,
+- Fish identification/confusion relationship architecture,
+- Fish-to-Rig guidance architecture,
+- final 30-Fish Version 1 species library,
+- final 20-relationship Version 1 identification graph,
+- Northern Rock Bass canonical identity,
+- hierarchical scoped Search rules,
+- revised Parent context/scroll restoration behavior.
+
+# 16. Known Temporary Bridge
 
 Rig readiness remains transitional local state under:
 
@@ -460,13 +603,73 @@ Rig readiness remains transitional local state under:
 
 It must not be treated as permanent My Tackle ownership.
 
-# 16. Exact Resume Point — Next Session
+# 17. Active Gate — Repository Audit Cleanup
 
-The Knots milestone is closed. Do not reopen it unless a real defect or an explicitly approved enhancement requires it.
+**Status:** SECTIONS 1–3 COMPLETE / SECTION 4 APPROVED — IMPLEMENTATION PENDING / FISH PAUSED
 
-Begin the next session with **Fish Guide** planning:
+Controlling documents:
 
-1. Re-fetch current GitHub `main` and verify the authoritative baseline.
-2. Review existing Fish data, search, media, detail-page behavior, and Fish-related architecture before proposing source edits.
-3. Decide the next Fish Guide milestone/build segment based on current project state rather than assumptions from older plans.
-4. Preserve the validated Dashboard order, site-wide floating navigation, connected-knowledge behavior, Rig/Knot navigation, and Reel Setup behavior unless an approved Fish Guide requirement explicitly changes them.
+- `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` — immutable audit-time findings snapshot; its original `OPEN` labels describe the audit baseline.
+- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.9` — current authoritative cleanup dispositions, rationale, status, and completed actions.
+
+Completed cleanup decisions:
+
+- Section 1.1 `data-reel-guidance.tmp` — deleted / GitHub-verified.
+- Section 1.2 `styles.bak` — deleted / GitHub-verified.
+- Section 1.3 Rig-image placeholder — `images/rigs/dummy.js` replaced with intentional `images/rigs/.gitkeep`; local Rig visual library preserved as a future offline-capability improvement.
+- Section 1.4 accidental `docs/docs/` duplicate subtree — deleted / GitHub-verified.
+- Section 2.1 theme interpretation and structure — deferred theme candidates documented and moved byte-for-byte under `themes/concepts/`; `forest-journal.css` remains the sole production theme.
+- Section 2.2 archive path convention — repository-root `archive/` approved as canonical; `archive/README.md` created; ordinary prior revisions remain in Git history; retired artifacts now require **GIT HISTORY ONLY / ARCHIVE / DELETE** classification and archive verification when applicable.
+- D055 Durable Decision Context Preservation — approved permanent safeguard.
+- Section 3 production entrypoint and asset reachability — **PASS**; current `index.html` production load targets all exist; no production source cleanup required.
+- `docs/ARCHITECTURE.md` revision `0.4.3` — corrected current source tree, Knot/Reel load order, and root archive placement.
+- `docs/DECISIONS.md` revision `0.4.5` — D056 added as the permanent semantic single-owner site-wide rule.
+- `docs/DEVELOPMENT_WORKFLOW.md` revision `1.1.7` — repository artifact retirement/archive procedure promoted to permanent workflow.
+- `docs/data-model/09-RELATIONSHIPS.md` revision `0.3.4` — site-wide semantic ownership test and entity-to-Media ownership rules documented.
+- `docs/data-model/05-TACKLE.md` revision `0.1.4` — approved Tackle schema removes `mediaIds`; production 29/29 state corrected; duplicate current implementation identified as transitional.
+
+Section 4 approved state:
+
+- Media is the canonical owner of entity-to-media attachment through `ownerType` + `ownerId`.
+- Tackle `mediaIds[]` is approved for removal.
+- renderer media lookup must derive from Media ownership.
+- no Tackle-Media join registry and no speculative Media role/order fields are approved.
+- removed `mediaIds[]` history is **GIT HISTORY ONLY**.
+- Section 4 remains open until the production refactor is pushed and runtime/regression validated.
+
+Next cleanup action:
+
+> **Implement and validate the approved Section 4 Tackle ↔ Media production refactor. Do not begin Section 5 yet.**
+
+The wider audit still covers obsolete Rig schema fields, governing/data-model synchronization, future Draft ownership risks, workstream status, stale branch, `.gitignore`, repository-wide validation, optional CI, documentation safeguards, and external-reference/media freshness.
+
+# 18. Exact Resume Point — Next Session
+
+Do **not** resume the six remaining Fish Guide audit topics yet.
+
+Resume the **Repository Audit Cleanup Gate — Section 4 implementation**:
+
+1. Re-fetch current GitHub `main`.
+2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, and `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` first.
+3. Treat the cleanup audit as the immutable findings snapshot and the decision log as the current authority for reviewed dispositions/actions.
+4. Preserve D056: every canonical fact/relationship has one semantic owner; ownership follows meaning, not UI/search/reverse-navigation convenience.
+5. Re-fetch authoritative `data/tackle.js`, `data/media.js`, and `view-renderer.js` immediately before source work.
+6. Remove Tackle `mediaIds[]` from the production Tackle schema.
+7. Change Tackle recognition-media lookup to derive active Media from `ownerType === "tackle"` and `ownerId === tackle.id`.
+8. Keep `data/media.js` owner metadata canonical and unchanged unless validation finds a genuine defect.
+9. Do not add a Tackle-Media join registry or speculative Media role/order field.
+10. Treat removed `mediaIds[]` as **GIT HISTORY ONLY**.
+11. Deliver production changes as a user-reviewable GitHub Desktop package unless the user explicitly authorizes direct source writes.
+12. After push, re-fetch and validate the source, then run contextual Tackle recognition-media runtime/regression checks.
+13. Reconcile `ARCHITECTURE.md`, the audit decision log, and `HANDOFF.md` to the validated implementation.
+14. Only after Section 4 is fully implemented and closed proceed to Section 5.
+15. After all approved cleanup/synchronization is complete, perform a fresh read-only repository re-audit.
+16. Only after that re-audit passes and the cleanup document is closed should the project return to Fish Guide Phase 0 and its six remaining architecture questions.
+
+Fish state to preserve while paused:
+
+- Fish Audit Revisions 1–5 remain approved/locked unless explicitly reopened.
+- No Fish production source has been changed during Phase 0.
+- Current `script.js` still implements the older all-transitions top reset; revised Parent state/scroll restoration is approved but not production-implemented.
+- Current Rig/Knot subset result scoping is correct, but their static helper/example text predates the new contextual-helper rule.
+- Re-fetch every production file immediately before any future edit; never assume a proposed version was implemented.

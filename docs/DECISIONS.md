@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.4.2  
+**Document Revision:** 0.4.5  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-17
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -67,6 +67,8 @@ This document records long-term architectural decisions.
 | D052 | Rig Detail Compact Density | Approved |
 | D053 | Rig Media Completeness and Tutorial Audit | Approved |
 | D054 | Intermediate Rig Tier Membership | Approved |
+| D055 | Durable Decision Context Preservation | Approved |
+| D056 | Semantic Single-Owner Data and Relationship Ownership | Approved |
 
 # D001 – Local-First Architecture
 
@@ -374,31 +376,61 @@ This decision reinforces the replacement-integrity rule: full-file replacements 
 
 # D033 – Archive Completed Package Artifacts
 
-Completed, package-specific implementation artifacts do not remain at repository root once their package is no longer active.
+`archive/` at repository root is the single canonical archive root.
 
-Historical package artifacts with continuing audit or handoff value are preserved under a clearly labeled archive path, such as `docs/archive/packages/<date>-<package>/`. Archived package files are historical records and must not override current governing documentation.
+Completed package-specific implementation artifacts do not remain in active/current repository locations once their package is no longer active. Package artifacts with continuing audit, provenance, reconstruction, or handoff value are retained under a clearly labeled path such as:
 
-Permanent rule: **completed package-specific artifacts belong in Archives, not at repository root.**
+```text
+archive/packages/<date>-<package>/
+```
+
+Normal prior revisions of current source or documentation files are **not** copied into `archive/` merely because the implementation workflow edited or replaced the whole file. Git history is the canonical recovery mechanism for ordinary file revisions.
+
+Whenever an implementation, migration, cleanup, or closeout retires an existing repository artifact, classify it explicitly as:
+
+1. **GIT HISTORY ONLY** — ordinary prior revision; no archive copy.
+2. **ARCHIVE** — independently useful historical/audit/provenance/reconstruction artifact retained under `archive/`.
+3. **DELETE** — no continuing repository value beyond Git history.
+
+An artifact classified **ARCHIVE** is not closed out until its archive path is verified on authoritative GitHub `main`, its former active/current path no longer masquerades as current, and the archival action is recorded in the relevant workstream/decision/closeout documentation.
+
+Archived material is historical evidence and must not override current governing documentation, production source, current data models, or active workstreams. `archive/README.md` owns the directory-level archive operating policy.
+
+Permanent rule: **Git history preserves ordinary revisions; `archive/` preserves independently useful historical artifacts.**
 
 # D034 – Production Asset Directory Discipline
 
 Active production asset directories contain current production assets or explicitly approved reusable production assets.
 
-Historical boards, previews, experiments, and superseded design references are moved to a clearly historical/reference archive rather than left in production asset directories. Unreferenced does not automatically mean delete: an asset may be preserved when it has design-lineage, geometry, licensing, or reconstruction value, but it must not masquerade as production media.
+Historical boards, previews, experiments, and superseded design references with independent design-lineage, geometry, licensing, provenance, or reconstruction value are moved to an appropriate location under the canonical repository-root `archive/` rather than left in production asset directories. Unreferenced does not automatically mean delete, but retained historical material must not masquerade as production media.
 
-The current `tackle-reference-board.webp` and `what-you-need-thumbnail-preview.webp` are approved for archival as historical design/reference assets.
+The existing archived `tackle-reference-board.webp` and `what-you-need-thumbnail-preview.webp` remain historical design/reference artifacts under the repository archive.
 
-Permanent rule: **production asset directories contain production assets; historical design references belong in Archives.**
+Permanent rule: **production asset directories contain production assets; historical design/reference artifacts with continuing value belong under the canonical repository archive.**
 
 # D035 – Single Production-Supported Theme
 
-Forest Journal is the only production-supported Version 1 theme.
+Forest Journal is the only production-supported Version 1 theme and remains the visual/reference baseline while the application is under active functional development.
 
-`forest-copper.css`, `forest-gold.css`, and `legacy-dark-theme.css` are retained as historical/inactive design concepts. They are not required to remain in behavioral or visual parity with Forest Journal and are not part of the supported production test matrix.
+`themes/concepts/forest-copper.css`, `themes/concepts/forest-gold.css`, and `themes/concepts/legacy-dark-theme.css` are intentionally retained **deferred theme candidates** from earlier theme exploration. They are not abandoned historical artifacts, are not required to remain in behavioral or visual parity with Forest Journal while deferred, and are not part of the supported production test matrix.
 
-A future shared CSS architecture may separate common base/layout/component behavior from theme tokens and visual overrides before additional themes are promoted to supported status.
+**Reason:** multi-theme implementation is deliberately postponed because maintaining several complete themes while components, navigation, media, accessibility behavior, and responsive layouts are still changing would multiply maintenance work and regression risk before the shared UI structure is stable.
 
-Permanent rule: **a CSS file existing in the repository does not make it a supported production theme.**
+A broader theme-tree/shared CSS restructuring was discussed and deliberately deferred rather than forgotten or rejected. The absence of that structure in current production is therefore meaningful non-action, not evidence that theme architecture was abandoned.
+
+**Current implementation status:** Forest Journal only. No user-facing theme selector or multi-theme runtime behavior is implemented.
+
+**Future trigger:** reopen the final theme architecture during the Settings / User Preferences architecture gate, when user preference ownership/persistence and a sufficiently stable application structure can be designed together.
+
+At that gate, shared base/layout/component behavior should be centralized once where practical, and individual production theme files should primarily own theme-specific design tokens and intentional overrides rather than duplicate complete application structure. Forest Journal remains the reference implementation for future parity requirements.
+
+Theme selection, persistence, device/profile ownership, backup/restore behavior, the final supported-theme list, and final CSS directory structure belong to that future gate. Existing candidate files do not guarantee that every candidate will ultimately ship.
+
+The canonical reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
+
+**Canonical owners:** this decision is owned by `DECISIONS.md`; current/future source structure is described by `ARCHITECTURE.md`; visual requirements are described by `STYLE_GUIDE.md`; workflow context preservation is governed by `DEVELOPMENT_WORKFLOW.md`.
+
+Permanent rule: **a CSS file existing in the repository does not make it a supported production theme, and a deliberately deferred theme candidate must not later be reclassified as abandoned merely because it is inactive.**
 
 # D036 – Status and Version Semantics
 
@@ -764,3 +796,59 @@ The complete Intermediate tier is:
 This tier is the deliberate difficulty step after Beginner+ because these Rigs introduce more precise leader management, bottom-contact tuning, multi-component relationships, or multi-branch rigging while remaining broadly practical for the approved regional library.
 
 Intermediate+, Advanced, and Expert membership remain outside D054 and must be assigned deliberately in their own future segment.
+
+# D055 – Durable Decision Context Preservation
+
+A material decision is not sufficiently documented when the repository records only the outcome but omits the context needed to interpret that outcome later.
+
+For durable architectural, product, data-model, workflow, UI, deferment, rejection, or structural decisions, canonical documentation must preserve:
+
+1. **Decision** — what was approved.
+2. **Reason** — why the project chose it, including the meaningful tradeoff, maintenance burden, or risk being avoided or accepted.
+3. **Current implementation status** — for example Current, Approved / Not Implemented, Deferred, Superseded, or another applicable state.
+4. **Deferred/future trigger** — the milestone, architecture gate, condition, dependency, or evidence that should cause the decision to be revisited.
+5. **Canonical owner/document** — where the durable interpretation lives after reconciliation.
+
+Architecturally meaningful non-actions must also be recorded. If the project deliberately postpones a directory restructure, implementation, migration, or feature, future sessions must not infer that the absent structure was forgotten, rejected, or obsolete.
+
+When a deferred item remains a candidate for future implementation, label it as deferred rather than using ambiguous historical/inactive wording that could imply abandonment.
+
+`DEVELOPMENT_WORKFLOW.md` owns the operating procedure for this requirement. `DECISIONS.md` owns the durable summary for long-term structural decisions; supporting architecture, style, data-model, workstream, and handoff documents should carry only the context required by their roles.
+
+Permanent principle: **a future session must be able to recover both what was decided and why from GitHub without relying on chat history.**
+
+# D056 – Semantic Single-Owner Data and Relationship Ownership
+
+**Decision:** Every canonical fact or relationship has exactly one authoritative owner across the application. Ownership is assigned to the entity or domain for which the information is intrinsically meaningful, not to whichever record is most convenient for a current UI, lookup, search path, reverse navigation, or implementation shortcut.
+
+**Reason:** Duplicating the same semantic fact in multiple records creates competing sources of truth, synchronization work, avoidable validators, and ambiguity when the copies disagree. The application already benefits from single-owner patterns such as Rig-to-Tackle usage, Core membership, Rig-to-Knot connection context, and Knot media ownership. The repository audit identified Tackle `mediaIds[]` plus Media `ownerType`/`ownerId` as a concrete violation of that principle and demonstrated the need to make the rule site-wide rather than domain-specific.
+
+Ownership decisions use this test:
+
+1. What does the fact or relationship actually describe?
+2. Which entity/domain would still logically own it if the current UI disappeared?
+3. Can that owner explain why the information belongs there without referring to presentation convenience?
+4. Can other required views reference or derive the information from that owner rather than storing another canonical copy?
+
+Bidirectional navigation does not require bidirectional canonical storage. Search, UI presentation, reporting, recommendations, and reverse lookup consume or derive from canonical owners rather than becoming independent owners of the same fact.
+
+A second stored representation is allowed only when it represents a genuinely different semantic relationship or when an explicit architectural decision documents why duplication is required. A performance cache/index may exist when scale demonstrates the need, but it remains non-authoritative and must be reproducible from the canonical owner.
+
+For entity-to-Media attachment, Media owns the relationship because `ownerType` + `ownerId` describe what canonical entity the Media record belongs to. Canonical entity records do not store inverse media-ID arrays solely to locate Media records that already identify their owner.
+
+Section 4 applies this rule immediately to Tackle architecture:
+
+- `MEDIA_DATA.ownerType` + `ownerId` is the canonical Tackle-to-Media attachment.
+- Tackle `mediaIds[]` is approved for removal from production.
+- runtime Tackle media lookup will derive matching active Media by `ownerType === "tackle"` and `ownerId === tackle.id`.
+- no separate Tackle-Media relationship registry is introduced.
+- no speculative Media role/order field is introduced until an actual multi-media requirement demonstrates it.
+- removed `mediaIds[]` history is classified **GIT HISTORY ONLY**.
+
+**Current implementation status:** The site-wide ownership rule is Approved and governing immediately. Existing production areas that already follow single-owner semantics remain valid. The Tackle/Media production implementation is **Approved / Not Yet Refactored** until `data/tackle.js` and the consuming renderer are updated, packaged, pushed, and runtime/regression validated. Current duplicate Tackle `mediaIds[]` are transitional legacy fields, not approved long-term architecture.
+
+**Future trigger:** Every new field, relationship, inverse navigation path, cache/index, search metadata proposal, and schema refactor must apply this ownership test during design. Existing domains are reconciled when audited or actively modified. Any exception requires a deliberate documented architecture decision explaining why one canonical owner is insufficient.
+
+**Canonical owners:** `DECISIONS.md` owns this permanent architectural rule. `data-model/09-RELATIONSHIPS.md` owns the operational relationship semantics and validation rules. Each domain data-model document identifies the owner of its own fields and domain-specific relationships.
+
+Permanent principle: **ownership follows meaning, not convenience.**

@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.4.0
+**Document Revision:** 0.4.3
 **Document Status:** Approved
-**Last Updated:** 2026-08-10
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -17,13 +17,24 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
 
     index.html
     forest-journal.css
-    forest-copper.css
-    forest-gold.css
-    legacy-dark-theme.css
+
+    archive/
+        README.md
+        packages/
+
+    themes/
+        README.md
+        concepts/
+            forest-copper.css
+            forest-gold.css
+            legacy-dark-theme.css
 
     data/
         fish.js
         rigs.js
+        knots.js
+        knot-guidance.js
+        reel-guidance.js
         tackle.js
         media.js
 
@@ -33,7 +44,10 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
 
     search.js
     view-renderer.js
+    knot-media-renderer.js
     script.js
+
+    tools/
 
     docs/
         ARCHITECTURE.md
@@ -47,32 +61,48 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
         ROADMAP.md
         SPECIFICATION.md
         STYLE_GUIDE.md
-        archive/
         data-model/
         workstreams/
 
-Required JavaScript load order:
+Required production JavaScript load order from `index.html`:
 
     data/fish.js
     data/rigs.js
+    data/knots.js
+    data/knot-guidance.js
+    data/reel-guidance.js
     data/tackle.js
     data/media.js
     search.js
     view-renderer.js
+    knot-media-renderer.js
     script.js
 
+The production entrypoint and loaded-source reachability were re-audited on 2026-08-19 and passed. All files listed in the production load order exist on authoritative GitHub `main`. Deferred themes, repository archives, project documentation, development tools, and the reserved Rig-image directory are intentionally outside the browser runtime entrypoint.
 
 # Theme Support
 
-**Current:** Forest Journal is the only production-supported Version 1 theme.
+**Current:** Forest Journal is the only production-supported Version 1 theme and remains the active visual/reference baseline.
 
-`forest-copper.css`, `forest-gold.css`, and `legacy-dark-theme.css` are historical/inactive design concepts. They are not required to maintain parity with current production components and are not part of the supported production validation matrix.
+`themes/concepts/forest-copper.css`, `themes/concepts/forest-gold.css`, and `themes/concepts/legacy-dark-theme.css` are intentionally retained **deferred theme candidates** from earlier theme exploration. They are not abandoned historical artifacts, are not currently loaded as supported production themes, are not required to maintain parity with current Forest Journal components, and are not part of the supported production validation matrix.
 
-**Approved / Not Implemented:** a future shared CSS architecture may centralize base/layout/component behavior and limit theme files primarily to tokens and theme-specific visual overrides before additional themes are promoted to supported status.
+Multi-theme implementation was deliberately deferred while the application remains under active functional development. Maintaining several complete theme implementations during rapid component, navigation, media, accessibility, and responsive-layout changes would multiply synchronization work and regression risk before the shared UI structure is stable.
+
+**Current repository organization:** the deferred candidates are grouped under `themes/concepts/`, with `themes/README.md` documenting their purpose and deferred status. `forest-journal.css` remains at repository root because it is the active production stylesheet. This organizational structure may be modified later if the final theme architecture requires it.
+
+**Approved / Not Implemented:** the final theme architecture will be designed during the Settings / User Preferences architecture gate. That work should centralize shared base/layout/component behavior once where practical and limit individual theme files primarily to theme-specific design tokens and intentional visual overrides. Forest Journal remains the reference implementation for future parity requirements.
+
+Theme selection, persistence, device/profile ownership, backup/restore behavior, and the final set of supported themes are all deferred to that Settings / User Preferences gate. Existing candidate files do not guarantee that every candidate will ultimately ship.
+
+The canonical reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
 
 # Archive Architecture
 
-Completed package artifacts and historical design/reference assets are preserved outside active production roots when they retain audit or design value. Archived files are historical and do not override current governing documents or production assets.
+`archive/` at repository root is the single canonical archive root. It owns deliberately retained historical repository artifacts with independent audit, provenance, reconstruction, design-lineage, or implementation-history value.
+
+Normal prior revisions of tracked source and documentation files remain in Git history and are not copied into `archive/` merely because a file was edited or replaced wholesale. Retired artifacts are explicitly classified as **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE** according to `archive/README.md` and the repository-audit decision record.
+
+Archived files are historical evidence and do not override current governing documents, production assets, current data models, or active workstreams. Additional archive subdirectories are created only when a real retained artifact class requires them.
 
 Active production asset directories should contain only currently referenced or explicitly approved reusable production assets.
 

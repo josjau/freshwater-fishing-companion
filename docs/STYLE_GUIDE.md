@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.3.2
+**Document Revision:** 1.3.3
 **Document Status:** Approved
-**Last Updated:** 2026-08-13
+**Last Updated:** 2026-08-18
 
 # Purpose
 
@@ -145,11 +145,19 @@ A future Dashboard search field is approved direction but remains outside the cu
 
 # Forest Journal
 
-Forest Journal is the Version 1 default theme.
+Forest Journal is the Version 1 default theme and the current visual/reference baseline.
 
 It uses muted forest greens, warm earth tones, and copper/gold accents to create a modern outdoor field-guide feel.
 
-Forest Journal is the only production-supported Version 1 theme. Forest Copper, Forest Gold, and Legacy Dark are historical/inactive concepts until a shared theme architecture is approved.
+Forest Journal is the only production-supported Version 1 theme.
+
+Forest Copper, Forest Gold, and Legacy Dark are intentionally retained **deferred/inactive theme candidates** from earlier theme exploration. They are not abandoned historical artifacts, do not need to maintain current component parity while deferred, and are not part of the supported production validation matrix.
+
+Multi-theme implementation is deliberately postponed while the application remains under active functional development. Maintaining multiple complete production themes during ongoing component, navigation, media, accessibility, and responsive-layout changes would create duplicated maintenance and regression risk before the shared UI structure is stable.
+
+The final theme architecture belongs to the Settings / User Preferences architecture gate. When that gate opens, shared base/layout/component behavior should be centralized once where practical, and individual theme files should primarily own theme-specific design tokens and deliberate overrides rather than duplicate the full application stylesheet.
+
+The absence of a final theme directory/tree today is a deliberate deferral, not evidence that theme support was forgotten or rejected. Existing deferred candidates may be reorganized into a clearly labeled theme-concept location before that later implementation, but their presence does not guarantee that every concept will become a supported theme.
 
 Any future production-supported alternative theme may change appearance but must preserve:
 
@@ -335,6 +343,8 @@ When relevant, include:
 Document Status uses `Draft`, `Approved`, `Superseded`, or `Archived`. Implementation Status uses `Current`, `Approved / Not Implemented`, `In Progress`, or `Validated`. `Document Revision` and `Application Version`/`Application Baseline` are separate concepts.
 
 Documentation must distinguish current implementation from approved future work. Do not describe a future design as already implemented. `Validated` is used only after actual repository/runtime verification where applicable.
+
+Material durable decisions must also preserve enough context to recover the decision without chat history: the decision itself, its reason, current implementation status, future/revisit trigger, and canonical owner/document. `DEVELOPMENT_WORKFLOW.md` defines the permanent Durable Decision Context standard.
 
 # Source Replacement Standard
 
