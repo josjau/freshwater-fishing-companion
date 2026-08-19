@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.5  
+**Document Revision:** 1.0.6  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -314,6 +314,74 @@ Section 2 theme/archive decisions are now approved and implemented at the reposi
 
 Remaining stale references in broader governing documents are explicitly tracked for the governing-document synchronization phase; they do not change the current approved cleanup dispositions recorded here.
 
+# Section 3 — Production Entrypoint and Asset Reachability
+
+**Status:** REVIEWED / RECOMMENDATION PENDING USER DECISION
+
+## Verified production entrypoint
+
+Current `index.html` loads one production stylesheet:
+
+- `forest-journal.css`
+
+Current `index.html` loads the following JavaScript/data sources in order:
+
+1. `data/fish.js`
+2. `data/rigs.js`
+3. `data/knots.js`
+4. `data/knot-guidance.js`
+5. `data/reel-guidance.js`
+6. `data/tackle.js`
+7. `data/media.js`
+8. `search.js`
+9. `view-renderer.js`
+10. `knot-media-renderer.js`
+11. `script.js`
+
+All eleven referenced JavaScript/data files exist on current GitHub `main`. The `data/` directory contains exactly the seven data sources loaded by `index.html`; no extra production data file was found there during this check.
+
+## Production versus intentional non-runtime repository content
+
+The following are intentionally outside the browser runtime entrypoint and are not production reachability defects:
+
+- `themes/concepts/` — deferred, unsupported theme candidates,
+- `archive/` — historical repository artifacts,
+- `docs/` — governing/project documentation,
+- `tools/` — repository validation/development utilities,
+- `images/rigs/.gitkeep` — intentional reserved directory marker for future verified local Rig imagery.
+
+The root `tools/` directory currently contains the existing Knot package validators and replacement-integrity validator. These are development/validation tools, not browser runtime dependencies.
+
+## Tackle asset reachability
+
+`data/media.js` remains the production media registry and references the local Tackle recognition images under `images/tackle/`. The current `images/tackle/` directory contains the expected 29 WebP recognition assets from the completed Rig/Tackle media library. No extra obvious Tackle-image orphan was identified in this check.
+
+The separate Tackle-to-Media relationship-ownership problem is **not** an asset-reachability failure. It remains the next architectural audit item because current Tackle records and Media records both encode the association.
+
+## Documentation drift found
+
+`docs/ARCHITECTURE.md` does not currently describe the production source tree accurately. Its source-structure/load-order section omits:
+
+- `data/knots.js`,
+- `data/knot-guidance.js`,
+- `data/reel-guidance.js`,
+- `knot-media-renderer.js`,
+
+and still depicts the older archive placement under `docs/` rather than the approved repository-root `archive/` convention.
+
+This is a documentation synchronization defect, not evidence that the production entrypoint should be changed.
+
+## Recommended disposition
+
+> **KEEP CURRENT PRODUCTION ENTRYPOINT / NO SOURCE CLEANUP REQUIRED / UPDATE GOVERNING SOURCE-STRUCTURE DOCUMENTATION**
+
+Recommended status if approved:
+
+- production entrypoint/loaded-source reachability: **PASS**,
+- production source deletion/move: **NONE**,
+- governing documentation: **UPDATE REQUIRED** during the documentation synchronization work,
+- future repository-wide validator: include an entrypoint/local-asset reachability check so missing loaded files and orphan production assets are detected mechanically.
+
 # Next Audit Discussion
 
-Proceed to **Section 3 — Production Entrypoint and Asset Reachability** unless the user explicitly selects another cleanup item.
+After Section 3 disposition is approved, proceed to **Section 4 — Tackle ↔ Media Relationship Ownership**.
