@@ -1,19 +1,19 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.5.8  
+**Document Revision:** 1.5.9  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
-**Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
-**Latest Completed Production Package:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4.md` — Production Package 4 PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED  
+**Current Validated Production Baseline:** `614a5b472fb42a8fa23870ea96a00f929a8ed4b6` — `Section 4 production update package`  
+**Latest Completed Production Package:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` — Section 4 PASS / VALIDATED / PRODUCTION IMPLEMENTED  
 **Completed Workstream:** `docs/workstreams/KNOT-INTEGRATED-REGRESSION.md` — PASS / VALIDATED / CLOSED  
 **Completed Milestone:** Knots  
 **Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
 **Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
-**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.9 — current cleanup dispositions/actions  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.9 — current cleanup dispositions/actions; Section 4 closeout is additionally recorded in `docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` revision 1.0.0 pending the later comprehensive governing-document synchronization pass  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.4 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Repository cleanup discussions are active. Sections 1–3 are complete and GitHub-verified. Section 4 Tackle ↔ Media ownership is APPROVED and documented under D056, but production implementation is still pending: Tackle `mediaIds[]` must be removed and renderer lookup must derive Media through `ownerType` + `ownerId` before Section 4 can close. Fish Guide Phase 0 remains paused.  
+**Session Status:** Repository cleanup discussions are active. Sections 1–4 are complete and GitHub/runtime-verified. Section 4 established D056 site-wide semantic single-owner ownership and implemented Media-owned Tackle attachment with no Tackle `mediaIds[]`. Next discussion is Section 5 — Rig Empty Schema Fields. Fish Guide Phase 0 remains paused.  
 **Last Updated:** 2026-08-19
 
 # 1. Start Here
@@ -581,6 +581,7 @@ The following are Validated / Finalized:
 - Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
 - Complete Rig Guide
 - **Knots — Production Packages 1–4 plus integrated navigation/runtime closeout**
+- **Repository Audit Section 4 — Tackle ↔ Media semantic ownership refactor**
 
 The following Fish Guide Phase 0 work is Approved / Locked but not production-implemented:
 
@@ -605,12 +606,13 @@ It must not be treated as permanent My Tackle ownership.
 
 # 17. Active Gate — Repository Audit Cleanup
 
-**Status:** SECTIONS 1–3 COMPLETE / SECTION 4 APPROVED — IMPLEMENTATION PENDING / FISH PAUSED
+**Status:** SECTIONS 1–4 COMPLETE / SECTION 5 NEXT / FISH PAUSED
 
 Controlling documents:
 
 - `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` — immutable audit-time findings snapshot; its original `OPEN` labels describe the audit baseline.
-- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.9` — current authoritative cleanup dispositions, rationale, status, and completed actions.
+- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.9` — authoritative decisions through the Section 4 approval discussion.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` revision `1.0.0` — authoritative Section 4 implementation/runtime closeout until the later comprehensive governing-document synchronization pass reconciles the long-form decision log.
 
 Completed cleanup decisions:
 
@@ -622,24 +624,17 @@ Completed cleanup decisions:
 - Section 2.2 archive path convention — repository-root `archive/` approved as canonical; `archive/README.md` created; ordinary prior revisions remain in Git history; retired artifacts now require **GIT HISTORY ONLY / ARCHIVE / DELETE** classification and archive verification when applicable.
 - D055 Durable Decision Context Preservation — approved permanent safeguard.
 - Section 3 production entrypoint and asset reachability — **PASS**; current `index.html` production load targets all exist; no production source cleanup required.
-- `docs/ARCHITECTURE.md` revision `0.4.3` — corrected current source tree, Knot/Reel load order, and root archive placement.
-- `docs/DECISIONS.md` revision `0.4.5` — D056 added as the permanent semantic single-owner site-wide rule.
-- `docs/DEVELOPMENT_WORKFLOW.md` revision `1.1.7` — repository artifact retirement/archive procedure promoted to permanent workflow.
-- `docs/data-model/09-RELATIONSHIPS.md` revision `0.3.4` — site-wide semantic ownership test and entity-to-Media ownership rules documented.
-- `docs/data-model/05-TACKLE.md` revision `0.1.4` — approved Tackle schema removes `mediaIds`; production 29/29 state corrected; duplicate current implementation identified as transitional.
+- D056 Semantic Single-Owner Data and Relationship Ownership — approved permanent site-wide rule.
+- Section 4 Tackle ↔ Media ownership — **PASS / VALIDATED / PRODUCTION IMPLEMENTED**. `data/tackle.js` no longer stores `mediaIds[]`; `data/media.js` owns attachment via `ownerType` + `ownerId`; renderer lookup derives from Media ownership; 29/29 owner mapping and Microsoft Edge runtime validation passed.
+- `docs/data-model/05-TACKLE.md` revision `0.1.5` — current implementation marked Validated.
 
-Section 4 approved state:
+Section 4 production commit:
 
-- Media is the canonical owner of entity-to-media attachment through `ownerType` + `ownerId`.
-- Tackle `mediaIds[]` is approved for removal.
-- renderer media lookup must derive from Media ownership.
-- no Tackle-Media join registry and no speculative Media role/order fields are approved.
-- removed `mediaIds[]` history is **GIT HISTORY ONLY**.
-- Section 4 remains open until the production refactor is pushed and runtime/regression validated.
+`614a5b472fb42a8fa23870ea96a00f929a8ed4b6` — `Section 4 production update package`
 
-Next cleanup action:
+Next cleanup discussion:
 
-> **Implement and validate the approved Section 4 Tackle ↔ Media production refactor. Do not begin Section 5 yet.**
+> **Section 5 — Rig Empty Schema Fields**
 
 The wider audit still covers obsolete Rig schema fields, governing/data-model synchronization, future Draft ownership risks, workstream status, stale branch, `.gitignore`, repository-wide validation, optional CI, documentation safeguards, and external-reference/media freshness.
 
@@ -647,24 +642,19 @@ The wider audit still covers obsolete Rig schema fields, governing/data-model sy
 
 Do **not** resume the six remaining Fish Guide audit topics yet.
 
-Resume the **Repository Audit Cleanup Gate — Section 4 implementation**:
+Resume the **Repository Audit Cleanup Gate — Section 5: Rig Empty Schema Fields**:
 
 1. Re-fetch current GitHub `main`.
-2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, and `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` first.
-3. Treat the cleanup audit as the immutable findings snapshot and the decision log as the current authority for reviewed dispositions/actions.
+2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md`, and `docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` first.
+3. Preserve Sections 1–4 as completed; do not reopen them without a new defect or explicit user decision.
 4. Preserve D056: every canonical fact/relationship has one semantic owner; ownership follows meaning, not UI/search/reverse-navigation convenience.
-5. Re-fetch authoritative `data/tackle.js`, `data/media.js`, and `view-renderer.js` immediately before source work.
-6. Remove Tackle `mediaIds[]` from the production Tackle schema.
-7. Change Tackle recognition-media lookup to derive active Media from `ownerType === "tackle"` and `ownerId === tackle.id`.
-8. Keep `data/media.js` owner metadata canonical and unchanged unless validation finds a genuine defect.
-9. Do not add a Tackle-Media join registry or speculative Media role/order field.
-10. Treat removed `mediaIds[]` as **GIT HISTORY ONLY**.
-11. Deliver production changes as a user-reviewable GitHub Desktop package unless the user explicitly authorizes direct source writes.
-12. After push, re-fetch and validate the source, then run contextual Tackle recognition-media runtime/regression checks.
-13. Reconcile `ARCHITECTURE.md`, the audit decision log, and `HANDOFF.md` to the validated implementation.
-14. Only after Section 4 is fully implemented and closed proceed to Section 5.
-15. After all approved cleanup/synchronization is complete, perform a fresh read-only repository re-audit.
-16. Only after that re-audit passes and the cleanup document is closed should the project return to Fish Guide Phase 0 and its six remaining architecture questions.
+5. Begin Section 5 by re-fetching authoritative `data/rigs.js` and `docs/data-model/03-RIGS.md`, then verify whether the currently empty Rig schema fields remain present and whether any source or renderer consumes them.
+6. Discuss the disposition of empty Rig schema fields before any production/schema edit. No deletion/refactor occurs solely from the audit recommendation without explicit user approval.
+7. Apply D055 to each material Section 5 decision: Decision, Reason, Current Status, Future Trigger, Canonical Owner.
+8. Apply the retirement rule to displaced artifacts/fields as applicable: **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**.
+9. Continue the remaining repository-audit sections only after Section 5 is settled and closed.
+10. After all approved cleanup/synchronization is complete, perform a fresh read-only repository re-audit.
+11. Only after that re-audit passes and the cleanup document is closed should the project return to Fish Guide Phase 0 and its six remaining architecture questions.
 
 Fish state to preserve while paused:
 
