@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.4.4  
+**Document Revision:** 0.4.5  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-19
 
@@ -68,6 +68,7 @@ This document records long-term architectural decisions.
 | D053 | Rig Media Completeness and Tutorial Audit | Approved |
 | D054 | Intermediate Rig Tier Membership | Approved |
 | D055 | Durable Decision Context Preservation | Approved |
+| D056 | Semantic Single-Owner Data and Relationship Ownership | Approved |
 
 # D001 – Local-First Architecture
 
@@ -815,3 +816,39 @@ When a deferred item remains a candidate for future implementation, label it as 
 `DEVELOPMENT_WORKFLOW.md` owns the operating procedure for this requirement. `DECISIONS.md` owns the durable summary for long-term structural decisions; supporting architecture, style, data-model, workstream, and handoff documents should carry only the context required by their roles.
 
 Permanent principle: **a future session must be able to recover both what was decided and why from GitHub without relying on chat history.**
+
+# D056 – Semantic Single-Owner Data and Relationship Ownership
+
+**Decision:** Every canonical fact or relationship has exactly one authoritative owner across the application. Ownership is assigned to the entity or domain for which the information is intrinsically meaningful, not to whichever record is most convenient for a current UI, lookup, search path, reverse navigation, or implementation shortcut.
+
+**Reason:** Duplicating the same semantic fact in multiple records creates competing sources of truth, synchronization work, avoidable validators, and ambiguity when the copies disagree. The application already benefits from single-owner patterns such as Rig-to-Tackle usage, Core membership, Rig-to-Knot connection context, and Knot media ownership. The repository audit identified Tackle `mediaIds[]` plus Media `ownerType`/`ownerId` as a concrete violation of that principle and demonstrated the need to make the rule site-wide rather than domain-specific.
+
+Ownership decisions use this test:
+
+1. What does the fact or relationship actually describe?
+2. Which entity/domain would still logically own it if the current UI disappeared?
+3. Can that owner explain why the information belongs there without referring to presentation convenience?
+4. Can other required views reference or derive the information from that owner rather than storing another canonical copy?
+
+Bidirectional navigation does not require bidirectional canonical storage. Search, UI presentation, reporting, recommendations, and reverse lookup consume or derive from canonical owners rather than becoming independent owners of the same fact.
+
+A second stored representation is allowed only when it represents a genuinely different semantic relationship or when an explicit architectural decision documents why duplication is required. A performance cache/index may exist when scale demonstrates the need, but it remains non-authoritative and must be reproducible from the canonical owner.
+
+For entity-to-Media attachment, Media owns the relationship because `ownerType` + `ownerId` describe what canonical entity the Media record belongs to. Canonical entity records do not store inverse media-ID arrays solely to locate Media records that already identify their owner.
+
+Section 4 applies this rule immediately to Tackle architecture:
+
+- `MEDIA_DATA.ownerType` + `ownerId` is the canonical Tackle-to-Media attachment.
+- Tackle `mediaIds[]` is approved for removal from production.
+- runtime Tackle media lookup will derive matching active Media by `ownerType === "tackle"` and `ownerId === tackle.id`.
+- no separate Tackle-Media relationship registry is introduced.
+- no speculative Media role/order field is introduced until an actual multi-media requirement demonstrates it.
+- removed `mediaIds[]` history is classified **GIT HISTORY ONLY**.
+
+**Current implementation status:** The site-wide ownership rule is Approved and governing immediately. Existing production areas that already follow single-owner semantics remain valid. The Tackle/Media production implementation is **Approved / Not Yet Refactored** until `data/tackle.js` and the consuming renderer are updated, packaged, pushed, and runtime/regression validated. Current duplicate Tackle `mediaIds[]` are transitional legacy fields, not approved long-term architecture.
+
+**Future trigger:** Every new field, relationship, inverse navigation path, cache/index, search metadata proposal, and schema refactor must apply this ownership test during design. Existing domains are reconciled when audited or actively modified. Any exception requires a deliberate documented architecture decision explaining why one canonical owner is insufficient.
+
+**Canonical owners:** `DECISIONS.md` owns this permanent architectural rule. `data-model/09-RELATIONSHIPS.md` owns the operational relationship semantics and validation rules. Each domain data-model document identifies the owner of its own fields and domain-specific relationships.
+
+Permanent principle: **ownership follows meaning, not convenience.**
