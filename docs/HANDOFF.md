@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.5.4  
+**Document Revision:** 1.5.5  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
@@ -10,11 +10,11 @@
 **Completed Milestone:** Knots  
 **Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
 **Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
-**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.3 — current cleanup dispositions/actions  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.4 — current cleanup dispositions/actions  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.4 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Repository cleanup discussions are active. Section 1 orphan cleanup is complete and GitHub-verified. Section 2.1 theme status/rationale is approved and documented; the deferred theme-candidate file move remains a production-source organization action not yet executed. Next discussion is Section 2.2 Archive Path Convention. Fish Guide Phase 0 remains paused.  
-**Last Updated:** 2026-08-18
+**Session Status:** Repository cleanup discussions are active. Section 1 orphan cleanup is complete and GitHub-verified. Section 2.1 theme interpretation and deferred-theme repository structure are approved, implemented, documented, and GitHub-verified. Next discussion is Section 2.2 Archive Path Convention. Fish Guide Phase 0 remains paused.  
+**Last Updated:** 2026-08-19
 
 # 1. Start Here
 
@@ -439,9 +439,10 @@ Required topics include:
 Theme context already approved for that future gate:
 
 - Forest Journal is the only production-supported theme today and remains the visual/reference baseline.
-- Forest Copper, Forest Gold, and Legacy Dark are intentionally retained deferred theme candidates, not abandoned historical artifacts.
+- Forest Copper, Forest Gold, and Legacy Dark are intentionally retained deferred theme candidates under `themes/concepts/`, not abandoned historical artifacts.
+- `themes/README.md` records the local directory purpose and deferred status.
 - Multi-theme implementation was deliberately postponed to avoid duplicated maintenance/regression work while the application structure is still changing.
-- A broader theme-tree/shared CSS restructure was deliberately deferred rather than forgotten or rejected.
+- The current `themes/concepts/` organization is intentionally lightweight and may be revised when final theme implementation begins.
 - Future production theme architecture should centralize shared base/layout/component behavior where practical and keep individual themes focused primarily on tokens/intentional overrides.
 - Theme selection, persistence, device/profile ownership, backup/restore behavior, and the final supported-theme set must be resolved here.
 - The fixed reference-media surface `#f4f0e8` remains a cross-theme invariant.
@@ -602,14 +603,10 @@ Completed cleanup decisions:
 - Section 1.3 Rig-image placeholder — `images/rigs/dummy.js` replaced with intentional `images/rigs/.gitkeep`; local Rig visual library preserved as a future offline-capability improvement.
 - Section 1.4 accidental `docs/docs/` duplicate subtree — deleted / GitHub-verified.
 - Section 2.1 theme interpretation — approved and promoted into `DECISIONS.md`, `ARCHITECTURE.md`, `STYLE_GUIDE.md`, and `DEVELOPMENT_WORKFLOW.md`.
+- Section 2.1 theme structure — `themes/README.md` created; Forest Copper, Forest Gold, and Legacy Dark moved byte-for-byte into `themes/concepts/`; former root copies removed; `forest-journal.css` and production loading unchanged.
 - D055 Durable Decision Context Preservation — approved permanent safeguard.
 
-Section 2.1 production/source organization still pending:
-
-- deferred theme candidates are approved to move to a clearly labeled theme-concept location such as `themes/concepts/`,
-- `forest-journal.css` remains at its current production path,
-- no alternate theme is being implemented or made selectable now,
-- the actual CSS file move has not yet been executed.
+Section 2.1 is now complete. The `themes/concepts/` structure is intentionally organizational and may be revised later during the Settings / User Preferences architecture gate without implying that multi-theme support is currently implemented.
 
 Next cleanup discussion:
 
@@ -627,7 +624,7 @@ Resume the **Repository Audit Cleanup Gate**:
 2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, and `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` first.
 3. Treat the cleanup audit as the immutable findings snapshot and the decision log as the current authority for reviewed dispositions/actions.
 4. Continue with **Section 2.2 — Archive Path Convention** unless the user explicitly selects another cleanup item.
-5. Preserve the approved Section 2.1 theme decision: Forest Journal is the only supported theme; the three alternate CSS files are deferred candidates; multi-theme implementation remains deferred to Settings/User Preferences; future shared CSS should avoid duplicated full-theme maintenance.
+5. Preserve the approved/completed Section 2.1 theme state: Forest Journal is the only supported theme; `themes/concepts/` contains the three deferred candidates; `themes/README.md` documents their status; multi-theme implementation remains deferred to Settings/User Preferences; future shared CSS should avoid duplicated full-theme maintenance.
 6. For each finding, explicitly decide `KEEP`, `UPDATE`, `MOVE / ARCHIVE`, `DELETE`, `REFACTOR`, or `DEFER` as applicable.
 7. Apply D055: record Decision, Reason, Current Status, Future Trigger, and Canonical Owner for every material decision or meaningful deferral.
 8. Treat the user’s ownership requirement as permanent during cleanup: each domain owns only data it should own; inverse/connected knowledge is derived or referenced from a single canonical owner rather than duplicated for UI/Search convenience.
