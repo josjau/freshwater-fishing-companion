@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.1  
+**Document Revision:** 1.0.2  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18
@@ -112,4 +112,95 @@ All four Section 1 findings now have approved dispositions and verified reposito
 
 No canonical production source or canonical governing/data-model document was removed during Section 1 cleanup.
 
-Next audit discussion: **Section 2 — Historical Themes and Archive Structure**.
+# Section 2 — Historical Themes and Archive Structure
+
+## 2.1 Deferred Theme Concepts
+
+**Decision:** RETAIN AS DEFERRED THEME CANDIDATES / MOVE TO A CLEAR THEME-CONCEPT STRUCTURE  
+**Status:** APPROVED / DOCUMENTED / FILE MOVE NOT YET IMPLEMENTED  
+**Current production theme:** `forest-journal.css` only
+
+Files covered by this decision:
+
+- `forest-copper.css`
+- `forest-gold.css`
+- `legacy-dark-theme.css`
+
+### Preserved user/project context
+
+These three files were intentionally retained after early theme testing. They are not equivalent to the deleted `styles.bak` backup and are not abandoned historical debris.
+
+The project deliberately decided **not** to implement or maintain multiple production themes while the site is still under active functional development. The reason is maintenance and regression risk: every new component, navigation pattern, detail page, media treatment, accessibility rule, or responsive change would otherwise have to be synchronized across multiple theme implementations before the product structure is stable.
+
+A broader theme tree/shared CSS restructuring was discussed earlier but deliberately deferred because changing the CSS architecture at that stage would have introduced unnecessary structural churn while feature implementation was still moving quickly.
+
+### Current approved behavior
+
+- Forest Journal remains the sole production-supported theme.
+- `forest-journal.css` remains the active stylesheet and the visual/reference baseline.
+- Forest Copper, Forest Gold, and Legacy Dark remain deferred candidates only.
+- Deferred candidates are not required to track current Forest Journal component parity and are not part of the production validation matrix.
+- No user-facing theme selector or multi-theme runtime behavior is implemented now.
+- Theme selection, user preference ownership, persistence, backup behavior, and final supported-theme architecture belong to the future **Settings / User Preferences architecture gate**.
+
+### Approved future architecture direction
+
+When theme implementation is deliberately reopened:
+
+- shared base/layout/component behavior should be centralized once where practical,
+- individual production theme files should primarily own theme-specific design tokens and intentional overrides rather than duplicate full application structure,
+- Forest Journal remains the reference implementation from which future visual parity requirements are derived,
+- the exact final CSS tree must be designed and validated at that later architecture gate rather than prematurely frozen now,
+- the canonical reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
+
+### Approved repository organization direction
+
+The three deferred candidates should no longer be interpreted as root-level production stylesheets. The approved cleanup direction is to move them into a clearly labeled theme-concept location, currently proposed as:
+
+```text
+themes/
+    README.md
+    concepts/
+        forest-copper.css
+        forest-gold.css
+        legacy-dark-theme.css
+```
+
+`forest-journal.css` remains at repository root until a later approved production CSS restructuring requires changing its path. The candidate-file move is a repository-organization/source action and has **not** been executed by this documentation-only update.
+
+### Governing-document reconciliation required
+
+During the governing-document synchronization phase of this repository audit, reconcile this decision into:
+
+- `docs/ARCHITECTURE.md`
+- `docs/STYLE_GUIDE.md`
+- `docs/DECISIONS.md`
+- `docs/HANDOFF.md` where current continuation/Settings-gate context benefits from the clarification.
+
+The governing wording must distinguish **deferred theme candidate** from **historical/abandoned artifact** and must preserve the reason multi-theme implementation was postponed.
+
+# Audit Safeguard — Architectural Decision Context Preservation
+
+**Decision:** APPROVED IMMEDIATE DOCUMENTATION SAFEGUARD
+
+The theme audit exposed a documentation failure mode: a decision may technically exist across several documents while still being easy to misinterpret if its rationale, lifecycle status, or future trigger is omitted.
+
+For material architectural/product/workflow decisions, durable documentation must preserve at least:
+
+1. **Decision** — what was approved.
+2. **Reason** — why the project chose it, including the material tradeoff being avoided or accepted.
+3. **Current implementation status** — Current, Approved / Not Implemented, Deferred, Superseded, etc.
+4. **Deferred/future trigger** — what milestone, architecture gate, condition, or evidence should cause the decision to be revisited.
+5. **Canonical owner/document** — where the durable source of truth for that decision lives after reconciliation.
+
+When an implementation structure is deliberately **not** changed, document that non-action when it is architecturally meaningful. Future sessions must not infer that an absent structure means the design was forgotten or rejected when it was actually deferred.
+
+This safeguard is effective immediately within the repository-audit decision process and must be promoted into the appropriate permanent governing workflow/decision documentation during the governing-document synchronization phase.
+
+# Pending Section 2 Item
+
+## 2.2 Archive Path Convention
+
+**Status:** OPEN / NOT YET DECIDED
+
+Next discussion should choose the canonical archive root and reconcile the existing root-level `archive/` structure against older documentation that references `docs/archive/`.
