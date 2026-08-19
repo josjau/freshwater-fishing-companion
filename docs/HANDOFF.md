@@ -1,17 +1,18 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.5.1  
+**Document Revision:** 1.5.2  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
 **Latest Completed Production Package:** `docs/workstreams/KNOT-PRODUCTION-PACKAGE-4.md` — Production Package 4 PASS / VALIDATED / FUNCTIONALLY COMPLETE / CLOSED  
 **Completed Workstream:** `docs/workstreams/KNOT-INTEGRATED-REGRESSION.md` — PASS / VALIDATED / CLOSED  
 **Completed Milestone:** Knots  
-**Current Milestone:** Fish Guide — Phase 0 In Progress; Version 1 species library LOCKED  
-**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3 remains the approved milestone sequence.  
+**Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
+**Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0  
+**Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.4 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Fish Guide Phase 0 architecture audit is in progress. Five audit revisions are approved and documented; six architecture/implementation clarification points remain open before Block 0.7 and Phase 0 may close. No Fish production source has been changed.  
+**Session Status:** Repository audit is complete and cleanup/safeguard decisions are now the active project gate. Fish Guide Phase 0 retains five approved audit revisions and six open architecture/implementation clarification points, but Fish discussion/implementation must not resume until the repository cleanup gate is closed.  
 **Last Updated:** 2026-08-18
 
 # 1. Start Here
@@ -33,6 +34,10 @@ Permanent rules:
 > Production updates normally remain user-reviewable update packages applied through GitHub Desktop unless the user explicitly authorizes a different workflow.
 
 > Every repository file write must pass post-write integrity validation from authoritative GitHub after the write. A successful write response alone is not sufficient.
+
+Temporary cleanup gate:
+
+> **Do not resume Fish Guide Phase 0 discussion or begin new feature implementation while `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` remains open. Review cleanup findings and maintenance safeguards point by point first.**
 
 # 2. Current Milestone State — Complete Rig Guide
 
@@ -64,7 +69,7 @@ Final Rig workstream record:
 The approved order remains:
 
 1. **Knots** — completed / validated / closed
-2. **Fish Guide** — current milestone
+2. **Fish Guide** — current milestone, Phase 0 temporarily paused for repository cleanup
 3. **What Should I Throw**
 4. **Tackle Reference / Find Tackle**
 5. **Settings / User Data Architecture Gate**
@@ -73,7 +78,7 @@ The approved order remains:
 8. **Global Search**
 9. **Favorites final decision**
 
-The milestone ordering has not changed. `ROADMAP.md` revision 0.3.3 remains the canonical sequence; this handoff records the current completion state.
+The milestone ordering has not changed. `ROADMAP.md` revision 0.3.4 is the current roadmap document; this handoff records the newer cleanup gate and current continuation state.
 
 # 4. Completed Milestone — Knots
 
@@ -319,7 +324,7 @@ Current Version 1 media coverage is complete for all 10 Knots using approved ext
 
 # 5. Current Milestone — Fish Guide Phase 0
 
-**Implementation Status: Phase 0 In Progress / Species Library LOCKED / Architecture Audit OPEN**
+**Implementation Status: Phase 0 In Progress / Species Library LOCKED / Architecture Audit OPEN / TEMPORARILY PAUSED FOR REPOSITORY CLEANUP**
 
 Controlling records:
 
@@ -370,7 +375,7 @@ The following are approved and locked in `FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
 
 ## Remaining Phase 0 Audit / Clarification Items
 
-These are **open and not approved yet**. Discuss them point by point next session:
+These remain open but are **not the next-session discussion until repository cleanup closes**:
 
 1. **Identification relationship ID convention** — deterministic stable IDs and duplicate/reversed-pair validation.
 2. **Fish-to-Rig guidance optionality and source naming** — whether every Fish needs guidance; `data/fish-guidance.js` vs more explicit naming; guidance-record ID convention.
@@ -379,7 +384,7 @@ These are **open and not approved yet**. Discuss them point by point next sessio
 5. **Four-State scope reconciliation outside Fish** — older project/Rig docs still contain Northeast Oklahoma + Southwest Kansas wording; decide whether to establish a project-wide Four-State V1 scope and revalidate existing Rig coverage without silently changing the Rig library.
 6. **Fish source documentation + integrity validation** — exact `FISH_REFERENCE_SOURCES.md` requirements and repeatable Fish data-integrity validator scope.
 
-Block 0.7 is therefore **not fully closed** despite substantial authoring-rule approval. Do not begin production Fish implementation yet.
+Block 0.7 remains not fully closed. Do not begin production Fish implementation yet.
 
 # 6. What Should I Throw — Canonical Instruction Direction
 
@@ -478,6 +483,17 @@ No newly created or replacement image may be added to a production update packag
 
 During long or multi-step work, post concise visible progress updates at meaningful checkpoints.
 
+## E. Repository cleanup gate
+
+The 2026-08-18 audit proved the existing documentation/cleanup rules were not strict enough to prevent drift. Until stronger safeguards are reviewed and approved:
+
+- no new feature implementation begins,
+- cleanup dispositions are reviewed point by point,
+- no audit-proposed deletion/move/schema refactor occurs without approval,
+- all cleanup documentation writes retain the existing fetch-before-edit and post-write validation rules.
+
+The safeguard-design agenda is owned by `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` and includes canonical document roles, milestone closeout reconciliation, status-consistency checks, `.gitignore`, repository-wide integrity validation, optional CI, branch/archive hygiene, and external-reference freshness maintenance.
+
 # 13. Rig Tutorial Standard
 
 Primary embedded Rig tutorials are build-first:
@@ -545,17 +561,54 @@ Rig readiness remains transitional local state under:
 
 It must not be treated as permanent My Tackle ownership.
 
-# 17. Exact Resume Point — Next Session
+# 17. Active Gate — Repository Audit Cleanup
 
-The Knots milestone remains closed. Do not reopen it unless a real defect or an explicitly approved enhancement requires it.
+**Status:** READ-ONLY AUDIT COMPLETE / CLEANUP DECISIONS OPEN / FISH PAUSED
 
-Resume **Fish Guide Phase 0 architecture audit**, not production implementation:
+Controlling document:
 
-1. Re-fetch current GitHub `main` and read `docs/HANDOFF.md`, `docs/workstreams/FISH-GUIDE-PHASE-0.md`, `docs/workstreams/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`, `docs/data-model/02-FISH.md`, and `docs/NAVIGATION-PAGE-STANDARD.md`.
-2. Treat audit Revisions 1–5 as approved/locked unless explicitly reopened.
-3. Continue the six remaining audit topics **one at a time**, beginning with the identification relationship ID convention unless the user selects a different item.
-4. Keep the permanent ownership rule central: each domain owns only its intrinsic/canonical data; inverse or connected knowledge is referenced/derived from its single canonical owner and is never duplicated for UI/Search convenience.
-5. Do not begin production Fish data/UI/media source edits until the remaining audit items are approved/parked, Block 0.7 is closed, governing documentation is reconciled, and Fish Phase 0 is explicitly closed.
-6. Current production `script.js` still uses the older all-transitions top reset. The revised navigation behavior is approved documentation only until a dedicated source package implements and validates Forward=top / Parent=restore state+scroll / Home=top+reset.
-7. Current Rig/Knot subset search returns are already scoped correctly, but static helper/example text predates the contextual-helper rule. Align that presentation when those search views are next deliberately edited rather than through unrelated Fish source scope.
-8. Re-fetch any production source immediately before proposing its first edit. Never assume a previously proposed version was implemented.
+`docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`
+
+The audit preserved findings covering:
+
+1. confirmed orphan/unnecessary-file candidates,
+2. historical themes and archive structure,
+3. production entrypoint/asset reachability,
+4. duplicated Tackle ↔ Media relationship ownership,
+5. empty/possibly obsolete Rig schema fields,
+6. governing-document synchronization defects,
+7. implemented data-model synchronization defects,
+8. future Draft data-model ownership risks,
+9. obsolete/live-looking workstream status,
+10. stale Git branch,
+11. missing `.gitignore` / repository hygiene,
+12. need for a repository-wide integrity validator,
+13. optional CI discussion,
+14. stronger documentation-maintenance safeguards,
+15. external reference/media freshness maintenance.
+
+The audit record intentionally distinguishes findings from decisions. No orphan deletion, branch deletion, theme move, schema refactor, or production change has been approved merely because it appears in the audit.
+
+# 18. Exact Resume Point — Next Session
+
+Do **not** resume the six remaining Fish Guide audit topics yet.
+
+Resume the **Repository Audit Cleanup Gate**:
+
+1. Re-fetch current GitHub `main`.
+2. Read `docs/HANDOFF.md` and `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` first.
+3. Review the audit **one section at a time**, beginning with **Section 1 — Confirmed Orphan / Unnecessary-File Candidates**, unless the user selects another cleanup section.
+4. For each finding, explicitly decide `KEEP`, `UPDATE`, `MOVE / ARCHIVE`, `DELETE`, `REFACTOR`, or `DEFER` as applicable.
+5. Treat the user’s ownership requirement as permanent during cleanup: each domain owns only data it should own; inverse/connected knowledge is derived or referenced from a single canonical owner rather than duplicated for UI/Search convenience.
+6. Discuss and approve stronger safeguards before the cleanup gate closes. At minimum address canonical document roles, closeout reconciliation, repository-wide integrity validation, `.gitignore`/artifact prevention, workstream/archive status discipline, and whether any CI/check automation is worthwhile.
+7. Make no production/schema deletion or refactor solely from an audit recommendation without explicit approval.
+8. After all approved cleanup/synchronization is implemented, perform a fresh read-only repository re-audit.
+9. Only after that re-audit passes and the cleanup document is closed should the project return to Fish Guide Phase 0 and its six remaining architecture questions.
+
+Fish state to preserve while paused:
+
+- Fish Audit Revisions 1–5 remain approved/locked unless explicitly reopened.
+- No Fish production source has been changed during Phase 0.
+- Current `script.js` still implements the older all-transitions top reset; revised Parent state/scroll restoration is approved but not production-implemented.
+- Current Rig/Knot subset result scoping is correct, but their static helper/example text predates the new contextual-helper rule.
+- Re-fetch every production file immediately before any future edit; never assume a proposed version was implemented.
