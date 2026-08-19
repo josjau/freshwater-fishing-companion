@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.2.5
+**Document Revision:** 0.2.6
 **Document Status:** Draft
-**Decision Baseline:** D025, D026, D027, D028, D042-D049
+**Decision Baseline:** D025, D026, D027, D028, D042-D049, D056
 
 ---
 
@@ -36,6 +36,8 @@ A Technique defines reusable presentation behavior used to fish a compatible set
 This separation minimizes duplicated instructional content and improves long-term maintainability.
 
 Rig is also the canonical owner of its component requirements. Tackle does not independently restate which Rigs use it solely to support inverse navigation.
+
+D056 applies to every Rig relationship: a relationship is stored only by its approved semantic owner, and inverse/navigation convenience does not justify a second canonical copy.
 
 ---
 
@@ -222,15 +224,23 @@ Application.
 
 ---
 
-## techniqueIds
+## Rig ↔ Technique relationship — deferred
 
-Purpose
+Technique remains a valid future canonical concept for reusable presentation behavior, but current production does not implement canonical Technique data or a Rig-to-Technique runtime feature.
 
-References one or more canonical fishing Techniques that describe reusable presentation behavior compatible with the Rig.
+The previous production placeholder field:
 
-Ownership
+```text
+techniqueIds[]
+```
 
-Application.
+is approved for removal from all current Rig records because all 20 arrays are empty, no production consumer exists, and keeping a future relationship field in every current record violates the project's no-"just in case" schema rule.
+
+The previous Technique draft also proposed `compatibleRigIds[]`. D056 prohibits populating both directions as competing canonical storage.
+
+When Technique implementation begins, the Rig↔Technique relationship must be designed deliberately and given exactly one semantic owner before production relationship data is added. If the relationship requires contextual recommendation data rather than simple compatibility, a Decision Knowledge relationship may be more appropriate than either entity owning a direct inverse array.
+
+Current status: **Deferred / Not Implemented**.
 
 ---
 
@@ -250,23 +260,28 @@ Weightless Soft-Plastic Rig
 
 Ordinary relationship fields are not planning placeholders. Once the relevant production dataset is complete for a planned expansion, referenced Rig IDs must resolve to canonical Rig records.
 
+Empty `variationIds[]` on an individual Rig means that Rig currently has no approved related variation; it does not make the field itself obsolete.
+
 Ownership
 
-Application.
+Application / Rig.
 
 ---
 
-## imageIds
+## Media ownership
 
-Purpose
+Rig media attachment is not stored through Rig-owned `imageIds[]`.
 
-References approved Rig media when technically verified and legally reusable media exists.
+D056 assigns canonical entity-to-Media attachment to Media through:
 
-Current Rig pages may leave this field empty and use authoritative text instructions plus verified external references or an approved platform-hosted tutorial.
+```text
+Media.ownerType
+Media.ownerId
+```
 
-Ownership
+Future technically verified and legally reusable Rig media therefore attaches to a Rig from the Media registry using `ownerType: "rig"` and the canonical Rig ID. Rig records do not maintain an inverse media-ID array solely to locate Media that already identifies its owner.
 
-Application.
+The former empty `imageIds[]` production field is approved for removal from all 20 Rig records and classified **GIT HISTORY ONLY**.
 
 ---
 
@@ -397,6 +412,8 @@ Practical ownership test:
 
 > If the instruction would still make sense with a different compatible Rig, it probably belongs to Technique. If it depends on the physical configuration of this Rig, it belongs to Rig.
 
+This content-ownership distinction does not by itself decide which future entity or Decision Knowledge registry will own Rig↔Technique compatibility. That relationship remains deferred until Technique implementation.
+
 ---
 
 # Approved Initial Rig Library — Implemented
@@ -429,6 +446,22 @@ All 20 records are implemented in `data/rigs.js` across the finalized Beginner, 
 The validated corrective implementation uses `wacky-hook` (plus optional `wacky-o-ring`) for the Wacky Rig and `ned-jighead` for the Ned Rig so readiness does not treat an unsuitable generic hook or general-purpose jighead as sufficient for those standard setups.
 
 Production Package 1 of the Knots milestone adds a deliberate `knotApplications[]` audit across all 20 active Rigs. The audit contains 31 real tied connection points. Hardware-only joins remain excluded.
+
+---
+
+# Current Section 5 Cleanup State
+
+Repository Audit Section 5 approved the following targeted production cleanup:
+
+- remove universally empty `techniqueIds[]` from all 20 Rig records,
+- remove universally empty `imageIds[]` from all 20 Rig records,
+- preserve `variationIds[]`, including empty arrays where a specific Rig has no approved variation,
+- do not add the documentation-only `targetFishIds[]` proposal to production during this cleanup,
+- defer Rig↔Technique relationship ownership until the Technique architecture gate,
+- keep future Rig media attachment under Media ownership through `ownerType` + `ownerId`,
+- classify removed `techniqueIds[]` and `imageIds[]` fields **GIT HISTORY ONLY**.
+
+Production source implementation remains pending until the approved `data/rigs.js` package is pushed and verified.
 
 ---
 
@@ -517,4 +550,6 @@ These require separate architectural approval.
 - 05A-INVENTORY.md
 - 06-LURES.md
 - 09-RELATIONSHIPS.md
+- ../DECISIONS.md
+- ../workstreams/REPOSITORY-AUDIT-SECTION-5-DECISION.md
 - ../workstreams/KNOT-RELATIONSHIP-APPROVAL.md
