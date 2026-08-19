@@ -1,0 +1,114 @@
+:root {
+    color-scheme: dark;
+
+    --background: #0f1713;
+    --surface: #18231d;
+    --text: #f1f5f2;
+    --muted: #a8b5ad;
+    --accent: #72ad86;
+    --border: #314038;
+    --radius: 14px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+header,
+main {
+    width: min(100% - 32px, 720px);
+    margin-inline: auto;
+}
+
+header {
+    padding: 40px 0 24px;
+}
+
+h1 {
+    margin: 0 0 8px;
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.05;
+}
+
+header p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+main {
+    padding-bottom: 40px;
+}
+
+h2 {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+}
+
+button {
+    display: block;
+    width: 100%;
+    min-height: 64px;
+    margin-bottom: 12px;
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-weight: 650;
+    text-align: left;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.99);
+}
+
+.dashboard-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.dashboard-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 104px;
+    margin: 0;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    text-align: left;
+    text-decoration: none;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.dashboard-card__title {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.dashboard-card__description {
+    display: block;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.dashboard-card:active {
+    transform: scale(0.99);
+}
