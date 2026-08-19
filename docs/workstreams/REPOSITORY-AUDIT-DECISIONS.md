@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.8  
+**Document Revision:** 1.0.9  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -390,6 +390,103 @@ The future repository-wide integrity validator should include:
 
 Production entrypoint and asset reachability pass. No production source deletion, move, or runtime change is required for this section.
 
-# Next Audit Discussion
+# Section 4 — Tackle ↔ Media Relationship Ownership
 
-Proceed to **Section 4 — Tackle ↔ Media Relationship Ownership**.
+**Decision:** REFACTOR / MEDIA OWNS ENTITY-TO-MEDIA ATTACHMENT  
+**Status:** APPROVED / DOCUMENTED / PRODUCTION IMPLEMENTATION PENDING
+
+## Audit finding
+
+Current production Tackle records store inverse media identifiers through:
+
+```text
+Tackle.mediaIds[]
+```
+
+while the same association is independently stored on Media through:
+
+```text
+Media.ownerType
+Media.ownerId
+```
+
+This creates two canonical-looking copies of the same semantic relationship and can become contradictory if the records diverge.
+
+## Approved ownership
+
+Media is the sole canonical owner of entity-to-media attachment because `ownerType` + `ownerId` describe what canonical entity the Media record belongs to.
+
+For Tackle recognition media, canonical storage is:
+
+```text
+Media.ownerType = "tackle"
+Media.ownerId = canonical Tackle ID
+```
+
+Tackle does not need an inverse `mediaIds[]` array merely to locate Media records that already identify their owner.
+
+Runtime lookup should derive matching active Media records from `MEDIA_DATA` using the current Tackle ID.
+
+## Site-wide rule promoted from Section 4
+
+The user approved this reasoning as a permanent site-wide rule rather than a Tackle-only exception.
+
+D056 — **Semantic Single-Owner Data and Relationship Ownership** now governs the project:
+
+> Every canonical fact or relationship has exactly one authoritative owner, and ownership follows the entity/domain for which the information is intrinsically meaningful rather than whichever location is most convenient for the current UI or implementation.
+
+This means:
+
+- inverse navigation is normally derived,
+- search/UI/reporting do not become second canonical owners,
+- duplicated storage requires an explicit semantic or architectural justification,
+- derived performance caches/indexes may exist later when scale requires them but remain non-authoritative and reproducible,
+- ownership must be explainable by domain meaning.
+
+Canonical rule owner: `docs/DECISIONS.md` D056.  
+Operational relationship semantics/validation owner: `docs/data-model/09-RELATIONSHIPS.md`.
+
+## Approved Section 4 production refactor
+
+The implementation package must:
+
+1. Remove `mediaIds[]` from canonical Tackle records in `data/tackle.js`.
+2. Update Tackle media lookup in `view-renderer.js` to derive active Media using `ownerType === "tackle"` and `ownerId === tackle.id`.
+3. Preserve `data/media.js` owner metadata as the canonical relationship.
+4. Do not add an inverse Tackle media array.
+5. Do not add a separate Tackle-Media join registry.
+6. Do not add speculative Media role/order fields until an actual multi-media presentation requirement exists.
+7. Validate every applicable Media `ownerType`/`ownerId` against the appropriate canonical entity.
+8. Preserve current contextual Tackle recognition behavior and all unrelated renderer behavior.
+
+## Retirement classification
+
+Removed Tackle `mediaIds[]` fields are classified:
+
+**GIT HISTORY ONLY**
+
+They are obsolete schema fields from normal prior revisions and do not have independent archival value. No archive copy is required.
+
+## Documentation reconciliation completed so far
+
+- `docs/DECISIONS.md` revision `0.4.5` — D056 added as the site-wide rule; commit `86a4f433a2f7b6a16a9b2a4cbc1fd6fb0b511069`.
+- `docs/data-model/09-RELATIONSHIPS.md` revision `0.3.4` — semantic ownership test, Media ownership, derived inverse rules, and validator requirements added; commit `68011875895159fcdeafb8a88de84001e7c4f1e2`.
+- `docs/data-model/05-TACKLE.md` revision `0.1.4` — `mediaIds` removed from the approved target schema, current 29/29 production count corrected, and current duplicate production state marked transitional; commit `6aa77eb9556e2ca9e397d2204df78d0e057af645`.
+
+## Section 4 closeout gate
+
+Section 4 is **not complete yet** because production source still contains the duplicate Tackle `mediaIds[]` relationship and the renderer still consumes it.
+
+Before Section 5 begins:
+
+1. re-fetch current `data/tackle.js`, `data/media.js`, and `view-renderer.js`,
+2. prepare the targeted production refactor from those exact GitHub baselines,
+3. deliver the user-reviewable source package for GitHub Desktop,
+4. verify the pushed source on GitHub,
+5. run runtime/regression validation for contextual Tackle recognition media,
+6. reconcile `ARCHITECTURE.md`, this decision log, and `HANDOFF.md` to the validated implementation,
+7. only then mark Section 4 completed and proceed to Section 5.
+
+# Next Audit Action
+
+Complete the approved **Section 4 Tackle ↔ Media production refactor and validation**. Do not begin Section 5 until Section 4 is fully implemented and closed.
