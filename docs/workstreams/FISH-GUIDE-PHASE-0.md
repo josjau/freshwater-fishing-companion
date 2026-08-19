@@ -1285,6 +1285,295 @@ This mirrors the project's connected-knowledge navigation principle used by rela
 
 Opening a comparison from Fish Detail preserves Fish Detail as the immediate Parent context; returning from the comparison restores that Fish Detail state.
 
+# Block 0.6 — Fish Detail Page + Connected Knowledge
+
+**Status:** APPROVED / LOCKED — PRESENTATION ADJUSTABLE DURING IMPLEMENTATION/RUNTIME REVIEW
+
+The Fish Detail architecture follows the shared Detail Page Standard while adapting the page around recognition and field identification rather than Rig-style instruction.
+
+Exact spacing, density, column behavior, section grouping, card proportions, and responsive presentation may be refined when the real interface demonstrates a clearer fit with the rest of the Companion. Such refinements must preserve the approved information hierarchy, canonical ownership, connected-knowledge meaning, accessibility, mobile-first behavior, and navigation semantics. Material changes to architecture, data ownership, or workflow meaning require explicit reopening of this block.
+
+## 0.6A — Detail Information Hierarchy
+
+Default Version 1 order:
+
+```text
+Floating Parent / Home
+
+Identity
+Primary Identification Media
+
+How to Identify It
+
+Similar Fish / Compare        ← only when relationships exist
+
+Habitat & Water
+
+Rigs to Start With
+
+Future connected knowledge only when its owning domain exists
+```
+
+Identification remains the dominant purpose of the Fish page. Decision Knowledge such as Rig guidance is useful connected knowledge but must not displace identification/reference content.
+
+## 0.6B — Identity Header
+
+Fish adapts the shared identity-header hierarchy because Fish has no meaningful equivalent of Rig difficulty or Core designation.
+
+Default presentation:
+
+```text
+Category
+Canonical common name
+Scientific name
+Concise beginner-friendly summary
+```
+
+Rules:
+
+- `category` may appear as the compact classification label/badge.
+- `scientificName` is visually subordinate to the common name but readily visible.
+- `family` appears as compact reference metadata rather than a headline.
+- `aliases[]` appears only when nonempty, using beginner-readable wording such as `Also known as` where appropriate.
+- Do not display implementation metadata such as IDs, version fields, or `isActive`.
+- Do not add state/geographic badges because canonical Fish remains geographically neutral.
+
+## 0.6C — Primary Identification Media
+
+Primary identification media appears high on Fish Detail, immediately after or visually integrated with the identity section.
+
+Mobile-first flow normally stacks:
+
+```text
+Identity
+↓
+Primary image
+↓
+Identification content
+```
+
+Desktop may use a balanced identity/image composition when it remains readable and consistent with the field-guide visual system.
+
+When attribution is required, display the approved `attributionText` with or immediately below the relevant asset. Complete provenance remains in the Media registry; the visible interface exposes the attribution/license information that the asset's rights actually require rather than forcing a long license paragraph under every image.
+
+## 0.6D — How to Identify It
+
+`How to Identify It` is the dominant informational section and is sourced from:
+
+```text
+Fish.identificationTraits[]
+```
+
+Traits are:
+
+- observable,
+- concise,
+- beginner-readable,
+- species-specific,
+- ordered with the most useful diagnostic traits first.
+
+Supplemental diagnostic photographs, drawings, illustrations, or diagrams appear near the trait or group of traits they clarify rather than in an unrelated generic gallery.
+
+Do not require one supplemental asset per trait. Add supplemental media only when it materially improves recognition or understanding.
+
+## 0.6E — Similar Fish / Compare
+
+This section appears only when the current Fish participates in one or more active approved `FISH_IDENTIFICATION_RELATIONSHIPS` records.
+
+Each related comparison gateway normally includes:
+
+```text
+Related Fish primary identification image
+Related Fish name
+Compare →
+```
+
+The Fish Detail gateway does not reproduce the full pairwise distinction record. Its purpose is to identify a genuinely confusable Fish and provide a direct path to the focused comparison.
+
+A Fish with zero approved identification relationships omits the section entirely; do not display an empty placeholder.
+
+## 0.6F — Fish Comparison Page
+
+Use a dedicated focused comparison presentation. A conceptual route may be:
+
+```text
+FISH_COMPARE
+```
+
+Default information structure:
+
+```text
+Parent / Home
+
+Fish A
+vs
+Fish B
+
+Fish A primary image
+Fish B primary image
+
+Key Differences
+
+Fish A distinctions
+Fish B distinctions
+
+Optional relationship-owned comparison media
+
+View Fish A →
+View Fish B →
+```
+
+Desktop may place the Fish side by side when legible. Mobile should stack cleanly rather than forcing narrow comparison columns.
+
+Canonical sources remain:
+
+```text
+Fish images
+→ MEDIA_DATA
+
+Pairwise distinction text
+→ FISH_IDENTIFICATION_RELATIONSHIPS.distinctions[]
+
+Comparison diagnostic media
+→ MEDIA_DATA
+  ownerType: "fish-identification"
+  role: "comparison"
+```
+
+Do not create a second comparison-data model in rendering code.
+
+## 0.6G — Context-Preserving Connected Navigation
+
+Fish comparison and other related-detail navigation use the established connected-knowledge context stack.
+
+Example:
+
+```text
+Fish Browse
+→ Fish Detail A
+→ Fish Comparison
+→ Fish Detail B
+```
+
+Parent returns through the immediately preceding context:
+
+```text
+Fish Detail B
+← Fish Comparison
+← Fish Detail A
+← original Fish Browse/Search state
+```
+
+Nested connected knowledge may continue when useful, for example:
+
+```text
+Fish Detail
+→ Rig Detail
+→ Knot Detail
+```
+
+Parent then restores:
+
+```text
+Knot Detail
+← Rig Detail
+← Fish Detail
+← original Fish browse/search context
+```
+
+Home intentionally clears the connected-detail return stack.
+
+## 0.6H — Habitat & Water
+
+Present `habitatTags[]` and `waterbodyTypes[]` as compact reference context rather than generated narrative prose.
+
+Default concept:
+
+```text
+Habitat & Water
+
+Common Habitat
+Rock · Current · Open Water
+
+Common Waters
+Lake · River · Reservoir
+```
+
+Do not make these tags/chips actionable in Version 1 unless a later approved navigation/filter design explicitly introduces that capability.
+
+This prevents the detail page from silently reintroducing Habitat browsing that Block 0.5 intentionally removed from primary navigation.
+
+## 0.6I — Rigs to Start With
+
+Fish Detail surfaces curated Fish-to-Rig Decision Knowledge from:
+
+```text
+FISH_RIG_GUIDANCE
+```
+
+Default presentation separates approved priorities:
+
+```text
+Rigs to Start With
+
+PRIMARY
+Rig name
+Reason
+View Rig →
+
+ALTERNATIVES
+Rig name
+Reason
+View Rig →
+```
+
+Each gateway contains the canonical Rig name, its `Primary` or `Alternative` guidance priority, the approved relationship `reason`, and a direct `View Rig →` action.
+
+Display the complete approved Version 1 set by default because the guidance model is intentionally small—normally 1–3 Primary and optionally 1–3 Alternative recommendations. Do not add progressive disclosure unless actual runtime density demonstrates a need.
+
+Selecting a Rig opens normal Rig Detail with Fish Detail preserved as Parent. Do not duplicate Rig assembly/instruction content inside Fish Detail.
+
+## 0.6J — Broken or Unavailable Rig References
+
+A Fish guidance record referencing a missing/nonexistent Rig is a validation defect rather than acceptable silently degraded canonical data.
+
+Normal rendering must not create broken navigation controls. Validation/debug tooling should explicitly report invalid guidance references so the underlying canonical relationship can be corrected.
+
+Do not normalize bad relationship data by silently ignoring it as the permanent behavior.
+
+## 0.6K — Regulations
+
+Version 1 Fish Detail does not contain hardcoded regulation guidance.
+
+Regulations are jurisdiction-specific, time-sensitive knowledge and are not Fish-owned. Until an approved Regulation Knowledge layer exists:
+
+```text
+Fish Detail
+→ no hardcoded regulation summaries
+→ no state-specific possession/size-limit fields
+→ no stale state-by-state regulation blocks
+```
+
+A future Regulation layer may be surfaced as connected knowledge without altering canonical Fish ownership.
+
+## 0.6L — Future Domains
+
+Do not reserve empty or disabled Fish Detail sections for future domains that do not yet exist.
+
+Examples include:
+
+```text
+Best Lures
+Best Time to Fish
+Seasonal Patterns
+Local Regulations
+My Catches
+I Own This
+Favorite
+```
+
+Those features belong to their later Decision Knowledge or User Knowledge milestones. Add them as contextual gateways only when their owning domains are approved and implemented. Avoid repeating `Coming Soon` placeholders on every Fish page.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -1304,18 +1593,21 @@ Completed and locked Phase 0 work:
 - Block 0.4A — Fish Media Coverage Standard
 - Block 0.4B — Fish Media Source, Licensing, Provenance, and Diagnostic-Media Rules
 - Block 0.5 — Fish Landing / Browse / Search Information Architecture
+- Block 0.6 — Fish Detail Page + Connected Knowledge
 
 ## Next Discussion
 
-**Block 0.6 — Fish Detail Page + Connected Knowledge**
+**Block 0.7 — Canonical Fish Record-Authoring Rules**
 
 Do not begin production Fish source edits yet.
 
 At the next discussion:
 
-1. Define the Fish Detail information hierarchy under the shared Detail Page Standard.
-2. Define placement and presentation of primary/supplemental identification media.
-3. Define `How to Identify It` and `Similar Fish / Compare` presentation.
-4. Define habitat and waterbody context presentation.
-5. Define Fish-to-Rig connected-knowledge presentation from `FISH_RIG_GUIDANCE`.
-6. Confirm context-preserving navigation between Fish Detail, comparisons, Rig Detail, and other related canonical knowledge.
+1. Finalize the Version 1 `category` vocabulary that drives Fish landing/browse collections.
+2. Resolve `Rock Bass` versus `Northern Rock Bass` canonical display naming and alias handling.
+3. Finalize `Hybrid Striped Bass` aliases, including whether `Wiper` and `Whiterock Bass` belong in `aliases[]`.
+4. Define canonical `family` formatting/naming rules.
+5. Define the exact `aliases[]` inclusion standard.
+6. Normalize the controlled `habitatTags[]` vocabulary across all 30 Fish.
+7. Confirm `waterbodyTypes[]` usage against the already approved controlled vocabulary.
+8. Define authoring limits/standards for `summary` and `identificationTraits[]` so all 30 records are consistent before production data is written.
