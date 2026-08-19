@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.5.5  
+**Document Revision:** 1.5.6  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
@@ -10,10 +10,10 @@
 **Completed Milestone:** Knots  
 **Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
 **Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
-**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.4 — current cleanup dispositions/actions  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.7 — current cleanup dispositions/actions  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.4 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Repository cleanup discussions are active. Section 1 orphan cleanup is complete and GitHub-verified. Section 2.1 theme interpretation and deferred-theme repository structure are approved, implemented, documented, and GitHub-verified. Next discussion is Section 2.2 Archive Path Convention. Fish Guide Phase 0 remains paused.  
+**Session Status:** Repository cleanup discussions are active. Sections 1–3 are complete and GitHub-verified. Theme concepts are organized under `themes/concepts/`; repository-root `archive/` is canonical with retirement/archive safeguards documented; production entrypoint and asset reachability passed with no source cleanup required. Next discussion is Section 4 — Tackle ↔ Media Relationship Ownership. Fish Guide Phase 0 remains paused.  
 **Last Updated:** 2026-08-19
 
 # 1. Start Here
@@ -37,6 +37,8 @@ Permanent rules:
 > Every repository file write must pass post-write integrity validation from authoritative GitHub after the write. A successful write response alone is not sufficient.
 
 > Material durable decisions must preserve the decision, reason, current implementation status, deferred/future trigger, and canonical owner/document. Architecturally meaningful non-actions must be recorded rather than left for future sessions to infer.
+
+> Retired repository artifacts must be explicitly classified as **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**. Ordinary prior file revisions remain in Git history; independently useful historical artifacts are preserved under repository-root `archive/` and verified before closeout.
 
 Temporary cleanup gate:
 
@@ -509,7 +511,13 @@ D055 and `DEVELOPMENT_WORKFLOW.md` require every material durable decision to pr
 
 Architecturally meaningful non-actions must be recorded. Deferred candidates must not later be misclassified as abandoned solely because implementation or restructuring was intentionally postponed.
 
-## F. Repository cleanup gate
+## F. Repository artifact retirement and archive discipline
+
+`archive/` at repository root is the only canonical repository archive. Ordinary prior revisions remain recoverable through Git history and are not copied into the archive solely because a file was replaced wholesale.
+
+Every retired artifact is classified **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**. An **ARCHIVE** disposition is incomplete until the archive path is created and verified on GitHub `main`, the old active/current path no longer masquerades as current, and the reason/action are documented.
+
+## G. Repository cleanup gate
 
 The 2026-08-18 audit proved the existing documentation/cleanup rules were not strict enough to prevent drift. Until stronger safeguards are reviewed and approved:
 
@@ -589,12 +597,12 @@ It must not be treated as permanent My Tackle ownership.
 
 # 17. Active Gate — Repository Audit Cleanup
 
-**Status:** SECTION 1 COMPLETE / SECTION 2 IN PROGRESS / FISH PAUSED
+**Status:** SECTIONS 1–3 COMPLETE / SECTION 4 NEXT / FISH PAUSED
 
 Controlling documents:
 
 - `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` — immutable audit-time findings snapshot; its original `OPEN` labels describe the audit baseline.
-- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` — current authoritative cleanup dispositions, rationale, status, and completed actions.
+- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.7` — current authoritative cleanup dispositions, rationale, status, and completed actions.
 
 Completed cleanup decisions:
 
@@ -602,17 +610,19 @@ Completed cleanup decisions:
 - Section 1.2 `styles.bak` — deleted / GitHub-verified.
 - Section 1.3 Rig-image placeholder — `images/rigs/dummy.js` replaced with intentional `images/rigs/.gitkeep`; local Rig visual library preserved as a future offline-capability improvement.
 - Section 1.4 accidental `docs/docs/` duplicate subtree — deleted / GitHub-verified.
-- Section 2.1 theme interpretation — approved and promoted into `DECISIONS.md`, `ARCHITECTURE.md`, `STYLE_GUIDE.md`, and `DEVELOPMENT_WORKFLOW.md`.
-- Section 2.1 theme structure — `themes/README.md` created; Forest Copper, Forest Gold, and Legacy Dark moved byte-for-byte into `themes/concepts/`; former root copies removed; `forest-journal.css` and production loading unchanged.
+- Section 2.1 theme interpretation and structure — deferred theme candidates documented and moved byte-for-byte under `themes/concepts/`; `forest-journal.css` remains the sole production theme.
+- Section 2.2 archive path convention — repository-root `archive/` approved as canonical; `archive/README.md` created; ordinary prior revisions remain in Git history; retired artifacts now require **GIT HISTORY ONLY / ARCHIVE / DELETE** classification and archive verification when applicable.
 - D055 Durable Decision Context Preservation — approved permanent safeguard.
-
-Section 2.1 is now complete. The `themes/concepts/` structure is intentionally organizational and may be revised later during the Settings / User Preferences architecture gate without implying that multi-theme support is currently implemented.
+- Section 3 production entrypoint and asset reachability — **PASS**; current `index.html` production load targets all exist; no production source cleanup required.
+- `docs/ARCHITECTURE.md` revision `0.4.3` — corrected current source tree, Knot/Reel load order, and root archive placement.
+- `docs/DECISIONS.md` revision `0.4.4` — D033/D034 reconciled to the canonical root archive and Git-history/archive distinction.
+- `docs/DEVELOPMENT_WORKFLOW.md` revision `1.1.7` — repository artifact retirement/archive procedure promoted to permanent workflow.
 
 Next cleanup discussion:
 
-> **Section 2.2 — Archive Path Convention**
+> **Section 4 — Tackle ↔ Media Relationship Ownership**
 
-The wider audit still covers production entrypoint/asset reachability, relationship ownership duplication, obsolete schema fields, governing/data-model synchronization, future Draft ownership risks, workstream status, stale branch, `.gitignore`, repository-wide validation, optional CI, documentation safeguards, and external-reference/media freshness.
+The wider audit still covers relationship ownership duplication, obsolete schema fields, governing/data-model synchronization, future Draft ownership risks, workstream status, stale branch, `.gitignore`, repository-wide validation, optional CI, documentation safeguards, and external-reference/media freshness.
 
 # 18. Exact Resume Point — Next Session
 
@@ -623,15 +633,17 @@ Resume the **Repository Audit Cleanup Gate**:
 1. Re-fetch current GitHub `main`.
 2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, and `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` first.
 3. Treat the cleanup audit as the immutable findings snapshot and the decision log as the current authority for reviewed dispositions/actions.
-4. Continue with **Section 2.2 — Archive Path Convention** unless the user explicitly selects another cleanup item.
-5. Preserve the approved/completed Section 2.1 theme state: Forest Journal is the only supported theme; `themes/concepts/` contains the three deferred candidates; `themes/README.md` documents their status; multi-theme implementation remains deferred to Settings/User Preferences; future shared CSS should avoid duplicated full-theme maintenance.
-6. For each finding, explicitly decide `KEEP`, `UPDATE`, `MOVE / ARCHIVE`, `DELETE`, `REFACTOR`, or `DEFER` as applicable.
-7. Apply D055: record Decision, Reason, Current Status, Future Trigger, and Canonical Owner for every material decision or meaningful deferral.
-8. Treat the user’s ownership requirement as permanent during cleanup: each domain owns only data it should own; inverse/connected knowledge is derived or referenced from a single canonical owner rather than duplicated for UI/Search convenience.
-9. Discuss and approve the remaining stronger safeguards before the cleanup gate closes. At minimum address canonical document roles, closeout reconciliation, repository-wide integrity validation, `.gitignore`/artifact prevention, workstream/archive status discipline, and whether any CI/check automation is worthwhile.
-10. Make no production/schema deletion or refactor solely from an audit recommendation without explicit approval.
-11. After all approved cleanup/synchronization is implemented, perform a fresh read-only repository re-audit.
-12. Only after that re-audit passes and the cleanup document is closed should the project return to Fish Guide Phase 0 and its six remaining architecture questions.
+4. Continue with **Section 4 — Tackle ↔ Media Relationship Ownership** unless the user explicitly selects another cleanup item.
+5. Preserve the completed Section 2 repository-organization rules: Forest Journal is the only supported theme; deferred candidates live under `themes/concepts/`; repository-root `archive/` is canonical; ordinary prior revisions remain in Git history; archived artifacts must have independent historical value and verified archive disposition.
+6. Preserve the completed Section 3 finding: current production entrypoint/loaded-source reachability passed and requires no production source cleanup.
+7. For each finding, explicitly decide `KEEP`, `UPDATE`, `MOVE / ARCHIVE`, `DELETE`, `REFACTOR`, or `DEFER` as applicable.
+8. Apply D055: record Decision, Reason, Current Status, Future Trigger, and Canonical Owner for every material decision or meaningful deferral.
+9. Apply the retirement rule whenever an existing artifact is displaced: explicitly classify it **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE** and verify any archive move before closeout.
+10. Treat the user’s ownership requirement as permanent during cleanup: each domain owns only data it should own; inverse/connected knowledge is derived or referenced from a single canonical owner rather than duplicated for UI/Search convenience.
+11. Discuss and approve the remaining stronger safeguards before the cleanup gate closes. At minimum address canonical document roles, closeout reconciliation, repository-wide integrity validation, `.gitignore`/artifact prevention, workstream/archive status discipline, and whether any CI/check automation is worthwhile.
+12. Make no production/schema deletion or refactor solely from an audit recommendation without explicit approval.
+13. After all approved cleanup/synchronization is implemented, perform a fresh read-only repository re-audit.
+14. Only after that re-audit passes and the cleanup document is closed should the project return to Fish Guide Phase 0 and its six remaining architecture questions.
 
 Fish state to preserve while paused:
 
