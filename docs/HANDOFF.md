@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.5.0  
+**Document Revision:** 1.5.1  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
@@ -11,7 +11,7 @@
 **Current Milestone:** Fish Guide — Phase 0 In Progress; Version 1 species library LOCKED  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.3 remains the approved milestone sequence.  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
-**Session Status:** Fish Guide Phase 0 architecture and species-library work is in progress. The Four-State Ozark scope, Fish schema, relationship ownership, Fish-to-Rig guidance architecture, all species-group audits, Catfish/Black Bass Four-State revalidation, and the final Four-State gap audit are complete. Version 1 is locked at 30 canonical Fish with 20 approved pairwise identification relationships. No Fish production source has been changed.  
+**Session Status:** Fish Guide Phase 0 architecture audit is in progress. Five audit revisions are approved and documented; six architecture/implementation clarification points remain open before Block 0.7 and Phase 0 may close. No Fish production source has been changed.  
 **Last Updated:** 2026-08-18
 
 # 1. Start Here
@@ -319,77 +319,67 @@ Current Version 1 media coverage is complete for all 10 Knots using approved ext
 
 # 5. Current Milestone — Fish Guide Phase 0
 
-**Implementation Status: Phase 0 In Progress / Species Library LOCKED**
+**Implementation Status: Phase 0 In Progress / Species Library LOCKED / Architecture Audit OPEN**
 
-Controlling workstream:
+Controlling records:
 
 - `docs/workstreams/FISH-GUIDE-PHASE-0.md`
+- `docs/workstreams/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
+- `docs/data-model/02-FISH.md`
+- `docs/NAVIGATION-PAGE-STANDARD.md`
 
-Locked Four-State Ozark scope:
+Locked Four-State Ozark Fish scope:
 
 - Northeast Oklahoma
 - Southeast Kansas
 - Southwest Missouri
 - Northwest Arkansas
 
-Locked Version 1 Fish architecture includes:
+Locked/approved Fish architecture now includes:
 
-- canonical Fish schema,
+- 30 canonical Version 1 Fish,
+- 20 approved pairwise identification relationships,
 - Fish-owned `identificationTraits[]`, `habitatTags[]`, and `waterbodyTypes[]`,
+- exact controlled habitat/waterbody vocabularies,
 - separate `FISH_IDENTIFICATION_RELATIONSHIPS` Reference Knowledge registry,
 - separate `FISH_RIG_GUIDANCE` Decision Knowledge registry,
 - media ownership through the shared Media registry rather than Fish-owned image IDs,
-- no state-specific geography Boolean fields on Fish.
+- no state-specific geography Boolean fields on Fish,
+- Fish category membership stored as `categoryId`, not duplicated display text,
+- Fish-owned `FISH_CATEGORY_DATA` registry for category identity/presentation/order,
+- no category-level `isActive`; individual `Fish.isActive` owns Fish lifecycle,
+- canonical `northern-rock-bass` / `Northern Rock Bass` identity,
+- shared aliases allowed where regionally legitimate, including `Goggle-Eye`,
+- Hybrid Striped Bass aliases `Wiper` and `Whiterock Bass`,
+- hierarchical scoped Search with context-correct helper/empty-state text,
+- revised standard navigation: Forward opens new destinations at top; Parent restores prior view state + scroll; Home opens Dashboard at top and clears context.
 
-The final Version 1 species library is locked at **30 canonical Fish**:
-
-1. Channel Catfish
-2. Blue Catfish
-3. Flathead Catfish
-4. Black Bullhead
-5. Yellow Bullhead
-6. Largemouth Bass
-7. Smallmouth Bass
-8. Spotted Bass
-9. Bluegill
-10. Redear Sunfish
-11. Green Sunfish
-12. Longear Sunfish
-13. Rock Bass
-14. Warmouth
-15. Ozark Bass
-16. Black Crappie
-17. White Crappie
-18. White Bass
-19. Striped Bass
-20. Hybrid Striped Bass
-21. Walleye
-22. Saugeye
-23. Sauger
-24. Rainbow Trout
-25. Brown Trout
-26. Common Carp
-27. Freshwater Drum
-28. Paddlefish
-29. Longnose Gar
-30. Spotted Gar
-
-The approved Version 1 identification graph contains **20 pairwise relationships**.
-
-Final combined audit results:
-
-- Block 0.3J — Paddlefish Include V1; Alligator Gar and Yellow Perch deferred.
-- Block 0.3K — Catfish and Black Bass Four-State revalidation PASS / NO CHANGE.
-- Block 0.3L — Longnose Gar and Spotted Gar promoted to V1; `longnose-gar ↔ spotted-gar` added; all other mandatory gap-audit candidates resolved as deferred.
+The final Version 1 species library remains 30 Fish; item 13 is now canonically **Northern Rock Bass** rather than the earlier planning display name Rock Bass.
 
 No Fish production source/data/media/UI files have been changed during Phase 0.
 
-Important unresolved canonical-content choices remain deliberately open:
+## Approved 2026-08-18 Audit Revisions
 
-- `Rock Bass` versus `Northern Rock Bass` beginner-facing canonical display name,
-- final `Hybrid Striped Bass` alias set, including `Wiper` and `Whiterock Bass` candidates.
+The following are approved and locked in `FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`:
 
-Fish Guide Phase 0 is **not yet closed**. Remaining Phase 0 work includes Fish media direction, browse/detail information architecture, connected-knowledge presentation boundaries as needed, and reconciliation of governing Fish data-model documentation with the locked decisions.
+1. **Context-Preserving Parent Navigation** — Forward = destination top; Parent = prior state + scroll; Home = Dashboard top/reset; never transfer source scroll into a new destination.
+2. **Fish Habitat / Water Ownership** — retain Fish-owned `habitatTags[]` and `waterbodyTypes[]`; do not collapse them into generic current-condition references.
+3. **Fish Category Registry / Lifecycle Ownership** — `category` → `categoryId`; Fish category registry owns grouping identity/presentation/order; individual Fish owns `isActive`.
+4. **Northern Rock Bass Canonical Identity** — `northern-rock-bass`; `Northern Rock Bass`; `Rock Bass` and `Goggle-Eye` aliases; shared aliases permitted.
+5. **Hierarchical Scoped Search** — deeper navigation narrows eligible search scope; helper text/examples/empty states must reflect that scope; Search never silently broadens; future global/relationship-aware Search must consume canonical owners rather than duplicate relationship knowledge.
+
+## Remaining Phase 0 Audit / Clarification Items
+
+These are **open and not approved yet**. Discuss them point by point next session:
+
+1. **Identification relationship ID convention** — deterministic stable IDs and duplicate/reversed-pair validation.
+2. **Fish-to-Rig guidance optionality and source naming** — whether every Fish needs guidance; `data/fish-guidance.js` vs more explicit naming; guidance-record ID convention.
+3. **Fish activation / staged release readiness** — whether V1 inclusion and runtime `isActive` should be separated during staged implementation so incomplete Fish/media cannot surface prematurely.
+4. **Fish media requiredness/naming** — conditional `role`, null semantics for attribution/changes, media/file naming, alt-text standard, responsive derivatives if any.
+5. **Four-State scope reconciliation outside Fish** — older project/Rig docs still contain Northeast Oklahoma + Southwest Kansas wording; decide whether to establish a project-wide Four-State V1 scope and revalidate existing Rig coverage without silently changing the Rig library.
+6. **Fish source documentation + integrity validation** — exact `FISH_REFERENCE_SOURCES.md` requirements and repeatable Fish data-integrity validator scope.
+
+Block 0.7 is therefore **not fully closed** despite substantial authoring-rule approval. Do not begin production Fish implementation yet.
 
 # 6. What Should I Throw — Canonical Instruction Direction
 
@@ -453,6 +443,8 @@ Catch Log then uses that same persistence architecture and references canonical 
 Global Search is intentionally deferred until the major searchable domains and canonical entity models are established.
 
 It must build on the existing relevance-first/connected-knowledge approach and must not become an undifferentiated cross-domain result dump.
+
+The 2026-08-18 hierarchical scoped-search approval adds an explicit future constraint: Global Search should orchestrate domain-specific search providers and canonical relationship owners rather than requiring local domain Search to be rewritten or duplicating relationship facts as search metadata.
 
 # 11. Favorites
 
@@ -534,12 +526,16 @@ The following are Validated / Finalized:
 
 The following Fish Guide Phase 0 work is Approved / Locked but not production-implemented:
 
-- Four-State Ozark geographic scope,
-- canonical Version 1 Fish schema,
+- Four-State Ozark Fish geographic scope,
+- revised canonical Version 1 Fish schema using `categoryId`,
+- Fish category registry ownership,
 - Fish identification/confusion relationship architecture,
 - Fish-to-Rig guidance architecture,
 - final 30-Fish Version 1 species library,
-- final 20-relationship Version 1 identification graph.
+- final 20-relationship Version 1 identification graph,
+- Northern Rock Bass canonical identity,
+- hierarchical scoped Search rules,
+- revised Parent context/scroll restoration behavior.
 
 # 16. Known Temporary Bridge
 
@@ -553,11 +549,13 @@ It must not be treated as permanent My Tackle ownership.
 
 The Knots milestone remains closed. Do not reopen it unless a real defect or an explicitly approved enhancement requires it.
 
-Resume **Fish Guide Phase 0** from the locked species-library state:
+Resume **Fish Guide Phase 0 architecture audit**, not production implementation:
 
-1. Re-fetch current GitHub `main`, `docs/HANDOFF.md`, and `docs/workstreams/FISH-GUIDE-PHASE-0.md`.
-2. Treat the 30-Fish Version 1 species library and 20 approved identification relationships as locked unless Phase 0 is explicitly reopened.
-3. Continue the remaining Phase 0 design/documentation work before any Fish production source edit: Fish media direction, browse/detail information architecture, and governing Fish data-model/documentation reconciliation.
-4. Resolve the `Rock Bass` versus `Northern Rock Bass` display-name choice and final `Hybrid Striped Bass` alias set during canonical record authoring; do not silently choose them earlier.
-5. Re-fetch any existing production Fish source file immediately before proposing its first implementation edit.
-6. Preserve the validated Dashboard order, site-wide floating navigation, connected-knowledge behavior, Rig/Knot navigation, and Reel Setup behavior unless an approved Fish Guide requirement explicitly changes them.
+1. Re-fetch current GitHub `main` and read `docs/HANDOFF.md`, `docs/workstreams/FISH-GUIDE-PHASE-0.md`, `docs/workstreams/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`, `docs/data-model/02-FISH.md`, and `docs/NAVIGATION-PAGE-STANDARD.md`.
+2. Treat audit Revisions 1–5 as approved/locked unless explicitly reopened.
+3. Continue the six remaining audit topics **one at a time**, beginning with the identification relationship ID convention unless the user selects a different item.
+4. Keep the permanent ownership rule central: each domain owns only its intrinsic/canonical data; inverse or connected knowledge is referenced/derived from its single canonical owner and is never duplicated for UI/Search convenience.
+5. Do not begin production Fish data/UI/media source edits until the remaining audit items are approved/parked, Block 0.7 is closed, governing documentation is reconciled, and Fish Phase 0 is explicitly closed.
+6. Current production `script.js` still uses the older all-transitions top reset. The revised navigation behavior is approved documentation only until a dedicated source package implements and validates Forward=top / Parent=restore state+scroll / Home=top+reset.
+7. Current Rig/Knot subset search returns are already scoped correctly, but static helper/example text predates the contextual-helper rule. Align that presentation when those search views are next deliberately edited rather than through unrelated Fish source scope.
+8. Re-fetch any production source immediately before proposing its first edit. Never assume a previously proposed version was implemented.
