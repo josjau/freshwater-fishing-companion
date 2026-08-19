@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.4.2  
+**Document Revision:** 0.4.3  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-17
+**Last Updated:** 2026-08-18
 
 # Purpose
 
@@ -67,6 +67,7 @@ This document records long-term architectural decisions.
 | D052 | Rig Detail Compact Density | Approved |
 | D053 | Rig Media Completeness and Tutorial Audit | Approved |
 | D054 | Intermediate Rig Tier Membership | Approved |
+| D055 | Durable Decision Context Preservation | Approved |
 
 # D001 – Local-First Architecture
 
@@ -392,13 +393,27 @@ Permanent rule: **production asset directories contain production assets; histor
 
 # D035 – Single Production-Supported Theme
 
-Forest Journal is the only production-supported Version 1 theme.
+Forest Journal is the only production-supported Version 1 theme and remains the visual/reference baseline while the application is under active functional development.
 
-`forest-copper.css`, `forest-gold.css`, and `legacy-dark-theme.css` are retained as historical/inactive design concepts. They are not required to remain in behavioral or visual parity with Forest Journal and are not part of the supported production test matrix.
+`forest-copper.css`, `forest-gold.css`, and `legacy-dark-theme.css` are intentionally retained **deferred theme candidates** from earlier theme exploration. They are not abandoned historical artifacts, are not required to remain in behavioral or visual parity with Forest Journal while deferred, and are not part of the supported production test matrix.
 
-A future shared CSS architecture may separate common base/layout/component behavior from theme tokens and visual overrides before additional themes are promoted to supported status.
+**Reason:** multi-theme implementation is deliberately postponed because maintaining several complete themes while components, navigation, media, accessibility behavior, and responsive layouts are still changing would multiply maintenance work and regression risk before the shared UI structure is stable.
 
-Permanent rule: **a CSS file existing in the repository does not make it a supported production theme.**
+A broader theme-tree/shared CSS restructuring was discussed and deliberately deferred rather than forgotten or rejected. The absence of that structure in current production is therefore meaningful non-action, not evidence that theme architecture was abandoned.
+
+**Current implementation status:** Forest Journal only. No user-facing theme selector or multi-theme runtime behavior is implemented.
+
+**Future trigger:** reopen the final theme architecture during the Settings / User Preferences architecture gate, when user preference ownership/persistence and a sufficiently stable application structure can be designed together.
+
+At that gate, shared base/layout/component behavior should be centralized once where practical, and individual production theme files should primarily own theme-specific design tokens and intentional overrides rather than duplicate complete application structure. Forest Journal remains the reference implementation for future parity requirements.
+
+Theme selection, persistence, device/profile ownership, backup/restore behavior, the final supported-theme list, and final CSS directory structure belong to that future gate. Existing candidate files do not guarantee that every candidate will ultimately ship.
+
+The canonical reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
+
+**Canonical owners:** this decision is owned by `DECISIONS.md`; current/future source structure is described by `ARCHITECTURE.md`; visual requirements are described by `STYLE_GUIDE.md`; workflow context preservation is governed by `DEVELOPMENT_WORKFLOW.md`.
+
+Permanent rule: **a CSS file existing in the repository does not make it a supported production theme, and a deliberately deferred theme candidate must not later be reclassified as abandoned merely because it is inactive.**
 
 # D036 – Status and Version Semantics
 
@@ -764,3 +779,23 @@ The complete Intermediate tier is:
 This tier is the deliberate difficulty step after Beginner+ because these Rigs introduce more precise leader management, bottom-contact tuning, multi-component relationships, or multi-branch rigging while remaining broadly practical for the approved regional library.
 
 Intermediate+, Advanced, and Expert membership remain outside D054 and must be assigned deliberately in their own future segment.
+
+# D055 – Durable Decision Context Preservation
+
+A material decision is not sufficiently documented when the repository records only the outcome but omits the context needed to interpret that outcome later.
+
+For durable architectural, product, data-model, workflow, UI, deferment, rejection, or structural decisions, canonical documentation must preserve:
+
+1. **Decision** — what was approved.
+2. **Reason** — why the project chose it, including the meaningful tradeoff, maintenance burden, or risk being avoided or accepted.
+3. **Current implementation status** — for example Current, Approved / Not Implemented, Deferred, Superseded, or another applicable state.
+4. **Deferred/future trigger** — the milestone, architecture gate, condition, dependency, or evidence that should cause the decision to be revisited.
+5. **Canonical owner/document** — where the durable interpretation lives after reconciliation.
+
+Architecturally meaningful non-actions must also be recorded. If the project deliberately postpones a directory restructure, implementation, migration, or feature, future sessions must not infer that the absent structure was forgotten, rejected, or obsolete.
+
+When a deferred item remains a candidate for future implementation, label it as deferred rather than using ambiguous historical/inactive wording that could imply abandonment.
+
+`DEVELOPMENT_WORKFLOW.md` owns the operating procedure for this requirement. `DECISIONS.md` owns the durable summary for long-term structural decisions; supporting architecture, style, data-model, workstream, and handoff documents should carry only the context required by their roles.
+
+Permanent principle: **a future session must be able to recover both what was decided and why from GitHub without relying on chat history.**
