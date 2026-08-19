@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.7  
+**Document Revision:** 1.0.8  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -237,7 +237,7 @@ Post-write verification confirms `archive/README.md` exists and defines the cano
 
 The repository archive contains mixed historical material, including package manifests, validation reports, audit logs, and historical design/reference media. It is therefore repository-wide history rather than a subdomain of `docs/`.
 
-The older `docs/archive/...` wording is documentation drift. The approved canonical convention is repository-root `archive/`.
+The older `docs/archive/...` wording was documentation drift. The approved canonical convention is repository-root `archive/`.
 
 Additional archive subdirectories are created only when a real retained artifact class requires them. Do not create speculative archive categories in advance.
 
@@ -280,11 +280,12 @@ When an artifact is classified **ARCHIVE**, closeout is incomplete until:
 ### Canonical ownership
 
 - `archive/README.md` owns the directory-level archive operating policy.
-- `docs/DECISIONS.md` D033/D034 must be reconciled to the root `archive/` convention during governing-document synchronization.
-- `docs/ARCHITECTURE.md` now shows `archive/` at repository root and documents the Git-history-versus-archive distinction.
-- `docs/DEVELOPMENT_WORKFLOW.md` must incorporate the retirement-classification/archive-verification rule during workflow synchronization.
+- `docs/DECISIONS.md` revision `0.4.4` reconciles D033/D034 to repository-root `archive/` and the Git-history/archive distinction; commit `97f2ef8599f28337400dfbaaa1bd7f1df0abed48`.
+- `docs/ARCHITECTURE.md` revision `0.4.3` shows `archive/` at repository root and documents the Git-history-versus-archive distinction; commit `6b605a18ef00f11b89b90af109e01eb61d6e7131`.
+- `docs/DEVELOPMENT_WORKFLOW.md` revision `1.1.7` incorporates the retirement classification and archive-verification procedure; commit `8c35ba9575c9d994b1383e977a61d2058129de32`.
+- `docs/HANDOFF.md` revision `1.5.6` carries the archive rule and current continuation point; commit `d9b6061e092a3d94c2d26ae9a74fb5107ebb4c79`.
 
-The audit decision is effective immediately even where broader governing documents still contain pre-audit wording; this decision log is the current cleanup authority.
+The approved archive convention and operating safeguards are now reconciled into their primary governing/current-state documents.
 
 # Audit Safeguard — Architectural Decision Context Preservation
 
@@ -310,9 +311,7 @@ This safeguard is now permanent through:
 
 # Section 2 Closeout
 
-Section 2 theme/archive decisions are now approved and implemented at the repository-organization/policy level.
-
-Remaining stale references in broader governing documents are explicitly tracked for the governing-document synchronization phase; they do not change the current approved cleanup dispositions recorded here.
+Section 2 theme/archive decisions are approved, implemented, and reconciled into the primary governing/current-state documents.
 
 # Section 3 — Production Entrypoint and Asset Reachability
 
@@ -361,7 +360,7 @@ The separate Tackle-to-Media relationship-ownership problem is **not** an asset-
 
 ## Documentation correction completed
 
-`docs/ARCHITECTURE.md` revision `0.4.3` now records the actual production source tree and exact current `index.html` JavaScript load order, including:
+`docs/ARCHITECTURE.md` revision `0.4.3` records the actual production source tree and exact current `index.html` JavaScript load order, including:
 
 - `data/knots.js`,
 - `data/knot-guidance.js`,
@@ -375,6 +374,8 @@ Architecture correction commit:
 `6b605a18ef00f11b89b90af109e01eb61d6e7131`
 
 Post-write verification confirmed the corrected source tree/load-order section and preserved document tail.
+
+`docs/HANDOFF.md` revision `1.5.6` now records Sections 1–3 as complete and sets Section 4 as the next cleanup discussion.
 
 ## Future safeguard
 
