@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.4.3  
+**Document Revision:** 0.4.4  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-18
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -375,27 +375,43 @@ This decision reinforces the replacement-integrity rule: full-file replacements 
 
 # D033 – Archive Completed Package Artifacts
 
-Completed, package-specific implementation artifacts do not remain at repository root once their package is no longer active.
+`archive/` at repository root is the single canonical archive root.
 
-Historical package artifacts with continuing audit or handoff value are preserved under a clearly labeled archive path, such as `docs/archive/packages/<date>-<package>/`. Archived package files are historical records and must not override current governing documentation.
+Completed package-specific implementation artifacts do not remain in active/current repository locations once their package is no longer active. Package artifacts with continuing audit, provenance, reconstruction, or handoff value are retained under a clearly labeled path such as:
 
-Permanent rule: **completed package-specific artifacts belong in Archives, not at repository root.**
+```text
+archive/packages/<date>-<package>/
+```
+
+Normal prior revisions of current source or documentation files are **not** copied into `archive/` merely because the implementation workflow edited or replaced the whole file. Git history is the canonical recovery mechanism for ordinary file revisions.
+
+Whenever an implementation, migration, cleanup, or closeout retires an existing repository artifact, classify it explicitly as:
+
+1. **GIT HISTORY ONLY** — ordinary prior revision; no archive copy.
+2. **ARCHIVE** — independently useful historical/audit/provenance/reconstruction artifact retained under `archive/`.
+3. **DELETE** — no continuing repository value beyond Git history.
+
+An artifact classified **ARCHIVE** is not closed out until its archive path is verified on authoritative GitHub `main`, its former active/current path no longer masquerades as current, and the archival action is recorded in the relevant workstream/decision/closeout documentation.
+
+Archived material is historical evidence and must not override current governing documentation, production source, current data models, or active workstreams. `archive/README.md` owns the directory-level archive operating policy.
+
+Permanent rule: **Git history preserves ordinary revisions; `archive/` preserves independently useful historical artifacts.**
 
 # D034 – Production Asset Directory Discipline
 
 Active production asset directories contain current production assets or explicitly approved reusable production assets.
 
-Historical boards, previews, experiments, and superseded design references are moved to a clearly historical/reference archive rather than left in production asset directories. Unreferenced does not automatically mean delete: an asset may be preserved when it has design-lineage, geometry, licensing, or reconstruction value, but it must not masquerade as production media.
+Historical boards, previews, experiments, and superseded design references with independent design-lineage, geometry, licensing, provenance, or reconstruction value are moved to an appropriate location under the canonical repository-root `archive/` rather than left in production asset directories. Unreferenced does not automatically mean delete, but retained historical material must not masquerade as production media.
 
-The current `tackle-reference-board.webp` and `what-you-need-thumbnail-preview.webp` are approved for archival as historical design/reference assets.
+The existing archived `tackle-reference-board.webp` and `what-you-need-thumbnail-preview.webp` remain historical design/reference artifacts under the repository archive.
 
-Permanent rule: **production asset directories contain production assets; historical design references belong in Archives.**
+Permanent rule: **production asset directories contain production assets; historical design/reference artifacts with continuing value belong under the canonical repository archive.**
 
 # D035 – Single Production-Supported Theme
 
 Forest Journal is the only production-supported Version 1 theme and remains the visual/reference baseline while the application is under active functional development.
 
-`forest-copper.css`, `forest-gold.css`, and `legacy-dark-theme.css` are intentionally retained **deferred theme candidates** from earlier theme exploration. They are not abandoned historical artifacts, are not required to remain in behavioral or visual parity with Forest Journal while deferred, and are not part of the supported production test matrix.
+`themes/concepts/forest-copper.css`, `themes/concepts/forest-gold.css`, and `themes/concepts/legacy-dark-theme.css` are intentionally retained **deferred theme candidates** from earlier theme exploration. They are not abandoned historical artifacts, are not required to remain in behavioral or visual parity with Forest Journal while deferred, and are not part of the supported production test matrix.
 
 **Reason:** multi-theme implementation is deliberately postponed because maintaining several complete themes while components, navigation, media, accessibility behavior, and responsive layouts are still changing would multiply maintenance work and regression risk before the shared UI structure is stable.
 
