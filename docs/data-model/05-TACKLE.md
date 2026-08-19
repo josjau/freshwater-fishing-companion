@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 05-TACKLE.md  
-**Document Revision:** 0.1.3  
+**Document Revision:** 0.1.4  
 **Document Status:** Approved  
 **Implementation Status:** In Progress  
-**Decision Baseline:** D019, D025, D026, D028, D037, D043
+**Decision Baseline:** D019, D025, D026, D028, D037, D043, D056
 
 # Purpose
 
@@ -35,6 +35,8 @@ My Tackle/Inventory belongs to User Knowledge and records actual owned items. Se
 
 A future ProductDefinition may describe an exact commercial product if an approved product-specific feature demonstrates the need. ProductDefinition is not required for basic canonical Tackle, My Tackle MVP, or Rig readiness.
 
+D056 applies the site-wide semantic single-owner rule: each canonical fact or relationship has one authoritative owner, and that owner must be the entity/domain for which the information is intrinsically meaningful rather than merely convenient for a current UI.
+
 # Canonical Identity
 
 Canonical Tackle owns its own identity and display name.
@@ -58,13 +60,14 @@ category
 recognitionNotes
 commonVariants
 relatedTackleIds
-mediaIds
 createdVersion
 lastModifiedVersion
 isActive
 ```
 
 `rigIds` is not part of the canonical Tackle ownership model for Rig usage.
+
+`mediaIds` is not part of the approved canonical Tackle ownership model. Media attachment is owned by the Media record through `ownerType` + `ownerId` and is derived when Tackle media is needed.
 
 # Rig Relationships
 
@@ -119,21 +122,26 @@ Current reference media is intended for recognition help through contextual `Nam
 
 The current production standard uses optimized 640 × 440 WebP assets on a restrained warm-neutral background. Alpha transparency and artificial baked-in drop shadows are not used in the active set.
 
+Media owns the canonical entity-to-media attachment through:
+
+```text
+ownerType: "tackle"
+ownerId: canonical Tackle ID
+```
+
+Tackle does not maintain an inverse `mediaIds[]` list solely to locate its media. Runtime presentation derives matching active Media records from the Media registry.
+
+Multiple Media records may point to the same Tackle entity when a demonstrated need exists. Media-specific role/order metadata is not added until an actual multi-media presentation requirement demonstrates that need.
+
 # Current Implementation
 
 `data/tackle.js` owns the production canonical Tackle records and stable IDs.
 
-Current `main` contains 17 active canonical Tackle concepts and 17 neutral-background recognition-media assets from the Core Rigs/Tackle Media implementation.
+Current `main` contains 29 active canonical Tackle concepts and 29 active Tackle recognition-media records.
 
-The current Rig UX corrective package adds three narrower canonical concepts:
+The production source has not yet been refactored to the approved D056/Section 4 ownership model: current Tackle records still contain `mediaIds[]`, while `data/media.js` independently stores `ownerType: "tackle"` + `ownerId`. This is an approved cleanup refactor awaiting production packaging and runtime/regression validation.
 
-- `wacky-hook`
-- `wacky-o-ring`
-- `ned-jighead`
-
-This produces 20 active canonical Tackle concepts while keeping the active recognition-media set at 17 assets. The three newly narrowed concepts intentionally use text recognition guidance until technically accurate dedicated recognition media is separately approved; no generic image is reused when it could misidentify the component.
-
-This corrective expansion remains **In Progress** until pushed and runtime/regression validation passes.
+Until that production refactor lands, the duplicate fields are a known transitional implementation defect rather than an approved long-term schema.
 
 # Future / Deferred
 
@@ -144,6 +152,7 @@ Deferred until demonstrated by approved features:
 - SKU/UPC/retailer modeling
 - advanced subtype/variant inheritance
 - precomputed relationship indexes solely for scale
+- Media role/order metadata when actual multi-media presentation requires it
 
 # Related Documents
 
