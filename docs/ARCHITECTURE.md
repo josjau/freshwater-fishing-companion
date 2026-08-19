@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.4.2
+**Document Revision:** 0.4.3
 **Document Status:** Approved
 **Last Updated:** 2026-08-19
 
@@ -18,6 +18,10 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
     index.html
     forest-journal.css
 
+    archive/
+        README.md
+        packages/
+
     themes/
         README.md
         concepts/
@@ -28,6 +32,9 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
     data/
         fish.js
         rigs.js
+        knots.js
+        knot-guidance.js
+        reel-guidance.js
         tackle.js
         media.js
 
@@ -37,7 +44,10 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
 
     search.js
     view-renderer.js
+    knot-media-renderer.js
     script.js
+
+    tools/
 
     docs/
         ARCHITECTURE.md
@@ -51,20 +61,24 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
         ROADMAP.md
         SPECIFICATION.md
         STYLE_GUIDE.md
-        archive/
         data-model/
         workstreams/
 
-Required JavaScript load order:
+Required production JavaScript load order from `index.html`:
 
     data/fish.js
     data/rigs.js
+    data/knots.js
+    data/knot-guidance.js
+    data/reel-guidance.js
     data/tackle.js
     data/media.js
     search.js
     view-renderer.js
+    knot-media-renderer.js
     script.js
 
+The production entrypoint and loaded-source reachability were re-audited on 2026-08-19 and passed. All files listed in the production load order exist on authoritative GitHub `main`. Deferred themes, repository archives, project documentation, development tools, and the reserved Rig-image directory are intentionally outside the browser runtime entrypoint.
 
 # Theme Support
 
@@ -84,7 +98,11 @@ The canonical reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a 
 
 # Archive Architecture
 
-Completed package artifacts and historical design/reference assets are preserved outside active production roots when they retain audit or design value. Archived files are historical and do not override current governing documents or production assets.
+`archive/` at repository root is the single canonical archive root. It owns deliberately retained historical repository artifacts with independent audit, provenance, reconstruction, design-lineage, or implementation-history value.
+
+Normal prior revisions of tracked source and documentation files remain in Git history and are not copied into `archive/` merely because a file was edited or replaced wholesale. Retired artifacts are explicitly classified as **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE** according to `archive/README.md` and the repository-audit decision record.
+
+Archived files are historical evidence and do not override current governing documents, production assets, current data models, or active workstreams. Additional archive subdirectories are created only when a real retained artifact class requires them.
 
 Active production asset directories should contain only currently referenced or explicitly approved reusable production assets.
 
