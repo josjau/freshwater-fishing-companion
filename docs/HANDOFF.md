@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.5.6  
+**Document Revision:** 1.5.7  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`  
@@ -10,7 +10,7 @@
 **Completed Milestone:** Knots  
 **Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
 **Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
-**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.7 — current cleanup dispositions/actions  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.8 — current cleanup dispositions/actions  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.4 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Windows Desktop, Microsoft Edge, GitHub Desktop  
 **Session Status:** Repository cleanup discussions are active. Sections 1–3 are complete and GitHub-verified. Theme concepts are organized under `themes/concepts/`; repository-root `archive/` is canonical with retirement/archive safeguards documented; production entrypoint and asset reachability passed with no source cleanup required. Next discussion is Section 4 — Tackle ↔ Media Relationship Ownership. Fish Guide Phase 0 remains paused.  
@@ -357,7 +357,7 @@ Locked/approved Fish architecture now includes:
 - no state-specific geography Boolean fields on Fish,
 - Fish category membership stored as `categoryId`, not duplicated display text,
 - Fish-owned `FISH_CATEGORY_DATA` registry for category identity/presentation/order,
-- no category-level `isActive`; individual `Fish.isActive` owns Fish lifecycle,
+- no category-level `isActive`; individual Fish.isActive owns Fish lifecycle,
 - canonical `northern-rock-bass` / `Northern Rock Bass` identity,
 - shared aliases allowed where regionally legitimate, including `Goggle-Eye`,
 - Hybrid Striped Bass aliases `Wiper` and `Whiterock Bass`,
@@ -602,7 +602,7 @@ It must not be treated as permanent My Tackle ownership.
 Controlling documents:
 
 - `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` — immutable audit-time findings snapshot; its original `OPEN` labels describe the audit baseline.
-- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.7` — current authoritative cleanup dispositions, rationale, status, and completed actions.
+- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.8` — current authoritative cleanup dispositions, rationale, status, and completed actions.
 
 Completed cleanup decisions:
 
