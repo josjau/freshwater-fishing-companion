@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 05-TACKLE.md  
-**Document Revision:** 0.1.4  
+**Document Revision:** 0.1.5  
 **Document Status:** Approved  
-**Implementation Status:** In Progress  
+**Implementation Status:** Validated  
 **Decision Baseline:** D019, D025, D026, D028, D037, D043, D056
 
 # Purpose
@@ -67,7 +67,7 @@ isActive
 
 `rigIds` is not part of the canonical Tackle ownership model for Rig usage.
 
-`mediaIds` is not part of the approved canonical Tackle ownership model. Media attachment is owned by the Media record through `ownerType` + `ownerId` and is derived when Tackle media is needed.
+`mediaIds` is not part of the canonical Tackle ownership model. Media attachment is owned by the Media record through `ownerType` + `ownerId` and is derived when Tackle media is needed.
 
 # Rig Relationships
 
@@ -139,9 +139,19 @@ Multiple Media records may point to the same Tackle entity when a demonstrated n
 
 Current `main` contains 29 active canonical Tackle concepts and 29 active Tackle recognition-media records.
 
-The production source has not yet been refactored to the approved D056/Section 4 ownership model: current Tackle records still contain `mediaIds[]`, while `data/media.js` independently stores `ownerType: "tackle"` + `ownerId`. This is an approved cleanup refactor awaiting production packaging and runtime/regression validation.
+Section 4 of the Repository Audit Cleanup is implemented and runtime-validated:
 
-Until that production refactor lands, the duplicate fields are a known transitional implementation defect rather than an approved long-term schema.
+- canonical Tackle records no longer contain inverse `mediaIds[]`,
+- `data/media.js` owns Tackle media attachment through `ownerType: "tackle"` + `ownerId`,
+- `view-renderer.js` resolves active Tackle media by Media ownership rather than a Tackle-owned media list,
+- the 29 active Tackle Media owner IDs resolve 1:1 to the 29 canonical Tackle IDs,
+- contextual Tackle recognition media, related-component popovers, later-library Tackle references, and normal console behavior passed Microsoft Edge runtime validation.
+
+Production implementation commit:
+
+`614a5b472fb42a8fa23870ea96a00f929a8ed4b6` — `Section 4 production update package`
+
+Removed `mediaIds[]` fields are classified **GIT HISTORY ONLY**; no archive copy is required.
 
 # Future / Deferred
 
