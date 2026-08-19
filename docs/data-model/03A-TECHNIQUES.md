@@ -1,21 +1,23 @@
 # Freshwater Fishing Companion
 
 **Document:** 03A-TECHNIQUES.md  
-**Version:** 0.1.0  
+**Version:** 0.1.1  
 **Status:** Draft  
-**Decision Baseline:** D004
+**Decision Baseline:** D004, D056
 
 ---
 
 # Purpose
 
-This document defines the canonical Technique entity for Freshwater Fishing Companion.
+This document defines the future canonical Technique entity for Freshwater Fishing Companion.
 
 A Technique describes **how** a lure or rig is presented to fish.
 
-Techniques are independent of rigs and may be shared by multiple rigs.
+Techniques are independent reusable concepts and may apply to multiple Rigs.
 
 Separating techniques from rigs eliminates duplicated instructional content and supports a more intelligent recommendation engine.
+
+No canonical Technique production dataset is implemented yet.
 
 ---
 
@@ -34,7 +36,9 @@ Examples:
 - Twitch
 - Deadstick
 
-Each Technique exists once and is referenced by any applicable rig.
+Each Technique should exist once when the Technique domain is implemented.
+
+D056 requires every future Technique relationship to have one semantic owner. This Draft must not be interpreted as approval to store the same Rig↔Technique relationship in both Rig and Technique records.
 
 ---
 
@@ -53,7 +57,7 @@ lastModifiedVersion
 isActive
 ```
 
-Additional Technique fields extend the base entity.
+Additional Technique fields extend the base entity only after the Technique architecture is deliberately implemented.
 
 ---
 
@@ -163,11 +167,11 @@ Application.
 
 Purpose
 
-References fish commonly associated with the technique.
+Potential future relationship to Fish commonly associated with the Technique.
 
 Ownership
 
-Application.
+**Unresolved in this Draft.** Apply D056 before implementation; do not populate a relationship here if another canonical/Decision Knowledge owner is approved.
 
 ---
 
@@ -175,23 +179,37 @@ Application.
 
 Purpose
 
-References canonical Conditions where the technique performs well.
+Potential future relationship to canonical Conditions where the Technique performs well.
 
 Ownership
 
-Application.
+**Unresolved in this Draft.** Apply D056 before implementation.
 
 ---
 
-## compatibleRigIds
+## Rig compatibility — ownership deferred
 
-Purpose
+A Technique may be compatible with one or more canonical Rigs, but the storage owner for that relationship is **not yet approved**.
 
-References rigs commonly using this presentation.
+The earlier Draft field:
 
-Ownership
+```text
+compatibleRigIds[]
+```
 
-Application.
+is therefore a design candidate, not an approved schema field.
+
+Repository Audit Section 5 also removes universally empty `techniqueIds[]` from current production Rig records. The project must not later populate both directions as duplicate canonical storage.
+
+When Technique implementation begins, decide whether compatibility is best owned by:
+
+- Technique,
+- Rig,
+- or a Decision Knowledge relationship that carries contextual recommendation/suitability semantics.
+
+The chosen design must have one semantic owner under D056, and every inverse view must be derived unless a separately justified relationship exists.
+
+Current status: **Deferred / Not Implemented**.
 
 ---
 
@@ -219,15 +237,18 @@ Application.
 
 ---
 
-## imageIds
+## Media ownership
 
-Purpose
+Technique media must follow the shared D056 Media ownership model when this domain is implemented.
 
-Illustrations demonstrating the presentation.
+Technique records should not own inverse `imageIds[]` solely to locate Media. Canonical attachment belongs to Media through:
 
-Ownership
+```text
+ownerType: "technique"
+ownerId: canonical Technique ID
+```
 
-Application.
+Any media role/order semantics belong to Media or an explicitly justified relationship entity when a demonstrated feature requires them.
 
 ---
 
@@ -249,7 +270,7 @@ The goal is to teach understanding rather than memorization.
 
 # Recommendation Integration
 
-Techniques may be recommended based upon:
+Techniques may eventually participate in recommendations based upon:
 
 - Conditions
 - Target fish
@@ -259,7 +280,26 @@ Techniques may be recommended based upon:
 - Cover
 - Water depth
 
-Techniques should never recommend specific commercial products.
+Recommendations own recommendation-specific ranking/rationale/context rather than forcing those semantics into the canonical Technique entity merely for convenience.
+
+Techniques should never recommend specific commercial products directly unless a later approved architecture explicitly assigns that responsibility.
+
+---
+
+# Implementation Gate
+
+Before creating canonical Technique production data, the Technique architecture gate must settle at least:
+
+1. canonical Technique field set,
+2. Rig↔Technique relationship ownership,
+3. Fish↔Technique relationship ownership,
+4. Condition↔Technique relationship ownership,
+5. which relationships are Reference Knowledge versus Decision Knowledge,
+6. Media attachment and any role/order requirements,
+7. referential-integrity validation,
+8. search/index fields without duplicating relationship knowledge.
+
+No empty future relationship arrays should be pre-populated in production records merely as placeholders.
 
 ---
 
@@ -285,3 +325,5 @@ These features require separate architectural approval.
 - 03B-CONDITIONS.md
 - 05-TACKLE.md
 - 09-RELATIONSHIPS.md
+- ../DECISIONS.md
+- ../workstreams/REPOSITORY-AUDIT-SECTION-5-DECISION.md
