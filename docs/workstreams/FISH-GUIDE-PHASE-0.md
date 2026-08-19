@@ -1069,6 +1069,222 @@ Do not use edits that can alter diagnostic evidence, including:
 
 Arrows, circles, reference lines, or similar annotations are acceptable when they are clearly overlays and the underlying diagnostic Fish pixels remain intact. When substantial annotation is needed, prefer a separate diagnostic diagram rather than heavily modifying the primary photograph.
 
+# Block 0.5 — Fish Landing / Browse / Search Information Architecture
+
+**Status:** APPROVED / LOCKED
+
+## Landing-Page Hierarchy
+
+The Fish Guide landing page follows the shared Navigation Page Standard in this order:
+
+```text
+Fish Guide
+Intro
+
+Search all Fish
+
+Compare Similar Fish
+
+Browse Fish
+- All Fish
+- category-derived collection cards
+```
+
+Search remains the first functional navigation element.
+
+`Compare Similar Fish` is the single approved Fish-specific special-navigation entry. It opens the catalog of approved pairwise identification relationships and must not be labeled as an automated Fish-identification workflow.
+
+## Primary Browse Navigation
+
+Remove these current landing-page cards:
+
+```text
+Browse by Family
+Browse by Habitat
+Browse Alphabetically
+```
+
+`Browse Alphabetically` is replaced by `All Fish`, whose default ordering is canonical Fish name A–Z.
+
+`family` remains canonical reference metadata but does not drive primary beginner navigation.
+
+`habitatTags[]` and `waterbodyTypes[]` remain Fish/reference context and potential later refinement inputs; they do not drive the Version 1 landing-page hierarchy.
+
+Do not create a `Core Fish` collection in Version 1.
+
+## Category-Derived Collections
+
+The Fish landing page uses beginner-facing category/group collection cards derived from the canonical Fish `category` vocabulary.
+
+Exact Version 1 category labels are deliberately deferred to Block 0.7 canonical record-authoring rules.
+
+Do not maintain a separate landing-page taxonomy that can drift from canonical Fish categories.
+
+## Browse-Page Architecture
+
+Use one reusable Fish browse view rather than separate page renderers for All Fish and each category.
+
+Conceptual routes:
+
+```text
+FISH
+FISH_BROWSE
+FISH_DETAIL
+```
+
+A dedicated comparison route may be added only if the approved comparison presentation requires it.
+
+The selected collection/category is browse state; it does not require a separate renderer.
+
+Every Fish browse page uses:
+
+1. shared floating `Parent` + `Home` navigation,
+2. collection title,
+3. concise collection description,
+4. collection-scoped search when useful,
+5. visual Fish cards,
+6. canonical Fish-name A–Z ordering when no search query is active.
+
+No Version 1 Family/Habitat filter drawer or pagination is required for the 30-Fish library. Revisit only if actual library growth or runtime usability demonstrates a need.
+
+Do not duplicate category-navigation cards inside the browse page; collection selection belongs on the Fish Guide landing page.
+
+## Browse-State Preservation
+
+Opening a Fish from a browse view must preserve the immediately preceding browse context so Parent returns the user to the same working state.
+
+Preserve, where technically practical:
+
+- selected collection,
+- active scoped-search query,
+- filtered result state,
+- prior scroll position.
+
+This applies to All Fish and category browse views.
+
+A Parent return from Fish Detail must not silently reset the user to an unfiltered browse page or the top of the collection when the previous browse context can be restored.
+
+## Browse Fish Card Content
+
+Fish browse cards are visual identification/reference gateways.
+
+Each Fish card normally contains:
+
+```text
+Primary identification image
+Common name
+Scientific name
+Short summary
+View Fish →
+```
+
+Category may appear as compact metadata in mixed collections such as All Fish.
+
+Family does not need prominent browse-card placement.
+
+The card uses the Fish's existing `primary-identification` Media record; do not create a separate thumbnail-ownership model.
+
+The normal Fish browse card has one primary action: open Fish Detail. Do not overload it with a second comparison action.
+
+## Fish Search Scope
+
+Version 1 Fish identity search covers:
+
+```text
+name
+scientificName
+aliases[]
+category
+family
+```
+
+Do not include these fields in default identity search:
+
+```text
+summary
+identificationTraits[]
+habitatTags[]
+waterbodyTypes[]
+```
+
+This preserves relevance-first identity retrieval and avoids noisy results from broad descriptive/context terms.
+
+This search-field set is approved as the Version 1 baseline but may be refined during canonical-data/runtime validation if real retrieval behavior demonstrates a concrete usability need. Such refinement must not silently expand the canonical Fish schema.
+
+## Search Ranking
+
+Use relevance-first ordering rather than equal-weight field matching.
+
+Conceptual priority:
+
+1. exact canonical-name match,
+2. canonical name starts with query,
+3. exact alias match,
+4. alias starts with query,
+5. canonical/scientific name contains query,
+6. category match,
+7. family match,
+8. alphabetical tie-break.
+
+Do not add canonical `searchKeywords` merely to implement search ranking.
+
+## Search-Result Presentation
+
+Fish search-result cards normally contain:
+
+```text
+Primary identification image
+Common name
+Scientific name
+Category
+Short summary
+View Fish →
+```
+
+Family remains searchable/reference metadata but does not need prominent search-result placement.
+
+Selecting a search result opens Fish Detail.
+
+Search results do not inline-expand identification comparisons, Rig guidance, or other connected knowledge; those belong to the destination Fish page.
+
+## Compare Similar Fish Catalog
+
+`Compare Similar Fish` derives directly from active `FISH_IDENTIFICATION_RELATIONSHIPS` records.
+
+Each canonical pair appears once in the comparison catalog.
+
+Do not store a separate hand-maintained comparison list or duplicate relationship ownership.
+
+## Comparison Access from Fish Detail
+
+When a Fish participates in one or more approved identification relationships, Fish Detail surfaces those comparisons as connected knowledge.
+
+Conceptual behavior:
+
+```text
+Fish Detail
+→ Similar Fish / Compare
+→ relevant canonical pairwise comparison
+```
+
+A Fish with multiple approved relationships exposes each relevant comparison derived from the relationship registry.
+
+The same canonical comparison may therefore be reached through two legitimate paths:
+
+```text
+Fish Guide
+→ Compare Similar Fish
+→ choose pair
+
+Fish Detail
+→ Similar Fish / Compare
+→ relevant pair
+```
+
+This mirrors the project's connected-knowledge navigation principle used by related Rigs and Knots without duplicating the underlying relationship.
+
+Opening a comparison from Fish Detail preserves Fish Detail as the immediate Parent context; returning from the comparison restores that Fish Detail state.
+
 # Exact Stopping Point — Resume Here
 
 **Fish Guide Phase 0 remains OPEN.**
@@ -1087,18 +1303,19 @@ Completed and locked Phase 0 work:
 - Version 1 identification graph — **20 pairwise relationships / LOCKED**
 - Block 0.4A — Fish Media Coverage Standard
 - Block 0.4B — Fish Media Source, Licensing, Provenance, and Diagnostic-Media Rules
+- Block 0.5 — Fish Landing / Browse / Search Information Architecture
 
 ## Next Discussion
 
-**Block 0.5 — Fish Landing / Browse / Search Information Architecture**
+**Block 0.6 — Fish Detail Page + Connected Knowledge**
 
 Do not begin production Fish source edits yet.
 
 At the next discussion:
 
-1. Define the Fish Guide landing-page hierarchy under the shared Navigation Page Standard.
-2. Decide which browse collections are useful for a 30-Fish library.
-3. Decide whether Browse by Family and Browse by Habitat remain useful, are renamed, or are removed.
-4. Define alphabetical/category browsing, collection sort rules, and scoped browse behavior.
-5. Define Fish search fields and search-result information density.
-6. Preserve the existing shared floating-navigation, search-first, mobile-first, and connected-knowledge standards.
+1. Define the Fish Detail information hierarchy under the shared Detail Page Standard.
+2. Define placement and presentation of primary/supplemental identification media.
+3. Define `How to Identify It` and `Similar Fish / Compare` presentation.
+4. Define habitat and waterbody context presentation.
+5. Define Fish-to-Rig connected-knowledge presentation from `FISH_RIG_GUIDANCE`.
+6. Confirm context-preserving navigation between Fish Detail, comparisons, Rig Detail, and other related canonical knowledge.
