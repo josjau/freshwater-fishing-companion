@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.2  
+**Document Revision:** 1.0.3  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18
@@ -9,7 +9,9 @@
 
 This file records approved repository-audit decisions as they are made so cleanup conclusions are not lost between sessions.
 
-The parent audit remains the complete findings record. This log records only approved dispositions and completed actions.
+The parent audit remains the complete **audit-time findings snapshot**. Its original `OPEN` labels describe the state when the read-only audit was recorded and are not the current disposition once an item has been reviewed. This decision log is the authoritative source for **current cleanup dispositions, approved rationale, implementation status, and completed repository actions**.
+
+A future session reviewing cleanup state must read the parent audit together with this decision log. Where an audit-time proposal conflicts with a later approved disposition recorded here, the later approved disposition in this log governs.
 
 # Section 1 — Confirmed Orphan / Unnecessary-File Candidates
 
@@ -117,7 +119,7 @@ No canonical production source or canonical governing/data-model document was re
 ## 2.1 Deferred Theme Concepts
 
 **Decision:** RETAIN AS DEFERRED THEME CANDIDATES / MOVE TO A CLEAR THEME-CONCEPT STRUCTURE  
-**Status:** APPROVED / DOCUMENTED / FILE MOVE NOT YET IMPLEMENTED  
+**Status:** APPROVED / GOVERNING DOCUMENTATION RECONCILED / FILE MOVE NOT YET IMPLEMENTED  
 **Current production theme:** `forest-journal.css` only
 
 Files covered by this decision:
@@ -168,20 +170,21 @@ themes/
 
 `forest-journal.css` remains at repository root until a later approved production CSS restructuring requires changing its path. The candidate-file move is a repository-organization/source action and has **not** been executed by this documentation-only update.
 
-### Governing-document reconciliation required
+### Governing-document reconciliation completed
 
-During the governing-document synchronization phase of this repository audit, reconcile this decision into:
+The durable theme interpretation and rationale have now been promoted into:
 
-- `docs/ARCHITECTURE.md`
-- `docs/STYLE_GUIDE.md`
-- `docs/DECISIONS.md`
-- `docs/HANDOFF.md` where current continuation/Settings-gate context benefits from the clarification.
+- `docs/ARCHITECTURE.md` revision 0.4.1,
+- `docs/STYLE_GUIDE.md` revision 1.3.3,
+- `docs/DECISIONS.md` revision 0.4.3 through expanded D035,
+- `docs/DEVELOPMENT_WORKFLOW.md` revision 1.1.6,
+- `docs/HANDOFF.md` revision 1.5.3.
 
-The governing wording must distinguish **deferred theme candidate** from **historical/abandoned artifact** and must preserve the reason multi-theme implementation was postponed.
+The governing wording now distinguishes **deferred theme candidate** from **historical/abandoned artifact** and preserves the reason multi-theme implementation was postponed.
 
 # Audit Safeguard — Architectural Decision Context Preservation
 
-**Decision:** APPROVED IMMEDIATE DOCUMENTATION SAFEGUARD
+**Decision:** APPROVED / PROMOTED TO PERMANENT GOVERNING STANDARD
 
 The theme audit exposed a documentation failure mode: a decision may technically exist across several documents while still being easy to misinterpret if its rationale, lifecycle status, or future trigger is omitted.
 
@@ -195,7 +198,11 @@ For material architectural/product/workflow decisions, durable documentation mus
 
 When an implementation structure is deliberately **not** changed, document that non-action when it is architecturally meaningful. Future sessions must not infer that an absent structure means the design was forgotten or rejected when it was actually deferred.
 
-This safeguard is effective immediately within the repository-audit decision process and must be promoted into the appropriate permanent governing workflow/decision documentation during the governing-document synchronization phase.
+This safeguard is now permanent through:
+
+- `docs/DECISIONS.md` D055 — Durable Decision Context Preservation,
+- `docs/DEVELOPMENT_WORKFLOW.md` — Durable Decision Context,
+- supporting references in `docs/STYLE_GUIDE.md` and `docs/HANDOFF.md`.
 
 # Pending Section 2 Item
 
