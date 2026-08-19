@@ -646,10 +646,10 @@ function getRelatedRigNames(tackleId) {
 }
 
 function getReferenceMedia(referenceRecord) {
-    if (!referenceRecord?.mediaIds?.length || typeof MEDIA_DATA === "undefined") return null;
+    if (!referenceRecord?.id || typeof MEDIA_DATA === "undefined") return null;
     return MEDIA_DATA.find((media) =>
-        referenceRecord.mediaIds.includes(media.id) &&
         media.ownerType === "tackle" &&
+        media.ownerId === referenceRecord.id &&
         media.isActive === true
     ) ?? null;
 }

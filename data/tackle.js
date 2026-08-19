@@ -23,7 +23,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Usually round or oval", "Often red-and-white", "Uses a spring-loaded clip"],
         commonVariants: ["Round", "Pencil", "Cigar"],
         relatedTackleIds: ["split-shot", "hook", "bait"],
-        mediaIds: ["fixed-bobber-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -38,7 +37,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Small round or oval metal weight", "Visible slot through one side", "Often sold in assorted sizes"],
         commonVariants: ["Removable", "Non-removable", "Lead-free"],
         relatedTackleIds: ["fixed-bobber", "slip-float", "hook"],
-        mediaIds: ["split-shot-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -53,7 +51,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Curved metal shape", "Sharp point and barb", "Eye at the opposite end"],
         commonVariants: ["Baitholder", "Circle", "Aberdeen", "Octopus"],
         relatedTackleIds: ["bait", "leader-line"],
-        mediaIds: ["hook-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -68,7 +65,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["May be live, preserved, prepared, or artificial", "Selected according to target fish and regulations"],
         commonVariants: ["Worms", "Minnows", "Crickets", "Prepared bait"],
         relatedTackleIds: ["hook", "fixed-bobber", "slip-float"],
-        mediaIds: ["bait-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -83,7 +79,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Very small knot, rubber stop, or thread stop", "Usually sold with beads", "Slides on the line when adjusted"],
         commonVariants: ["Thread", "Rubber", "Silicone"],
         relatedTackleIds: ["stop-bead", "slip-float"],
-        mediaIds: ["bobber-stop-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -98,7 +93,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Small round plastic bead", "Hole through the center", "Usually bright or neutral colored"],
         commonVariants: ["Plastic", "Glass", "Soft rubber"],
         relatedTackleIds: ["bobber-stop", "slip-float"],
-        mediaIds: ["stop-bead-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -113,7 +107,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Line passes through the center or a lower tube", "Long or oval body", "No fixed spring clip"],
         commonVariants: ["Pencil", "Cigar", "Oval", "Weighted"],
         relatedTackleIds: ["bobber-stop", "stop-bead", "split-shot"],
-        mediaIds: ["slip-float-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -128,7 +121,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Hole through the center", "Usually egg-shaped, flat, or cylindrical", "Slides directly on the main line"],
         commonVariants: ["Egg", "No-roll", "Barrel", "Walking"],
         relatedTackleIds: ["bead", "barrel-swivel", "leader-line"],
-        mediaIds: ["sliding-sinker-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.3.1",
         isActive: true
@@ -143,7 +135,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Small round bead", "Hole through the center", "Often red, orange, black, or clear"],
         commonVariants: ["Plastic", "Glass", "Soft rubber"],
         relatedTackleIds: ["sliding-sinker", "barrel-swivel"],
-        mediaIds: ["bead-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -158,7 +149,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Two metal eyes", "Short rotating barrel in the center", "No snap attached"],
         commonVariants: ["Brass", "Black nickel", "Ball-bearing"],
         relatedTackleIds: ["leader-line", "sliding-sinker", "bead"],
-        mediaIds: ["barrel-swivel-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -173,7 +163,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Looks like fishing line", "Often sold on smaller spools", "May be fluorocarbon, monofilament, or wire"],
         commonVariants: ["Monofilament", "Fluorocarbon", "Wire"],
         relatedTackleIds: ["barrel-swivel", "hook"],
-        mediaIds: ["leader-line-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -188,7 +177,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Cone or bullet shape", "Hole through the center", "Pointed end faces the rod"],
         commonVariants: ["Lead", "Tungsten", "Brass"],
         relatedTackleIds: ["offset-worm-hook", "soft-plastic", "weight-peg"],
-        mediaIds: ["bullet-weight-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -203,7 +191,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Z-shaped offset below the eye", "Wide or standard gap", "Long shank compared with many bait hooks"],
         commonVariants: ["Standard gap", "Extra-wide gap", "Straight shank"],
         relatedTackleIds: ["bullet-weight", "soft-plastic"],
-        mediaIds: ["offset-worm-hook-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -218,7 +205,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Flexible rubber-like body", "Available in many shapes and colors", "Usually packaged in resealable bags"],
         commonVariants: ["Worm", "Creature bait", "Craw", "Swimbait"],
         relatedTackleIds: ["offset-worm-hook", "bullet-weight", "jighead"],
-        mediaIds: ["soft-plastic-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.8",
         isActive: true
@@ -233,7 +219,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Small rubber or silicone stop", "Slides onto the line", "Often sold on wire loops"],
         commonVariants: ["Rubber stop", "Silicone stop", "Peg toothpick"],
         relatedTackleIds: ["bullet-weight", "offset-worm-hook", "soft-plastic"],
-        mediaIds: ["weight-peg-reference"],
         createdVersion: "0.2.6",
         lastModifiedVersion: "0.2.6",
         isActive: true
@@ -248,7 +233,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Weighted head molded onto the hook", "Line-tie eye near or above the head", "Often includes a collar or keeper for holding soft plastic"],
         commonVariants: ["Round head", "Minnow head", "Swimbait head", "Mushroom head"],
         relatedTackleIds: ["soft-plastic"],
-        mediaIds: ["jighead-reference"],
         createdVersion: "0.2.8",
         lastModifiedVersion: "0.2.8",
         isActive: true
@@ -263,7 +247,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Short compact hook profile", "Open hook gap and exposed point", "May include a light weed guard"],
         commonVariants: ["Open hook", "Weedless guard", "Wacky/Neko/Drop Shot hook"],
         relatedTackleIds: ["soft-plastic", "wacky-o-ring", "hook"],
-        mediaIds: ["wacky-hook-reference"],
         createdVersion: "0.3.0",
         lastModifiedVersion: "0.3.1",
         isActive: true
@@ -278,7 +261,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Small flexible ring", "Sized to fit around a stick worm", "Usually installed near the bait midpoint"],
         commonVariants: ["Single O-ring", "Crossed double-ring", "Wacky saddle"],
         relatedTackleIds: ["wacky-hook", "soft-plastic"],
-        mediaIds: ["wacky-o-ring-reference"],
         createdVersion: "0.3.0",
         lastModifiedVersion: "0.3.1",
         isActive: true
@@ -293,7 +275,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Small mushroom-shaped weighted head", "Light-wire compact hook on standard finesse versions", "Usually includes a keeper for holding a short soft plastic"],
         commonVariants: ["Exposed-hook mushroom head", "Weedless mushroom head", "Heavier-duty Ned head"],
         relatedTackleIds: ["soft-plastic", "jighead"],
-        mediaIds: ["ned-jighead-reference"],
         createdVersion: "0.3.0",
         lastModifiedVersion: "0.3.1",
         isActive: true
@@ -308,7 +289,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Weight hangs at the end of the tag line", "Often has a narrow quick-change line clip", "Common shapes include round, teardrop, and skinny cylinder"],
         commonVariants: ["Round", "Teardrop", "Skinny cylinder"],
         relatedTackleIds: ["wacky-hook", "soft-plastic"],
-        mediaIds: ["drop-shot-weight-reference"],
         createdVersion: "0.3.1",
         lastModifiedVersion: "0.3.1",
         isActive: true
@@ -323,7 +303,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Three distinct line-tie eyes", "Central rotating metal junction", "Forms a three-branch or T-shaped connection rather than a straight two-eye swivel"],
         commonVariants: ["Power three-way", "Cross swivel", "Three-way crane swivel"],
         relatedTackleIds: ["leader-line", "fixed-sinker", "hook"],
-        mediaIds: ["three-way-swivel-reference"],
         createdVersion: "0.3.1",
         lastModifiedVersion: "0.3.1",
         isActive: true
@@ -338,7 +317,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Tie eye or molded top loop", "No through-hole for sliding on the main line", "Bank and bell shapes are common bottom-fishing examples"],
         commonVariants: ["Bank", "Bell", "Pyramid"],
         relatedTackleIds: ["three-way-swivel", "leader-line"],
-        mediaIds: ["fixed-sinker-reference"],
         createdVersion: "0.3.1",
         lastModifiedVersion: "0.3.1",
         isActive: true
@@ -353,7 +331,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Metal blade mounted beside a straight wire shaft", "Weighted body below the blade", "Single or treble hook at the rear"],
         commonVariants: ["French blade", "In-line blade", "Dressed hook", "Undressed hook"],
         relatedTackleIds: [],
-        mediaIds: ["inline-spinner-reference"],
         createdVersion: "0.2.8",
         lastModifiedVersion: "0.2.8",
         isActive: true
@@ -368,7 +345,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Thin nail- or pin-like shape", "Designed to insert directly into soft plastic", "May have ribs, barbs, or a wider head to resist pulling out"],
         commonVariants: ["Lead nail", "Tungsten nail", "Ribbed insert"],
         relatedTackleIds: ["soft-plastic", "wacky-hook", "wacky-o-ring"],
-        mediaIds: ["nail-weight-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -383,7 +359,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Weighted head integrated with a worm hook", "Keeper, screw-lock, or pin secures the bait nose", "Hook exits the bait farther back for a weed-resistant or exposed-point setup"],
         commonVariants: ["Round head", "Stand-up head", "Screw-lock head", "Weedless head"],
         relatedTackleIds: ["soft-plastic", "jighead"],
-        mediaIds: ["shaky-head-jighead-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -398,7 +373,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Weight body ends in a distinct metal eye or loop", "Fishing line or connector passes through the external eye", "The weight body itself does not contain the main sliding line channel"],
         commonVariants: ["Bell", "Casting", "Teardrop", "Tungsten free-rig weight"],
         relatedTackleIds: ["offset-worm-hook", "soft-plastic", "split-ring"],
-        mediaIds: ["ringed-sinker-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -413,7 +387,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Looks like a miniature key ring", "Two overlapping wire turns", "No swivel barrel or snap arm"],
         commonVariants: ["Stainless steel", "Black nickel", "Heavy-duty"],
         relatedTackleIds: ["ringed-sinker", "offset-worm-hook"],
-        mediaIds: ["split-ring-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -428,7 +401,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Long rigid wire bent into an angled or 7-shaped frame", "Lead weight fixed to the vertical wire", "Main-line connection near the bend and harness connection on the trailing arm"],
         commonVariants: ["Fixed-weight wire", "Quick-change weight", "Snap-equipped"],
         relatedTackleIds: ["spinner-harness", "bait"],
-        mediaIds: ["bottom-bouncer-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
@@ -443,7 +415,6 @@ const TACKLE_DATA = Object.freeze([
         recognitionNotes: ["Leader with a rotating spinner blade ahead of the hook", "Several beads commonly separate the blade from the hook", "Often uses one hook or a two-hook crawler configuration"],
         commonVariants: ["Single-hook", "Two-hook crawler harness", "Colorado blade", "Indiana blade", "Smile blade"],
         relatedTackleIds: ["bottom-bouncer", "bait", "barrel-swivel"],
-        mediaIds: ["spinner-harness-reference"],
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
