@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.0.1  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18
@@ -12,6 +12,8 @@ This file records approved repository-audit decisions as they are made so cleanu
 The parent audit remains the complete findings record. This log records only approved dispositions and completed actions.
 
 # Section 1 — Confirmed Orphan / Unnecessary-File Candidates
+
+**Section Status:** COMPLETED / GITHUB-VERIFIED
 
 ## 1.1 `data-reel-guidance.tmp`
 
@@ -86,10 +88,28 @@ Current durable direction:
 
 This parking-lot item does not reopen the completed 20-Rig canonical library. It is a future media/offline-capability enhancement.
 
-# Pending Section 1 Item
-
 ## 1.4 `docs/docs/` duplicate documentation subtree
 
-**Status:** OPEN / NOT YET DECIDED
+**Decision:** DELETE ENTIRE DUPLICATE SUBTREE  
+**Status:** COMPLETED / GITHUB-VERIFIED  
+**Reason:** The nested tree contained only older predecessors of canonical governing/data-model documents. Canonical replacements exist under `docs/` and `docs/data-model/`; Git history preserves the superseded snapshots. Keeping duplicate authoritative-looking files created a high risk of future sessions reasoning from stale architecture.
 
-Next discussion should determine final disposition after confirming no unique material exists only in the nested duplicate subtree.
+Deleted files:
+
+- `docs/docs/ARCHITECTURE.md` — commit `a181fe7c6d4b753d7a6e55edbe064fa0ef992f53`
+- `docs/docs/DECISIONS.md` — commit `a7da8e50197ef297572afc47e7653b2148edc95a`
+- `docs/docs/data-model/01-FOUNDATION.md` — commit `1111cb27155af49a08033935be5322ebc7b74452`
+- `docs/docs/data-model/03-RIGS.md` — commit `845154c6d006719cf3786d53c398689375c248d8`
+- `docs/docs/data-model/05-INVENTORY.md` — commit `69117133b312de5bff4016d86c5e61ef2be5fb00`
+- `docs/docs/data-model/07-USER-DATA.md` — commit `04d64189407683c82fc41f7fd075b3a35b377f89`
+- `docs/docs/data-model/09-RELATIONSHIPS.md` — commit `e29b424dcad197dd56a2ec7aec0029a01bc77b6a`
+
+Post-delete verification: `docs/docs/` returns Not Found from GitHub `main`.
+
+# Section 1 Closeout
+
+All four Section 1 findings now have approved dispositions and verified repository actions.
+
+No canonical production source or canonical governing/data-model document was removed during Section 1 cleanup.
+
+Next audit discussion: **Section 2 — Historical Themes and Archive Structure**.
