@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.4  
+**Document Revision:** 1.0.5  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -207,6 +207,85 @@ The durable theme interpretation and rationale are governed by:
 
 `themes/README.md` is the local directory-level explanation of the deferred-theme structure.
 
+## 2.2 Archive Path Convention and Retirement Policy
+
+**Decision:** KEEP REPOSITORY-ROOT `archive/` AS THE SINGLE CANONICAL ARCHIVE ROOT  
+**Status:** APPROVED / IMPLEMENTED / GITHUB-VERIFIED  
+**Canonical archive root:** `archive/`
+
+### Current repository structure
+
+The existing archive remains in place:
+
+```text
+archive/
+    README.md
+    packages/
+        2026-08-07-audit-logs/
+        2026-08-07-rig-tackle/
+```
+
+Existing package contents are preserved in place. No existing archive package was moved solely for aesthetics.
+
+`archive/README.md` was created in commit:
+
+`937a46ebce76b7404f841f16aa0598f1e80a5c2c`
+
+Post-write verification confirms `archive/README.md` exists and defines the canonical archive purpose, retirement classification, and archive-verification requirements.
+
+### Why root `archive/` owns historical artifacts
+
+The repository archive contains mixed historical material, including package manifests, validation reports, audit logs, and historical design/reference media. It is therefore repository-wide history rather than a subdomain of `docs/`.
+
+The older `docs/archive/...` wording is documentation drift. The approved canonical convention is repository-root `archive/`.
+
+Additional archive subdirectories are created only when a real retained artifact class requires them. Do not create speculative archive categories in advance.
+
+### Archive versus Git history
+
+Normal prior revisions of current files are preserved by Git history and are **not** copied into `archive/` merely because the implementation workflow used a whole-file replacement.
+
+This rule applies equally to JavaScript, CSS, HTML, application data, Markdown, and other tracked source files.
+
+Creating an archive copy for every replaced file would duplicate Git history and recreate stale authoritative-looking copies—the same failure mode this repository audit is removing.
+
+A prior file version belongs in `archive/` only when it has continuing value as an artifact in its own right, such as:
+
+- a package manifest or package-specific validation report,
+- an audit log retained for provenance,
+- a superseded handoff/workstream record that would mislead if left in an active/current directory,
+- a historical design/reference board or preview with reconstruction/design-lineage value,
+- another deliberately retained artifact that needs direct repository discoverability independent of ordinary Git history.
+
+### Required retirement classification
+
+Whenever implementation, migration, cleanup, or closeout retires an existing repository artifact, explicitly classify it as one of:
+
+1. **GIT HISTORY ONLY** — normal prior revision; no archive copy is created.
+2. **ARCHIVE** — independent historical/audit/provenance/reconstruction value; retain under `archive/`.
+3. **DELETE** — no continuing repository value beyond Git history.
+
+Retired artifacts must not remain in active/current locations simply because no disposition was chosen.
+
+### Required archive completion check
+
+When an artifact is classified **ARCHIVE**, closeout is incomplete until:
+
+1. the archive location is chosen,
+2. the archived copy/path is created before the active copy is removed when loss risk exists,
+3. the archive path is verified on authoritative GitHub `main`,
+4. the former active/current path is removed or clearly no longer masquerades as current,
+5. the archival action and reason are recorded in the relevant workstream/decision/closeout documentation.
+
+### Canonical ownership
+
+- `archive/README.md` owns the directory-level archive operating policy.
+- `docs/DECISIONS.md` D033/D034 must be reconciled to the root `archive/` convention during governing-document synchronization.
+- `docs/ARCHITECTURE.md` must show `archive/` at repository root rather than under `docs/` during governing-document synchronization.
+- `docs/DEVELOPMENT_WORKFLOW.md` must incorporate the retirement-classification/archive-verification rule during workflow synchronization.
+
+The audit decision is effective immediately even where those broader governing documents still contain pre-audit wording; this decision log is the current cleanup authority.
+
 # Audit Safeguard — Architectural Decision Context Preservation
 
 **Decision:** APPROVED / PROMOTED TO PERMANENT GOVERNING STANDARD
@@ -229,10 +308,12 @@ This safeguard is now permanent through:
 - `docs/DEVELOPMENT_WORKFLOW.md` — Durable Decision Context,
 - supporting references in `docs/STYLE_GUIDE.md` and `docs/HANDOFF.md`.
 
-# Pending Section 2 Item
+# Section 2 Closeout
 
-## 2.2 Archive Path Convention
+Section 2 theme/archive decisions are now approved and implemented at the repository-organization/policy level.
 
-**Status:** OPEN / NOT YET DECIDED
+Remaining stale references in broader governing documents are explicitly tracked for the governing-document synchronization phase; they do not change the current approved cleanup dispositions recorded here.
 
-Next discussion should choose the canonical archive root and reconcile the existing root-level `archive/` structure against older documentation that references `docs/archive/`.
+# Next Audit Discussion
+
+Proceed to **Section 3 — Production Entrypoint and Asset Reachability** unless the user explicitly selects another cleanup item.
