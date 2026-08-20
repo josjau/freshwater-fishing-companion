@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
+const childProcess = require("child_process");
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
@@ -9,10 +10,7 @@ const ROOT = path.resolve(__dirname, "..");
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const FAILURES = [];
 const CHECKS = [];
-
-function toRepoPath(value) {
-    return value.split(path.sep).join("/");
-}
+let TRACKED_FILES = null;
 
 function absolutePath(relativePath) {
     return path.join(ROOT, ...relativePath.split("/"));
@@ -60,55 +58,79 @@ function readText(relativePath) {
     }
 }
 
-function listFilesRecursive(relativeDirectory) {
-    const start = absolutePath(relativeDirectory);
-    if (!fs.existsSync(start)) {
-        return [];
-    }
+function gitExecutableCandidates() {
+    const candidates = ["git"];
 
-    const results = [];
-    const stack = [start];
+    if (process.platform === "win32") {
+        const localAppData = process.env.LOCALAPPDATA;
+        if (localAppData) {
+            const desktopRoot = path.join(localAppData, "GitHubDesktop");
+            try {
+                const appDirectories = fs
+                    .readdirSync(desktopRoot, { withFileTypes: true })
+                    .filter((entry) => entry.isDirectory() && entry.name.startsWith("app-"))
+                    .map((entry) => entry.name)
+                    .sort()
+                    .reverse();
 
-    while (stack.length > 0) {
-        const current = stack.pop();
-        for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
-            if (entry.name === ".git") {
-                continue;
+                for (const appDirectory of appDirectories) {
+                    candidates.push(
+                        path.join(desktopRoot, appDirectory, "resources", "app", "git", "cmd", "git.exe"),
+                        path.join(desktopRoot, appDirectory, "resources", "app", "git", "bin", "git.exe")
+                    );
+                }
+            } catch {
+                // GitHub Desktop may not be installed in the default per-user location.
             }
+        }
 
-            const full = path.join(current, entry.name);
-            if (entry.isDirectory()) {
-                stack.push(full);
-            } else if (entry.isFile()) {
-                results.push(toRepoPath(path.relative(ROOT, full)));
+        for (const programFiles of [process.env.ProgramFiles, process.env["ProgramFiles(x86)"]]) {
+            if (programFiles) {
+                candidates.push(path.join(programFiles, "Git", "cmd", "git.exe"));
             }
         }
     }
 
-    return results.sort();
+    return [...new Set(candidates)];
 }
 
-function listAllRepositoryFiles() {
-    const results = [];
-    const stack = [ROOT];
+function listTrackedRepositoryFiles() {
+    if (TRACKED_FILES !== null) {
+        return TRACKED_FILES;
+    }
 
-    while (stack.length > 0) {
-        const current = stack.pop();
-        for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
-            if (entry.name === ".git") {
-                continue;
-            }
+    let lastError = null;
 
-            const full = path.join(current, entry.name);
-            if (entry.isDirectory()) {
-                stack.push(full);
-            } else if (entry.isFile()) {
-                results.push(toRepoPath(path.relative(ROOT, full)));
+    for (const executable of gitExecutableCandidates()) {
+        try {
+            const output = childProcess.execFileSync(
+                executable,
+                ["-C", ROOT, "ls-files", "-z"],
+                { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }
+            );
+            TRACKED_FILES = output
+                .split("\0")
+                .filter((item) => item !== "")
+                .map((item) => item.replace(/\\/g, "/"))
+                .sort();
+            return TRACKED_FILES;
+        } catch (error) {
+            lastError = error;
+            if (error && error.code !== "ENOENT") {
+                break;
             }
         }
     }
 
-    return results.sort();
+    const detail = lastError && lastError.code === "ENOENT"
+        ? "Git could not be located, including the normal GitHub Desktop installation path"
+        : "git ls-files failed for this repository";
+    fail(
+        "Git tracking",
+        `${detail}; tracked-file integrity checks require a valid Git checkout`
+    );
+    TRACKED_FILES = [];
+    return TRACKED_FILES;
 }
 
 function normalizeLocalReference(reference) {
@@ -791,7 +813,8 @@ function validateMedia(canonicalData) {
     }
 
     const allowlistedImageFiles = new Set(["images/rigs/.gitkeep"]);
-    for (const imagePath of listFilesRecursive("images")) {
+    const trackedImageFiles = listTrackedRepositoryFiles().filter((repoPath) => repoPath.startsWith("images/"));
+    for (const imagePath of trackedImageFiles) {
         if (allowlistedImageFiles.has(imagePath)) {
             continue;
         }
@@ -804,11 +827,13 @@ function validateMedia(canonicalData) {
 function validateRepositoryHygiene() {
     recordCheck("Repository hygiene and Section 11 ignore safeguards");
 
-    if (directoryExists("docs/docs")) {
-        fail("Repository hygiene", "unexpected duplicate documentation subtree exists: docs/docs/");
+    const trackedFiles = listTrackedRepositoryFiles();
+
+    if (trackedFiles.some((repoPath) => repoPath.startsWith("docs/docs/"))) {
+        fail("Repository hygiene", "unexpected tracked duplicate documentation subtree exists: docs/docs/");
     }
 
-    for (const repoPath of listAllRepositoryFiles()) {
+    for (const repoPath of trackedFiles) {
         const lower = repoPath.toLowerCase();
         const basename = path.posix.basename(repoPath);
         const parts = repoPath.split("/");
