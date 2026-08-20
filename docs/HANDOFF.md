@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.6.3  
+**Document Revision:** 1.6.4  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `449155ffef4eb452aba22e463ee20a21c233a191` — `Section 5 Audit Update`  
@@ -10,7 +10,7 @@
 **Completed Milestone:** Knots  
 **Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
 **Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
-**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.15 — current cleanup dispositions/actions through Section 10  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.16 — current cleanup dispositions/actions through Section 10  
 **Completed Section 9 Record:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-9-CLOSEOUT.md` — Section 9 PASS / GITHUB-VERIFIED / CLOSED  
 **Completed Section 10 Record:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-10-CLOSEOUT.md` — Section 10 PASS / GITHUB-VERIFIED / CLOSED  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.5 is the current roadmap document; milestone ordering is unchanged.  
@@ -634,7 +634,7 @@ It must not be treated as permanent My Tackle ownership.
 Controlling documents:
 
 - `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` — immutable audit-time findings snapshot; its original `OPEN` labels describe the audit baseline.
-- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.15` — current cleanup dispositions through Section 10.
+- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.16` — current cleanup dispositions through Section 10.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` — Section 4 implementation/runtime closeout.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md` — Section 5 implementation closeout.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-CLOSEOUT.md` — Section 6 governing-document closeout.
