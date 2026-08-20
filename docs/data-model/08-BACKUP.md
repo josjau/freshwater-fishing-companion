@@ -1,150 +1,115 @@
 # Freshwater Fishing Companion
 
 **Document:** 08-BACKUP.md  
-**Version:** 0.1.0  
-**Status:** Draft  
-**Decision Baseline:** D013
+**Document Revision:** 0.2.0  
+**Document Status:** Draft  
+**Implementation Status:** Approved Direction / Not Implemented  
+**Decision Baseline:** D013, D029, D056
 
 ---
 
 # Purpose
 
-This document defines the backup and restore architecture for Freshwater Fishing Companion.
+This document defines the approved architectural direction for future backup and restore of Freshwater Fishing Companion User Knowledge.
 
-The backup system protects user-owned data while preserving compatibility between application versions.
+No authoritative production backup/restore system or Version 1 backup schema is implemented on current `main`.
 
-Reference Knowledge is distributed with the application and is not required to be included in user backups unless specifically exported.
-
----
-
-# Design Philosophy
-
-The Companion follows a local-first approach.
-
-Users control when backups are created, exported, restored, and deleted.
-
-Backups should be:
-
-- Simple
-- Portable
-- Human-readable when practical
-- Version-aware
-- Reliable
+Backup design must follow the User Knowledge schemas that actually become authoritative rather than pre-committing speculative fields or a monolithic user-data structure.
 
 ---
 
-# Backup Scope
+# Current Status
 
-A standard backup includes user-owned data.
+**Approved Direction / Not Implemented.**
 
-Examples include:
+The project is local-first and intends to provide user-controlled backup and restore. The exact backup file schema, storage technology, schema-version representation, migration pipeline, and included User Knowledge domains remain implementation-gate decisions.
 
-- User Profile
-- Preferences
-- Favorites
-- Equipment
-- Consumables
-- Fishing Setups
-- Catch Log
-
-Reference Knowledge is restored through application updates and is not duplicated in normal backups.
+Current transitional Rig-readiness local state is not authoritative My Tackle ownership and must not be promoted into ownership merely because backup functionality is later added.
 
 ---
 
-# Backup Format
+# Design Principles
 
-Version 1 uses JSON.
+Future backups should be:
 
-Every backup shall contain:
+- user-controlled,
+- portable,
+- version-aware,
+- validated before restore,
+- reliable and failure-safe,
+- human-readable when practical,
+- limited to User Knowledge and required compatibility metadata.
 
-- Backup Version
-- Application Version
-- Backup Date
-- Schema Version
-- User Data
-
-Additional metadata may be added in future versions without breaking compatibility.
-
----
-
-# Backup Versioning
-
-Every backup contains a schema version.
-
-The application compares the backup schema against the current schema before restoration.
-
-Possible outcomes:
-
-- Compatible
-- Migration Required
-- Unsupported
+Reference Knowledge is application-owned and should normally be restored through the application rather than duplicated as authoritative user backup data.
 
 ---
 
-# Restore Process
+# Backup Scope — To Be Derived from Implemented User Knowledge
 
-Restore operations should:
+A future standard backup may include authoritative User Knowledge domains such as Profile, Preferences, Favorites, My Tackle, Fishing Setups, or Catch Log **only after those domains have implemented schemas**.
 
-1. Validate the backup file.
-2. Verify schema compatibility.
-3. Create a safety backup of existing user data.
-4. Restore the selected backup.
-5. Report the results to the user.
+This document does not approve those domains' candidate fields.
 
-If validation fails, no user data shall be modified.
+The backup implementation must explicitly classify transitional/cache/session state so temporary state is not mistaken for persistent user ownership or history.
 
 ---
 
-# Migration
+# Backup Format — Unresolved
 
-When supported, the Companion may migrate older backup formats.
+Earlier planning proposed JSON with concepts such as backup version, application version, date, schema version, and User Data.
 
-Migration should:
+JSON remains a reasonable candidate because it is portable and inspectable, but Section 7 does **not** treat that earlier proposal as an implemented Version 1 contract.
 
-- Preserve user data.
-- Report any changes made.
-- Never silently discard information.
+The implementation gate must choose the exact envelope and metadata after authoritative User Knowledge schemas exist.
 
-If migration cannot be completed safely, the restore shall be cancelled.
+---
+
+# Versioning and Migration
+
+Future backups must identify enough schema/application compatibility information to determine whether a restore is:
+
+- directly compatible,
+- safely migratable,
+- or unsupported.
+
+Migration must preserve user data whenever practical, report material changes, and never silently discard information.
+
+Exact version fields and migration mechanics remain unresolved until implementation.
+
+---
+
+# Restore Safety
+
+A future restore workflow must be transactional from the user's perspective.
+
+At minimum it should:
+
+1. parse and validate the selected backup,
+2. verify compatibility,
+3. preserve the existing authoritative User Knowledge before destructive replacement,
+4. perform any approved migration,
+5. restore only after validation succeeds,
+6. report success or failure clearly.
+
+A failed validation or restore must not leave partially replaced User Knowledge.
 
 ---
 
 # Validation
 
-Before restoring, the application validates:
+The eventual validator must check the actual implemented backup contract, including required metadata, schema compatibility, record integrity, canonical references where applicable, and User Knowledge field validation.
 
-- Backup format
-- Required fields
-- Schema version
-- Data integrity
-
-Validation failures should clearly explain the issue and provide guidance where possible.
-
----
-
-# Error Handling
-
-Restore failures shall:
-
-- Leave existing data unchanged.
-- Explain the reason for the failure.
-- Avoid partial restores.
-
-The Companion should never overwrite valid user data with invalid backup data.
+Imported text remains untrusted User Knowledge and follows the same rendering/sanitization boundary as manually entered data.
 
 ---
 
 # Import and Export
 
-Users may:
+User-controlled export/import is part of the approved direction.
 
-- Export a backup.
-- Import a backup.
-- Replace existing user data during restoration.
+The exact behavior — full replacement, merge, selective restore, conflict handling, and file selection/storage — remains unresolved until implementation requirements are approved.
 
-Version 1 restores the complete backup.
-
-Selective restore may be considered in a future release.
+No current document should state that Version 1 performs complete restore as though that behavior already exists.
 
 ---
 
@@ -152,39 +117,45 @@ Selective restore may be considered in a future release.
 
 Backup files belong to the user.
 
-The Companion does not require cloud storage or online services to create or restore backups.
-
-Users choose where backup files are stored.
+The architecture does not require cloud storage or an online account. If optional cloud providers are added later, they require separate approval and must not become mandatory for local backup/restore.
 
 ---
 
-# Design Notes
+# Reference Knowledge Boundary
 
-The backup system protects User Knowledge.
+Canonical Fish, Rigs, Knots, Tackle, Media, and other Reference Knowledge remain application-owned.
 
-Reference Knowledge is maintained by the application and updated independently.
+A backup may retain stable canonical IDs referenced by User Knowledge, but it should not create a second authoritative copy of the canonical entities themselves unless a later historical-snapshot requirement explicitly justifies it.
 
-This separation reduces backup size and simplifies future application updates.
+---
+
+# Implementation Gate
+
+Before backup/restore production work begins, settle at least:
+
+1. which implemented User Knowledge domains are included,
+2. backup envelope and file format,
+3. schema/application compatibility metadata,
+4. validation rules,
+5. migration behavior,
+6. transactional restore/safety-copy behavior,
+7. import/export and conflict semantics,
+8. treatment of transitional/session/cache state,
+9. canonical-reference integrity behavior,
+10. privacy and optional external-storage boundaries.
 
 ---
 
 # Future Enhancements
 
-Potential future additions include:
-
-- Automatic backup reminders
-- Encrypted backups
-- Optional cloud backup providers
-- Selective restore
-- Backup comparison
-
-These enhancements are outside the scope of Version 1.
+Potential later capabilities include automatic backup reminders, encryption, optional cloud providers, selective restore, and backup comparison. These are feature candidates rather than current schema commitments.
 
 ---
 
 # Related Documents
 
 - 01-FOUNDATION.md
-- 05-INVENTORY.md
+- 05A-INVENTORY.md
 - 07-USER-DATA.md
 - 09-RELATIONSHIPS.md
+- ../DECISIONS.md
