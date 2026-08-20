@@ -1,168 +1,182 @@
 # Freshwater Fishing Companion
 
 **Document:** 05-TACKLE.md  
-**Document Revision:** 0.1.5  
+**Document Revision:** 0.2.0  
 **Document Status:** Approved  
 **Implementation Status:** Validated  
 **Decision Baseline:** D019, D025, D026, D028, D037, D043, D056
 
+---
+
 # Purpose
 
-This document defines canonical Tackle Reference Knowledge for Freshwater Fishing Companion.
+This document defines current canonical Tackle Reference Knowledge for Freshwater Fishing Companion.
 
-Canonical Tackle describes **what functional tackle type an item is**. It does not describe a specific user's exact possession and does not require a commercial ProductDefinition.
+Canonical Tackle describes **what functional tackle type an item is**. It does not describe a user's exact possession and does not require a commercial Product Definition.
 
-Examples include:
+---
 
-- Offset Hook
-- Bullet Weight
-- Jighead
-- Ned Jighead
-- Wacky Hook
-- Wacky O-Ring
-- Slip Float
-- Barrel Swivel
-- Spinnerbait
-- Crankbait
-- Soft Plastic Worm
-- Inline Spinner
+# Current Production Schema
 
-# Knowledge Ownership
-
-Canonical Tackle belongs to Reference Knowledge.
-
-My Tackle/Inventory belongs to User Knowledge and records actual owned items. See `05A-INVENTORY.md`.
-
-A future ProductDefinition may describe an exact commercial product if an approved product-specific feature demonstrates the need. ProductDefinition is not required for basic canonical Tackle, My Tackle MVP, or Rig readiness.
-
-D056 applies the site-wide semantic single-owner rule: each canonical fact or relationship has one authoritative owner, and that owner must be the entity/domain for which the information is intrinsically meaningful rather than merely convenient for a current UI.
-
-# Canonical Identity
-
-Canonical Tackle owns its own identity and display name.
-
-A Rig requirement references a canonical Tackle record through:
-
-```text
-tackleId
-```
-
-The user-facing component name is resolved from the referenced canonical Tackle record.
-
-Core fields follow `01-FOUNDATION.md` and may include:
+`data/tackle.js` currently stores canonical Tackle records with exactly these fields:
 
 ```text
 id
 name
-summary
-aliases
+aliases[]
 category
-recognitionNotes
-commonVariants
-relatedTackleIds
+summary
+purpose
+recognitionNotes[]
+commonVariants[]
+relatedTackleIds[]
 createdVersion
 lastModifiedVersion
 isActive
 ```
 
-`rigIds` is not part of the canonical Tackle ownership model for Rig usage.
+`purpose` is part of the validated current schema and describes the practical function of the Tackle concept.
 
-`mediaIds` is not part of the canonical Tackle ownership model. Media attachment is owned by the Media record through `ownerType` + `ownerId` and is derived when Tackle media is needed.
+Current production does **not** store:
+
+```text
+rigIds[]
+mediaIds[]
+```
+
+---
+
+# Field Ownership
+
+## id / name
+Canonical Tackle identity and user-facing display name.
+
+## aliases[]
+Approved alternate names and beginner terminology for the same Tackle concept.
+
+## category
+Current functional Tackle grouping used by the production library.
+
+## summary
+Concise explanation of what the item is.
+
+## purpose
+Practical explanation of what the item does in fishing use.
+
+## recognitionNotes[]
+Observable characteristics that help a user recognize the functional item type.
+
+## commonVariants[]
+Common functional variants of the canonical concept. These are not a commercial product catalog.
+
+## relatedTackleIds[]
+Tackle-owned related-component relationships where the relationship is intrinsically meaningful to the Tackle concept. IDs must resolve to canonical Tackle records.
+
+## createdVersion / lastModifiedVersion / isActive
+Canonical lifecycle metadata.
+
+---
 
 # Rig Relationships
 
-Rigs act as recipes and reference canonical Tackle through `Rig.componentRequirements[].tackleId`.
+Rigs reference canonical Tackle through:
 
-`Rig.componentRequirements` is the authoritative source for Rig-to-Tackle usage.
+```text
+Rig.componentRequirements[].tackleId
+```
 
-The UI may show:
+`Rig.componentRequirements[]` is the authoritative Rig-to-Tackle usage relationship.
+
+The inverse UI:
 
 ```text
 Tackle
     -> Used In
-    -> matching Rigs
+    -> matching active Rigs
 ```
 
-That inverse is derived by scanning active Rig component requirements.
+is derived from Rig data. Tackle does not store `rigIds[]` merely for reverse navigation.
 
-# Rig-Specific Context
+The Rig owns setup-specific context such as required/optional status, quantity, order, size/configuration guidance, assembly role, and notes. Tackle owns the reusable component identity and definition.
 
-Canonical Tackle owns identity.
+Canonical functional types should be specific enough for truthful Rig readiness. Current examples include `wacky-hook` and `ned-jighead` where a generic component would incorrectly imply buildability.
 
-The Rig owns context specific to its use of the component, including where approved:
+---
 
-- required/optional status
-- quantity
-- component order
-- size or configuration guidance
-- assembly role
-- setup-specific notes
+# Media Ownership
 
-Context-specific display labels are not added unless a demonstrated UX need justifies them.
+Canonical Tackle does not store `mediaIds[]`.
 
-Canonical functional types should be specific enough for truthful Rig buildability. When a generic component category would incorrectly mark a Rig as buildable, use a narrower canonical Tackle concept rather than relying only on explanatory notes. Current examples are `wacky-hook` and `ned-jighead`.
-
-# Search and Connected Knowledge
-
-Canonical Tackle may be searchable by deliberate fields such as canonical name, approved aliases, beginner terminology, category, and approved keywords.
-
-After a Tackle entity is identified, connected knowledge may expose:
-
-- definition and recognition help
-- related Tackle
-- Rigs that use it
-- Fish/Conditions/Techniques where relationships exist
-- My Tackle ownership context
-
-# Media
-
-Canonical Tackle recognition imagery follows `../MEDIA_GUIDE.md`.
-
-Current reference media is intended for recognition help through contextual `Name ⓘ` rather than default inline display in every Rig requirement.
-
-The current production standard uses optimized 640 × 440 WebP assets on a restrained warm-neutral background. Alpha transparency and artificial baked-in drop shadows are not used in the active set.
-
-Media owns the canonical entity-to-media attachment through:
+Media owns attachment through:
 
 ```text
 ownerType: "tackle"
 ownerId: canonical Tackle ID
 ```
 
-Tackle does not maintain an inverse `mediaIds[]` list solely to locate its media. Runtime presentation derives matching active Media records from the Media registry.
+Runtime presentation derives matching active Media records from the Media registry.
 
-Multiple Media records may point to the same Tackle entity when a demonstrated need exists. Media-specific role/order metadata is not added until an actual multi-media presentation requirement demonstrates that need.
+Repository Audit Section 4 removed the former duplicate Tackle `mediaIds[]` storage and validated the Media-owned relationship in Microsoft Edge. Removed fields remain available through Git history only.
+
+Current recognition imagery is used contextually rather than being required inline in every Rig component display.
+
+---
+
+# Search and Connected Knowledge
+
+Canonical Tackle may be discovered through deliberate canonical fields such as name, aliases, category, and other approved searchable metadata.
+
+After identification, connected knowledge may expose:
+
+- definition and recognition help,
+- related Tackle,
+- Rigs that use the item,
+- future Fish/Condition/Technique relationships when approved,
+- future My Tackle ownership context.
+
+Search must not create duplicate canonical relationship ownership merely for discoverability.
+
+---
+
+# My Tackle Boundary
+
+Canonical Tackle belongs to Reference Knowledge.
+
+My Tackle belongs to User Knowledge and will record actual owned items when its detailed schema is implemented. Persistent user ownership must not be stored on canonical Tackle records.
+
+A future Product Definition may describe an exact commercial product if an approved feature demonstrates that need. Product Definitions are not required for basic canonical Tackle, My Tackle MVP, or Rig readiness.
+
+---
 
 # Current Implementation
 
 `data/tackle.js` owns the production canonical Tackle records and stable IDs.
 
-Current `main` contains 29 active canonical Tackle concepts and 29 active Tackle recognition-media records.
+Current `main` contains 29 active canonical Tackle concepts. Current Media data provides the validated recognition-media ownership for those concepts.
 
-Section 4 of the Repository Audit Cleanup is implemented and runtime-validated:
+Repository Audit Section 4 is **implemented / runtime-validated / closed**:
 
-- canonical Tackle records no longer contain inverse `mediaIds[]`,
-- `data/media.js` owns Tackle media attachment through `ownerType: "tackle"` + `ownerId`,
-- `view-renderer.js` resolves active Tackle media by Media ownership rather than a Tackle-owned media list,
-- the 29 active Tackle Media owner IDs resolve 1:1 to the 29 canonical Tackle IDs,
-- contextual Tackle recognition media, related-component popovers, later-library Tackle references, and normal console behavior passed Microsoft Edge runtime validation.
+- Tackle `mediaIds[]` were removed,
+- Media owns Tackle attachment through `ownerType` + `ownerId`,
+- runtime lookup derives Media from that owner relationship,
+- active Tackle Media owner IDs were validated against canonical Tackle IDs,
+- recognition popovers and related-component behavior passed Edge runtime validation.
 
-Production implementation commit:
-
-`614a5b472fb42a8fa23870ea96a00f929a8ed4b6` — `Section 4 production update package`
-
-Removed `mediaIds[]` fields are classified **GIT HISTORY ONLY**; no archive copy is required.
+---
 
 # Future / Deferred
 
 Deferred until demonstrated by approved features:
 
-- commercial ProductDefinition entities
-- exhaustive manufacturer/product catalogs
-- SKU/UPC/retailer modeling
-- advanced subtype/variant inheritance
-- precomputed relationship indexes solely for scale
-- Media role/order metadata when actual multi-media presentation requires it
+- commercial Product Definition entities,
+- exhaustive manufacturer/product catalogs,
+- SKU/UPC/retailer modeling,
+- advanced subtype/variant inheritance,
+- precomputed relationship indexes solely for scale,
+- Media role/order metadata before an actual multi-media need,
+- persistent user ownership fields on Reference Tackle.
+
+---
 
 # Related Documents
 
