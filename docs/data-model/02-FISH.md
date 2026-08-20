@@ -1,65 +1,27 @@
 # Freshwater Fishing Companion
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.2.0  
-**Document Status:** Draft — Phase 0 Audit Reconciled / Remaining Audit Items Open  
-**Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, Fish Guide Phase 0  
-**Last Updated:** 2026-08-18
+**Document Revision:** 0.3.0  
+**Document Status:** Draft — Production Baseline + Approved Phase 0 Target  
+**Implementation Status:** Current schema implemented; Phase 0 expansion not implemented  
+**Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056, Fish Guide Phase 0  
+**Last Updated:** 2026-08-19
+
+---
 
 # Purpose
 
-This document defines the current approved canonical Fish entity direction for Freshwater Fishing Companion.
+This document distinguishes the Fish schema that exists on current production `main` from the approved Fish Guide Phase 0 target model.
 
-The Fish model supports:
+Fish owns facts intrinsic to the species. Recommendations, pairwise identification guidance, Media attachment, regulations, and User Knowledge belong to their respective owners rather than being duplicated into Fish.
 
-- Fish identification/reference,
-- Fish Guide browse and search,
-- Catch Log references,
-- connected Fish-to-Rig guidance owned outside Fish,
-- connected identification relationships owned outside Fish,
-- Media relationships owned by the shared Media registry,
-- future Decision Knowledge and User Knowledge without duplicating Fish facts.
+No production Fish source change is authorized by this documentation synchronization.
 
-The current controlling Phase 0 records are:
+---
 
-- `../workstreams/FISH-GUIDE-PHASE-0.md`
-- `../workstreams/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
+# Current Production Schema — Implemented
 
-No production Fish source change is authorized solely by this document.
-
-# Ownership Principle
-
-Fish owns facts intrinsic to the species.
-
-Fish does **not** own instructions, recommendations, media provenance, regulations, or user-specific information merely because those items are displayed from Fish Detail.
-
-Permanent ownership boundary:
-
-```text
-Fish
-→ intrinsic species/reference facts
-
-FISH_IDENTIFICATION_RELATIONSHIPS
-→ pairwise identification distinctions
-
-FISH_RIG_GUIDANCE
-→ Fish-to-Rig Decision Knowledge
-
-MEDIA_DATA
-→ Fish/comparison media and provenance
-
-Future Regulation Knowledge
-→ jurisdiction/time-sensitive regulation guidance
-
-User Knowledge
-→ catches, favorites, observations, preferences, ownership
-```
-
-Do not duplicate inverse relationships or display names into Fish for UI convenience when another canonical owner already exists.
-
-# Canonical Fish Schema
-
-Current approved Version 1 field order:
+`data/fish.js` currently stores canonical Fish records with exactly these fields:
 
 ```text
 id
@@ -68,295 +30,84 @@ summary
 createdVersion
 lastModifiedVersion
 isActive
+scientificName
+category
+family
+habitatTags[]
+waterbodyTypes[]
+```
 
+Current production therefore uses the text field `category`. It does **not** yet implement `categoryId`, `aliases[]`, or `identificationTraits[]`.
+
+The existing production fields remain authoritative until the approved Fish Guide implementation deliberately migrates the schema.
+
+---
+
+# Current Production Field Ownership
+
+## id
+Stable canonical Fish identity used by current routing and relationships.
+
+## name
+Canonical user-facing common name.
+
+## summary
+Concise species/reference description.
+
+## createdVersion / lastModifiedVersion / isActive
+Canonical lifecycle metadata.
+
+## scientificName
+Application-maintained verified scientific identity.
+
+## category
+Current production browse/category text. This is a transitional current field, not the approved long-term Phase 0 category relationship.
+
+## family
+Biological family/reference metadata.
+
+## habitatTags[]
+Stable species habitat associations owned by Fish. These are not transient fishing Conditions.
+
+## waterbodyTypes[]
+General waterbody environments commonly associated with the species.
+
+---
+
+# Approved Fish Guide Phase 0 Target — Not Implemented
+
+The approved Phase 0 target schema is:
+
+```text
+id
+name
+summary
+createdVersion
+lastModifiedVersion
+isActive
 scientificName
 categoryId
 family
 aliases[]
-
 identificationTraits[]
 habitatTags[]
 waterbodyTypes[]
 ```
 
-Revision note:
+Target-model changes relative to current production:
 
-- the earlier `category` text field is superseded by `categoryId`,
-- `habitatTags[]` and `waterbodyTypes[]` remain Fish-owned reference fields and are **not** replaced by a generic `typicalConditionIds[]` array.
+- replace current `category` text with canonical `categoryId`,
+- add legitimate alternate names through `aliases[]`,
+- add intrinsic observable identification guidance through `identificationTraits[]`,
+- preserve Fish-owned `habitatTags[]` and `waterbodyTypes[]`.
 
-# Field Definitions
+These target fields are **Approved / Not Implemented**. Documentation must not describe them as current production until the corresponding source migration is implemented and validated.
 
-## id
+---
 
-**Purpose**
+# Approved Target Category Registry — Not Implemented
 
-Stable canonical identifier used by relationships, Media ownership, search/routing state, and future User Knowledge references.
-
-**Ownership**
-
-Application / Fish Reference Knowledge.
-
-**Rules**
-
-- required,
-- lowercase kebab-case,
-- unique,
-- descriptive,
-- never reused,
-- do not change after the identity has entered production references/user data unless an explicit migration is approved.
-
-Approved pre-production correction:
-
-```text
-northern-rock-bass
-```
-
-supersedes the earlier planning identifier `rock-bass` before production implementation.
-
-## name
-
-**Purpose**
-
-Canonical beginner-facing common display name.
-
-**Ownership**
-
-Application / Fish Reference Knowledge.
-
-Approved example:
-
-```text
-Northern Rock Bass
-```
-
-## summary
-
-**Purpose**
-
-Concise beginner-oriented species/reference description used on cards, search results, and Fish Detail.
-
-**Ownership**
-
-Application / Fish Reference Knowledge.
-
-**Rules**
-
-- normally one concise sentence,
-- practical and neutral,
-- may mention a high-value recognition/context fact,
-- must not absorb regulations, Rig/Lure recommendations, state-specific occurrence prose, seasonal advice, or fishing instruction.
-
-## createdVersion
-
-**Purpose**
-
-Records the application version in which the canonical Fish entered production data.
-
-**Ownership**
-
-Application.
-
-**Rules**
-
-- set once,
-- existing seed Fish retain truthful introduction history,
-- newly added Fish receive their actual production introduction version.
-
-## lastModifiedVersion
-
-**Purpose**
-
-Records the latest substantive canonical Fish revision.
-
-**Ownership**
-
-Application.
-
-## isActive
-
-**Purpose**
-
-Controls whether the Fish participates in normal current application use.
-
-**Ownership**
-
-Individual Fish record.
-
-**Rules**
-
-- category membership does not control Fish lifecycle,
-- Fish category definitions do not currently have their own `isActive`,
-- exact staged-implementation activation/readiness semantics remain an open Phase 0 audit item.
-
-## scientificName
-
-**Purpose**
-
-Accepted scientific identity and strong Fish search signal.
-
-**Ownership**
-
-Application-maintained External Verified Reference Knowledge.
-
-**Rules**
-
-- verify against authoritative/current taxonomic sources during record authoring,
-- use a consistent hybrid-name convention once finalized for Hybrid Striped Bass and Saugeye.
-
-## categoryId
-
-**Purpose**
-
-References the Fish-owned beginner-facing browse category.
-
-**Ownership**
-
-Fish record owns membership; the Fish category registry owns category identity/presentation.
-
-**Dependencies**
-
-Fish landing/browse navigation, scoped search, result metadata.
-
-**Rules**
-
-- required,
-- must resolve to exactly one approved Fish category definition,
-- do not duplicate `categoryName` inside Fish.
-
-## family
-
-**Purpose**
-
-Biological family/reference metadata.
-
-**Ownership**
-
-Application-maintained External Verified Reference Knowledge.
-
-**Rules**
-
-- use the accepted Latin biological family name consistently,
-- family does not drive the primary beginner browse hierarchy in Version 1.
-
-## aliases[]
-
-**Purpose**
-
-Legitimate established alternate common names or useful regional terminology.
-
-**Ownership**
-
-Application / Fish Reference Knowledge.
-
-**Rules**
-
-- zero or more values,
-- exclude arbitrary search phrases, misspellings, SEO terms, scientific names, and duplicated canonical names,
-- aliases are not required to be globally unique,
-- legitimate ambiguous regional terminology may resolve to multiple Fish.
-
-Approved examples:
-
-```text
-Northern Rock Bass
-→ Rock Bass
-→ Goggle-Eye
-
-Ozark Bass
-→ Goggle-Eye
-
-Hybrid Striped Bass
-→ Wiper
-→ Whiterock Bass
-```
-
-## identificationTraits[]
-
-**Purpose**
-
-Observable, beginner-readable traits describing what the Fish itself looks like.
-
-**Ownership**
-
-Fish Reference Knowledge.
-
-**Rules**
-
-- simple authoritative text, not references to separate trait entities in Version 1,
-- order strongest/useful field discriminators first,
-- prefer reliable structural characteristics over variable coloration when possible,
-- do not pad to an arbitrary count,
-- pairwise "how these two differ" wording belongs to `FISH_IDENTIFICATION_RELATIONSHIPS`, not this array.
-
-## habitatTags[]
-
-**Purpose**
-
-Typical physical habitat/water-characteristic associations for the species.
-
-**Ownership**
-
-Fish Reference Knowledge.
-
-**Rules**
-
-- controlled Fish vocabulary,
-- describe stable species associations rather than transient current fishing conditions,
-- assign the smallest useful set of characteristic associations rather than every place the species could occur.
-
-Approved starting Version 1 vocabulary:
-
-```text
-Grass
-Timber
-Brush
-Rock
-Current
-Open Water
-Shallow Water
-Deep Water
-Cold Water
-Mud
-Channel
-```
-
-Do not create spelling/capitalization variants.
-
-## waterbodyTypes[]
-
-**Purpose**
-
-General waterbody environments where the species is commonly found.
-
-**Ownership**
-
-Fish Reference Knowledge.
-
-**Rules**
-
-- controlled Fish vocabulary,
-- include meaningful/common environments rather than every isolated occurrence,
-- keep separate from `habitatTags[]` because waterbody type and habitat characteristic answer different questions.
-
-Approved Version 1 vocabulary:
-
-```text
-Pond
-Lake
-Reservoir
-River
-Creek
-```
-
-# Fish Category Registry
-
-Fish browse-category identity is owned once by a Fish-domain registry conceptually named:
-
-```text
-FISH_CATEGORY_DATA
-```
-
-Approved registry fields:
+Phase 0 approves a Fish-domain category registry conceptually named `FISH_CATEGORY_DATA` with:
 
 ```text
 id
@@ -364,45 +115,17 @@ name
 summary
 ```
 
-Canonical array order owns browse-card order. Do not add a separate `displayOrder` field unless a concrete future editing/persistence requirement justifies it.
+Fish would own membership through `categoryId`; the registry would own category identity and presentation. `All Fish` remains a browse mode rather than a category.
 
-Do not add category-level `isActive` at this stage.
+This registry is not present in current production and must not be assumed by runtime code before implementation.
 
-Category visibility is derived from active Fish membership:
+---
 
-```text
-show category
-→ at least one active Fish references categoryId
-```
+# Fish Identification Relationships — Approved / Not Implemented
 
-Approved Version 1 category IDs:
+Pairwise field-identification knowledge belongs outside Fish in a future `FISH_IDENTIFICATION_RELATIONSHIPS` registry.
 
-```text
-bass              → Bass
-catfish           → Catfish
-sunfish-crappie   → Sunfish & Crappie
-walleye-sauger    → Walleye & Sauger
-trout             → Trout
-gar               → Gar
-carp              → Carp
-drum              → Drum
-paddlefish        → Paddlefish
-```
-
-`All Fish` is a browse mode and must not be modeled as a category.
-
-Category is intentionally different from biological `family`.
-
-# Fish Identification Relationships
-
-Pairwise field-confusion knowledge is owned outside Fish in future:
-
-```text
-data/fish-identification.js
-FISH_IDENTIFICATION_RELATIONSHIPS
-```
-
-Relationship schema remains:
+Conceptual relationship shape remains:
 
 ```text
 id
@@ -410,259 +133,104 @@ fishIds[]
 createdVersion
 lastModifiedVersion
 isActive
-
 distinctions[]
 ```
 
-Each distinction contains:
-
-```text
-fishId
-text
-```
+Each distinction identifies one Fish and the text that differentiates it from the paired Fish.
 
 Rules:
 
 - exactly two Fish per relationship,
-- one canonical stored relationship supports both UI directions,
-- relationship exists only for genuine field-identification confusion,
-- Fish `identificationTraits[]` answers what the species looks like,
-- relationship `distinctions[]` answers how the supported pair differs,
-- stable relationship-ID convention remains an open Phase 0 audit item.
+- one stored relationship supports both UI directions,
+- intrinsic appearance belongs to Fish `identificationTraits[]`,
+- pairwise distinction wording belongs to the relationship owner.
 
-Approved Northern Rock Bass relationship references use:
+This registry is not implemented on current `main`.
 
-```text
-warmouth ↔ northern-rock-bass
-northern-rock-bass ↔ ozark-bass
-```
+---
 
-# Fish-to-Rig Guidance
+# Fish-to-Rig Guidance — Approved / Not Implemented
 
-Fish-to-Rig recommendations are not Fish fields.
+Fish-to-Rig recommendations are Decision Knowledge, not Fish or Rig fields.
 
-Future Decision Knowledge owner:
+The approved conceptual owner is `FISH_RIG_GUIDANCE`, with recommendation items that may reference canonical Rig IDs and carry recommendation-specific priority/reason semantics.
 
-```text
-FISH_RIG_GUIDANCE
-```
+Current Fish records do not store `recommendedRigIds[]`, and current Rig records do not store `targetFishIds[]`.
 
-Current approved conceptual schema:
+Exact implementation details remain subject to the Fish Guide architecture gate and D056 single-owner review.
 
-```text
-id
-fishId
-createdVersion
-lastModifiedVersion
-isActive
-
-rigRecommendations[]
-```
-
-Recommendation item:
-
-```text
-rigId
-priority
-reason
-```
-
-Approved priority vocabulary:
-
-```text
-Primary
-Alternative
-```
-
-Rules:
-
-- Fish and Rig do not duplicate this relationship,
-- inverse Rig-to-Fish presentation is derived,
-- `reason` explains why the Rig is useful for the Fish and does not duplicate Rig assembly,
-- exact guidance optionality, source filename, and record-ID convention remain open Phase 0 audit items.
+---
 
 # Media Ownership
 
-Fish records do not store `imageIds[]`.
+Fish records do not store inverse `imageIds[]`.
 
-Media owns the association through the shared Media registry.
-
-Species media:
+Media owns canonical attachment through:
 
 ```text
 ownerType: "fish"
-ownerId: <Fish.id>
+ownerId: canonical Fish ID
 ```
 
-Pairwise comparison media:
+Future pairwise comparison media may use the approved Fish-identification owner type once that relationship domain is implemented.
+
+Media provenance, role, ordering, and technical metadata belong to Media rather than Fish.
+
+---
+
+# Search
+
+## Current production
+
+Current search consumes the fields that actually exist in `data/fish.js`.
+
+## Approved Phase 0 target
+
+Future Fish search may use canonical name, approved aliases, scientific name, category identity, and family according to the approved Phase 0 ranking rules.
+
+Search must consume canonical facts rather than creating duplicate Fish relationship fields solely for discoverability.
+
+---
+
+# Explicitly Excluded Canonical Fish Fields
+
+Do not add the following merely for UI convenience or speculative future use:
 
 ```text
-ownerType: "fish-identification"
-ownerId: <relationship id>
-```
-
-Fish-related roles approved in Phase 0:
-
-```text
-primary-identification
-supplemental-identification
-comparison
-```
-
-Every active Version 1 Fish ultimately requires exactly one active primary identification asset under the approved media coverage standard.
-
-Exact Fish media field requiredness, null semantics, ID/file naming, and alt-text conventions remain open Phase 0 audit items.
-
-# Search Architecture
-
-Fish Search consumes canonical Fish/category data but does not own duplicate search facts.
-
-Searchable Fish identity inputs:
-
-```text
-Fish.name
-Fish.aliases[]
-Fish.scientificName
-Fish.categoryId → FISH_CATEGORY_DATA.name
-Fish.family
-```
-
-Do not search by default:
-
-```text
-summary
-identificationTraits[]
-habitatTags[]
-waterbodyTypes[]
-```
-
-Do not add Fish `searchKeywords[]` solely for ranking/discovery.
-
-## Hierarchical Scope
-
-Search scope is resolved before ranking.
-
-```text
-Fish Guide
-→ all active Fish
-
-Fish category browse
-→ only active Fish in that category
-```
-
-A narrower search never silently widens itself because the query has no match.
-
-Search labels/helper text/examples/empty states must accurately reflect the active scope. Do not suggest terms that cannot produce eligible results in that scope.
-
-## Fish Ranking Within Scope
-
-Approved conceptual ranking:
-
-1. exact canonical name,
-2. exact alias,
-3. exact scientific name,
-4. canonical-name prefix,
-5. alias prefix,
-6. scientific-name prefix,
-7. canonical/alias/scientific contains,
-8. category-name match,
-9. family match,
-10. canonical Fish-name A–Z tie-break.
-
-Shared exact aliases may produce multiple equally valid results.
-
-Future Global Search may orchestrate Fish and other domain-specific search providers and consume canonical relationship registries. It must not require duplicated relationship terms inside Fish, Rig, Knot, or other canonical entities.
-
-# Navigation Context
-
-Standard Fish navigation follows the revised shared navigation standard:
-
-```text
-Forward
-→ new destination top
-
-Parent
-→ restore prior view state + prior scroll position
-
-Home
-→ Dashboard top + clear contextual return stack
-```
-
-A source view's scroll position must never transfer to a newly opened Fish, comparison, Rig, Knot, or other destination.
-
-Fish browse restoration may include selected category, active query, filtered result state, and prior scroll position.
-
-# Explicitly Excluded Fish Fields
-
-Do not add these to canonical Fish Version 1 unless Phase 0 is formally reopened:
-
-```text
-regionTags
-activityPeriods
-seasonalPatterns
 recommendedRigIds
 recommendedLureIds
 regulationResourceIds
 imageIds
-isOklahomaFish
-isKansasFish
-isMissouriFish
-isArkansasFish
 searchKeywords
-averageWeight
-maximumWeight
-averageLength
-recordWeight
-preferredTemperature
-spawnTemperature
-diet
-forage
-conservationStatus
 similarFishIds
 ```
 
-# Version 1 Library
+Jurisdiction-specific occurrence/regulation facts, recommendations, Media attachment, and User Knowledge require their own semantic owners.
 
-Version 1 remains locked at 30 canonical Fish.
+---
 
-The approved canonical name now uses **Northern Rock Bass** rather than the earlier planning display name Rock Bass.
+# Version 1 Target Library
 
-The full locked library and 20 approved pairwise identification relationships remain controlled by `../workstreams/FISH-GUIDE-PHASE-0.md` plus the audit-revision addendum.
+Fish Guide Phase 0 approves a 30-Fish target library and the Northern Rock Bass naming correction. Those records and naming changes are not declared production-complete by this document; implementation status must be determined from the actual source files and Fish Guide workstream.
 
-# Unknown Fish / Identification Confidence
+---
 
-The earlier draft proposed an `Unknown Fish` canonical state and generic confidence values. These are **not** part of the approved Version 1 canonical Fish schema.
+# Implementation Gate
 
-If a future Catch Log or identification-assistance workflow needs uncertain identification, that state belongs to the appropriate workflow/User Knowledge model rather than creating a fake canonical Fish species.
+Before the Phase 0 target replaces the current production Fish schema, implementation must deliberately resolve and validate:
 
-# Validation Requirements
+1. `category` → `categoryId` migration,
+2. category registry creation and referential integrity,
+3. `aliases[]` and `identificationTraits[]` authoring,
+4. Fish-identification relationship IDs and references,
+5. Fish-to-Rig Decision Knowledge ownership and identifiers,
+6. Fish Media coverage/requiredness standards,
+7. source documentation and integrity validation,
+8. staged activation/release-readiness semantics.
 
-At minimum, future Fish implementation validation must enforce approved field shape and ownership boundaries.
+Until that work is implemented, the **Current Production Schema** section above remains authoritative for runtime source shape.
 
-Exact Fish integrity-validator scope remains open for final Phase 0 approval, including possible validation of:
-
-- unique/resolvable Fish IDs,
-- category IDs,
-- controlled habitat/waterbody values,
-- relationship references,
-- Fish media coverage/ownership,
-- Fish-to-Rig guidance references,
-- aliases and canonical naming constraints.
-
-# Remaining Phase 0 Audit Items
-
-Before production Fish implementation begins, resolve or deliberately park the open items in:
-
-`../workstreams/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
-
-They currently include:
-
-1. identification relationship ID convention,
-2. Fish-to-Rig guidance optionality/source filename/ID convention,
-3. staged Fish activation/release-readiness semantics,
-4. Fish media requiredness/naming/null/alt-text standards,
-5. project-wide Four-State scope reconciliation outside Fish,
-6. Fish source-documentation and integrity-validation standard.
+---
 
 # Related Documents
 
