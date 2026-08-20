@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DATA MODEL INDEX  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.3.1  
 **Document Status:** Approved  
 **Decision Baseline:** D037, D056
 
@@ -9,7 +9,7 @@
 
 # Purpose
 
-This directory contains the governing data-model documents for Freshwater Fishing Companion. The model is divided by semantic ownership so each concept has one authoritative definition and current implementation remains distinguishable from approved future architecture.
+This directory contains the governing data-model documents for Freshwater Fishing Companion. The model is divided by semantic ownership so each concept has one authoritative definition and current implementation remains distinguishable from approved or deferred future architecture.
 
 ---
 
@@ -22,8 +22,9 @@ This directory contains the governing data-model documents for Freshwater Fishin
 - Local-first and offline-first direction.
 - Simplicity before complexity.
 - Derived inverse relationships are preferred over duplicate stored sources of truth.
-- Documentation must distinguish implemented schemas from approved-but-not-implemented designs.
+- Documentation must distinguish implemented schemas, approved-but-not-implemented designs, and deferred/unapproved design candidates.
 - Candidate fields are not production schema until an implementation gate approves and validates them.
+- A Draft document does not by itself approve the domain or architecture it discusses.
 
 ---
 
@@ -67,7 +68,7 @@ This directory contains the governing data-model documents for Freshwater Fishin
 
 ## 06 — LURES
 
-**Approved domain concept / Schema Not Implemented.** Defines the potential separate Lure domain and requires the Lure-versus-current-Tackle boundary to be resolved before implementation.
+**Draft / Deferred / Separate Domain Not Yet Approved.** Preserves the possible separate-Lure architecture questions and requires the Lure-versus-current-Tackle boundary and need for a separate entity to be approved before implementation.
 
 ## 07 — USER DATA
 
@@ -75,7 +76,7 @@ This directory contains the governing data-model documents for Freshwater Fishin
 
 ## 08 — BACKUP
 
-**Approved Direction / Not Implemented.** Defines backup/restore safety and compatibility principles without pre-committing a Version 1 file contract before authoritative User Knowledge schemas exist.
+**Draft / Deferred / Not Implemented.** Preserves candidate backup/restore requirements and requires the User Data architecture gate to approve the product scope and architecture before implementation.
 
 ## 09 — RELATIONSHIPS
 
@@ -95,7 +96,7 @@ Current production Reference Knowledge includes:
 
 Current Decision Knowledge includes Knot task guidance and Reel & Line Setup guidance.
 
-Approved future domains such as Technique, Conditions, My Tackle, Backup, and a possible separate Lure entity must not be treated as production datasets until implemented and validated.
+Approved future domains such as Technique, Conditions, and My Tackle must not be treated as production datasets until implemented and validated. Backup and a possible separate Lure entity are deferred design candidates and must not be treated as approved architecture until their respective gates explicitly approve them.
 
 ---
 
@@ -125,8 +126,9 @@ No standalone document should be created merely to reserve a possible future ent
 - Before changing an existing source/document, re-fetch its latest contents.
 - Changes to one domain should not require rewriting unrelated domains.
 - Structural decisions belong in `../DECISIONS.md`.
-- Current implementation and Approved / Not Implemented architecture must remain visibly distinguishable.
+- Current implementation, Approved / Not Implemented architecture, and Deferred / Not Approved candidates must remain visibly distinguishable.
 - Candidate fields and relationships must not be described as production simply because they appear in planning documents.
+- Draft architecture must not be promoted to approved status without an explicit governing decision or approval record.
 - D056 single-owner semantics apply across all domains.
 - Nonexistent or speculative documents must not be linked as current authoritative sources.
 - After synchronization work, changed documents should be re-fetched and verified against the intended repository state.
