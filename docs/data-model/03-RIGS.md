@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.2.6
+**Document Revision:** 0.2.7
 **Document Status:** Draft
 **Decision Baseline:** D025, D026, D027, D028, D042-D049, D056
 
@@ -90,6 +90,8 @@ Fish commonly targeted.
 Ownership
 
 Application.
+
+**Section 6 status note:** this remains documentation-only model content and was **not** added to production during Repository Audit Section 5. Its broader model disposition belongs to Section 7 data-model synchronization.
 
 ---
 
@@ -228,13 +230,13 @@ Application.
 
 Technique remains a valid future canonical concept for reusable presentation behavior, but current production does not implement canonical Technique data or a Rig-to-Technique runtime feature.
 
-The previous production placeholder field:
+The former production placeholder field:
 
 ```text
 techniqueIds[]
 ```
 
-is approved for removal from all current Rig records because all 20 arrays are empty, no production consumer exists, and keeping a future relationship field in every current record violates the project's no-"just in case" schema rule.
+was removed from all 20 current Rig records during Repository Audit Section 5 because all arrays were empty, no production consumer existed, and keeping a future relationship field in every current record violated the project's no-"just in case" schema rule.
 
 The previous Technique draft also proposed `compatibleRigIds[]`. D056 prohibits populating both directions as competing canonical storage.
 
@@ -281,7 +283,7 @@ Media.ownerId
 
 Future technically verified and legally reusable Rig media therefore attaches to a Rig from the Media registry using `ownerType: "rig"` and the canonical Rig ID. Rig records do not maintain an inverse media-ID array solely to locate Media that already identifies its owner.
 
-The former empty `imageIds[]` production field is approved for removal from all 20 Rig records and classified **GIT HISTORY ONLY**.
+The former empty `imageIds[]` production field was removed from all 20 Rig records during Repository Audit Section 5 and is classified **GIT HISTORY ONLY**.
 
 ---
 
@@ -451,17 +453,27 @@ Production Package 1 of the Knots milestone adds a deliberate `knotApplications[
 
 # Current Section 5 Cleanup State
 
-Repository Audit Section 5 approved the following targeted production cleanup:
+Repository Audit Section 5 is **PASS / VALIDATED / PRODUCTION IMPLEMENTED / CLOSED**.
 
-- remove universally empty `techniqueIds[]` from all 20 Rig records,
-- remove universally empty `imageIds[]` from all 20 Rig records,
-- preserve `variationIds[]`, including empty arrays where a specific Rig has no approved variation,
-- do not add the documentation-only `targetFishIds[]` proposal to production during this cleanup,
-- defer Rig↔Technique relationship ownership until the Technique architecture gate,
-- keep future Rig media attachment under Media ownership through `ownerType` + `ownerId`,
-- classify removed `techniqueIds[]` and `imageIds[]` fields **GIT HISTORY ONLY**.
+Implemented production state:
 
-Production source implementation remains pending until the approved `data/rigs.js` package is pushed and verified.
+- universally empty `techniqueIds[]` were removed from all 20 Rig records,
+- universally empty `imageIds[]` were removed from all 20 Rig records,
+- `variationIds[]` is preserved, including empty arrays where a specific Rig has no approved variation,
+- the documentation-only `targetFishIds[]` proposal was not added to production during this cleanup,
+- Rig↔Technique relationship ownership remains deferred until the Technique architecture gate,
+- future Rig media attachment remains under Media ownership through `ownerType` + `ownerId`,
+- removed `techniqueIds[]` and `imageIds[]` fields are **GIT HISTORY ONLY**.
+
+Production commit:
+
+`449155ffef4eb452aba22e463ee20a21c233a191` — `Section 5 Audit Update`
+
+Validated production `data/rigs.js` blob:
+
+`0a30eed8d97626a5f822c8b9eee514766144bce4`
+
+This Section 6 update is status-only. Broader Rig model reconciliation remains assigned to Repository Audit Section 7.
 
 ---
 
@@ -552,4 +564,5 @@ These require separate architectural approval.
 - 09-RELATIONSHIPS.md
 - ../DECISIONS.md
 - ../workstreams/REPOSITORY-AUDIT-SECTION-5-DECISION.md
+- ../workstreams/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md
 - ../workstreams/KNOT-RELATIONSHIP-APPROVAL.md

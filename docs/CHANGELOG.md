@@ -1,15 +1,35 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.13.3  
+**Document Revision:** 1.13.4  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-13
+**Last Updated:** 2026-08-19
 
 # Unreleased
 
-## Knots — Production Packages 1 and 2
+## Current Repository State — Knots Closed / Repository Audit Cleanup Active
 
-**Implementation Status: In Progress / Package 2 Validated / Finalized**
+**Implementation Status: Repository Audit Section 6 In Progress**
+
+### Current Status
+
+- Knots Production Packages 1–4 are complete, validated, finalized, and closed.
+- Production Package 3 **Get Your Reel Ready / Reel & Line Setup** is complete and validated.
+- Production Package 4 **Knot Instructional Media** is complete with approved instructional-media coverage for all 10 Version 1 Knots.
+- The integrated Knots regression and extended navigation/runtime closeout are complete.
+- Repository Audit Cleanup Sections 1–5 are complete.
+- Section 4 Tackle ↔ Media ownership cleanup is production implemented and validated: Tackle no longer stores inverse `mediaIds[]`; Media owns attachment through `ownerType` + `ownerId`, and the renderer derives Tackle Media from that owner relationship.
+- Section 5 Rig schema cleanup is production implemented and validated: universally empty `techniqueIds[]` and `imageIds[]` were removed from all 20 Rigs; `variationIds[]` remains; the documentation-only `targetFishIds[]` proposal was not added.
+- Repository Audit Section 6 — Governing Documents Comprehensive Synchronization — is active.
+- Fish Guide remains the next approved product milestone but is paused behind the Repository Audit Cleanup Gate.
+
+### Current Architecture Supersession Note
+
+Historical entries below remain release/milestone evidence for what was true when those changes landed. Where an older entry describes Parent-to-top navigation, smaller Rig/Tackle counts, incomplete later Rig tiers, or earlier Knot package status, current architecture and current-state documents supersede that historical behavior/status without rewriting the historical event.
+
+## Knots — Historical Packages 1 and 2 Snapshot
+
+**Implementation Status: Historical Snapshot — Packages 1–2 Validated / Finalized at This Point**
 
 ### Added / Changed
 
@@ -32,7 +52,7 @@
 - Production Package 2 Revision 5 GitHub blob verification: passed; all 10 delivered Revision 5 files matched GitHub `main` by blob SHA.
 - Production Package 2 Microsoft Edge runtime validation: passed, including the complete Revision 4 functional/regression checklist and both Revision 5 targeted remediation checks.
 - Production Package 2 status: **PASS / VALIDATED / FINALIZED**.
-- Production Package 3 (**Get Your Reel Ready**) and Package 4 (static Knot SVG/media integration): not started.
+- Historical note: Production Packages 3 and 4 had not started at the time of this snapshot; both are now complete and closed as recorded in the current-state section above.
 
 See `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`, `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`, `NAVIGATION-PAGE-STANDARD.md`, `MILESTONES.md`, and `HANDOFF.md`.
 

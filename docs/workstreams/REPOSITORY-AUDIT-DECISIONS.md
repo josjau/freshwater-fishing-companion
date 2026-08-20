@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.9  
+**Document Revision:** 1.0.10  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -356,11 +356,11 @@ The root `tools/` directory currently contains the existing Knot package validat
 
 `data/media.js` remains the production media registry and references the local Tackle recognition images under `images/tackle/`. The current `images/tackle/` directory contains the expected 29 WebP recognition assets from the completed Rig/Tackle media library. No extra obvious Tackle-image orphan was identified in this check.
 
-The separate Tackle-to-Media relationship-ownership problem is **not** an asset-reachability failure. It remains the next architectural audit item because current Tackle records and Media records both encode the association.
+The separate Tackle-to-Media relationship-ownership problem was not an asset-reachability failure; it was resolved and validated in Section 4 under D056.
 
 ## Documentation correction completed
 
-`docs/ARCHITECTURE.md` revision `0.4.3` records the actual production source tree and exact current `index.html` JavaScript load order, including:
+`docs/ARCHITECTURE.md` revision `0.4.3` recorded the production source tree and exact `index.html` JavaScript load order, including:
 
 - `data/knots.js`,
 - `data/knot-guidance.js`,
@@ -374,8 +374,6 @@ Architecture correction commit:
 `6b605a18ef00f11b89b90af109e01eb61d6e7131`
 
 Post-write verification confirmed the corrected source tree/load-order section and preserved document tail.
-
-`docs/HANDOFF.md` revision `1.5.6` now records Sections 1–3 as complete and sets Section 4 as the next cleanup discussion.
 
 ## Future safeguard
 
@@ -392,25 +390,25 @@ Production entrypoint and asset reachability pass. No production source deletion
 
 # Section 4 — Tackle ↔ Media Relationship Ownership
 
-**Decision:** REFACTOR / MEDIA OWNS ENTITY-TO-MEDIA ATTACHMENT  
-**Status:** APPROVED / DOCUMENTED / PRODUCTION IMPLEMENTATION PENDING
+**Decision:** MEDIA OWNS ENTITY-TO-MEDIA ATTACHMENT  
+**Status:** PASS / VALIDATED / PRODUCTION IMPLEMENTED / CLOSED
 
-## Audit finding
+## Audit finding — historical pre-implementation state
 
-Current production Tackle records store inverse media identifiers through:
+Production Tackle records previously stored inverse media identifiers through:
 
 ```text
 Tackle.mediaIds[]
 ```
 
-while the same association is independently stored on Media through:
+while the same association was independently stored on Media through:
 
 ```text
 Media.ownerType
 Media.ownerId
 ```
 
-This creates two canonical-looking copies of the same semantic relationship and can become contradictory if the records diverge.
+This created two canonical-looking copies of the same semantic relationship and could become contradictory if the records diverged.
 
 ## Approved ownership
 
@@ -425,13 +423,11 @@ Media.ownerId = canonical Tackle ID
 
 Tackle does not need an inverse `mediaIds[]` array merely to locate Media records that already identify their owner.
 
-Runtime lookup should derive matching active Media records from `MEDIA_DATA` using the current Tackle ID.
+Runtime lookup derives matching active Media records from `MEDIA_DATA` using the current Tackle ID.
 
 ## Site-wide rule promoted from Section 4
 
-The user approved this reasoning as a permanent site-wide rule rather than a Tackle-only exception.
-
-D056 — **Semantic Single-Owner Data and Relationship Ownership** now governs the project:
+D056 — **Semantic Single-Owner Data and Relationship Ownership** governs the project:
 
 > Every canonical fact or relationship has exactly one authoritative owner, and ownership follows the entity/domain for which the information is intrinsically meaningful rather than whichever location is most convenient for the current UI or implementation.
 
@@ -443,50 +439,100 @@ This means:
 - derived performance caches/indexes may exist later when scale requires them but remain non-authoritative and reproducible,
 - ownership must be explainable by domain meaning.
 
-Canonical rule owner: `docs/DECISIONS.md` D056.  
-Operational relationship semantics/validation owner: `docs/data-model/09-RELATIONSHIPS.md`.
+Canonical rule owner: `docs/DECISIONS.md` D056.
 
-## Approved Section 4 production refactor
+## Implemented Section 4 production refactor
 
-The implementation package must:
+Production implementation:
 
-1. Remove `mediaIds[]` from canonical Tackle records in `data/tackle.js`.
-2. Update Tackle media lookup in `view-renderer.js` to derive active Media using `ownerType === "tackle"` and `ownerId === tackle.id`.
-3. Preserve `data/media.js` owner metadata as the canonical relationship.
-4. Do not add an inverse Tackle media array.
-5. Do not add a separate Tackle-Media join registry.
-6. Do not add speculative Media role/order fields until an actual multi-media presentation requirement exists.
-7. Validate every applicable Media `ownerType`/`ownerId` against the appropriate canonical entity.
-8. Preserve current contextual Tackle recognition behavior and all unrelated renderer behavior.
+1. Removed `mediaIds[]` from canonical Tackle records in `data/tackle.js`.
+2. Updated Tackle media lookup in `view-renderer.js` to derive active Media using `ownerType === "tackle"` and `ownerId === tackle.id`.
+3. Preserved `data/media.js` owner metadata as the canonical relationship.
+4. Added no inverse Tackle media array.
+5. Added no Tackle-Media join registry.
+6. Added no speculative Media role/order fields.
+7. Verified all 29 active Tackle Media owner IDs resolve one-to-one to canonical Tackle IDs.
+8. Preserved contextual Tackle recognition behavior in Microsoft Edge runtime validation.
+
+Production commit:
+
+`614a5b472fb42a8fa23870ea96a00f929a8ed4b6` — `Section 4 production update package`
+
+Validated production blobs:
+
+- `data/tackle.js`: `4b0e19395ea322a9ea04f61ffe906e6e50bb78c8`
+- `view-renderer.js`: `42fdfdaa28bad314867bb5dd08ce1f450266f3ca`
+- `data/media.js`: `42b3765e44416144ffdd9c245124f6311bf46a6a` unchanged
+
+Controlling closeout:
+
+`docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` revision 1.0.0.
 
 ## Retirement classification
 
-Removed Tackle `mediaIds[]` fields are classified:
+Removed Tackle `mediaIds[]` fields:
 
 **GIT HISTORY ONLY**
 
-They are obsolete schema fields from normal prior revisions and do not have independent archival value. No archive copy is required.
+No archive copy is required.
 
-## Documentation reconciliation completed so far
+# Section 5 — Rig Empty Schema Fields
 
-- `docs/DECISIONS.md` revision `0.4.5` — D056 added as the site-wide rule; commit `86a4f433a2f7b6a16a9b2a4cbc1fd6fb0b511069`.
-- `docs/data-model/09-RELATIONSHIPS.md` revision `0.3.4` — semantic ownership test, Media ownership, derived inverse rules, and validator requirements added; commit `68011875895159fcdeafb8a88de84001e7c4f1e2`.
-- `docs/data-model/05-TACKLE.md` revision `0.1.4` — `mediaIds` removed from the approved target schema, current 29/29 production count corrected, and current duplicate production state marked transitional; commit `6aa77eb9556e2ca9e397d2204df78d0e057af645`.
+**Decision:** REMOVE EMPTY SPECULATIVE FIELDS / PRESERVE REAL RELATIONSHIP FIELD  
+**Status:** PASS / VALIDATED / PRODUCTION IMPLEMENTED / CLOSED
 
-## Section 4 closeout gate
+Approved and implemented cleanup:
 
-Section 4 is **not complete yet** because production source still contains the duplicate Tackle `mediaIds[]` relationship and the renderer still consumes it.
+- removed `techniqueIds[]` from all 20 canonical Rig records,
+- removed `imageIds[]` from all 20 canonical Rig records,
+- preserved `variationIds[]`, including valid empty arrays where a Rig has no approved variation,
+- did not add the documentation-only `targetFishIds[]` proposal,
+- deferred Rig↔Technique relationship ownership to the Technique architecture gate,
+- retained future Rig Media ownership under Media `ownerType` + `ownerId`,
+- classified removed fields **GIT HISTORY ONLY**.
 
-Before Section 5 begins:
+Production commit:
 
-1. re-fetch current `data/tackle.js`, `data/media.js`, and `view-renderer.js`,
-2. prepare the targeted production refactor from those exact GitHub baselines,
-3. deliver the user-reviewable source package for GitHub Desktop,
-4. verify the pushed source on GitHub,
-5. run runtime/regression validation for contextual Tackle recognition media,
-6. reconcile `ARCHITECTURE.md`, this decision log, and `HANDOFF.md` to the validated implementation,
-7. only then mark Section 4 completed and proceed to Section 5.
+`449155ffef4eb452aba22e463ee20a21c233a191` — `Section 5 Audit Update`
+
+Validated `data/rigs.js` blob:
+
+`0a30eed8d97626a5f822c8b9eee514766144bce4`
+
+The production diff contained exactly 40 deletions and zero additions: 20 empty `techniqueIds[]` fields and 20 empty `imageIds[]` fields. No runtime consumer depended on either field, so no additional Edge runtime regression was required after exact blob verification.
+
+Controlling records:
+
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-5-DECISION.md`
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md`
+
+# Section 6 — Governing Documents Comprehensive Synchronization
+
+**Section Status:** IN PROGRESS
+
+Section 6 reconciles current governing/current-state documentation after Sections 4 and 5 and the completed Knots/Rig work.
+
+Approved Section 6 direction includes:
+
+- preserve full-file delivery while distinguishing delivery format from narrow authorized change scope,
+- minimize commits without sacrificing reviewability, rollback safety, validation boundaries, or documentation freshness,
+- apply the permanent Session-End Documentation Gate so approved decisions cannot remain only in chat history,
+- establish the Four-State forward content focus while preserving original validation context,
+- preserve the existing 20-Rig library and require a later additive Four-State adequacy audit,
+- revise D051 to context-preserving standard Parent navigation while allowing deliberate specialized workflows such as Reel Setup,
+- revise D003/D056 so Rig↔Technique ownership remains unresolved until the Technique architecture gate rather than assuming bidirectional arrays,
+- reconcile Architecture, Workflow, Style, planning/history, Project, Specification, Media, Section 5 status, and Handoff documentation to actual current state,
+- promote Fish Phase 0 durable architecture decisions into `DECISIONS.md` so they are recoverable outside the workstream.
+
+Detailed approved Section 6 decision records:
+
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-DECISIONS.md`
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-SESSION-END-2026-08-19.md`
+
+No production JavaScript, CSS, HTML, application data, media, image, or configuration change is authorized by Section 6 documentation synchronization.
+
+Fish Guide Phase 0 remains paused behind the Repository Audit Cleanup Gate.
 
 # Next Audit Action
 
-Complete the approved **Section 4 Tackle ↔ Media production refactor and validation**. Do not begin Section 5 until Section 4 is fully implemented and closed.
+Complete and remotely verify the approved **Section 6 governing-document synchronization**. After Section 6 is validated and closed, proceed to **Section 7 — Data-Model Documentation Synchronization**. Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections and final re-audit are complete.

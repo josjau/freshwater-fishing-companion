@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.4.3
+**Document Revision:** 0.4.4
 **Document Status:** Approved
 **Last Updated:** 2026-08-19
 
@@ -80,6 +80,19 @@ Required production JavaScript load order from `index.html`:
 
 The production entrypoint and loaded-source reachability were re-audited on 2026-08-19 and passed. All files listed in the production load order exist on authoritative GitHub `main`. Deferred themes, repository archives, project documentation, development tools, and the reserved Rig-image directory are intentionally outside the browser runtime entrypoint.
 
+# Regional Content Architecture
+
+The Companion's forward Version 1 regional content focus is:
+
+- Northeast Oklahoma
+- Southeast Kansas
+- Southwest Missouri
+- Northwest Arkansas
+
+Existing validated domains retain their original selection/validation context and are progressively reconciled against the Four-State focus when audited or materially modified. Regional reconciliation is additive by default.
+
+The existing 20-Rig library was originally selected and validated for Northeast Oklahoma and Southwest Kansas. It remains canonical and validated. A later Four-State adequacy audit will determine whether any materially important regional Rig or specialized fishing setup is missing; existing valid Rigs are not removed solely because the regional focus expanded.
+
 # Theme Support
 
 **Current:** Forest Journal is the only production-supported Version 1 theme and remains the active visual/reference baseline.
@@ -147,6 +160,8 @@ Avoid information overload. Related knowledge should be progressively disclosed.
 
 **Approved / Not Implemented:** heavy fuzzy search, advanced typo-tolerance, sophisticated confidence systems, natural-language intent parsing, and a global cross-domain result dump remain deferred until demonstrated by actual use. A future Dashboard search field is approved direction, but its cross-domain scope and result presentation remain intentionally unresolved.
 
+Search scope is hierarchical where domain navigation defines a narrower eligible universe. Scope is applied before relevance ranking; deeper navigation narrows rather than silently broadens results.
+
 # Source Ownership
 
 ## `data/fish.js`
@@ -157,27 +172,28 @@ Fish identification media is accuracy-critical and follows `MEDIA_GUIDE.md`.
 
 ## `data/rigs.js`
 
-Owns canonical Rig records, including:
+Owns 20 active canonical Rig records and the Rig facts intrinsically tied to physical setup, including:
 
 - Stable Rig ID
 - Name and summary
 - Difficulty
 - Use cases
 - Condition tags
-- Verified external reference links
-- Optional verified tutorial-video metadata
 - Component requirements
 - Assembly steps
 - Setup notes
 - Common mistakes
 - Safety notes
-- Relationship IDs
+- `variationIds[]`
+- `knotApplications[]`
+- Verified external reference links
+- Optional verified tutorial-video metadata
 - Version metadata
 - Active state
 
 The text in `assemblySteps` is the authoritative in-app build sequence.
 
-Rig owns physical assembly and rig-specific configuration. Reusable presentation behavior belongs to canonical Technique records.
+Rig owns physical assembly and Rig-specific configuration. Reusable presentation behavior belongs to canonical Technique knowledge, but current production does not assign canonical Rig↔Technique compatibility storage to Rig. The relationship owner/shape remains deferred until the Technique architecture gate under D056.
 
 Rig `componentRequirements` is the authoritative source for Rig-to-Tackle usage relationships. Reverse Tackle-to-Rig `Used In` navigation is derived from active Rig requirements rather than stored independently on Tackle.
 
@@ -187,33 +203,57 @@ A Rig component requirement references canonical Tackle explicitly through `tack
 
 Rig `referenceLinks` point to verified external fishing references used for technical cross-checking and visual confirmation. They are not production-media copies and do not transfer ownership of external content into the project.
 
-Optional `tutorialVideo` metadata may identify a verified platform-hosted tutorial. The renderer may load that tutorial through the platform's official permitted embed player without downloading or rehosting the video. Texas Rig is the first approved implementation trial.
+Optional `tutorialVideo` metadata may identify a verified platform-hosted tutorial. The renderer may load that tutorial through the platform's official permitted embed player without downloading or rehosting the video.
 
-Historical `imageIds` fields may remain empty while older media records/assets are retained for cleanup or audit history.
+Rig does not own inverse Media IDs. Future Rig media attaches from the shared Media registry through `ownerType: "rig"` + the canonical Rig ID.
 
 ## `data/tackle.js`
 
-Owns the current canonical Tackle reference records and stable Tackle IDs.
+Owns 29 active canonical functional Tackle concepts and stable Tackle identity.
 
-Canonical Tackle represents functional tackle types rather than a user's exact commercial possession. Examples include Offset Hook, Bullet Weight, Slip Float, Spinnerbait, Crankbait, and Inline Spinner.
+Canonical Tackle represents functional tackle types rather than a user's exact commercial possession. Tackle may exist independently of a Rig.
 
-Tackle may exist independently of a Rig.
+Rigs reference Tackle records through `componentRequirements[].tackleId`. `Rig.componentRequirements` owns Rig-to-Tackle usage; reverse `Used In` navigation is derived rather than stored on Tackle.
 
-Rigs reference Tackle records through `componentRequirements[].tackleId`.
-
-Manual inverse `rigIds` have been removed from canonical Tackle records. Reverse Rig usage is derived from `Rig.componentRequirements`.
-
-The Core-Rig build expanded canonical Tackle from 15 to 17 active concepts by adding `jighead` and `inline-spinner`.
-
-The current Rig UX finalization package adds `wacky-hook`, `wacky-o-ring`, and `ned-jighead`, producing 20 active canonical concepts. These narrower types keep buildability checks from treating an unsuitable generic hook or jighead as sufficient. Dedicated media for these three concepts is deferred rather than reusing a potentially misleading generic image.
+Tackle records do not maintain inverse `rigIds` or `mediaIds` merely for reverse navigation or Media lookup. Persistent user ownership belongs later to My Tackle/User Knowledge, not canonical Tackle.
 
 ## `data/media.js`
 
-Owns reusable canonical media metadata and stable media IDs.
+Owns reusable cross-entity Media metadata and stable media IDs.
 
-The active media catalog contains contextual Tackle reference media only.
+Canonical entity attachment is owned by Media through:
 
-The Core-Rig build expands the catalog from 15 to 17 optimized 640 × 440 WebP assets. Current production Tackle media uses a restrained neutral background with no alpha transparency and no artificial cast shadow. Images remain on-demand through contextual `Name ⓘ` help.
+    ownerType
+    ownerId
+
+Entity records do not maintain inverse media-ID arrays merely to find attached Media.
+
+Current production Media includes:
+
+- 29 canonical Tackle recognition-media attachments,
+- approved external instructional-media records for all 10 Version 1 Knots.
+
+Future Fish, Rig, Lure, Technique, and other entity media should use the same ownership model unless an explicit later architecture decision establishes a genuinely different semantic relationship.
+
+Current Tackle production media uses 640 × 440 WebP assets on the fixed `#f4f0e8` reference surface. Knot external instructional records retain provider/rights metadata rather than copying third-party assets into the repository.
+
+## `data/knots.js`
+
+Owns canonical Knot identity and reusable Knot facts, including stable IDs, names, summaries, difficulty/core-related canonical metadata where applicable, connection/line compatibility facts, authoritative tying instructions, common mistakes, final checks, and lifecycle/version metadata.
+
+Knot does not own inverse Rig usage relationships. Rig-owned `knotApplications[]` provides the physical connection context, and reverse Knot usage is derived.
+
+## `data/knot-guidance.js`
+
+Owns task-oriented Knot guidance and selection behavior that is distinct from canonical Knot identity and tying instructions.
+
+It may support task-first navigation and guidance without duplicating the canonical Knot record. Broader data-model ownership details remain subject to the later data-model documentation audit.
+
+## `data/reel-guidance.js`
+
+Owns canonical Reel & Line Setup guidance/workflow data for the completed beginner workflow within the Knots milestone.
+
+It covers the approved Spinning, Spincast, and Baitcasting line-setup journey, including beginner selection/compatibility/backing/spooling guidance and canonical Knot handoffs. It is not a general reel-product catalog or full Technique domain.
 
 ## `search.js`
 
@@ -239,23 +279,23 @@ Owns reusable rendering and UI interactions, including:
 - Compact sticky Parent/Home navigation
 - Modal close behavior and focus restoration
 
+Tackle recognition Media lookup derives active Media from `ownerType === "tackle"` and `ownerId === tackle.id` rather than consuming a Tackle-owned media ID array.
+
 Any future rendering path that receives User Knowledge or imported content must treat it as untrusted text and render it through safe DOM APIs such as `textContent`, unless a centrally owned sanitization path is explicitly approved.
+
+## `knot-media-renderer.js`
+
+Owns Knot instructional-media rendering behavior. It consumes canonical Knot/Media facts but does not own Knot identity, tying facts, or Media attachment.
 
 ## `script.js`
 
-Coordinates:
-
-- Application routes
-- Dashboard restoration
-- Fish Guide with landing-page inline search
-- Rig Guide landing-page search, scoped browse search, and Rig details
-- My Tackle
-- Current local readiness-state loading/persistence
-- Current per-Rig Tackle availability selections
+Coordinates application routing and major view transitions, including Dashboard restoration, Fish Guide, Rig Guide, Knot Guide/Reel Setup integration, My Tackle transitional behavior, and current readiness-state loading/persistence.
 
 # Rig Guide Architecture
 
-Current package target Rig flow (current `main` already provides the nine-Rig library and scoped browse search; landing-page global search/tutorial/compact-detail changes are In Progress until pushed and validated):
+**Current validated state:** the Rig Guide contains 20 active canonical Rigs across six learning tiers and uses the completed connected-knowledge/navigation architecture.
+
+Current landing/browse flow:
 
     Dashboard
     → Rig Guide
@@ -264,10 +304,13 @@ Current package target Rig flow (current `main` already provides the nine-Rig li
         → Core Rigs
         → Beginner
         → Beginner+
-        → future implemented tiers
+        → Intermediate
+        → Intermediate+
+        → Advanced
+        → Expert
     → Select a Rig
     → Rig Detail
-        → Best For + Good Conditions (compact at-a-glance trial)
+        → Best For + Good Conditions
         → Verified tutorial when approved for that Rig
             → lazy-load official platform player
             → external source fallback ↗
@@ -280,6 +323,7 @@ Current package target Rig flow (current `main` already provides the nine-Rig li
         → Setup Notes
         → Common Mistakes
         → Safety
+        → Connected Knot/Tackle knowledge where implemented
 
 Main Rig Guide search queries the full active implemented Rig set. Search within an implemented subset remains scoped to that subset. Both paths use the same canonical Rig data and shared search helpers.
 
@@ -287,38 +331,13 @@ Card-based Rig Guide navigation uses the same Dashboard-derived varied accent/le
 
 Rig pages intentionally use authoritative text instructions rather than generated Rig build diagrams.
 
-Completed-Rig visual confirmation prefers verified licensed local media, then a verified officially permitted embedded tutorial, then direct external visual/reference paths. Texas Rig is the first embedded-tutorial trial.
+Completed-Rig visual confirmation prefers verified licensed local media, then a verified officially permitted embedded tutorial, then direct external visual/reference paths.
 
 The compact Rig-detail layout is runtime-approved for Rigs. It remains a Rig-specific density standard and is not automatically promoted to other domain detail pages.
 
-## Approved Rig Library Expansion — Not Implemented
+The existing 20-Rig library is complete. Further Rig additions are enhancement/regional-reconciliation scope rather than completion of the original library.
 
-**Status clarification:** nine Rigs are implemented on current `main`: the six Core Rigs plus Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig. Intermediate, Intermediate+, Advanced, and Expert expansion remains Approved / Not Implemented.
-
-The initial canonical target is a 20-rig regional library for practical use in northeast Oklahoma and southwest Kansas:
-
-1. Fixed Bobber Rig
-2. Basic Bottom Rig
-3. Jighead + Soft Plastic
-4. Slip Bobber Rig
-5. Inline Spinner Setup
-6. Texas Rig
-7. Weightless Soft-Plastic Rig
-8. Wacky Rig
-9. Ned Rig
-10. Drop Shot Rig
-11. Carolina Rig
-12. Live-Bait Slip-Sinker Rig
-13. Three-Way Rig
-14. Neko Rig
-15. Shaky Head Rig
-16. Free Rig
-17. Jika Rig
-18. Punch / Pegged Texas Rig
-19. Double-Jig Crappie Rig
-20. Bottom-Bouncer / Spinner Rig
-
-The implemented curated **Core Rigs** subset contains:
+The curated **Core Rigs** subset remains:
 
 - Fixed Bobber Rig
 - Basic Bottom Rig — especially useful for catfish
@@ -327,26 +346,27 @@ The implemented curated **Core Rigs** subset contains:
 - Texas Rig
 - Slip Bobber Rig
 
-The Core 6 are the first Rig-expansion milestone and must be complete, accurate, beginner-ready, and validated before expansion to the remaining fourteen Rigs.
-
 Per D042/D044/D048, Core membership/order derives from `CORE_RIG_IDS`, Core may overlap any difficulty/category, and Core receives restrained additional hierarchy while Rig Guide navigation cards retain the shared Dashboard-derived palette. All Rigs contains Core records normally rather than owning a separate Core section.
 
-D043 resolves the former modeling question: Jighead + Soft Plastic and Inline Spinner Setup are ready-to-fish terminal setups in the Rig Guide. Reusable presentation behavior remains owned by Technique.
+D043 resolves the modeling question: Jighead + Soft Plastic and Inline Spinner Setup are ready-to-fish terminal setups in the Rig Guide. Reusable presentation behavior remains owned by Technique knowledge.
 
-The teaching strategy is to build success and confidence with these broadly useful rigs before expanding the user's fishing arsenal.
+# Knots and Reel & Line Setup Architecture
 
-Carolina Rig is approved for the near-term canonical library. The existing `carolina-rig` relationship should be resolved by implementing the canonical Rig during the expansion rather than treating Carolina Rig as an unwanted concept.
+The Knots milestone is **PASS / VALIDATED / FINALIZED / CLOSED**.
 
+Current production includes:
 
-# Core Rigs and Tackle Media Build
+- 10 active canonical Knots,
+- four Core Knot IDs,
+- task-first Knot Guide navigation,
+- deterministic Knot search,
+- canonical in-app tying instructions,
+- all 20 Rigs audited with 31 real `knotApplications` tied connections,
+- verified instructional-media coverage for all 10 Knots,
+- completed Reel & Line Setup for Spinning, Spincast, and Baitcasting,
+- context-preserving connected navigation among Rigs, Knots, Line Type references, and Reel Setup.
 
-**Implementation Status: In Progress**
-
-The active Rig segment now contains nine implemented Rigs, the single-owner `CORE_RIG_IDS` registry, learning-tier navigation, 17 neutral-background Tackle images, and the finalization work described above.
-
-The source and documentation package must be pushed, inspected on GitHub, and runtime/regression validated before this segment may be marked Validated.
-
-Generated completed-Rig or build-step imagery remains prohibited under D045; Rig assembly continues to use authoritative text plus verified external visual references.
+Reel & Line Setup is a specialized guided workflow. It may use documented step-aware navigation semantics when workflow state requires them without redefining the standard Parent behavior for ordinary application views.
 
 # My Tackle Architecture
 
@@ -391,7 +411,7 @@ Permanent principle: **User Knowledge is data, not markup.**
 
 # Unavailable Feature Affordance
 
-**Approved / Not Implemented:** child cards for planned features may remain visible when they help communicate application structure, but unavailable cards must be clearly marked `Coming Soon` or equivalent. They must not retain hover, pointer, click, or other affordances that imply working navigation, and should use accessible disabled/unavailable semantics.
+Child cards for planned features may remain visible when they help communicate application structure, but unavailable cards must be clearly marked `Coming Soon` or equivalent. They must not retain hover, pointer, click, or other affordances that imply working navigation, and should use accessible disabled/unavailable semantics.
 
 Permanent rule: **Anything that looks actionable must either perform an action or clearly communicate that it is unavailable.**
 
@@ -401,15 +421,19 @@ Common field workflows should stay within approximately three intentional intera
 
 # Navigation and Scroll Architecture
 
-`script.js` owns view transitions. Every explicit application transition renders the destination and resets the window to the top. Parent navigation does not restore a remembered scroll position.
+Persistent/floating Parent/Home controls remain the shared visual standard for nested standard application views.
 
-`view-renderer.js` owns the shared Parent/Home control markup for nested views, while `forest-journal.css` keeps that control group compact and sticky during scrolling. This removes the need for per-view, per-collection, or per-Rig scroll-position state solely to support Parent navigation.
+Canonical behavior for standard application views:
 
-The standard is intentionally predictable:
+    Forward -> newly opened destination starts at top
+    Parent -> immediately preceding standard application context, applicable UI state, and prior scroll position
+    Home -> Dashboard starts at top and contextual return state is cleared
 
-    Forward -> destination top
-    Parent -> parent top
-    Home -> Dashboard top
+A saved scroll position belongs only to the source context being restored and must never be transferred into a newly opened destination.
+
+Specialized workflows may use separately approved navigation semantics when workflow state requires them. Reel Setup is an approved specialized example. Such exceptions must be deliberate/documented and do not redefine standard Parent behavior.
+
+**Current implementation note:** some broader production routing still contains the older all-transitions top-reset behavior. The revised standard is approved architecture but requires a later deliberate production source package and runtime validation where not already implemented.
 
 Browser-native history behavior is separate from these explicit in-application controls.
 
@@ -441,31 +465,20 @@ External CTA labels should name the destination when practical rather than use g
 
 The `↗` marker indicates that the user is leaving the application for an external destination. Do not use `ⓘ` for external navigation.
 
-# Dashboard Regression Restoration
-
-**Current:** the production Forest Journal Dashboard is missing portions of the previously approved card hierarchy and interaction styling because an unrelated replacement removed approved Dashboard rules.
-
-**Approved / Not Implemented:** restore the previously validated Dashboard behavior without redesign. The repair restores the stronger primary-card treatment, 6px left accent, 2px right accent, primary title emphasis, approved vertical spacing, gradient hover treatment, active behavior, and `overflow: hidden`. Preserve the current pill CTA and all newer Rig/Tackle styling.
-
-The repair must not change card order, labels, navigation, Dashboard content, theme direction, dormant themes, or unrelated CSS.
-
 # Media Architecture
 
 Detailed media rules are authoritative in `MEDIA_GUIDE.md`.
 
-Preferred formats:
-
-- Optimized WebP for catalog-style Tackle reference media, including rasterized vector-style or semi-photorealistic assets
-- SVG for technically safe diagrams, line art, and instructional graphics
-
 Entity rules:
 
-- Fish: verified real photographs/scientific illustrations for identification
-- Rigs: verified local completed image only when licensing and technical accuracy are established; otherwise external verified reference links
-- Tackle: recognition-first vector-style or semi-photorealistic illustration anchored to approved real-world geometry
-- Knots: step-by-step diagrams
-- Lures: photography or accurate illustration according to recognition requirements
-- Techniques: instructional media only when it improves understanding
+- Fish: verified real photographs/scientific illustrations for identification.
+- Rigs: verified local completed image only when licensing and technical accuracy are established; otherwise external verified reference/tutorial paths plus authoritative text.
+- Tackle: recognition-first real-photo/semi-photorealistic catalog references anchored to approved real-world geometry.
+- Knots: canonical text instructions plus approved instructional Media; current Version 1 uses verified external instructional destinations.
+- Lures: photography or accurate illustration according to recognition requirements.
+- Techniques: instructional media only when it improves understanding.
+
+Media owns entity attachment through `ownerType` + `ownerId` under D056.
 
 # Storage Strategy
 
@@ -478,7 +491,7 @@ General targets:
 - Fish identification photos: approximately 150–300 KB when diagnostic detail requires it
 - SVG: keep compact and avoid unnecessary embedded raster data
 
-Current Tackle reference assets are stored as optimized WebP files. Future replacements may use clean alpha transparency or a restrained neutral background according to the approved recognition-quality standard.
+Current Tackle reference assets are stored as optimized WebP files on the fixed `#f4f0e8` reference-media surface.
 
 # Inline Rig Readiness
 
@@ -502,10 +515,9 @@ Rules:
 
 My Tackle will replace the persistent lookup source while preserving the inline Rig Readiness interface. Owned required items are automatically satisfied; a separate temporary session-availability state may satisfy borrowed or newly acquired items without writing ownership back to My Tackle.
 
-
 # Repository Handoff and Closeout
 
-`docs/HANDOFF.md` is the first-read current-state map for future sessions and contributors. It links to governing documents rather than duplicating them.
+`docs/HANDOFF.md` is the first-read current-state map for future sessions and contributors. It links to governing documents rather than duplicating them unnecessarily.
 
 A session, module, or section is not finalized until all relevant documentation is updated, pushed, inspected on GitHub, and validated. The project does not begin a new build segment while the current segment remains unfinalized.
 
@@ -518,29 +530,13 @@ Meaningful cross-segment discussions receive the same documentation treatment as
 Permanent rules include:
 
 - Fetch latest GitHub source before editing.
-- Complete-file replacement is the default delivery method.
-- Coherent multi-file modules should be delivered as one ZIP package whenever practical, including required documentation in the same coherent push.
-- Documentation replacements must pass the replacement-integrity gate defined in `DEVELOPMENT_WORKFLOW.md` before packaging.
-- User normally reviews and commits through GitHub Desktop.
-- Verify GitHub after push.
+- Complete-file replacement is the default delivery method while authorized semantic change scope remains targeted.
+- Coherent multi-file modules should be delivered/committed together whenever practical.
+- Documentation replacements must pass the replacement-integrity and post-write validation gates.
+- User normally reviews production updates through GitHub Desktop unless a current session explicitly authorizes another direct-write workflow.
+- Assistant direct GitHub writes are limited by default to Markdown documentation; production direct writes require explicit action-specific authorization.
+- Verify GitHub after every write/push.
 - Documentation closeout is mandatory and must be validated in GitHub before a segment is finalized.
 - Do not begin a new build segment while the current one is unfinalized.
 - Capture meaningful cross-segment decisions even when they arise outside the active module.
-- Commands intended for user copy/paste are placed in fenced code blocks.
-
-# Current Reference-Refresh Scope
-
-The current deployed reference-refresh package changed the presentation layer without changing the canonical 15-item Tackle catalog or the transitional Tackle Readiness storage contract.
-
-Implemented changes include:
-
-- My Tackle remains the user-owned inventory domain
-- Historical transparent Tackle recognition media used only in contextual help; the active Core-Rig package supersedes those assets with neutral-background references
-- Text-first Tackle contextual popovers
-- Verified external completed-Rig reference links
-- Text-first Rig assembly instructions
-- Texas Rig wording corrected for bait seating, rotation, re-entry measurement, and skin-hook finish
-- Dashboard `My Tackle` label
-- Existing Fish Search and transitional readiness workflows preserved
-
-Rig/Tackle Data Integrity Batch 1 is Validated. The Core Rigs and Tackle Media workstream is In Progress pending GitHub and runtime validation.
+- Apply the Session-End Documentation Gate when a session ends before a section closes.

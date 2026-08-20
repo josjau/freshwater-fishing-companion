@@ -1,9 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** PROJECT.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.3.1  
 **Document Status:** Approved  
-**Decision Baseline:** D027, D038-D041
+**Decision Baseline:** D027, D038-D041  
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -24,14 +25,18 @@ The application is intended to be a practical tool used before and while fishing
 
 - Casual freshwater anglers looking for a lightweight mobile companion
 
-# Primary Fishing Areas
+# Regional Content Focus
 
-Initial development, content prioritization, and practical Rig coverage focus on:
+The Companion's forward Version 1 regional content focus is:
 
 - Northeast Oklahoma
-- Southwest Kansas
+- Southeast Kansas
+- Southwest Missouri
+- Northwest Arkansas
 
-The application architecture remains flexible enough to support additional locations in future releases.
+Existing validated content may retain a narrower original selection or validation context. Domains are progressively reconciled against the Four-State region when they are audited or materially modified.
+
+Regional reconciliation is additive by default: important missing regional coverage may be added, but valid existing content is not automatically invalidated merely because the geographic focus expanded. If a regional finding would require significant architecture, data-model, or UI rewiring, that change must be discussed and approved before implementation.
 
 # Mission
 
@@ -120,7 +125,9 @@ Each capability is evaluated against the project's mission and current architect
 
 # Rig Learning Direction
 
-The approved initial regional Rig library contains 20 practical rigs for northeast Oklahoma and southwest Kansas.
+The approved initial 20-Rig library was selected and validated using Northeast Oklahoma and Southwest Kansas as its original regional-practicality scope.
+
+That 20-Rig library remains canonical and validated. It will receive an additive Four-State adequacy audit to determine whether any materially important regional Rig or specialized setup is missing. Existing valid Rigs are not removed solely because the geographic focus expanded.
 
 Six Core Rigs provide a confidence-building starting set:
 

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.4.5  
+**Document Revision:** 0.4.6  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-19
 
@@ -63,12 +63,17 @@ This document records long-term architectural decisions.
 | D048 | Dashboard-Derived Section Card Design | Approved |
 | D049 | Verified Rig Tutorial Embed Policy | Approved |
 | D050 | Standard Search Field and Clear Control | Approved |
-| D051 | Persistent Navigation and Top-Reset View Transitions | Approved |
+| D051 | Context-Preserving Parent Navigation | Approved |
 | D052 | Rig Detail Compact Density | Approved |
 | D053 | Rig Media Completeness and Tutorial Audit | Approved |
 | D054 | Intermediate Rig Tier Membership | Approved |
 | D055 | Durable Decision Context Preservation | Approved |
 | D056 | Semantic Single-Owner Data and Relationship Ownership | Approved |
+| D057 | Fish Guide Four-State Version 1 Scope | Approved |
+| D058 | Fish Habitat and Waterbody Ownership | Approved |
+| D059 | Fish Category Registry and Lifecycle Ownership | Approved |
+| D060 | Northern Rock Bass Identity and Shared Aliases | Approved |
+| D061 | Hierarchical Scoped Search | Approved |
 
 # D001 – Local-First Architecture
 
@@ -80,7 +85,21 @@ The data model is divided into focused documents instead of one large specificat
 
 # D003 – Canonical Fishing Techniques
 
-Fishing techniques are independent canonical entities referenced by rigs.
+Fishing Techniques are independent canonical Reference Knowledge entities that own reusable presentation behavior. A Technique may apply to multiple Rigs or other compatible fishing setups.
+
+Technique identity does not determine which side owns a future Rig↔Technique compatibility relationship. The canonical storage owner and structure of that relationship remain deliberately deferred until the Technique architecture gate and must be resolved under D056.
+
+Rig continues to own physical assembly/configuration. Technique owns reusable retrieve/cadence, rod/reel movement, and presentation/strike guidance.
+
+If future compatibility is a simple intrinsic applicability fact, it receives one semantic Reference Knowledge owner. If the relationship instead answers which Technique should be used with a Rig under particular Fish/Condition context, a Decision Knowledge relationship may be the more accurate owner.
+
+Do not mirror the same semantic relationship in both `Rig.techniqueIds[]` and `Technique.compatibleRigIds[]`.
+
+**Current implementation status:** Technique remains a valid future domain; no canonical production Technique dataset or Rig↔Technique runtime relationship is implemented.
+
+**Future trigger:** resolve relationship ownership when the Technique architecture gate opens and concrete feature requirements exist.
+
+**Canonical owners:** `DECISIONS.md` D003/D024/D056 and the Technique/relationship data-model documents.
 
 # D004 – Canonical Conditions
 
@@ -126,15 +145,17 @@ Inventory locations use reusable location records.
 
 GitHub `main` is authoritative for existing project files.
 
-The latest GitHub version must be fetched before changing an existing source file.
+The latest GitHub version must be fetched before changing an existing file. Chat memory or a previously proposed file is never authoritative file content.
 
-Complete-file replacement is the default delivery method.
+Complete-file replacement is the default final delivery artifact for changed existing files. This delivery rule does not authorize broad edits: semantic changes remain limited to the approved scope, and unrelated differences inside a replacement are failures unless separately authorized.
 
-Coherent multi-file changes may be delivered as ZIP packages.
+Coherent multi-file production changes normally use a repository-relative ZIP containing only repository files/folders so the user can review and apply the package through GitHub Desktop. Assistant direct GitHub writes are limited by default to Markdown documentation; production source/data/media/configuration direct writes require explicit authorization for the specific action or current session.
 
-The user normally reviews and commits through GitHub Desktop.
+Commit economy is required: use as few commits as practical while preserving reviewability, validation boundaries, rollback safety, and current documentation. Fewer commits never justify stale documentation or an overbroad unreviewable commit.
 
-GitHub must be verified after push.
+Every repository write must be re-fetched and integrity-verified from GitHub before it is considered complete. A complete resulting source file remains the validation copy after planned edits to that file are complete.
+
+A session ending before section closeout triggers the Session-End Documentation Gate in `DEVELOPMENT_WORKFLOW.md`; approved decisions and current continuation state must not remain only in chat history.
 
 Detailed procedure: `DEVELOPMENT_WORKFLOW.md`.
 
@@ -219,6 +240,8 @@ Heavy fuzzy search, advanced typo tolerance, natural-language intent parsing, so
 
 Branded or commercial names such as `Rooster Tail` require a later product/concept-resolution decision and are not resolved by this decision alone.
 
+D061 adds the scope-before-ranking rule for hierarchical domain search.
+
 # D023 – Five Recommendation Tiers
 
 Product recommendations use five approved tiers:
@@ -240,6 +263,8 @@ Techniques own reusable fishing presentation behavior such as drag, hop, shake, 
 Shared presentation instructions should live in Technique rather than being duplicated across Rigs. Rig-specific setup or usage notes may remain with the Rig when they do not generalize cleanly to a reusable Technique.
 
 A practical ownership test is: if an instruction still makes sense with a different compatible Rig, it probably belongs to Technique; if it depends on the physical configuration of this Rig, it belongs to the Rig.
+
+This content boundary does not decide the canonical owner of future Rig↔Technique compatibility; D003/D056 defer that relationship to the Technique architecture gate.
 
 # D025 – Single-Owner Rig-to-Tackle Relationships
 
@@ -265,7 +290,7 @@ Context-specific display labels are deferred unless a demonstrated UX need appea
 
 # D027 – Regional Rig Library and Core Rigs
 
-The initial canonical Rig library will contain 20 rigs selected for practical freshwater use in northeast Oklahoma and southwest Kansas.
+The initial 20-Rig library was selected and validated using Northeast Oklahoma and Southwest Kansas as its original regional-practicality scope.
 
 The approved initial library is:
 
@@ -290,7 +315,9 @@ The approved initial library is:
 19. Double-Jig Crappie Rig
 20. Bottom-Bouncer / Spinner Rig
 
-A six-rig confidence-building subset is presented as **Core Rigs — Master These First**:
+The existing 20 Rigs are **Validated / Finalized** and remain canonical.
+
+A six-rig confidence-building Core subset is presented in the approved order:
 
 - Fixed Bobber Rig
 - Basic Bottom Rig — especially useful for catfish
@@ -299,15 +326,24 @@ A six-rig confidence-building subset is presented as **Core Rigs — Master Thes
 - Texas Rig
 - Slip Bobber Rig
 
-The Core 6 are the first Rig-expansion milestone. They should be complete, accurate, beginner-ready, and validated before expansion proceeds to the remaining fourteen rigs.
+The product teaching principle remains to help a newer angler become successful with a small set of broadly productive Rigs before expanding the fishing arsenal.
 
-D043 resolves the Core-6 modeling question: Jighead + Soft Plastic and Inline Spinner Setup are canonical ready-to-fish terminal setups within the Rig Guide. Their inclusion does not create a separate domain model merely because one setup is built from two components and the other is a lure tied directly to line.
+D043 confirms Jighead + Soft Plastic and Inline Spinner Setup are canonical ready-to-fish terminal setups within the Rig Guide. D046 owns the current learning-tier navigation and current Core presentation wording.
 
-The product teaching principle is to help a newer angler become successful with a small set of broadly productive rigs before expanding the fishing arsenal.
+The Companion's forward content focus has expanded to the Four-State region under the Section 6 regional decision and D057. The existing 20-Rig library therefore receives a later additive Four-State adequacy audit:
 
-Canonical relationship IDs must resolve to real canonical entities. Carolina Rig is approved for the near-term library, so the correct repair for the current `carolina-rig` forward reference is to create the canonical Carolina Rig record during the later Rig expansion rather than treat the concept as unwanted. Production relationships should not depend on unresolved placeholder IDs once the expansion is implemented.
+- do not reopen or remove an existing valid Rig solely because the geographic focus expanded,
+- determine whether an important Four-State fishing method/setup is materially absent,
+- add a new canonical Rig only when demonstrated practical regional value justifies it,
+- preserve the current 20 unchanged if no meaningful gap exists.
 
-Rigs beyond the initial 20, specialized sonar-driven rigs, and niche tournament presentations remain deferred.
+A specialized regional method does not automatically become another ordinary Rig. Paddlefish snagging is the current example requiring later architectural review because its specialized rod/reel/line/tackle/regulatory context may fit a species/method setup or Decision Knowledge workflow better than an ordinary Rig record.
+
+**Current implementation status:** 20-Rig library Validated / Finalized; Four-State adequacy audit Approved / Not Yet Performed.
+
+**Future trigger:** perform the adequacy audit when Rig/Fish relationships or another relevant regional domain is deliberately reviewed.
+
+**Canonical owners:** D027, `data-model/03-RIGS.md`, and the future regional-audit record.
 
 # D028 – My Tackle Ownership and Rig Readiness Authority
 
@@ -443,16 +479,11 @@ Document Status values are:
 - `Superseded`
 - `Archived`
 
-Implementation Status values are:
+Implementation-state terminology and transition rules are owned by `DEVELOPMENT_WORKFLOW.md`; this decision does not maintain a competing fixed list of values.
 
-- `Current`
-- `Approved / Not Implemented`
-- `In Progress`
-- `Validated`
+`Document Revision` identifies the revision of a documentation file. `Application Version` or `Application Baseline` identifies the product version or baseline when needed. Ambiguous `Active` should not be used as a document-governance status.
 
-`Document Revision` identifies the revision of a documentation file. `Application Version` or `Application Baseline` identifies the product version or baseline when needed. Ambiguous `Active` is not used as a document-governance status.
-
-`Validated` is reserved for implementation or repository state that has actually been verified after push/runtime validation; documentation approval alone does not make an implementation validated.
+`Validated` is reserved for implementation or repository state that has actually been verified after push/runtime validation where applicable; documentation approval alone does not make an implementation validated.
 
 Package-specific source-header language such as `REPLACEMENT` should be removed when the relevant permanent source file is next deliberately edited.
 
@@ -523,7 +554,7 @@ Curated `Core` content that the application explicitly identifies as high-priori
 Examples include:
 
 - **Core Rigs**
-- Future **Core Knots**
+- **Core Knots**
 - Other future curated `Core` groups only when they have been deliberately approved as priority learning/reference sets.
 
 Core is a cross-cutting designation, not a difficulty, category, ownership state, or recommendation tier. A Core item may coexist with Beginner, Intermediate, Advanced, Expert, or other domain-specific classifications.
@@ -630,7 +661,7 @@ Implemented learning tiers are actionable. Tiers without implemented Rigs remain
 
 `All Rigs` always displays every currently implemented active Rig, including Core Rigs. It does not own a second dedicated Core section.
 
-Rig expansion proceeds by completed learning tier rather than creating the full 20-Rig library in one unvalidated batch. The current expansion completes Beginner and Beginner+ before moving to Intermediate, then Intermediate+, Advanced, and Expert.
+The initial 20-Rig learning-tier expansion is complete. Future additions are enhancement/regional-reconciliation scope and require their own deliberate placement.
 
 Permanent principle: **All Rigs is the universal library entry point; the remaining Rig Guide cards expose curated learning paths and difficulty progression.**
 
@@ -642,7 +673,7 @@ Main-section search queries the complete implemented content set for that sectio
 
 Main-section and subset search must reuse the same canonical records and shared search helpers rather than maintaining parallel indexes or duplicated source-of-truth data.
 
-For the Rig Guide, the landing-page search queries all active implemented Rigs. Core, Beginner, Beginner+, All Rigs, and future implemented tier pages may retain their scoped search fields. The Rig Guide is the first deliberate implementation of this permanent standard; existing sections that do not yet expose landing-page search should be aligned when their searchable navigation is next actively developed rather than changed through unrelated scope.
+For the Rig Guide, the landing-page search queries all active implemented Rigs. Core, Beginner, Beginner+, All Rigs, and implemented tier pages may retain their scoped search fields.
 
 Permanent principle: **search should be available at the section entry point and remain available when the user intentionally narrows the scope.**
 
@@ -692,7 +723,7 @@ Embedded tutorial requirements:
 
 For YouTube, approved implementations use the official embedded player and privacy-enhanced `youtube-nocookie.com` domain. The browser must be allowed to provide the normal HTTP referrer required by YouTube playback.
 
-The Texas Rig trial passed and the pattern has now been validated across completed Beginner/Beginner+/Intermediate Rig tutorials. D053 adds the permanent build-first tutorial-selection and per-tier completeness audit standard.
+The Texas Rig trial passed and the pattern has now been validated across the completed 20-Rig library. D053 adds the permanent build-first tutorial-selection and completeness-audit standard.
 
 Permanent principle: **prefer trustworthy in-context visual instruction without copying third-party media into the repository.**
 
@@ -716,30 +747,39 @@ A search field near the top of the Dashboard is approved future direction, but i
 
 Permanent principle: **search is a direct field interaction, not an extra navigation destination.**
 
-# D051 – Persistent Navigation and Top-Reset View Transitions
+# D051 – Context-Preserving Parent Navigation
 
-Every non-Dashboard application view keeps its applicable navigation controls available while the user scrolls.
+Persistent/floating navigation controls remain the site-wide visual standard for non-Dashboard application views.
 
-The canonical visual treatment is one shared compact sticky/floating navigation container that remains legible, keyboard accessible, touch usable, responsive, and visually subordinate to page content.
+Canonical behavior for standard application views is:
 
-Standard view rules are:
+```text
+Forward navigation
+-> newly opened destination starts at top
 
-- Root application views use the shared floating container with one non-duplicative `← Home` control because Parent and Home would resolve to the same Dashboard destination.
-- Nested browse, search, detail, and other child views use the same shared floating container with `← Parent` and `Home` controls.
-- Renderer-based standard views should generate this markup through the shared navigation helper rather than maintain root-specific and nested-specific markup paths.
-- Specialized workflows may use dedicated control behavior when justified, but should preserve the same floating-container visual treatment unless a deliberate documented exception is approved.
-- A bare sticky navigation button is not the normal root-page pattern.
-- The Dashboard is the normal exception because it is already the application root destination.
+Parent navigation
+-> restores the immediately preceding standard application view
+-> restores that view's applicable UI state
+-> restores that view's prior scroll position
 
-All explicit application view transitions start the destination at the top, including:
+Home navigation
+-> Dashboard starts at top
+-> contextual return state is cleared
+```
 
-- forward navigation,
-- Parent navigation,
-- Home navigation.
+A saved scroll position belongs only to the source context being restored and must never be transferred into a newly opened destination.
 
-The earlier runtime behavior that restored a parent's remembered scroll position is superseded. Application view routing no longer needs per-view or per-Rig remembered scroll-position state for Parent navigation.
+Parent is a contextual return action, not an ordinary forward route to a logical parent. Restoring prior state avoids unnecessary re-navigation while still preventing the older defect in which a newly opened destination inherited source-page scroll.
 
-Permanent principle: **navigation uses one shared visible floating treatment across root and nested views, stays reachable while scrolling, and every destination opens from a predictable top position.**
+Specialized workflows may use separately approved navigation semantics when workflow state requires them. Reel Setup is an approved example of a specialized step-aware navigation context. Such exceptions must be deliberate/documented and do not redefine standard Parent behavior.
+
+**Current implementation status:** Approved architecture. `NAVIGATION-PAGE-STANDARD.md` and `DETAIL-PAGE-STANDARD.md` already record the target behavior. Some broader production routing still uses the older all-transitions top-reset implementation and requires a later deliberate source package/runtime validation.
+
+**Future trigger:** implement/reconcile the remaining production routing when navigation source is deliberately reopened. New specialized workflow exceptions require explicit documentation.
+
+**Canonical owners:** D051, `NAVIGATION-PAGE-STANDARD.md`, `STYLE_GUIDE.md`, and specialized workflow records where applicable.
+
+Permanent principle: **new destinations start at top; Parent restores the prior standard application context; Home resets to Dashboard.**
 
 # D052 – Rig Detail Compact Density
 
@@ -795,7 +835,7 @@ The complete Intermediate tier is:
 
 This tier is the deliberate difficulty step after Beginner+ because these Rigs introduce more precise leader management, bottom-contact tuning, multi-component relationships, or multi-branch rigging while remaining broadly practical for the approved regional library.
 
-Intermediate+, Advanced, and Expert membership remain outside D054 and must be assigned deliberately in their own future segment.
+This historical tier decision remains part of the finalized 20-Rig library.
 
 # D055 – Durable Decision Context Preservation
 
@@ -821,7 +861,7 @@ Permanent principle: **a future session must be able to recover both what was de
 
 **Decision:** Every canonical fact or relationship has exactly one authoritative owner across the application. Ownership is assigned to the entity or domain for which the information is intrinsically meaningful, not to whichever record is most convenient for a current UI, lookup, search path, reverse navigation, or implementation shortcut.
 
-**Reason:** Duplicating the same semantic fact in multiple records creates competing sources of truth, synchronization work, avoidable validators, and ambiguity when the copies disagree. The application already benefits from single-owner patterns such as Rig-to-Tackle usage, Core membership, Rig-to-Knot connection context, and Knot media ownership. The repository audit identified Tackle `mediaIds[]` plus Media `ownerType`/`ownerId` as a concrete violation of that principle and demonstrated the need to make the rule site-wide rather than domain-specific.
+**Reason:** Duplicating the same semantic fact in multiple records creates competing sources of truth, synchronization work, avoidable validators, and ambiguity when the copies disagree.
 
 Ownership decisions use this test:
 
@@ -834,21 +874,164 @@ Bidirectional navigation does not require bidirectional canonical storage. Searc
 
 A second stored representation is allowed only when it represents a genuinely different semantic relationship or when an explicit architectural decision documents why duplication is required. A performance cache/index may exist when scale demonstrates the need, but it remains non-authoritative and must be reproducible from the canonical owner.
 
-For entity-to-Media attachment, Media owns the relationship because `ownerType` + `ownerId` describe what canonical entity the Media record belongs to. Canonical entity records do not store inverse media-ID arrays solely to locate Media records that already identify their owner.
+For entity-to-Media attachment, Media owns the relationship through `ownerType` + `ownerId`. Canonical entity records do not store inverse media-ID arrays solely to locate Media records that already identify their owner.
 
-Section 4 applies this rule immediately to Tackle architecture:
+**Current implementation status:** Approved and active site-wide rule.
 
-- `MEDIA_DATA.ownerType` + `ownerId` is the canonical Tackle-to-Media attachment.
-- Tackle `mediaIds[]` is approved for removal from production.
-- runtime Tackle media lookup will derive matching active Media by `ownerType === "tackle"` and `ownerId === tackle.id`.
-- no separate Tackle-Media relationship registry is introduced.
-- no speculative Media role/order field is introduced until an actual multi-media requirement demonstrates it.
-- removed `mediaIds[]` history is classified **GIT HISTORY ONLY**.
+Section 4 is **PASS / VALIDATED / PRODUCTION IMPLEMENTED**:
 
-**Current implementation status:** The site-wide ownership rule is Approved and governing immediately. Existing production areas that already follow single-owner semantics remain valid. The Tackle/Media production implementation is **Approved / Not Yet Refactored** until `data/tackle.js` and the consuming renderer are updated, packaged, pushed, and runtime/regression validated. Current duplicate Tackle `mediaIds[]` are transitional legacy fields, not approved long-term architecture.
+- all Tackle `mediaIds[]` were removed,
+- `MEDIA_DATA.ownerType` + `ownerId` is canonical attachment,
+- runtime Tackle lookup derives active Media using `ownerType === "tackle"` and `ownerId === tackle.id`,
+- no separate Tackle-Media registry or speculative Media role/order fields were added,
+- removed fields are GIT HISTORY ONLY.
+
+Section 5 applied D056 to Rig cleanup and is **PASS / VALIDATED / PRODUCTION IMPLEMENTED**:
+
+- universally empty Rig `imageIds[]` were removed because future Rig media belongs to Media ownership,
+- universally empty speculative Rig `techniqueIds[]` were removed,
+- `variationIds[]` remains because it owns real Rig-to-Rig relationships,
+- no speculative `targetFishIds[]` was added during cleanup.
+
+Rig↔Technique compatibility ownership remains deliberately unresolved. When Technique implementation begins, choose one semantic owner for simple compatibility or a Decision Knowledge relationship when contextual recommendation semantics are more accurate. Do not populate both Rig and Technique inverse arrays for the same fact.
 
 **Future trigger:** Every new field, relationship, inverse navigation path, cache/index, search metadata proposal, and schema refactor must apply this ownership test during design. Existing domains are reconciled when audited or actively modified. Any exception requires a deliberate documented architecture decision explaining why one canonical owner is insufficient.
 
-**Canonical owners:** `DECISIONS.md` owns this permanent architectural rule. `data-model/09-RELATIONSHIPS.md` owns the operational relationship semantics and validation rules. Each domain data-model document identifies the owner of its own fields and domain-specific relationships.
+**Canonical owners:** `DECISIONS.md` owns this permanent architectural rule. `data-model/09-RELATIONSHIPS.md` owns operational relationship semantics when synchronized. Each domain data-model document identifies the owner of its own fields and domain-specific relationships.
 
 Permanent principle: **ownership follows meaning, not convenience.**
+
+# D057 – Fish Guide Four-State Version 1 Scope
+
+**Decision:** The Fish Guide Version 1 regional scope is Northeast Oklahoma, Southeast Kansas, Southwest Missouri, and Northwest Arkansas.
+
+This Four-State direction is also the Companion's forward regional content focus. Existing validated domains retain their original validation context and are progressively reconciled rather than retroactively rewritten.
+
+**Reason:** The region reflects the user's near-term fishing focus and has substantial freshwater species/method overlap with the earlier Northeast Oklahoma / Southwest Kansas scope, making progressive reconciliation more accurate and lower-risk than project-wide invalidation.
+
+**Current implementation status:** Approved/locked for Fish Guide Phase 0. No Fish production source has yet been changed by the Phase 0 work.
+
+**Future trigger:** apply Four-State adequacy as each domain is audited or materially modified. Significant rewiring requires explicit discussion before implementation.
+
+**Canonical owners:** D057, Fish Phase 0 workstream, `PROJECT.md`, `ROADMAP.md`, and Fish data-model documentation.
+
+# D058 – Fish Habitat and Waterbody Ownership
+
+**Decision:** Fish-owned `habitatTags[]` and `waterbodyTypes[]` remain intrinsic Fish Reference Knowledge and are not collapsed into Current Conditions.
+
+Approved Version 1 waterbody vocabulary:
+
+- Pond
+- Lake
+- Reservoir
+- River
+- Creek
+
+Approved Version 1 habitat vocabulary:
+
+- Grass
+- Timber
+- Brush
+- Rock
+- Current
+- Open Water
+- Shallow Water
+- Deep Water
+- Cold Water
+- Mud
+- Channel
+
+Current Conditions remains a separate semantic domain. Recommendation suitability under current conditions belongs to Decision Knowledge rather than duplicating intrinsic Fish habitat facts.
+
+**Reason:** where a Fish characteristically lives is intrinsic species Reference Knowledge; whether today's conditions make a place/approach suitable is a different fact.
+
+**Current implementation status:** Approved/locked Phase 0 architecture; production Fish implementation pending.
+
+**Future trigger:** revisit only if a second real domain demonstrates a reusable taxonomy/ownership need that cannot be served without changing this model.
+
+**Canonical owners:** Fish data-model/workstream plus D058.
+
+# D059 – Fish Category Registry and Lifecycle Ownership
+
+**Decision:** Fish records store `categoryId` rather than duplicated category display text. A Fish-domain `FISH_CATEGORY_DATA` registry owns category identity, display name, summary, and array order.
+
+Version 1 categories:
+
+- `bass` — Bass
+- `catfish` — Catfish
+- `sunfish-crappie` — Sunfish & Crappie
+- `walleye-sauger` — Walleye & Sauger
+- `trout` — Trout
+- `gar` — Gar
+- `carp` — Carp
+- `drum` — Drum
+- `paddlefish` — Paddlefish
+
+`All Fish` is a browse mode, not a category entity. `categoryId` and biological family remain distinct concepts.
+
+Category records do not own `isActive`. Individual `Fish.isActive` is the sole Fish lifecycle owner; category visibility/counts are derived from active member Fish.
+
+**Reason:** category identity/presentation/order is reusable Fish-domain Reference Knowledge, while activation belongs to the actual Fish entities. A second category lifecycle flag would create conflicting state.
+
+**Current implementation status:** Approved/locked Phase 0 architecture; production implementation pending.
+
+**Future trigger:** revisit only when actual Fish taxonomy/navigation requirements demonstrate a need beyond the current registry.
+
+**Canonical owners:** Fish data-model/workstream plus D059.
+
+# D060 – Northern Rock Bass Identity and Shared Aliases
+
+**Decision:** The canonical Version 1 identity is:
+
+```text
+id: northern-rock-bass
+name: Northern Rock Bass
+scientificName: Ambloplites rupestris
+aliases: Rock Bass, Goggle-Eye
+```
+
+Regionally legitimate aliases may be shared by multiple canonical Fish. `Goggle-Eye` may therefore also apply to another appropriate Ozark species such as Ozark Bass; Search must preserve ambiguity instead of forcing an alias into one false exclusive owner.
+
+All relationships use the stable canonical ID `northern-rock-bass` rather than display/alias text.
+
+**Reason:** the canonical identity is scientifically specific while common regional names can be ambiguous. Modeling the alias honestly is safer for identification than artificially making it unique.
+
+**Current implementation status:** Approved/locked Fish Phase 0 identity; production implementation pending.
+
+**Future trigger:** update only if authoritative taxonomic/regional naming evidence requires a canonical identity correction.
+
+**Canonical owners:** Fish data-model/source documentation and D060.
+
+# D061 – Hierarchical Scoped Search
+
+**Decision:** Search scope is determined before relevance ranking.
+
+Navigation context defines the eligible search universe:
+
+- broader/domain entry points search the approved domain scope,
+- collection/category/subset navigation narrows eligible records,
+- deeper navigation never silently broadens search back to the full domain,
+- future related-knowledge search scopes may be narrower still,
+- future Global Search is a deliberate separate scope rather than an implicit fallback.
+
+Search helper text, examples, placeholders, result labels, and empty-state messages must describe the actual eligible scope.
+
+For Fish Version 1, deliberate searchable identity fields are:
+
+- `name`
+- `aliases[]`
+- `scientificName`
+- `categoryId` resolved through the category registry display name
+- `family`
+
+Do not add `searchKeywords[]` solely to make Fish search work when the same meaning can be derived from canonical identity fields.
+
+Relevance ranking operates only after scope filtering. Scope outranks ranking.
+
+**Reason:** a search performed after the user intentionally narrowed context should respect that choice. Silently returning out-of-scope records makes navigation hierarchy untrustworthy and encourages duplicated search metadata.
+
+**Current implementation status:** Approved/locked architecture. Existing Rig/Knot subset searches already follow scoped-record behavior; Fish helper/empty-state alignment is part of Fish implementation. Global Search remains deferred.
+
+**Future trigger:** apply the same principle to new searchable domains and to future Global Search provider orchestration.
+
+**Canonical owners:** D061, search/navigation standards, and domain-specific search documentation.

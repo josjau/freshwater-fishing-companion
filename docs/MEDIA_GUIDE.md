@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.8  
+**Document Revision:** 1.0.9  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-11
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -24,6 +24,23 @@ Media must be:
 - Useful rather than decorative
 
 Correctness takes priority over polish.
+
+# Media Ownership Architecture
+
+D056 governs canonical entity-to-Media attachment.
+
+Media owns the attachment through:
+
+```text
+Media.ownerType
+Media.ownerId
+```
+
+Entity records do not maintain inverse media-ID arrays merely to locate Media that already identifies its owner. This applies across Fish, Rig, Tackle, Knot, Lure, Technique, and future canonical entity domains unless a later explicit architectural decision documents a genuinely different semantic relationship.
+
+Multiple Media records may share the same `ownerType` + `ownerId` when a demonstrated feature requires multiple assets. If later UX requires role, order, or priority metadata, that information belongs with the Media attachment or another explicitly approved relationship owner because it describes the media relationship. Do not add role/order fields speculatively.
+
+Entity lifecycle and Media lifecycle remain separate. An entity can remain canonical without local media, and a Media record can be inactive independently of its owner.
 
 # Unified Field-Guide Visual System
 
@@ -99,6 +116,8 @@ For instructional composite images:
 # Rig Media
 
 Rig media is accuracy-critical because several components must maintain correct order, orientation, connection, and geometry at the same time.
+
+Future Rig visual/reference attachments follow the shared Media ownership model through `ownerType: "rig"` and the canonical Rig ID. Rig records do not regain inverse `imageIds[]` merely to locate Media.
 
 ## Current Standard
 
@@ -212,6 +231,8 @@ The Fish page may surround the verified photograph with field-guide information,
 
 Tackle is recognition-first. Production recognition media should use a trustworthy real photograph when local reuse rights, subject identity, and presentation quality permit it. When a suitable reusable photograph is unavailable, use an original semi-photorealistic catalog-style reference anchored to verified real-world geometry.
 
+Canonical Tackle records do not own `mediaIds[]`. Current Tackle recognition Media is located through Media-owned `ownerType: "tackle"` + `ownerId`.
+
 Vector, line-art, flat-graphic, or clip-art treatment is not the normal production style for Tackle recognition media. Precise illustration is an exception for mechanically sensitive items only when it materially improves geometry or recognition and must be explicitly identified and reviewed before inclusion in a build.
 
 The approved visual style uses:
@@ -284,11 +305,24 @@ For standalone standard fishing hooks, Wacky/finesse hooks, offset worm hooks, a
 
 # Knot Media
 
-Common fishing knots are approved future instructional-media work.
+The Version 1 Knot library contains 10 canonical Knots and has approved instructional-media coverage for all 10.
 
-Prefer mobile-readable step-by-step diagrams.
+Each current Knot instructional Media record attaches through:
 
-Use:
+```text
+ownerType: "knot"
+ownerId: canonical Knot ID
+```
+
+Current production instructional destinations include external step-by-step animation, illustrated instruction, and interactive 3D instruction where the source passed the method-match and rights review.
+
+Canonical in-app `tyingSteps[]` remain authoritative. External instructional Media supplements those instructions; it does not replace or own canonical Knot tying facts.
+
+Third-party artwork, animation sequences, video, or 3D assets are not copied, bundled, rehosted, extracted, or redistributed unless explicit reuse rights exist.
+
+Current Version 1 uses verified external instructional destinations. Future project-owned diagrams or user-controlled animations remain preferred where they materially improve clarity and can be produced accurately.
+
+For future project-owned Knot diagrams/animations, prefer mobile-readable step-by-step presentation using:
 
 - Numbered steps
 - Clear line paths
@@ -298,11 +332,25 @@ Use:
 - Clear distinction between standing line, tag end, hook/eye, and loops
 - Color coding only when useful and accessible
 
-Static diagrams must remain sufficient even if animation is added later.
+Static instruction must remain sufficient even if animation is added later.
 
-Knot illustrations should be designed as reusable canonical instructional assets so future Rig pages can reference the appropriate Knot without duplicating the full tying sequence inside each Rig.
+Reusable Knot instructional assets should support connected knowledge without duplicating the full tying sequence inside every Rig.
 
-The exact initial knot set and Rig-to-Knot relationship model remain open until the Knots segment.
+# Local Production Media vs External Instructional Media
+
+`data/media.js` may contain both locally bundled production Media and external instructional Media records.
+
+## Local production Media
+
+Examples include current Tackle recognition WebP assets and future locally owned/licensed Fish, Rig, Knot, Lure, or Technique media.
+
+Locally bundled assets require appropriate redistribution rights and must satisfy the applicable technical/media standards in this guide.
+
+## External instructional Media records
+
+External records may store provider, destination, rights/provenance, action label, and other approved metadata without copying the third-party asset into the repository.
+
+An external Media record does not imply local redistribution permission. Rights fields such as `localReuseAllowed`, attribution requirements, and source/review metadata must accurately describe what the project is permitted to do.
 
 # Lure Media
 
@@ -408,7 +456,7 @@ Preferred behavior:
 
 `data/media.js` owns reusable media metadata.
 
-Retain:
+For locally bundled project/reusable assets, retain as applicable:
 
 - License status
 - License type
@@ -419,6 +467,8 @@ Retain:
 - Commercial-use permission
 - Modification permission
 - Review date
+
+For external instructional Media, retain the equivalent rights/provenance fields needed to state linking, preview, attribution, and local-reuse permissions accurately.
 
 Original Companion art is recorded as original project media.
 
@@ -436,9 +486,10 @@ Before approval, verify:
 - Forest Journal compatibility
 - No unnecessary branding
 - Acceptable file size
-- Correct path
-- Appropriate alt text
-- Complete licensing metadata
+- Correct path or external destination
+- Appropriate alt text or instructional label where applicable
+- Complete licensing/rights metadata
+- Correct `ownerType` + `ownerId` attachment when stored in Media
 
 ## Rig
 

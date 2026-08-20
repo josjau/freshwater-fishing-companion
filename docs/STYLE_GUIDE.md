@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.3.3
+**Document Revision:** 1.3.4
 **Document Status:** Approved
-**Last Updated:** 2026-08-18
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -182,7 +182,7 @@ Core is cross-cutting rather than a difficulty or category. A Core item may coex
 Examples include:
 
 - **Core Rigs**
-- Future **Core Knots**
+- **Core Knots**
 - Other explicitly approved `Core` learning/reference groups.
 
 Use restrained Forest Journal design flairs rather than a separate visual system. Appropriate treatments include:
@@ -240,10 +240,27 @@ Requirements:
 - keep Parent and Home controls visible while scrolling,
 - preserve keyboard focus and practical touch interaction,
 - keep the floating surface compact and visually subordinate to page content,
-- avoid covering important content or creating a large mobile toolbar,
-- every explicit application navigation transition opens the destination at the top.
+- avoid covering important content or creating a large mobile toolbar.
 
-Do not restore remembered parent scroll positions through application Parent controls. Predictable top-of-page arrival is the standard.
+Canonical navigation behavior for standard application views:
+
+```text
+Forward
+-> newly opened destination starts at top
+
+Parent
+-> restores the immediately preceding standard application view
+-> restores applicable prior UI state
+-> restores that view's prior scroll position
+
+Home
+-> Dashboard starts at top
+-> contextual return state is cleared
+```
+
+A saved scroll position belongs only to the source context being restored and must never transfer into a newly opened destination.
+
+Specialized workflows may use separately approved navigation semantics where workflow state requires them. Reel Setup is an approved example of a specialized step-aware navigation context. Such exceptions must be deliberate and documented and do not redefine standard Parent behavior.
 
 # Rig Detail Density
 
@@ -340,7 +357,7 @@ When relevant, include:
 - Related Documents
 - Implementation Status
 
-Document Status uses `Draft`, `Approved`, `Superseded`, or `Archived`. Implementation Status uses `Current`, `Approved / Not Implemented`, `In Progress`, or `Validated`. `Document Revision` and `Application Version`/`Application Baseline` are separate concepts.
+Document Status uses `Draft`, `Approved`, `Superseded`, or `Archived`. Detailed implementation-state terminology and transitions are governed by `DEVELOPMENT_WORKFLOW.md`; this Style Guide does not maintain a competing status vocabulary. `Document Revision` and `Application Version`/`Application Baseline` are separate concepts.
 
 Documentation must distinguish current implementation from approved future work. Do not describe a future design as already implemented. `Validated` is used only after actual repository/runtime verification where applicable.
 
@@ -348,7 +365,7 @@ Material durable decisions must also preserve enough context to recover the deci
 
 # Source Replacement Standard
 
-Complete-file replacement is the default project delivery method.
+Complete-file replacement is the default project delivery method. Complete-file replacement describes the delivery artifact; it does not authorize broad or unrelated edits.
 
 For an existing source file:
 
@@ -360,6 +377,8 @@ For an existing source file:
 6. Package coherent multi-file updates together when practical.
 
 An unrelated diff in a full-file replacement is a failure unless the unrelated change was explicitly authorized.
+
+Coherent repository changes should follow the commit, delivery, and session-closeout rules in `DEVELOPMENT_WORKFLOW.md`.
 
 See `DEVELOPMENT_WORKFLOW.md`.
 

@@ -1,15 +1,17 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 2.3.0  
+**Document Revision:** 2.3.1  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-17
+**Last Updated:** 2026-08-19
 
 # Purpose
 
 This document preserves milestone history. Historical milestone completion records describe what was validated at that time; later approved architecture may supersede the workflow or media approach without rewriting history.
 
 When a historical milestone conflicts with current architecture, `DECISIONS.md`, `ARCHITECTURE.md`, `ROADMAP.md`, and `HANDOFF.md` govern the current state.
+
+**Current navigation supersession note:** historical milestone entries that record Parent/Home top-reset behavior remain valid evidence of what passed at that time. D051 has since been revised for standard application views: Forward opens the new destination at top, Parent restores the immediately preceding standard application context including applicable UI state and prior scroll position, and Home opens Dashboard at top and clears contextual return state. Specialized workflows such as Reel Setup may use separately approved navigation semantics.
 
 # Completed
 
@@ -164,6 +166,8 @@ Validated source/data/media scope:
 
 Validated runtime/regression coverage included mobile and desktop Rig detail presentation, Core/Beginner/Beginner+/All membership and search scope, Wacky/Ned/Weightless component/readiness behavior, worm recognition media, Texas tutorial playback in Brave, Fish landing-page search, clear controls, `Ned` ranking Ned Rig first, sticky navigation, Parent/Home top reset, Fish common/scientific/category search, and derived Tackle `Used In` relationships.
 
+**Current note:** the top-reset Parent behavior above is preserved as historical validation evidence. Revised D051 now governs standard application Parent behavior and supersedes that historical navigation rule for future/current architecture.
+
 The compact-detail standard remains Rig-specific. Dashboard search is approved future direction but remains deferred pending deliberate cross-domain scope and result-presentation design. Dashboard card density remains unchanged.
 
 See:
@@ -315,7 +319,7 @@ The Knots milestone is closed. Further Knot work is enhancement/defect scope unl
 The approved development order remains:
 
 1. **Knots** — completed / validated / closed.
-2. **Fish Guide** — next approved milestone.
+2. **Fish Guide** — next approved product milestone; currently paused behind Repository Audit Cleanup.
 3. **What Should I Throw** — recommendation/Decision Knowledge milestone, including the approved `How to Rig It` versus `How to Fish It` instructional split.
 4. **Tackle Reference / Find Tackle** — searchable canonical Tackle discovery independent of remembering a Rig; results expose derived `Used In` Rig relationships and other connected knowledge.
 5. **Settings / User Data Architecture Gate** — settle persistence, retention, backup/restore, schema migration, user/profile model, themes, and preference ownership before persistent User Knowledge features.
@@ -324,15 +328,12 @@ The approved development order remains:
 8. **Global Search** — design after the major searchable domains and entity models are established; preserve relevance-first behavior and avoid an undifferentiated result dump.
 9. **Favorites final decision** — defer implementation until near project completion and decide whether to keep, narrow, replace, or remove it based on actual workflow value.
 
-`ROADMAP.md` revision 0.3.3 remains the canonical planning sequence until its status metadata is reconciled; the ordering itself has not changed.
+`ROADMAP.md` revision 0.3.4 or later remains the canonical planning sequence; the ordering itself has not changed.
 
-# Next Segment
+# Current Active Workstream and Next Product Milestone
 
-The next approved milestone is **Fish Guide**.
+**Current active workstream:** Repository Audit Cleanup. Sections 1–5 are complete; Section 6 — Governing Documents Comprehensive Synchronization — is active.
 
-Exact next-session start:
+**Next product milestone:** Fish Guide. Fish Guide remains the next approved product milestone but is temporarily paused until the Repository Audit Cleanup Gate and final re-audit are closed.
 
-1. Re-fetch current GitHub `main` before proposing Fish Guide source edits.
-2. Review existing Fish data, search, media, routing, and detail-page behavior against the current architecture.
-3. Select the first Fish Guide build/planning segment deliberately.
-4. Preserve the validated Dashboard priority order, shared floating navigation, connected-knowledge behavior, Rig/Knot navigation, and Reel Setup behavior unless an approved Fish Guide requirement explicitly changes them.
+When the cleanup gate closes, resume Fish Guide from the current Phase 0 architecture state rather than treating it as a new milestone restart.

@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.3.4  
+**Document Revision:** 0.3.5  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-17
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -21,6 +21,19 @@ Features may move only through an explicit project decision. A new build segment
 - Finish and validate the current segment before beginning the next.
 - Resolve foundational User Knowledge storage questions before building features that depend on persistent user data.
 - Prioritize practical first-time-angler blockers before advanced fishing specializations.
+
+# Regional Content Direction
+
+The Companion's forward Version 1 regional content focus is:
+
+- Northeast Oklahoma
+- Southeast Kansas
+- Southwest Missouri
+- Northwest Arkansas
+
+Existing validated domains retain their original selection/validation context until deliberately reconciled. Regional reconciliation is progressive and additive by default: important missing regional coverage may be added when a domain is audited or materially modified, but valid existing content is not automatically removed or invalidated merely because the geographic focus expanded.
+
+The validated 20-Rig library was originally selected for Northeast Oklahoma and Southwest Kansas. It remains canonical and will receive a later additive Four-State adequacy audit to identify any materially important missing regional Rig or specialized setup.
 
 # Current Project State
 
@@ -71,18 +84,20 @@ Final closeout record:
 
 `workstreams/KNOT-INTEGRATED-REGRESSION.md`
 
-## Next Approved Milestone — Fish Guide
+## Next Approved Product Milestone — Fish Guide
 
-The Fish Guide is now unblocked because the Knots milestone is formally closed.
+Fish Guide remains the next approved product milestone in the canonical product sequence.
 
-The next session must begin by re-fetching current GitHub `main`, reviewing the existing Fish data/search/media/detail implementation, and selecting the first Fish Guide planning/build segment deliberately.
+It is currently paused behind the Repository Audit Cleanup Gate. Repository Audit Sections 1–5 are complete and Section 6 — Governing Documents Comprehensive Synchronization — is active. Fish Guide Phase 0 resumes only after the audit gate and final re-audit are closed.
+
+Repository Audit Cleanup is a maintenance/governance gate, not a numbered product milestone and does not change the product roadmap ordering below.
 
 # Canonical Build Sequence After Rig Guide
 
 The approved order remains:
 
 1. **Knots** — completed / validated / closed
-2. **Fish Guide** — next approved milestone
+2. **Fish Guide** — next approved product milestone; currently paused behind Repository Audit Cleanup
 3. **What Should I Throw**
 4. **Tackle Reference / Find Tackle**
 5. **Settings / User Data Architecture Gate**
@@ -244,13 +259,13 @@ Fly fishing and fly-line-specific knot systems remain **Parking Lot** for Versio
 
 # 2. Fish Guide
 
-**Next Approved Milestone**
+**Next Approved Product Milestone / Currently Paused Behind Repository Audit Cleanup**
 
 Expand the Fish Guide into a complete field-reference experience rather than only search/data foundation.
 
 The Fish Guide milestone should deliberately review:
 
-- supported regional Fish library and scope,
+- supported Four-State regional Fish library and scope,
 - identification-safe media,
 - practical identification traits,
 - similar-species navigation,
