@@ -1,28 +1,28 @@
 # Freshwater Fishing Companion
 
 **Document:** 06-LURES.md  
-**Document Revision:** 0.2.0  
+**Document Revision:** 0.2.1  
 **Document Status:** Draft  
-**Implementation Status:** Approved Domain / Schema Not Implemented  
+**Implementation Status:** Deferred / Separate Domain Not Yet Approved  
 **Decision Baseline:** D009, D015, D056
 
 ---
 
 # Purpose
 
-This document defines the architectural boundary for a future canonical Lure domain in Freshwater Fishing Companion.
+This document preserves the architectural questions for a possible future canonical Lure domain in Freshwater Fishing Companion.
 
-A Lure represents a reusable artificial-bait concept rather than an individual commercial product or a user-owned item.
+A possible Lure entity would represent a reusable artificial-bait concept rather than an individual commercial product or a user-owned item.
 
-No separate canonical Lure production dataset is implemented on current `main`. Some lure-like functional concepts currently exist in canonical Tackle because Tackle supports Rig requirements, recognition, search, and readiness. Section 7 does not split or migrate those records.
+No separate canonical Lure production dataset is implemented or approved for implementation on current `main`. Some lure-like functional concepts currently exist in canonical Tackle because Tackle supports Rig requirements, recognition, search, and readiness.
 
 ---
 
 # Current Status
 
-**Approved domain concept; production schema not implemented.**
+**Draft / Deferred — separate Lure domain not yet approved for implementation.**
 
-The three-layer architecture supports a future canonical Lure domain as Reference Knowledge, but its exact field set and its boundary with canonical Tackle require a dedicated implementation gate before production data is created.
+The three-layer architecture can accommodate a future canonical Lure domain as Reference Knowledge if demonstrated features require one, but the project has not yet approved that separate domain as the required architecture. Its necessity, exact field set, and boundary with canonical Tackle require a dedicated Lure/Tackle architecture gate before production data is created.
 
 Commercial Product Definitions remain separately deferred. User-owned lure items belong to User Knowledge/My Tackle when that schema is implemented.
 
@@ -30,7 +30,7 @@ Commercial Product Definitions remain separately deferred. User-owned lure items
 
 # Design Philosophy
 
-A future canonical Lure definition should describe a reusable lure family or fishing concept, not duplicate:
+If a separate canonical Lure domain is approved, a Lure definition should describe a reusable lure family or fishing concept, not duplicate:
 
 - a manufacturer-specific commercial product,
 - a user-owned item,
@@ -43,7 +43,7 @@ The Lure/Tackle boundary must be explicit before implementation because current 
 
 # Foundation Fields
 
-If a separate canonical Lure dataset is implemented, each Lure will inherit the Foundation entity standard:
+If a separate canonical Lure dataset is approved and implemented, each Lure will inherit the Foundation entity standard:
 
 ```text
 id
@@ -70,7 +70,7 @@ Earlier planning identified potentially useful concepts such as:
 - beginner guidance,
 - and common mistakes.
 
-These are design inputs, **not approved production fields**. Their final representation depends on the demonstrated Lure features and on the boundary with canonical Tackle and future Product Definitions.
+These are design inputs, **not approved production fields**. Their final representation depends on demonstrated Lure features and on the boundary with canonical Tackle and future Product Definitions.
 
 ---
 
@@ -94,9 +94,9 @@ Reverse navigation must normally be derived from the canonical owner.
 
 # Media Ownership
 
-Future Lure records must not own inverse `imageIds[]` solely to locate Media.
+If a Lure domain is approved, Lure records must not own inverse `imageIds[]` solely to locate Media.
 
-Canonical attachment belongs to Media through:
+Canonical attachment would follow the shared Media ownership model:
 
 ```text
 ownerType: "lure"
@@ -109,7 +109,7 @@ Any media role or ordering semantics belong to Media or an explicitly justified 
 
 # Product Boundary
 
-A canonical Lure concept may eventually relate to multiple commercial products, but Product Definition modeling is not yet implemented.
+A future canonical Lure concept could relate to multiple commercial products, but Product Definition modeling is not yet implemented.
 
 For example, a reusable stick-worm concept and manufacturer-specific products are different semantic entities. The project must not create product records or product relationships until a product-specific feature establishes the required schema and ownership.
 
@@ -117,7 +117,7 @@ For example, a reusable stick-worm concept and manufacturer-specific products ar
 
 # User Knowledge Boundary
 
-A user's actual lure ownership belongs to My Tackle/User Knowledge, not to the canonical Lure definition.
+A user's actual lure ownership belongs to My Tackle/User Knowledge, not to a canonical Lure definition.
 
 Persistent ownership must be created or changed only through explicit ownership-management workflows when My Tackle becomes authoritative.
 
@@ -127,17 +127,17 @@ Persistent ownership must be created or changed only through explicit ownership-
 
 Future lure recommendations may consider Fish, Conditions, Technique, season, user inventory, and other context.
 
-Recommendation ranking, rationale, confidence, alternatives, and situational suitability are Decision Knowledge. They must not be copied into canonical Lure records merely to simplify rendering.
+Recommendation ranking, rationale, confidence, alternatives, and situational suitability are Decision Knowledge. They must not be copied into canonical reference records merely to simplify rendering.
 
 ---
 
 # Implementation Gate
 
-Before a separate canonical Lure production dataset is created, the Lure architecture gate must settle at least:
+Before a separate canonical Lure production dataset is approved or created, the Lure/Tackle architecture gate must settle at least:
 
 1. whether a separate Lure entity is required by demonstrated features,
 2. the boundary between Lure and current canonical Tackle,
-3. the canonical Lure field set,
+3. the canonical Lure field set if the domain is approved,
 4. Fish/Rig/Technique/Condition relationship ownership,
 5. Product Definition relationship ownership if commercial products are in scope,
 6. My Tackle mapping behavior,
