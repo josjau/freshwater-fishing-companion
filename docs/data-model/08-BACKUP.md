@@ -1,18 +1,18 @@
 # Freshwater Fishing Companion
 
 **Document:** 08-BACKUP.md  
-**Document Revision:** 0.2.0  
+**Document Revision:** 0.2.1  
 **Document Status:** Draft  
-**Implementation Status:** Approved Direction / Not Implemented  
-**Decision Baseline:** D013, D029, D056
+**Implementation Status:** Deferred / Not Implemented / Architecture Not Yet Approved  
+**Decision Baseline:** D029, D056
 
 ---
 
 # Purpose
 
-This document defines the approved architectural direction for future backup and restore of Freshwater Fishing Companion User Knowledge.
+This document preserves design requirements and questions for possible future backup and restore of Freshwater Fishing Companion User Knowledge.
 
-No authoritative production backup/restore system or Version 1 backup schema is implemented on current `main`.
+No authoritative production backup/restore system, approved backup architecture, or Version 1 backup schema is implemented on current `main`.
 
 Backup design must follow the User Knowledge schemas that actually become authoritative rather than pre-committing speculative fields or a monolithic user-data structure.
 
@@ -20,37 +20,37 @@ Backup design must follow the User Knowledge schemas that actually become author
 
 # Current Status
 
-**Approved Direction / Not Implemented.**
+**Draft / Deferred / Not Implemented — backup and restore architecture must be approved at the User Data architecture gate.**
 
-The project is local-first and intends to provide user-controlled backup and restore. The exact backup file schema, storage technology, schema-version representation, migration pipeline, and included User Knowledge domains remain implementation-gate decisions.
+The project is local-first, so user-controlled backup and restore is a reasonable future capability to evaluate. That direction is not yet a settled implementation architecture. The exact backup scope, file schema, storage technology, schema-version representation, migration pipeline, and included User Knowledge domains remain architecture-gate decisions.
 
-Current transitional Rig-readiness local state is not authoritative My Tackle ownership and must not be promoted into ownership merely because backup functionality is later added.
-
----
-
-# Design Principles
-
-Future backups should be:
-
-- user-controlled,
-- portable,
-- version-aware,
-- validated before restore,
-- reliable and failure-safe,
-- human-readable when practical,
-- limited to User Knowledge and required compatibility metadata.
-
-Reference Knowledge is application-owned and should normally be restored through the application rather than duplicated as authoritative user backup data.
+Current transitional Rig-readiness local state is not authoritative My Tackle ownership and must not be promoted into ownership merely because backup functionality is later considered.
 
 ---
 
-# Backup Scope — To Be Derived from Implemented User Knowledge
+# Candidate Design Principles — Revalidate at Architecture Gate
 
-A future standard backup may include authoritative User Knowledge domains such as Profile, Preferences, Favorites, My Tackle, Fishing Setups, or Catch Log **only after those domains have implemented schemas**.
+If backup/restore is approved, the design should evaluate requirements such as:
 
-This document does not approve those domains' candidate fields.
+- user control,
+- portability,
+- version awareness,
+- validation before restore,
+- reliable and failure-safe behavior,
+- human readability when practical,
+- limiting authoritative backup content to User Knowledge and required compatibility metadata.
 
-The backup implementation must explicitly classify transitional/cache/session state so temporary state is not mistaken for persistent user ownership or history.
+Reference Knowledge is application-owned and should normally be restored through the application rather than duplicated as authoritative user backup data unless a later approved requirement justifies a historical snapshot.
+
+---
+
+# Backup Scope — Unresolved
+
+A future backup could include authoritative User Knowledge domains such as Profile, Preferences, Favorites, My Tackle, Fishing Setups, or Catch Log only after those domains have implemented schemas and the backup architecture gate approves their inclusion.
+
+This document does not approve those domains' candidate fields or commit them to backup scope.
+
+Any future implementation must explicitly classify transitional/cache/session state so temporary state is not mistaken for persistent user ownership or history.
 
 ---
 
@@ -58,56 +58,47 @@ The backup implementation must explicitly classify transitional/cache/session st
 
 Earlier planning proposed JSON with concepts such as backup version, application version, date, schema version, and User Data.
 
-JSON remains a reasonable candidate because it is portable and inspectable, but Section 7 does **not** treat that earlier proposal as an implemented Version 1 contract.
+JSON remains a candidate because it is portable and inspectable, but it is **not an approved Version 1 contract**.
 
-The implementation gate must choose the exact envelope and metadata after authoritative User Knowledge schemas exist.
+The architecture gate must choose the exact envelope and metadata after authoritative User Knowledge schemas exist.
 
 ---
 
-# Versioning and Migration
+# Versioning and Migration — Candidate Requirements
 
-Future backups must identify enough schema/application compatibility information to determine whether a restore is:
+If backup/restore is approved, the architecture should provide enough schema/application compatibility information to determine whether a restore is:
 
 - directly compatible,
 - safely migratable,
 - or unsupported.
 
-Migration must preserve user data whenever practical, report material changes, and never silently discard information.
+Migration should preserve user data whenever practical, report material changes, and never silently discard information.
 
 Exact version fields and migration mechanics remain unresolved until implementation.
 
 ---
 
-# Restore Safety
+# Restore Safety — Candidate Requirement
 
-A future restore workflow must be transactional from the user's perspective.
+Any future restore implementation should be transactional from the user's perspective and must not leave partially replaced User Knowledge after a failed validation or restore.
 
-At minimum it should:
-
-1. parse and validate the selected backup,
-2. verify compatibility,
-3. preserve the existing authoritative User Knowledge before destructive replacement,
-4. perform any approved migration,
-5. restore only after validation succeeds,
-6. report success or failure clearly.
-
-A failed validation or restore must not leave partially replaced User Knowledge.
+The architecture gate must define the exact validation, safety-copy, migration, replacement/merge, rollback, and reporting behavior before implementation.
 
 ---
 
 # Validation
 
-The eventual validator must check the actual implemented backup contract, including required metadata, schema compatibility, record integrity, canonical references where applicable, and User Knowledge field validation.
+The eventual validator must check the actual approved backup contract. Potential checks include required metadata, schema compatibility, record integrity, canonical references where applicable, and User Knowledge field validation.
 
 Imported text remains untrusted User Knowledge and follows the same rendering/sanitization boundary as manually entered data.
 
 ---
 
-# Import and Export
+# Import and Export — Unresolved
 
-User-controlled export/import is part of the approved direction.
+User-controlled export/import is a candidate capability, not an approved current workflow.
 
-The exact behavior — full replacement, merge, selective restore, conflict handling, and file selection/storage — remains unresolved until implementation requirements are approved.
+Full replacement, merge, selective restore, conflict handling, file selection/storage, and failure recovery remain unresolved until the User Data architecture gate approves requirements.
 
 No current document should state that Version 1 performs complete restore as though that behavior already exists.
 
@@ -115,9 +106,9 @@ No current document should state that Version 1 performs complete restore as tho
 
 # Privacy
 
-Backup files belong to the user.
+Any future backup design must preserve the project's local-first boundary and treat backup files as user-controlled data.
 
-The architecture does not require cloud storage or an online account. If optional cloud providers are added later, they require separate approval and must not become mandatory for local backup/restore.
+Cloud storage or an online account must not be assumed as a required dependency. Any optional external-storage provider would require separate approval.
 
 ---
 
@@ -125,30 +116,31 @@ The architecture does not require cloud storage or an online account. If optiona
 
 Canonical Fish, Rigs, Knots, Tackle, Media, and other Reference Knowledge remain application-owned.
 
-A backup may retain stable canonical IDs referenced by User Knowledge, but it should not create a second authoritative copy of the canonical entities themselves unless a later historical-snapshot requirement explicitly justifies it.
+If backup is approved, stable canonical IDs referenced by User Knowledge may need compatibility handling, but backup must not create a second authoritative copy of canonical entities unless a later historical-snapshot requirement explicitly justifies it.
 
 ---
 
-# Implementation Gate
+# Architecture Gate
 
-Before backup/restore production work begins, settle at least:
+Before backup/restore production work begins, the User Data architecture gate must decide and approve at least:
 
-1. which implemented User Knowledge domains are included,
-2. backup envelope and file format,
-3. schema/application compatibility metadata,
-4. validation rules,
-5. migration behavior,
-6. transactional restore/safety-copy behavior,
-7. import/export and conflict semantics,
-8. treatment of transitional/session/cache state,
-9. canonical-reference integrity behavior,
-10. privacy and optional external-storage boundaries.
+1. whether backup/restore is in the applicable product scope,
+2. which implemented User Knowledge domains are included,
+3. backup envelope and file format,
+4. schema/application compatibility metadata,
+5. validation rules,
+6. migration behavior,
+7. transactional restore/safety-copy behavior,
+8. import/export and conflict semantics,
+9. treatment of transitional/session/cache state,
+10. canonical-reference integrity behavior,
+11. privacy and optional external-storage boundaries.
 
 ---
 
 # Future Enhancements
 
-Potential later capabilities include automatic backup reminders, encryption, optional cloud providers, selective restore, and backup comparison. These are feature candidates rather than current schema commitments.
+Potential later capabilities include automatic backup reminders, encryption, optional cloud providers, selective restore, and backup comparison. These are feature candidates rather than current architecture commitments.
 
 ---
 
