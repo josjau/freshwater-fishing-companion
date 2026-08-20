@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Navigation Page Standard
 
-**Document Revision:** 1.0.5  
+**Document Revision:** 1.0.6  
 **Document Status:** Approved  
 **Implementation Status:** Current / Shared Floating Navigation Appearance PASS / Context-Restoration Revision Approved / Implementation Pending  
-**Last Updated:** 2026-08-18
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -36,9 +36,23 @@ The hierarchy should remain concise and visually uncluttered. New record categor
 
 # Persistent Navigation Component
 
-Every non-Dashboard application view uses the site-wide floating-navigation standard defined in `workstreams/SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md`.
+Every non-Dashboard application view uses the shared site-wide floating-navigation standard defined here.
 
-The canonical visual component is the shared floating navigation container.
+The canonical visual component is the shared `.page-navigation-group` floating navigation container. For renderer-based application views, `buildPageNavigationMarkup()` is the canonical shared markup path when practical.
+
+The shared container owns the floating treatment, including:
+
+- sticky positioning,
+- visible container background,
+- border,
+- padding,
+- rounded shape,
+- shadow,
+- backdrop treatment,
+- responsive wrapping,
+- shared spacing around its navigation controls.
+
+Individual `.page-navigation` controls are the buttons inside that container. A bare sticky `.page-navigation` button is not the normal site-wide pattern.
 
 Rules:
 
@@ -47,7 +61,7 @@ Rules:
 - Renderer-based pages should use the shared `buildPageNavigationMarkup()` path rather than duplicating navigation markup.
 - A bare sticky navigation button is not the normal root-page treatment.
 - New sections and new nested pages inherit this standard automatically; they should not create a separate navigation appearance merely because the page is new or belongs to a different domain.
-- Specialized workflows may retain dedicated navigation behavior when justified, but should reuse the established floating-container visual treatment unless an explicit documented exception is approved.
+- Specialized workflows may retain dedicated navigation behavior when justified. Their custom navigation should replace the standard container rather than nesting a second floating shell, and should reuse the established floating-container visual treatment unless an explicit documented exception is approved.
 - Navigation must remain keyboard accessible, touch usable, responsive, and visible without obscuring content.
 - Forward navigation opens a newly selected destination at the top.
 - Parent navigation restores the immediately preceding standard application view, including its applicable UI state and prior scroll position.
@@ -55,6 +69,8 @@ Rules:
 - A saved scroll position belongs only to the saved source context and must never transfer to a newly opened destination.
 
 The Dashboard itself is the normal exception because it is already the application root destination.
+
+The earlier standalone `SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md` workstream is historical implementation/validation provenance only. Its durable component rules are incorporated here, while its earlier Parent-to-top runtime validation is superseded by the approved 2026-08-18 context-restoration revision above.
 
 ## Runtime Validation Status
 
@@ -263,13 +279,14 @@ The Knot root uses the same shared floating navigation container as nested Knot 
 
 The current production Rig/Knot browse implementations already scope returned records to their selected subsets. Their static subset helper/example text predates the 2026-08-18 contextual-helper requirement and should be aligned when those search presentations are next deliberately edited rather than through unrelated Fish production scope.
 
-The Knot-specific implementation details remain controlled by `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`.
+Historical Knot landing/search/package implementation records are retained under `archive/workstreams/knots/`; they provide provenance but do not govern current navigation behavior. Current navigation behavior is governed by this standard together with `STYLE_GUIDE.md` and applicable durable decisions.
 
 # Related Documents
 
 - `STYLE_GUIDE.md`
 - `DETAIL-PAGE-STANDARD.md`
-- `workstreams/SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md`
-- `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`
-- `workstreams/KNOT-SEARCH-APPROVAL.md`
-- `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
+- `DECISIONS.md`
+- `workstreams/KNOT-INTEGRATED-REGRESSION.md`
+- `archive/workstreams/knots/KNOT-LANDING-PAGE-APPROVAL.md` — historical provenance
+- `archive/workstreams/knots/KNOT-SEARCH-APPROVAL.md` — historical provenance
+- `archive/workstreams/knots/KNOT-PRODUCTION-PACKAGE-2.md` — historical provenance
