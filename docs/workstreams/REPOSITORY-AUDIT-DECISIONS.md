@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.15  
+**Document Revision:** 1.0.16  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -633,36 +633,42 @@ No production source/data/media/UI/configuration changed during Section 9.
 # Section 10 — Stale Git Branch
 
 **Decision:** DELETE `agent/rig-guide-closeout` AFTER UNIQUE-MATERIAL REVIEW  
-**Status:** APPROVED / DELETION PENDING
+**Status:** PASS / GITHUB-VERIFIED / CLOSED
 
-Current remote branch inventory contains:
+Pre-deletion branch inventory contained:
 
 - `main`
 - `agent/rig-guide-closeout`
 
-Comparison against current `main` shows the stale branch is **251 commits behind** and **4 commits ahead** of `main`; there is no open pull request for the branch.
+Comparison against `main` showed the stale branch was **251 commits behind** and **4 commits ahead** of `main`; there was no open pull request for the branch.
 
-The branch-only material was inspected before approving deletion. It includes:
+The branch-only material was inspected before deletion. It included:
 
 - `data/rig-closeout-media.js`,
 - one `index.html` script-load addition for that staging file,
 - six older Tackle recognition-image versions.
 
-No unique material requires preservation:
+No unique material required preservation:
 
-- `data/rig-closeout-media.js` is an obsolete staging implementation that writes inverse `mediaIds[]` into Tackle records; Section 4/D056 later removed that duplicate ownership and made Media `ownerType` + `ownerId` canonical.
-- The six media concepts are now integrated directly into current `data/media.js` using the later validated `0.4.1` records and replacement assets.
-- The branch `index.html` addition exists only to load the obsolete staging file.
-- The branch Handoff describes the superseded 13-Rig / 23-Tackle Intermediate state.
+- `data/rig-closeout-media.js` was an obsolete staging implementation that wrote inverse `mediaIds[]` into Tackle records; Section 4/D056 later removed that duplicate ownership and made Media `ownerType` + `ownerId` canonical.
+- The six media concepts are integrated directly into current `data/media.js` using later validated `0.4.1` records and replacement assets.
+- The branch `index.html` addition existed only to load the obsolete staging file.
+- The branch Handoff described the superseded 13-Rig / 23-Tackle Intermediate state.
 
-**Retirement classification:** DELETE. The branch-only implementation is superseded and has no independent audit/provenance/reconstruction value requiring an archive copy.
+**Retirement classification:** DELETE. The branch-only implementation was superseded and had no independent audit/provenance/reconstruction value requiring an archive copy.
 
-The user explicitly approved remote branch deletion on 2026-08-20. Section 10 remains open until the remote branch is actually deleted and GitHub verification confirms the stale branch no longer exists.
+The user deleted the remote branch through GitHub Desktop on 2026-08-20. Post-deletion GitHub branch inventory returned exactly `main`; the stale branch no longer exists remotely.
+
+Controlling closeout:
+
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-10-CLOSEOUT.md`
+
+No production source/data/media/UI/configuration on `main` changed during Section 10.
 
 # Next Audit Action
 
-Complete **Section 10 — Stale Git Branch** by deleting `agent/rig-guide-closeout`, then verify the remote branch inventory and create the Section 10 closeout record.
+Proceed to **Section 11 — `.gitignore` / Repository Hygiene Prevention**.
 
-After Section 10 closes, proceed to **Section 11 — `.gitignore` / Repository Hygiene Prevention**.
+Before any Section 11 change, perform a fresh repository preflight and propose a deliberately narrow ignore policy based on actual repository/workflow artifact risks. Do not add broad patterns that could hide legitimate project assets.
 
 Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections, final read-only re-audit, mandatory drift-prevention review/approval, and final documentation closeout are complete.
