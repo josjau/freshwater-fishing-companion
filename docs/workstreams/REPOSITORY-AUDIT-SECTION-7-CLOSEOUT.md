@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** REPOSITORY-AUDIT-SECTION-7-CLOSEOUT.md  
-**Status:** CLOSED — PASS  
+**Status:** CLOSED — PASS / CORRECTED 2026-08-19  
 **Section:** 7 — Data-Model Documentation Synchronization  
 **Date:** 2026-08-19
 
@@ -12,6 +12,8 @@
 This document records the validation and closeout of Repository Audit Section 7 — Data-Model Documentation Synchronization.
 
 Section 7 reconciled `docs/data-model/*` against the current production schemas and the governing architecture/decision baseline without changing production runtime source.
+
+A later Sections 1–8 decision-precedence reconciliation found that the original Section 7 synchronization over-promoted the separate Lure domain and Backup architecture to approved status without a governing decision supporting those exact approvals. That status-language defect has been corrected without changing the substantive deferred design questions or any production source.
 
 ---
 
@@ -55,7 +57,7 @@ docs/data-model/09-RELATIONSHIPS.md
 
 ## Implemented Reference Knowledge
 
-Documentation now distinguishes and accurately describes the validated production domains:
+Documentation distinguishes and accurately describes the validated production domains:
 
 - Fish current production schema,
 - 20-Rig canonical library and current Rig schema,
@@ -72,15 +74,19 @@ The approved Fish Guide Phase 0 target is documented separately from the current
 
 Current Knot task guidance and Reel & Line Setup guidance are documented as Decision Knowledge. Their workflow/ranking fields are not treated as additions to canonical Knot, Rig, Fish, or Tackle schemas.
 
-## Approved / Not Implemented Domains
+## Future and Deferred Domains
 
-Technique, Conditions, My Tackle/Inventory, separate Lure modeling, authoritative general User Knowledge schemas, and Backup remain explicitly separated from implemented production schemas.
+Technique, Conditions, and My Tackle/Inventory remain approved-but-not-implemented domains under their governing decisions.
 
-Candidate fields in these domains are documented as design inputs or unresolved architecture questions rather than production contracts.
+Authoritative general User Knowledge schemas remain mostly unresolved and not implemented.
+
+A possible separate Lure domain and Backup/Restore remain **Draft / Deferred / Not Yet Approved for implementation**. Their documents preserve design questions and implementation gates; they do not establish approved production architecture merely by existing as Draft model documents.
+
+Candidate fields in future/deferred domains are design inputs or unresolved architecture questions rather than production contracts.
 
 ## Relationship Ownership
 
-D056 single-owner semantics are now consistently reflected across the model suite.
+D056 single-owner semantics are consistently reflected across the model suite.
 
 Validated ownership includes:
 
@@ -113,13 +119,18 @@ Section 7 removed or corrected documentation that previously implied unsupported
 - pre-cleanup Tackle Media status,
 - broken `05-INVENTORY.md` references.
 
-Where these names remain in documentation, they appear only in explicit exclusion, historical-removal, or not-approved contexts.
+The later decision-precedence correction additionally removed unsupported approval claims for:
+
+- a separate canonical Lure domain,
+- Backup/Restore architecture.
+
+Where candidate names remain in documentation, they appear only in explicit exclusion, historical-removal, deferred, or not-approved contexts unless separately governed by an approved decision.
 
 ---
 
 # Validation
 
-Final Section 7 validation included:
+Original Section 7 validation included:
 
 1. repository search for stale relationship/schema names,
 2. repository search for the obsolete `05-INVENTORY.md` path,
@@ -128,7 +139,9 @@ Final Section 7 validation included:
 5. re-fetch verification of every changed data-model document after its GitHub write,
 6. confirmation that Glossary and README status language matches the synchronized domain documents.
 
-Validation result:
+The later reconciliation added a governing-decision precedence check so Draft/future model language cannot be promoted to Approved without explicit decision authority.
+
+Validation result after correction:
 
 ```text
 PASS
@@ -140,7 +153,7 @@ No unresolved documentation contradiction was found that requires a production s
 
 # Production Source Impact
 
-Section 7 made **no changes** to:
+Section 7 and its correction made **no changes** to:
 
 - JavaScript runtime code,
 - production data files,
@@ -149,7 +162,7 @@ Section 7 made **no changes** to:
 - runtime behavior,
 - UI behavior.
 
-All Section 7 changes are documentation synchronization and workstream closeout records.
+All changes are documentation synchronization/correction and workstream closeout records.
 
 ---
 
@@ -165,7 +178,8 @@ Section 7 preserves the existing architecture and decisions rather than redesign
 - Media-owned canonical attachment,
 - explicit My Tackle ownership authority,
 - derived inverse relationships,
-- no speculative placeholder fields without demonstrated feature requirements.
+- no speculative placeholder fields without demonstrated feature requirements,
+- no promotion of Draft/deferred architecture to Approved without explicit governing authority.
 
 ---
 
@@ -174,7 +188,7 @@ Section 7 preserves the existing architecture and decisions rather than redesign
 Repository Audit Section 7 — Data-Model Documentation Synchronization is:
 
 ```text
-CLOSED — PASS
+CLOSED — PASS / CORRECTED
 ```
 
-The data-model documentation is synchronized sufficiently for repository-audit continuation. Future feature work must continue to distinguish current production schemas from approved-but-not-implemented architecture and must reopen the relevant architecture gate before promoting candidate fields into production.
+The data-model documentation is synchronized sufficiently for repository-audit continuation. Future feature work must distinguish current production schemas, approved-but-not-implemented architecture, and deferred/unapproved candidates, and must reopen the relevant architecture gate before promoting candidate fields or domains into production.
