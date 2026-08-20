@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.13  
+**Document Revision:** 1.0.14  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -542,8 +542,8 @@ Fish Guide Phase 0 remains paused behind the Repository Audit Cleanup Gate.
 
 # Section 7 — Data-Model Documentation Synchronization
 
-**Decision:** SYNCHRONIZE CURRENT PRODUCTION SCHEMAS, FUTURE ARCHITECTURE, AND RELATIONSHIP OWNERSHIP  
-**Status:** PASS / VALIDATED / CLOSED
+**Decision:** SYNCHRONIZE CURRENT PRODUCTION SCHEMAS, FUTURE/DEFERRED ARCHITECTURE, AND RELATIONSHIP OWNERSHIP  
+**Status:** PASS / VALIDATED / CLOSED / CORRECTED 2026-08-19
 
 Section 7 reconciled the complete `docs/data-model/` suite against current GitHub `main`, production schemas, and governing decisions.
 
@@ -553,45 +553,61 @@ Completed outcomes include:
 - current 20-Rig schema documented without `targetFishIds[]`, `techniqueIds[]`, or inverse `imageIds[]`,
 - current Knot schema synchronized with completed Knot/Reel guidance and Media ownership,
 - current Tackle schema synchronized including `purpose` and without inverse `mediaIds[]`,
-- Technique, Conditions, separate Lure modeling, My Tackle, general User Knowledge, and Backup explicitly separated from implemented production schemas,
+- Technique, Conditions, My Tackle, general User Knowledge, possible separate Lure modeling, and Backup explicitly separated from implemented production schemas,
 - D056 single-owner relationship semantics applied throughout,
 - stale `05-INVENTORY.md` references corrected to `05A-INVENTORY.md`,
 - data-model Glossary and README reconciled to implementation status.
+
+### Decision-precedence correction
+
+A later Sections 1–8 reconciliation found that the original Section 7 rewrite over-promoted two Draft/future concepts beyond their governing decision authority:
+
+- a separate canonical Lure domain,
+- Backup/Restore architecture.
+
+Corrected status:
+
+- `06-LURES.md` — **Draft / Deferred / Separate Domain Not Yet Approved**; the Lure/Tackle architecture gate must first decide whether a separate canonical Lure entity is required.
+- `08-BACKUP.md` — **Draft / Deferred / Architecture Not Yet Approved**; the User Data architecture gate must explicitly approve backup/restore scope and architecture before implementation.
+
+This correction changes approval/status semantics only. It does not change production source or discard the useful design questions preserved in those Draft documents.
 
 Controlling record:
 
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-7-CLOSEOUT.md`
 
-Section 7 changed documentation only. No production source/data/media/UI/configuration changed.
+Section 7 and its correction changed documentation only. No production source/data/media/UI/configuration changed.
 
 # Section 8 — Future Draft Data Models
 
 **Decision:** RETAIN / DEFER / REVALIDATE AT THE RELEVANT ARCHITECTURE GATE  
-**Status:** PASS / VALIDATED / CLOSED
+**Status:** PASS / VALIDATED / CLOSED / CORRECTED 2026-08-19
 
-The future-domain model documents remain useful architectural boundaries and are not repository orphans merely because their production datasets are not implemented.
+Future-domain model documents remain useful architectural boundaries/design records and are not repository orphans merely because their production datasets are not implemented.
 
-Section 7 had already resolved the substantive Section 8 audit findings. Therefore Section 8 intentionally made no further edits to the model files themselves.
-
-Approved dispositions:
+Approved/current dispositions:
 
 - `03A-TECHNIQUES.md` — retain; Approved / Not Implemented; revalidate at Technique architecture gate.
 - `03B-CONDITIONS.md` — retain; Approved / Not Implemented; revalidate before recommendation implementation.
-- `06-LURES.md` — retain; schema not implemented; revalidate at Lure architecture gate.
+- `06-LURES.md` — retain; **Draft / Deferred / Separate Domain Not Yet Approved**; revalidate at Lure/Tackle architecture gate.
 - `05A-INVENTORY.md` — retain; Approved / Not Implemented; revalidate at Settings / User Data architecture gate.
 - `07-USER-DATA.md` — retain; current transitional state separated from future authoritative User Knowledge.
-- `08-BACKUP.md` — retain; Approved Direction / Not Implemented; revalidate at User Data architecture gate.
+- `08-BACKUP.md` — retain; **Draft / Deferred / Architecture Not Yet Approved**; revalidate at User Data architecture gate.
+
+The permanent safeguard exposed by this correction is:
+
+> A Draft/future model document must not be promoted to Approved merely because its concept fits the three-layer architecture or because the document already exists. Approval requires explicit governing decision authority.
 
 Controlling record:
 
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-8-CLOSEOUT.md`
 
-Section 8 changed documentation/status records only. No production source/data/media/UI/configuration changed.
+No production source/data/media/UI/configuration changed.
 
 # Next Audit Action
 
 Proceed to **Section 9 — Workstream Directory Hygiene**.
 
-Before proposing Section 9 changes, inspect current authoritative GitHub `main` and determine actual workstream status from repository evidence rather than assuming older planning state.
+Section 9 is already partially implemented for the completed Knot workstream family. Before additional cleanup, use current authoritative GitHub `main`, respect governing-document precedence over historical workstreams, and do not promote historical runtime behavior over later approved architecture.
 
 Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections and final read-only re-audit are complete.
