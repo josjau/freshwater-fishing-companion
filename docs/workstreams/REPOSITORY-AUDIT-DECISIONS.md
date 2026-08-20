@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.16  
+**Document Revision:** 1.0.17  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -665,10 +665,58 @@ Controlling closeout:
 
 No production source/data/media/UI/configuration on `main` changed during Section 10.
 
+# Section 11 — `.gitignore` / Repository Hygiene Prevention
+
+**Decision:** ADD A NARROW ROOT `.gitignore` BASED ON OBSERVED PROJECT ARTIFACT RISKS  
+**Status:** PASS / GITHUB-VERIFIED / CLOSED
+
+Section 11 confirmed that no `.gitignore` existed on current `main` before implementation.
+
+The project had already accumulated two accidental transient artifacts during earlier development:
+
+- `data-reel-guidance.tmp`,
+- `styles.bak`.
+
+The repository also contains Python validation utilities under `tools/`, so Python bytecode/cache files are a real local artifact class.
+
+Approved root `.gitignore` patterns:
+
+```gitignore
+# Temporary and backup files
+*.tmp
+*.bak
+
+# Windows-generated metadata
+Thumbs.db
+Desktop.ini
+
+# Python validator cache / bytecode
+__pycache__/
+*.py[cod]
+```
+
+The policy is intentionally narrow. It does **not** ignore ZIP delivery packages, logs, editor configuration directories, `node_modules/`, `.env`, build/dist/output directories, generic staging/temp directories, or editor-specific swap files without concrete project evidence.
+
+ZIP delivery behavior is unchanged: complete repository-relative replacement packages remain the preferred production delivery method for the user to extract over the local GitHub Desktop repository and review as a coherent diff. The ZIP itself is a delivery container, not an ignored repository class.
+
+Created root `.gitignore` in commit:
+
+`27c5431c808db18fd0a0f8f4bab1b084dccdad9e`
+
+Validated `.gitignore` blob:
+
+`f830eaca2c97a3b708af5fdcf94c8455153601ab`
+
+Controlling closeout:
+
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-11-CLOSEOUT.md`
+
+No application runtime behavior or production source/data/media changed during Section 11.
+
 # Next Audit Action
 
-Proceed to **Section 11 — `.gitignore` / Repository Hygiene Prevention**.
+Proceed to **Section 12 — Repository-Wide Integrity Validator**.
 
-Before any Section 11 change, perform a fresh repository preflight and propose a deliberately narrow ignore policy based on actual repository/workflow artifact risks. Do not add broad patterns that could hide legitimate project assets.
+Before any Section 12 implementation, perform a fresh repository preflight and define the validator scope from current canonical source/data ownership and the audit's required responsibilities. The validator must report defects rather than silently rewrite or delete repository content.
 
 Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections, final read-only re-audit, mandatory drift-prevention review/approval, and final documentation closeout are complete.
