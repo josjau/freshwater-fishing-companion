@@ -1,175 +1,126 @@
 # Freshwater Fishing Companion
 
 **Document:** 05A-INVENTORY.md  
-**Document Revision:** 0.2.0  
+**Document Revision:** 0.3.0  
 **Document Status:** Draft  
-**Decision Baseline:** D028
+**Implementation Status:** Approved / Not Implemented  
+**Decision Baseline:** D028, D056
 
 ---
 
 # Purpose
 
-This document defines the Inventory/My Tackle model direction for Freshwater Fishing Companion.
+This document defines the approved architectural boundary for future My Tackle/Inventory User Knowledge.
 
-Inventory represents the actual fishing equipment and consumable tackle owned by the angler.
-
-The Inventory model supports:
-
-- My Tackle
-- Fishing Setups
-- Recommendations
-- Inventory Matching
-- Rig Readiness
-- Shopping Lists
-- Catch Log
-- Trip Preparation
-
-Inventory records belong to the user and reference canonical entities whenever practical.
+My Tackle represents actual fishing equipment and consumable tackle owned by the angler. No authoritative My Tackle production dataset or owned-item schema is implemented on current `main`.
 
 ---
 
-# Design Philosophy
+# Current Status
 
-Canonical Tackle and My Tackle answer different questions.
+**Approved / Not Implemented.**
 
-Canonical Tackle is Reference Knowledge and defines the functional tackle type, such as:
+The application currently has lightweight per-Rig local readiness selections. Those selections are transitional availability state, not authoritative persistent ownership records and must not be migrated automatically into My Tackle.
 
-- Offset Hook
-- Spinnerbait
-- Crankbait
-- Bullet Weight
-- Jighead
-- Slip Float
-- Barrel Swivel
-- Soft Plastic Worm
-- Inline Spinner
-
-My Tackle is User Knowledge and defines the actual items owned by the angler.
-
-A commercial Product Definition layer is not required for the My Tackle MVP or for basic Rig readiness. ProductDefinition may be introduced later if exact commercial-product identity becomes necessary for an approved feature.
-
-The detailed schema for an owned item — including decisions about brand, model, size, color, quantity, condition, notes, unmapped items, and durable-vs-consumable details — remains open for the dedicated My Tackle design discussion.
+Canonical Tackle remains Reference Knowledge. My Tackle will become the persistent ownership source of truth only after its dedicated schema and workflows are implemented and validated.
 
 ---
 
-# Inventory Categories
+# Ownership Boundary
 
-The approved architecture continues to recognize two broad lifecycle categories.
+Canonical Tackle answers:
 
-## Equipment
+> What functional tackle type is this?
 
-Equipment represents durable items expected to remain in inventory.
+My Tackle answers:
 
-Examples:
+> What fishing items do I actually own?
 
-- Rods
-- Reels
-- Nets
-- Pliers
-- Scales
-- Tackle Boxes
-- Kayaks
-
-Potential characteristics include individual identity, condition, location, and long service life.
+A commercial Product Definition layer is not required for My Tackle MVP or basic Rig readiness. Product Definition remains deferred until an approved product-specific feature demonstrates a need.
 
 ---
 
-## Consumables
+# Owned-Item Schema — Unresolved
 
-Consumables are expected to be depleted, lost, or replaced through normal fishing.
+The detailed owned-item schema is intentionally open.
 
-Examples:
+Earlier planning identified possible concepts such as:
 
-- Hooks
-- Weights
-- Line
-- Soft Plastics
-- Jig Heads
-- Swivels
-- Snaps
-- Bobber Stops
-- Beads
+- canonical Tackle mapping,
+- user-defined name,
+- brand/model,
+- size or variant,
+- color,
+- quantity,
+- condition,
+- notes,
+- photo references,
+- durable-versus-consumable behavior.
 
-Potential characteristics include quantity, size/variant details, and future restocking support.
+These are design inputs, **not approved production fields**. The My Tackle architecture gate may retain, rename, combine, normalize, or reject them based on demonstrated features.
 
-The exact MVP treatment of these categories remains open and must not be inferred from this document beyond the approved ownership/readiness rules below.
+No placeholder fields should be added before that gate.
+
+---
+
+# Equipment and Consumables
+
+The architecture recognizes that owned fishing items may have different lifecycle behavior.
+
+Durable equipment may include rods, reels, nets, pliers, scales, tackle boxes, or watercraft. Consumables may include hooks, weights, line, soft plastics, jigheads, swivels, snaps, bobber stops, or beads.
+
+These examples do not establish separate production schemas or require every owned item to use the same fields. Exact lifecycle modeling remains unresolved.
 
 ---
 
 # Canonical Tackle Mapping
 
-For tackle types used by supported Rigs, My Tackle should map an owned item to the relevant canonical Tackle concept whenever practical.
+For owned items that satisfy supported Rig requirements, My Tackle should map to canonical Tackle whenever practical.
 
 Conceptually:
 
 ```text
 Owned Item
-    -> canonicalTackleId
+    -> canonical Tackle concept
 ```
 
-The canonical Tackle relationship answers what functional type the owned item can satisfy.
+The exact field name and cardinality are not approved until the My Tackle schema gate.
 
-Examples:
-
-```text
-Owned commercial hook
-    -> Offset Hook
-
-Owned crankbait
-    -> Crankbait
-```
-
-Exact owned-item attributes remain part of the later My Tackle schema discussion.
+This relationship must follow D056 single-owner semantics and must not duplicate canonical Tackle identity or Rig requirement data into the owned item unnecessarily.
 
 ---
 
 # My Tackle Write Authority
 
-My Tackle is the only persistent ownership source of truth once the Inventory implementation becomes authoritative.
+Once implemented, My Tackle is the only persistent ownership source of truth.
 
-Persistent My Tackle data may only be created or changed through explicit ownership-management workflows within My Tackle, such as:
+Persistent ownership may be created or changed only through explicit ownership-management workflows such as Add Tackle, Edit Tackle, or Remove Tackle.
 
-- Add Tackle
-- Edit Tackle
-- Remove Tackle
+Other features may read ownership but may not silently create or modify it. This includes:
 
-Other features may read My Tackle but may not silently write ownership.
-
-Specifically, persistent ownership shall not be created or modified by:
-
-- Rig Readiness
-- Search
-- Recommendations
-- A prior readiness checkbox
-- Borrowing tackle for one session
-- Inferring ownership because an item was used
-- Any background or automatic inference
-
-Canonical project builds may define or update Reference Knowledge such as canonical Tackle types, but they do not fabricate user ownership records.
+- Rig Readiness,
+- Search,
+- Recommendations,
+- prior readiness checkmarks,
+- borrowed tackle,
+- inferred usage,
+- background inference.
 
 ---
 
 # Rig Readiness Integration
 
-Rig Readiness answers:
+Rig Readiness answers whether the current Rig can be built with owned or temporarily available tackle.
 
-> Can I build this Rig with what I own or have available for this build/session?
+When My Tackle becomes authoritative:
 
-When My Tackle is implemented as the authoritative ownership source:
+```text
+Rig.componentRequirements[].tackleId
+    -> canonical Tackle
+    -> My Tackle owned-item mapping
+```
 
-1. Rig requirements reference canonical Tackle types.
-2. Rig Readiness checks My Tackle for owned items mapped to each required type.
-3. Owned required types are automatically satisfied.
-4. Missing items may be marked temporarily available for the current build/session.
-5. Temporary availability does not modify My Tackle.
-
-Temporary availability may represent tackle that was:
-
-- Borrowed
-- Just purchased but not yet entered
-- Available at the moment for another reason
-
-The readiness system does not require an ideal brand/model combination before declaring a Rig buildable.
+Owned required types may satisfy the Rig automatically. A missing item may be marked temporarily available for the current build/session without creating persistent ownership.
 
 Permanent principle:
 
@@ -179,91 +130,65 @@ Permanent principle:
 
 # Transitional Readiness State
 
-**Current:** the application uses a lightweight per-Rig local readiness state.
+Current local readiness selections remain transitional application state.
 
-**Approved / Not Implemented:** once My Tackle is authoritative, the old readiness state will no longer be a persistent ownership source.
-
-Existing readiness checkmarks shall not be automatically migrated into My Tackle because a checkmark does not prove maintained ownership inventory.
-
-The future implementation may preserve temporary session availability separately if required, but that state must never become a second persistent ownership database.
+They do not prove maintained ownership and therefore must not be treated as My Tackle records. A future implementation may preserve temporary availability separately if needed, but it must not become a second persistent ownership database.
 
 ---
 
-# Fishing Setups
+# Fishing Setups — Concept Approved / Schema Unresolved
 
-A Fishing Setup references existing inventory items.
+A future Fishing Setup may reference existing owned equipment for a particular purpose, such as a Bass, Panfish, or Catfish setup.
 
-Examples:
+The principle is approved: setup records should reference owned items rather than duplicate them.
 
-Bass Setup
-
-- Rod
-- Reel
-- Line
-
-Panfish Setup
-
-- Rod
-- Reel
-- Line
-
-Setup records do not duplicate inventory.
-
-They reference existing owned items.
+The exact Fishing Setup entity, fields, identifiers, persistence behavior, and relationship cardinalities are **not implemented or approved as a production schema** by this document.
 
 ---
 
 # Inventory Matching
 
-Inventory matching should use canonical functional relationships when the feature does not require exact commercial-product identity.
+Inventory matching should use canonical functional relationships when exact commercial-product identity is unnecessary.
 
-For Rig Readiness, the required comparison is between:
-
-```text
-Rig.componentRequirements
-    -> canonical Tackle type
-    -> My Tackle owned-item mapping
-```
-
-Exact size/style compatibility may be added later where it materially determines whether a Rig can actually be built, but this sophistication is not required for the first readiness implementation.
+Size/style-aware compatibility may be introduced where it materially determines buildability, but that requirement must be demonstrated before additional schema is added.
 
 ---
 
-# Shopping Support
+# Shopping Boundary
 
-Shopping recommendations may eventually be generated from inventory and missing requirements.
+Future shopping support may consume missing ownership/readiness information. It does not own persistent inventory and may not silently add purchases to My Tackle.
 
-Shopping support does not maintain a separate ownership database and may not silently add purchases to My Tackle.
-
-If a future workflow offers to add a newly purchased item, ownership must still be committed through an explicit user action in an approved My Tackle workflow.
+Any future purchase-to-inventory workflow must require an explicit user ownership action.
 
 ---
 
 # User Data Safety
 
-Inventory is User Knowledge.
+My Tackle is User Knowledge.
 
-User-entered Inventory text is untrusted by default and should be rendered through safe DOM APIs such as `textContent`.
+User-entered and imported text is untrusted by default and should render through safe DOM APIs such as `textContent`. User-controlled strings must not be concatenated directly into `innerHTML`.
 
-Inventory values must not be concatenated directly into `innerHTML`.
+---
+
+# Implementation Gate
+
+Before My Tackle becomes authoritative, the architecture gate must settle at least:
+
+1. owned-item identity and field schema,
+2. canonical Tackle mapping semantics,
+3. durable-versus-consumable lifecycle requirements,
+4. quantity and variant behavior,
+5. explicit Add/Edit/Remove ownership workflows,
+6. transitional readiness-state replacement behavior,
+7. Fishing Setup schema if included in the same milestone,
+8. persistence, validation, migration, backup, and import/export requirements,
+9. User Knowledge rendering and sanitization boundaries.
 
 ---
 
 # Future Enhancements
 
-Potential future additions include:
-
-- Detailed owned-item schema
-- Commercial ProductDefinition entities
-- Barcode scanning
-- Purchase history
-- Warranty tracking
-- Maintenance reminders
-- Import and export
-- Size/style-aware readiness
-- User-owned tackle imagery surfaced in Rig Readiness
-
-These enhancements require separate architectural or schema approval as appropriate.
+Potential later capabilities include commercial Product Definitions, barcode scanning, purchase history, warranty/maintenance tracking, size-aware readiness, user-owned imagery, and restocking assistance. These are feature candidates rather than current schema requirements.
 
 ---
 
@@ -274,4 +199,6 @@ These enhancements require separate architectural or schema approval as appropri
 - 05-TACKLE.md
 - 06-LURES.md
 - 07-USER-DATA.md
+- 08-BACKUP.md
 - 09-RELATIONSHIPS.md
+- ../DECISIONS.md
