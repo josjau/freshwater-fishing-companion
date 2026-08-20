@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.14  
+**Document Revision:** 1.0.15  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
-**Last Updated:** 2026-08-19
+**Last Updated:** 2026-08-20
 
 # Purpose
 
@@ -604,10 +604,65 @@ Controlling record:
 
 No production source/data/media/UI/configuration changed.
 
+# Section 9 — Workstream Directory Hygiene
+
+**Decision:** CLASSIFY ACTIVE WORKSTREAMS BY LIFECYCLE / PROMOTE DURABLE RULES / RETIRE HISTORICAL RECORDS FROM ACTIVE PATHS  
+**Status:** PASS / GITHUB-VERIFIED / CLOSED
+
+Section 9 classified records by actual lifecycle and governing authority rather than filename age.
+
+Completed outcomes:
+
+- Knot workstreams were classified into durable current records, archive-worthy historical/provenance records, and transient records retained only through Git history.
+- `RIG-GUIDE-COMPLETION.md` remains the durable final Rig milestone record; six completed Rig/Tackle implementation and validation records were archived under `archive/workstreams/rig/`.
+- Durable site-wide floating-navigation rules were promoted into `docs/NAVIGATION-PAGE-STANDARD.md` revision 1.0.6; five completed UX/navigation records were archived under `archive/workstreams/ux/`.
+- Historical Parent-to-top navigation behavior is provenance only. Current governing behavior remains Forward → destination top; Parent → prior standard view state + prior scroll; Home → Dashboard top + clear context.
+- `FISH-GUIDE-PHASE-0.md` and `FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md` remain active because Fish Phase 0 is paused, not completed.
+- The Delivery Fallback Rule was promoted into `docs/DEVELOPMENT_WORKFLOW.md` revision 1.1.9; the original workstream was archived byte-for-byte under `archive/workstreams/workflow/` and removed from the active workstream directory.
+- Repository Audit control/closeout records remain active until the audit itself closes.
+- A mandatory final Repository Integrity and Drift Prevention review/approval gate was added through `REPOSITORY-AUDIT-CLOSEOUT-REQUIREMENTS.md`.
+
+Section 9 also triggered a read-only Sections 1–8 precedence reconciliation. Sections 1–6 passed; Sections 7–8 received narrow status corrections so separate Lure modeling and Backup architecture remain Draft/Deferred unless explicitly approved by their future architecture gates.
+
+Controlling closeout:
+
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-9-CLOSEOUT.md`
+
+No production source/data/media/UI/configuration changed during Section 9.
+
+# Section 10 — Stale Git Branch
+
+**Decision:** DELETE `agent/rig-guide-closeout` AFTER UNIQUE-MATERIAL REVIEW  
+**Status:** APPROVED / DELETION PENDING
+
+Current remote branch inventory contains:
+
+- `main`
+- `agent/rig-guide-closeout`
+
+Comparison against current `main` shows the stale branch is **251 commits behind** and **4 commits ahead** of `main`; there is no open pull request for the branch.
+
+The branch-only material was inspected before approving deletion. It includes:
+
+- `data/rig-closeout-media.js`,
+- one `index.html` script-load addition for that staging file,
+- six older Tackle recognition-image versions.
+
+No unique material requires preservation:
+
+- `data/rig-closeout-media.js` is an obsolete staging implementation that writes inverse `mediaIds[]` into Tackle records; Section 4/D056 later removed that duplicate ownership and made Media `ownerType` + `ownerId` canonical.
+- The six media concepts are now integrated directly into current `data/media.js` using the later validated `0.4.1` records and replacement assets.
+- The branch `index.html` addition exists only to load the obsolete staging file.
+- The branch Handoff describes the superseded 13-Rig / 23-Tackle Intermediate state.
+
+**Retirement classification:** DELETE. The branch-only implementation is superseded and has no independent audit/provenance/reconstruction value requiring an archive copy.
+
+The user explicitly approved remote branch deletion on 2026-08-20. Section 10 remains open until the remote branch is actually deleted and GitHub verification confirms the stale branch no longer exists.
+
 # Next Audit Action
 
-Proceed to **Section 9 — Workstream Directory Hygiene**.
+Complete **Section 10 — Stale Git Branch** by deleting `agent/rig-guide-closeout`, then verify the remote branch inventory and create the Section 10 closeout record.
 
-Section 9 is already partially implemented for the completed Knot workstream family. Before additional cleanup, use current authoritative GitHub `main`, respect governing-document precedence over historical workstreams, and do not promote historical runtime behavior over later approved architecture.
+After Section 10 closes, proceed to **Section 11 — `.gitignore` / Repository Hygiene Prevention**.
 
-Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections and final read-only re-audit are complete.
+Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections, final read-only re-audit, mandatory drift-prevention review/approval, and final documentation closeout are complete.
