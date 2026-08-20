@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.17  
+**Document Revision:** 1.0.18  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -713,10 +713,59 @@ Controlling closeout:
 
 No application runtime behavior or production source/data/media changed during Section 11.
 
+# Section 12 — Repository-Wide Integrity Validator
+
+**Decision:** ADD ONE READ-ONLY NODE VALIDATOR FOR CURRENT REPOSITORY INTEGRITY  
+**Status:** PASS / GITHUB-VERIFIED / CLOSED
+
+Section 12 implemented:
+
+`tools/validate_repository_integrity.js`
+
+The validator is intentionally read-only. It reports defects and exits nonzero on failure; it does not rewrite, delete, or repair repository content.
+
+Validated mechanical scope includes:
+
+- local `index.html` stylesheet/script target existence and active data-load coverage,
+- JavaScript syntax validation for active production/data sources,
+- canonical ID uniqueness/format and required Foundation fields,
+- Core Rig and Core Knot registry resolution,
+- Rig → Tackle, Rig → Knot, Rig variation, Tackle relation, Knot task, and supported Reel Decision Knowledge references,
+- approved controlled values for implemented Rig/Knot domains,
+- mechanically testable D056 inverse-ownership prohibitions,
+- Media owner resolution, local Media-path existence, and tracked image orphan detection with the intentional `images/rigs/.gitkeep` allowlist,
+- committed repository-hygiene artifacts and unexpected tracked `docs/docs/` duplication,
+- presence of the approved Section 11 `.gitignore` rules.
+
+The validator deliberately does not hardcode current entity counts as a second source of truth and does not attempt to replace human review of fishing correctness, source authority, licensing suitability, visual accuracy, UX/runtime behavior, or external-reference freshness.
+
+During first local execution, the validator correctly exposed an empty local `docs/docs/` directory left behind after Section 1 cleanup. Because Git does not track empty directories, that was a local filesystem condition rather than a repository defect. The validator was corrected before closeout so repository hygiene and orphan-image checks use Git-tracked files rather than arbitrary untracked local filesystem content. On Windows it can locate Git through PATH or the normal GitHub Desktop bundled-Git installation path.
+
+Final local runtime result:
+
+```text
+REPOSITORY INTEGRITY: PASS
+- 5 validation groups passed
+- no repository content was modified
+```
+
+Final GitHub-verified validator state:
+
+- implementation commit on current `main`: `0486d466987ab77174866f8837408bd25ae56632`
+- blob: `0f905c87744b614d70a2b493988cb78525cd31b2`
+- file length: 893 lines
+- comparison from the Section 11 baseline `2f636ad235e8a828e12b32d49f60896552502417` to the verified validator commit shows exactly one net changed path: `tools/validate_repository_integrity.js`.
+
+Controlling closeout:
+
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-12-CLOSEOUT.md`
+
+No application runtime source/data/media/UI behavior changed during Section 12.
+
 # Next Audit Action
 
-Proceed to **Section 12 — Repository-Wide Integrity Validator**.
+Proceed to **Section 13 — Optional Continuous Integration**.
 
-Before any Section 12 implementation, perform a fresh repository preflight and define the validator scope from current canonical source/data ownership and the audit's required responsibilities. The validator must report defects rather than silently rewrite or delete repository content.
+Section 13 must evaluate whether automatically running the repository-integrity validator through GitHub Actions provides enough maintenance value for this personal/local-first workflow. Do not add CI unless the maintenance cost and workflow consequences are explicitly justified and approved.
 
 Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections, final read-only re-audit, mandatory drift-prevention review/approval, and final documentation closeout are complete.
