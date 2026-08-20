@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.6.0  
+**Document Revision:** 1.6.1  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `449155ffef4eb452aba22e463ee20a21c233a191` — `Section 5 Audit Update`  
@@ -10,11 +10,11 @@
 **Completed Milestone:** Knots  
 **Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
 **Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
-**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.10 — current cleanup dispositions/actions through Sections 1–5 and Section 6 in progress  
-**Active Section 6 Records:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-DECISIONS.md` and `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-SESSION-END-2026-08-19.md`  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.11 — current cleanup dispositions/actions through Section 6 closeout  
+**Completed Section 6 Records:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-DECISIONS.md`, `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-SESSION-END-2026-08-19.md`, and `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-CLOSEOUT.md`  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.5 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Mobile session; direct Markdown commit application is allowed after detailed review/approval for this session.  
-**Session Status:** Repository Audit Sections 1–5 are complete and verified. Section 6 — Governing Documents Comprehensive Synchronization — is active. Fish Guide Phase 0 remains paused.  
+**Session Status:** Repository Audit Sections 1–6 are complete and verified. Section 7 — Data-Model Documentation Synchronization — is next. Fish Guide Phase 0 remains paused.  
 **Last Updated:** 2026-08-19
 
 # 1. Start Here
@@ -594,6 +594,7 @@ The following are Validated / Finalized:
 - **Knots — Production Packages 1–4 plus integrated navigation/runtime closeout**
 - **Repository Audit Section 4 — Tackle ↔ Media semantic ownership refactor**
 - **Repository Audit Section 5 — Rig empty schema-field cleanup**
+- **Repository Audit Section 6 — Governing Documents Comprehensive Synchronization**
 
 The following Fish Guide Phase 0 work is Approved / Locked but not production-implemented:
 
@@ -618,16 +619,17 @@ It must not be treated as permanent My Tackle ownership.
 
 # 17. Active Gate — Repository Audit Cleanup
 
-**Status:** SECTIONS 1–5 COMPLETE / SECTION 6 IN PROGRESS / FISH PAUSED
+**Status:** SECTIONS 1–6 COMPLETE / SECTION 7 NEXT / FISH PAUSED
 
 Controlling documents:
 
 - `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` — immutable audit-time findings snapshot; its original `OPEN` labels describe the audit baseline.
-- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.10` — current cleanup dispositions through Sections 1–5 and Section 6 active.
+- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.11` — current cleanup dispositions through Section 6 closeout.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` revision `1.0.0` — Section 4 implementation/runtime closeout.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md` revision `1.0.0` — Section 5 implementation closeout.
-- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-DECISIONS.md` — approved Section 6 governing synchronization decisions.
-- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-SESSION-END-2026-08-19.md` — session-preservation record for approved Section 6 discussion.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-DECISIONS.md` revision `1.0.3` — completed Section 6 governing decisions.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-CLOSEOUT.md` revision `1.0.0` — Section 6 validation/closeout.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-SESSION-END-2026-08-19.md` — preserved Section 6 discussion/session history.
 
 Completed cleanup decisions:
 
@@ -642,6 +644,7 @@ Completed cleanup decisions:
 - D056 Semantic Single-Owner Data and Relationship Ownership — approved permanent site-wide rule.
 - Section 4 Tackle ↔ Media ownership — **PASS / VALIDATED / PRODUCTION IMPLEMENTED**. `data/tackle.js` no longer stores `mediaIds[]`; `data/media.js` owns attachment via `ownerType` + `ownerId`; renderer lookup derives from Media ownership; 29/29 owner mapping and Microsoft Edge runtime validation passed.
 - Section 5 Rig empty schema fields — **PASS / VALIDATED / PRODUCTION IMPLEMENTED / CLOSED**. All 20 empty `techniqueIds[]` and all 20 empty `imageIds[]` removed; `variationIds[]` preserved; `targetFishIds[]` not added; Rig↔Technique ownership deferred; removed fields GIT HISTORY ONLY.
+- Section 6 Governing Documents Comprehensive Synchronization — **PASS / VALIDATED / CLOSED**. Governing/current-state documentation was reconciled in commit `5eff49dc3fe5bcce1c66f7ea2a99bfd562e1e957` and remotely verified; no production source/data/media/UI/configuration changed.
 
 Section 4 production commit:
 
@@ -651,11 +654,13 @@ Section 5 production commit:
 
 `449155ffef4eb452aba22e463ee20a21c233a191` — `Section 5 Audit Update`
 
-Current cleanup work:
+Section 6 synchronization commit:
 
-> **Section 6 — Governing Documents Comprehensive Synchronization**
+`5eff49dc3fe5bcce1c66f7ea2a99bfd562e1e957` — `Docs - synchronize Repository Audit Section 6`
 
-No production source/data/media/UI change is part of Section 6.
+Next cleanup work:
+
+> **Section 7 — Data-Model Documentation Synchronization**
 
 The wider audit still covers current data-model documentation, future Draft ownership risks, workstream status, stale branch, `.gitignore`, repository-wide validation, optional CI, documentation safeguards, external-reference/media freshness, and final re-audit.
 
@@ -663,20 +668,20 @@ The wider audit still covers current data-model documentation, future Draft owne
 
 Do **not** resume the remaining Fish Guide Phase 0 topics yet.
 
-Resume the **Repository Audit Cleanup Gate — Section 6** until the governing-document synchronization is committed, re-fetched, integrity-verified, and formally closed.
+Begin the **Repository Audit Cleanup Gate — Section 7: Data-Model Documentation Synchronization**.
 
 Current exact sequence:
 
-1. Verify the consolidated Section 6 governing-document synchronization commit from authoritative GitHub `main`.
-2. Confirm changed governing/current-state documents preserve unrelated headings/content and contain the approved Section 6 decisions.
-3. Confirm no current governing/current-state text incorrectly says nine active Rigs, Knots Packages 3/4 not started, Section 4/5 pending, or Section 5 next.
-4. Confirm D003, D014, D027, D051, D056, and Fish durable decisions D057–D061 are recoverable from `DECISIONS.md`.
-5. Confirm `DEVELOPMENT_WORKFLOW.md` contains Commit Economy and the Session-End Documentation Gate.
-6. Confirm Four-State forward direction preserves the original 20-Rig validation context and additive adequacy audit.
-7. Create the Section 6 closeout record only after the synchronization commit passes post-write verification.
-8. Reconcile `HANDOFF.md` at closeout to **Sections 1–6 complete / Section 7 next**.
-9. Then begin **Section 7 — Data-Model Documentation Synchronization**.
-10. Do not resume Fish Guide Phase 0 until the remaining audit sections and final read-only re-audit pass.
+1. Re-fetch current GitHub `main` before any proposed data-model document edit.
+2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md`, and `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-CLOSEOUT.md` first.
+3. Preserve Sections 1–6 as completed; do not reopen them without a new defect or explicit user decision.
+4. Audit the current data-model documentation against actual canonical production schemas and current governing decisions.
+5. Apply D056 to every field/relationship: one semantic owner, no inverse duplication for navigation convenience.
+6. Remove or clearly defer speculative schema that exists only "just in case"; do not silently invent future production fields.
+7. Preserve the Section 5 boundary: `03-RIGS.md` received only status correction in Section 6 and remains eligible for broader model reconciliation now.
+8. Preserve Fish Phase 0 durable decisions D057–D061 while Fish production remains paused.
+9. Record each Section 7 disposition with D055 context: Decision, Reason, Current Status, Future Trigger, Canonical Owner.
+10. Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections and final read-only re-audit pass.
 
 Fish state to preserve while paused:
 
