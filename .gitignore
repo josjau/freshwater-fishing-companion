@@ -1,0 +1,11 @@
+# Temporary and backup files
+*.tmp
+*.bak
+
+# Windows-generated metadata
+Thumbs.db
+Desktop.ini
+
+# Python validator cache / bytecode
+__pycache__/
+*.py[cod]
