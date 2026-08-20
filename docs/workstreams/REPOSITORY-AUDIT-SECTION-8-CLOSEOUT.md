@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** REPOSITORY-AUDIT-SECTION-8-CLOSEOUT.md  
-**Status:** CLOSED — PASS  
+**Status:** CLOSED — PASS / CORRECTED 2026-08-19  
 **Section:** 8 — Future Draft Data Models  
 **Date:** 2026-08-19
 
@@ -12,6 +12,8 @@
 This document records the validation and closeout of Repository Audit Section 8 — Future Draft Data Models.
 
 The Section 8 audit-time findings were re-evaluated against the current GitHub `main` state after Section 7 completed the full data-model documentation synchronization.
+
+A later Sections 1–8 decision-precedence reconciliation found two unsupported approval-status promotions from Section 7: the possible separate Lure domain and Backup/Restore architecture. Those status defects have now been corrected while retaining both Draft documents for future architecture-gate review.
 
 ---
 
@@ -32,9 +34,7 @@ GitHub `main` remained authoritative.
 
 **RETAIN / DEFER / REVALIDATE AT THE RELEVANT ARCHITECTURE GATE.**
 
-The future-domain data-model documents are not repository orphans merely because their production datasets are not implemented. They remain useful architectural boundaries, provided they do not present speculative fields as current production contracts.
-
-Section 7 already corrected the substantive Section 8 concerns, so Section 8 requires no further changes to the data-model files themselves.
+Future-domain data-model documents are not repository orphans merely because their production datasets are not implemented. They remain useful architectural boundaries or design-question records, provided they do not present speculative fields or unapproved domains as current/approved production contracts.
 
 ---
 
@@ -54,29 +54,29 @@ Section 7 preserved Fish-owned intrinsic habitat/waterbody associations, removed
 
 ## `06-LURES.md`
 
-**Disposition:** RETAIN / SCHEMA NOT IMPLEMENTED / REVALIDATE AT LURE ARCHITECTURE GATE.
+**Disposition:** RETAIN / DRAFT-DEFERRED / SEPARATE DOMAIN NOT YET APPROVED / REVALIDATE AT LURE-TACKLE ARCHITECTURE GATE.
 
-Section 7 corrected stale relationship assumptions, deferred Fish/Rig/Technique applicability ownership, and added the required Lure-versus-current-Tackle boundary gate.
+The document preserves useful Lure design questions, but its existence and the three-layer architecture do not themselves approve a separate canonical Lure entity. The future gate must first decide whether a separate Lure domain is required and define its boundary with current canonical Tackle.
 
 ## `05A-INVENTORY.md`
 
 **Disposition:** RETAIN / APPROVED-NOT-IMPLEMENTED / REVALIDATE AT SETTINGS-USER-DATA ARCHITECTURE GATE.
 
-The document now clearly separates future My Tackle ownership from current transitional Rig-readiness state and does not commit an owned-item production schema prematurely.
+The document clearly separates future My Tackle ownership from current transitional Rig-readiness state and does not commit an owned-item production schema prematurely.
 
 ## `07-USER-DATA.md`
 
 **Disposition:** RETAIN / MIXED CURRENT-TRANSITIONAL + FUTURE USER-KNOWLEDGE DIRECTION.
 
-Section 7 clarified that current `main` does not implement one authoritative general User Data schema. Profile, Preferences, Favorites, My Tackle, Fishing Setups, Catch Log, and related persistence remain future architecture unless separately implemented.
+Current `main` does not implement one authoritative general User Data schema. Profile, Preferences, Favorites, My Tackle, Fishing Setups, Catch Log, and related persistence remain future architecture unless separately implemented.
 
 Favorites remains a future/final-decision concern rather than a required current persistence contract.
 
 ## `08-BACKUP.md`
 
-**Disposition:** RETAIN / APPROVED DIRECTION-NOT-IMPLEMENTED / REVALIDATE AT USER-DATA GATE.
+**Disposition:** RETAIN / DRAFT-DEFERRED / ARCHITECTURE NOT YET APPROVED / REVALIDATE AT USER-DATA ARCHITECTURE GATE.
 
-Section 7 removed the appearance of a committed Version 1 backup schema and tied future backup design to whichever User Knowledge schemas actually become authoritative.
+The document preserves candidate backup/restore safety, compatibility, and scope questions. Local-first architecture makes backup a reasonable future capability to evaluate, but D029/D056 do not approve a backup/restore architecture. The User Data architecture gate must explicitly decide scope and architecture before implementation.
 
 ---
 
@@ -88,6 +88,7 @@ Section 8 preserves:
 - D056 Semantic Single-Owner Data and Relationship Ownership,
 - three-layer Reference / Decision / User Knowledge separation,
 - no speculative production fields solely for future convenience,
+- no promotion of Draft/deferred architecture to Approved without explicit governing authority,
 - architecture-gate review before future-domain implementation,
 - current production schemas remaining authoritative until explicitly migrated.
 
@@ -95,7 +96,7 @@ Section 8 preserves:
 
 # Production Impact
 
-Section 8 required **no changes** to:
+Section 8 and its correction required **no changes** to:
 
 - JavaScript,
 - production data,
@@ -107,19 +108,19 @@ Section 8 required **no changes** to:
 - runtime behavior,
 - UI behavior.
 
-It also required no additional changes to the synchronized `docs/data-model/*` files because Section 7 had already resolved the substantive audit findings.
+The correction affected documentation/status language only.
 
 ---
 
 # Validation Result
 
 ```text
-PASS
+PASS / CORRECTED
 ```
 
 No future Draft data-model document currently requires deletion or production implementation merely to satisfy repository hygiene.
 
-The correct lifecycle is to retain the documents, keep their implementation status explicit, and revalidate each domain when its architecture gate opens.
+The correct lifecycle is to retain useful Draft/deferred documents, keep approval and implementation status explicit, and revalidate each domain when its architecture gate opens.
 
 ---
 
@@ -128,7 +129,7 @@ The correct lifecycle is to retain the documents, keep their implementation stat
 Repository Audit Section 8 — Future Draft Data Models is:
 
 ```text
-CLOSED — PASS
+CLOSED — PASS / CORRECTED
 ```
 
 Next audit section:
