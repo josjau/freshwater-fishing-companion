@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.6.5  
+**Document Revision:** 1.6.6  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `449155ffef4eb452aba22e463ee20a21c233a191` — `Section 5 Audit Update`  
@@ -10,12 +10,12 @@
 **Completed Milestone:** Knots  
 **Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
 **Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
-**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.17 — current cleanup dispositions/actions through Section 11  
-**Completed Section 10 Record:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-10-CLOSEOUT.md` — Section 10 PASS / GITHUB-VERIFIED / CLOSED  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.18 — current cleanup dispositions/actions through Section 12  
 **Completed Section 11 Record:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-11-CLOSEOUT.md` — Section 11 PASS / GITHUB-VERIFIED / CLOSED  
+**Completed Section 12 Record:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-12-CLOSEOUT.md` — Section 12 PASS / GITHUB-VERIFIED / CLOSED  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.5 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Windows Desktop; Brave browser; GitHub Desktop.  
-**Session Status:** Repository Audit Sections 1–11 are complete and verified. Section 12 — Repository-Wide Integrity Validator — is next. Fish Guide Phase 0 remains paused.  
+**Session Status:** Repository Audit Sections 1–12 are complete and verified. Section 13 — Optional Continuous Integration — is next. Fish Guide Phase 0 remains paused.  
 **Last Updated:** 2026-08-20
 
 # 1. Start Here
@@ -426,7 +426,7 @@ A Tackle result should act as a connected-knowledge gateway and may expose:
 - definition and recognition help,
 - common variants,
 - related Tackle,
-- derived **Used In** Rigs from `Rig.componentRequirements`,
+- Rigs that use the item,
 - Fish/Conditions/Techniques where canonical relationships exist,
 - later My Tackle ownership context.
 
@@ -551,7 +551,7 @@ Until Repository Audit Cleanup is closed:
 - no audit-proposed deletion/move/schema refactor occurs without approval,
 - all cleanup documentation writes retain the existing fetch-before-edit and post-write validation rules.
 
-The remaining safeguard-design agenda includes repository-wide integrity validation, optional CI, documentation safeguards, external-reference/media freshness maintenance, final re-audit, and the mandatory drift-prevention approval gate.
+The remaining safeguard-design agenda includes optional CI, documentation safeguards, external-reference/media freshness maintenance, final re-audit, and the mandatory drift-prevention approval gate.
 
 # 13. Rig Tutorial Standard
 
@@ -606,6 +606,7 @@ The following are Validated / Finalized:
 - **Repository Audit Section 9 — Workstream Directory Hygiene**
 - **Repository Audit Section 10 — Stale Git Branch**
 - **Repository Audit Section 11 — `.gitignore` / Repository Hygiene Prevention**
+- **Repository Audit Section 12 — Repository-Wide Integrity Validator**
 
 The following Fish Guide Phase 0 work is Approved / Locked but not production-implemented:
 
@@ -630,12 +631,12 @@ It must not be treated as permanent My Tackle ownership.
 
 # 17. Active Gate — Repository Audit Cleanup
 
-**Status:** SECTIONS 1–11 COMPLETE / SECTION 12 NEXT / FISH PAUSED
+**Status:** SECTIONS 1–12 COMPLETE / SECTION 13 NEXT / FISH PAUSED
 
 Controlling documents:
 
 - `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` — immutable audit-time findings snapshot; its original `OPEN` labels describe the audit baseline.
-- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.17` — current cleanup dispositions through Section 11.
+- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.18` — current cleanup dispositions through Section 12.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` — Section 4 implementation/runtime closeout.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md` — Section 5 implementation closeout.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-CLOSEOUT.md` — Section 6 governing-document closeout.
@@ -644,9 +645,10 @@ Controlling documents:
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-9-CLOSEOUT.md` — Section 9 workstream-directory closeout.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-10-CLOSEOUT.md` — Section 10 stale-branch closeout.
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-11-CLOSEOUT.md` — Section 11 repository-hygiene closeout.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-12-CLOSEOUT.md` — Section 12 repository-integrity-validator closeout.
 - `docs/workstreams/REPOSITORY-AUDIT-CLOSEOUT-REQUIREMENTS.md` — mandatory final drift-prevention review/approval gate.
 
-Completed cleanup decisions through Section 11:
+Completed cleanup decisions through Section 12:
 
 - Section 1 orphan/duplicate cleanup — completed / GitHub-verified.
 - Section 2 theme/archive structure — completed / GitHub-verified; D055 promoted.
@@ -658,33 +660,35 @@ Completed cleanup decisions through Section 11:
 - Section 8 Future Draft Data Models — PASS / VALIDATED / CLOSED / corrected for decision precedence.
 - Section 9 Workstream Directory Hygiene — PASS / GITHUB-VERIFIED / CLOSED.
 - Section 10 Stale Git Branch — PASS / GITHUB-VERIFIED / CLOSED; `agent/rig-guide-closeout` deleted after unique-material review and remote verification.
-- Section 11 `.gitignore` / Repository Hygiene Prevention — PASS / GITHUB-VERIFIED / CLOSED; narrow root ignore rules now prevent known transient/backup, Windows metadata, and Python cache artifacts without changing the ZIP/full-file replacement delivery workflow.
+- Section 11 `.gitignore` / Repository Hygiene Prevention — PASS / GITHUB-VERIFIED / CLOSED.
+- Section 12 Repository-Wide Integrity Validator — PASS / GITHUB-VERIFIED / CLOSED; `tools/validate_repository_integrity.js` is the current read-only cross-domain mechanical integrity check and passed against the real local repository before GitHub verification.
 
 Next cleanup work:
 
-> **Section 12 — Repository-Wide Integrity Validator**
+> **Section 13 — Optional Continuous Integration**
 
-The wider audit still covers repository-wide validation, optional CI, documentation safeguards, external-reference/media freshness, final production-intent verification, final re-audit, and mandatory drift-prevention review/approval.
+The wider audit still covers optional CI, documentation safeguards, external-reference/media freshness, final production-intent verification, final re-audit, and mandatory drift-prevention review/approval.
 
 # 18. Exact Resume Point — Current Session
 
 Do **not** resume the remaining Fish Guide Phase 0 topics yet.
 
-Begin the **Repository Audit Cleanup Gate — Section 12: Repository-Wide Integrity Validator** only after a fresh Section 12 repository preflight.
+Begin the **Repository Audit Cleanup Gate — Section 13: Optional Continuous Integration** only after a fresh Section 13 repository preflight.
 
 Current exact sequence:
 
-1. Re-fetch current authoritative GitHub `main` before proposing any Section 12 implementation.
-2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md`, and the Section 11 closeout record first.
-3. Preserve Sections 1–11 as completed; do not reopen them without a new defect or explicit user decision.
-4. Inventory current production registries, repository layout, existing validators, controlled values, canonical relationship owners, and local-media paths that the repository-wide validator must inspect.
-5. Distinguish mechanically testable invariants from human review requirements; the validator reports defects and must not silently rewrite or delete repository content.
-6. Propose exact validator responsibilities, file location, invocation, failure behavior, and expected output for user approval before creating or modifying validator source.
-7. Preserve the existing complete-file replacement / ZIP delivery workflow for production/source changes unless explicitly authorized otherwise.
-8. After approved implementation and validation, update the audit decision log, Section 12 closeout record, and Handoff before Section 12 is considered complete.
-9. Re-fetch every changed file from GitHub and verify beginning, end, intended changes, and preserved unrelated content.
-10. Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections and final read-only re-audit pass.
-11. Before final audit closeout, conduct the mandatory Repository Integrity and Drift Prevention review/discussion and obtain explicit user approval of the final process.
+1. Re-fetch current authoritative GitHub `main` before proposing any Section 13 change.
+2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md`, and the Section 12 closeout record first.
+3. Preserve Sections 1–12 as completed; do not reopen them without a new defect or explicit user decision.
+4. Confirm the current branch-protection/workflow state and whether `.github/workflows/` exists.
+5. Evaluate the actual value of running `node tools/validate_repository_integrity.js` automatically on push and/or pull request against the maintenance cost of GitHub Actions for this personal/local-first workflow.
+6. Distinguish optional visibility from required merge protection; do not introduce branch protection or a mandatory PR workflow merely because CI is technically available.
+7. Propose Section 13 as IMPLEMENT, DEFER/PARK, or REJECT with rationale before creating any workflow/configuration file.
+8. If implementation is approved, preserve the full-file replacement / ZIP delivery workflow for non-Markdown configuration changes unless explicitly authorized otherwise.
+9. After the approved Section 13 disposition is implemented/documented, update the decision log, closeout record, and Handoff before Section 13 is considered complete.
+10. Re-fetch every changed file from GitHub and verify beginning, end, intended changes, and preserved unrelated content.
+11. Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections and final read-only re-audit pass.
+12. Before final audit closeout, conduct the mandatory Repository Integrity and Drift Prevention review/discussion and obtain explicit user approval of the final process.
 
 Fish state to preserve while paused:
 
