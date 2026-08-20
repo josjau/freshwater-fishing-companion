@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 1.6.1  
+**Document Revision:** 1.6.2  
 **Document Status:** Approved  
 **Repository State Reference:** GitHub `main` is authoritative.  
 **Current Validated Production Baseline:** `449155ffef4eb452aba22e463ee20a21c233a191` — `Section 5 Audit Update`  
@@ -10,11 +10,12 @@
 **Completed Milestone:** Knots  
 **Current Milestone:** Fish Guide — Phase 0 In Progress; PAUSED behind Repository Audit Cleanup Gate  
 **Active Cleanup Record:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` revision 1.0.0 — immutable audit-time findings snapshot  
-**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.11 — current cleanup dispositions/actions through Section 6 closeout  
-**Completed Section 6 Records:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-DECISIONS.md`, `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-SESSION-END-2026-08-19.md`, and `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-CLOSEOUT.md`  
+**Active Cleanup Decision Log:** `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision 1.0.13 — current cleanup dispositions/actions through Section 8 closeout  
+**Completed Section 7 Record:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-7-CLOSEOUT.md` — Section 7 PASS / VALIDATED / CLOSED  
+**Completed Section 8 Record:** `docs/workstreams/REPOSITORY-AUDIT-SECTION-8-CLOSEOUT.md` — Section 8 PASS / VALIDATED / CLOSED  
 **Canonical Roadmap:** `docs/ROADMAP.md` revision 0.3.5 is the current roadmap document; milestone ordering is unchanged.  
 **Session Environment:** Mobile session; direct Markdown commit application is allowed after detailed review/approval for this session.  
-**Session Status:** Repository Audit Sections 1–6 are complete and verified. Section 7 — Data-Model Documentation Synchronization — is next. Fish Guide Phase 0 remains paused.  
+**Session Status:** Repository Audit Sections 1–8 are complete and verified. Section 9 — Workstream Directory Hygiene — is next. Fish Guide Phase 0 remains paused.  
 **Last Updated:** 2026-08-19
 
 # 1. Start Here
@@ -24,6 +25,8 @@ GitHub `main` is authoritative for all existing project files.
 Permanent rules:
 
 > Fetch the latest GitHub file before changing an existing source file.
+
+> Before beginning any new audit section or milestone, inspect current authoritative GitHub `main`, determine the actual repository state, and propose scope from that evidence rather than assuming older planning state.
 
 > Do not begin a new build segment while the current segment remains unfinalized.
 
@@ -545,7 +548,7 @@ Until Repository Audit Cleanup is closed:
 - no audit-proposed deletion/move/schema refactor occurs without approval,
 - all cleanup documentation writes retain the existing fetch-before-edit and post-write validation rules.
 
-The remaining safeguard-design agenda includes current/future data-model documentation, workstream status, stale branch, `.gitignore`, repository-wide integrity validation, optional CI, branch/archive hygiene, and external-reference/media freshness maintenance.
+The remaining safeguard-design agenda includes workstream status, stale branch, `.gitignore`, repository-wide integrity validation, optional CI, branch/archive hygiene, and external-reference/media freshness maintenance.
 
 # 13. Rig Tutorial Standard
 
@@ -595,6 +598,8 @@ The following are Validated / Finalized:
 - **Repository Audit Section 4 — Tackle ↔ Media semantic ownership refactor**
 - **Repository Audit Section 5 — Rig empty schema-field cleanup**
 - **Repository Audit Section 6 — Governing Documents Comprehensive Synchronization**
+- **Repository Audit Section 7 — Data-Model Documentation Synchronization**
+- **Repository Audit Section 8 — Future Draft Data Models**
 
 The following Fish Guide Phase 0 work is Approved / Locked but not production-implemented:
 
@@ -619,69 +624,54 @@ It must not be treated as permanent My Tackle ownership.
 
 # 17. Active Gate — Repository Audit Cleanup
 
-**Status:** SECTIONS 1–6 COMPLETE / SECTION 7 NEXT / FISH PAUSED
+**Status:** SECTIONS 1–8 COMPLETE / SECTION 9 NEXT / FISH PAUSED
 
 Controlling documents:
 
 - `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md` — immutable audit-time findings snapshot; its original `OPEN` labels describe the audit baseline.
-- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.11` — current cleanup dispositions through Section 6 closeout.
-- `docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` revision `1.0.0` — Section 4 implementation/runtime closeout.
-- `docs/workstreams/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md` revision `1.0.0` — Section 5 implementation closeout.
-- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-DECISIONS.md` revision `1.0.3` — completed Section 6 governing decisions.
-- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-CLOSEOUT.md` revision `1.0.0` — Section 6 validation/closeout.
-- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-SESSION-END-2026-08-19.md` — preserved Section 6 discussion/session history.
+- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md` revision `1.0.13` — current cleanup dispositions through Section 8 closeout.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-4-CLOSEOUT.md` — Section 4 implementation/runtime closeout.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md` — Section 5 implementation closeout.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-CLOSEOUT.md` — Section 6 governing-document closeout.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-7-CLOSEOUT.md` — Section 7 data-model synchronization closeout.
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-8-CLOSEOUT.md` — Section 8 future-model closeout.
 
-Completed cleanup decisions:
+Completed cleanup decisions through Section 8:
 
-- Section 1.1 `data-reel-guidance.tmp` — deleted / GitHub-verified.
-- Section 1.2 `styles.bak` — deleted / GitHub-verified.
-- Section 1.3 Rig-image placeholder — `images/rigs/dummy.js` replaced with intentional `images/rigs/.gitkeep`; local Rig visual library preserved as a future offline-capability improvement.
-- Section 1.4 accidental `docs/docs/` duplicate subtree — deleted / GitHub-verified.
-- Section 2.1 theme interpretation and structure — deferred theme candidates documented and moved byte-for-byte under `themes/concepts/`; `forest-journal.css` remains the sole production theme.
-- Section 2.2 archive path convention — repository-root `archive/` approved as canonical; `archive/README.md` created; ordinary prior revisions remain in Git history; retired artifacts require **GIT HISTORY ONLY / ARCHIVE / DELETE** classification and archive verification when applicable.
-- D055 Durable Decision Context Preservation — approved permanent safeguard.
-- Section 3 production entrypoint and asset reachability — **PASS**; current `index.html` production load targets all exist; no production source cleanup required.
-- D056 Semantic Single-Owner Data and Relationship Ownership — approved permanent site-wide rule.
-- Section 4 Tackle ↔ Media ownership — **PASS / VALIDATED / PRODUCTION IMPLEMENTED**. `data/tackle.js` no longer stores `mediaIds[]`; `data/media.js` owns attachment via `ownerType` + `ownerId`; renderer lookup derives from Media ownership; 29/29 owner mapping and Microsoft Edge runtime validation passed.
-- Section 5 Rig empty schema fields — **PASS / VALIDATED / PRODUCTION IMPLEMENTED / CLOSED**. All 20 empty `techniqueIds[]` and all 20 empty `imageIds[]` removed; `variationIds[]` preserved; `targetFishIds[]` not added; Rig↔Technique ownership deferred; removed fields GIT HISTORY ONLY.
-- Section 6 Governing Documents Comprehensive Synchronization — **PASS / VALIDATED / CLOSED**. Governing/current-state documentation was reconciled in commit `5eff49dc3fe5bcce1c66f7ea2a99bfd562e1e957` and remotely verified; no production source/data/media/UI/configuration changed.
-
-Section 4 production commit:
-
-`614a5b472fb42a8fa23870ea96a00f929a8ed4b6` — `Section 4 production update package`
-
-Section 5 production commit:
-
-`449155ffef4eb452aba22e463ee20a21c233a191` — `Section 5 Audit Update`
-
-Section 6 synchronization commit:
-
-`5eff49dc3fe5bcce1c66f7ea2a99bfd562e1e957` — `Docs - synchronize Repository Audit Section 6`
+- Section 1 orphan/duplicate cleanup — completed / GitHub-verified.
+- Section 2 theme/archive structure — completed / GitHub-verified; D055 promoted.
+- Section 3 production entrypoint and asset reachability — PASS.
+- Section 4 Tackle ↔ Media ownership — PASS / VALIDATED / PRODUCTION IMPLEMENTED; D056 promoted.
+- Section 5 Rig empty schema fields — PASS / VALIDATED / PRODUCTION IMPLEMENTED / CLOSED.
+- Section 6 Governing Documents Comprehensive Synchronization — PASS / VALIDATED / CLOSED.
+- Section 7 Data-Model Documentation Synchronization — PASS / VALIDATED / CLOSED. Current production schemas, future architecture, relationship ownership, Glossary, and data-model README were reconciled without production changes.
+- Section 8 Future Draft Data Models — PASS / VALIDATED / CLOSED. Future model documents retained with explicit lifecycle status and architecture-gate revalidation; no additional model rewrite or production change required.
 
 Next cleanup work:
 
-> **Section 7 — Data-Model Documentation Synchronization**
+> **Section 9 — Workstream Directory Hygiene**
 
-The wider audit still covers current data-model documentation, future Draft ownership risks, workstream status, stale branch, `.gitignore`, repository-wide validation, optional CI, documentation safeguards, external-reference/media freshness, and final re-audit.
+The wider audit still covers workstream status, stale branch, `.gitignore`, repository-wide validation, optional CI, documentation safeguards, external-reference/media freshness, and final re-audit.
 
 # 18. Exact Resume Point — Next Session
 
 Do **not** resume the remaining Fish Guide Phase 0 topics yet.
 
-Begin the **Repository Audit Cleanup Gate — Section 7: Data-Model Documentation Synchronization**.
+Begin the **Repository Audit Cleanup Gate — Section 9: Workstream Directory Hygiene**.
 
 Current exact sequence:
 
-1. Re-fetch current GitHub `main` before any proposed data-model document edit.
-2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md`, and `docs/workstreams/REPOSITORY-AUDIT-SECTION-6-CLOSEOUT.md` first.
-3. Preserve Sections 1–6 as completed; do not reopen them without a new defect or explicit user decision.
-4. Audit the current data-model documentation against actual canonical production schemas and current governing decisions.
-5. Apply D056 to every field/relationship: one semantic owner, no inverse duplication for navigation convenience.
-6. Remove or clearly defer speculative schema that exists only "just in case"; do not silently invent future production fields.
-7. Preserve the Section 5 boundary: `03-RIGS.md` received only status correction in Section 6 and remains eligible for broader model reconciliation now.
-8. Preserve Fish Phase 0 durable decisions D057–D061 while Fish production remains paused.
-9. Record each Section 7 disposition with D055 context: Decision, Reason, Current Status, Future Trigger, Canonical Owner.
-10. Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections and final read-only re-audit pass.
+1. Re-fetch current authoritative GitHub `main` before proposing any Section 9 change.
+2. Read `docs/HANDOFF.md`, `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`, `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md`, and the Section 7/8 closeout records first.
+3. Preserve Sections 1–8 as completed; do not reopen them without a new defect or explicit user decision.
+4. Inventory the current `docs/workstreams/` directory and classify each relevant record by actual lifecycle/status evidence.
+5. Identify stale active-looking records, superseded handoffs/status documents, duplicate workstream state, and records that should remain current versus archive versus Git-history-only.
+6. Apply the repository retirement rule: **GIT HISTORY ONLY / ARCHIVE / DELETE**; do not move or delete solely for aesthetics.
+7. Preserve historical/audit/provenance records that have independent value, but prevent them from masquerading as current state.
+8. Summarize proposed Section 9 changes for user approval before writing, moving, archiving, or deleting anything.
+9. After approved changes, update the audit decision log, closeout record, and Handoff before Section 9 is considered complete.
+10. Re-fetch every changed file from GitHub and verify beginning, end, intended changes, and preserved unrelated content.
+11. Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections and final read-only re-audit pass.
 
 Fish state to preserve while paused:
 
