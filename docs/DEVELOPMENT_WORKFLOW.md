@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.1.8  
+**Document Revision:** 1.1.9  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-19
 
@@ -123,6 +123,19 @@ Default workflow for those files:
 5. After the user push, verify the actual commit and affected files on GitHub.
 
 A prior approval for one production update does not grant blanket approval for later production writes. Ask again before each new direct-write set unless the user explicitly changes this rule for the applicable session or action.
+
+# Delivery Fallback
+
+For project changes that are already authorized for direct GitHub delivery, use this fallback when the direct write path fails:
+
+1. Attempt the authorized direct GitHub write once through the normal delivery path.
+2. If the direct write fails, do not stall the workflow or repeatedly retry the same blocked path without new evidence that another attempt will succeed.
+3. Package the exact intended change as a production ZIP that preserves repository-relative paths and contains only the authorized permanent repository files.
+4. Provide the ZIP to the user for manual application through the normal local repository/GitHub Desktop workflow.
+5. After the user confirms the ZIP was applied and pushed, re-fetch the affected files from authoritative GitHub `main`.
+6. Validate that GitHub matches the intended package before treating the change as complete.
+
+This fallback does **not** expand direct-write authority. Production source, data, media, CSS, HTML, JavaScript, configuration, and other protected project files remain subject to the Production Write Approval Gate above. A failed write never converts an unapproved production change into an authorized one.
 
 # Decision-to-Package Continuity
 
