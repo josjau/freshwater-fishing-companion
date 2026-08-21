@@ -256,7 +256,7 @@ function renderRigGuideView(appMain) {
         cards: [
             { id: "browse-all-rigs", title: "All Rigs", description: "Browse every Rig currently implemented in the library.", isAvailable: true },
             { id: "browse-core-rigs", title: "Core Rigs", description: "Six curated setups that form a broadly useful fishing toolkit.", isAvailable: true },
-            { id: "browse-beginner-rigs", title: "Beginner", description: "Six simple rigs with forgiving assembly and broad usefulness.", isAvailable: true },
+            { id: "browse-beginner-rigs", title: "Beginner", description: "Seven simple rigs with forgiving assembly and broad usefulness.", isAvailable: true },
             { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Three approachable rigs that require a little more setup precision.", isAvailable: true },
             { id: "browse-intermediate-rigs", title: "Intermediate", description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup.", isAvailable: true },
             { id: "browse-intermediate-plus-rigs", title: "Intermediate+", description: "Four specialized finesse and multi-component setups with more precise weight placement and rig orientation.", isAvailable: true },
@@ -442,8 +442,8 @@ function renderRigBrowseView(appMain) {
         inputId: "rig-search-input",
         title: collection.title,
         description: collection.description,
-        label: "Search this Rig group",
-        placeholder: "Try bobber, bass, shore, cover, or clear water",
+        label: `Search within ${collection.title}`,
+        placeholder: `Search ${collection.title}`,
         parentLabel: "Rig Guide",
         onParent: () => showView(ROUTES.RIGS),
         onSearch: (query) => updateRigBrowseResults(appMain, query)
@@ -2532,8 +2532,8 @@ function renderKnotBrowseView(appMain) {
         inputId: "knot-browse-search-input",
         title: browseConfig.title,
         description: browseConfig.description,
-        label: "Search this Knot group",
-        placeholder: "Try Palomar, leader, braid, or beginner",
+        label: `Search within ${browseConfig.title}`,
+        placeholder: `Search ${browseConfig.title}`,
         parentLabel: fromKnotDetail ? returnContext.label : "Knots",
         onParent: fromKnotDetail
             ? returnToDetailNavigationContext

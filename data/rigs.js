@@ -10,7 +10,7 @@
 
 const RIG_DATA_BUILD_INFO = Object.freeze({
     file: "data/rigs.js",
-    milestone: "Knot Guide — Production Package 1"
+    milestone: "Rig Guide — Four-State Adequacy Reconciliation"
 });
 
 const CORE_RIG_IDS = Object.freeze([
@@ -188,7 +188,7 @@ const RIG_DATA = Object.freeze([
                 tackleId: "bait",
                 quantity: 1,
                 required: true,
-                notes: "Common choices include worms, minnows, or small jigs."
+                notes: "Common choices include worms or minnows where legal."
             }
         ],
         knotApplications: [
@@ -2053,6 +2053,99 @@ const RIG_DATA = Object.freeze([
             "Secure the rod when trolling because the bouncer and harness remain under continuous load."
         ],
         variationIds: ["live-bait-slip-sinker-rig"],
+    },
+    {
+        id: "split-shot-bait-rig",
+        name: "Split-Shot Bait Rig",
+        summary: "A simple live- or natural-bait rig that uses fixed split shot above the hook to add light weight without a float.",
+        createdVersion: "0.5.0",
+        lastModifiedVersion: "0.5.0",
+        isActive: true,
+        difficulty: "Beginner",
+        useCases: [
+            "Fishing live or natural bait without a float",
+            "Drifting bait in light current",
+            "Tight-lining or presenting bait near the bottom"
+        ],
+        conditionTags: [
+            "Shallow Water",
+            "Deep Water",
+            "Open Water",
+            "Light Current",
+            "Bottom Fishing"
+        ],
+        referenceLinks: [
+            {
+                label: "ODWC — Split the Difference",
+                url: "https://www.wildlifedepartment.com/outdoorok/ooj/split-difference"
+            },
+            {
+                label: "Missouri Department of Conservation — Trout Fishing Tips",
+                url: "https://mdc.mo.gov/fishing/species/trout/trout-fishing-tips"
+            }
+        ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How to Make a Split Shot Rig for Panfish | Best Bluegill & Crappie Rigs",
+            creator: "Show Me the Hawgs",
+            videoId: "pw2hgUPDifM",
+            externalUrl: "https://www.youtube.com/watch?v=pw2hgUPDifM"
+        },
+        componentRequirements: [
+            {
+                tackleId: "split-shot",
+                quantity: 1,
+                required: true,
+                notes: "Start with one small shot 12 to 24 inches above the hook; add another only when extra weight is needed."
+            },
+            {
+                tackleId: "hook",
+                quantity: 1,
+                required: true,
+                notes: "Match hook size to the bait and target fish."
+            },
+            {
+                tackleId: "bait",
+                quantity: 1,
+                required: true,
+                notes: "Use worms, minnows, or other legal live or natural bait suited to the fish."
+            }
+        ],
+        knotApplications: [
+            {
+                label: "Main line to hook",
+                connectionType: "terminal-attachment",
+                recommendedKnotIds: [
+                    "improved-clinch-knot",
+                    "palomar-knot",
+                    "uni-knot"
+                ],
+                notes: null
+            }
+        ],
+        assemblySteps: [
+            "Tie the hook directly to the end of the main line.",
+            "Use pliers to pinch one small split shot onto the main line about 12 to 24 inches above the hook.",
+            "Add another split shot only if the bait needs more weight to reach the intended depth or maintain light bottom contact.",
+            "Inspect the line where each split shot is attached and replace damaged line before fishing.",
+            "Add live or natural bait to the hook and confirm the bait can move naturally."
+        ],
+        setupNotes: [
+            "Twelve to twenty-four inches above the hook is a practical starting distance; adjust for depth, current, and presentation.",
+            "Use the lightest split-shot weight that gets the bait to the intended depth or maintains the contact you need.",
+            "This canonical build uses the hook and split shot directly on the main line without a float, sliding sinker, swivel, or required leader."
+        ],
+        commonMistakes: [
+            "Using more split-shot weight than needed and making the bait move unnaturally.",
+            "Crushing split shot hard enough to nick or weaken the line.",
+            "Placing the shot so close to the hook that it restricts the bait's natural movement.",
+            "Adding unnecessary terminal hardware and turning the setup into a different Rig family."
+        ],
+        safetyNotes: [
+            "Attach and remove split shot with pliers rather than your teeth.",
+            "Keep the baited hook controlled while adjusting weights and before casting."
+        ],
+        variationIds: [],
     }
 ]);
 
