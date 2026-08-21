@@ -865,6 +865,113 @@ function validateRepositoryHygiene() {
     }
 }
 
+
+function validateDocumentationGovernance() {
+    recordCheck("Documentation governance roles and lifecycle markers");
+
+    const requiredDocs = [
+        "docs/PROJECT.md",
+        "docs/ARCHITECTURE.md",
+        "docs/DECISIONS.md",
+        "docs/DEVELOPMENT_WORKFLOW.md",
+        "docs/ROADMAP.md",
+        "docs/HANDOFF.md",
+        "docs/ACTIVE-CHANGE-LEDGER.md",
+        "docs/CHANGELOG.md",
+        "docs/MILESTONES.md",
+        "docs/SPECIFICATION.md"
+    ];
+
+    const docs = new Map();
+    for (const relativePath of requiredDocs) {
+        const text = readText(relativePath);
+        if (text !== null) {
+            docs.set(relativePath, text);
+        }
+    }
+
+    const requiredMarkers = new Map([
+        [
+            "docs/HANDOFF.md",
+            [
+                "**Role:** Compact formal GitHub recovery/continuation entrypoint",
+                "`ACTIVE-CHANGE-LEDGER.md`",
+                "Freshwater Fishing Companion — Working State"
+            ]
+        ],
+        [
+            "docs/ACTIVE-CHANGE-LEDGER.md",
+            [
+                "**Role:** Single formal GitHub owner of material non-closed carry-forward items",
+                "# Status Vocabulary",
+                "# Maintenance Rules"
+            ]
+        ],
+        [
+            "docs/ROADMAP.md",
+            [
+                "**Role:** Product milestone order and future direction",
+                "does **not** own exact active Repository Audit/workstream status"
+            ]
+        ],
+        [
+            "docs/MILESTONES.md",
+            [
+                "**Maintenance Status:** FROZEN HISTORICAL RECORD",
+                "It is **not** a current-state owner"
+            ]
+        ],
+        [
+            "docs/CHANGELOG.md",
+            [
+                "**Role:** Curated meaningful landed-change history",
+                "It is **not** a current project-status dashboard"
+            ]
+        ],
+        [
+            "docs/SPECIFICATION.md",
+            [
+                "**Document Status:** Superseded",
+                "**Maintenance Status:** Retired from active maintenance",
+                "`SPECIFICATION.md` is no longer an active governing source"
+            ]
+        ]
+    ]);
+
+    for (const [relativePath, markers] of requiredMarkers.entries()) {
+        const text = docs.get(relativePath);
+        if (text === undefined) {
+            continue;
+        }
+        for (const marker of markers) {
+            if (!text.includes(marker)) {
+                fail("Documentation governance", `${relativePath}: missing required role/lifecycle marker: ${marker}`);
+            }
+        }
+    }
+
+    const staleCurrentStatePatterns = [
+        /^##\s+Current Repository State\b/im,
+        /^\*\*Implementation Status:\*\*\s*Repository Audit Section\s+\d+\b/im,
+        /^\*\*Current Audit Section:\*\*\s*\d+\b/im
+    ];
+
+    for (const relativePath of ["docs/ROADMAP.md", "docs/MILESTONES.md", "docs/CHANGELOG.md"]) {
+        const text = docs.get(relativePath);
+        if (text === undefined) {
+            continue;
+        }
+        for (const pattern of staleCurrentStatePatterns) {
+            if (pattern.test(text)) {
+                fail(
+                    "Documentation governance",
+                    `${relativePath}: contains a prohibited exact-current-state/audit-status structure`
+                );
+            }
+        }
+    }
+}
+
 function main() {
     console.log("REPOSITORY INTEGRITY VALIDATION");
     console.log(`Root: ${ROOT}`);
@@ -874,6 +981,7 @@ function main() {
     validateReelGuidance();
     validateMedia(canonicalData);
     validateRepositoryHygiene();
+    validateDocumentationGovernance();
 
     if (FAILURES.length > 0) {
         console.error("\nREPOSITORY INTEGRITY: FAIL");
