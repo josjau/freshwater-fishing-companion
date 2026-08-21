@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.0.1  
+**Document Revision:** 2.0.2  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-21
@@ -59,29 +59,27 @@ Remaining Fish Phase 0 actions are tracked in `ACTIVE-CHANGE-LEDGER.md` and the 
 
 **Repository Audit Section 14 — Documentation Maintenance Safeguards**
 
-Completed and GitHub-verified before this cleanup:
+Completed and GitHub-verified:
 
 - reduced living-document role model,
 - persistent `ACTIVE-CHANGE-LEDGER.md`,
 - deterministic documentation-governance checks in the existing repository-integrity validator,
-- external-reference/media freshness policy and report-only quarterly/manual checker.
+- external-reference/media freshness policy and report-only quarterly/manual checker,
+- first final read-only re-audit cleanup,
+- post-cleanup Architecture source-tree drift correction,
+- final read-only repository re-audit — **PASS**.
 
-The first final read-only re-audit found five cleanup items. This cleanup addresses them by:
-
-- refreshing this Handoff,
-- refreshing the Section 14 implementation record,
-- retiring completed Knot workstreams from `docs/workstreams/`,
-- removing package-only `README-APPLY.md`,
-- closing UX-003 through explicit canonical-owner sufficiency rather than duplicating durable rules.
+The final re-audit found no remaining unexplained duplicate current sources or known current-state status contradictions after the Architecture correction.
 
 # Exact Resume Point
 
-1. Re-fetch authoritative GitHub `main` after this cleanup lands.
-2. Re-run the final read-only repository re-audit.
-3. If the re-audit passes, hold the mandatory Repository Integrity and Drift Prevention approval gate tracked as GOV-007.
-4. Promote any approved final safeguards to their governing owner(s).
-5. Close Repository Audit Cleanup only after the final gate and GitHub verification pass.
-6. Resume Fish Guide Phase 0 only after the cleanup gate closes.
+1. Re-fetch authoritative GitHub `main`.
+2. Hold the mandatory **Repository Integrity and Drift Prevention** review and explicit user approval gate tracked as GOV-007.
+3. Classify the proposed safeguards as mandatory, optional, rejected, or parked.
+4. Promote approved durable safeguards to the correct governing owner(s), including `DEVELOPMENT_WORKFLOW.md` and any explicitly approved dedicated integrity standard.
+5. Update Handoff to reference the approved final process.
+6. Close Repository Audit Cleanup only after the GOV-007 promotion and final GitHub verification pass.
+7. Resume Fish Guide Phase 0 only after the cleanup gate closes.
 
 # Non-Negotiable Working Rules
 

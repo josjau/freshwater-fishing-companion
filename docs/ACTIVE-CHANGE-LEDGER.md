@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.2  
+**Document Revision:** 1.0.3  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `2f7c6ea41157ca68142575f8696525dc993f19f9`  
@@ -31,7 +31,6 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| GOV-006 | REQUIRED | Final read-only repository re-audit | Repository Audit closeout | Re-run after the final cleanup commit; verify no unexplained duplicate current owners or known stale-status contradictions remain. |
 | GOV-007 | REQUIRED | Final Repository Integrity and Drift Prevention review | Mandatory final user approval gate | Review/approve safeguards, classify controls, promote durable process rules. |
 | GOV-008 | BLOCKED | Repository Audit closeout / Fish release | Audit closeout | Close only after all findings/gates are reconciled, validated, documented, and GitHub-verified. |
 
