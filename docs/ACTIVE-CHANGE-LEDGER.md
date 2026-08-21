@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.1  
+**Document Revision:** 1.0.2  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `2f7c6ea41157ca68142575f8696525dc993f19f9`  
@@ -31,9 +31,7 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| GOV-004 | OPEN | Document lifecycle/status cleanup details | Section 14 / D036 | Reconcile lifecycle metadata where useful; do not mass-rewrite historical closeouts without need. |
-| GOV-005 | IMPLEMENTED / PENDING VALIDATION | External reference/media freshness maintenance | `EXTERNAL_REFERENCE_MAINTENANCE.md`; external-reference health workflow | Verify the landed policy/checker/workflow, then remove this completed implementation item; recurring quarterly/human review continues under the maintenance standard. |
-| GOV-006 | REQUIRED | Final read-only repository re-audit | Repository Audit closeout | Verify no unexplained duplicate current owners or known stale-status contradictions after cleanup. |
+| GOV-006 | REQUIRED | Final read-only repository re-audit | Repository Audit closeout | Re-run after the final cleanup commit; verify no unexplained duplicate current owners or known stale-status contradictions remain. |
 | GOV-007 | REQUIRED | Final Repository Integrity and Drift Prevention review | Mandatory final user approval gate | Review/approve safeguards, classify controls, promote durable process rules. |
 | GOV-008 | BLOCKED | Repository Audit closeout / Fish release | Audit closeout | Close only after all findings/gates are reconciled, validated, documented, and GitHub-verified. |
 
@@ -43,7 +41,6 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 |---|---|---|---|---|
 | UX-001 | APPROVED / PENDING IMPLEMENTATION | Site-wide context-preserving Parent navigation (D051) | D051, `NAVIGATION-PAGE-STANDARD.md` | Implement/reconcile broader routing; validate nested navigation, restored view/query/filter/scroll, Reel Setup interactions, narrow viewport, keyboard/focus. |
 | UX-002 | DEFERRED TO NAMED GATE | Scoped search helper/example alignment | Next deliberate Rig/Knot search-presentation edit | Align helper/example text with eligible subset; do not open unrelated source solely for this wording fix. |
-| UX-003 | OPEN / GOVERNANCE RECONCILIATION | Connected-knowledge / Dashboard / Tackle durable governance ownership | Archived approved UX work + current source | Promote the durable rules to the correct governing owner or explicitly document existing owner sufficiency; do not redo validated source behavior. |
 | UX-004 | DEFERRED TO NAMED GATE | Dashboard / Global Search entry point | Roadmap Global Search milestone | Define cross-domain scope, grouping, ranking/ambiguity, and presentation; avoid indiscriminate result dump. |
 | UX-005 | DEFERRED TO NAMED GATE | Compact detail density outside Rigs | Domain-specific review | Reuse only after the target domain demonstrates the Rig density pattern fits. |
 | UX-006 | PARKED | Technically verified local Rig visual library | Rig/media future quality gate | Use licensed/verified/manual/reference-grounded media only; generated finished/build-step Rig imagery remains prohibited. |

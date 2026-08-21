@@ -1,10 +1,9 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.0.0  
+**Document Revision:** 2.0.1  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
-**Package Baseline:** `2f7c6ea41157ca68142575f8696525dc993f19f9`  
 **Last Updated:** 2026-08-21
 
 # Purpose
@@ -44,7 +43,7 @@ For a new project session:
 | What changed materially over time? | `CHANGELOG.md` |
 | What historical milestones were completed? | frozen `MILESTONES.md` |
 | What does a domain own? | the applicable data-model/domain standard |
-| What happened during a bounded workstream? | active/closed workstream record while retained |
+| What happened during a bounded workstream? | active workstream record while active; archive/Git history after closeout |
 
 `SPECIFICATION.md` is retired from active maintenance and remains only as a supersession/retirement pointer after its unique requirements were reconciled.
 
@@ -54,51 +53,35 @@ For a new project session:
 
 Fish production must not begin until the Repository Audit Cleanup Gate is formally closed.
 
-The Fish Phase 0 design already includes locked/approved architecture such as the 30-Fish Version 1 library, Four-State scope, pairwise identification relationships, Fish-owned intrinsic habitat/waterbody facts, shared Media attachment, category registry/lifecycle ownership, Northern Rock Bass identity, and hierarchical scoped Search.
-
-Remaining Fish Phase 0 actions are tracked only in `ACTIVE-CHANGE-LEDGER.md` and the Fish workstream documents; they are not duplicated here.
+Remaining Fish Phase 0 actions are tracked in `ACTIVE-CHANGE-LEDGER.md` and the Fish workstream documents.
 
 # Current Maintenance Workstream
 
 **Repository Audit Section 14 — Documentation Maintenance Safeguards**
 
-Current Section 14 implementation record:
+Completed and GitHub-verified before this cleanup:
 
-`docs/workstreams/REPOSITORY-AUDIT-SECTION-14-IMPLEMENTATION.md`
+- reduced living-document role model,
+- persistent `ACTIVE-CHANGE-LEDGER.md`,
+- deterministic documentation-governance checks in the existing repository-integrity validator,
+- external-reference/media freshness policy and report-only quarterly/manual checker.
 
-The Sections 1–13 carry-forward reconciliation and six-block user review are complete and approved.
+The first final read-only re-audit found five cleanup items. This cleanup addresses them by:
 
-The reduced living-document role model is approved.
-
-This package implements the documentation-reconciliation portion of Section 14:
-
-- compact Handoff,
-- dedicated persistent Active Change Ledger,
-- Roadmap narrowed to product order/future direction,
-- Milestones frozen as history,
-- Changelog narrowed to curated landed changes,
-- Specification retired after no-loss uniqueness review,
-- approved SPEC-U01/SPEC-U02 promotion into Architecture,
-- approved SPEC-U03 promotion into Roadmap.
-
-The deterministic documentation-integrity extension is deliberately the **next** step after this package is applied and GitHub-verified so its checks target the actual landed structures.
+- refreshing this Handoff,
+- refreshing the Section 14 implementation record,
+- retiring completed Knot workstreams from `docs/workstreams/`,
+- removing package-only `README-APPLY.md`,
+- closing UX-003 through explicit canonical-owner sufficiency rather than duplicating durable rules.
 
 # Exact Resume Point
 
-After this package is applied to the repository:
-
-1. Re-fetch authoritative GitHub `main`.
-2. Verify every package file matches the intended full-file replacement.
-3. Confirm `ACTIVE-CHANGE-LEDGER.md` is the single formal owner of non-closed carry-forward items.
-4. Confirm ROADMAP/MILESTONES/CHANGELOG no longer act as competing exact-current-state dashboards.
-5. Confirm `SPECIFICATION.md` is retired and SPEC-U01/U02/U03 are preserved in their approved owners.
-6. Extend `tools/validate_repository_integrity.js` with narrow deterministic documentation checks against the landed structure; do not create a competing validator.
-7. Run/verify the existing repository-integrity workflow.
-8. Continue external-reference/media freshness work.
-9. Run the required final read-only repository re-audit.
-10. Hold the mandatory Repository Integrity and Drift Prevention approval gate.
-11. Close Repository Audit Cleanup only after all required findings/gates have terminal dispositions and GitHub verification passes.
-12. Resume Fish Guide Phase 0 only after the cleanup gate closes.
+1. Re-fetch authoritative GitHub `main` after this cleanup lands.
+2. Re-run the final read-only repository re-audit.
+3. If the re-audit passes, hold the mandatory Repository Integrity and Drift Prevention approval gate tracked as GOV-007.
+4. Promote any approved final safeguards to their governing owner(s).
+5. Close Repository Audit Cleanup only after the final gate and GitHub verification pass.
+6. Resume Fish Guide Phase 0 only after the cleanup gate closes.
 
 # Non-Negotiable Working Rules
 
@@ -109,7 +92,7 @@ After this package is applied to the repository:
 - Do not assume a previously proposed file version was implemented.
 - Finish/validate the active segment or deliberately park it before moving to a dependent segment.
 - Material decisions, confirmed defects, parked/deferred/rejected outcomes, and implementation/validation state must not exist only in chat.
-- During long active sessions, update Working State at material boundaries; at formal checkpoints promote durable truth to the correct GitHub owner and update the Active Change Ledger.
+- During long active sessions, update Working State at material boundaries; at formal checkpoints promote durable truth to the correct GitHub owner and reconcile the Active Change Ledger.
 - Historical/closed records do not override current governing documents.
 
 # Historical References
@@ -121,4 +104,4 @@ For repository-audit provenance:
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-14-CHECKPOINT.md`
 - `docs/workstreams/REPOSITORY-AUDIT-SECTION-14-IMPLEMENTATION.md`
 
-For completed Knot/Rig details, use their governing docs and retained closeout/archive/Git history rather than expanding this Handoff.
+For completed Knot/Rig details, use governing docs plus retained archive/Git history rather than expanding this Handoff.
