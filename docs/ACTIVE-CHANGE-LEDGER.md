@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.3  
+**Document Revision:** 1.0.4  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `2f7c6ea41157ca68142575f8696525dc993f19f9`  
@@ -27,13 +27,6 @@ GitHub `main` owns formal state. The Google Drive Working State may contain newe
 
 Closed, superseded, rejected, and deliberate non-action items are not maintained here unless temporarily needed to explain an active dependency. Their provenance remains in decisions, closed workstreams, archive, Changelog, Milestones, and Git history.
 
-# Repository Audit / Governance
-
-| ID | Status | Item | Canonical detail / gate | Next action |
-|---|---|---|---|---|
-| GOV-007 | REQUIRED | Final Repository Integrity and Drift Prevention review | Mandatory final user approval gate | Review/approve safeguards, classify controls, promote durable process rules. |
-| GOV-008 | BLOCKED | Repository Audit closeout / Fish release | Audit closeout | Close only after all findings/gates are reconciled, validated, documented, and GitHub-verified. |
-
 # Cross-Domain UX / Source Follow-Ups
 
 | ID | Status | Item | Canonical detail / gate | Next action |
@@ -53,7 +46,7 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 | REG-001 | OPEN | Four-State Regulations entry strategy | Regulations product/design gate | Decide external multi-state gateway vs in-app hub, state selection/saved region, official OK/KS/MO/AR destinations, freshness, Fish Detail gateway, and privacy/location assumptions. |
 | TACKLE-004 | OPEN | Tackle-root `Check Rig Readiness` placeholder | D020 + Tackle/My Tackle milestone | Remove, rename/redefine as a secondary aggregate view, or explicitly approve; do not auto-build a separate primary readiness page. |
 
-# Fish Guide Phase 0 — Resume Only After Audit Cleanup
+# Fish Guide Phase 0 — Active
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|

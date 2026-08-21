@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.0.1  
+**Document Revision:** 2.1.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-21
@@ -18,6 +18,25 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 
 # Unreleased
 
+## Repository Audit Cleanup — Finalized
+
+### Added
+
+- Promoted the approved **Repository Integrity and Drift Prevention Standard** into `DEVELOPMENT_WORKFLOW.md` as the single permanent workflow owner.
+- Added mandatory repository preflight, bounded baseline tracking, dependency/change-impact review, stale-status scanning, event-based broader reconciliation, and explicit PASS/CLOSED precedence controls.
+
+### Changed
+
+- Closed the Repository Audit Cleanup gate after the final read-only re-audit passed and GOV-007 safeguards were explicitly user-approved and promoted.
+- Released the audit-level pause on Fish Guide Phase 0 architecture work; Fish production remains gated by the existing FISH-007 Phase 0 closeout requirement.
+- Kept `tools/validate_repository_integrity.js` as the single deterministic repository-integrity validator.
+- Retained current GitHub Actions checks as non-blocking repository-health alarms; branch protection/required checks remain deliberately not required for the current workflow.
+- Moved completed Repository Audit workstream/provenance records out of active `docs/workstreams/` into `archive/workstreams/repository-audit/`.
+
+### Corrected
+
+- Restored the existing `No-Churn Rule` and manual-edit validation checkpoint immediately after post-write validation detected their accidental omission during the workflow promotion.
+
 ## External Reference Freshness Maintenance
 
 ### Added
@@ -30,7 +49,6 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 - Clarified that human review remains authoritative for technical correctness, source suitability, embed behavior, and rights assumptions.
 - Established file-level `externalReferenceReviewedDate` metadata for Rig and Media build information only after a complete human review; automated or partial checks do not advance that date.
 - Excluded geometry/provenance-only URLs for already-approved local assets from recurring automated checks unless the asset is edited/replaced or provenance is questioned.
-
 
 ## Documentation Governance — Section 14 Reconciliation
 

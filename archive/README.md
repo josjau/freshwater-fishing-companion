@@ -22,14 +22,22 @@ Archive material should have continuing value as an artifact in its own right, f
 - historical design/reference boards or previews with reconstruction/design-lineage value,
 - other deliberately retained historical artifacts that need direct repository discoverability independent of ordinary Git file history.
 
-Existing package history is stored under:
+Existing archive areas include:
 
 ```text
 archive/
     README.md
     packages/
         <date>-<package>/
+    workstreams/
+        knots/
+        repository-audit/
+        rig/
+        ux/
+        workflow/
 ```
+
+`archive/workstreams/repository-audit/` contains the completed Repository Audit Cleanup workstream and section records retained for audit/provenance value after final closeout. Historical OPEN/PENDING/PASS wording inside those files reflects the state at the time and does not override current governing documents.
 
 Additional archive subdirectories are created only when a real retained artifact class requires them. Do not create speculative archive categories in advance.
 

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.0.2  
+**Document Revision:** 2.1.0  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-21
@@ -49,42 +49,46 @@ For a new project session:
 
 # Current Product Milestone
 
-**Fish Guide — Phase 0 In Progress / PAUSED behind Repository Audit Cleanup Gate**
+**Fish Guide — Phase 0 In Progress**
 
-Fish production must not begin until the Repository Audit Cleanup Gate is formally closed.
+The Repository Audit Cleanup gate is closed. Fish Guide Phase 0 architecture work may resume.
 
-Remaining Fish Phase 0 actions are tracked in `ACTIVE-CHANGE-LEDGER.md` and the Fish workstream documents.
+Fish **production implementation remains blocked by FISH-007** until FISH-001 through FISH-006 are resolved or deliberately parked, Phase 0 is reconciled, and the Phase 0 closeout gate passes.
 
-# Current Maintenance Workstream
+# Repository Integrity Baseline
 
-**Repository Audit Section 14 — Documentation Maintenance Safeguards**
+The Repository Audit Cleanup is **PASS / FINALIZED / CLOSED**.
 
-Completed and GitHub-verified:
+Durable safeguards are owned by the **Repository Integrity and Drift Prevention Standard** in `DEVELOPMENT_WORKFLOW.md`, including:
 
-- reduced living-document role model,
-- persistent `ACTIVE-CHANGE-LEDGER.md`,
-- deterministic documentation-governance checks in the existing repository-integrity validator,
-- external-reference/media freshness policy and report-only quarterly/manual checker,
-- first final read-only re-audit cleanup,
-- post-cleanup Architecture source-tree drift correction,
-- final read-only repository re-audit — **PASS**.
+- GitHub-authoritative repository preflight,
+- governing-document/decision precedence,
+- bounded exact baseline tracking,
+- dependency/change-impact review,
+- explicit supersession/retirement handling,
+- documentation closeout and post-write verification,
+- stale-status/cross-reference review,
+- deterministic mechanical checks with human semantic review,
+- event-based broader repository reconciliation,
+- containment of Draft/planning/history authority,
+- current-hierarchy interpretation of old PASS/CLOSED records.
 
-The final re-audit found no remaining unexplained duplicate current sources or known current-state status contradictions after the Architecture correction.
+The existing repository-integrity validator remains the single deterministic validator. Existing GitHub Actions checks remain non-blocking. Branch protection/required checks remain deliberately not required for the current workflow.
 
 # Exact Resume Point
 
 1. Re-fetch authoritative GitHub `main`.
-2. Hold the mandatory **Repository Integrity and Drift Prevention** review and explicit user approval gate tracked as GOV-007.
-3. Classify the proposed safeguards as mandatory, optional, rejected, or parked.
-4. Promote approved durable safeguards to the correct governing owner(s), including `DEVELOPMENT_WORKFLOW.md` and any explicitly approved dedicated integrity standard.
-5. Update Handoff to reference the approved final process.
-6. Close Repository Audit Cleanup only after the GOV-007 promotion and final GitHub verification pass.
-7. Resume Fish Guide Phase 0 only after the cleanup gate closes.
+2. Read `docs/workstreams/FISH-GUIDE-PHASE-0.md` and `docs/workstreams/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`.
+3. Read the Fish entries in `ACTIVE-CHANGE-LEDGER.md`.
+4. Resume Fish Phase 0 at **FISH-001 through FISH-006** without reopening decisions already closed by D057–D061.
+5. Resolve or deliberately park those items, then satisfy **FISH-007** and reconcile Fish governing/data-model documentation.
+6. Only after Phase 0 closes, begin the approved Fish production architecture/UX implementation tracked by FISH-008/FISH-009.
 
 # Non-Negotiable Working Rules
 
 - GitHub `main` is authoritative for existing repository files.
 - Fetch the latest GitHub version before changing an existing source file.
+- Follow the Repository Integrity and Drift Prevention Standard in `DEVELOPMENT_WORKFLOW.md` before substantive work and at closeout.
 - Make targeted semantic edits unless a broader replacement/consolidation has been explicitly approved.
 - After all planned edits to an existing source file are complete, provide a full-file validation copy.
 - Do not assume a previously proposed file version was implemented.
@@ -95,11 +99,10 @@ The final re-audit found no remaining unexplained duplicate current sources or k
 
 # Historical References
 
-For repository-audit provenance:
+Repository Audit provenance is retained under:
 
-- `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`
-- `docs/workstreams/REPOSITORY-AUDIT-DECISIONS.md`
-- `docs/workstreams/REPOSITORY-AUDIT-SECTION-14-CHECKPOINT.md`
-- `docs/workstreams/REPOSITORY-AUDIT-SECTION-14-IMPLEMENTATION.md`
+- `archive/workstreams/repository-audit/`
+
+The archive preserves historical workstream states and evidence. Older OPEN/PENDING/PASS wording inside those records reflects the state at the time and does not override current governing documents or this Handoff.
 
 For completed Knot/Rig details, use governing docs plus retained archive/Git history rather than expanding this Handoff.
