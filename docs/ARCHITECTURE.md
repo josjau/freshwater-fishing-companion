@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.5.0  
+**Document Revision:** 0.5.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-21
 
@@ -18,6 +18,7 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
 ```text
 .github/
     workflows/
+        external-reference-health.yml
         repository-integrity.yml
 
 index.html
@@ -54,6 +55,7 @@ knot-media-renderer.js
 script.js
 
 tools/
+    check_external_references.js
     validate_repository_integrity.js
     validate_replacement_integrity.py
 
@@ -64,6 +66,7 @@ docs/
     CHANGELOG.md
     DECISIONS.md
     DEVELOPMENT_WORKFLOW.md
+    EXTERNAL_REFERENCE_MAINTENANCE.md
     MEDIA_GUIDE.md
     MILESTONES.md
     PROJECT.md
