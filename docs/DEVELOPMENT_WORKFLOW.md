@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.1.9  
+**Document Revision:** 1.2.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-19
+**Last Updated:** 2026-08-21
 
 # Purpose
 
@@ -518,17 +518,31 @@ If the user explicitly asks for a manual targeted edit:
 - Give exact replacement.
 - State insertion point.
 - State expected result.
-- Give a validation checkpoint.
 
-# No-Churn Rule
+# Repository Integrity and Drift Prevention Standard
 
-Before generating a replacement, reconcile:
+This section is the permanent workflow owner for the Repository Integrity and Drift Prevention controls approved at Repository Audit closeout. It consolidates those safeguards into the existing workflow rather than creating a competing integrity-standard document.
 
-- Approved architecture
-- Latest GitHub source
-- Related logic and data contracts
-- Likely follow-on requirements
+## Mandatory controls
 
-Do not replace a file again immediately for a foreseeable issue.
+1. **Repository preflight.** Before a substantive new session, section, workstream, or implementation block, read the current Handoff/Working State as applicable, re-fetch authoritative GitHub `main`, and verify the relevant governing and source files before planning changes.
+2. **Governing-document and decision precedence.** Current governing documents and current approved decisions outrank Drafts, plans, workstreams, archives, historical records, and old chat conclusions. A newer discussion does not supersede an approved decision until it is explicitly approved and promoted.
+3. **Exact baseline tracking for bounded work.** Record the exact starting GitHub commit for a bounded section/workstream when repository state will change. Do not add universal commit-freshness metadata to every living document; Git history remains file-level provenance.
+4. **Dependency/change-impact review.** Before edits, identify affected source owners, relationships, UI flows, documentation, validators, media, regressions, and downstream dependencies.
+5. **Supersession/retirement discipline.** When an artifact stops being current, explicitly determine whether it remains current, becomes Superseded, is retained as **ARCHIVE**, remains **GIT HISTORY ONLY**, or is **DELETE**. Retired authoritative-looking copies must not remain in active/current locations.
+6. **Authority/lifecycle labels.** Governing documentation distinguishes document lifecycle from implementation/workstream status. Use the approved document lifecycle terminology and avoid ambiguous status wording that can masquerade as current implementation truth.
+7. **Documentation closeout and post-write verification.** Documentation is part of implementation. Every write must be re-fetched from GitHub and validated against its verified baseline; a successful write or commit response alone is not proof of completion.
+8. **Cross-reference and stale-status scan.** At meaningful section/workstream closeout, inspect affected governing documents, Handoff, Active Change Ledger, related data-model documents, and explicit current-state structures for stale or contradictory references. Historical evidence is not mechanically rewritten solely to normalize old wording.
+9. **Mechanical versus human validation boundary.** Automate deterministic checks such as required files, IDs, relationships, structured statuses, known stale patterns, and source reachability. Architectural meaning, narrative correctness, technical fishing accuracy, suitability, rights/source judgment, and decision interpretation remain human-reviewed.
+10. **Event-based repository reconciliation.** Perform a broader read-only reconciliation at major milestone or architecture-gate closeout and whenever material drift evidence appears. A calendar-only full-repository audit is not required merely to satisfy cadence.
+11. **Draft/planning/history containment.** Drafts, workstream plans, archive records, historical Milestones, old PASS reports, and chat history may provide evidence but cannot silently create or override canonical architecture, product scope, ownership, or current implementation state.
+12. **PASS/CLOSED precedence.** A prior `PASS`, `VALIDATED`, `FINALIZED`, or `CLOSED` record proves only the scope/state validated at that time. Before using it as a new-work baseline, interpret it through current decisions, architecture, standards, and source.
 
-A new replacement is justified when testing finds a defect, GitHub changed, requirements changed, or new verified evidence requires correction.
+## Mechanical enforcement and current workflow disposition
+
+- `tools/validate_repository_integrity.js` remains the single repository-integrity validator for deterministic structural checks. Do not create a competing validator without an explicit architecture decision.
+- Existing GitHub Actions integrity checks remain non-blocking repository-health alarms under the current workflow.
+- Branch protection and required status checks are deliberately **not required** for the current workflow. Their absence is not a defect; reconsider only if a future collaboration/release workflow demonstrates a need.
+- External-reference reachability automation remains report-only; human review remains authoritative for correctness, suitability, embed behavior, and rights/source judgment.
+
+Permanent principle: **mechanize objective drift detection, preserve human judgment for semantic correctness, and keep each durable fact owned by one current canonical source.**
