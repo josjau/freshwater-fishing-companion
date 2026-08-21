@@ -663,7 +663,7 @@ Completed cleanup decisions through Section 13:
 - Section 9 Workstream Directory Hygiene — PASS / GITHUB-VERIFIED / CLOSED.
 - Section 10 Stale Git Branch — PASS / GITHUB-VERIFIED / CLOSED; `agent/rig-guide-closeout` deleted after unique-material review and remote verification.
 - Section 11 `.gitignore` / Repository Hygiene Prevention — PASS / GITHUB-VERIFIED / CLOSED.
-- Section 12 Repository-Wide Integrity Validator — PASS / GITHUB-VERIFIED / CLOSED; `tools/validate_repository_integrity.js` is the current read-only cross-domain mechanical integrity check.
+- Section 12 Repository-Wide Integrity Validator — PASS / GITHUB-VERIFIED / CLOSED; `tools/validate_repository_integrity.js` is the current read-only cross-domain mechanical integrity check and passed against the real local repository before GitHub verification.
 - Section 13 Optional Continuous Integration — PASS / GITHUB-VERIFIED / ACTIONS-PASS-CONFIRMED / CLOSED; GitHub Actions now runs the repository-integrity validator automatically on `main` pushes, pull requests targeting `main`, and manual dispatch without branch protection or write-back behavior.
 
 Next cleanup work:
