@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.4.6  
+**Document Revision:** 0.4.7  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-19
 
@@ -330,20 +330,25 @@ The product teaching principle remains to help a newer angler become successful 
 
 D043 confirms Jighead + Soft Plastic and Inline Spinner Setup are canonical ready-to-fish terminal setups within the Rig Guide. D046 owns the current learning-tier navigation and current Core presentation wording.
 
-The Companion's forward content focus has expanded to the Four-State region under the Section 6 regional decision and D057. The existing 20-Rig library therefore receives a later additive Four-State adequacy audit:
+The Companion's forward content focus expanded to the Four-State region under D057. The additive Four-State Rig adequacy audit was completed during FISH-005 using the approved rule that valid existing Rigs remain canonical unless verified evidence demonstrates a true gap.
 
-- do not reopen or remove an existing valid Rig solely because the geographic focus expanded,
-- determine whether an important Four-State fishing method/setup is materially absent,
-- add a new canonical Rig only when demonstrated practical regional value justifies it,
-- preserve the current 20 unchanged if no meaningful gap exists.
+Audit result:
 
-A specialized regional method does not automatically become another ordinary Rig. Paddlefish snagging is the current example requiring later architectural review because its specialized rod/reel/line/tackle/regulatory context may fit a species/method setup or Decision Knowledge workflow better than an ordinary Rig record.
+- all original 20 Rigs remain valid and canonical,
+- one material beginner setup gap was identified,
+- **Split-Shot Bait Rig** was approved and implemented as canonical Rig #21,
+- the six-rig Core subset remains unchanged,
+- no other material ordinary-Rig method gap remains open from the completed Four-State audit.
 
-**Current implementation status:** 20-Rig library Validated / Finalized; Four-State adequacy audit Approved / Not Yet Performed.
+Split-Shot Bait Rig is a simple live/natural-bait setup using fixed split shot above the hook without a float, sliding sinker, swivel, or required leader system. Its purpose is beginner bait presentation for drifting, tight-lining, or lightly weighting bait near the bottom; it is not a generic bass-finesse catch-all.
 
-**Future trigger:** perform the adequacy audit when Rig/Fish relationships or another relevant regional domain is deliberately reviewed.
+Specialized targeting methods do not automatically become ordinary canonical Rigs. Gar rope-lure targeting and Paddlefish snagging remain outside the ordinary Version 1 Rig library unless a later explicit specialist-method decision reopens them.
 
-**Canonical owners:** D027, `data-model/03-RIGS.md`, and the future regional-audit record.
+**Current implementation status:** 21-Rig library Validated; Four-State Rig adequacy audit Complete; Split-Shot Bait Rig implemented.
+
+**Future trigger:** reopen Rig adequacy only when later regional scope or verified method evidence demonstrates a materially missing ready-to-fish setup. Do not routinely repeat the completed FISH-005 audit.
+
+**Canonical owners:** D027, D057, `data-model/03-RIGS.md`, and `workstreams/FISH-GUIDE-PHASE-0.md`.
 
 # D028 – My Tackle Ownership and Rig Readiness Authority
 

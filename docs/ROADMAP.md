@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.4.0  
+**Document Revision:** 0.4.1  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
 **Last Updated:** 2026-08-21
@@ -38,7 +38,7 @@ Existing validated domains retain their original selection/validation context un
 
 Regional reconciliation is progressive/additive by default: important missing regional coverage may be added when a domain is audited or materially modified, but valid existing content is not automatically removed or invalidated merely because geographic focus expanded.
 
-The validated 20-Rig library remains canonical and later receives an additive Four-State adequacy audit.
+The original validated 20-Rig library remains canonical. The additive Four-State adequacy audit is complete and added Split-Shot Bait Rig as canonical Rig #21; no other material ordinary-Rig gap remains open from that audit.
 
 # Canonical Product Sequence
 

@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.3.1  
 **Document Status:** Approved  
-**Implementation Status:** Validated — 20 active canonical Rigs  
-**Decision Baseline:** D024, D025, D026, D027, D028, D042-D049, D056
+**Implementation Status:** Validated — 21 active canonical Rigs  
+**Decision Baseline:** D024, D025, D026, D027, D028, D042-D049, D056, D057
 
 ---
 
@@ -94,7 +94,7 @@ Rules:
 - reverse Knot **Where You'll Use It** navigation is derived from active Rig records,
 - runtime code does not infer Knot relationships by parsing assembly prose.
 
-The validated 20-Rig library contains 31 real tied connection points.
+The validated 21-Rig library contains 32 real tied connection points.
 
 ## assemblySteps[]
 
@@ -174,7 +174,7 @@ The six Core Rigs are:
 
 # Rig Guide Learning Tiers — Implemented
 
-The current 20-Rig library implements all six difficulty tiers:
+The current 21-Rig library implements all six difficulty tiers:
 
 - Beginner
 - Beginner+
@@ -183,13 +183,15 @@ The current 20-Rig library implements all six difficulty tiers:
 - Advanced
 - Expert
 
+Current tier counts are 7 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert.
+
 The Rig Guide exposes All Rigs, Core Rigs, and each implemented difficulty tier. Earlier documentation describing Intermediate through Expert as future tier expansion is obsolete.
 
 ---
 
 # Current Canonical Rig Library
 
-The current production library contains 20 active Rigs:
+The current production library contains 21 active Rigs:
 
 1. Fixed Bobber Rig
 2. Basic Bottom Rig
@@ -211,6 +213,9 @@ The current production library contains 20 active Rigs:
 18. Punch / Pegged Texas Rig
 19. Double-Jig Crappie Rig
 20. Bottom-Bouncer / Spinner Rig
+21. Split-Shot Bait Rig
+
+The original 20-Rig library remains validated and canonical. The completed Four-State adequacy audit added Split-Shot Bait Rig as an additive Beginner Rig without removing or reclassifying any existing Rig.
 
 Carolina Rig and the later difficulty tiers are implemented production entities, not unresolved near-term expansion placeholders.
 
@@ -239,6 +244,8 @@ Basic readiness answers whether required component types are available to build 
 ---
 
 # Future / Deferred
+
+The FISH-005 Four-State Rig adequacy audit is complete. It preserved the original 20 Rigs, added Split-Shot Bait Rig as canonical Rig #21, and identified no other material ordinary-Rig method gap for the approved Four-State Version 1 scope. Reopen regional Rig adequacy only when later scope or verified method evidence demonstrates a new material gap.
 
 Potential future capabilities include additional regional Rigs, richer interactive assembly, approved instructional media, and contextual recommendation systems. Any new canonical fields or relationships require demonstrated feature need and D056 ownership review.
 

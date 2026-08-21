@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.4  
+**Document Revision:** 1.0.5  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `2f7c6ea41157ca68142575f8696525dc993f19f9`  
+**Reconciliation Baseline:** `4785b72cdd8509db198c9cfd48327f4724bf1bcd`  
 **Last Updated:** 2026-08-21
 
 # Purpose
@@ -32,11 +32,9 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
 | UX-001 | APPROVED / PENDING IMPLEMENTATION | Site-wide context-preserving Parent navigation (D051) | D051, `NAVIGATION-PAGE-STANDARD.md` | Implement/reconcile broader routing; validate nested navigation, restored view/query/filter/scroll, Reel Setup interactions, narrow viewport, keyboard/focus. |
-| UX-002 | DEFERRED TO NAMED GATE | Scoped search helper/example alignment | Next deliberate Rig/Knot search-presentation edit | Align helper/example text with eligible subset; do not open unrelated source solely for this wording fix. |
 | UX-004 | DEFERRED TO NAMED GATE | Dashboard / Global Search entry point | Roadmap Global Search milestone | Define cross-domain scope, grouping, ranking/ambiguity, and presentation; avoid indiscriminate result dump. |
 | UX-005 | DEFERRED TO NAMED GATE | Compact detail density outside Rigs | Domain-specific review | Reuse only after the target domain demonstrates the Rig density pattern fits. |
 | UX-006 | PARKED | Technically verified local Rig visual library | Rig/media future quality gate | Use licensed/verified/manual/reference-grounded media only; generated finished/build-step Rig imagery remains prohibited. |
-| UX-007 | APPROVED / PENDING IMPLEMENTATION | Four-State Rig adequacy audit | D027 + future regional audit | At relevant Rig/Fish review, identify materially missing Four-State methods without invalidating existing 20 Rigs. |
 | UX-008 | DEFERRED TO NAMED GATE | Package-era source headers such as `REPLACEMENT` | Next deliberate edit to an affected permanent source file | Remove obsolete package-era header language when that file is next intentionally edited; do not create unrelated source churn solely for comments. |
 
 # Regulations / Tackle Open Design
@@ -54,7 +52,7 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 | FISH-002 | OPEN | Fish-to-Rig guidance optionality/source/IDs | Fish Phase 0 | Decide requiredness, source file name, and guidance-record ID convention. |
 | FISH-003 | OPEN | Fish activation / staged-release readiness | Fish Phase 0 | Decide whether V1 inclusion and runtime `isActive` need separate readiness semantics. |
 | FISH-004 | OPEN | Fish media implementation contract | Fish Phase 0 + MEDIA_GUIDE | Decide role requiredness, attribution null/absence semantics, stable media/file naming, alt text, derivatives. |
-| FISH-005 | APPROVED / PENDING IMPLEMENTATION | Four-State reconciliation outside Fish | D057 + domain-specific gates | Do additive adequacy review when each downstream domain is deliberately reviewed; do not re-decide project-wide Four-State principle. |
+| FISH-005 | OPEN | Four-State reconciliation outside Fish — implementation/validation complete | D057 + D027 + Fish Phase 0 | Rig adequacy audit, Rig #21 implementation, post-push validation, and formal documentation reconciliation are complete; obtain explicit user closure approval, then remove this entry and continue FISH-006. |
 | FISH-006 | OPEN | Fish reference-source documentation + integrity validation | Fish Phase 0 | Define source evidence, regional inclusion evidence, taxonomy/ID/habitat sourcing, and repeatable Fish integrity checks. |
 | FISH-007 | REQUIRED | Close Fish Block 0.7 / Phase 0 | Fish Phase 0 | Resolve/park FISH-001–006, reconcile docs, close Phase 0 before production. |
 | FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture | D057–D061 + Fish workstream | Implement only after Phase 0 closes. |

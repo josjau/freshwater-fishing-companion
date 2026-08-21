@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.4.0  
+**Document Revision:** 0.4.1  
 **Document Status:** Draft  
 **Implementation Status:** Mixed — validated relationships and deferred future relationships  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056
@@ -146,7 +146,7 @@ Rules:
 
 Reverse Knot detail navigation such as **Where You'll Use It** is derived from active Rig Knot applications rather than stored again on Knot.
 
-The audited 20-Rig library contains 31 real tied connection points.
+The current 21-Rig library contains 32 real tied connection points.
 
 ---
 
@@ -251,7 +251,7 @@ For implemented relationship domains:
 - every active Media entity attachment must resolve according to the owning domain's lifecycle rules,
 - ordinary production relationship IDs must not be used as forward-planning placeholders.
 
-The approved 20-Rig library is fully implemented, including Carolina Rig. Earlier documentation describing Carolina Rig as a near-term unresolved expansion target is obsolete.
+The original approved 20-Rig library remains fully implemented, including Carolina Rig. The completed Four-State adequacy audit added Split-Shot Bait Rig as canonical Rig #21, bringing the current production library to 21 active Rigs. Earlier documentation describing Carolina Rig as a near-term unresolved expansion target is obsolete.
 
 ---
 

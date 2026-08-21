@@ -6,6 +6,7 @@
 **Milestone:** Fish Guide  
 **Recorded:** 2026-08-18  
 **Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
+**Current Reconciliation:** FISH-005 Rig-domain implementation/validation complete; explicit FISH-005 closure approval pending
 
 # Purpose
 
@@ -1574,7 +1575,9 @@ Favorite
 
 Those features belong to their later Decision Knowledge or User Knowledge milestones. Add them as contextual gateways only when their owning domains are approved and implemented. Avoid repeating `Coming Soon` placeholders on every Fish page.
 
-# Exact Stopping Point — Resume Here
+# Prior Phase 0 Stopping Point — Superseded
+
+This was the active resume point before the later FISH-001–FISH-007 tracking sequence. It is retained for design lineage and must not override the Current Phase 0 Reconciliation Checkpoint below.
 
 **Fish Guide Phase 0 remains OPEN.**
 
@@ -1611,3 +1614,59 @@ At the next discussion:
 6. Normalize the controlled `habitatTags[]` vocabulary across all 30 Fish.
 7. Confirm `waterbodyTypes[]` usage against the already approved controlled vocabulary.
 8. Define authoring limits/standards for `summary` and `identificationTraits[]` so all 30 records are consistent before production data is written.
+
+
+# FISH-005 — Four-State Reconciliation Outside Fish
+
+**Status:** IMPLEMENTATION / POST-PUSH VALIDATION / DOCUMENTATION RECONCILIATION COMPLETE — EXPLICIT USER CLOSURE APPROVAL PENDING
+
+FISH-005 applied the D057 Four-State principle to adjacent fishing-method coverage without reopening valid existing domain decisions.
+
+Rig-domain result:
+
+- audited the locked 30-Fish Version 1 library against the existing canonical Rig method families,
+- preserved all original 20 canonical Rigs,
+- identified one material beginner method-family gap,
+- approved and implemented **Split-Shot Bait Rig** as canonical Beginner Rig #21,
+- found no other material ordinary-Rig gap requiring a new canonical Rig,
+- kept the six-rig Core subset unchanged,
+- kept Gar rope-lure targeting and Paddlefish snagging/specialized targeting outside the ordinary Version 1 Rig library.
+
+Split-Shot Bait Rig scope is intentionally narrow: fixed split shot on the main line above a hook with live/natural bait, no canonical float, no sliding sinker, no required swivel, and no required leader system. Its beginner purpose is drifting, tight-lining, or lightly weighting bait near the bottom; it is not a generic bass-finesse catch-all.
+
+Landed source commit:
+
+`4785b72cdd8509db198c9cfd48327f4724bf1bcd` — `Rig 21 Update`
+
+Post-push validation confirmed:
+
+- exactly `data/rigs.js` and `script.js` changed,
+- 21 active canonical Rigs,
+- 7 Beginner Rigs,
+- six unchanged Core Rigs,
+- 32 real Rig-to-Knot connection points,
+- all new Tackle and Knot references resolve,
+- JavaScript syntax passes,
+- repository integrity passes.
+
+The landed package also contained two narrow same-file corrections: the Slip Bobber `bait` note was changed from “worms, minnows, or small jigs” to “worms or minnows where legal,” and stale Rig build metadata was corrected from Knot-package wording to Rig Four-State reconciliation wording. The Slip Bobber wording change did not alter components, assembly, difficulty, knots, or runtime behavior. These corrections are documented explicitly because they were discovered during package preparation and were not separately reviewed before the package was applied; future newly discovered semantic/content changes require explicit user approval before inclusion.
+
+# Current Phase 0 Reconciliation Checkpoint — Resume Here
+
+**Fish Guide Phase 0 remains OPEN. Fish production remains blocked by FISH-007.**
+
+Current status relevant to this checkpoint:
+
+- FISH-005 — implementation, post-push validation, and formal documentation reconciliation complete; **explicit user closure approval pending**.
+- FISH-006 — OPEN; next unresolved Phase 0 work after FISH-005 closes.
+- FISH-007 — REQUIRED final Phase 0 close gate before Fish production.
+- Newer user-approved Working State decisions for FISH-001 through FISH-004 are outside this Rig #21/FISH-005 reconciliation and must not be silently altered here.
+
+Next action:
+
+1. Obtain explicit user approval to close FISH-005.
+2. Remove/close the FISH-005 Active Change Ledger item after approval.
+3. Continue FISH-006.
+4. Complete FISH-007 before beginning production Fish source implementation.
+
+Do not repeat the completed Four-State Rig adequacy audit unless new verified evidence or a changed regional/product scope explicitly reopens it.

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.1.0  
+**Document Revision:** 2.1.1  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-21
@@ -17,6 +17,28 @@ Do not record exact active audit section, exact session resume point, current bl
 For current formal continuation use `HANDOFF.md`. For material non-closed items use `ACTIVE-CHANGE-LEDGER.md`.
 
 # Unreleased
+
+## Rig Guide — Four-State Adequacy Reconciliation
+
+### Added
+
+- Added **Split-Shot Bait Rig** as canonical Beginner Rig #21 after the FISH-005 Four-State method-family adequacy audit identified one material beginner bait-presentation gap.
+- Preserved all original 20 canonical Rigs and the existing six-rig Core subset.
+
+### Changed
+
+- Updated the Beginner Rig collection count from six to seven.
+- Updated scoped Rig/Knot browse Search labels and placeholders so the helper text reflects the active subset rather than examples that may not exist in that subset.
+- Updated Rig build metadata to identify the Four-State adequacy reconciliation milestone.
+
+### Corrected
+
+- Corrected the Slip Bobber `bait` component note so canonical live/natural bait is not described as including a jig. This wording correction did not change Slip Bobber components, assembly, difficulty, knots, or runtime behavior.
+
+### Validated
+
+- Post-push verification confirmed GitHub commit `4785b72cdd8509db198c9cfd48327f4724bf1bcd` with exactly `data/rigs.js` and `script.js` changed.
+- Verified 21 active Rigs, 7 Beginner Rigs, six unchanged Core Rigs, 32 Rig-to-Knot connection points, valid new Tackle/Knot references, JavaScript syntax, and repository integrity.
 
 ## Repository Audit Cleanup — Finalized
 

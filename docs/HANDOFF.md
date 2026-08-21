@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.1.0  
+**Document Revision:** 2.1.1  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-21
@@ -51,9 +51,11 @@ For a new project session:
 
 **Fish Guide — Phase 0 In Progress**
 
-The Repository Audit Cleanup gate is closed. Fish Guide Phase 0 architecture work may resume.
+The Repository Audit Cleanup gate is closed. Fish Guide Phase 0 is active.
 
-Fish **production implementation remains blocked by FISH-007** until FISH-001 through FISH-006 are resolved or deliberately parked, Phase 0 is reconciled, and the Phase 0 closeout gate passes.
+FISH-005 Four-State reconciliation has completed its Rig-domain audit, Rig #21 implementation, post-push source validation, and formal documentation reconciliation. Explicit user approval to close FISH-005 is the remaining FISH-005 gate.
+
+Fish **production implementation remains blocked by FISH-007** until the remaining Phase 0 items are resolved or deliberately parked, Phase 0 is reconciled, and the Phase 0 closeout gate passes.
 
 # Repository Integrity Baseline
 
@@ -78,11 +80,11 @@ The existing repository-integrity validator remains the single deterministic val
 # Exact Resume Point
 
 1. Re-fetch authoritative GitHub `main`.
-2. Read `docs/workstreams/FISH-GUIDE-PHASE-0.md` and `docs/workstreams/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`.
-3. Read the Fish entries in `ACTIVE-CHANGE-LEDGER.md`.
-4. Resume Fish Phase 0 at **FISH-001 through FISH-006** without reopening decisions already closed by D057–D061.
-5. Resolve or deliberately park those items, then satisfy **FISH-007** and reconcile Fish governing/data-model documentation.
-6. Only after Phase 0 closes, begin the approved Fish production architecture/UX implementation tracked by FISH-008/FISH-009.
+2. Read `docs/workstreams/FISH-GUIDE-PHASE-0.md` and the Fish entries in `ACTIVE-CHANGE-LEDGER.md`.
+3. Confirm the landed FISH-005/Rig #21 reconciliation remains valid; do not repeat the completed Four-State Rig adequacy audit without new evidence or scope.
+4. Obtain explicit user approval to close **FISH-005**.
+5. After FISH-005 closes, continue the remaining Fish Phase 0 work at **FISH-006**, while preserving any newer user-approved Working State delta for FISH-001–004 until its separate formal promotion/closeout.
+6. Satisfy **FISH-007** before any Fish production source implementation begins.
 
 # Non-Negotiable Working Rules
 
