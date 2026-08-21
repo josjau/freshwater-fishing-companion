@@ -1,240 +1,146 @@
 # Freshwater Fishing Companion
 
 **Document:** 07-USER-DATA.md  
-**Document Revision:** 0.2.0
-**Document Status:** Draft
-**Decision Baseline:** D029
+**Document Revision:** 0.3.0  
+**Document Status:** Draft  
+**Implementation Status:** Mixed — transitional local state exists; authoritative User Knowledge schemas not implemented  
+**Decision Baseline:** D028, D029, D056
 
 ---
 
 # Purpose
 
-This document defines the canonical User Data model for Freshwater Fishing Companion.
+This document defines the architectural boundary for User Knowledge in Freshwater Fishing Companion and distinguishes current persisted application state from future authoritative user-data domains.
 
-User Data represents information created, maintained, and owned by the angler.
-
-Unlike Reference Knowledge, User Data is unique to each user and is included in backups.
+User Knowledge is information created, maintained, or owned by the angler. It remains separate from application-owned Reference Knowledge and contextual Decision Knowledge.
 
 ---
 
-# Design Philosophy
+# Current Production State
 
-The Companion separates Reference Knowledge from User Knowledge.
+Current `main` does **not** implement one authoritative general User Data schema containing Profile, Preferences, Favorites, My Tackle, Fishing Setups, Catch Log, and Backup History.
 
-Reference Knowledge is maintained by the application.
+The application currently persists lightweight local Rig-readiness selections. That state is transitional availability data and is not authoritative My Tackle ownership.
 
-User Knowledge is maintained by the angler.
+Other user-facing areas may exist as routes or UI placeholders, but their presence does not establish a production persistence schema.
 
-Whenever practical, User Data references canonical entities instead of duplicating information.
-
-User Knowledge is data, not markup.
+Accordingly, the structures below are architectural domains and candidate concepts unless explicitly identified as current production state.
 
 ---
 
-# User Data Categories
+# Design Principles
 
-The following categories comprise User Data.
-
-- User Profile
-- Preferences
-- Favorites
-- Equipment
-- Consumables
-- Fishing Setups
-- Catch Log
-- Backup History
+- Reference Knowledge remains application-owned.
+- User Knowledge remains user-owned.
+- User records should reference canonical IDs rather than duplicate canonical definitions whenever practical.
+- Every persisted field requires a demonstrated feature and documented owner.
+- User Knowledge is data, not markup.
+- No workflow may infer persistent ownership merely from temporary availability or use.
+- Backup design must follow the schemas that actually become authoritative rather than inventing them in advance.
 
 ---
 
-# User Profile
+# Approved Future User Knowledge Domains
 
-The User Profile stores basic application information.
+Potential authoritative domains include:
 
-## Fields
+- User Profile,
+- Preferences,
+- Favorites,
+- My Tackle,
+- Fishing Setups,
+- Catch Log,
+- Backup History or backup metadata if demonstrated necessary.
 
-### displayName
-
-Purpose
-
-User-defined display name.
-
-Ownership
-
-User.
+These domain names do **not** approve the earlier candidate field lists as production schema.
 
 ---
 
-### experienceLevel
+# User Profile — Schema Unresolved
 
-Purpose
+Earlier planning identified possible profile concepts such as display name, experience level, measurement preference, and preferred region.
 
-Current fishing experience.
+Those concepts remain design inputs. No canonical production User Profile schema is approved or implemented by this document.
 
-Ownership
-
-User.
-
-Allowed Values
-
-- Beginner
-- Intermediate
-- Advanced
+A future profile gate must justify each persisted field against a concrete feature.
 
 ---
 
-### preferredMeasurementSystem
+# Preferences — Schema Unresolved
 
-Purpose
+Preferences may eventually control application behavior such as display or workflow choices.
 
-Preferred measurement units.
+No production Preferences schema is approved here. Candidate examples from earlier drafts must not be treated as committed fields.
 
-Ownership
-
-User.
-
-Allowed Values
-
-- Imperial
-- Metric
+Preferences may never modify canonical Reference Knowledge.
 
 ---
 
-### preferredRegion
+# Favorites — Schema Unresolved
 
-Purpose
+Favorites may eventually provide quick access to supported entities or user-defined records.
 
-Primary fishing region.
-
-Ownership
-
-User.
+The exact supported entity types, persistence shape, ordering behavior, and lifecycle rules remain unresolved. A visible Favorites route does not by itself establish a persistence schema.
 
 ---
 
-# Preferences
+# My Tackle — Approved / Not Implemented
 
-Preferences control application behavior.
+My Tackle is User Knowledge containing actual owned fishing items. Its detailed owned-item schema is governed by `05A-INVENTORY.md` and remains unresolved.
 
-Examples include:
-
-- Theme
-- Default Start Page
-- Show Beginner Tips
-- Enable Notifications
-- Reminder Preferences
-
-Preferences affect application behavior but never modify canonical reference data.
+Once authoritative, persistent ownership may only be changed through explicit My Tackle ownership-management workflows. Rig Readiness, Search, Recommendations, borrowed tackle, prior readiness selections, and inferred usage may not silently create or modify ownership.
 
 ---
 
-# Favorites
+# Fishing Setups — Conceptual / Not Implemented
 
-Favorites allow quick access to commonly used items.
+A future Fishing Setup may reference existing owned equipment for a particular purpose.
 
-Users may favorite:
-
-- Fish
-- Rigs
-- Techniques
-- Knots
-- Lures
-- Equipment
-- Fishing Setups
-
-Favorites reference canonical entities whenever applicable.
+The approved principle is to reference owned items rather than duplicate them. Exact setup fields and persistence behavior are unresolved.
 
 ---
 
-# My Tackle / Inventory Ownership
+# Catch Log — Domain Approved / Schema Unresolved
 
-My Tackle is User Knowledge and records the actual equipment and tackle the angler owns.
+Catch Log is a User Knowledge domain for fishing events.
 
-Canonical Tackle remains Reference Knowledge and defines functional Tackle types.
+Earlier planning identified possible references and observations such as Fish, Rig, Technique, Lure, setup, date, measurements, location, notes, or photos. These are candidate concepts rather than an approved production record shape.
 
-When the My Tackle implementation becomes authoritative, persistent ownership may only be created or changed through explicit My Tackle ownership-management workflows such as Add Tackle, Edit Tackle, or Remove Tackle.
+When Catch Log implementation begins, each field must be justified by an approved feature, and historical snapshot requirements must be distinguished from live canonical references.
 
-Rig Readiness, Search, Recommendations, prior readiness checkmarks, borrowed tackle, and inferred usage may read or temporarily use ownership context but may not silently create or modify persistent My Tackle records.
-
-The detailed owned-item schema remains open for the dedicated My Tackle design discussion.
+Catch records must never modify canonical Fish or other Reference Knowledge.
 
 ---
 
-# Fishing Setups
+# Backup Metadata — Deferred
 
-Fishing Setups are user-defined collections of equipment intended for a specific purpose.
+Backup history or metadata may be useful after backup/restore is implemented. No production Backup History record schema is approved here.
 
-Examples
-
-- Bass Setup
-- Panfish Setup
-- Catfish Setup
-
-Each setup references existing inventory items rather than duplicating equipment information.
-
----
-
-# Catch Log
-
-The Catch Log records individual fishing catches.
-
-Each catch may reference:
-
-- Fish
-- Lure
-- Rig
-- Technique
-- Fishing Setup
-
-Additional user-entered information may include:
-
-- Length
-- Weight
-- Notes
-- Catch Date
-- General Location
-- Photo References
-
-The Catch Log records fishing events and does not modify canonical Fish records.
-
----
-
-# Backup History
-
-The application may maintain information about completed backups.
-
-Examples
-
-- Backup Date
-- Backup Version
-- Restore Date
-
-Backup History is informational only and is separate from the backup file itself.
+Backup architecture is governed separately by `08-BACKUP.md` and must follow the actual authoritative User Knowledge schemas.
 
 ---
 
 # Data Ownership
 
-User Data belongs exclusively to the user.
+User Knowledge belongs to the user.
 
-The Companion shall not modify user-created information except in response to explicit user actions or approved migration processes.
+The application may modify user-created information only in response to explicit user actions or an approved, validated migration process.
 
-No feature may infer persistent My Tackle ownership merely because tackle was marked temporarily available or used in another workflow.
+Reference Knowledge updates must not overwrite User Knowledge merely because a referenced canonical entity changes.
 
 ---
 
 # Rendering Trust Boundary
 
-Canonical project data may be treated as trusted application content.
-
 User-entered and imported content is untrusted by default.
 
-Rendering rules:
+Rules:
 
-- Prefer safe DOM APIs such as `textContent` for User Knowledge.
-- Do not concatenate user-controlled strings directly into `innerHTML`.
-- Imported data follows the same trust rules as manually entered data.
-- If formatted User Knowledge is later required, use one centrally owned, explicitly approved sanitization path.
-- Do not scatter ad hoc escaping or sanitization logic across individual features.
+- prefer safe DOM APIs such as `textContent`,
+- do not concatenate user-controlled strings directly into `innerHTML`,
+- imported data follows the same trust rules as manually entered data,
+- if formatted User Knowledge is later required, use one centrally owned approved sanitization path,
+- do not scatter ad hoc escaping/sanitization logic across features.
 
 Permanent principle:
 
@@ -242,47 +148,35 @@ Permanent principle:
 
 ---
 
-# Privacy
+# Local-First Direction
 
-User Data is stored locally.
+The project remains local-first. That architectural direction does not by itself commit a specific storage technology, monolithic user-data object, or backup format for domains that are not yet implemented.
 
-Version 1 does not require an online account.
-
-The user controls backup, restore, import, and export operations.
+Persistence choices must be made against the requirements of each approved User Knowledge feature and coordinated with migration/backup compatibility.
 
 ---
 
-# Design Notes
+# Implementation Gates
 
-User Data references canonical entities whenever possible.
+Before each User Knowledge domain becomes authoritative, its implementation gate must settle:
 
-Examples
+1. exact field schema and field ownership,
+2. stable user-record identity where required,
+3. canonical reference versus historical snapshot behavior,
+4. validation rules,
+5. persistence/storage behavior,
+6. migration/versioning requirements,
+7. backup/export/import requirements,
+8. rendering and sanitization boundaries,
+9. deletion and lifecycle behavior.
 
-A favorite fish stores the Fish identifier.
-
-A fishing setup stores Equipment identifiers.
-
-A catch stores the Fish identifier rather than copying species information.
-
-A My Tackle item may map to a canonical Tackle type so Rig Readiness can determine buildability without requiring exact brand/model identity.
-
-This minimizes duplication and improves long-term consistency.
+Do not create a universal user-data schema containing speculative fields merely to reserve future capability.
 
 ---
 
 # Future Enhancements
 
-Potential future additions include:
-
-- Detailed My Tackle owned-item schema
-- Multiple user profiles
-- Shared family accounts
-- Cloud synchronization
-- Achievement tracking
-- Fishing statistics dashboard
-- Rich-text User Knowledge only if an approved need justifies centralized sanitization
-
-These enhancements require separate review before implementation.
+Potential later capabilities include multiple profiles, cloud synchronization, shared accounts, achievement/statistics features, and richer User Knowledge. Each requires separate approval and must build on implemented authoritative schemas.
 
 ---
 
@@ -296,3 +190,4 @@ These enhancements require separate review before implementation.
 - 06-LURES.md
 - 08-BACKUP.md
 - 09-RELATIONSHIPS.md
+- ../DECISIONS.md

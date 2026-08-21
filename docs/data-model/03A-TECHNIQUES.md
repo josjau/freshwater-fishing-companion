@@ -1,31 +1,38 @@
 # Freshwater Fishing Companion
 
 **Document:** 03A-TECHNIQUES.md  
-**Version:** 0.1.0  
-**Status:** Draft  
-**Decision Baseline:** D004
+**Document Revision:** 0.2.0  
+**Document Status:** Draft  
+**Implementation Status:** Approved / Not Implemented  
+**Decision Baseline:** D003, D024, D056
 
 ---
 
 # Purpose
 
-This document defines the canonical Technique entity for Freshwater Fishing Companion.
+This document defines the approved architectural boundary for the future canonical Technique domain in Freshwater Fishing Companion.
 
-A Technique describes **how** a lure or rig is presented to fish.
+A Technique describes **how** a lure, Rig, or other compatible setup is presented to fish. Technique is Reference Knowledge and owns reusable presentation behavior rather than physical assembly.
 
-Techniques are independent of rigs and may be shared by multiple rigs.
+No canonical Technique production dataset is implemented on current `main`. Accordingly, this document does **not** approve a production Technique field schema beyond the Foundation entity standard.
 
-Separating techniques from rigs eliminates duplicated instructional content and supports a more intelligent recommendation engine.
+---
+
+# Current Status
+
+**Approved / Not Implemented.**
+
+The Technique domain is approved by D003. D024 assigns reusable presentation behavior to Technique and physical assembly/configuration to Rig. D056 requires every future Technique fact and relationship to have one semantic owner.
+
+Current production Rigs do not store `techniqueIds[]`, and no `Technique.compatibleRigIds[]` relationship is approved. Repository Audit Section 5 removed the universally empty Rig-side placeholder rather than promoting an unresolved relationship into production.
 
 ---
 
 # Design Philosophy
 
-A Technique represents presentation rather than equipment.
+Technique represents presentation rather than equipment.
 
-The same presentation can often be performed with many different rigs.
-
-Examples:
+Reusable examples include concepts such as:
 
 - Drag
 - Hop
@@ -34,15 +41,15 @@ Examples:
 - Twitch
 - Deadstick
 
-Each Technique exists once and is referenced by any applicable rig.
+A presentation instruction that remains meaningful across different compatible setups generally belongs to Technique. An instruction that depends on the physical construction or configuration of one Rig belongs to Rig.
+
+The same semantic relationship must not be stored in both directions merely for navigation, search, or rendering convenience.
 
 ---
 
-# Canonical Entity
+# Foundation Fields
 
-Every Technique inherits the Foundation entity.
-
-Required base fields:
+When Technique production data is implemented, every canonical Technique will inherit the Foundation entity standard:
 
 ```text
 id
@@ -53,227 +60,109 @@ lastModifiedVersion
 isActive
 ```
 
-Additional Technique fields extend the base entity.
+Additional fields require approval at the Technique architecture gate and must document purpose, ownership, dependencies, and validation.
 
 ---
 
-# Technique Fields
+# Candidate Presentation Concepts — Not Yet Schema
 
-## difficulty
+Earlier planning identified several useful presentation concepts. They remain design inputs, **not approved production fields**:
 
-Purpose
+- learning difficulty
+- movement type
+- cadence
+- rod action
+- reel action
+- beginner tips
+- common mistakes
 
-Recommended experience level.
-
-Ownership
-
-Application.
-
-Allowed values
-
-- Beginner
-- Intermediate
-- Advanced
+The architecture gate may retain, rename, combine, normalize, or reject these concepts based on demonstrated feature requirements. Production records must not be created with placeholder fields merely because a concept appears in this Draft.
 
 ---
 
-## movementType
+# Relationship Ownership — Deferred
 
-Purpose
+The following relationships are intentionally unresolved until Technique implementation:
 
-Describes the primary rod or lure movement.
+- Rig ↔ Technique compatibility
+- Fish ↔ Technique applicability
+- Condition ↔ Technique applicability
 
-Examples
+Earlier candidate fields such as:
 
-- Drag
-- Hop
-- Shake
-- Swim
-- Twitch
-- Pop
-- Walk
-- Lift
-- Drop
+```text
+compatibleRigIds[]
+targetFishIds[]
+recommendedConditionIds[]
+```
 
-Ownership
+are **not approved schema fields**.
 
-Application.
+When the Technique architecture gate opens, each relationship must be classified under D056. A simple intrinsic compatibility fact may belong to one Reference Knowledge owner. A contextual answer such as which Technique should be used with a Rig for particular Fish or Conditions may instead belong to Decision Knowledge.
 
----
-
-## cadence
-
-Purpose
-
-Describes the recommended rhythm of the presentation.
-
-Examples
-
-- Slow
-- Moderate
-- Fast
-- Variable
-
-Ownership
-
-Application.
+Only one authoritative semantic owner may store a given relationship. Reverse navigation must normally be derived.
 
 ---
 
-## rodAction
+# Media Ownership
 
-Purpose
+Technique media must follow the shared D056 Media ownership model when the domain is implemented.
 
-Describes the primary rod movement used.
+Technique records must not own inverse `imageIds[]` solely to locate Media. Canonical attachment belongs to Media through:
 
-Examples
+```text
+ownerType: "technique"
+ownerId: canonical Technique ID
+```
 
-- Sweep
-- Lift
-- Twitch
-- Snap
-- Steady Retrieve
-
-Ownership
-
-Application.
-
----
-
-## reelAction
-
-Purpose
-
-Describes reel usage.
-
-Examples
-
-- Constant
-- Pause
-- Stop-and-Go
-- Minimal
-
-Ownership
-
-Application.
-
----
-
-## targetFishIds
-
-Purpose
-
-References fish commonly associated with the technique.
-
-Ownership
-
-Application.
-
----
-
-## recommendedConditionIds
-
-Purpose
-
-References canonical Conditions where the technique performs well.
-
-Ownership
-
-Application.
-
----
-
-## compatibleRigIds
-
-Purpose
-
-References rigs commonly using this presentation.
-
-Ownership
-
-Application.
-
----
-
-## beginnerTips
-
-Purpose
-
-Simple guidance to improve success.
-
-Ownership
-
-Application.
-
----
-
-## commonMistakes
-
-Purpose
-
-Common errors made while using the technique.
-
-Ownership
-
-Application.
-
----
-
-## imageIds
-
-Purpose
-
-Illustrations demonstrating the presentation.
-
-Ownership
-
-Application.
+Media-specific role or ordering fields are added only when a demonstrated multi-media requirement justifies them.
 
 ---
 
 # Teaching Philosophy
 
-Techniques should be written for anglers with little or no experience.
+Technique instruction should help an angler understand:
 
-Instructions should emphasize:
+- what to do,
+- what to observe,
+- what a strike may feel like,
+- common mistakes,
+- and when to change presentation.
 
-- What to do
-- What to look for
-- What a strike may feel like
-- Common beginner mistakes
-- When to change presentations
-
-The goal is to teach understanding rather than memorization.
+The goal is reusable understanding rather than duplicated Rig-specific prose.
 
 ---
 
 # Recommendation Integration
 
-Techniques may be recommended based upon:
+Technique may eventually participate in recommendations involving Fish, Conditions, season, water clarity, cover, depth, experience, and available tackle.
 
-- Conditions
-- Target fish
-- Experience level
-- Season
-- Water clarity
-- Cover
-- Water depth
+Recommendation-specific ranking, rationale, confidence, and situational context belong to Decision Knowledge rather than being forced into the canonical Technique entity for convenience.
 
-Techniques should never recommend specific commercial products.
+Commercial-product recommendations remain outside Technique unless a later approved architecture explicitly assigns a Technique-domain responsibility.
+
+---
+
+# Implementation Gate
+
+Before canonical Technique production data is created, the Technique architecture gate must settle at least:
+
+1. the canonical Technique field set,
+2. Rig ↔ Technique relationship ownership,
+3. Fish ↔ Technique relationship ownership,
+4. Condition ↔ Technique relationship ownership,
+5. which relationships are Reference Knowledge versus Decision Knowledge,
+6. Media attachment requirements beyond the existing owner model, if any,
+7. referential-integrity validation,
+8. search/index fields without duplicating canonical relationship knowledge.
+
+No empty future relationship arrays or speculative fields should be pre-populated as placeholders.
 
 ---
 
 # Future Enhancements
 
-Potential future additions include:
-
-- Animated demonstrations
-- Video instruction
-- Practice mode
-- Haptic timing assistance
-- Adaptive recommendations based on catch history
-
-These features require separate architectural approval.
+Potential later capabilities include animated demonstrations, video instruction, practice assistance, and adaptive recommendations. These are feature candidates rather than current schema requirements and require separate approval when pursued.
 
 ---
 
@@ -285,3 +174,5 @@ These features require separate architectural approval.
 - 03B-CONDITIONS.md
 - 05-TACKLE.md
 - 09-RELATIONSHIPS.md
+- ../DECISIONS.md
+- ../workstreams/REPOSITORY-AUDIT-SECTION-5-DECISION.md

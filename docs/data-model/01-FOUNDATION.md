@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 01-FOUNDATION.md  
-**Document Revision:** 0.3.0
+**Document Revision:** 0.3.1
 **Document Status:** Draft
-**Decision Baseline:** D029
+**Decision Baseline:** D029, D056
 
 ---
 
@@ -502,6 +502,8 @@ Rig `assemblySteps` are authoritative for construction. Shared instructions abou
 
 A Rig-specific usage or setup note may remain with the Rig when it does not generalize cleanly to a reusable Technique.
 
+The storage owner for future Rig ↔ Technique compatibility is not yet approved. Current production Rigs do not store `techniqueIds[]`; future Technique records must not add an inverse compatibility array until the Technique architecture gate assigns one semantic owner under D056.
+
 ---
 
 # Search Metadata Standard
@@ -515,6 +517,8 @@ categoryIds
 ```
 
 Scientific names and other entity-specific fields may also be searchable where they are meaningful to the entity.
+
+These are examples of possible domain-owned search metadata, not universal required fields. A domain document and implemented feature must approve a field before production use.
 
 ## aliases
 
@@ -537,7 +541,7 @@ Deliberately indexed terms that describe function, use, or context and are stron
 
 ## categoryIds
 
-Canonical taxonomy references used for meaningful grouping and filtering.
+Canonical taxonomy references used for meaningful grouping and filtering when the relevant domain implements a canonical category relationship.
 
 ---
 
@@ -681,9 +685,9 @@ Manufacturer sources are authoritative for specifications but not necessarily fo
 
 # Taxonomies
 
-Reusable classifications shall reference canonical taxonomy values rather than free-form category text.
+Reusable classifications should reference canonical taxonomy values when a domain has implemented an approved taxonomy rather than accumulating inconsistent free-form variants.
 
-Examples include:
+Examples may include:
 
 - Fish category
 - Tackle category
@@ -692,7 +696,7 @@ Examples include:
 - Capability type
 - Recommendation tier
 
-This prevents category drift and inconsistent spelling.
+A future taxonomy concept is not automatically an implemented registry or ID field. Each domain controls its current production shape until an explicit migration is approved.
 
 ---
 
@@ -704,14 +708,23 @@ Canonical entities shall not embed duplicate copies of related entities.
 
 When a relationship has one natural canonical owner, store it once and derive the inverse for navigation unless a separately meaningful inverse relationship has been explicitly approved.
 
-Example:
+Current validated examples include:
 
 ```text
-Rig
-    -> componentRequirements
-    -> techniqueIds
-    -> targetFishIds
+Rig.componentRequirements[].tackleId
+    -> canonical Tackle
+
+Rig.knotApplications[].recommendedKnotIds[]
+    -> canonical Knot
+
+Media.ownerType + Media.ownerId
+    -> canonical entity attachment
+
+CORE_RIG_IDS[]
+    -> ordered Core Rig membership
 ```
+
+Deferred relationships such as Rig ↔ Technique and future Fish-to-Rig guidance must not be represented by speculative production fields before their semantic owner is approved.
 
 User records may store limited historical snapshots only when a documented feature requires preserving the original state.
 
@@ -774,7 +787,9 @@ The approved architecture shall be completed before adding new foundational conc
 
 # Documentation Structure Principle
 
-Data-model documentation must reflect actual domain ownership. Nonexistent or speculative documents must not be presented as current authoritative sources. Canonical Tackle and My Tackle/Inventory are documented separately.
+Data-model documentation must reflect actual domain ownership and distinguish implemented schemas from approved future architecture. Nonexistent or speculative documents, fields, or relationships must not be presented as current production sources.
+
+Canonical Tackle and My Tackle/Inventory are documented separately.
 
 # Guiding Principle
 

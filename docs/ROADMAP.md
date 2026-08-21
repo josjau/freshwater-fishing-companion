@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.3.3  
+**Document Revision:** 0.3.5  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-13
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -21,6 +21,19 @@ Features may move only through an explicit project decision. A new build segment
 - Finish and validate the current segment before beginning the next.
 - Resolve foundational User Knowledge storage questions before building features that depend on persistent user data.
 - Prioritize practical first-time-angler blockers before advanced fishing specializations.
+
+# Regional Content Direction
+
+The Companion's forward Version 1 regional content focus is:
+
+- Northeast Oklahoma
+- Southeast Kansas
+- Southwest Missouri
+- Northwest Arkansas
+
+Existing validated domains retain their original selection/validation context until deliberately reconciled. Regional reconciliation is progressive and additive by default: important missing regional coverage may be added when a domain is audited or materially modified, but valid existing content is not automatically removed or invalidated merely because the geographic focus expanded.
+
+The validated 20-Rig library was originally selected for Northeast Oklahoma and Southwest Kansas. It remains canonical and will receive a later additive Four-State adequacy audit to identify any materially important missing regional Rig or specialized setup.
 
 # Current Project State
 
@@ -44,22 +57,47 @@ Final workstream:
 
 `workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0
 
-## Active Knot Milestone
+## Knots Milestone
 
-**Implementation Status: In Progress**
+**Implementation Status: PASS / VALIDATED / FINALIZED / CLOSED**
 
-- Production Package 1 is validated.
-- Production Package 2 Runtime Revision 3 (`0.6.3`) is implemented on `main` and has passed GitHub/static verification, but Brave runtime validation is incomplete.
-- Runtime Revision 4 is approved and not implemented: remove section-level accenting from **What are you trying to do?** and move Important Card emphasis to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** while preserving varied accent bars and Core Knots emphasis.
-- Production Packages 3 and 4 have not begun.
-- Fish Guide remains blocked until the Knots milestone is finalized and validated.
+Final validated production baseline:
+
+`e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`
+
+Validated state:
+
+- Production Packages 1–4 complete and closed,
+- 10 canonical Version 1 Knots with four Core IDs,
+- task-first Knot Guide and deterministic search complete,
+- Get Your Reel Ready / Reel & Line Setup complete,
+- verified instructional-media coverage for all 10 Version 1 Knots complete,
+- shared floating Root/Nested navigation validated,
+- Reel Setup navigation correction validated,
+- connected-knowledge navigation from Knot detail validated,
+- context-preserving Rig ↔ Knot and Reel Setup ↔ Knot navigation validated,
+- Line Type reference/detail routing validated,
+- Dashboard/Tackle information architecture validated,
+- keyboard and normal-navigation console health validated.
+
+Final closeout record:
+
+`workstreams/KNOT-INTEGRATED-REGRESSION.md`
+
+## Next Approved Product Milestone — Fish Guide
+
+Fish Guide remains the next approved product milestone in the canonical product sequence.
+
+It is currently paused behind the Repository Audit Cleanup Gate. Repository Audit Sections 1–5 are complete and Section 6 — Governing Documents Comprehensive Synchronization — is active. Fish Guide Phase 0 resumes only after the audit gate and final re-audit are closed.
+
+Repository Audit Cleanup is a maintenance/governance gate, not a numbered product milestone and does not change the product roadmap ordering below.
 
 # Canonical Build Sequence After Rig Guide
 
-The approved order is:
+The approved order remains:
 
-1. **Knots**
-2. **Fish Guide**
+1. **Knots** — completed / validated / closed
+2. **Fish Guide** — next approved product milestone; currently paused behind Repository Audit Cleanup
 3. **What Should I Throw**
 4. **Tackle Reference / Find Tackle**
 5. **Settings / User Data Architecture Gate**
@@ -72,25 +110,25 @@ This sequence is deliberate. Do not skip forward into a later persistent-user-da
 
 # 1. Knots
 
-**Active Milestone — Implementation In Progress**
+**Completed Milestone — PASS / VALIDATED / FINALIZED / CLOSED**
 
-Build the canonical Knot reference library and Knot Guide before expanding recommendation or persistent User Knowledge features.
+The canonical Knot reference library, Knot Guide, Reel & Line Setup workflow, instructional-media integration, and integrated runtime regression are complete.
 
-The Knot milestone should establish:
+The completed Knot milestone established:
 
 - practical Version 1 knot library,
 - beginner-oriented instructions,
 - knot purpose and compatible line types,
 - task-first beginner navigation,
-- diagram/animation-first instructional media,
+- verified instructional media,
 - search and navigation,
 - connected relationships to Rigs and later Techniques/Recommendations,
 - responsive/runtime validation,
 - a first-time-angler **Reel & Line Setup** learning workflow that gets a conventional freshwater reel from unlined or replacement-line state to a fishable line system.
 
-### Current Implementation Boundary
+### Final Implementation Boundary
 
-The Package 2 landing-page hierarchy is now governed by `NAVIGATION-PAGE-STANDARD.md` and `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`:
+The Knot landing-page hierarchy remains governed by `NAVIGATION-PAGE-STANDARD.md` and `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`:
 
 1. Search first.
 2. **What are you trying to do?** special navigation.
@@ -98,13 +136,19 @@ The Package 2 landing-page hierarchy is now governed by `NAVIGATION-PAGE-STANDAR
 
 The special-navigation section itself remains visually neutral. **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** are the approved Important Cards because they are foundational prerequisites to fishing. **Core Knots** retains Core/primary emphasis.
 
-Do not begin Package 3 until Package 2 Runtime Revision 4 is implemented and the complete Package 2 runtime/regression checklist passes.
+Connected-knowledge behavior on Knot detail is also validated:
+
+- Common Tasks are clickable,
+- Rigs that use the Knot are clickable,
+- Line Compatibility items are clickable,
+- originating-context Parent navigation is preserved,
+- compact connected-link pills use content-width sizing.
 
 ## Knot Instructional Media Direction
 
-For Knots, project-owned diagrams and controlled animations are preferred over video.
+For Knots, project-owned diagrams and controlled animations remain preferred over video where they materially improve clarity, but the completed Version 1 implementation uses verified external instructional destinations under the approved method-match gate.
 
-Preferred order:
+Preferred order remains:
 
 1. project-owned instructional diagram,
 2. project-owned user-controlled step-through animation,
@@ -112,17 +156,15 @@ Preferred order:
 4. external video only when the knot cannot be taught adequately with diagram/animation,
 5. supplemental video may be approved as an exception for more advanced knots when hand position, tensioning, or motion is materially clearer in video.
 
-Core Knots should have a complete non-video instructional path.
-
-Animations should be user-controlled, should not autoplay, should remain understandable with motion disabled, and should support reduced-motion preferences.
+Core Knots should retain a complete non-video instructional path when future project-owned media is added.
 
 ## Reel & Line Setup — Approved V1 Direction
 
-Reel & Line Setup is a first-class beginner workflow inside the Knots milestone, not merely an Arbor Knot article.
+Reel & Line Setup is a first-class beginner workflow inside the completed Knots milestone, not merely an Arbor Knot article.
 
 The endpoint is practical: take a reel that needs line and get the angler to a correctly spooled, usable line system ready to connect to a Rig.
 
-Version 1 should support:
+Version 1 supports:
 
 - new/empty reel setup,
 - replacement-line setup,
@@ -146,11 +188,11 @@ Version 1 should support:
 - context-preserving navigation into canonical Knot instructions and back into Reel Setup,
 - a final **Reel Ready** checkpoint with direct handoff to the Rig Guide.
 
-The workflow should not require the angler to know technical fishing vocabulary before beginning.
+The workflow does not require the angler to know technical fishing vocabulary before beginning.
 
 ### Beginner Line Guidance
 
-When the angler does not already have line, Reel & Line Setup should provide enough guidance to make a confident first purchase or starting choice.
+When the angler does not already have line, Reel & Line Setup provides enough guidance to make a confident first purchase or starting choice.
 
 The beginner path may use target species and reel type to provide:
 
@@ -166,11 +208,11 @@ Future What Should I Throw / Recommendation knowledge may later optimize line ch
 
 ### How to Read Your Reel
 
-Reel & Line Setup should include a small **How to Read Your Reel** section.
+Reel & Line Setup includes a small **How to Read Your Reel** section.
 
-It should teach a beginner how to interpret line-capacity markings without assuming one manufacturer format.
+It teaches a beginner how to interpret line-capacity markings without assuming one manufacturer format.
 
-The section should explain:
+The section explains:
 
 - how to find line-capacity markings on the reel/spool or manufacturer specifications,
 - how to identify `lb`, `yd`, `m`, `mm`, Mono, and Braid labels,
@@ -180,26 +222,24 @@ The section should explain:
 - how to compare a beginner species-based line recommendation with the reel's actual capacity/rating,
 - that an incompatible reel/line combination should trigger guidance to choose a compatible line or setup rather than silently proceed.
 
-A simple labeled reel/spool diagram should support this explanation.
-
 ### Reel-Specific Scope Boundary
 
-Spinning, Spincast, and Baitcasting should each receive complete line-installation/replacement guidance appropriate to their design.
+Spinning, Spincast, and Baitcasting each receive complete line-installation/replacement guidance appropriate to their design.
 
-Baitcasting Reel & Line Setup should cover correct spooling only. Detailed brake tuning, spool-tension tuning, backlash prevention, lure-weight configuration, and casting instruction remain outside this workflow and belong to later learning/Technique content.
+Baitcasting Reel & Line Setup covers correct spooling only. Detailed brake tuning, spool-tension tuning, backlash prevention, lure-weight configuration, and casting instruction remain outside this workflow and belong to later learning/Technique content.
 
 Fly reels are not part of Version 1.
 
 ### Backing and Line-System Guidance
 
-Backing guidance must be reel-type-aware rather than reduced to a universal braid rule.
+Backing guidance remains reel-type-aware rather than reduced to a universal braid rule.
 
-The workflow should explain the line system visually:
+The workflow explains the line system visually/conceptually:
 
 - without backing: Reel spool → Main line → optional leader → Rig,
 - with backing: Reel spool → Backing → Main line → optional leader → Rig.
 
-When backing is appropriate, the workflow should explain what backing is, why it is being used, how it attaches to the spool, how it connects to the main line, and how the user returns to the Reel Setup workflow after viewing the relevant canonical Knot instructions.
+When backing is appropriate, the workflow explains what backing is, why it is being used, how it attaches to the spool, how it connects to the main line, and how the user returns to Reel Setup after viewing the relevant canonical Knot instructions.
 
 ### Approved Scope Boundary
 
@@ -215,19 +255,17 @@ Excluded from this workflow:
 - exhaustive line-selection optimization by technique/cover/lure,
 - product-specific setup beyond directing the user to manufacturer guidance when reel design requires it.
 
-The Version 1 knot discussion currently includes the Arbor Knot as a Core Knot because reel-spool attachment is a prerequisite to fishing, not an optional specialty task.
-
-Fly fishing and fly-line-specific knot systems are **Parking Lot** for the initial build. Do not expand the first Knot milestone with Albright/Nail/fly-line workflows solely to cover advanced fly-fishing use cases.
-
-The canonical Knot schema and Rig → Knot relationship model are implemented and documented. Current production/status details are controlled by `workstreams/KNOT-PRODUCTION-PACKAGE-2.md` and `workstreams/KNOT-IMPLEMENTATION-HANDOFF.md`.
+Fly fishing and fly-line-specific knot systems remain **Parking Lot** for Version 1.
 
 # 2. Fish Guide
 
-After Knots is finalized, expand the Fish Guide into a complete field-reference experience rather than only search/data foundation.
+**Next Approved Product Milestone / Currently Paused Behind Repository Audit Cleanup**
+
+Expand the Fish Guide into a complete field-reference experience rather than only search/data foundation.
 
 The Fish Guide milestone should deliberately review:
 
-- supported regional Fish library and scope,
+- supported Four-State regional Fish library and scope,
 - identification-safe media,
 - practical identification traits,
 - similar-species navigation,
@@ -436,9 +474,11 @@ See `DEVELOPMENT_WORKFLOW.md`.
 - `DECISIONS.md`
 - `DEVELOPMENT_WORKFLOW.md`
 - `NAVIGATION-PAGE-STANDARD.md`
+- `workstreams/KNOT-PRODUCTION-PACKAGE-1.md`
 - `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
-- `workstreams/KNOT-IMPLEMENTATION-HANDOFF.md`
-- `workstreams/KNOT-SESSION-CLOSEOUT-2026-08-13.md`
+- `workstreams/KNOT-PRODUCTION-PACKAGE-3.md`
+- `workstreams/KNOT-PRODUCTION-PACKAGE-4.md`
+- `workstreams/KNOT-INTEGRATED-REGRESSION.md`
 - `data-model/04-KNOTS.md`
 - `data-model/02-FISH.md`
 - `data-model/05-TACKLE.md`

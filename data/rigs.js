@@ -115,9 +115,7 @@ const RIG_DATA = Object.freeze([
         safetyNotes: [
             "Keep the hook pointed away from people while clipping on the bobber."
         ],
-        techniqueIds: [],
         variationIds: ["slip-bobber-rig"],
-        imageIds: []
     },
     {
         id: "slip-bobber-rig",
@@ -227,9 +225,7 @@ const RIG_DATA = Object.freeze([
             "Pinch split shot with pliers rather than your teeth.",
             "Keep hooks secured while adjusting the bobber stop."
         ],
-        techniqueIds: [],
         variationIds: ["fixed-bobber-rig"],
-        imageIds: []
     },
     {
         id: "basic-bottom-rig",
@@ -359,9 +355,7 @@ const RIG_DATA = Object.freeze([
             "Check behind you before casting a weighted rig.",
             "Use controlled casts because sinkers can cause injury."
         ],
-        techniqueIds: [],
         variationIds: ["carolina-rig"],
-        imageIds: []
     },
     {
         id: "texas-rig",
@@ -459,9 +453,7 @@ const RIG_DATA = Object.freeze([
         safetyNotes: [
             "Keep fingers clear of the hook point while threading the bait."
         ],
-        techniqueIds: [],
         variationIds: ["carolina-rig", "weightless-soft-plastic-rig"],
-        imageIds: []
     },
     {
         id: "jighead-soft-plastic",
@@ -549,9 +541,7 @@ const RIG_DATA = Object.freeze([
             "Keep fingers behind the hook point while threading the soft plastic.",
             "Check behind you before casting a weighted jighead."
         ],
-        techniqueIds: [],
         variationIds: ["ned-rig"],
-        imageIds: []
     },
     {
         id: "inline-spinner-setup",
@@ -619,9 +609,7 @@ const RIG_DATA = Object.freeze([
             "Keep the exposed hook secured until you are ready to cast.",
             "Check the casting area carefully because the compact weighted lure can travel quickly."
         ],
-        techniqueIds: [],
         variationIds: [],
-        imageIds: []
     },
     {
         id: "wacky-rig",
@@ -712,9 +700,7 @@ const RIG_DATA = Object.freeze([
         safetyNotes: [
             "Keep fingers clear of the hook point while piercing the middle of the bait."
         ],
-        techniqueIds: [],
         variationIds: [],
-        imageIds: []
     },
     {
         id: "ned-rig",
@@ -803,9 +789,7 @@ const RIG_DATA = Object.freeze([
             "Keep fingers behind the hook point while threading the soft plastic.",
             "Check behind you before casting the weighted jighead."
         ],
-        techniqueIds: [],
         variationIds: ["jighead-soft-plastic"],
-        imageIds: []
     },
     {
         id: "weightless-soft-plastic-rig",
@@ -891,9 +875,7 @@ const RIG_DATA = Object.freeze([
         safetyNotes: [
             "Keep fingers clear of the hook point while threading and skin-hooking the bait."
         ],
-        techniqueIds: [],
         variationIds: ["texas-rig"],
-        imageIds: []
     },
     {
         id: "drop-shot-rig",
@@ -985,9 +967,7 @@ const RIG_DATA = Object.freeze([
             "Secure both the exposed hook and hanging weight before moving or storing the rod.",
             "Keep fingers clear of the exposed hook point when nose-hooking the bait."
         ],
-        techniqueIds: [],
         variationIds: [],
-        imageIds: []
     },
     {
         id: "carolina-rig",
@@ -1120,9 +1100,7 @@ const RIG_DATA = Object.freeze([
             "Use a controlled side-arm or lob cast because the long leader and heavy sliding weight create a wide moving rig.",
             "Check behind and beside you before casting."
         ],
-        techniqueIds: [],
         variationIds: ["texas-rig", "basic-bottom-rig"],
-        imageIds: []
     },
     {
         id: "live-bait-slip-sinker-rig",
@@ -1255,9 +1233,7 @@ const RIG_DATA = Object.freeze([
             "Use controlled casts because the sliding sinker and baited hook can swing independently.",
             "Handle live bait and hooks carefully, and follow local bait and invasive-species regulations."
         ],
-        techniqueIds: [],
         variationIds: ["basic-bottom-rig"],
-        imageIds: []
     },
     {
         id: "three-way-rig",
@@ -1404,9 +1380,7 @@ const RIG_DATA = Object.freeze([
             "Use controlled casts because a baited hook and separate sinker can swing on different leaders.",
             "Inspect all three swivel connections before fishing strong current."
         ],
-        techniqueIds: [],
         variationIds: [],
-        imageIds: []
     },
     {
         id: "neko-rig",
@@ -1506,9 +1480,7 @@ const RIG_DATA = Object.freeze([
             "Keep fingers clear of the hook point while installing the hook and weight.",
             "Check the nail weight after catches so a loosened weight is not thrown during the next cast."
         ],
-        techniqueIds: [],
         variationIds: ["wacky-rig"],
-        imageIds: []
     },
     {
         id: "shaky-head-rig",
@@ -1595,9 +1567,7 @@ const RIG_DATA = Object.freeze([
         safetyNotes: [
             "Keep fingers behind the hook point while threading and skin-hooking the bait."
         ],
-        techniqueIds: [],
         variationIds: ["ned-rig"],
-        imageIds: []
     },
     {
         id: "free-rig",
@@ -1690,9 +1660,7 @@ const RIG_DATA = Object.freeze([
         safetyNotes: [
             "Use controlled casts because the freely moving sinker can slide and swing independently of the hook."
         ],
-        techniqueIds: [],
         variationIds: ["texas-rig", "carolina-rig"],
-        imageIds: []
     },
     {
         id: "double-jig-crappie-rig",
@@ -1788,9 +1756,7 @@ const RIG_DATA = Object.freeze([
             "Remember that two exposed hooks are moving during every cast, lift, and landing sequence.",
             "Use controlled casts and secure both hooks before transport."
         ],
-        techniqueIds: [],
         variationIds: ["jighead-soft-plastic"],
-        imageIds: []
     },
     {
         id: "jika-rig",
@@ -1890,9 +1856,7 @@ const RIG_DATA = Object.freeze([
             "Use split-ring pliers rather than fingernails when installing small heavy-duty rings.",
             "Inspect the ring and weight connection frequently because a compact weighted rig can damage hardware during repeated contact with cover."
         ],
-        techniqueIds: [],
         variationIds: ["free-rig", "texas-rig"],
-        imageIds: []
     },
     {
         id: "punch-pegged-texas-rig",
@@ -1991,9 +1955,7 @@ const RIG_DATA = Object.freeze([
             "Heavy weights and hooks carry substantial energy; use short controlled pitches and verify that the casting lane is clear.",
             "Inspect line near the weight and hook frequently for abrasion after fishing dense cover."
         ],
-        techniqueIds: [],
         variationIds: ["texas-rig"],
-        imageIds: []
     },
     {
         id: "bottom-bouncer-spinner-rig",
@@ -2090,9 +2052,7 @@ const RIG_DATA = Object.freeze([
             "Keep hooks secured while baiting and handling the harness, especially when multiple hooks are present.",
             "Secure the rod when trolling because the bouncer and harness remain under continuous load."
         ],
-        techniqueIds: [],
         variationIds: ["live-bait-slip-sinker-rig"],
-        imageIds: []
     }
 ]);
 

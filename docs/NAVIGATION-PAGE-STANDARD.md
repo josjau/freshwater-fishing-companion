@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Navigation Page Standard
 
-**Document Revision:** 1.0.4  
+**Document Revision:** 1.0.6  
 **Document Status:** Approved  
-**Implementation Status:** Current / Shared Floating Navigation Appearance PASS / Extended Runtime Validation Pending  
-**Last Updated:** 2026-08-17
+**Implementation Status:** Current / Shared Floating Navigation Appearance PASS / Context-Restoration Revision Approved / Implementation Pending  
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -36,9 +36,23 @@ The hierarchy should remain concise and visually uncluttered. New record categor
 
 # Persistent Navigation Component
 
-Every non-Dashboard application view uses the site-wide floating-navigation standard defined in `workstreams/SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md`.
+Every non-Dashboard application view uses the shared site-wide floating-navigation standard defined here.
 
-The canonical visual component is the shared floating navigation container.
+The canonical visual component is the shared `.page-navigation-group` floating navigation container. For renderer-based application views, `buildPageNavigationMarkup()` is the canonical shared markup path when practical.
+
+The shared container owns the floating treatment, including:
+
+- sticky positioning,
+- visible container background,
+- border,
+- padding,
+- rounded shape,
+- shadow,
+- backdrop treatment,
+- responsive wrapping,
+- shared spacing around its navigation controls.
+
+Individual `.page-navigation` controls are the buttons inside that container. A bare sticky `.page-navigation` button is not the normal site-wide pattern.
 
 Rules:
 
@@ -47,11 +61,16 @@ Rules:
 - Renderer-based pages should use the shared `buildPageNavigationMarkup()` path rather than duplicating navigation markup.
 - A bare sticky navigation button is not the normal root-page treatment.
 - New sections and new nested pages inherit this standard automatically; they should not create a separate navigation appearance merely because the page is new or belongs to a different domain.
-- Specialized workflows may retain dedicated navigation behavior when justified, but should reuse the established floating-container visual treatment unless an explicit documented exception is approved.
+- Specialized workflows may retain dedicated navigation behavior when justified. Their custom navigation should replace the standard container rather than nesting a second floating shell, and should reuse the established floating-container visual treatment unless an explicit documented exception is approved.
 - Navigation must remain keyboard accessible, touch usable, responsive, and visible without obscuring content.
-- Parent/Home routing continues to follow D051 top-reset behavior.
+- Forward navigation opens a newly selected destination at the top.
+- Parent navigation restores the immediately preceding standard application view, including its applicable UI state and prior scroll position.
+- Home opens the Dashboard at the top and clears the contextual return stack.
+- A saved scroll position belongs only to the saved source context and must never transfer to a newly opened destination.
 
 The Dashboard itself is the normal exception because it is already the application root destination.
+
+The earlier standalone `SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md` workstream is historical implementation/validation provenance only. Its durable component rules are incorporated here, while its earlier Parent-to-top runtime validation is superseded by the approved 2026-08-18 context-restoration revision above.
 
 ## Runtime Validation Status
 
@@ -63,7 +82,9 @@ Confirmed:
 - representative Nested pages retain Parent + Home inside that same visual component,
 - the prior Root-versus-Nested visibility mismatch is resolved.
 
-Extended checks for functional nested navigation, Reel Setup, narrow viewport behavior, keyboard focus, and top-reset routing remain pending before the site-wide navigation implementation is marked fully `Validated`.
+The 2026-08-18 context-restoration revision changes the approved transition behavior but is not yet implemented in production source. Current production routing still performs the earlier all-transitions top reset until a dedicated navigation implementation package changes and validates it.
+
+Extended checks for functional nested navigation, Reel Setup, narrow viewport behavior, keyboard focus, and the revised Parent context/scroll restoration behavior remain required before the site-wide navigation implementation is marked fully `Validated` under the revised standard.
 
 # Search
 
@@ -73,13 +94,39 @@ Requirements:
 
 - Place the standard inline section search immediately after the page identity/intro.
 - Main-section search covers the implemented domain library.
-- Do not create a separate Search card when the inline search already provides primary search access.
+- Search scope is resolved before matching/ranking begins.
+- A subset/category/browse search may search only the records eligible for that selected scope.
+- Going deeper in navigation may narrow search scope, but search must never silently broaden beyond the user's current scope.
+- A broader search requires an explicit user navigation/action to the broader parent scope or a future explicitly global search.
+- Helper text, placeholder examples, labels, and empty-state messages must accurately describe the active scope. Do not suggest example terms that cannot produce an eligible result inside that scope.
+- Prefer scope-descriptive helper text when manually maintained example terms would duplicate canonical record data. If example terms are used, derive or validate them against the active record set rather than maintaining a second search vocabulary.
+- Do not create duplicate names, aliases, relationship facts, or search-only metadata in canonical entities solely to make scoped helper text or related-knowledge discovery easier.
 - Search results may expose individual records directly because the user has expressed a specific retrieval intent.
 - Do not automatically focus a search input when a page, collection, browse view, or card destination renders. Search focus must follow deliberate user interaction so mobile browsers do not open the software keyboard merely because navigation occurred.
 - User-initiated search interactions may retain focus when appropriate; for example, an explicit Clear Search action may return focus to the same search field so the user can continue typing.
-- Clearing search restores the normal landing-page hierarchy.
+- Clearing search restores the normal unfiltered/default state for the current scope; it does not broaden the scope.
 
-Search behavior continues to follow `STYLE_GUIDE.md`.
+Conceptual search hierarchy:
+
+```text
+Global Search (future)
+→ all implemented searchable domains
+
+Domain Search
+→ all active records in one domain
+
+Collection / Subset Search
+→ only active records in the selected collection/subset
+
+Related-Knowledge Search (future, only if useful)
+→ only entities reachable through the approved relationship set being searched
+```
+
+Search never moves upward in this hierarchy on its own.
+
+Future global or relationship-aware discovery should orchestrate domain-specific search behavior and canonical relationship owners rather than duplicate relationship knowledge into the searched entities. For example, a future query for a Fish-related Rig should be able to use canonical Fish-to-Rig Decision Knowledge without copying Fish terms into every Rig merely for search.
+
+Search behavior continues to follow `STYLE_GUIDE.md` and D022/D047/D050.
 
 # Special Navigation
 
@@ -147,10 +194,13 @@ A browse page should:
 
 - clearly identify the selected collection,
 - provide scoped Search when useful,
+- ensure Search queries only records eligible for that selected collection,
+- use scope-correct search labels/helper text/empty states,
 - display the collection's individual records,
 - preserve the established shared Parent/Home floating-navigation pattern,
+- preserve the user's applicable collection/search/filter state and prior scroll position when Parent restores the browse page,
 - use a predictable sort or approved curated order,
-- open selected records into their detail views.
+- open selected records into their detail views at the top.
 
 This separation keeps the landing page useful as the library expands while allowing browse pages to carry the record-level density.
 
@@ -192,12 +242,15 @@ The Rig Guide is the baseline, not an inflexible template.
 A domain may deviate when a materially better user workflow exists, but the exception must preserve:
 
 - Search-first discovery,
+- hierarchical scope discipline,
+- context-correct Search helper/empty-state wording,
 - concise navigation,
 - beginner-first usability,
 - scalable grouping,
 - accessible actionable/unavailable behavior,
 - the shared floating-navigation component or a deliberately documented equivalent,
-- predictable Parent/Home navigation.
+- forward-to-top and Home-to-top behavior,
+- context-preserving Parent return behavior for standard views.
 
 Material deviations from this standard should be documented in the relevant workstream approval before production implementation.
 
@@ -216,7 +269,7 @@ The approved Knot Guide follows this hierarchy:
    - Core Knots — approved Core/Important treatment.
    - Beginner Knots.
    - Intermediate Knots.
-   - Advanced Knots — Coming Soon while unavailable.
+   - Advanced Knots — Coming Soon.
 
 The **What are you trying to do?** section itself remains visually neutral; priority is communicated through the deliberately elevated individual cards.
 
@@ -224,13 +277,16 @@ Selecting a Knot collection opens the corresponding grouped browse page. Individ
 
 The Knot root uses the same shared floating navigation container as nested Knot browse/detail pages, with one non-duplicative `← Home` control on the root and Parent + Home controls on nested views.
 
-The Knot-specific implementation details remain controlled by `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`.
+The current production Rig/Knot browse implementations already scope returned records to their selected subsets. Their static subset helper/example text predates the 2026-08-18 contextual-helper requirement and should be aligned when those search presentations are next deliberately edited rather than through unrelated Fish production scope.
+
+Historical Knot landing/search/package implementation records are retained under `archive/workstreams/knots/`; they provide provenance but do not govern current navigation behavior. Current navigation behavior is governed by this standard together with `STYLE_GUIDE.md` and applicable durable decisions.
 
 # Related Documents
 
 - `STYLE_GUIDE.md`
 - `DETAIL-PAGE-STANDARD.md`
-- `workstreams/SITE-WIDE-FLOATING-NAVIGATION-STANDARD.md`
-- `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`
-- `workstreams/KNOT-SEARCH-APPROVAL.md`
-- `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
+- `DECISIONS.md`
+- `workstreams/KNOT-INTEGRATED-REGRESSION.md`
+- `archive/workstreams/knots/KNOT-LANDING-PAGE-APPROVAL.md` — historical provenance
+- `archive/workstreams/knots/KNOT-SEARCH-APPROVAL.md` — historical provenance
+- `archive/workstreams/knots/KNOT-PRODUCTION-PACKAGE-2.md` — historical provenance

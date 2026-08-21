@@ -1,191 +1,127 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.3.3
-**Document Status:** Draft
-**Decision Baseline:** D025, D026, D037, D043, D044
+**Document Revision:** 0.4.0  
+**Document Status:** Draft  
+**Implementation Status:** Mixed — validated relationships and deferred future relationships  
+**Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056
 
 ---
 
 # Purpose
 
-This document defines how canonical entities, decision knowledge, and user-owned data relate within Freshwater Fishing Companion.
+This document defines how canonical entities, Decision Knowledge, and User Knowledge relate within Freshwater Fishing Companion.
 
-The relationship model supports:
-
-- Search
-- Related knowledge
-- Recommendations
-- Inventory matching
-- Rig readiness
-- Catch logging
-- Learning paths
-- Navigation
-- Data validation
-
-Relationships connect entities through stable identifiers rather than duplicated content.
-
----
-
-# Design Philosophy
-
-The Companion is built around connected knowledge.
-
-A search result or detail page should not operate as an isolated record. It should help the user understand:
-
-- What the item is
-- How it is used
-- What works with it
-- What conditions suit it
-- Whether the user owns it
-- What to learn next
-
-Search is relevance-first; connected knowledge is breadth-first.
-
-Relationships should provide useful next steps without overwhelming the user.
+Relationships use stable identifiers and follow the site's semantic single-owner rule. This document distinguishes relationships already implemented and validated from future relationships whose ownership remains deliberately unresolved.
 
 ---
 
 # Knowledge Layers
 
-The relationship model follows the approved three-layer architecture.
-
 ## Layer 1 — Reference Knowledge
 
-Curated facts and reusable fishing concepts.
-
-Examples:
-
-- Fish
-- Rigs
-- Techniques
-- Conditions
-- Knots
-- Tackle
-- Lures
-- Products when explicitly modeled
-- Taxonomies
-- Sources
-
----
+Curated facts and reusable fishing concepts, including implemented Fish, Rigs, Knots, Tackle, and Media plus approved future domains such as Techniques, Conditions, and a possible separate Lure domain.
 
 ## Layer 2 — Decision Knowledge
 
-Guidance derived from Reference Knowledge and user context.
-
-Examples:
-
-- Lure recommendations
-- Product recommendations
-- Suggested alternatives
-- Inventory compatibility
-- Search ranking
-- Learning guidance
-
----
+Guidance derived from Reference Knowledge and context. Current examples include Knot task guidance and Reel & Line Setup guidance. Future examples may include recommendation ranking, contextual suitability, alternatives, and inventory compatibility.
 
 ## Layer 3 — User Knowledge
 
-Information owned or maintained by the angler.
-
-Examples:
-
-- Profiles
-- Preferences
-- Favorites
-- Equipment
-- Consumables
-- Custom tackle
-- Fishing setups
-- Catch records
+Information owned or maintained by the angler, including future profiles, preferences, favorites, My Tackle, fishing setups, and catch records. The current lightweight Rig-readiness local state is transitional and is not authoritative My Tackle ownership.
 
 ---
 
-# Relationship Principles
+# Site-Wide Semantic Ownership Rule
 
-The Companion shall follow these relationship rules:
+D056 establishes the permanent rule:
 
-- Relationships use stable identifiers.
-- Canonical entities are referenced rather than copied.
-- User records reference canonical entities whenever practical.
-- Tackle items are not required to belong to a Rig.
-- Rigs act as recipes that reference existing canonical Tackle concepts.
-- The canonical owner of a relationship stores it once when that direction is sufficient.
-- Inverse navigation should be derived rather than independently maintained when it represents the same relationship.
-- Relationships should support related knowledge without forcing every possible connection.
-- Required relationships must be validated.
-- Ordinary production relationship IDs should resolve to existing canonical records once the relevant implementation is complete.
-- Optional relationships must not block use of an otherwise valid entity.
-- Inactive canonical entities remain available for historical references.
-- Circular stored relationships should be limited and documented when necessary.
-- Search and recommendation relationships should be explainable.
+> Every canonical fact or relationship has exactly one authoritative owner, and that owner must be the entity or domain for which the information is intrinsically meaningful.
+
+Ownership follows meaning, not rendering, search, reverse navigation, caching, or implementation convenience.
+
+When the UI needs the inverse of an existing canonical relationship, derive it unless a separately meaningful relationship or explicit architecture decision justifies additional storage.
+
+A future cache or index may duplicate derived values for performance only when it remains non-authoritative and reproducible from the canonical owner.
 
 ---
 
 # Relationship Classifications
 
-Every relationship should be understood by its semantic need rather than duplicated for UI convenience.
-
 ## Required
 
-The source entity cannot function correctly without the relationship.
+The source record cannot function correctly without the relationship.
 
 Example:
 
 ```text
-Rig component requirement
-    -> Canonical Tackle
+Rig.componentRequirements[].tackleId
+    -> canonical Tackle
 ```
-
-A missing required relationship is a data defect.
 
 ## Optional
 
-The relationship adds useful context but the source entity remains valid without it.
+The relationship adds context while the source entity remains valid without it.
 
 Example:
 
 ```text
-Rig
-    -> related variation
+Rig.variationIds[]
+    -> related Rig
 ```
 
 ## Derived Inverse
 
-The UI needs reverse navigation, but the canonical relationship is stored in only one direction.
+The canonical relationship is stored once and reverse navigation is computed.
 
 Example:
 
 ```text
-Canonical storage:
+Canonical:
 Rig.componentRequirements[].tackleId
-    -> Offset Hook
 
-Derived UI navigation:
-Offset Hook
-    -> Used In
-    -> matching Rigs
+Derived:
+Tackle -> Used In -> matching active Rigs
 ```
 
-Derived inverse relationships should not be stored as a second manually maintained source of truth without an explicit semantic reason.
+## Deferred
+
+The domain or relationship is approved conceptually, but its semantic owner or storage shape is not yet approved. Deferred relationships must not be represented by empty production arrays or speculative IDs.
 
 ---
 
-# Rig-to-Tackle Relationship Ownership
+# Validated Current Relationships
 
-`Rig.componentRequirements` is the authoritative source for Rig-to-Tackle usage. Each requirement identifies the referenced canonical Tackle concept through `tackleId`.
+## Rig → Tackle
 
-Tackle records do not independently maintain inverse `rigIds` solely to answer which Rigs use the item.
+`Rig.componentRequirements[]` is the authoritative source for Rig-to-Tackle usage. Each requirement references canonical Tackle through `tackleId`.
 
-`Used In` is derived by finding active Rigs whose component requirements contain the matching `tackleId`.
+Tackle does not store inverse `rigIds[]` solely for `Used In`. Reverse navigation is derived from active Rig requirements.
 
-Tackle may still own genuine Tackle-domain relationships such as related components or future explicitly approved substitute relationships.
+Canonical Tackle owns identity and display name. A Rig requirement owns only Rig-specific usage context such as required/optional status, quantity, order, recommended size/configuration, assembly role, and setup note.
 
-Bidirectional UI navigation does not imply bidirectional canonical storage.
+A separate requirement-level identifier is not required by the current feature set.
 
 ---
 
-# Rig-to-Knot Relationship Ownership
+## Media → Entity Attachment
+
+Media owns canonical entity attachment through:
+
+```text
+Media.ownerType
+Media.ownerId
+```
+
+Canonical Fish, Rig, Knot, Tackle, and future Technique/Condition/Lure records must not maintain inverse media-ID arrays solely to locate Media that already identifies its owner.
+
+The Repository Audit Section 4 Tackle cleanup is **implemented, validated, and closed**: transitional Tackle `mediaIds[]` duplicate storage was removed from production. Historical versions remain available through Git history.
+
+Multiple Media records may share an owner when a demonstrated feature requires multiple assets. Any role, ordering, or presentation-priority semantics belong to Media or an explicitly justified relationship entity.
+
+---
+
+## Rig → Knot
 
 `Rig.knotApplications[]` is the authoritative source for contextual Rig-to-Knot recommendations.
 
@@ -202,157 +138,120 @@ Rules:
 
 - Rig owns the physical connection context.
 - Only real tied connections receive an entry; hardware-only joins do not.
-- `recommendedKnotIds[]` is selective and nonempty, not an exhaustive list of every theoretically usable Knot.
-- Referenced Knot IDs must resolve to active canonical Knot records.
-- General tying instructions remain with Knot; `notes` contains only Rig-specific context.
-- No Version 1 application ID or assembly-step index is stored.
-- Runtime code must not infer the relationship by parsing `assemblySteps` prose.
+- `recommendedKnotIds[]` is selective and nonempty.
+- Referenced Knot IDs resolve to active canonical Knot records.
+- Knot owns reusable tying instructions.
+- Rig `notes` contains only Rig-specific connection context.
+- Runtime code does not infer Knot relationships by parsing `assemblySteps` prose.
 
-Derived inverse navigation:
+Reverse Knot detail navigation such as **Where You'll Use It** is derived from active Rig Knot applications rather than stored again on Knot.
 
-```text
-Canonical storage:
-Rig.knotApplications[].recommendedKnotIds[]
-    -> canonical Knot IDs
-
-Derived Knot detail:
-Knot
-    -> Where You'll Use It
-    -> matching active Rigs / connection labels
-```
-
-Production Package 1 audits all 20 active Rigs and records 31 real tied connection points. The final audited count is authoritative.
+The audited 20-Rig library contains 31 real tied connection points.
 
 ---
 
-# Canonical Identity Across Relationships
+## Core Learning Group → Rig
 
-A relationship references another entity by stable ID.
-
-The referenced canonical entity owns its identity and display name.
-
-For Rig components:
-
-```text
-Rig requirement
-    -> tackleId
-    -> canonical Tackle name
-```
-
-The Rig owns only the context of that component inside the Rig, such as required/optional status, quantity, order, recommended size/configuration, assembly role, and setup note.
-
-A second display-name field in the Rig must not become an independent source of truth.
-
-A separate requirement-level `id` is not introduced unless independent requirement identity becomes necessary for a demonstrated feature.
-
----
-
-
-# Core Learning-Path Relationship
-
-Core membership is a curated relationship from the Core learning group to canonical Rig IDs.
-
-Canonical storage:
+Core membership and order are owned by the curated registry:
 
 ```text
 CORE_RIG_IDS
     -> ordered canonical Rig IDs
 ```
 
-Derived presentation:
-
-```text
-Core Rigs — Master These First
-    -> ordered cards
-    -> Core badges
-    -> Core detail emphasis
-```
-
-Individual Rig records do not store duplicate Core membership/order fields solely for UI convenience.
+Individual Rig records do not store duplicate Core membership/order fields solely for presentation.
 
 ---
 
-# Rig and Technique Relationship
+# Decision Knowledge Relationships
 
-Rig owns physical assembly and Rig-specific configuration.
+Decision Knowledge may reference canonical entities without changing their schemas.
 
-Technique owns reusable presentation behavior.
+Current examples:
 
-A Rig may reference compatible Techniques, but shared presentation instructions should live in Technique rather than being copied into every compatible Rig.
+- Knot task guidance owns task-first discovery vocabulary and curated task-to-Knot ordering.
+- Reel & Line Setup guidance owns its guided decision paths and references canonical Knot IDs where tying instruction is required.
 
-Rig `assemblySteps` remain authoritative for physical construction.
+These registries do not make their workflow fields part of canonical Knot, Rig, Fish, or Tackle entities.
+
+Future recommendation relationships should follow the same ownership test: contextual ranking, rationale, confidence, and suitability belong to Decision Knowledge when they answer **what should I do in this context?** rather than an intrinsic canonical fact.
+
+---
+
+# Rig ↔ Technique — Deferred
+
+Rig owns physical assembly and Rig-specific configuration. Technique owns reusable presentation behavior.
+
+The canonical storage owner for future Rig ↔ Technique compatibility is **not yet approved**. Current production Rigs do not store `techniqueIds[]`, and the future Technique model does not have an approved `compatibleRigIds[]` field.
+
+At the Technique architecture gate, determine whether compatibility is:
+
+- an intrinsic Reference Knowledge fact owned by one side, or
+- contextual Decision Knowledge involving Fish, Conditions, or other factors.
+
+Do not populate both directions. Rig `assemblySteps[]` remain authoritative for physical construction regardless of the eventual compatibility model.
+
+---
+
+# Other Future Relationships — Deferred
+
+The following relationship families remain unresolved until their respective architecture gates:
+
+- Fish ↔ Rig applicability beyond currently implemented domain metadata,
+- Fish ↔ Technique,
+- Condition ↔ Fish/Rig/Technique/Lure,
+- separate Lure ↔ Fish/Rig/Technique relationships,
+- Product Definition relationships,
+- My Tackle owned-item mappings beyond the approved ownership boundary.
+
+Search or UI needs do not authorize speculative canonical relationship fields.
 
 ---
 
 # Search Relationships
 
-Search should first identify the strongest intended entity.
+Search should identify the strongest intended entity first. Connected knowledge can then expose pertinent breadth.
 
-After an entity is selected, relationships expose relevant breadth.
+Search metadata must not become a second canonical owner of relationship facts. Search consumes canonical owners, Decision Knowledge, or deliberately derived indexes.
 
-Examples:
-
-```text
-Fish
-    -> Rigs
-    -> Conditions
-    -> Lures
-    -> Techniques
-
-Rig
-    -> Fish
-    -> Conditions
-    -> Tackle requirements
-    -> Knots
-    -> Techniques
-    -> Readiness
-
-Lure or Tackle
-    -> Fish
-    -> Conditions
-    -> compatible uses
-    -> ownership context
-```
-
-A weak or incidental relationship is not automatically a reason for an entity to appear as a primary Search result.
+A weak or incidental relationship is not by itself a reason for an entity to appear as a primary search result.
 
 ---
 
-# My Tackle and Readiness Relationships
+# My Tackle and Rig Readiness
 
-Canonical Tackle defines the functional type.
+Canonical Tackle defines functional tackle concepts. Future My Tackle defines actual persistent user ownership.
 
-My Tackle defines actual user ownership.
-
-Rig Readiness derives buildability from:
+When My Tackle becomes authoritative, Rig Readiness will derive buildability from:
 
 ```text
 Rig.componentRequirements[].tackleId
-    -> canonical Tackle type
+    -> canonical Tackle
     -> My Tackle owned-item mapping
 ```
 
-The current transitional readiness state already stores canonical Tackle ID string values, so renaming the Rig requirement property to `tackleId` does not require a storage migration.
+Until then, the existing lightweight local readiness state is transitional.
 
-When My Tackle becomes authoritative:
+Permanent rules:
 
-- Owned required types are automatically satisfied.
-- Temporary session availability may satisfy a missing item without becoming ownership.
-- Rig Readiness reads My Tackle but never writes persistent ownership.
-- Persistent ownership changes are made only through explicit My Tackle ownership-management workflows.
-- Prior readiness checkmarks are not silently promoted into inventory.
+- Rig Readiness may read ownership but may not silently create it.
+- Temporary availability may satisfy a current build without becoming persistent ownership.
+- Search, Recommendations, borrowed tackle, inferred usage, and prior readiness checkmarks do not create My Tackle records.
+- Persistent ownership changes require explicit My Tackle ownership-management workflows.
 
 ---
 
 # Referential Integrity
 
-Stable canonical relationship IDs should resolve to real canonical records when production data for the relevant implementation is complete.
+For implemented relationship domains:
 
-Forward planning belongs in project documentation rather than unresolved ordinary relationship IDs.
+- every Rig component `tackleId` must resolve to canonical Tackle,
+- every Rig `recommendedKnotIds[]` entry must resolve to active canonical Knot,
+- every `CORE_RIG_IDS` entry must resolve to one active canonical Rig and appear once,
+- every active Media entity attachment must resolve according to the owning domain's lifecycle rules,
+- ordinary production relationship IDs must not be used as forward-planning placeholders.
 
-For the approved 20-Rig expansion, Carolina Rig is an approved near-term canonical entity. The current `carolina-rig` relationship is therefore resolved by implementing the Carolina Rig record as part of that expansion rather than treating the concept as unwanted.
-
-For every Rig component requirement, `tackleId` must be present and resolve to canonical Tackle. Validation should detect unresolved canonical IDs as data defects.
+The approved 20-Rig library is fully implemented, including Carolina Rig. Earlier documentation describing Carolina Rig as a near-term unresolved expansion target is obsolete.
 
 ---
 
@@ -360,45 +259,39 @@ For every Rig component requirement, `tackleId` must be present and resolve to c
 
 User Knowledge is data, not markup.
 
-User-entered and imported relationship labels, notes, names, or other text must be treated as untrusted by rendering code.
-
-Use safe DOM text rendering by default. Any future formatted User Knowledge requires a centrally owned sanitization path.
+User-entered and imported relationship labels, notes, names, or other text are untrusted by rendering code. Safe DOM text rendering is the default. Any future formatted User Knowledge requires one centrally owned sanitization path.
 
 ---
 
 # Validation
 
-Relationship validation should include, where applicable:
+Relationship validation should verify, where applicable:
 
-- Referenced ID exists.
-- Referenced entity is of the expected type.
-- Required relationships are present.
-- A stored inverse does not create a second source of truth without an approved reason.
-- No manual Tackle `rigIds` inverse exists solely for Rig usage.
-- Every current Rig component `tackleId` resolves.
-- Derived `Used In` output matches active Rig requirements.
-- Every `CORE_RIG_IDS` entry resolves to one active canonical Rig and appears only once.
-- Core presentation order matches the registry order.
-- Every active Rig has a deliberate `knotApplications[]` audit result.
-- Every Rig Knot application has exactly `label`, `connectionType`, `recommendedKnotIds[]`, and `notes`.
-- Every `recommendedKnotIds[]` entry resolves to an active canonical Knot.
-- Rig-to-Knot reverse navigation is derived rather than stored again on Knot.
-- Hardware-only joins are not represented as Knot applications.
-- Inactive entities remain resolvable for historical or migration needs.
-- User-owned references do not mutate canonical Reference Knowledge.
+- referenced IDs exist and are of the expected type,
+- required relationships are present,
+- every stored canonical relationship has an identifiable semantic owner,
+- inverse storage is not duplicated merely for UI, search, reporting, or convenience,
+- any derived cache/index can be regenerated from its canonical owner,
+- no Tackle `rigIds[]` inverse exists solely for Rig usage,
+- every current Rig component `tackleId` resolves,
+- derived Tackle `Used In` output matches active Rig requirements,
+- canonical entities do not store inverse media-ID arrays solely to locate Media,
+- Media owner references resolve appropriately,
+- Core registry membership and order resolve correctly,
+- every active Rig has a deliberate `knotApplications[]` audit result,
+- every Knot application has exactly the approved four fields,
+- Knot IDs resolve and hardware-only joins are excluded,
+- Rig-to-Knot reverse navigation is derived,
+- deferred domains do not introduce placeholder relationship arrays,
+- User Knowledge references do not mutate canonical Reference Knowledge.
 
 ---
 
 # Future Enhancements
 
-Potential future relationship infrastructure includes:
+Potential future relationship infrastructure includes runtime indexes when scale justifies them, automated repository-wide relationship validation, and more sophisticated graph/cache infrastructure.
 
-- Runtime indexes when dataset scale justifies them
-- Automated repository-wide relationship validation
-- More sophisticated graph/cache infrastructure
-- ProductDefinition relationships when an approved commercial-product feature requires them
-
-These are deferred until demonstrated by actual need.
+Any future cache remains derived and non-authoritative unless an explicit later architecture decision changes ownership.
 
 ---
 
@@ -409,6 +302,7 @@ These are deferred until demonstrated by actual need.
 - 03-RIGS.md
 - 03A-TECHNIQUES.md
 - 03B-CONDITIONS.md
+- 04-KNOTS.md
 - 05-TACKLE.md
 - 05A-INVENTORY.md
 - 06-LURES.md

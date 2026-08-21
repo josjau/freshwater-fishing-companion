@@ -1,51 +1,85 @@
 # Freshwater Fishing Companion
 
 **Document:** 00-GLOSSARY.md  
-**Document Revision:** 0.1.0  
+**Document Revision:** 0.2.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-07
+**Last Updated:** 2026-08-19
+
+---
 
 # Purpose
 
-This glossary defines project architecture and domain terms whose meaning must remain consistent across documentation, implementation, and future sessions. It is not intended to be a general fishing glossary.
+This glossary defines project architecture and domain terms whose meaning must remain consistent across documentation, implementation, and future sessions. It is not a general fishing glossary.
+
+---
 
 # Terms
 
 ## Reference Knowledge
 
-Curated application-owned facts and canonical entities. Examples include Fish, Rigs, Techniques, Conditions, Knots, canonical Tackle, and Lure families. Answers: **What is this?**
+Curated application-owned facts and canonical entities. Current implemented examples include Fish, Rigs, Knots, Tackle, and Media. Approved future examples include Techniques, Conditions, and potentially a separate Lure domain after its architecture gate.
+
+Answers: **What is this?**
 
 ## Decision Knowledge
 
-Guidance derived from Reference Knowledge and context. Examples include recommendations, related alternatives, inventory compatibility, and future relevance ranking. Answers: **What should I do?**
+Guidance that combines Reference Knowledge and context without changing canonical entity definitions. Current examples include Knot task guidance and Reel & Line Setup guidance. Future examples include contextual recommendations, ranking, rationale, and inventory compatibility.
+
+Answers: **What should I do?**
 
 ## User Knowledge
 
-Information created, maintained, or owned by the angler. Examples include My Tackle, catches, favorites, preferences, and notes. Answers: **What do I own, prefer, or record?**
+Information created, maintained, or owned by the angler. Future authoritative examples include My Tackle, catches, favorites, preferences, and notes. Current lightweight Rig-readiness local state is transitional availability state rather than authoritative My Tackle ownership.
+
+Answers: **What do I own, prefer, or record?**
 
 ## Canonical Entity
 
 A reusable application-owned entity with a stable ID and one authoritative definition.
 
+## Semantic Owner
+
+The entity or domain for which a fact or relationship is intrinsically meaningful. Under D056, every canonical fact or relationship has exactly one authoritative semantic owner.
+
+## Derived Inverse
+
+A reverse relationship computed from its canonical owner rather than stored as a second authoritative copy. Examples include Tackle **Used In** derived from Rig component requirements and Knot **Where You'll Use It** derived from Rig Knot applications.
+
+## Deferred Relationship
+
+An approved or plausible relationship whose semantic owner or storage shape has not yet been approved. Deferred relationships must not be represented by speculative production fields or empty placeholder arrays.
+
 ## Canonical Tackle
 
-A Reference Knowledge concept describing a functional tackle type, such as Offset Hook, Bullet Weight, Spinnerbait, Crankbait, Slip Float, or Inline Spinner. Canonical Tackle does not represent a specific user's exact owned item.
+Reference Knowledge describing a functional tackle type, such as Offset Hook, Bullet Weight, Spinnerbait, Crankbait, Slip Float, or Inline Spinner. Canonical Tackle does not represent a user's exact owned item.
 
 ## My Tackle
 
-The User Knowledge inventory domain containing the actual fishing items owned by the user. Persistent ownership may only be changed through explicit My Tackle ownership-management workflows.
+The approved future User Knowledge inventory domain containing actual fishing items owned by the user. Its detailed owned-item schema is not implemented. Once authoritative, persistent ownership may only be changed through explicit My Tackle ownership-management workflows.
 
-## ProductDefinition
+## Product Definition
 
 A possible future Reference Knowledge entity describing a specific commercial product. It is not required for My Tackle MVP or basic Rig readiness and remains deferred until an approved feature demonstrates the need.
 
 ## Rig
 
-A canonical setup/recipe that owns physical assembly, component requirements, and Rig-specific configuration.
+A canonical ready-to-fish setup/recipe that owns physical assembly, component requirements, real tied-connection context, and Rig-specific configuration.
 
 ## Technique
 
-A reusable presentation method describing how compatible Rigs or lures are fished, including retrieve, cadence, rod/reel action, and strike guidance.
+An approved future Reference Knowledge domain for reusable presentation behavior after a setup is built. No canonical Technique production dataset is currently implemented, and Rig↔Technique relationship ownership remains deferred.
+
+## Condition
+
+An approved future Reference Knowledge domain for reusable environmental or situational fishing context. No canonical Condition production dataset is currently implemented.
+
+## Lure
+
+A potential separate canonical artificial-bait concept. A dedicated Lure production dataset is not currently implemented; its boundary with current canonical Tackle must be resolved before implementation.
+
+## Media Ownership
+
+Canonical entity attachment is owned by Media through `ownerType` + `ownerId`. Canonical entities do not maintain inverse media-ID arrays solely to locate Media that already identifies its owner.
 
 ## Search
 
@@ -61,27 +95,27 @@ Decision Knowledge that helps choose among valid options for a goal or context. 
 
 ## Connected Knowledge
 
-Pertinent relationships exposed after an entity is identified, allowing rapid movement to adjacent Fish, Rigs, Conditions, Lures, Techniques, Tackle, Regulations, ownership, or other relevant knowledge.
+Pertinent relationships exposed after an entity is identified, allowing movement to adjacent knowledge without requiring duplicate canonical relationship storage.
 
 ## Rig Readiness
 
-A derived buildability view answering: **Can I build this Rig with what I own or have available for this build/session?** Readiness reads My Tackle when My Tackle becomes authoritative and does not write persistent ownership.
+A derived buildability view answering: **Can I build this Rig with what I own or have available for this build/session?** Current local readiness state is transitional. When My Tackle becomes authoritative, Readiness reads ownership but does not write it.
 
 ## Core Rigs
 
-The approved six-rig confidence-building subset of the initial regional Rig library: Fixed Bobber Rig, Basic Bottom Rig, Jighead + Soft Plastic, Inline Spinner Setup, Texas Rig, and Slip Bobber Rig.
+The approved six-Rig confidence-building subset: Fixed Bobber Rig, Basic Bottom Rig, Jighead + Soft Plastic, Inline Spinner Setup, Texas Rig, and Slip Bobber Rig. Membership/order are owned by the curated `CORE_RIG_IDS` registry.
 
 ## Document Status
 
-Governance state of a document: `Draft`, `Approved`, `Superseded`, or `Archived`.
+Governance state of a document, such as `Draft`, `Approved`, `Superseded`, or `Archived`.
 
 ## Implementation Status
 
-State of implementation: `Current`, `Approved / Not Implemented`, `In Progress`, or `Validated`.
+State of implementation. Common values include `Current`, `Approved / Not Implemented`, `In Progress`, `Validated`, and explicit mixed/deferred wording when one document covers both current and future architecture.
 
 ## Validated
 
-Implementation or repository state that has been verified after the relevant push and runtime/repository checks. Preflight, local files, and staged changes are not validated.
+Implementation or repository state verified after the relevant source update and required repository/runtime checks. A proposal or documentation target is not validated production merely because it is approved.
 
 ## Build Now
 
@@ -98,6 +132,8 @@ An idea intentionally excluded because it conflicts with the mission, duplicates
 ## Open
 
 A meaningful unresolved issue that must remain visible with enough context to resume later.
+
+---
 
 # Related Documents
 

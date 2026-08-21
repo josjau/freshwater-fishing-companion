@@ -1,50 +1,49 @@
 # Freshwater Fishing Companion
 
 **Document:** 06-LURES.md  
-**Version:** 0.1.0  
-**Status:** Draft  
-**Decision Baseline:** D013
+**Document Revision:** 0.2.1  
+**Document Status:** Draft  
+**Implementation Status:** Deferred / Separate Domain Not Yet Approved  
+**Decision Baseline:** D009, D015, D056
 
 ---
 
 # Purpose
 
-This document defines the canonical Lure entity for Freshwater Fishing Companion.
+This document preserves the architectural questions for a possible future canonical Lure domain in Freshwater Fishing Companion.
 
-A Lure represents an artificial bait used to attract fish.
+A possible Lure entity would represent a reusable artificial-bait concept rather than an individual commercial product or a user-owned item.
 
-The Lure entity supports:
+No separate canonical Lure production dataset is implemented or approved for implementation on current `main`. Some lure-like functional concepts currently exist in canonical Tackle because Tackle supports Rig requirements, recognition, search, and readiness.
 
-- Fish Recommendations
-- Rig Recommendations
-- Inventory
-- Learning Center
-- Product Lookup
-- Catch Log
+---
 
-Each lure definition shall exist once within the Companion.
+# Current Status
+
+**Draft / Deferred — separate Lure domain not yet approved for implementation.**
+
+The three-layer architecture can accommodate a future canonical Lure domain as Reference Knowledge if demonstrated features require one, but the project has not yet approved that separate domain as the required architecture. Its necessity, exact field set, and boundary with canonical Tackle require a dedicated Lure/Tackle architecture gate before production data is created.
+
+Commercial Product Definitions remain separately deferred. User-owned lure items belong to User Knowledge/My Tackle when that schema is implemented.
 
 ---
 
 # Design Philosophy
 
-A lure describes the characteristics of an artificial bait, not an individual product owned by the user.
+If a separate canonical Lure domain is approved, a Lure definition should describe a reusable lure family or fishing concept, not duplicate:
 
-The Companion separates:
+- a manufacturer-specific commercial product,
+- a user-owned item,
+- a Rig component requirement,
+- or recommendation-specific rationale.
 
-- Canonical Lure definitions
-- Commercial Product definitions
-- User Inventory
-
-This avoids duplicated information while allowing many commercial products to reference the same lure concept.
+The Lure/Tackle boundary must be explicit before implementation because current canonical Tackle already contains functional lure and bait concepts used by supported workflows.
 
 ---
 
-# Canonical Entity
+# Foundation Fields
 
-Every Lure inherits the Foundation entity.
-
-Required base fields:
+If a separate canonical Lure dataset is approved and implemented, each Lure will inherit the Foundation entity standard:
 
 ```text
 id
@@ -55,237 +54,103 @@ lastModifiedVersion
 isActive
 ```
 
-Additional Lure fields extend the base entity.
+Additional fields require approval at the Lure architecture gate and must document purpose, ownership, dependencies, and validation.
 
 ---
 
-# Lure Fields
+# Candidate Lure Concepts — Not Yet Schema
 
-## lureTypeId
+Earlier planning identified potentially useful concepts such as:
 
-Purpose
+- lure type or family,
+- typical lengths,
+- typical weights,
+- common colors,
+- primary actions,
+- beginner guidance,
+- and common mistakes.
 
-References the canonical lure taxonomy.
-
-Ownership
-
-Application.
-
-Examples
-
-- Soft Plastic
-- Crankbait
-- Jerkbait
-- Spinnerbait
-- Buzzbait
-- Jig
-- Spoon
-- Inline Spinner
-- Topwater
-- Swimbait
+These are design inputs, **not approved production fields**. Their final representation depends on demonstrated Lure features and on the boundary with canonical Tackle and future Product Definitions.
 
 ---
 
-## typicalLengths
+# Relationship Ownership — Deferred
 
-Purpose
+Earlier candidate relationship fields included concepts equivalent to:
 
-Common lengths available for this lure.
+```text
+targetFishIds[]
+compatibleRigIds[]
+compatibleTechniqueIds[]
+```
 
-Ownership
+These are **not approved schema fields**.
 
-Application.
+Before implementation, each relationship must be assigned one semantic owner under D056. Contextual answers such as which lure should be used for a Fish, Rig, Technique, or Condition may belong to Decision Knowledge rather than being stored as intrinsic bidirectional Reference Knowledge.
 
-Examples
-
-- 2"
-- 3"
-- 5"
-- 7"
-
----
-
-## typicalWeights
-
-Purpose
-
-Common weights available for this lure.
-
-Ownership
-
-Application.
-
-Examples
-
-- 1/16 oz
-- 1/8 oz
-- 1/4 oz
-- 3/8 oz
+Reverse navigation must normally be derived from the canonical owner.
 
 ---
 
-## commonColors
+# Media Ownership
 
-Purpose
+If a Lure domain is approved, Lure records must not own inverse `imageIds[]` solely to locate Media.
 
-References common color patterns.
+Canonical attachment would follow the shared Media ownership model:
 
-Ownership
+```text
+ownerType: "lure"
+ownerId: canonical Lure ID
+```
 
-Application.
-
-Examples
-
-- Green Pumpkin
-- Black Blue
-- White
-- Chartreuse
-- Silver
-- Gold
+Any media role or ordering semantics belong to Media or an explicitly justified relationship entity when a demonstrated feature requires them.
 
 ---
 
-## primaryActions
+# Product Boundary
 
-Purpose
+A future canonical Lure concept could relate to multiple commercial products, but Product Definition modeling is not yet implemented.
 
-Describes the lure's intended action.
-
-Ownership
-
-Application.
-
-Examples
-
-- Wobble
-- Dart
-- Glide
-- Vibrate
-- Pop
-- Walk
-- Swim
+For example, a reusable stick-worm concept and manufacturer-specific products are different semantic entities. The project must not create product records or product relationships until a product-specific feature establishes the required schema and ownership.
 
 ---
 
-## targetFishIds
+# User Knowledge Boundary
 
-Purpose
+A user's actual lure ownership belongs to My Tackle/User Knowledge, not to a canonical Lure definition.
 
-References fish commonly targeted.
-
-Ownership
-
-Application.
+Persistent ownership must be created or changed only through explicit ownership-management workflows when My Tackle becomes authoritative.
 
 ---
 
-## compatibleRigIds
+# Recommendation Boundary
 
-Purpose
+Future lure recommendations may consider Fish, Conditions, Technique, season, user inventory, and other context.
 
-References compatible rigs.
-
-Ownership
-
-Application.
+Recommendation ranking, rationale, confidence, alternatives, and situational suitability are Decision Knowledge. They must not be copied into canonical reference records merely to simplify rendering.
 
 ---
 
-## compatibleTechniqueIds
+# Implementation Gate
 
-Purpose
+Before a separate canonical Lure production dataset is approved or created, the Lure/Tackle architecture gate must settle at least:
 
-References recommended fishing techniques.
+1. whether a separate Lure entity is required by demonstrated features,
+2. the boundary between Lure and current canonical Tackle,
+3. the canonical Lure field set if the domain is approved,
+4. Fish/Rig/Technique/Condition relationship ownership,
+5. Product Definition relationship ownership if commercial products are in scope,
+6. My Tackle mapping behavior,
+7. Media attachment requirements beyond the existing owner model, if any,
+8. referential-integrity validation and migration requirements.
 
-Ownership
-
-Application.
-
----
-
-## imageIds
-
-Purpose
-
-References approved illustrations or photographs.
-
-Ownership
-
-Application.
-
----
-
-# Product Relationships
-
-A single lure definition may be represented by many commercial products.
-
-Example
-
-Canonical Lure
-
-- Stick Worm
-
-Commercial Products
-
-- Yamamoto Senko
-- Yum Dinger
-- Strike King Ocho
-
-The Companion stores the lure once while allowing multiple product definitions.
-
----
-
-# Learning Philosophy
-
-Each lure should help the angler understand:
-
-- What it imitates
-- When it performs well
-- Typical retrieves
-- Common mistakes
-- Beginner tips
-
-The goal is to build confidence through understanding rather than memorization.
-
----
-
-# Recommendations
-
-The Companion may recommend lures based on:
-
-- Target fish
-- Conditions
-- Technique
-- Season
-- User inventory
-
-Recommendations should include a brief explanation whenever practical.
-
----
-
-# Design Notes
-
-Lure definitions describe lure families.
-
-Commercial product information belongs in Product Definitions.
-
-User-owned lures belong in Inventory.
-
-The same lure definition may be used by many manufacturers.
+No placeholder relationship arrays or speculative product fields should be added before that gate.
 
 ---
 
 # Future Enhancements
 
-Potential future additions include:
-
-- Actual-size image calibration
-- Manufacturer comparisons
-- Expanded color galleries
-- User ratings
-- Catch statistics by lure
-
-These enhancements are outside the scope of Version 1.
+Potential later capabilities include manufacturer comparisons, expanded visual galleries, user ratings, and catch statistics by lure concept. These are feature candidates rather than current schema requirements.
 
 ---
 
@@ -295,6 +160,8 @@ These enhancements are outside the scope of Version 1.
 - 02-FISH.md
 - 03-RIGS.md
 - 03A-TECHNIQUES.md
-- 05-INVENTORY.md
+- 05-TACKLE.md
+- 05A-INVENTORY.md
 - 07-USER-DATA.md
 - 09-RELATIONSHIPS.md
+- ../DECISIONS.md

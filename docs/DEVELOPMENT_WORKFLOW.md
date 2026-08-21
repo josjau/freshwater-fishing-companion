@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.1.4  
+**Document Revision:** 1.1.9  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-10
+**Last Updated:** 2026-08-19
 
 # Purpose
 
@@ -62,6 +62,8 @@ Final closeout remains required, but closeout is a reconciliation/verification s
 
 Complete-file replacement is the default implementation workflow.
 
+Complete-file replacement describes the **delivery artifact**, not authorization to make broad edits. The semantic change scope remains limited to the approved work; unrelated differences inside a replacement file are failures unless separately approved.
+
 For every existing source file that changes:
 
 - Return the complete resulting file.
@@ -80,11 +82,29 @@ For coherent multi-file or asset-heavy work:
 - Minimize GitHub pushes: when implementation and its required documentation can safely be reviewed together, deliver them in the same package and target one coherent commit/push.
 - Do not minimize pushes at the cost of stale current-state documentation. If implementation is intentionally pushed before runtime validation, its documentation must state `Implemented / Unvalidated` in that same repository state whenever practical.
 
+# Commit Economy
+
+Use as few commits as practical for a coherent section while preserving reviewability, validation boundaries, rollback safety, and accurate current-state documentation.
+
+Preferred pattern:
+
+1. Avoid discussion/planning commits unless a durable decision must be preserved before implementation.
+2. Prefer one coherent implementation commit when implementation and truthful documentation can safely travel together.
+3. Use a separate validation/closeout documentation commit only when later runtime, deployment, user validation, or correction changes the implementation state.
+4. Avoid separate commits for every small file or documentation adjustment when those changes can safely be grouped.
+5. A third or additional commit within one section requires a concrete reason such as a discovered defect, required correction, validation-driven state change, or session-preservation need.
+6. Never reduce commit count by leaving governing or current-state documentation stale.
+7. Never make a commit so broad that reviewability, rollback clarity, or validation boundaries are materially weakened.
+
+Permanent priority when these goals conflict:
+
+> Preserve correct recoverable project state first; minimize commit count second.
+
 # Production Write Approval Gate
 
-Markdown documentation may be updated directly on GitHub when needed to keep repository state, decisions, validation results, and handoff information current.
+Assistant direct GitHub writes are limited by default to Markdown documentation (`.md`) when needed to keep repository state, decisions, validation results, and handoff information current.
 
-Production assets and source require user review before direct repository writes by the assistant. This includes, but is not limited to:
+Production assets and source require user review and explicit authorization for the specific direct-write action. This includes, but is not limited to:
 
 - images and other media,
 - JavaScript,
@@ -102,7 +122,20 @@ Default workflow for those files:
 4. The user may instead copy/upload the reviewed files and push them through GitHub Desktop.
 5. After the user push, verify the actual commit and affected files on GitHub.
 
-A prior approval for one production update does not grant blanket approval for later production writes. Ask again before each new direct-write set unless the user explicitly changes this rule.
+A prior approval for one production update does not grant blanket approval for later production writes. Ask again before each new direct-write set unless the user explicitly changes this rule for the applicable session or action.
+
+# Delivery Fallback
+
+For project changes that are already authorized for direct GitHub delivery, use this fallback when the direct write path fails:
+
+1. Attempt the authorized direct GitHub write once through the normal delivery path.
+2. If the direct write fails, do not stall the workflow or repeatedly retry the same blocked path without new evidence that another attempt will succeed.
+3. Package the exact intended change as a production ZIP that preserves repository-relative paths and contains only the authorized permanent repository files.
+4. Provide the ZIP to the user for manual application through the normal local repository/GitHub Desktop workflow.
+5. After the user confirms the ZIP was applied and pushed, re-fetch the affected files from authoritative GitHub `main`.
+6. Validate that GitHub matches the intended package before treating the change as complete.
+
+This fallback does **not** expand direct-write authority. Production source, data, media, CSS, HTML, JavaScript, configuration, and other protected project files remain subject to the Production Write Approval Gate above. A failed write never converts an unapproved production change into an authorized one.
 
 # Decision-to-Package Continuity
 
@@ -116,6 +149,87 @@ When a decision is finalized during an active build segment:
 6. If a decision is deliberately parked rather than implemented now, document the parked decision in the same active segment package.
 
 The user should not have to repeatedly ask for documentation that is a foreseeable consequence of an approved in-stream decision.
+
+# Durable Decision Context
+
+A durable decision is not sufficiently documented when the repository records only the final outcome but omits the context needed to interpret that outcome later.
+
+For every material architectural, product, data-model, workflow, UI, deferment, rejection, or structural decision, the canonical documentation must preserve at least:
+
+1. **Decision** — what was approved.
+2. **Reason** — why the project chose it, including the material tradeoff, risk, or maintenance burden being avoided or accepted.
+3. **Current implementation status** — for example Current, Approved / Not Implemented, Deferred, Superseded, or other applicable state.
+4. **Deferred/future trigger** — the milestone, architecture gate, condition, evidence, or dependency that should cause the decision to be revisited.
+5. **Canonical owner/document** — the governing file that owns the durable interpretation after reconciliation.
+
+When the project deliberately decides **not** to make a structural change yet, record that non-action when it is architecturally meaningful. An absent implementation or absent directory structure must not later be interpreted as forgotten, rejected, or obsolete when it was deliberately deferred.
+
+Deferred candidates must be labeled as deferred candidates rather than loosely described as historical or inactive when that wording could imply abandonment.
+
+If the decision is distributed across several documents, `DECISIONS.md` owns the durable decision summary and the relevant architecture, style, data-model, workstream, or handoff documents carry only the context needed for their roles.
+
+Permanent principle: **record enough decision context that a future session can recover both what was decided and why without relying on chat history.**
+
+# Session-End Documentation Gate
+
+When the user indicates that a work session is ending — including wording such as `end session`, `stop here`, `continue tomorrow`, or an equivalent clear ending signal — normal implementation/audit progression stops and a documentation reconciliation occurs before the session is treated as closed.
+
+This gate applies even when the current section or milestone remains open.
+
+Before session end, repository documentation must preserve, as applicable:
+
+1. approved decisions made during the session,
+2. approved changes or fixes that have not yet been implemented,
+3. relevant rejected or deferred alternatives when the reason matters later,
+4. newly discovered defects, contradictions, risks, or audit findings,
+5. actual implementation and validation state — distinguishing what is on `main`, what is approved only, what remains unvalidated, and what has not started,
+6. unresolved decisions clearly marked unresolved rather than silently decided,
+7. the exact continuation point and next intended action.
+
+Ownership rules:
+
+- durable architecture/product/workflow decisions belong in `DECISIONS.md` when canonical synchronization occurs,
+- operational workflow rules belong in `DEVELOPMENT_WORKFLOW.md`,
+- domain decisions belong in their relevant data-model/governing documents,
+- active section/audit state belongs in the active workstream record,
+- `HANDOFF.md` owns the first-read continuation map,
+- Handoff must not become the sole canonical owner of durable decisions.
+
+If approved decisions are clear, the session-end documentation reconciliation may be performed automatically. If documentation would require interpreting an unresolved discussion as an approved decision, provide a concise decision summary or obtain the minimum necessary clarification before recording it as approved.
+
+Permanent principle:
+
+> Never guess merely to finish session documentation, but never leave clearly approved material only in chat history because the section is unfinished.
+
+A session-preservation documentation commit is an explicitly justified exception to normal commit minimization.
+
+# Repository Artifact Retirement and Archival
+
+`archive/` at repository root is the single canonical repository archive. `archive/README.md` owns the directory-level archive policy; D033/D034 own the durable architectural decision.
+
+Whole-file replacement does **not** create an archive obligation by itself. Git history preserves ordinary prior committed versions of JavaScript, CSS, HTML, data, Markdown, and other tracked files. Copying every previous revision into `archive/` would duplicate Git history and create stale authoritative-looking files.
+
+Whenever implementation, migration, cleanup, or closeout retires an existing repository artifact, explicitly classify it as one of:
+
+1. **GIT HISTORY ONLY** — an ordinary prior revision; no archive copy is created.
+2. **ARCHIVE** — an independently useful historical/audit/provenance/reconstruction artifact that should remain directly discoverable under `archive/`.
+3. **DELETE** — no continuing repository value beyond Git history.
+
+Examples of appropriate archive material include completed package manifests and package-specific validation records, audit logs retained for provenance, superseded handoffs/workstreams that would mislead if left active, and historical design/reference artifacts with reconstruction or design-lineage value.
+
+Do not archive every old source/document revision, temporary `.tmp`/`.bak` files with no continuing value, accidental duplicate trees, or deferred candidates that remain part of future product planning.
+
+If the disposition is **ARCHIVE**, closeout is incomplete until:
+
+1. the correct existing archive category is selected, or a new category is created only because a real artifact now requires it,
+2. the archive copy/path is created before removal of the active copy when loss risk exists,
+3. the archived path is verified on authoritative GitHub `main`,
+4. the former active/current path is removed or clearly no longer masquerades as current,
+5. the archival action and reason are recorded in the relevant workstream/decision/closeout documentation.
+
+Additional archive categories are not created speculatively.
+
+Permanent principle: **Git history preserves ordinary revisions; the repository archive preserves independently useful historical artifacts.**
 
 # Full-File Replacement Integrity
 
@@ -148,6 +262,34 @@ A deliberate large documentation rewrite may bypass the size thresholds only whe
 For repository-side checking, `tools/validate_replacement_integrity.py` provides the same conservative guard against accidental document truncation by comparing working-tree Markdown files with `HEAD`. This validator is a safety net, not a substitute for deriving replacements from the latest verified GitHub contents.
 
 For assistant-generated packages, the equivalent baseline comparison must be run before the ZIP is created. A package that fails the gate must not be delivered.
+
+# Post-Write Integrity Validation
+
+Every file write must be validated from the authoritative remote repository after the write. A successful write/commit response alone is not sufficient evidence that the file is intact.
+
+This rule applies to:
+
+- direct assistant Markdown writes to GitHub,
+- user commits/pushes through GitHub Desktop,
+- corrective/restoration writes,
+- any other workflow that changes an existing or newly created repository file.
+
+After every file write:
+
+1. Re-fetch the written file from the target branch/commit.
+2. Confirm the file is non-empty unless an empty file was explicitly intended.
+3. Confirm the returned blob SHA matches the new repository state.
+4. Verify the beginning and end of the file so accidental prefix/tail loss is detected.
+5. Verify every approved inserted/replaced section is present.
+6. For existing files, compare the post-write file against the exact pre-write GitHub baseline and confirm unrelated headings/content remain preserved.
+7. Treat any unexpected shrinkage, missing heading, missing tail, empty content, unrelated deletion, or malformed replacement as a failed write.
+8. When tool output is display-truncated, use targeted line-range/chunk fetches or other repository comparisons to validate the omitted regions; never interpret display truncation as proof that repository content is missing.
+9. If validation fails, stop further work on that file, restore from the immediately preceding authoritative GitHub version, reapply only the approved change, and repeat the full post-write validation.
+10. Do not mark the file, block, segment, or documentation closeout complete until the post-write integrity validation passes.
+
+For a targeted edit, the validation should confirm both sides of the change: the intended new content is present and previously existing unrelated content remains intact.
+
+This post-write gate is mandatory even when pre-write replacement-integrity checks passed. Pre-write checks prevent bad payloads; post-write checks prove the authoritative repository received the intended complete file.
 
 # User Repository Workflow
 
@@ -260,12 +402,13 @@ Deliver:
 
 ## Commit and Verify
 
-The user commits and pushes through GitHub Desktop.
+The user normally commits and pushes through GitHub Desktop unless a current session explicitly authorizes direct GitHub commit application after review.
 
-After push:
+After push or authorized direct commit:
 
 - Verify the actual commit.
 - Verify the affected files on `main`.
+- Apply the mandatory Post-Write Integrity Validation gate to every written file.
 - Do not assume local/staged work reached GitHub.
 - Rule out GitHub Pages deployment lag before altering otherwise-correct source.
 - Confirm the active workstream/HANDOFF state accurately describes what is now on `main`; correct stale status before starting another build segment.
@@ -281,11 +424,12 @@ Closeout sequence:
 1. Identify all decisions, current-state changes, deferred work, known failures, corrections, and open issues produced by the segment.
 2. Fetch the latest relevant documentation from GitHub.
 3. Reconcile all affected governing documents and `HANDOFF.md` with the already-current active workstream state.
-4. Return complete replacement documentation files as part of the coherent segment package whenever practical.
-5. User reviews, commits, and pushes.
-6. Verify the actual GitHub files after push.
-7. Confirm that Planned, In Progress, Implemented / Unvalidated, Partially Validated, Validated, Finalized, Approved / Not Implemented, and Open states are represented accurately where applicable.
-8. Only then mark the segment finalized.
+4. Classify every repository artifact retired by the segment as **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**; complete and verify any required archival move before closeout.
+5. Return complete replacement documentation files as part of the coherent segment package whenever practical.
+6. User reviews, commits, and pushes, or explicitly authorizes the assistant to apply the reviewed documentation commit when the current session workflow permits it.
+7. Verify the actual GitHub files after push using the mandatory Post-Write Integrity Validation gate.
+8. Confirm that Planned, In Progress, Implemented / Unvalidated, Partially Validated, Validated, Finalized, Approved / Not Implemented, and Open states are represented accurately where applicable.
+9. Only then mark the segment finalized.
 
 Conversation agreement, local files, staged files, preflight checks, or implementation alone do not satisfy this closeout rule.
 
@@ -327,7 +471,7 @@ When a permanent standard is agreed:
 2. Add an architectural decision when it has long-term structural impact.
 3. Update cross-references and `HANDOFF.md` when current state or future work changes.
 4. Include those documentation changes with the active coherent package when practical.
-5. Verify the documentation after push.
+5. Verify the documentation after push using the mandatory Post-Write Integrity Validation gate.
 
 A new chat should be able to reconstruct the project's operating rules and current implementation state from GitHub alone.
 

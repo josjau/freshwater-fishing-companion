@@ -1,15 +1,17 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 2.2.3  
+**Document Revision:** 2.3.1  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-13
+**Last Updated:** 2026-08-19
 
 # Purpose
 
 This document preserves milestone history. Historical milestone completion records describe what was validated at that time; later approved architecture may supersede the workflow or media approach without rewriting history.
 
 When a historical milestone conflicts with current architecture, `DECISIONS.md`, `ARCHITECTURE.md`, `ROADMAP.md`, and `HANDOFF.md` govern the current state.
+
+**Current navigation supersession note:** historical milestone entries that record Parent/Home top-reset behavior remain valid evidence of what passed at that time. D051 has since been revised for standard application views: Forward opens the new destination at top, Parent restores the immediately preceding standard application context including applicable UI state and prior scroll position, and Home opens Dashboard at top and clears contextual return state. Specialized workflows such as Reel Setup may use separately approved navigation semantics.
 
 # Completed
 
@@ -164,6 +166,8 @@ Validated source/data/media scope:
 
 Validated runtime/regression coverage included mobile and desktop Rig detail presentation, Core/Beginner/Beginner+/All membership and search scope, Wacky/Ned/Weightless component/readiness behavior, worm recognition media, Texas tutorial playback in Brave, Fish landing-page search, clear controls, `Ned` ranking Ned Rig first, sticky navigation, Parent/Home top reset, Fish common/scientific/category search, and derived Tackle `Used In` relationships.
 
+**Current note:** the top-reset Parent behavior above is preserved as historical validation evidence. Revised D051 now governs standard application Parent behavior and supersedes that historical navigation rule for future/current architecture.
+
 The compact-detail standard remains Rig-specific. Dashboard search is approved future direction but remains deferred pending deliberate cross-domain scope and result-presentation design. Dashboard card density remains unchanged.
 
 See:
@@ -264,40 +268,58 @@ Final workstream record:
 
 `workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0
 
-The approved initial Rig Guide is now complete. Further Rig work is enhancement scope rather than completion of the initial library.
-
-# In Progress
+The approved initial Rig Guide is complete. Further Rig work is enhancement scope rather than completion of the initial library.
 
 ## Knots
 
-**Implementation Status: In Progress**
+**Implementation Status: PASS / VALIDATED / FINALIZED / CLOSED**
 
-Current state:
+Final validated production source baseline:
 
-- Planning, research validation, and canonical content lock are complete.
-- Production Package 1 is **Validated**: 10 active canonical Knots, 6 Beginner / 4 Intermediate, four approved Core IDs, all 20 active Rigs audited, and 31 real tied `knotApplications` connections.
-- Production Package 2 Runtime Revision 5 (`0.6.5`) is **PASS / VALIDATED**. Runtime Revision 4 completed the full Microsoft Edge functional/regression checklist; Revision 5 passed GitHub blob verification and the two final targeted remediation checks.
-- Package 2 includes task-first Knot navigation, deterministic Knot search, text detail pages, progressive disclosure for long Rig usage lists, and context-preserving Rig ↔ Knot navigation.
-- Revision 4 removed section-level accenting from **What are you trying to do?**, applied Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, preserved normal treatment for the other two task cards, varied accent bars, and Core Knots priority treatment, and reduced collapsed **Where You'll Use It** from four visible Rigs to two.
-- Revision 5 restores the viewport to the **Where You'll Use It** relationship group after **Show fewer** collapses a long list and removes automatic search-field focus on view render application-wide so navigation does not summon a mobile software keyboard.
-- Package 3 (**Get Your Reel Ready**) and Package 4 (ten static Knot SVGs/media integration) have not begun.
+`e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`
 
-See:
+Validated final scope:
+
+- 10 active canonical Knots,
+- 6 Beginner / 4 Intermediate,
+- four approved Core Knot IDs,
+- all 20 active Rigs audited with 31 real tied `knotApplications` connections,
+- task-first Knot Guide navigation,
+- deterministic Knot search,
+- canonical text instruction pages,
+- verified instructional-media coverage for all 10 Version 1 Knots,
+- Production Package 3 **Get Your Reel Ready** complete and validated,
+- site-wide shared floating Root/Nested navigation complete and validated,
+- specialized Reel Setup floating navigation corrected and validated,
+- context-preserving Rig ↔ Knot and Reel Setup ↔ Knot navigation validated,
+- clickable Common Tasks, Rig usage links, and Line Compatibility connected-knowledge paths validated,
+- minimal Line Type reference/detail view validated,
+- Dashboard priority order validated as **Fish Guide, Knots, Rig Guide, Tackle**,
+- Tackle root validated with **Tackle Reference / Find Tackle**, **My Tackle**, and **Check Rig Readiness**,
+- connected-knowledge pills finalized at compact content-width sizing,
+- keyboard navigation passed,
+- narrow-viewport behavior passed,
+- normal-navigation console health passed.
+
+Final closeout workstream:
+
+`workstreams/KNOT-INTEGRATED-REGRESSION.md`
+
+Production Package records:
 
 - `workstreams/KNOT-PRODUCTION-PACKAGE-1.md`
 - `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
-- `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`
-- `workstreams/KNOT-DETAIL-PAGE-APPROVAL.md`
-- `NAVIGATION-PAGE-STANDARD.md`
-- `workstreams/KNOT-IMPLEMENTATION-HANDOFF.md`
-- `workstreams/KNOT-SESSION-CLOSEOUT-2026-08-13.md`
+- `workstreams/KNOT-PRODUCTION-PACKAGE-3.md`
+- `workstreams/KNOT-PRODUCTION-PACKAGE-4.md`
+
+The Knots milestone is closed. Further Knot work is enhancement/defect scope unless a later approved milestone explicitly extends it.
 
 # Canonical Upcoming Milestone Sequence
 
-The approved development order is:
+The approved development order remains:
 
-1. **Knots** — active milestone; Production Package 2 is validated and Production Package 3 is next.
-2. **Fish Guide** — full field-guide expansion after Knots.
+1. **Knots** — completed / validated / closed.
+2. **Fish Guide** — next approved product milestone; currently paused behind Repository Audit Cleanup.
 3. **What Should I Throw** — recommendation/Decision Knowledge milestone, including the approved `How to Rig It` versus `How to Fish It` instructional split.
 4. **Tackle Reference / Find Tackle** — searchable canonical Tackle discovery independent of remembering a Rig; results expose derived `Used In` Rig relationships and other connected knowledge.
 5. **Settings / User Data Architecture Gate** — settle persistence, retention, backup/restore, schema migration, user/profile model, themes, and preference ownership before persistent User Knowledge features.
@@ -306,18 +328,12 @@ The approved development order is:
 8. **Global Search** — design after the major searchable domains and entity models are established; preserve relevance-first behavior and avoid an undifferentiated result dump.
 9. **Favorites final decision** — defer implementation until near project completion and decide whether to keep, narrow, replace, or remove it based on actual workflow value.
 
-`ROADMAP.md` revision 0.3.3 is the canonical planning record for this sequence and its design gates.
+`ROADMAP.md` revision 0.3.4 or later remains the canonical planning sequence; the ordering itself has not changed.
 
-# Next Segment
+# Current Active Workstream and Next Product Milestone
 
-The active milestone remains **Knots**. Production Package 2 is **Validated / Finalized**.
+**Current active workstream:** Repository Audit Cleanup. Sections 1–5 are complete; Section 6 — Governing Documents Comprehensive Synchronization — is active.
 
-Exact next segment:
+**Next product milestone:** Fish Guide. Fish Guide remains the next approved product milestone but is temporarily paused until the Repository Audit Cleanup Gate and final re-audit are closed.
 
-1. Re-fetch current GitHub `main` before editing Package 3 source files.
-2. Reconcile the approved Reel & Line Setup requirements with the current validated Package 2 runtime architecture.
-3. Begin Production Package 3 — **Get Your Reel Ready** — from the existing **Attach Line to a Reel** task entry.
-4. Preserve validated Package 2 navigation, search, focus, and relationship behavior unless an approved Package 3 requirement explicitly extends it.
-5. Complete Package 3 validation and documentation closeout before beginning Package 4 static Knot SVG/media integration.
-
-Do not begin Fish Guide, What Should I Throw, Tackle Reference, Settings/User Data, My Tackle, Catch Log, Global Search, or Favorites implementation until Knots is completed and validated unless the roadmap is explicitly revised.
+When the cleanup gate closes, resume Fish Guide from the current Phase 0 architecture state rather than treating it as a new milestone restart.
