@@ -1,339 +1,243 @@
 # Freshwater Fishing Companion
 
 **Document:** MILESTONES.md  
-**Document Revision:** 2.3.1  
+**Document Revision:** 3.0.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-19
+**Maintenance Status:** FROZEN HISTORICAL RECORD  
+**Frozen:** 2026-08-21  
+**Last Updated:** 2026-08-21
 
 # Purpose
 
-This document preserves milestone history. Historical milestone completion records describe what was validated at that time; later approved architecture may supersede the workflow or media approach without rewriting history.
+This document preserves historical milestone completion context.
 
-When a historical milestone conflicts with current architecture, `DECISIONS.md`, `ARCHITECTURE.md`, `ROADMAP.md`, and `HANDOFF.md` govern the current state.
+It is **not** a current-state owner and is no longer maintained as the project advances.
 
-**Current navigation supersession note:** historical milestone entries that record Parent/Home top-reset behavior remain valid evidence of what passed at that time. D051 has since been revised for standard application views: Forward opens the new destination at top, Parent restores the immediately preceding standard application context including applicable UI state and prior scroll position, and Home opens Dashboard at top and clears contextual return state. Specialized workflows such as Reel Setup may use separately approved navigation semantics.
+For current product direction use `ROADMAP.md`. For the exact formal continuation point use `HANDOFF.md`. For material non-closed work use `ACTIVE-CHANGE-LEDGER.md`. For current architecture and durable decisions use `ARCHITECTURE.md` and `DECISIONS.md`.
 
-# Completed
+Historical milestone descriptions record what was validated at that time. Later architecture may supersede historical workflow, media, navigation, schema, or counts without rewriting the historical event.
+
+Detailed package-level evidence remains in retained workstreams/archive/Git history.
+
+# Historical Milestones
 
 ## Milestone 1 — Application Foundation
 
-- Dashboard
-- Navigation
-- Shared page renderer
-- Eight application views
-- Forest Journal theme
-- Runtime validation
+Completed foundation included:
+
+- Dashboard,
+- navigation,
+- shared page renderer,
+- initial application views,
+- Forest Journal theme,
+- runtime validation.
 
 ## MS2.1 — Fish Data Foundation
 
-- Canonical Fish data
-- Stable Fish IDs
-- Initial Fish records
-- Runtime data validation
+Historical completion included:
+
+- canonical Fish data foundation,
+- stable Fish IDs,
+- initial Fish records,
+- runtime data validation.
+
+The later Fish Guide Phase 0 architecture substantially expands/supersedes the original seed scope. Historical seed completion does not mean the future Fish Guide milestone is complete.
 
 ## MS2.2 — Shared Search and Rendering Utilities
 
-- Shared search utilities
-- Shared rendering utilities
-- Application coordinator
-- Console validation
+Historical completion included:
+
+- shared search utilities,
+- shared rendering utilities,
+- application coordinator,
+- console validation.
+
+Later D022/D047/D050/D061 decisions govern current Search behavior.
 
 ## MS2.3 — Functional Fish Search
 
-- Functional Fish Search route
-- Common-name search
-- Scientific-name search
-- Category search
-- Reusable result cards
-- Parent/Home navigation
-- Responsive validation
+Historical completion included:
 
-**Current note:** the primary Fish workflow now exposes the shared inline search field directly on the Fish Guide landing page. Search uses lightweight deterministic relevance ranking under D022/D050 instead of alphabetizing all substring matches, while the historical standalone Fish Search route remains part of milestone history rather than the current primary interaction.
+- Fish Search route,
+- common/scientific/category search,
+- reusable result cards,
+- Parent/Home navigation,
+- responsive validation.
+
+Later architecture moved primary Fish Search to the Fish Guide landing page, adopted deterministic relevance ranking, and approved hierarchical scoped Search for the future Fish milestone.
 
 ## MS2.4 — Functional Rig Guide
 
-- Canonical Rig data
-- Four beginner-focused Rig records
-- Browse All Rigs
-- Rig search
-- Rig instructional detail pages
-- Component requirements
-- Ordered assembly steps
-- Setup notes
-- Common mistakes
-- Safety guidance
-- Navigation and error handling
+Historical completion began with the initial Rig Guide foundation:
 
-**Current note:** D027's approved 20-Rig regional library is now fully implemented and validated through Beginner, Beginner+, Intermediate, Intermediate+, Advanced, and Expert. See **Complete Rig Guide** below for the final current state.
+- canonical Rig data,
+- beginner-focused Rig records,
+- browse/search,
+- Rig detail,
+- component requirements,
+- ordered assembly instructions,
+- setup notes,
+- mistakes/safety,
+- navigation/error handling.
+
+The later Complete Rig Guide milestone supersedes the initial library count while preserving this historical foundation.
 
 ## MS2.5 — Lightweight Tackle Readiness
 
-Historical MS2.5 validated a dedicated readiness route and per-Rig local checklist.
+Historical MS2.5 validated a dedicated local per-Rig readiness workflow.
 
-**Superseding current architecture:** D020 moved readiness into the Rig `What You Need` section. D028 establishes future My Tackle ownership authority.
+Later architecture superseded the dedicated primary readiness route:
+
+- D020 integrates readiness into Rig `What You Need`,
+- D028 establishes future My Tackle as persistent ownership authority.
+
+The transitional local readiness state remains implementation history rather than authoritative future ownership architecture.
 
 ## MS2.6 — Tackle References and Rig Visual Guides
 
-Historical MS2.6 validated canonical Tackle/media infrastructure, contextual reference popovers, generated Rig imagery, and a 23-record media catalog.
+Historical MS2.6 validated the early canonical Tackle/media infrastructure, contextual reference behavior, and generated Rig visual support.
 
-**Superseding current architecture:** D017–D019 and D045 replaced generated completed-Rig/build-step imagery with authoritative text assembly plus verified tutorial/external-reference paths. Current Tackle recognition media follows the later `MEDIA_GUIDE.md` catalog-reference standard.
+Later architecture superseded generated finished/build-step Rig imagery:
 
-## Current-State UX Repairs
+- D017/D018/D045 make authoritative text the build source,
+- D049/D053 govern verified tutorial/reference hierarchy,
+- current Tackle recognition media follows `MEDIA_GUIDE.md`.
 
-**Implementation Status: Validated**
+Historical generated media remains evidence of what existed then, not a current production requirement.
 
-Validated scope:
+# Later Validated Workstreams / Milestones
 
-- D030: inert child cards use clear `Coming Soon` unavailable semantics.
-- D031: Dashboard Regulations CTA uses `Go to ODWC Regulations ↗`.
-- D032: restored the previously approved Forest Journal Dashboard hierarchy and interaction behavior without redesign.
+## Current-State UX Repairs — Historical Completion
 
-Validated regressions:
+Validated changes included:
 
-- Fish Search
-- Rig browsing/detail
-- Tackle contextual popovers
-- Inline Rig readiness
-- Dashboard card order and parent routes
-- Current data/media architecture
-- Responsive/accessibility behavior
-- Normal-navigation console health
+- clear `Coming Soon` unavailable-card semantics,
+- explicit `Go to ODWC Regulations ↗` external destination semantics,
+- restoration of approved Forest Journal Dashboard hierarchy/interaction behavior,
+- regression checks for Fish Search, Rig browsing/detail, Tackle references, readiness, responsive/accessibility, and console health.
 
-Repository cleanup and documentation-preservation corrections were also completed before closeout.
+See historical workstream records and Git history for package-level evidence.
 
-See:
+## Rig/Tackle Data Integrity — Batch 1 — Historical Completion
 
-- `workstreams/UX-REPAIRS.md`
-- `workstreams/UX-REPAIRS-VALIDATION.md`
-
-## Rig/Tackle Data Integrity — Batch 1
-
-**Implementation Status: Validated**
-
-Validated scope:
+Validated architecture/implementation included:
 
 - explicit `Rig.componentRequirements[].tackleId`,
 - canonical Tackle display-name ownership,
 - removal of duplicated Rig-side component names,
-- removal of manual Tackle `rigIds`,
-- derived Tackle `Used In` relationships,
-- readiness storage compatibility,
-- consistent `tackleId` readiness parameter naming.
+- removal of manual Tackle inverse `rigIds`,
+- derived Tackle `Used In`,
+- readiness compatibility with canonical Tackle IDs,
+- documentation replacement-integrity safeguards.
 
-Validated runtime/regression coverage:
+## Core Rigs / Tackle Media / Rig Learning Tiers — Historical Completion
 
-- canonical `What You Need` names,
-- contextual Tackle references,
-- required/optional readiness behavior,
-- readiness persistence,
-- derived `Used In`,
-- Fish Search,
-- Rig browse/search,
-- external Rig references,
-- related Tackle navigation,
-- normal-navigation console health,
-- phone and desktop layout checks.
+Validated evolution included:
 
-The initial documentation over-condensation defect was corrected before closeout, and a repository-side replacement-integrity safeguard was added.
+- Rig Guide landing/global search plus scoped subset search,
+- deterministic relevance ranking,
+- explicit Search clear control,
+- Core learning-path emphasis,
+- Dashboard-derived section-card system,
+- compact Rig detail treatment,
+- sticky Parent/Home visual treatment,
+- Texas Rig permitted tutorial pilot,
+- expanded canonical Tackle concepts/media.
 
-See:
+Historical Parent-to-top behavior from this period is superseded by later D051 context-preserving Parent architecture for standard application views.
 
-- `workstreams/RIG-TACKLE-DATA-INTEGRITY.md`
-- `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`
+## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion — Historical Completion
 
-## Core Rigs and Tackle Media
+Validated final state at this stage included:
 
-### Rig Learning Tiers — Rig UX Finalization
+- 13 active Rigs,
+- 6 Beginner / 3 Beginner+ / 4 Intermediate,
+- 23 canonical Tackle concepts/media records,
+- completed Intermediate tier,
+- build-first tutorial audit and corrections,
+- Bobber Stop metadata correction,
+- D053 Rig media completeness/tutorial audit,
+- D054 Intermediate Rig membership.
 
-**Implementation Status: Validated**
+## Complete Rig Guide — Validated / Finalized
 
-Validated source/data/media scope:
+The approved initial Rig Guide reached its final validated scope:
 
-- nine active Rigs with six Beginner and three Beginner+ records,
-- six-member single-owner `CORE_RIG_IDS` registry,
-- All Rigs first in the Rig Guide, followed by Core, Beginner, Beginner+, and unavailable later tiers,
-- global Rig Guide search plus scoped subset search,
-- Dashboard-derived varied navigation-card accents with restrained Core emphasis,
-- corrected Wacky Rig, Ned Rig, and Weightless Soft-Plastic Rig assembly/readiness behavior,
-- 20 active canonical Tackle concepts,
-- intact warm-neutral worm-bait recognition media,
-- Texas Rig lazy-loaded Wired2Fish tutorial pilot through `youtube-nocookie.com` with external fallback,
-- compact Rig-detail density approved for Rigs,
-- shared inline search fields with explicit one-click clear control,
-- deterministic relevance ranking with canonical-name confidence ahead of lower-priority metadata,
-- compact sticky Parent/Home navigation,
-- top-reset behavior for forward, Parent, and Home transitions.
+- 20 active canonical Rigs,
+- 6 learning tiers,
+- tier counts 6 / 3 / 4 / 4 / 2 / 1,
+- unchanged six-member Core Rig registry/order,
+- 29 active canonical Tackle concepts,
+- 29 active Tackle recognition-media records,
+- seven final-tier Rigs integrated,
+- final-tier recognition media/tutorials validated,
+- readiness persistence validated,
+- desktop/mobile layout and console health validated,
+- GitHub Pages deployed-artifact integrity validated.
 
-Validated runtime/regression coverage included mobile and desktop Rig detail presentation, Core/Beginner/Beginner+/All membership and search scope, Wacky/Ned/Weightless component/readiness behavior, worm recognition media, Texas tutorial playback in Brave, Fish landing-page search, clear controls, `Ned` ranking Ned Rig first, sticky navigation, Parent/Home top reset, Fish common/scientific/category search, and derived Tackle `Used In` relationships.
-
-**Current note:** the top-reset Parent behavior above is preserved as historical validation evidence. Revised D051 now governs standard application Parent behavior and supersedes that historical navigation rule for future/current architecture.
-
-The compact-detail standard remains Rig-specific. Dashboard search is approved future direction but remains deferred pending deliberate cross-domain scope and result-presentation design. Dashboard card density remains unchanged.
-
-See:
-
-- `workstreams/CORE-RIGS-TACKLE-MEDIA.md`
-- `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`
-- `workstreams/RIG-UX-RUNTIME-FOLLOWUP.md`
-
-## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
-
-**Implementation Status: Validated / Finalized**
-
-Implementation baseline:
-
-`e4b61aea052f4ad843be0f6d54231af87d574905` — `Rigs - Intermediate Build`
-
-Final production-data corrections:
-
-- `80b8ef0ba2b0734429b29a5b02c318e02c81bc55` — final Rig tutorial/reference corrections
-- `291967ed4eb19eb9b1f7f83837c59133c949a333` — Bobber Stop alt-text correction
-
-Validated final scope:
-
-- 13 active Rigs total,
-  - 6 Beginner,
-  - 3 Beginner+,
-  - 4 Intermediate,
-- Intermediate tier:
-  1. Drop Shot Rig
-  2. Carolina Rig
-  3. Live-Bait Slip-Sinker Rig
-  4. Three-Way Rig
-- 23 active canonical Tackle concepts,
-- 23 active Tackle recognition-media records,
-- unchanged six-member Core registry,
-- all Intermediate membership/routing/search/detail/readiness behavior passed,
-- recognition-media package and phone/desktop contextual-popover validation passed,
-- retained tutorial regression passed,
-- six approved tutorial replacements were implemented and passed final runtime validation,
-- Inline Spinner Mepps-only external fallback passed after Panther Martin removal,
-- Bobber Stop metadata was corrected for the approved rubber/silicone stop and re-tested,
-- Beginner/Beginner+/Core, Fish Guide/search, Dashboard, desktop console/focus/layout, and mobile responsive regressions passed.
-
-Permanent decisions promoted at closeout:
-
-- D053 — Rig Media Completeness and Tutorial Audit
-- D054 — Intermediate Rig Tier Membership
-
-The validated tutorial standard is build-first: correct Rig assembly/configuration is the primary purpose; concise/direct sources are preferred when technically complete; technique/retrieve/presentation content is secondary; no arbitrary fixed duration threshold is required.
-
-See:
-
-- `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`
-- `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`
-- `MEDIA_GUIDE.md`
-- `RIG_REFERENCE_SOURCES.md`
-
-## Complete Rig Guide
-
-**Implementation Status: Validated / Finalized**
-
-Final production correction commit:
+Final Rig production correction commit preserved in Git history:
 
 `4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` — `Rig Updates Images and tutorials`
 
-Validated final scope:
+The initial 20-Rig milestone is closed. Future Rig additions are enhancement/regional adequacy scope, not completion of the initial library.
 
-- 20 active Rigs,
-- 6 learning tiers,
-- final tier counts: 6 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert,
-- unchanged six-member Core registry and order,
-- 29 active canonical Tackle concepts,
-- 29 active Tackle recognition-media records,
-- seven final-tier Rigs fully integrated:
-  1. Neko Rig
-  2. Shaky Head Rig
-  3. Free Rig
-  4. Double-Jig Crappie Rig
-  5. Jika Rig
-  6. Punch / Pegged Texas Rig
-  7. Bottom-Bouncer / Spinner Rig
-- six final canonical Tackle concepts integrated with approved recognition media:
-  1. Nail Weight
-  2. Shaky Head Jighead
-  3. Ringed Sinker
-  4. Split Ring
-  5. Bottom Bouncer
-  6. Spinner Harness
-- seven approved build-first YouTube tutorials integrated and runtime-validated,
-- all seven final-tier detail pages passed runtime validation,
-- all six new `Name ⓘ` reference panels passed runtime image validation,
-- representative readiness persistence passed,
-- desktop Edge layout and console health passed,
-- mobile-width Edge device emulation at approximately 375 px passed with no horizontal overflow or clipped controls,
-- GitHub Pages deployment and deployed-artifact integrity passed.
+## Knots — PASS / VALIDATED / FINALIZED / CLOSED
 
-Final workstream record:
+The completed Knots milestone includes:
 
-`workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0
-
-The approved initial Rig Guide is complete. Further Rig work is enhancement scope rather than completion of the initial library.
-
-## Knots
-
-**Implementation Status: PASS / VALIDATED / FINALIZED / CLOSED**
-
-Final validated production source baseline:
-
-`e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`
-
-Validated final scope:
-
-- 10 active canonical Knots,
+- 10 active canonical Version 1 Knots,
 - 6 Beginner / 4 Intermediate,
-- four approved Core Knot IDs,
+- four Core Knot IDs,
 - all 20 active Rigs audited with 31 real tied `knotApplications` connections,
 - task-first Knot Guide navigation,
 - deterministic Knot search,
-- canonical text instruction pages,
-- verified instructional-media coverage for all 10 Version 1 Knots,
-- Production Package 3 **Get Your Reel Ready** complete and validated,
-- site-wide shared floating Root/Nested navigation complete and validated,
-- specialized Reel Setup floating navigation corrected and validated,
-- context-preserving Rig ↔ Knot and Reel Setup ↔ Knot navigation validated,
-- clickable Common Tasks, Rig usage links, and Line Compatibility connected-knowledge paths validated,
-- minimal Line Type reference/detail view validated,
-- Dashboard priority order validated as **Fish Guide, Knots, Rig Guide, Tackle**,
-- Tackle root validated with **Tackle Reference / Find Tackle**, **My Tackle**, and **Check Rig Readiness**,
-- connected-knowledge pills finalized at compact content-width sizing,
-- keyboard navigation passed,
-- narrow-viewport behavior passed,
-- normal-navigation console health passed.
+- canonical text tying instructions,
+- verified instructional-media coverage for all 10 Knots,
+- complete Reel & Line Setup for Spinning, Spincast, and Baitcasting,
+- shared floating navigation,
+- validated Rig ↔ Knot and Reel Setup ↔ Knot contextual paths,
+- clickable Common Tasks, Rig usage, and Line Compatibility connected knowledge,
+- minimal Line Type reference/detail routing,
+- Dashboard priority order validated as Fish Guide, Knots, Rig Guide, Tackle,
+- Tackle root/hub presentation validated,
+- keyboard, narrow-viewport, and normal-navigation console validation.
 
-Final closeout workstream:
+Final validated production source baseline preserved in Git history:
 
-`workstreams/KNOT-INTEGRATED-REGRESSION.md`
+`e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`
 
-Production Package records:
+The Knots milestone is closed. Further Knot work is enhancement/defect scope unless a later milestone explicitly extends it.
 
-- `workstreams/KNOT-PRODUCTION-PACKAGE-1.md`
-- `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
-- `workstreams/KNOT-PRODUCTION-PACKAGE-3.md`
-- `workstreams/KNOT-PRODUCTION-PACKAGE-4.md`
+# Historical Sequence at Freeze
 
-The Knots milestone is closed. Further Knot work is enhancement/defect scope unless a later approved milestone explicitly extends it.
+At the time this record was frozen, the approved product ordering was:
 
-# Canonical Upcoming Milestone Sequence
+1. Knots — completed/validated/closed.
+2. Fish Guide.
+3. What Should I Throw.
+4. Tackle Reference / Find Tackle.
+5. Settings / User Data Architecture Gate.
+6. My Tackle.
+7. Catch Log.
+8. Global Search.
+9. Favorites final decision.
 
-The approved development order remains:
+This list is retained only as historical context at freeze. `ROADMAP.md` is the canonical current/future sequence owner.
 
-1. **Knots** — completed / validated / closed.
-2. **Fish Guide** — next approved product milestone; currently paused behind Repository Audit Cleanup.
-3. **What Should I Throw** — recommendation/Decision Knowledge milestone, including the approved `How to Rig It` versus `How to Fish It` instructional split.
-4. **Tackle Reference / Find Tackle** — searchable canonical Tackle discovery independent of remembering a Rig; results expose derived `Used In` Rig relationships and other connected knowledge.
-5. **Settings / User Data Architecture Gate** — settle persistence, retention, backup/restore, schema migration, user/profile model, themes, and preference ownership before persistent User Knowledge features.
-6. **My Tackle** — implement persistent ownership only after the User Data architecture gate.
-7. **Catch Log** — implement after My Tackle on the settled User Knowledge persistence architecture.
-8. **Global Search** — design after the major searchable domains and entity models are established; preserve relevance-first behavior and avoid an undifferentiated result dump.
-9. **Favorites final decision** — defer implementation until near project completion and decide whether to keep, narrow, replace, or remove it based on actual workflow value.
+# Historical Navigation Supersession
 
-`ROADMAP.md` revision 0.3.4 or later remains the canonical planning sequence; the ordering itself has not changed.
+Some older milestone evidence validates Parent/Home top-reset behavior because that was the approved behavior at that time.
 
-# Current Active Workstream and Next Product Milestone
+Later D051 governs current architecture for standard application views:
 
-**Current active workstream:** Repository Audit Cleanup. Sections 1–5 are complete; Section 6 — Governing Documents Comprehensive Synchronization — is active.
+- Forward opens the destination at top.
+- Parent restores the immediately preceding standard app context, applicable UI state, and prior scroll.
+- Home opens Dashboard at top and clears contextual return state.
 
-**Next product milestone:** Fish Guide. Fish Guide remains the next approved product milestone but is temporarily paused until the Repository Audit Cleanup Gate and final re-audit are closed.
+Specialized workflows such as Reel Setup may retain separately approved semantics.
 
-When the cleanup gate closes, resume Fish Guide from the current Phase 0 architecture state rather than treating it as a new milestone restart.
+# Freeze Rule
+
+Do not append current workstream status, exact audit section, latest commit, resume instructions, or new milestone completion detail to this file.
+
+New landed history belongs in `CHANGELOG.md`; formal current continuation belongs in `HANDOFF.md`; open work belongs in `ACTIVE-CHANGE-LEDGER.md`; detailed closeout evidence belongs in the applicable workstream/archive/Git history.

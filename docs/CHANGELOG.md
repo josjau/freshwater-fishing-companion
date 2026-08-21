@@ -1,416 +1,193 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 1.13.4  
+**Document Revision:** 2.0.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-19
+**Role:** Curated meaningful landed-change history  
+**Last Updated:** 2026-08-21
+
+# Purpose
+
+This file records meaningful changes that actually landed in the product/repository: design changes, implementation changes, fixes, architecture corrections, and other durable repository changes.
+
+It is **not** a current project-status dashboard.
+
+Do not record exact active audit section, exact session resume point, current blocking state, speculative/open planning, or parked ideas here merely because they are currently being discussed.
+
+For current formal continuation use `HANDOFF.md`. For material non-closed items use `ACTIVE-CHANGE-LEDGER.md`.
 
 # Unreleased
 
-## Current Repository State — Knots Closed / Repository Audit Cleanup Active
-
-**Implementation Status: Repository Audit Section 6 In Progress**
-
-### Current Status
-
-- Knots Production Packages 1–4 are complete, validated, finalized, and closed.
-- Production Package 3 **Get Your Reel Ready / Reel & Line Setup** is complete and validated.
-- Production Package 4 **Knot Instructional Media** is complete with approved instructional-media coverage for all 10 Version 1 Knots.
-- The integrated Knots regression and extended navigation/runtime closeout are complete.
-- Repository Audit Cleanup Sections 1–5 are complete.
-- Section 4 Tackle ↔ Media ownership cleanup is production implemented and validated: Tackle no longer stores inverse `mediaIds[]`; Media owns attachment through `ownerType` + `ownerId`, and the renderer derives Tackle Media from that owner relationship.
-- Section 5 Rig schema cleanup is production implemented and validated: universally empty `techniqueIds[]` and `imageIds[]` were removed from all 20 Rigs; `variationIds[]` remains; the documentation-only `targetFishIds[]` proposal was not added.
-- Repository Audit Section 6 — Governing Documents Comprehensive Synchronization — is active.
-- Fish Guide remains the next approved product milestone but is paused behind the Repository Audit Cleanup Gate.
-
-### Current Architecture Supersession Note
-
-Historical entries below remain release/milestone evidence for what was true when those changes landed. Where an older entry describes Parent-to-top navigation, smaller Rig/Tackle counts, incomplete later Rig tiers, or earlier Knot package status, current architecture and current-state documents supersede that historical behavior/status without rewriting the historical event.
-
-## Knots — Historical Packages 1 and 2 Snapshot
-
-**Implementation Status: Historical Snapshot — Packages 1–2 Validated / Finalized at This Point**
-
-### Added / Changed
-
-- Added and validated Production Package 1 with 10 active canonical Knots, four approved Core Knot IDs, 6 Beginner / 4 Intermediate difficulty distribution, and all 20 active Rigs audited for 31 real tied `knotApplications` connections.
-- Added Production Package 2 Knot task guidance, deterministic Knot search, Knot browse/detail routes, text-based Knot instruction pages, and verified-reference placement inside **How to Tie It**.
-- Added derived **Where You'll Use It** Rig relationships and context-preserving Rig ↔ Knot navigation without storing reverse Knot-to-Rig IDs.
-- Runtime Revision 2 corrected long Rig relationship lists with **See all N rigs** / **Show fewer** and changed the Knot landing to Rig-style collection cards.
-- Runtime Revision 3 restored the established varied navigation-card accent bars and added the approved Core Knots priority treatment.
-- Added the canonical cross-domain `NAVIGATION-PAGE-STANDARD.md`: navigation pages use the Rig Guide baseline with Search first, optional special navigation second, and collection/category cards afterward.
-- Runtime Revision 4 removes section-level accent/priority framing from **What are you trying to do?**, applies Important Card treatment to **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure**, keeps the other two task cards normal, preserves varied accent bars and Core Knots emphasis, and reduces collapsed **Where You'll Use It** Rig relationships from four visible items to two.
-- Runtime Revision 5 adds collapse-context restoration so **Show fewer** returns the viewport to **Where You'll Use It** after a long Rig list contracts, while preserving disclosure-control focus and reduced-motion preferences.
-- Runtime Revision 5 removes automatic search-field focus on view render application-wide. Search fields now receive focus only through deliberate user interaction, preventing navigation from automatically opening mobile software keyboards.
-
-### Validation Status
-
-- Production Package 1 repository/static/runtime validation: passed.
-- Production Package 2 Revision 4 GitHub blob integrity: passed.
-- Production Package 2 Revision 4 Microsoft Edge functional/regression blocks: passed; two UX remediation items were identified during review and promoted to Revision 5 before package closeout.
-- Production Package 2 Revision 5 local static preflight: passed.
-- Production Package 2 Revision 5 GitHub blob verification: passed; all 10 delivered Revision 5 files matched GitHub `main` by blob SHA.
-- Production Package 2 Microsoft Edge runtime validation: passed, including the complete Revision 4 functional/regression checklist and both Revision 5 targeted remediation checks.
-- Production Package 2 status: **PASS / VALIDATED / FINALIZED**.
-- Historical note: Production Packages 3 and 4 had not started at the time of this snapshot; both are now complete and closed as recorded in the current-state section above.
-
-See `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`, `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`, `NAVIGATION-PAGE-STANDARD.md`, `MILESTONES.md`, and `HANDOFF.md`.
-
-
-## Complete Rig Guide
-
-**Implementation Status: Validated / Finalized**
-
-### Added / Changed
-
-- Completed the approved 20-Rig regional library across all six learning tiers.
-- Final active Rig counts are 6 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert.
-- Core remains the approved six-member cross-cutting registry in the established order.
-- Canonical Tackle and Tackle recognition-media registries are now 29 active records each.
-- Added the final seven Rigs: Neko Rig, Shaky Head Rig, Free Rig, Double-Jig Crappie Rig, Jika Rig, Punch / Pegged Texas Rig, and Bottom-Bouncer / Spinner Rig.
-- Added six final canonical Tackle concepts: Nail Weight, Shaky Head Jighead, Ringed Sinker, Split Ring, Bottom Bouncer, and Spinner Harness.
-- Replaced the six initially rejected flat/vector final-tier recognition assets with user-approved production images.
-- Added and validated seven final-tier build-first YouTube tutorials:
-  - Neko Rig — Wired2Fish — `yxGJLTxa_B0`
-  - Shaky Head Rig — Bass Utopia — `zwcZSE3DVAU`
-  - Free Rig — Fishin With GRAMPS — `_SyrQJ1i0RA`
-  - Double-Jig Crappie Rig — Kansas Angling Experience — `7EVa28J9y-Y`
-  - Jika Rig — Mike Iaconelli Fishing — `uSmbuf-q2xg`
-  - Punch / Pegged Texas Rig — Wired2Fish — `HzIMkN_xTtM`
-  - Bottom-Bouncer / Spinner Rig — Fishing 411 TV — `xRXzhffsHGM`
-- Final production correction commit: `4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` (`Rig Updates Images and tutorials`).
-- GitHub Pages deployed the final production correction successfully.
-
-### Validation Status
-
-- GitHub source/blob verification: passed.
-- Deployed-artifact Rig/Tackle/media counts and relationships: passed.
-- All Rigs = 20: passed.
-- Tier counts 6 / 3 / 4 / 4 / 2 / 1: passed.
-- Core six/order: passed.
-- All seven final-tier Rig detail pages: passed.
-- All six final-tier Tackle `Name ⓘ` recognition panels/images: passed.
-- All seven final-tier YouTube embeds and external fallbacks: passed in Microsoft Edge.
-- No-autoplay behavior: passed.
-- Representative readiness persistence: passed.
-- Desktop Edge layout/horizontal-overflow check: passed.
-- Desktop normal-navigation console health: passed.
-- Mobile-width Edge device emulation at approximately 375 px, including dense Rig content, recognition image, tutorial player, Parent/Home navigation, and horizontal-overflow check: passed.
-- Segment is **Validated / Finalized**.
-
-See `workstreams/RIG-GUIDE-COMPLETION.md`, `MEDIA_GUIDE.md`, `RIG_REFERENCE_SOURCES.md`, `MILESTONES.md`, and `HANDOFF.md`.
-
-## Beginner/Beginner+ Media Completion + Intermediate Rig Expansion
-
-**Implementation Status: Validated / Finalized**
-
-### Added / Changed
-
-- Added and validated the complete four-Rig Intermediate tier: Drop Shot Rig, Carolina Rig, Live-Bait Slip-Sinker Rig, and Three-Way Rig.
-- Active Rig library is now 13 records: 6 Beginner, 3 Beginner+, and 4 Intermediate.
-- Canonical Tackle and Tackle recognition-media registries are now 23 active records each.
-- Completed the Rig tutorial audit under the build-first standard and implemented final tutorial replacements:
-  - Slip Bobber — Sportsman's Journal TV `0V-gaboIlD0`
-  - Wacky Rig — Kevin VanDam `EbHzUCM4o7Y`
-  - Ned Rig — Mystery Tackle Box `COFdRET28cY`
-  - Weightless Soft-Plastic — Reaction Tackle `EFORJFsycJQ`
-  - Carolina Rig — ShakespeareFishingUS `iYngOOMQCC0`
-  - Live-Bait Slip-Sinker — Castaway Fishing Kits `IbV0yG3sRms`
-- Retained validated tutorials for Fixed Bobber, Basic Bottom, Jighead + Soft Plastic, Texas Rig, Drop Shot, and Three-Way Rig.
-- Inline Spinner remains intentionally without an embedded tutorial; Mepps is retained as the validated instructional fallback and Panther Martin was removed because the destination was more marketing-oriented than instructional.
-- Corrected Bobber Stop alt text so the metadata matches the approved rubber/silicone stop image.
-- Finalized the corrected Tackle recognition-media library using the permanent exact 640 × 440 `#f4f0e8` production canvas and current catalog/semi-photorealistic visual standard.
-- Added D053 — Rig Media Completeness and Tutorial Audit.
-- Added D054 — Intermediate Rig Tier Membership.
-- `MEDIA_GUIDE.md` now codifies the permanent build-first tutorial-selection standard: assembly/configuration is primary, concise/direct sources are preferred when technically complete, technique content is secondary, and no arbitrary hard duration threshold is imposed.
-- `RIG_REFERENCE_SOURCES.md` now records the final validated tutorial/fallback sources for all 13 active Rigs.
-- `DEVELOPMENT_WORKFLOW.md` continues to permit direct Markdown documentation updates while requiring explicit user approval before assistant direct-write of images, JavaScript, CSS, HTML, application data, configuration, or other non-Markdown production files.
-
-### Validation Status
-
-- Canonical Rig/Tackle/media counts and relationships: passed.
-- Intermediate membership, routing, search, detail, readiness, reverse `Used In`, and navigation: passed.
-- Recognition-media package/GitHub verification and desktop/mobile contextual-popover validation: passed.
-- Retained tutorial runtime regression: passed.
-- All six changed tutorial embeds: passed final runtime closeout.
-- Inline Spinner Mepps-only fallback: passed.
-- Bobber Stop corrected metadata and contextual reference: passed.
-- Beginner/Beginner+/Core, Fish Guide/search, Dashboard, desktop navigation/console/focus/layout, and mobile responsive regressions: passed.
-- Segment is **Validated / Finalized**.
-
-See `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE.md`, `workstreams/RIG-BEGINNER-MEDIA-INTERMEDIATE-VALIDATION.md`, `MEDIA_GUIDE.md`, `RIG_REFERENCE_SOURCES.md`, and `HANDOFF.md`.
-
-## Core Rigs and Tackle Media / Rig Learning Tiers
-
-**Implementation Status: Validated**
-
-### Added
-
-- Global Rig search directly on the main Rig Guide landing page while retaining scoped subset search.
-- Fish Guide inline landing-page search using the same shared search interaction instead of a dedicated Search Fish card as the primary workflow.
-- Explicit one-click `×` / `Clear search` control for shared main-section and scoped search fields.
-- Lightweight deterministic relevance ranking so strong canonical-name matches lead weaker metadata matches.
-- Compact sticky Parent/Home navigation on nested views.
-- D047 — Section and Subset Search Availability.
-- D048 — Dashboard-Derived Section Card Design.
-- D049 — Verified Rig Tutorial Embed Policy.
-- D050 — Standard Search Field and Clear Control.
-- D051 — Persistent Parent Navigation and Top-Reset View Transitions.
-- D052 — Rig Detail Compact Density.
-- Canonical Wacky Hook, Wacky O-Ring, and Ned Jighead Tackle concepts.
-- Texas Rig lazy-loaded Wired2Fish YouTube tutorial pilot using privacy-enhanced embedding and an external fallback.
-- Compact mobile-first Rig-detail treatment, now approved for Rigs.
+## Documentation Governance — Section 14 Reconciliation
 
 ### Changed
 
-- Rig Guide card order is All Rigs, Core Rigs, Beginner, Beginner+, Intermediate, Intermediate+, Advanced, Expert.
-- Removed the Rig Guide CSS override that forced every navigation card to the same Rig accent; section navigation follows the Dashboard-derived varied accent/left-line system.
-- Core remains visually emphasized but is explicitly cross-cutting rather than tied to Beginner difficulty.
-- Wacky Rig uses a dedicated Wacky Hook, optional Wacky O-Ring, one-time midpoint piercing, freely hanging worm ends, and an exposed hook point/gap.
-- Ned Rig uses a dedicated small mushroom-style Ned Jighead and explicitly preserves the exposed-hook standard beginner configuration.
-- Canonical Tackle expands from 17 to 20 active concepts; the three narrowed concepts remain text-recognition-only until dedicated accurate media is approved.
-- Texas Rig primary visual/reference experience uses the embedded tutorial pilot rather than broad article links as the primary visual path.
-- Rig detail cards and What You Need use the approved compact Rig-specific treatment while retaining readable text and practical touch targets.
-- Search results no longer alphabetize all substring matches; exact/prefix/name confidence outranks lower-priority metadata, with stable ordering as the tie-break.
-- Parent/Home controls stay available while scrolling, and forward/Parent/Home transitions open the destination at the top rather than restoring remembered parent scroll position.
+- Reduced documentation ownership to single-purpose canonical roles.
+- Added `ACTIVE-CHANGE-LEDGER.md` as the single formal GitHub owner of material non-closed carry-forward items.
+- Reduced `HANDOFF.md` to a compact formal recovery/continuation entrypoint.
+- Narrowed `ROADMAP.md` to product milestone ordering and future direction rather than exact current Repository Audit status.
+- Froze `MILESTONES.md` as a historical milestone record rather than a living current-state owner.
+- Retained `CHANGELOG.md` only as curated meaningful landed-change history.
+- Retired `SPECIFICATION.md` from active maintenance after a targeted no-loss uniqueness review.
+- Promoted the base recurring-service-cost boundary and external-resource graceful-degradation boundary into `ARCHITECTURE.md`.
+- Parked automatic shopping/retailer integration explicitly in `ROADMAP.md`.
+- Corrected `ARCHITECTURE.md` source structure to include the repository-integrity GitHub Actions workflow and formal Active Change Ledger.
 
 ### Preserved
 
-- Nine active Rig records: six Beginner and three Beginner+.
-- Six-member `CORE_RIG_IDS` single-owner registry and current Core teaching order.
-- All Rigs complete-library behavior and Core badges.
-- Existing readiness persistence key and buildability behavior.
-- Existing 17-image neutral-background Tackle recognition-media set.
-- Text-authoritative Rig assembly and prohibition on generated Rig assembly imagery.
-- Dashboard larger-card treatment; Dashboard density review remains parked.
-- Dashboard search remains unimplemented pending deliberate cross-domain scope/grouping/result design.
+- GitHub `main` remains authoritative for formal source/documentation.
+- Google Drive Working State remains the high-frequency in-progress delta between formal GitHub checkpoints.
+- Durable decisions remain in `DECISIONS.md`.
+- Domain ownership remains in canonical architecture/data-model owners.
+- Existing production application behavior is unchanged by this documentation package.
 
-### Validation Status
+# Curated Landed History
 
-- Source/package integrity on actual GitHub `main` commit `7208edfb2240e6cc2c8a7ac3b2fbf11785ef59f0`: passed.
-- Rig Guide All-Rigs-first ordering, Core emphasis, subset membership/search scope, and card-grid restoration: passed.
-- Wacky, Ned, and Weightless Soft-Plastic component/readiness behavior: passed.
-- Intact worm-bait recognition media: passed.
-- Texas Rig tutorial playback in Brave: passed; earlier Edge `ERR_BLOCKED_BY_CLIENT` messages remain classified as blocker/ad-request noise rather than a reproduced application playback defect.
-- Compact Rig-detail presentation at about 375 px and desktop widths: passed and approved for Rigs.
-- Fish search by common name, scientific name, and category: passed.
-- Derived Tackle `Used In` relationships: passed.
-- Fish Guide inline search: passed.
-- One-click Clear search: passed.
-- `Ned` ranking **Ned Rig** first: passed.
-- Sticky Parent/Home controls: passed.
-- Parent navigation returning to parent top: passed.
-- Home navigation returning to Dashboard top: passed.
+## Knots — Finalized / Closed
 
-The implementation/runtime segment is validated. The formal closeout documentation package must still be pushed and re-fetched before the repository is declared finalized and Intermediate work begins under D039/D040.
+Meaningful landed results:
 
-See `workstreams/CORE-RIGS-TACKLE-MEDIA.md`, `workstreams/CORE-RIGS-TACKLE-MEDIA-VALIDATION.md`, and `workstreams/RIG-UX-RUNTIME-FOLLOWUP.md`.
+- 10 canonical Version 1 Knots with four Core IDs.
+- Task-first Knot Guide navigation and deterministic Knot search.
+- Canonical in-app tying instructions.
+- All 20 Rigs audited for 31 real tied `knotApplications` connections.
+- Verified instructional-media coverage for all 10 Knots.
+- Completed Reel & Line Setup for Spinning, Spincast, and Baitcasting.
+- Contextual Rig ↔ Knot and Reel Setup ↔ Knot navigation paths.
+- Clickable Common Tasks, Rig usage, and Line Compatibility connected knowledge.
+- Minimal Line Type reference/detail routing.
+- Dashboard/Tackle information architecture refinements and compact connected-knowledge pills.
+- Keyboard, narrow-viewport, and normal-navigation runtime validation.
+
+Historical package-level detail remains in the Knot workstream/archive records and Git history.
+
+## Complete Rig Guide — Finalized
+
+Meaningful landed results:
+
+- Completed the approved 20-Rig library across six learning tiers.
+- Final tier counts: 6 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert.
+- Preserved six-member Core Rig registry/order.
+- Expanded canonical Tackle and recognition-media registries to 29 records each.
+- Integrated final seven Rigs and six final canonical Tackle concepts.
+- Implemented/validated build-first tutorial coverage/fallbacks for final tiers.
+- Validated recognition media, readiness persistence, desktop/mobile presentation, console health, and deployed artifact integrity.
+
+Final correction commit:
+
+`4375ca3e05cfbfef6ab0a3e4662c2afd19b86f42` — `Rig Updates Images and tutorials`
+
+## Beginner/Beginner+ Media Completion + Intermediate Expansion
+
+Meaningful landed results:
+
+- Expanded active Rig library to 13 at that stage with complete Intermediate tier.
+- Expanded Tackle/media foundation to 23 canonical concepts/records.
+- Completed build-first Rig tutorial audit and replacement pass.
+- Corrected Bobber Stop media metadata.
+- Added D053 Rig Media Completeness and Tutorial Audit.
+- Added D054 Intermediate Rig Tier Membership.
+
+## Core Rigs / Tackle Media / Rig UX Finalization
+
+Meaningful landed changes:
+
+- Added global Rig search at the Rig Guide landing page while retaining scoped subset Search.
+- Added Fish Guide inline landing-page Search.
+- Added explicit one-click Search clear control.
+- Added deterministic relevance ranking.
+- Added Dashboard-derived shared section/subset card treatment and Core priority emphasis.
+- Added compact sticky Parent/Home visual treatment.
+- Added compact mobile-first Rig detail treatment.
+- Added initial verified/published Rig tutorial embed pattern with external fallback.
+- Expanded canonical Tackle concepts for narrowed Rig component needs.
+
+Historical Parent-to-top behavior recorded during this period was later superseded by revised D051 architecture for standard application Parent behavior.
 
 ## Rig/Tackle Data Integrity — Batch 1
 
-**Implementation Status: Validated**
+Meaningful landed changes:
 
-### Changed
-
-- Rig component requirements now reference canonical Tackle explicitly through `tackleId`.
+- Rig component requirements reference canonical Tackle through `tackleId`.
 - Removed duplicated Rig-side component display names.
-- Removed manually maintained Tackle `rigIds`.
-- Tackle `Used In` is derived from active Rig component requirements.
-- Rig component and readiness missing-item labels resolve canonical Tackle names.
-- `script.js` uses `tackleId` consistently at the readiness callback boundary.
-- Existing readiness storage remains compatible because stored keys already use canonical Tackle ID strings.
-
-### Documentation Integrity
-
-- Corrected an initial documentation replacement that over-condensed `ARCHITECTURE.md`, `03-RIGS.md`, and `09-RELATIONSHIPS.md`.
-- Restored those documents from their exact pre-change GitHub baselines and reapplied only authorized changes.
-- Added `tools/validate_replacement_integrity.py` and a permanent workflow gate to detect suspicious documentation truncation before future delivery.
-
-### Validation
-
-- GitHub source/data-model inspection: passed.
-- Documentation correction/revalidation: passed.
-- All four current Rig detail/readiness flows: passed.
-- Canonical component-name rendering: passed.
-- Tackle `Name ⓘ` references: passed.
-- Required/optional readiness behavior: passed.
-- Readiness persistence: passed.
-- Derived `Used In` relationships: passed.
-- Fish Search regression: passed.
-- Rig browse/search regression: passed.
-- External Rig references: passed.
-- Related Tackle navigation: passed.
-- Normal-navigation console health: passed.
-- Phone and desktop layout checks: passed.
-
-See `workstreams/RIG-TACKLE-DATA-INTEGRITY.md` and `workstreams/RIG-TACKLE-DATA-INTEGRITY-VALIDATION.md`.
+- Removed manually maintained Tackle inverse `rigIds`.
+- Derived Tackle `Used In` from canonical Rig requirements.
+- Preserved readiness storage compatibility.
+- Added replacement-integrity safeguards after correcting an over-condensed documentation replacement.
 
 ## Current-State UX Repairs
 
-**Implementation Status: Validated**
+Meaningful landed changes:
 
-The source implementation was pushed in commit `cf4f8bfa4974d06ada35650dd4e27f9371ee034f`. Repository inspection confirmed the intended source changes are present. Documentation-preservation defects from the initial package were corrected, package-specific root artifacts were removed, and runtime/regression validation passed.
+- `Coming Soon` cards became clearly unavailable/non-actionable.
+- Dashboard Regulations CTA became `Go to ODWC Regulations ↗`.
+- Restored approved Forest Journal Dashboard primary-card hierarchy/interaction behavior after regression.
+- Removed package-era `REPLACEMENT` labels from deliberately edited source files.
 
-### Changed
+## Architecture / Product Decisions Consolidation
 
-- Inert child cards render as non-actionable unavailable cards with a visible `Coming Soon` status.
-- Fish Guide `Search Fish` and Rig Guide `Browse All Rigs` remain interactive.
-- Dashboard Regulations CTA changed from generic `Browse →` to `Go to ODWC Regulations ↗`.
-- Forest Journal Dashboard restored the approved primary-card right accent, stronger primary title, primary vertical spacing, gradient hover treatment, active treatment, and card overflow containment.
-- Package-specific `REPLACEMENT` source labels were removed from deliberately edited source files under the approved status/version cleanup rule.
+Meaningful durable decisions established across the build history include:
 
-### Preserved
+- three-layer Reference / Decision / User Knowledge architecture,
+- relevance-first Search + connected-knowledge behavior,
+- five recommendation tiers,
+- Rig physical assembly vs Technique reusable presentation ownership,
+- single-owner Rig→Tackle relationships,
+- canonical Tackle identity/display ownership,
+- My Tackle persistent ownership/readiness authority,
+- User Knowledge trust boundary,
+- unavailable-feature affordance,
+- explicit external destination semantics,
+- Forest Journal as the sole production-supported V1 theme,
+- documentation-validated closeout and no-unvalidated-transition rules,
+- single-owner semantic relationship architecture under D056,
+- Four-State Fish/project direction and later Fish category/lifecycle/identity/Search decisions.
 
-- Dashboard card order and route architecture.
-- Current pill CTA styling.
-- Fish Search.
-- Rig browse/detail behavior.
-- Tackle contextual `Name ⓘ` interaction.
-- Inline Rig readiness and persistence.
-- Current data/media.
-- Dormant theme files remain untouched.
+`DECISIONS.md` remains authoritative for the exact durable rules.
 
-### Validation
+# Historical Releases
 
-- Repository source inspection: passed.
-- Documentation preservation and root cleanup: passed.
-- Dashboard runtime validation: passed.
-- Fish Guide unavailable-card validation: passed.
-- Rig Guide unavailable-card validation: passed.
-- Recommendations, My Tackle, Knots, Catch Log, Favorites, and Settings unavailable-card validation: passed.
-- Regulations external-link behavior: passed.
-- Fish Search, Rig browse/detail, Tackle popovers, related-component navigation, and readiness persistence regressions: passed.
-- Responsive/accessibility checks at phone and desktop widths: passed.
-- Normal-navigation console health and external Rig reference behavior: passed.
+## Version 0.2.6 — Tackle References and Rig Visual Guides
 
-See `workstreams/UX-REPAIRS.md` and `workstreams/UX-REPAIRS-VALIDATION.md`.
+Historical release introduced canonical Tackle/media infrastructure, local Tackle/Rig asset libraries, contextual Tackle references, related-component navigation, and early Rig visual support.
 
-## Architecture, Data-Model, UX, and Handoff Decisions
+Later architecture superseded generated Rig overview/build-step media and narrowed production Tackle media format. Git history preserves the exact historical implementation.
 
-### Added / Approved
+## Version 0.2.5 — Lightweight Tackle Readiness
 
-- Relevance-first Search and connected-knowledge contract.
-- Five recommendation tiers: Best of the Best, Best Bang for the Buck, Best Budget, Best of the Rest, Avoid.
-- Rig assembly vs Technique presentation ownership boundary.
-- Single-owner Rig-to-Tackle relationship architecture and canonical Tackle display-name ownership.
-- Initial 20-Rig regional library plus six Core Rigs.
-- My Tackle ownership/readiness authority and buildability-first readiness principle.
-- User Knowledge safe-rendering trust boundary.
-- Coming Soon/unavailable child-card semantics.
-- Explicit `Go to ODWC Regulations ↗` external CTA semantics.
-- Narrow Dashboard CSS regression restoration plan.
-- Archive rules for completed package artifacts and historical design assets.
-- Forest Journal as the only production-supported Version 1 theme.
-- Separate document-status, implementation-status, document-revision, and application-version semantics.
-- Dedicated `00-GLOSSARY.md`, `05-TACKLE.md`, and `05A-INVENTORY.md` documentation structure.
-- `HANDOFF.md` as the repository current-state entrypoint.
-- Documentation-validated closeout, no-unvalidated-transition, and cross-segment decision-capture rules.
+Historical release introduced local per-Rig readiness state and persistence key:
 
-### Documentation Reconciliation
+`freshwaterFishingCompanion.tackleReadiness.v1`
 
-- Historical MS2.5/MS2.6 milestone descriptions are retained as history but explicitly marked as superseded where later approved architecture changed readiness or Rig-media behavior.
-- Detailed Recommendation and ProductDefinition model documents remain deferred until their schemas are mature/required.
+Later D020/D028 architecture integrates readiness into Rig detail and defines future My Tackle as persistent ownership authority.
 
-## Rig and Tackle Reference Refresh
+## Version 0.2.4 — Functional Rig Guide
 
-### Added
+Historical release established canonical Rig data, browse/search, Rig detail, component/assembly guidance, setup notes, common mistakes, and safety guidance.
 
-- My Tackle remains the ownership/inventory domain; no standalone image-library Tackle Guide is introduced
-- Approved lightweight semi-photorealistic Tackle reference images for contextual help
-- Verified external Rig reference links for all four current Rigs
-- `Best For` and `Good Conditions` summary blocks on Rig detail pages
-- Integrated `What You Need` ownership/readiness controls on Rig detail pages
-- External-reference `↗` convention
-- Permanent command-copy/paste documentation standard
+## Version 0.2.3 — Functional Fish Search
 
-### Changed
+Historical release established functional Fish Search, reusable result cards, and Parent/Home navigation.
 
-- Removed obsolete generated Rig overview and assembly-step assets from the active repository state.
-- Removed superseded Tackle SVG reference assets after replacement with approved WebP references.
-- Rig pages now contain no local Rig imagery; completed-rig visual confirmation uses verified external links.
-- `What You Need` remains text-first; Tackle WebP images appear only after selecting `Name ⓘ`.
-- `What You Need` and the lightweight readiness check are combined so ownership can be marked without leaving the Rig detail page.
-- Removed the separate Rig readiness page/action from the primary Rig workflow.
-- Normalized spacing around `Best For` and `Good Conditions` to match the standard section rhythm.
-- Dashboard remains `My Tackle`; it is the user-owned inventory domain.
-- Rig detail pages use authoritative text build instructions instead of generated Rig overview/assembly imagery.
-- Tackle contextual popovers display the approved recognition image on demand.
-- Tackle WebP reference images now use transparent backgrounds so they blend with the active card/modal surface without a visible white rectangle.
-- Texas Rig assembly wording now explicitly seats the bait nose against the hook offset before measuring the re-entry point.
-- Rig reference imagery policy now prioritizes licensed verified images or authoritative external references over generated diagrams.
+Later Fish/Search architecture supersedes the original primary interaction model where applicable.
 
-### Preserved
+# Changelog Maintenance Rule
 
-- Fish Search
-- Rig browsing
-- `Name ⓘ` contextual Tackle interaction
-- Related-component popover navigation
-- Per-Rig readiness persistence
-- Inline Ready/Missing status
+Add an entry only when a meaningful change lands.
 
----
+Appropriate examples:
 
-# Version 0.2.6 — Tackle References and Rig Visual Guides
+- new or materially changed product capability,
+- architecture/schema/ownership change,
+- significant UX behavior change,
+- meaningful defect correction,
+- canonical data-library expansion/correction,
+- repository governance/tooling change that changes how the project is maintained.
 
-**Date:** 2026-08-06  
-**Milestone:** MS2.6
+Do not add entries solely for:
 
-This release history is retained as a historical implementation record. Later Unreleased architecture supersedes generated Rig media and the dedicated-readiness workflow where noted above and in `MILESTONES.md`.
-
-## Added
-
-- Canonical `data/tackle.js`
-- 15 stable Tackle reference records
-- Centralized `data/media.js`
-- Stable media IDs and licensing metadata
-- Local `images/tackle/` asset library
-- Local `images/rigs/` asset library
-- 15 active Tackle SVG reference illustrations
-- Contextual `Name ⓘ` Tackle reference links
-- In-place Tackle reference modal / bottom-sheet interaction
-- Related-component links inside reference popovers
-- Recognition guidance, aliases, variants, and related-Rig information
-- Completed-Rig overview illustration support
-- Completed-Rig overview illustrations for all four current Rigs
-- Generic Rig media roles: `overview`, `assembly-step`
-- Sequence-based Rig assembly media ordering
-- Four-step Texas Rig visual assembly guide
-- 23 active media records total
-
-## Validation
-
-- Tackle data and media counts validated at the time of this historical release.
-- Reference popovers validated.
-- Related Tackle navigation validated.
-- Rig overview sections validated.
-- Four Texas Rig steps validated.
-- Tackle Readiness validated.
-- GitHub and live deployment validated.
-
----
-
-# Version 0.2.5 — Lightweight Tackle Readiness
-
-**Date:** 2026-08-05  
-**Milestone:** MS2.5
-
-Historical release that introduced the local per-Rig readiness checklist and persistence key `freshwaterFishingCompanion.tackleReadiness.v1`. Later architecture integrates readiness into the Rig page and treats this storage as transitional.
-
----
-
-# Version 0.2.4 — Functional Rig Guide
-
-- Canonical Rig data
-- Browse All Rigs
-- Searchable Rig list
-- Rig detail pages
-- Component and assembly guidance
-
----
-
-# Version 0.2.3 — Functional Fish Search
-
-- Functional Fish Search
-- Live search
-- Reusable result cards
-- Parent/Home navigation
+- exact current workstream status,
+- session continuation notes,
+- speculative/open discussions,
+- parked ideas,
+- routine synchronization edits with no meaningful repository/product effect.

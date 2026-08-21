@@ -1,362 +1,159 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.3.5  
+**Document Revision:** 0.4.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-19
+**Role:** Product milestone order and future direction  
+**Last Updated:** 2026-08-21
 
 # Purpose
 
-This document defines the canonical planned development direction for Freshwater Fishing Companion. It does not override `DECISIONS.md`, `ARCHITECTURE.md`, or the current-state map in `HANDOFF.md`.
+This document defines the canonical planned product-development direction for Freshwater Fishing Companion.
 
-Features may move only through an explicit project decision. A new build segment does not begin until the current segment is finalized and validated.
+It deliberately does **not** own exact active Repository Audit/workstream status, current commit baselines, validation package state, or session resume instructions. Those belong to `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, and active workstreams.
+
+It does not override `DECISIONS.md` or `ARCHITECTURE.md`.
 
 # Development Philosophy
 
 - Develop in coherent, testable segments.
-- Plan twice and write/build once.
+- Plan twice and build once.
 - Correctness before polish.
-- Actual need before theoretical scale.
-- One source of truth.
-- Finish and validate the current segment before beginning the next.
-- Resolve foundational User Knowledge storage questions before building features that depend on persistent user data.
-- Prioritize practical first-time-angler blockers before advanced fishing specializations.
+- Actual demonstrated need before theoretical scale.
+- One source of truth per semantic fact/relationship.
+- Finish/validate the current segment before beginning a dependent segment.
+- Resolve foundational User Knowledge storage questions before persistent user-data features.
+- Prioritize practical first-time-angler blockers before advanced specializations.
 
 # Regional Content Direction
 
-The Companion's forward Version 1 regional content focus is:
+Forward Version 1 regional content focus:
 
 - Northeast Oklahoma
 - Southeast Kansas
 - Southwest Missouri
 - Northwest Arkansas
 
-Existing validated domains retain their original selection/validation context until deliberately reconciled. Regional reconciliation is progressive and additive by default: important missing regional coverage may be added when a domain is audited or materially modified, but valid existing content is not automatically removed or invalidated merely because the geographic focus expanded.
+Existing validated domains retain their original selection/validation context until deliberately reconciled.
 
-The validated 20-Rig library was originally selected for Northeast Oklahoma and Southwest Kansas. It remains canonical and will receive a later additive Four-State adequacy audit to identify any materially important missing regional Rig or specialized setup.
+Regional reconciliation is progressive/additive by default: important missing regional coverage may be added when a domain is audited or materially modified, but valid existing content is not automatically removed or invalidated merely because geographic focus expanded.
 
-# Current Project State
+The validated 20-Rig library remains canonical and later receives an additive Four-State adequacy audit.
 
-## Complete Rig Guide
+# Canonical Product Sequence
 
-**Implementation Status: Validated / Finalized**
+1. **Knots** — completed / validated / closed.
+2. **Fish Guide** — next product milestone after Repository Audit Cleanup releases the Fish gate.
+3. **What Should I Throw**.
+4. **Tackle Reference / Find Tackle**.
+5. **Settings / User Data Architecture Gate**.
+6. **My Tackle**.
+7. **Catch Log**.
+8. **Global Search**.
+9. **Favorites final decision**.
 
-The approved initial 20-Rig regional library is complete and validated.
+Repository Audit Cleanup is a maintenance/governance gate, not a numbered product milestone and does not change this sequence.
 
-Current validated Rig/Tackle state:
+# 1. Knots — Completed Milestone
 
-- 20 active Rigs,
-- 6 learning tiers,
-- tier counts 6 / 3 / 4 / 4 / 2 / 1,
-- unchanged six-member Core registry and order,
-- 29 active canonical Tackle concepts,
-- 29 active Tackle recognition-media records,
-- final-tier tutorials, recognition media, readiness persistence, desktop layout, mobile-width layout, and console health validated.
+The completed Knots milestone established the canonical Knot library, task-first Knot Guide, deterministic search, canonical text instructions, verified instructional-media coverage, Reel & Line Setup, and validated connected navigation.
 
-Final workstream:
+Version 1 canonical scope includes 10 Knots, four Core IDs, and Reel & Line Setup for Spinning, Spincast, and Baitcasting.
 
-`workstreams/RIG-GUIDE-COMPLETION.md` revision 1.0.0
+Future Knot quality improvements may add project-owned diagrams/controlled animations, but the completed Version 1 milestone does not reopen automatically.
 
-## Knots Milestone
-
-**Implementation Status: PASS / VALIDATED / FINALIZED / CLOSED**
-
-Final validated production baseline:
-
-`e7a00db6936eba2aa11277a1a4d923d5f2e7cb32` — `Knots - compact connected knowledge pills`
-
-Validated state:
-
-- Production Packages 1–4 complete and closed,
-- 10 canonical Version 1 Knots with four Core IDs,
-- task-first Knot Guide and deterministic search complete,
-- Get Your Reel Ready / Reel & Line Setup complete,
-- verified instructional-media coverage for all 10 Version 1 Knots complete,
-- shared floating Root/Nested navigation validated,
-- Reel Setup navigation correction validated,
-- connected-knowledge navigation from Knot detail validated,
-- context-preserving Rig ↔ Knot and Reel Setup ↔ Knot navigation validated,
-- Line Type reference/detail routing validated,
-- Dashboard/Tackle information architecture validated,
-- keyboard and normal-navigation console health validated.
-
-Final closeout record:
-
-`workstreams/KNOT-INTEGRATED-REGRESSION.md`
-
-## Next Approved Product Milestone — Fish Guide
-
-Fish Guide remains the next approved product milestone in the canonical product sequence.
-
-It is currently paused behind the Repository Audit Cleanup Gate. Repository Audit Sections 1–5 are complete and Section 6 — Governing Documents Comprehensive Synchronization — is active. Fish Guide Phase 0 resumes only after the audit gate and final re-audit are closed.
-
-Repository Audit Cleanup is a maintenance/governance gate, not a numbered product milestone and does not change the product roadmap ordering below.
-
-# Canonical Build Sequence After Rig Guide
-
-The approved order remains:
-
-1. **Knots** — completed / validated / closed
-2. **Fish Guide** — next approved product milestone; currently paused behind Repository Audit Cleanup
-3. **What Should I Throw**
-4. **Tackle Reference / Find Tackle**
-5. **Settings / User Data Architecture Gate**
-6. **My Tackle**
-7. **Catch Log**
-8. **Global Search**
-9. **Favorites final decision**
-
-This sequence is deliberate. Do not skip forward into a later persistent-user-data feature before its architectural dependencies have been resolved.
-
-# 1. Knots
-
-**Completed Milestone — PASS / VALIDATED / FINALIZED / CLOSED**
-
-The canonical Knot reference library, Knot Guide, Reel & Line Setup workflow, instructional-media integration, and integrated runtime regression are complete.
-
-The completed Knot milestone established:
-
-- practical Version 1 knot library,
-- beginner-oriented instructions,
-- knot purpose and compatible line types,
-- task-first beginner navigation,
-- verified instructional media,
-- search and navigation,
-- connected relationships to Rigs and later Techniques/Recommendations,
-- responsive/runtime validation,
-- a first-time-angler **Reel & Line Setup** learning workflow that gets a conventional freshwater reel from unlined or replacement-line state to a fishable line system.
-
-### Final Implementation Boundary
-
-The Knot landing-page hierarchy remains governed by `NAVIGATION-PAGE-STANDARD.md` and `workstreams/KNOT-LANDING-PAGE-APPROVAL.md`:
-
-1. Search first.
-2. **What are you trying to do?** special navigation.
-3. Collection cards: All, Core, Beginner, Intermediate, Advanced (Coming Soon).
-
-The special-navigation section itself remains visually neutral. **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** are the approved Important Cards because they are foundational prerequisites to fishing. **Core Knots** retains Core/primary emphasis.
-
-Connected-knowledge behavior on Knot detail is also validated:
-
-- Common Tasks are clickable,
-- Rigs that use the Knot are clickable,
-- Line Compatibility items are clickable,
-- originating-context Parent navigation is preserved,
-- compact connected-link pills use content-width sizing.
-
-## Knot Instructional Media Direction
-
-For Knots, project-owned diagrams and controlled animations remain preferred over video where they materially improve clarity, but the completed Version 1 implementation uses verified external instructional destinations under the approved method-match gate.
-
-Preferred order remains:
-
-1. project-owned instructional diagram,
-2. project-owned user-controlled step-through animation,
-3. diagram and animation together when motion materially improves understanding,
-4. external video only when the knot cannot be taught adequately with diagram/animation,
-5. supplemental video may be approved as an exception for more advanced knots when hand position, tensioning, or motion is materially clearer in video.
-
-Core Knots should retain a complete non-video instructional path when future project-owned media is added.
-
-## Reel & Line Setup — Approved V1 Direction
-
-Reel & Line Setup is a first-class beginner workflow inside the completed Knots milestone, not merely an Arbor Knot article.
-
-The endpoint is practical: take a reel that needs line and get the angler to a correctly spooled, usable line system ready to connect to a Rig.
-
-Version 1 supports:
-
-- new/empty reel setup,
-- replacement-line setup,
-- Spinning reels,
-- Spincast reels,
-- Baitcasting reels,
-- an **I'm not sure** reel-identification path,
-- simple reel-recognition help,
-- Monofilament, Fluorocarbon, and Braid selection/identification,
-- an **I'm not sure** line-identification path,
-- basic beginner line-selection guidance when the angler does not already have line,
-- species-based starting pound-test guidance,
-- an all-around beginner recommendation when the user targets multiple common freshwater species,
-- reel/rod compatibility checks,
-- reel-type-aware backing decisions,
-- Arbor Knot integration for spool attachment,
-- approved beginner line-to-line Knot integration such as Double Uni where backing or leader connections require it,
-- line-routing and reel-specific spooling instruction,
-- proper winding tension and spool-fill guidance,
-- optional leader connection,
-- context-preserving navigation into canonical Knot instructions and back into Reel Setup,
-- a final **Reel Ready** checkpoint with direct handoff to the Rig Guide.
-
-The workflow does not require the angler to know technical fishing vocabulary before beginning.
-
-### Beginner Line Guidance
-
-When the angler does not already have line, Reel & Line Setup provides enough guidance to make a confident first purchase or starting choice.
-
-The beginner path may use target species and reel type to provide:
-
-- recommended starting line type,
-- recommended starting pound-test range,
-- a simple beginner choice where appropriate,
-- short plain-English reasoning,
-- limitations or situations where heavier/lighter line may be needed.
-
-This guidance is for **readiness**, not full fishing optimization.
-
-Future What Should I Throw / Recommendation knowledge may later optimize line choices for cover, lure type, technique, abrasion, sensitivity, depth, presentation, and other conditions.
-
-### How to Read Your Reel
-
-Reel & Line Setup includes a small **How to Read Your Reel** section.
-
-It teaches a beginner how to interpret line-capacity markings without assuming one manufacturer format.
-
-The section explains:
-
-- how to find line-capacity markings on the reel/spool or manufacturer specifications,
-- how to identify `lb`, `yd`, `m`, `mm`, Mono, and Braid labels,
-- that pound-test values identify line strength while yard/meter values indicate approximate capacity for that line diameter,
-- that manufacturer label order may vary and the printed units must be read rather than assumed,
-- that reel/model-size numbers such as 1000, 2500, 3000, or 4000 are not themselves direct pound-test ratings,
-- how to compare a beginner species-based line recommendation with the reel's actual capacity/rating,
-- that an incompatible reel/line combination should trigger guidance to choose a compatible line or setup rather than silently proceed.
-
-### Reel-Specific Scope Boundary
-
-Spinning, Spincast, and Baitcasting each receive complete line-installation/replacement guidance appropriate to their design.
-
-Baitcasting Reel & Line Setup covers correct spooling only. Detailed brake tuning, spool-tension tuning, backlash prevention, lure-weight configuration, and casting instruction remain outside this workflow and belong to later learning/Technique content.
-
-Fly reels are not part of Version 1.
-
-### Backing and Line-System Guidance
-
-Backing guidance remains reel-type-aware rather than reduced to a universal braid rule.
-
-The workflow explains the line system visually/conceptually:
-
-- without backing: Reel spool → Main line → optional leader → Rig,
-- with backing: Reel spool → Backing → Main line → optional leader → Rig.
-
-When backing is appropriate, the workflow explains what backing is, why it is being used, how it attaches to the spool, how it connects to the main line, and how the user returns to Reel Setup after viewing the relevant canonical Knot instructions.
-
-### Approved Scope Boundary
-
-Reel & Line Setup owns enough line-selection guidance to get a beginner fishable.
-
-It does not own full fishing optimization.
-
-Excluded from this workflow:
-
-- fly reels and fly-line-specific setup,
-- detailed baitcaster brake/casting instruction,
-- advanced reel maintenance or repair,
-- exhaustive line-selection optimization by technique/cover/lure,
-- product-specific setup beyond directing the user to manufacturer guidance when reel design requires it.
-
-Fly fishing and fly-line-specific knot systems remain **Parking Lot** for Version 1.
+Fly reels/fly-line-specific setup and advanced baitcaster tuning/casting remain outside the completed workflow unless later approved.
 
 # 2. Fish Guide
 
-**Next Approved Product Milestone / Currently Paused Behind Repository Audit Cleanup**
+Build the complete Fish field-reference experience from the approved Phase 0 architecture after the Repository Audit Cleanup gate releases it.
 
-Expand the Fish Guide into a complete field-reference experience rather than only search/data foundation.
+The milestone deliberately covers:
 
-The Fish Guide milestone should deliberately review:
-
-- supported Four-State regional Fish library and scope,
+- Four-State supported Fish library,
 - identification-safe media,
 - practical identification traits,
-- similar-species navigation,
-- habitat/waterbody/seasonal information,
-- connected Rigs and later lure/recommendation relationships,
+- similar-species comparison/navigation,
+- habitat/waterbody/seasonal reference information,
+- connected Rig guidance,
 - regulation-resource pathways,
-- current search behavior and detail-page UX.
+- scoped Search and Fish detail UX.
 
-Fish identification accuracy remains governed by the identification-safe media policy.
+Identification accuracy remains dominant.
+
+Fish-to-Lure and advanced lure/color/retrieve/weather/season/clarity/cover/depth optimization belong to later Decision Knowledge rather than canonical Fish.
 
 # 3. What Should I Throw
 
-After the Fish Guide is finalized, build the primary Decision Knowledge recommendation experience.
+Build the primary Decision Knowledge recommendation experience after Fish.
 
-The feature should answer the angler's practical question: **What should I throw here and now, and why?**
+The feature should answer:
 
-Recommendation outputs should connect canonical entities rather than duplicate their instructional content.
+> What should I throw here and now, and why?
 
-## Usage Tutorial Direction
+Recommendations select/rank/explain canonical entities rather than duplicate their instructions.
 
 Approved instructional ownership:
 
-- **How to Rig It** links to the applicable canonical Rig and its validated build tutorial/instructions.
-- **How to Fish It** links to the applicable canonical Technique and its reusable presentation/retrieve tutorial or instructions.
-- Recommendation records select, rank, and explain; they do not duplicate Rig assembly or Technique presentation instructions.
+- **How to Rig It** → canonical Rig build instructions/tutorial/reference.
+- **How to Fish It** → canonical Technique presentation/retrieve guidance.
+- Recommendation data owns contextual selection/rationale, not duplicate Rig or Technique prose.
 
-This preserves the existing Rig/Technique ownership boundary while allowing What Should I Throw to provide a complete practical path from recommendation to setup to presentation.
-
-Exact recommendation inputs, scoring, explanation format, Technique implementation requirements, and tutorial coverage will be finalized during the What Should I Throw design segment.
+Exact inputs, scoring, explanation model, Technique dependencies, and tutorial coverage are finalized during this milestone.
 
 # 4. Tackle Reference / Find Tackle
 
-Build a lightweight canonical Tackle discovery/reference experience after What Should I Throw.
+Build a lightweight canonical Tackle discovery/reference experience independent of remembering a Rig.
 
-This is **Reference Knowledge**, not My Tackle ownership and not a child feature owned exclusively by Rigs.
+This is Reference Knowledge, distinct from My Tackle ownership.
 
-A user should be able to find a component without remembering which Rig uses it.
+Search should support canonical identity fields such as:
 
-## Search Scope
-
-Canonical Tackle search should support deliberate identity fields such as:
-
-- canonical name,
+- name,
 - approved aliases,
 - beginner/common terminology,
 - category,
-- approved search keywords.
+- deliberate search keywords.
 
-## Tackle Result as a Knowledge Gateway
+A Tackle result should progressively expose pertinent connected knowledge where available:
 
-After identifying a Tackle concept, expose pertinent connected knowledge progressively, including where available:
-
-- what the component is,
-- recognition image/help,
+- definition/recognition,
 - common variants,
 - related Tackle,
-- **Used In** Rigs derived from canonical Rig component requirements,
+- derived `Used In` Rigs,
 - compatible Fish/Conditions/Techniques when canonical relationships exist,
 - later My Tackle ownership context.
 
-Rig Guide, What Should I Throw, My Tackle, and future Global Search should all link to the same canonical Tackle identity/detail experience rather than create separate competing Tackle definitions.
+All features should link to the same canonical Tackle identity/detail experience rather than create competing definitions.
 
 # 5. Settings / User Data Architecture Gate
 
-Before My Tackle or Catch Log implementation begins, conduct a dedicated architecture/design segment for persistent User Knowledge and Settings.
+This gate must close before persistent My Tackle or Catch Log implementation.
 
-This gate must resolve at minimum:
+It must resolve at minimum:
 
 - local persistence/storage technology,
-- data retention behavior,
-- behavior when browser/site data is cleared,
-- application-update and schema-migration strategy,
-- backup/export format,
-- restore/import validation and rollback behavior,
+- retention behavior and browser/site-data clearing,
+- application-update/schema-migration strategy,
+- backup/export scope and format,
+- restore/import validation and rollback,
 - device-transfer expectations,
-- user/profile identity model,
+- user/profile identity,
 - single-user vs future multi-user boundaries,
-- whether any synchronization/account model is required or explicitly deferred,
-- which settings are device-local versus user-profile data,
-- theme architecture and supported themes,
-- other user preferences and their backup/restore behavior.
+- synchronization/account decision or explicit deferral,
+- device-local vs profile settings,
+- theme architecture/supported themes,
+- other user preferences and backup/restore behavior.
 
-Current local-first architecture remains the baseline until an explicit architecture decision changes it.
+Current local-first architecture remains baseline until explicit architecture changes it.
 
-Do not implement My Tackle or Catch Log against an assumed persistence model before this gate is closed.
+Do not implement persistent My Tackle/Catch Log against an assumed storage model before this gate closes.
 
 # 6. My Tackle
 
-Build My Tackle after the Settings/User Data architecture gate.
+Build after the Settings/User Data gate.
 
-The existing approved principles remain:
+Approved principles:
 
 - canonical Tackle defines functional type,
 - My Tackle defines actual owned items,
@@ -366,32 +163,32 @@ The existing approved principles remain:
 - persistent ownership changes only through explicit My Tackle workflows,
 - readiness answers buildability first; optimization comes later.
 
-The detailed owned-item schema and storage implementation are intentionally deferred to the dedicated My Tackle design segment after the User Data architecture gate.
+Detailed owned-item schema remains deferred to the My Tackle design segment.
 
 # 7. Catch Log
 
-Build Catch Log after My Tackle so it can use the settled User Knowledge persistence architecture and stable relationships.
+Build after My Tackle on the settled User Knowledge persistence architecture.
 
-Catch records should reference canonical entities rather than duplicate Reference Knowledge wherever practical.
-
-The Catch Log design segment must review:
+Catch Log design must review:
 
 - Fish/Rig/Lure/Technique references,
 - optional My Tackle/Fishing Setup relationships,
 - date/time and measurements,
 - location/privacy model,
 - notes,
-- photo handling and storage implications,
+- photo handling/storage implications,
 - backup/restore behavior,
 - migration/versioning requirements.
 
+Candidate fields remain design inputs until explicitly approved; a historical Specification `shall` does not pre-lock the location schema.
+
 # 8. Global Search
 
-Global Search is deliberately deferred until the major searchable domains and their canonical entity models are established.
+Defer until major searchable domains and canonical entity models are established.
 
-The design should build on the existing relevance-first/connected-knowledge architecture rather than create an undifferentiated cross-domain result dump.
+Build on relevance-first/connected-knowledge architecture rather than an undifferentiated cross-domain dump.
 
-Expected searchable domains may include:
+Potential searchable domains include:
 
 - Fish,
 - Rigs,
@@ -399,35 +196,45 @@ Expected searchable domains may include:
 - canonical Tackle,
 - Lures,
 - Techniques,
-- What Should I Throw/recommendation entry points where appropriate.
+- recommendation entry points where appropriate.
 
-Exact grouping, ranking across entity types, ambiguity handling, and Dashboard presentation remain a dedicated design discussion for this milestone.
+Grouping, cross-entity ranking, ambiguity handling, and Dashboard presentation belong to this milestone.
 
 # 9. Favorites Final Decision
 
-Favorites remains **parked** rather than automatically implemented.
+Favorites remains parked until near project completion.
 
-Near project completion, review whether a generic Favorites domain provides enough value after Search, recent/history behavior, My Tackle, Catch Log, connected knowledge, and recommendations exist.
+Evaluate actual workflow value after Search, history/recent behavior, My Tackle, Catch Log, connected knowledge, and recommendations exist.
 
-Possible outcomes include:
+Possible outcomes:
 
-- keep a generic Favorites feature,
-- replace it with narrower saved concepts such as Saved Rigs, Go-To Lures, or Saved Recommendations,
-- remove the feature if other workflows make it redundant.
+- keep generic Favorites,
+- replace with narrower saved concepts,
+- remove it if other workflows make it redundant.
 
-Do not build Favorites solely because a placeholder currently exists in the application structure.
+Do not build Favorites solely because a placeholder exists.
+
+# Four-State Regulations Direction
+
+Current official Oklahoma external regulation navigation is valid.
+
+Before a Four-State release depends on Regulations, deliberately decide the future OK/KS/MO/AR resource strategy, including whether it is a simple multi-state official-resource gateway or a richer in-app hub, state selection/saved-region behavior, freshness, Fish Detail entry points, and location/privacy assumptions.
+
+This remains an active product/design item in `ACTIVE-CHANGE-LEDGER.md` rather than exact current-state prose here.
 
 # Parking Lot
 
-Intentionally deferred until demonstrated by actual need or a later milestone:
+Intentionally deferred until demonstrated need or a later named gate:
 
 - fly fishing and fly-line-specific setup/knot systems,
+- detailed baitcaster brake/spool-tension/backlash/lure-weight/casting instruction,
+- project-owned Knot diagrams/controlled animations,
 - heavy fuzzy Search and advanced natural-language intent parsing,
 - commercial ProductDefinition architecture,
 - exhaustive manufacturer/product catalogs,
 - SKU/UPC/retailer modeling,
 - advanced size/style-aware readiness,
-- cloud synchronization unless the User Data architecture gate explicitly approves it,
+- cloud synchronization unless the User Data gate explicitly approves it,
 - automatic cloud backup providers,
 - AI fish identification,
 - actual-size lure calibration,
@@ -438,49 +245,32 @@ Intentionally deferred until demonstrated by actual need or a later milestone:
 - live weather integration,
 - live regulation updates,
 - family sharing,
-- achievement system.
+- achievement system,
+- optional barcode scanning,
+- more sophisticated analytics,
+- **automatic shopping/retailer integration** — revisit only when a concrete workflow demonstrates sufficient value and explicit approval resolves architecture/privacy/maintenance implications.
 
 # Out of Scope for Version 1
 
-- Social networking
-- Competitive leaderboards
-- Marketplace functionality
-- Subscription features
-- Advertising
+- Social networking.
+- Competitive leaderboards.
+- Marketplace functionality.
+- Subscription features.
+- Advertising.
+
+These are rejected/out of scope for Version 1 rather than automatic future backlog items. A future explicit product-scope decision is required to reverse one.
 
 # Release / Segment Completion
 
-A feature or segment is not complete merely because files were generated or staged.
-
-Closeout requires, as applicable:
-
-- Decisions finalized
-- Implementation completed
-- Testing/preflight completed
-- Files pushed to GitHub
-- Actual GitHub state verified
-- Runtime/deployment validated
-- All relevant documentation updated and validated
-
-See `DEVELOPMENT_WORKFLOW.md`.
+Feature/segment completion requires the applicable implementation, testing, GitHub verification, runtime validation, and documentation closeout defined by `DEVELOPMENT_WORKFLOW.md`.
 
 # Related Documents
 
-- `HANDOFF.md`
-- `MILESTONES.md`
 - `PROJECT.md`
-- `SPECIFICATION.md`
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
 - `DEVELOPMENT_WORKFLOW.md`
+- `HANDOFF.md`
+- `ACTIVE-CHANGE-LEDGER.md`
 - `NAVIGATION-PAGE-STANDARD.md`
-- `workstreams/KNOT-PRODUCTION-PACKAGE-1.md`
-- `workstreams/KNOT-PRODUCTION-PACKAGE-2.md`
-- `workstreams/KNOT-PRODUCTION-PACKAGE-3.md`
-- `workstreams/KNOT-PRODUCTION-PACKAGE-4.md`
-- `workstreams/KNOT-INTEGRATED-REGRESSION.md`
-- `data-model/04-KNOTS.md`
-- `data-model/02-FISH.md`
-- `data-model/05-TACKLE.md`
-- `data-model/07-USER-DATA.md`
-- `data-model/08-BACKUP.md`
+- applicable data-model/domain documents
