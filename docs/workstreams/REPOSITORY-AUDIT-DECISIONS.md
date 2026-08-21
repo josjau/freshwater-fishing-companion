@@ -1,6 +1,6 @@
 # Freshwater Fishing Companion — Repository Audit Decision Log
 
-**Document Revision:** 1.0.18  
+**Document Revision:** 1.0.19  
 **Document Status:** Active Decision Log  
 **Parent Audit:** `docs/workstreams/REPOSITORY-AUDIT-CLEANUP.md`  
 **Recorded:** 2026-08-18  
@@ -762,10 +762,52 @@ Controlling closeout:
 
 No application runtime source/data/media/UI behavior changed during Section 12.
 
+# Section 13 — Optional Continuous Integration
+
+**Decision:** IMPLEMENT MINIMAL NON-BLOCKING GITHUB ACTIONS VALIDATION  
+**Status:** PASS / GITHUB-VERIFIED / ACTIONS-PASS-CONFIRMED / CLOSED
+
+Section 13 approved and implemented one GitHub Actions workflow:
+
+`.github/workflows/repository-integrity.yml`
+
+The workflow runs the Section 12 validator on:
+
+- pushes to `main`,
+- pull requests targeting `main`,
+- manual `workflow_dispatch`.
+
+It uses read-only repository permissions, Node.js 24, no application package installation, no secrets, no deployment, no artifacts, no write-back behavior, and a five-minute timeout.
+
+Official GitHub Actions are pinned to exact release commit SHAs:
+
+- `actions/checkout` v7.0.1 — `3d3c42e5aac5ba805825da76410c181273ba90b1`
+- `actions/setup-node` v7.0.0 — `820762786026740c76f36085b0efc47a31fe5020`
+
+No branch protection or required status check was added. Direct pushes to `main` remain permitted; CI is an automated repository-health alarm rather than a merge gate.
+
+GitHub verification:
+
+- Section 13 baseline: `c1da68258d0280d16a45eef91d040c42959b7b29`
+- workflow creation commit: `1c65708ceadf0803ab2a69f010d95e85e4a67f8b`
+- verified `main` after user push/merge: `1e62f873a46c1a1e3c058bcf9e1c718aceb3054a`
+- workflow blob: `9616f739527723eaa19c2939ea1b2dec6171bccc`
+- comparison from the Section 13 baseline to verified implementation state shows exactly one net changed path: `.github/workflows/repository-integrity.yml`.
+
+The user confirmed in the GitHub Actions UI that the first `Repository Integrity` hosted run completed successfully. Connected tooling verified the workflow file and commit scope but did not expose push-triggered run enumeration without a run ID, so the runtime result is deliberately recorded as user-confirmed rather than connector-retrieved.
+
+The workflow is expected to remain comparatively stable as the site evolves. Future domain integrity rules normally belong in `tools/validate_repository_integrity.js`; the CI workflow changes only when execution policy, runtime, Action dependencies, or validation commands need to change.
+
+Controlling closeout:
+
+- `docs/workstreams/REPOSITORY-AUDIT-SECTION-13-CLOSEOUT.md`
+
+No application runtime source/data/media/UI behavior changed during Section 13.
+
 # Next Audit Action
 
-Proceed to **Section 13 — Optional Continuous Integration**.
+Proceed to **Section 14 — Documentation Maintenance Safeguards**.
 
-Section 13 must evaluate whether automatically running the repository-integrity validator through GitHub Actions provides enough maintenance value for this personal/local-first workflow. Do not add CI unless the maintenance cost and workflow consequences are explicitly justified and approved.
+Section 14 must define stronger documentation-governance/process safeguards so current-state documents, workstream lifecycle records, and durable decisions cannot silently drift apart again. It must distinguish mechanically enforceable consistency checks from human review and avoid metadata/process rules that create disproportionate update churn.
 
 Do not resume Fish Guide Phase 0 until the remaining Repository Audit Cleanup sections, final read-only re-audit, mandatory drift-prevention review/approval, and final documentation closeout are complete.
