@@ -518,6 +518,20 @@ If the user explicitly asks for a manual targeted edit:
 - Give exact replacement.
 - State insertion point.
 - State expected result.
+- Give a validation checkpoint.
+
+# No-Churn Rule
+
+Before generating a replacement, reconcile:
+
+- Approved architecture
+- Latest GitHub source
+- Related logic and data contracts
+- Likely follow-on requirements
+
+Do not replace a file again immediately for a foreseeable issue.
+
+A new replacement is justified when testing finds a defect, GitHub changed, requirements changed, or new verified evidence requires correction.
 
 # Repository Integrity and Drift Prevention Standard
 
