@@ -1,0 +1,29 @@
+name: External Reference Health
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Quarterly cadence approximates the approved 90-day interval.
+    - cron: "17 13 1 1,4,7,10 *"
+
+permissions:
+  contents: read
+
+jobs:
+  external-reference-health:
+    name: Report external reference health
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check external references (report only)
+        continue-on-error: true
+        run: node tools/check_external_references.js

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.0.0  
+**Document Revision:** 2.0.1  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-21
@@ -17,6 +17,20 @@ Do not record exact active audit section, exact session resume point, current bl
 For current formal continuation use `HANDOFF.md`. For material non-closed items use `ACTIVE-CHANGE-LEDGER.md`.
 
 # Unreleased
+
+## External Reference Freshness Maintenance
+
+### Added
+
+- Added a permanent external-reference maintenance standard with quarterly report-only reachability checks and 180-day human freshness review.
+- Added a non-destructive external-reference health checker and quarterly/manual GitHub Actions wrapper.
+
+### Changed
+
+- Clarified that human review remains authoritative for technical correctness, source suitability, embed behavior, and rights assumptions.
+- Established file-level `externalReferenceReviewedDate` metadata for Rig and Media build information only after a complete human review; automated or partial checks do not advance that date.
+- Excluded geometry/provenance-only URLs for already-approved local assets from recurring automated checks unless the asset is edited/replaced or provenance is questioned.
+
 
 ## Documentation Governance — Section 14 Reconciliation
 

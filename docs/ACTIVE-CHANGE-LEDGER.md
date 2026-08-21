@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.0.1  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `2f7c6ea41157ca68142575f8696525dc993f19f9`  
@@ -31,11 +31,8 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| GOV-001 | IMPLEMENTED / PENDING VALIDATION | Reduced living-document role model | Section 14 implementation record | Apply this package, re-fetch GitHub, verify roles/no-loss. |
-| GOV-002 | IMPLEMENTED / PENDING VALIDATION | Persistent formal Active Change Ledger | This document | Verify every material non-closed carry-forward item is represented and future updates use this owner. |
-| GOV-003 | APPROVED / PENDING IMPLEMENTATION | Deterministic documentation-integrity checks | `tools/validate_repository_integrity.js`; Section 14 | After this package lands, extend existing validator only; validate required docs/roles/structured stale-state rules. |
 | GOV-004 | OPEN | Document lifecycle/status cleanup details | Section 14 / D036 | Reconcile lifecycle metadata where useful; do not mass-rewrite historical closeouts without need. |
-| GOV-005 | OPEN / ONGOING PROCESS | External reference/media freshness maintenance | Repository Audit next maintenance section; media/reference standards | Decide reviewed-date/recheck cadence and whether a non-destructive link checker adds value; human review remains authoritative. |
+| GOV-005 | IMPLEMENTED / PENDING VALIDATION | External reference/media freshness maintenance | `EXTERNAL_REFERENCE_MAINTENANCE.md`; external-reference health workflow | Verify the landed policy/checker/workflow, then remove this completed implementation item; recurring quarterly/human review continues under the maintenance standard. |
 | GOV-006 | REQUIRED | Final read-only repository re-audit | Repository Audit closeout | Verify no unexplained duplicate current owners or known stale-status contradictions after cleanup. |
 | GOV-007 | REQUIRED | Final Repository Integrity and Drift Prevention review | Mandatory final user approval gate | Review/approve safeguards, classify controls, promote durable process rules. |
 | GOV-008 | BLOCKED | Repository Audit closeout / Fish release | Audit closeout | Close only after all findings/gates are reconciled, validated, documented, and GitHub-verified. |
