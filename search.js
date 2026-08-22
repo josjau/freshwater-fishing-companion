@@ -94,6 +94,76 @@ function searchRecords(records, query, fields = ["name"]) {
         .map((match) => match.record);
 }
 
+const FISH_SEARCH_HELPERS = Object.freeze({
+    all: Object.freeze(["bass", "bluegill", "rainbow", "brown"]),
+    trout: Object.freeze(["rainbow", "brown", "German Brown"])
+});
+
+function getFishCategoryName(record, categoryData = [], legacyCategoryMap = {}) {
+    if (!record || !Array.isArray(categoryData)) return "";
+    const categoryId = record.categoryId ?? legacyCategoryMap?.[record.category] ?? null;
+    if (!categoryId) return "";
+    return categoryData.find((category) => category.id === categoryId)?.name ?? "";
+}
+
+function getFishSearchMatch(record, normalizedQuery, categoryData, legacyCategoryMap) {
+    const normalizedName = normalizeSearchText(record.name);
+    const normalizedScientificName = normalizeSearchText(record.scientificName);
+    const normalizedAliases = (record.aliases ?? []).map(normalizeSearchText);
+    const normalizedCategory = normalizeSearchText(getFishCategoryName(record, categoryData, legacyCategoryMap));
+    const normalizedFamily = normalizeSearchText(record.family);
+
+    if (normalizedName === normalizedQuery) return 1000;
+    if (normalizedName.startsWith(normalizedQuery)) return 900;
+    if (normalizedAliases.includes(normalizedQuery)) return 850;
+    if (normalizedAliases.some((alias) => alias.startsWith(normalizedQuery))) return 800;
+    if (
+        normalizedName.includes(normalizedQuery) ||
+        normalizedScientificName.includes(normalizedQuery)
+    ) {
+        return 700;
+    }
+    if (normalizedCategory && normalizedCategory.includes(normalizedQuery)) return 600;
+    if (normalizedFamily && normalizedFamily.includes(normalizedQuery)) return 500;
+    if (normalizedAliases.some((alias) => alias.includes(normalizedQuery))) return 450;
+
+    return 0;
+}
+
+function searchFishRecords(records, query, categoryData = [], legacyCategoryMap = {}) {
+    if (!Array.isArray(records)) return [];
+
+    const normalizedQuery = normalizeSearchText(query);
+    if (!normalizedQuery) return sortRecordsAlphabetically(records);
+
+    return records
+        .map((record) => ({
+            record,
+            score: getFishSearchMatch(record, normalizedQuery, categoryData, legacyCategoryMap)
+        }))
+        .filter((match) => match.score > 0)
+        .sort((first, second) =>
+            second.score - first.score ||
+            String(first.record.name ?? "").localeCompare(
+                String(second.record.name ?? ""),
+                undefined,
+                { sensitivity: "base" }
+            )
+        )
+        .map((match) => match.record);
+}
+
+function getFishSearchPlaceholder(scopeKey, fallbackLabel = "Fish") {
+    const terms = FISH_SEARCH_HELPERS[scopeKey];
+    if (!Array.isArray(terms) || terms.length === 0) {
+        return `Search ${fallbackLabel}`;
+    }
+
+    if (terms.length === 1) return `Try ${terms[0]}`;
+    if (terms.length === 2) return `Try ${terms[0]} or ${terms[1]}`;
+    return `Try ${terms.slice(0, -1).join(", ")}, or ${terms[terms.length - 1]}`;
+}
+
 const KNOT_SEARCH_REPLACEMENTS = Object.freeze({
     mono: "monofilament",
     fluoro: "fluorocarbon",

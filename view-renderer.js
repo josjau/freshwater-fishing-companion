@@ -187,7 +187,15 @@ function renderSearchView(appMain, searchConfig) {
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", searchConfig.onParent);
     initializeHomeNavigation(appMain);
 
-    const updateSearch = () => searchConfig.onSearch(searchInput?.value ?? "");
+    if (searchInput && typeof searchConfig.initialQuery === "string") {
+        searchInput.value = searchConfig.initialQuery;
+    }
+
+    const updateSearch = () => {
+        const query = searchInput?.value ?? "";
+        searchConfig.onQueryChange?.(query);
+        searchConfig.onSearch(query);
+    };
     initializeSearchControls(searchForm, searchInput, clearButton, updateSearch);
 
     updateSearch();
@@ -214,6 +222,335 @@ function renderSearchResults(appMain, records, resultConfig) {
     if (typeof resultConfig.onResultSelect !== "function") return;
     resultsContainer.querySelectorAll("[data-result-id]").forEach((resultCard) => {
         resultCard.addEventListener("click", () => resultConfig.onResultSelect(resultCard.dataset.resultId));
+    });
+}
+
+
+function buildFishMediaMarkup(media, className, loading = "lazy") {
+    if (!media?.file) return "";
+    return `<img class="${className}" src="${media.file}" alt="${media.alt ?? ""}" loading="${loading}" decoding="async">`;
+}
+
+function buildFishResultCardMarkup(fish, category, primaryMedia, isDetailAvailable = true) {
+    const scientificNameMarkup = fish.scientificName
+        ? `<span class="search-result-card__scientific-name">${fish.scientificName}</span>`
+        : "";
+    const summaryMarkup = fish.summary
+        ? `<span class="search-result-card__summary">${fish.summary}</span>`
+        : "";
+    const familyMarkup = fish.family
+        ? `<span class="fish-result-card__family"><strong>Family:</strong> ${fish.family}</span>`
+        : "";
+    const aliasesMarkup = Array.isArray(fish.aliases) && fish.aliases.length
+        ? `<span class="fish-result-card__aliases"><strong>Also known as:</strong> ${fish.aliases.join(", ")}</span>`
+        : "";
+    const content = `
+        <span class="fish-result-card__category">${category?.name ?? "Fish"}</span>
+        <span class="search-result-card__title">${fish.name}</span>
+        ${buildFishMediaMarkup(primaryMedia, "fish-result-card__image")}
+        ${scientificNameMarkup}
+        ${summaryMarkup}
+        ${familyMarkup}
+        ${aliasesMarkup}
+    `;
+
+    if (!isDetailAvailable) {
+        return `<article class="search-result-card search-result-card--fish search-result-card--fish-reference">${content}</article>`;
+    }
+
+    return `
+        <button class="search-result-card search-result-card--fish" type="button" data-result-id="${fish.id}">
+            ${content}
+            <span class="search-result-card__action">View Fish →</span>
+        </button>
+    `;
+}
+
+function renderFishGuideLanding(appMain, config) {
+    if (!appMain || !config) {
+        console.error("A valid Fish Guide landing configuration is required.");
+        return;
+    }
+
+    const categories = Array.isArray(config.categories) ? config.categories : [];
+    const comparisonCount = Number(config.comparisonCount ?? 0);
+    const browseCards = [
+        {
+            key: "all",
+            title: "All Fish",
+            description: `Browse all ${config.activeFishCount ?? 0} currently active Fish A–Z.`
+        },
+        ...categories.map((category) => ({
+            key: category.id,
+            title: category.name,
+            description: category.summary
+        }))
+    ];
+
+    const browseMarkup = browseCards.map((card) => `
+        <button class="dashboard-card fish-collection-card" type="button" data-fish-collection-key="${card.key}">
+            <span class="dashboard-card__title">${card.title}</span>
+            <span class="dashboard-card__description">${card.description}</span>
+            <span class="dashboard-card__action">Browse →</span>
+        </button>
+    `).join("");
+
+    const compareMarkup = comparisonCount > 0
+        ? `
+            <button class="dashboard-card dashboard-card--workflow fish-compare-entry" type="button" data-fish-compare-catalog>
+                <span class="dashboard-card__title">Compare Similar Fish</span>
+                <span class="dashboard-card__description">Compare approved look-alike Fish pairs using verified field-identification differences.</span>
+                <span class="dashboard-card__action">Compare →</span>
+            </button>
+        `
+        : "";
+
+    appMain.innerHTML = `
+        <section class="content-view fish-guide-view" aria-labelledby="fish-guide-title">
+            ${buildPageNavigationMarkup()}
+            <h2 id="fish-guide-title">Fish Guide</h2>
+            <p>Search by Fish identity, compare approved similar Fish, or browse the active Fish library.</p>
+            <form class="search-form section-search-form" data-fish-search-form>
+                <label class="search-label" for="fish-guide-search-input">Search all Fish</label>
+                ${buildSearchControlsMarkup("fish-guide-search-input", config.searchPlaceholder)}
+            </form>
+            <div class="section-search-results" data-fish-search-region hidden>
+                <p class="search-status" data-search-status aria-live="polite"></p>
+                <div class="search-results" data-search-results></div>
+            </div>
+            <div class="fish-guide-content" data-fish-guide-content>
+                ${compareMarkup ? `
+                    <section class="fish-guide-section" aria-labelledby="fish-compare-title">
+                        <h3 id="fish-compare-title">Compare Similar Fish</h3>
+                        <p>Use focused pairwise comparisons for Fish that are genuinely useful to tell apart.</p>
+                        <div class="dashboard-grid">${compareMarkup}</div>
+                    </section>
+                ` : ""}
+                <section class="fish-guide-section" aria-labelledby="fish-browse-title">
+                    <h3 id="fish-browse-title">Browse Fish</h3>
+                    <div class="dashboard-grid fish-collection-grid">${browseMarkup}</div>
+                </section>
+            </div>
+        </section>
+    `;
+
+    initializeHomeNavigation(appMain);
+
+    const form = appMain.querySelector("[data-fish-search-form]");
+    const input = appMain.querySelector("#fish-guide-search-input");
+    const clearButton = appMain.querySelector("[data-search-clear]");
+    const searchRegion = appMain.querySelector("[data-fish-search-region]");
+    const guideContent = appMain.querySelector("[data-fish-guide-content]");
+    if (input && typeof config.initialQuery === "string") input.value = config.initialQuery;
+
+    const updateSearch = () => {
+        const query = input?.value?.trim() ?? "";
+        config.onQueryChange?.(query);
+        const hasQuery = query.length > 0;
+        if (searchRegion) searchRegion.hidden = !hasQuery;
+        if (guideContent) guideContent.hidden = hasQuery;
+        if (!hasQuery) {
+            const status = appMain.querySelector("[data-search-status]");
+            const results = appMain.querySelector("[data-search-results]");
+            if (status) status.textContent = "";
+            if (results) results.innerHTML = "";
+            return;
+        }
+        config.onSearch?.(query);
+    };
+    initializeSearchControls(form, input, clearButton, updateSearch);
+    updateSearch();
+
+    appMain.querySelectorAll("[data-fish-collection-key]").forEach((card) => {
+        card.addEventListener("click", () => config.onCollectionSelect?.(card.dataset.fishCollectionKey));
+    });
+    appMain.querySelector("[data-fish-compare-catalog]")?.addEventListener("click", () => {
+        config.onCompareSelect?.();
+    });
+}
+
+function renderFishDetail(appMain, detailConfig) {
+    if (!appMain || !detailConfig?.record) {
+        console.error("A valid Fish detail record is required.");
+        return;
+    }
+
+    const record = detailConfig.record;
+    const category = detailConfig.category;
+    const media = detailConfig.primaryMedia;
+    const aliasesMarkup = record.aliases?.length
+        ? `<p class="fish-aliases"><strong>Also known as:</strong> ${record.aliases.join(", ")}</p>`
+        : "";
+    const attributionMarkup = media?.license?.attributionRequired === true && media.license.attributionText
+        ? `<p class="fish-media-attribution">${media.license.attributionText}</p>`
+        : "";
+    const relationships = Array.isArray(detailConfig.relationships) ? detailConfig.relationships : [];
+    const similarMarkup = relationships.length
+        ? `
+            <section class="detail-section fish-similar-section">
+                <h3>Compare Similar Fish</h3>
+                <div class="fish-similar-grid">
+                    ${relationships.map((context) => `
+                        <button class="fish-similar-link" type="button" data-fish-relationship-id="${context.relationship.id}">
+                            ${buildFishMediaMarkup(context.relatedMedia, "fish-similar-link__image")}
+                            <span class="fish-similar-link__body">
+                                <span class="fish-similar-link__name">${context.relatedFish.name}</span>
+                                <span class="fish-similar-link__action">Compare <span aria-hidden="true">→</span></span>
+                            </span>
+                        </button>
+                    `).join("")}
+                </div>
+            </section>
+        `
+        : "";
+    const recommendations = Array.isArray(detailConfig.rigRecommendations)
+        ? detailConfig.rigRecommendations
+        : [];
+    const primaryRigs = recommendations.filter((item) => item.priority === "Primary");
+    const alternativeRigs = recommendations.filter((item) => item.priority === "Alternative");
+    const buildRigGroup = (title, records) => records.length
+        ? `
+            <li class="fish-rig-application-item">
+                <strong>${title}</strong>
+                <div class="fish-rig-link-list">
+                    ${records.map((item) => `
+                        <button class="internal-knowledge-link fish-rig-link" type="button" data-fish-rig-id="${item.rig.id}">
+                            ${item.rig.name} <span aria-hidden="true">→</span>
+                        </button>
+                    `).join("")}
+                </div>
+            </li>
+        `
+        : "";
+    const rigMarkup = recommendations.length
+        ? `
+            <section class="detail-section fish-rig-section">
+                <div class="fish-rig-section__header">
+                    <h3>Rigs to Start With</h3>
+                    <p>Select a Rig for the canonical setup and tying instructions.</p>
+                </div>
+                <ul class="fish-rig-application-list">
+                    ${buildRigGroup("Primary", primaryRigs)}
+                    ${buildRigGroup("Alternatives", alternativeRigs)}
+                </ul>
+            </section>
+        `
+        : "";
+
+    appMain.innerHTML = `
+        <article class="detail-view detail-view--fish" aria-labelledby="fish-detail-title">
+            ${buildPageNavigationMarkup(detailConfig.parentLabel)}
+            <header class="detail-header fish-detail-header">
+                <p class="detail-eyebrow">${category?.name ?? "Fish"}</p>
+                <h2 id="fish-detail-title">${record.name}</h2>
+                <figure class="fish-primary-media fish-primary-media--identity">
+                    ${buildFishMediaMarkup(media, "fish-primary-media__image", "eager")}
+                    ${attributionMarkup}
+                </figure>
+                <p class="fish-scientific-name">${record.scientificName}</p>
+                <p>${record.summary}</p>
+                <p class="fish-family"><strong>Family:</strong> ${record.family}</p>
+                ${aliasesMarkup}
+            </header>
+            ${similarMarkup}
+            <section class="detail-section fish-identification-section">
+                <h3>How to Identify It</h3>
+                <ul class="detail-list fish-identification-list">
+                    ${record.identificationTraits.map((trait) => `<li>${trait}</li>`).join("")}
+                </ul>
+            </section>
+            <section class="detail-section rig-at-a-glance fish-at-a-glance">
+                <div class="rig-at-a-glance__group"><h3>Common Habitat</h3>${buildTagList(record.habitatTags)}</div>
+                <div class="rig-at-a-glance__group"><h3>Common Waters</h3>${buildTagList(record.waterbodyTypes)}</div>
+            </section>
+            ${rigMarkup}
+        </article>
+    `;
+
+    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
+    initializeHomeNavigation(appMain);
+    appMain.querySelectorAll("[data-fish-relationship-id]").forEach((button) => {
+        button.addEventListener("click", () => detailConfig.onRelationshipSelect?.(button.dataset.fishRelationshipId));
+    });
+    appMain.querySelectorAll("[data-fish-rig-id]").forEach((button) => {
+        button.addEventListener("click", () => detailConfig.onRigSelect?.(button.dataset.fishRigId));
+    });
+}
+
+function renderFishComparisonCatalog(appMain, config) {
+    if (!appMain || !config) {
+        console.error("A valid Fish comparison catalog configuration is required.");
+        return;
+    }
+    const comparisons = Array.isArray(config.comparisons) ? config.comparisons : [];
+    appMain.innerHTML = `
+        <section class="content-view fish-comparison-catalog" aria-labelledby="fish-comparison-catalog-title">
+            ${buildPageNavigationMarkup(config.parentLabel)}
+            <h2 id="fish-comparison-catalog-title">Compare Similar Fish</h2>
+            <p>Choose an approved pair to review the most useful field-identification differences.</p>
+            <div class="fish-comparison-catalog-grid">
+                ${comparisons.map((comparison) => `
+                    <button class="fish-comparison-catalog-card" type="button" data-fish-relationship-id="${comparison.relationship.id}">
+                        <span class="fish-comparison-catalog-card__images">
+                            ${buildFishMediaMarkup(comparison.mediaA, "fish-comparison-catalog-card__image")}
+                            ${buildFishMediaMarkup(comparison.mediaB, "fish-comparison-catalog-card__image")}
+                        </span>
+                        <span class="fish-comparison-catalog-card__title">${comparison.fishA.name} vs ${comparison.fishB.name}</span>
+                        <span class="fish-comparison-catalog-card__action">Compare →</span>
+                    </button>
+                `).join("")}
+            </div>
+        </section>
+    `;
+    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", config.onParent);
+    initializeHomeNavigation(appMain);
+    appMain.querySelectorAll("[data-fish-relationship-id]").forEach((button) => {
+        button.addEventListener("click", () => config.onSelect?.(button.dataset.fishRelationshipId));
+    });
+}
+
+function renderFishComparison(appMain, config) {
+    if (!appMain || !config?.relationship || !config?.fishA || !config?.fishB) {
+        console.error("A valid Fish comparison configuration is required.");
+        return;
+    }
+    const distinctionsFor = (fishId) => config.relationship.distinctions
+        .filter((distinction) => distinction.fishId === fishId)
+        .map((distinction) => `<li>${distinction.text}</li>`)
+        .join("");
+    const buildSide = (fish, media) => `
+        <section class="fish-comparison-side">
+            <h3>${fish.name}</h3>
+            <p class="fish-scientific-name">${fish.scientificName}</p>
+            ${buildFishMediaMarkup(media, "fish-comparison-side__image", "eager")}
+            <ul class="detail-list">${distinctionsFor(fish.id)}</ul>
+            <button class="internal-knowledge-link" type="button" data-fish-detail-id="${fish.id}">
+                View ${fish.name} <span aria-hidden="true">→</span>
+            </button>
+        </section>
+    `;
+
+    appMain.innerHTML = `
+        <article class="detail-view detail-view--fish-comparison" aria-labelledby="fish-comparison-title">
+            ${buildPageNavigationMarkup(config.parentLabel)}
+            <header class="detail-header fish-comparison-header">
+                <p class="detail-eyebrow">Field Identification</p>
+                <h2 id="fish-comparison-title">${config.fishA.name} vs ${config.fishB.name}</h2>
+                <p>Compare the strongest visible differences for this approved Fish pair.</p>
+            </header>
+            <section class="detail-section fish-comparison-differences">
+                <h3>Key Differences</h3>
+                <div class="fish-comparison-grid">
+                    ${buildSide(config.fishA, config.mediaA)}
+                    ${buildSide(config.fishB, config.mediaB)}
+                </div>
+            </section>
+        </article>
+    `;
+    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", config.onParent);
+    initializeHomeNavigation(appMain);
+    appMain.querySelectorAll("[data-fish-detail-id]").forEach((button) => {
+        button.addEventListener("click", () => config.onFishSelect?.(button.dataset.fishDetailId));
     });
 }
 

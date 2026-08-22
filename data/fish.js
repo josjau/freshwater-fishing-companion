@@ -155,16 +155,45 @@ const FISH_DATA = Object.freeze([
         id: "rainbow-trout",
         name: "Rainbow Trout",
         summary:
-            "A cold-water fish commonly recognized by its spotted body " +
-            "and pink or reddish lateral band.",
+            "A cold-water trout recognized by a pink or reddish side stripe, " +
+            "dark spotting, and a distinctly forked, spotted tail.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Oncorhynchus mykiss",
-        category: "Trout",
+        categoryId: "trout",
         family: "Salmonidae",
+        aliases: [],
+        identificationTraits: [
+            "A pink or reddish stripe runs lengthwise along the side.",
+            "Dark spots cover the upper body and are prominent on the tail.",
+            "The tail fin is distinctly forked.",
+            "The belly is silvery white."
+        ],
         habitatTags: ["Current", "Rock", "Cold Water", "Open Water"],
         waterbodyTypes: ["Lake", "River", "Creek", "Reservoir"]
+    },
+    {
+        id: "brown-trout",
+        name: "Brown Trout",
+        summary:
+            "A cold-water trout with black and red-orange body spots and a " +
+            "mostly unspotted tail that is square to only slightly forked.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Salmo trutta",
+        categoryId: "trout",
+        family: "Salmonidae",
+        aliases: ["German Brown Trout"],
+        identificationTraits: [
+            "Round black spots appear on the body and dorsal fin.",
+            "Red or orange spots along the body are often surrounded by lighter halos.",
+            "The tail usually has few or no dark spots.",
+            "The tail is usually square to only slightly forked."
+        ],
+        habitatTags: ["Current", "Timber", "Deep Water", "Cold Water"],
+        waterbodyTypes: ["Lake", "River", "Creek"]
     },
     {
         id: "common-carp",

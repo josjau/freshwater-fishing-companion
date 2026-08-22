@@ -379,16 +379,480 @@ function validateControlledArray(values, allowed, label) {
     }
 }
 
+
+function validateExactFieldOrder(record, expectedFields, label) {
+    if (!isPlainObject(record)) return;
+    const actualFields = Object.keys(record);
+    if (JSON.stringify(actualFields) !== JSON.stringify(expectedFields)) {
+        fail(
+            label,
+            `${record.id || record.fishId || "<unknown>"}: fields must be exactly ${expectedFields.join(", ")} in canonical order; found ${actualFields.join(", ")}`
+        );
+    }
+}
+
+function validateTextArray(values, label, allowEmpty = true) {
+    const items = requireArray(values, label);
+    if (!allowEmpty && items.length === 0) {
+        fail(label, "must contain at least one value");
+    }
+    const seen = new Set();
+    for (const value of items) {
+        if (typeof value !== "string" || value.trim() === "") {
+            fail(label, `contains invalid text value ${JSON.stringify(value)}`);
+            continue;
+        }
+        const normalized = value.trim().toLocaleLowerCase();
+        if (seen.has(normalized)) {
+            fail(label, `duplicate value ${JSON.stringify(value)}`);
+        }
+        seen.add(normalized);
+    }
+    return items;
+}
+
+function expectedFishIdentificationId(fishIds) {
+    return [...fishIds].sort().join("-vs-");
+}
+
+function isFishTargetProductionRecord(record) {
+    return isPlainObject(record) &&
+        typeof record.categoryId === "string" &&
+        Array.isArray(record.aliases) &&
+        Array.isArray(record.identificationTraits);
+}
+
+function validateFishProductionData(fish, categories, relationships, guidance, rigs, legacyCategoryMap) {
+    const expectedCategoryIds = [
+        "bass",
+        "catfish",
+        "sunfish-crappie",
+        "walleye-sauger",
+        "trout",
+        "gar",
+        "carp",
+        "drum",
+        "paddlefish"
+    ];
+    const categoryFields = ["id", "name", "summary"];
+    const fishFields = [
+        "id",
+        "name",
+        "summary",
+        "createdVersion",
+        "lastModifiedVersion",
+        "isActive",
+        "scientificName",
+        "categoryId",
+        "family",
+        "aliases",
+        "identificationTraits",
+        "habitatTags",
+        "waterbodyTypes"
+    ];
+    const legacyFishFields = [
+        "id",
+        "name",
+        "summary",
+        "createdVersion",
+        "lastModifiedVersion",
+        "isActive",
+        "scientificName",
+        "category",
+        "family",
+        "habitatTags",
+        "waterbodyTypes"
+    ];
+    const relationshipFields = [
+        "id",
+        "fishIds",
+        "createdVersion",
+        "lastModifiedVersion",
+        "isActive",
+        "distinctions"
+    ];
+    const distinctionFields = ["fishId", "text"];
+    const guidanceFields = [
+        "fishId",
+        "createdVersion",
+        "lastModifiedVersion",
+        "isActive",
+        "rigRecommendations"
+    ];
+    const recommendationFields = ["rigId", "priority", "reason"];
+    const habitatValues = new Set([
+        "Grass",
+        "Timber",
+        "Brush",
+        "Rock",
+        "Current",
+        "Open Water",
+        "Shallow Water",
+        "Deep Water",
+        "Cold Water",
+        "Mud",
+        "Channel"
+    ]);
+    const waterbodyValues = new Set(["Pond", "Lake", "Reservoir", "River", "Creek"]);
+    const guidancePriorities = new Set(["Primary", "Alternative"]);
+
+    const categoryIds = validateUniqueIds(categories, "Fish category registry");
+    const actualCategoryIds = categories.map((category) => category?.id);
+    if (JSON.stringify(actualCategoryIds) !== JSON.stringify(expectedCategoryIds)) {
+        fail(
+            "Fish category registry",
+            `category order/IDs must be ${expectedCategoryIds.join(", ")}; found ${actualCategoryIds.join(", ")}`
+        );
+    }
+    for (const category of categories) {
+        if (!isPlainObject(category)) continue;
+        validateExactFieldOrder(category, categoryFields, "Fish category registry");
+        for (const field of ["name", "summary"]) {
+            if (typeof category[field] !== "string" || category[field].trim() === "") {
+                fail("Fish category registry", `${category.id}: ${field} must be non-empty text`);
+            }
+        }
+        if (Object.prototype.hasOwnProperty.call(category, "isActive")) {
+            fail("Fish category registry", `${category.id}: category must not own isActive`);
+        }
+    }
+
+    const fishById = indexById(fish);
+    const forbiddenFishFields = [
+        "regionTags",
+        "activityPeriods",
+        "seasonalPatterns",
+        "recommendedRigIds",
+        "recommendedLureIds",
+        "regulationResourceIds",
+        "imageIds",
+        "mediaIds",
+        "similarFishIds",
+        "searchKeywords",
+        "isV1",
+        "isReady",
+        "releaseStatus",
+        "publicationStatus",
+        "isOklahomaFish",
+        "isKansasFish",
+        "isMissouriFish",
+        "isArkansasFish"
+    ];
+    validateNoForbiddenFields(fish, forbiddenFishFields, "Fish production ownership");
+
+    for (const record of fish) {
+        if (!isPlainObject(record)) continue;
+        const isTargetRecord = isFishTargetProductionRecord(record);
+        if (isTargetRecord) {
+            validateExactFieldOrder(record, fishFields, "Fish production schema");
+            if (Object.prototype.hasOwnProperty.call(record, "category")) {
+                fail("Fish production schema", `${record.id}: target Fish must not retain legacy category`);
+            }
+            if (typeof record.categoryId !== "string" || !categoryIds.has(record.categoryId)) {
+                fail("Fish category relationship", `${record.id}: unresolved categoryId ${JSON.stringify(record.categoryId)}`);
+            }
+            validateTextArray(record.aliases, `Fish ${record.id} aliases`);
+            validateTextArray(
+                record.identificationTraits,
+                `Fish ${record.id} identificationTraits`,
+                record.isActive !== true
+            );
+        } else {
+            validateExactFieldOrder(record, legacyFishFields, "Fish transitional legacy schema");
+            if (typeof record.category !== "string" || !legacyCategoryMap?.[record.category]) {
+                fail("Fish transitional category", `${record.id}: unresolved legacy category ${JSON.stringify(record.category)}`);
+            } else if (!categoryIds.has(legacyCategoryMap[record.category])) {
+                fail("Fish transitional category", `${record.id}: legacy category maps to unresolved categoryId ${legacyCategoryMap[record.category]}`);
+            }
+        }
+        if (typeof record.scientificName !== "string" || record.scientificName.trim() === "") {
+            fail("Fish production schema", `${record.id}: scientificName must be non-empty text`);
+        }
+        if (typeof record.family !== "string" || record.family.trim() === "") {
+            fail("Fish production schema", `${record.id}: family must be non-empty text`);
+        }
+        validateControlledArray(record.habitatTags, habitatValues, `Fish ${record.id} habitatTags`);
+        validateControlledArray(record.waterbodyTypes, waterbodyValues, `Fish ${record.id} waterbodyTypes`);
+    }
+
+    validateUniqueIds(relationships, "Fish identification relationships");
+    const pairKeys = new Set();
+    for (const relationship of relationships) {
+        if (!isPlainObject(relationship)) continue;
+        validateExactFieldOrder(relationship, relationshipFields, "Fish identification relationships");
+        const ids = requireArray(relationship.fishIds, `Fish identification ${relationship.id} fishIds`);
+        if (ids.length !== 2) {
+            fail("Fish identification relationships", `${relationship.id}: fishIds must contain exactly two Fish IDs`);
+            continue;
+        }
+        if (ids[0] === ids[1]) {
+            fail("Fish identification relationships", `${relationship.id}: self-pairs are not allowed`);
+        }
+        const sorted = [...ids].sort();
+        if (JSON.stringify(ids) !== JSON.stringify(sorted)) {
+            fail("Fish identification relationships", `${relationship.id}: fishIds are not in canonical lexicographic order`);
+        }
+        const expectedId = expectedFishIdentificationId(ids);
+        if (relationship.id !== expectedId) {
+            fail("Fish identification relationships", `${relationship.id}: expected deterministic ID ${expectedId}`);
+        }
+        const pairKey = sorted.join("|");
+        if (pairKeys.has(pairKey)) {
+            fail("Fish identification relationships", `${relationship.id}: duplicate unordered Fish pair`);
+        }
+        pairKeys.add(pairKey);
+
+        for (const fishId of ids) {
+            const participant = fishById.get(fishId);
+            if (!participant) {
+                fail("Fish identification relationships", `${relationship.id}: unresolved Fish ID ${fishId}`);
+            } else if (relationship.isActive === true && participant.isActive !== true) {
+                fail("Fish identification relationships", `${relationship.id}: active relationship references inactive Fish ${fishId}`);
+            }
+        }
+
+        const distinctions = requireArray(
+            relationship.distinctions,
+            `Fish identification ${relationship.id} distinctions`
+        );
+        const distinctionCounts = new Map(ids.map((fishId) => [fishId, 0]));
+        for (const distinction of distinctions) {
+            if (!isPlainObject(distinction)) {
+                fail("Fish identification relationships", `${relationship.id}: distinction is not an object`);
+                continue;
+            }
+            validateExactFieldOrder(distinction, distinctionFields, `Fish identification ${relationship.id} distinction`);
+            if (!ids.includes(distinction.fishId)) {
+                fail("Fish identification relationships", `${relationship.id}: distinction references nonparticipant ${distinction.fishId}`);
+            } else {
+                distinctionCounts.set(distinction.fishId, distinctionCounts.get(distinction.fishId) + 1);
+            }
+            if (typeof distinction.text !== "string" || distinction.text.trim() === "") {
+                fail("Fish identification relationships", `${relationship.id}: distinction text must be non-empty`);
+            }
+        }
+        for (const fishId of ids) {
+            if ((distinctionCounts.get(fishId) ?? 0) === 0) {
+                fail("Fish identification relationships", `${relationship.id}: no distinction supplied for ${fishId}`);
+            }
+        }
+    }
+
+    const rigById = indexById(rigs);
+    const guidanceFishIds = new Set();
+    for (const record of guidance) {
+        if (!isPlainObject(record)) {
+            fail("Fish-to-Rig guidance", "guidance registry contains a non-object record");
+            continue;
+        }
+        validateExactFieldOrder(record, guidanceFields, "Fish-to-Rig guidance");
+        if (typeof record.fishId !== "string" || !fishById.has(record.fishId)) {
+            fail("Fish-to-Rig guidance", `unresolved fishId ${JSON.stringify(record.fishId)}`);
+        }
+        if (guidanceFishIds.has(record.fishId)) {
+            fail("Fish-to-Rig guidance", `duplicate guidance record for ${record.fishId}`);
+        }
+        guidanceFishIds.add(record.fishId);
+        const fishRecord = fishById.get(record.fishId);
+        if (record.isActive === true && fishRecord?.isActive !== true) {
+            fail("Fish-to-Rig guidance", `${record.fishId}: active guidance references inactive Fish`);
+        }
+        if (typeof record.isActive !== "boolean") {
+            fail("Fish-to-Rig guidance", `${record.fishId}: isActive must be Boolean`);
+        }
+
+        const recommendations = requireArray(
+            record.rigRecommendations,
+            `Fish-to-Rig guidance ${record.fishId} recommendations`
+        );
+        if (recommendations.length === 0) {
+            fail("Fish-to-Rig guidance", `${record.fishId}: empty guidance record is not allowed`);
+        }
+        const seenRigIds = new Set();
+        let primaryCount = 0;
+        let alternativeCount = 0;
+        for (const recommendation of recommendations) {
+            if (!isPlainObject(recommendation)) {
+                fail("Fish-to-Rig guidance", `${record.fishId}: recommendation is not an object`);
+                continue;
+            }
+            validateExactFieldOrder(recommendation, recommendationFields, `Fish-to-Rig guidance ${record.fishId}`);
+            if (!guidancePriorities.has(recommendation.priority)) {
+                fail("Fish-to-Rig guidance", `${record.fishId}: invalid priority ${JSON.stringify(recommendation.priority)}`);
+            }
+            if (recommendation.priority === "Primary") primaryCount += 1;
+            if (recommendation.priority === "Alternative") alternativeCount += 1;
+            if (typeof recommendation.reason !== "string" || recommendation.reason.trim() === "") {
+                fail("Fish-to-Rig guidance", `${record.fishId}: recommendation reason must be non-empty`);
+            }
+            if (seenRigIds.has(recommendation.rigId)) {
+                fail("Fish-to-Rig guidance", `${record.fishId}: duplicate Rig recommendation ${recommendation.rigId}`);
+            }
+            seenRigIds.add(recommendation.rigId);
+            const rig = rigById.get(recommendation.rigId);
+            if (!rig) {
+                fail("Fish-to-Rig guidance", `${record.fishId}: unresolved Rig ${recommendation.rigId}`);
+            } else if (record.isActive === true && rig.isActive !== true) {
+                fail("Fish-to-Rig guidance", `${record.fishId}: active guidance references inactive Rig ${recommendation.rigId}`);
+            }
+        }
+        if (record.isActive === true && (primaryCount < 1 || primaryCount > 3)) {
+            fail("Fish-to-Rig guidance", `${record.fishId}: active guidance must have 1-3 Primary recommendations`);
+        }
+        if (alternativeCount > 3) {
+            fail("Fish-to-Rig guidance", `${record.fishId}: guidance exceeds 3 Alternative recommendations`);
+        }
+    }
+}
+
+function getMarkdownHeadingSection(text, heading) {
+    const marker = `## ${heading}`;
+    const start = text.indexOf(marker);
+    if (start < 0) return null;
+    const bodyStart = start + marker.length;
+    const nextHeading = text.indexOf("\n## ", bodyStart);
+    return text.slice(bodyStart, nextHeading < 0 ? text.length : nextHeading);
+}
+
+function collectEvidenceSourceIds(section, label) {
+    if (typeof section !== "string") return [];
+    const lines = section.split(/\r?\n/);
+    const start = lines.findIndex((line) => line.trim() === label);
+    if (start < 0) return [];
+    const ids = [];
+    for (let index = start + 1; index < lines.length; index += 1) {
+        const line = lines[index].trim();
+        if (line === "") continue;
+        if (!line.startsWith("- ")) break;
+        const match = line.match(/^- ([A-Z][A-Z0-9-]+)/);
+        if (match) ids.push(match[1]);
+    }
+    return ids;
+}
+
+function validateFishEvidence(fish, relationships) {
+    recordCheck("Fish production evidence and relationship provenance");
+    const sourceText = readText("docs/FISH_REFERENCE_SOURCES.md");
+    if (sourceText === null) return;
+
+    const sourceIds = new Set(
+        [...sourceText.matchAll(/^## ([A-Z][A-Z0-9-]+)\s*$/gm)].map((match) => match[1])
+    );
+
+    const authoredFish = fish.filter(
+        (record) => isPlainObject(record) && Array.isArray(record.identificationTraits) && record.identificationTraits.length > 0
+    );
+    for (const record of authoredFish) {
+        const section = getMarkdownHeadingSection(sourceText, `${record.name} (\`${record.id}\`)`);
+        if (section === null) {
+            fail("Fish evidence", `${record.id}: missing per-Fish evidence section`);
+            continue;
+        }
+        const labels = ["Regional Inclusion", "Taxonomy / Family", "Identification", "Habitat / Waterbody"];
+        if (Array.isArray(record.aliases) && record.aliases.length > 0) labels.push("Aliases");
+        for (const label of labels) {
+            const ids = collectEvidenceSourceIds(section, label);
+            if (ids.length === 0) {
+                fail("Fish evidence", `${record.id}: ${label} has no source reference`);
+            }
+            for (const sourceId of ids) {
+                if (!sourceIds.has(sourceId)) {
+                    fail("Fish evidence", `${record.id}: ${label} references unknown source ID ${sourceId}`);
+                }
+            }
+        }
+    }
+
+    for (const relationship of relationships) {
+        if (!isPlainObject(relationship) || !Array.isArray(relationship.fishIds)) continue;
+        const section = getMarkdownHeadingSection(sourceText, relationship.id);
+        if (section === null) {
+            fail("Fish relationship evidence", `${relationship.id}: missing relationship evidence section`);
+            continue;
+        }
+        for (const fishId of relationship.fishIds) {
+            const fishRecord = fish.find((record) => record.id === fishId);
+            if (!fishRecord) continue;
+            const label = `${fishRecord.name} distinction evidence`;
+            const ids = collectEvidenceSourceIds(section, label);
+            if (ids.length === 0) {
+                fail("Fish relationship evidence", `${relationship.id}: ${label} has no source reference`);
+            }
+            for (const sourceId of ids) {
+                if (!sourceIds.has(sourceId)) {
+                    fail("Fish relationship evidence", `${relationship.id}: ${label} references unknown source ID ${sourceId}`);
+                }
+            }
+        }
+    }
+}
+
+function validateFishSearchHelpers(canonicalData) {
+    recordCheck("Fish scoped-search helper validity");
+    const bindings = loadBindings("search.js", ["FISH_SEARCH_HELPERS", "searchFishRecords"]);
+    const helpers = bindings.FISH_SEARCH_HELPERS;
+    const searchFishRecords = bindings.searchFishRecords;
+    if (!isPlainObject(helpers) || typeof searchFishRecords !== "function") {
+        fail("Fish search helpers", "FISH_SEARCH_HELPERS and searchFishRecords must be available");
+        return;
+    }
+
+    const activeFish = canonicalData.fish.filter((record) => record.isActive === true);
+    for (const [scopeKey, terms] of Object.entries(helpers)) {
+        const eligible = scopeKey === "all"
+            ? activeFish
+            : activeFish.filter((record) => {
+                const categoryId = record.categoryId ?? canonicalData.legacyCategoryMap?.[record.category] ?? null;
+                return categoryId === scopeKey;
+            });
+        if (eligible.length === 0) {
+            continue;
+        }
+        if (!Array.isArray(terms) || terms.length === 0) {
+            fail("Fish search helpers", `${scopeKey}: helper scope has no curated terms`);
+            continue;
+        }
+        for (const term of terms) {
+            if (typeof term !== "string" || term.trim() === "") {
+                fail("Fish search helpers", `${scopeKey}: invalid helper term ${JSON.stringify(term)}`);
+                continue;
+            }
+            const matches = searchFishRecords(eligible, term, canonicalData.categories, canonicalData.legacyCategoryMap);
+            if (!Array.isArray(matches) || matches.length === 0) {
+                fail("Fish search helpers", `${scopeKey}: helper term ${JSON.stringify(term)} returns zero scoped results`);
+            }
+        }
+    }
+}
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
+    const categoryBindings = loadBindings("data/fish-categories.js", ["FISH_CATEGORY_DATA", "FISH_LEGACY_CATEGORY_ID_MAP"]);
     const fishBindings = loadBindings("data/fish.js", ["FISH_DATA"]);
+    const fishIdentificationBindings = loadBindings(
+        "data/fish-identification.js",
+        ["FISH_IDENTIFICATION_RELATIONSHIPS"]
+    );
+    const fishRigGuidanceBindings = loadBindings("data/fish-rig-guidance.js", ["FISH_RIG_GUIDANCE"]);
     const rigBindings = loadBindings("data/rigs.js", ["RIG_DATA", "CORE_RIG_IDS"]);
     const knotBindings = loadBindings("data/knots.js", ["KNOT_DATA", "CORE_KNOT_IDS"]);
     const tackleBindings = loadBindings("data/tackle.js", ["TACKLE_DATA"]);
     const guidanceBindings = loadBindings("data/knot-guidance.js", ["KNOT_TASK_DEFINITIONS"]);
 
+    const categories = requireArray(categoryBindings.FISH_CATEGORY_DATA, "Fish category registry");
+    const legacyCategoryMap = isPlainObject(categoryBindings.FISH_LEGACY_CATEGORY_ID_MAP)
+        ? categoryBindings.FISH_LEGACY_CATEGORY_ID_MAP
+        : {};
     const fish = requireArray(fishBindings.FISH_DATA, "Fish registry");
+    const fishIdentification = requireArray(
+        fishIdentificationBindings.FISH_IDENTIFICATION_RELATIONSHIPS,
+        "Fish identification relationships"
+    );
+    const fishRigGuidance = requireArray(
+        fishRigGuidanceBindings.FISH_RIG_GUIDANCE,
+        "Fish-to-Rig guidance"
+    );
     const rigs = requireArray(rigBindings.RIG_DATA, "Rig registry");
     const knots = requireArray(knotBindings.KNOT_DATA, "Knot registry");
     const tackle = requireArray(tackleBindings.TACKLE_DATA, "Tackle registry");
@@ -401,6 +865,7 @@ function validateCanonicalData() {
 
     validateCoreRegistry(rigBindings.CORE_RIG_IDS, rigs, "Core Rig registry");
     validateCoreRegistry(knotBindings.CORE_KNOT_IDS, knots, "Core Knot registry");
+    validateFishProductionData(fish, categories, fishIdentification, fishRigGuidance, rigs, legacyCategoryMap);
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
@@ -614,7 +1079,16 @@ function validateCanonicalData() {
         }
     }
 
-    return { fish, rigs, knots, tackle };
+    return {
+        categories,
+        legacyCategoryMap,
+        fish,
+        fishIdentification,
+        fishRigGuidance,
+        rigs,
+        knots,
+        tackle
+    };
 }
 
 function validateOptionArray(records, label) {
@@ -772,12 +1246,38 @@ function validateMedia(canonicalData) {
 
     const ownerRegistries = {
         fish: indexById(canonicalData.fish),
+        "fish-identification": indexById(canonicalData.fishIdentification),
         rig: indexById(canonicalData.rigs),
         knot: indexById(canonicalData.knots),
         tackle: indexById(canonicalData.tackle)
     };
 
     const referencedLocalFiles = new Set();
+    const activeFishPrimaryCounts = new Map(
+        canonicalData.fish.map((record) => [record.id, 0])
+    );
+
+    function validateFishLicense(item) {
+        if (!isPlainObject(item.license)) {
+            fail("Fish media license", `${item.id}: license must be an object`);
+            return;
+        }
+        if (typeof item.license.attributionRequired !== "boolean") {
+            fail("Fish media license", `${item.id}: attributionRequired must be Boolean`);
+        }
+        if (!Object.prototype.hasOwnProperty.call(item.license, "attributionText")) {
+            fail("Fish media license", `${item.id}: attributionText field is required`);
+        } else if (item.license.attributionRequired === true) {
+            if (typeof item.license.attributionText !== "string" || item.license.attributionText.trim() === "") {
+                fail("Fish media license", `${item.id}: attributionText must be non-empty when attribution is required`);
+            }
+        } else if (item.license.attributionText !== null) {
+            fail("Fish media license", `${item.id}: attributionText must be null when attribution is not required`);
+        }
+        if (typeof item.license.changesMade !== "string" || item.license.changesMade.trim() === "") {
+            fail("Fish media license", `${item.id}: local Fish media must state changesMade or "None"`);
+        }
+    }
 
     for (const item of media) {
         if (!isPlainObject(item)) {
@@ -799,8 +1299,9 @@ function validateMedia(canonicalData) {
             }
         }
 
+        let localFile = null;
         if (typeof item.file === "string" && item.file.trim() !== "") {
-            const localFile = normalizeLocalReference(item.file);
+            localFile = normalizeLocalReference(item.file);
             if (!localFile) {
                 fail("Local media", `${item.id}: file must be a repository-local path`);
             } else {
@@ -809,6 +1310,68 @@ function validateMedia(canonicalData) {
                     fail("Local media", `${item.id}: missing local media file ${localFile}`);
                 }
             }
+        }
+
+        if (item.ownerType === "fish") {
+            const allowedRoles = new Set(["primary-identification", "supplemental-identification"]);
+            if (!allowedRoles.has(item.role)) {
+                fail("Fish media", `${item.id}: unsupported Fish role ${JSON.stringify(item.role)}`);
+            }
+            if (item.type !== "image") {
+                fail("Fish media", `${item.id}: Fish identification media type must be image`);
+            }
+            if (!localFile || !localFile.startsWith("images/fish/")) {
+                fail("Fish media", `${item.id}: Fish image must be local under images/fish/`);
+            }
+            if (typeof item.alt !== "string" || item.alt.trim() === "") {
+                fail("Fish media", `${item.id}: identification alt text must be non-empty`);
+            }
+            if (item.role === "primary-identification") {
+                const expectedId = `${item.ownerId}-primary-identification`;
+                if (item.id !== expectedId) {
+                    fail("Fish media", `${item.id}: expected primary Media ID ${expectedId}`);
+                }
+                if (item.isActive === true && activeFishPrimaryCounts.has(item.ownerId)) {
+                    activeFishPrimaryCounts.set(
+                        item.ownerId,
+                        activeFishPrimaryCounts.get(item.ownerId) + 1
+                    );
+                }
+            } else if (item.role === "supplemental-identification") {
+                const prefix = `${item.ownerId}-supplemental-identification-`;
+                if (!item.id.startsWith(prefix) || item.id.length <= prefix.length) {
+                    fail("Fish media", `${item.id}: supplemental Media ID must use ${prefix}<purpose>`);
+                }
+            }
+            validateFishLicense(item);
+        }
+
+        if (item.ownerType === "fish-identification") {
+            if (item.role !== "comparison") {
+                fail("Fish comparison media", `${item.id}: Fish-identification role must be comparison`);
+            }
+            if (item.type !== "image") {
+                fail("Fish comparison media", `${item.id}: comparison media type must be image`);
+            }
+            if (!localFile || !localFile.startsWith("images/fish-identification/")) {
+                fail("Fish comparison media", `${item.id}: comparison image must be local under images/fish-identification/`);
+            }
+            const prefix = `${item.ownerId}-comparison-`;
+            if (!item.id.startsWith(prefix) || item.id.length <= prefix.length) {
+                fail("Fish comparison media", `${item.id}: comparison Media ID must use ${prefix}<purpose>`);
+            }
+            if (typeof item.alt !== "string" || item.alt.trim() === "") {
+                fail("Fish comparison media", `${item.id}: comparison alt text must be non-empty`);
+            }
+            validateFishLicense(item);
+        }
+    }
+
+    for (const fish of canonicalData.fish) {
+        if (!isFishTargetProductionRecord(fish) || fish.isActive !== true) continue;
+        const count = activeFishPrimaryCounts.get(fish.id) ?? 0;
+        if (count !== 1) {
+            fail("Fish media readiness", `${fish.id}: active Fish must have exactly one active primary-identification Media; found ${count}`);
         }
     }
 
@@ -978,6 +1541,8 @@ function main() {
 
     validateEntrypoint();
     const canonicalData = validateCanonicalData();
+    validateFishEvidence(canonicalData.fish, canonicalData.fishIdentification);
+    validateFishSearchHelpers(canonicalData);
     validateReelGuidance();
     validateMedia(canonicalData);
     validateRepositoryHygiene();

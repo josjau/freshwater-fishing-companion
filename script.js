@@ -18,6 +18,10 @@ console.info(`[Loaded] ${BUILD_INFO.file} | ${BUILD_INFO.milestone}`);
 const ROUTES = Object.freeze({
     DASHBOARD: "dashboard",
     FISH: "fish",
+    FISH_BROWSE: "fish-browse",
+    FISH_DETAIL: "fish-detail",
+    FISH_COMPARE_CATALOG: "fish-compare-catalog",
+    FISH_COMPARE: "fish-compare",
     RIGS: "rigs",
     RIG_BROWSE: "rig-browse",
     RIG_DETAIL: "rig-detail",
@@ -107,6 +111,12 @@ const KNOT_COLLECTIONS = Object.freeze({
 
 let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
+let selectedFishId = null;
+let selectedFishCollectionKey = "all";
+let selectedFishRelationshipId = null;
+let fishGuideState = { query: "", scrollY: 0 };
+let fishBrowseState = { query: "", scrollY: 0 };
+let fishComparisonCatalogScrollY = 0;
 let selectedRigId = null;
 let selectedRigCollectionKey = "all";
 let selectedKnotId = null;
@@ -136,6 +146,37 @@ function returnToDetailNavigationContext() {
     const context = detailNavigationStack.pop();
     if (!context) return false;
 
+    if (context.route === ROUTES.FISH) {
+        fishGuideState = { ...context.state.fishGuideState };
+        showView(ROUTES.FISH);
+        return true;
+    }
+
+    if (context.route === ROUTES.FISH_BROWSE) {
+        selectedFishCollectionKey = context.state.selectedFishCollectionKey;
+        fishBrowseState = { ...context.state.fishBrowseState };
+        showView(ROUTES.FISH_BROWSE);
+        return true;
+    }
+
+    if (context.route === ROUTES.FISH_COMPARE_CATALOG) {
+        fishComparisonCatalogScrollY = context.state.scrollY ?? 0;
+        showView(ROUTES.FISH_COMPARE_CATALOG);
+        return true;
+    }
+
+    if (context.route === ROUTES.FISH_DETAIL) {
+        selectedFishId = context.state.selectedFishId;
+        showView(ROUTES.FISH_DETAIL);
+        return true;
+    }
+
+    if (context.route === ROUTES.FISH_COMPARE) {
+        selectedFishRelationshipId = context.state.selectedFishRelationshipId;
+        showView(ROUTES.FISH_COMPARE);
+        return true;
+    }
+
     if (context.route === ROUTES.RIG_DETAIL) {
         selectedRigId = context.state.selectedRigId;
         selectedRigCollectionKey = context.state.selectedRigCollectionKey;
@@ -163,6 +204,10 @@ function returnToDetailNavigationContext() {
 
 const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH]: renderFishGuideView,
+    [ROUTES.FISH_BROWSE]: renderFishBrowseView,
+    [ROUTES.FISH_DETAIL]: renderFishDetailView,
+    [ROUTES.FISH_COMPARE_CATALOG]: renderFishComparisonCatalogView,
+    [ROUTES.FISH_COMPARE]: renderFishComparisonView,
     [ROUTES.RIGS]: renderRigGuideView,
     [ROUTES.RIG_BROWSE]: renderRigBrowseView,
     [ROUTES.RIG_DETAIL]: renderRigDetailView,
@@ -207,39 +252,402 @@ function showView(route) {
     });
 }
 
-function renderFishGuideView(appMain) {
-    renderView(appMain, {
-        headingId: "fish-guide-title",
-        title: "Fish Guide",
-        description: "Search by common name, scientific name, or category, or browse a Fish Guide collection.",
-        search: {
-            inputId: "fish-guide-search-input",
-            label: "Search all Fish",
-            placeholder: "Try bass, bluegill, or Micropterus",
-            onSearch: (query) => updateFishSearchResults(appMain, query)
-        },
-        cards: [
-            { id: "browse-fish-by-family", title: "Browse by Family", description: "Explore related freshwater fish groups." },
-            { id: "browse-fish-by-habitat", title: "Browse by Habitat", description: "Find fish by the water and habitat they prefer." },
-            { id: "browse-fish-alphabetically", title: "Browse Alphabetically", description: "View the complete fish guide from A to Z." }
-        ]
+function getActiveFish() {
+    return FISH_DATA.filter((fish) => fish.isActive === true);
+}
+
+function getFishCategory(categoryId) {
+    return FISH_CATEGORY_DATA.find((category) => category.id === categoryId) ?? null;
+}
+
+function getFishCategoryId(fish) {
+    if (!fish) return null;
+    if (typeof fish.categoryId === "string" && fish.categoryId) return fish.categoryId;
+    if (typeof fish.category === "string" && typeof FISH_LEGACY_CATEGORY_ID_MAP !== "undefined") {
+        return FISH_LEGACY_CATEGORY_ID_MAP[fish.category] ?? null;
+    }
+    return null;
+}
+
+function isFishProductionRecord(fish) {
+    return Boolean(fish) &&
+        typeof fish.categoryId === "string" &&
+        Array.isArray(fish.aliases) &&
+        Array.isArray(fish.identificationTraits);
+}
+
+function getVisibleFishCategories(activeFish = getActiveFish()) {
+    const activeCategoryIds = new Set(activeFish.map(getFishCategoryId).filter(Boolean));
+    return FISH_CATEGORY_DATA.filter((category) => activeCategoryIds.has(category.id));
+}
+
+function getFishPrimaryMedia(fishId) {
+    if (typeof MEDIA_DATA === "undefined") return null;
+    return MEDIA_DATA.find((media) =>
+        media.ownerType === "fish" &&
+        media.ownerId === fishId &&
+        media.role === "primary-identification" &&
+        media.isActive === true
+    ) ?? null;
+}
+
+function getActiveFishRelationships() {
+    if (typeof FISH_IDENTIFICATION_RELATIONSHIPS === "undefined") return [];
+    const activeFishIds = new Set(getActiveFish().map((fish) => fish.id));
+    return FISH_IDENTIFICATION_RELATIONSHIPS.filter((relationship) =>
+        relationship.isActive === true &&
+        relationship.fishIds.every((fishId) => activeFishIds.has(fishId))
+    );
+}
+
+function getFishRelationshipsForFish(fishId) {
+    return getActiveFishRelationships().filter((relationship) => relationship.fishIds.includes(fishId));
+}
+
+function isFishDetailReady(fish) {
+    return isFishProductionRecord(fish) && fish.isActive === true && Boolean(getFishPrimaryMedia(fish.id));
+}
+
+function getFishForCollection(activeFish = getActiveFish()) {
+    if (selectedFishCollectionKey === "all") return activeFish;
+    return activeFish.filter((fish) => getFishCategoryId(fish) === selectedFishCollectionKey);
+}
+
+function getFishCollectionConfig() {
+    if (selectedFishCollectionKey === "all") {
+        return {
+            key: "all",
+            title: "All Fish",
+            description: "Browse every currently active Fish in canonical-name A–Z order."
+        };
+    }
+
+    const category = getFishCategory(selectedFishCollectionKey);
+    return category
+        ? { key: category.id, title: category.name, description: category.summary }
+        : { key: "all", title: "All Fish", description: "Browse every currently active Fish in canonical-name A–Z order." };
+}
+
+function restoreFishScroll(scrollY) {
+    if (!Number.isFinite(scrollY) || scrollY <= 0) return;
+    window.requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
     });
 }
 
-function updateFishSearchResults(appMain, query) {
-    const matches = searchRecords(FISH_DATA.filter((fish) => fish.isActive), query, ["name", "scientificName", "category"]);
-    renderSearchResults(appMain, matches, {
-        emptyMessage: "No fish matched your search.",
-        renderRecord: (fish) => `
-            <button class="search-result-card" type="button" data-result-id="${fish.id}">
-                <span class="search-result-card__title">${fish.name}</span>
-                <span class="search-result-card__scientific-name">${fish.scientificName}</span>
-                <span class="search-result-card__meta">${fish.category} · ${fish.family}</span>
-                <span class="search-result-card__summary">${fish.summary}</span>
-            </button>
-        `,
-        onResultSelect: (fishId) => console.info(`Fish selected: ${fishId}`)
+function renderFishSearchResultCard(fish) {
+    return buildFishResultCardMarkup(
+        fish,
+        getFishCategory(getFishCategoryId(fish)),
+        getFishPrimaryMedia(fish.id),
+        isFishDetailReady(fish)
+    );
+}
+
+function renderFishGuideView(appMain) {
+    const activeFish = getActiveFish();
+    const visibleCategories = getVisibleFishCategories(activeFish);
+    const activeRelationships = getActiveFishRelationships();
+
+    renderFishGuideLanding(appMain, {
+        activeFishCount: activeFish.length,
+        categories: visibleCategories,
+        comparisonCount: activeRelationships.length,
+        initialQuery: fishGuideState.query,
+        searchPlaceholder: getFishSearchPlaceholder("all", "Fish"),
+        onQueryChange: (query) => {
+            fishGuideState.query = query;
+        },
+        onSearch: (query) => updateFishGuideSearchResults(appMain, query),
+        onCollectionSelect: openFishBrowse,
+        onCompareSelect: openFishComparisonCatalog
     });
+
+    restoreFishScroll(fishGuideState.scrollY);
+}
+
+function updateFishGuideSearchResults(appMain, query) {
+    const matches = searchFishRecords(getActiveFish(), query, FISH_CATEGORY_DATA, FISH_LEGACY_CATEGORY_ID_MAP);
+    renderSearchResults(appMain, matches, {
+        emptyMessage: "No Fish matched your search.",
+        renderRecord: renderFishSearchResultCard,
+        onResultSelect: openFishDetailFromGuide
+    });
+}
+
+function openFishBrowse(collectionKey) {
+    const validCollection = collectionKey === "all" || Boolean(getFishCategory(collectionKey));
+    if (!validCollection) {
+        console.warn(`Fish collection was not found: ${collectionKey}`);
+        return;
+    }
+
+    clearDetailNavigationStack();
+    fishGuideState.scrollY = window.scrollY;
+    selectedFishCollectionKey = collectionKey;
+    fishBrowseState = { query: "", scrollY: 0 };
+    showView(ROUTES.FISH_BROWSE);
+}
+
+function renderFishBrowseView(appMain) {
+    const collection = getFishCollectionConfig();
+    const scopeKey = collection.key;
+    renderSearchView(appMain, {
+        headingId: "fish-browse-title",
+        inputId: "fish-browse-search-input",
+        title: collection.title,
+        description: collection.description,
+        label: `Search within ${collection.title}`,
+        placeholder: getFishSearchPlaceholder(scopeKey, collection.title),
+        parentLabel: "Fish Guide",
+        initialQuery: fishBrowseState.query,
+        onQueryChange: (query) => {
+            fishBrowseState.query = query.trim();
+        },
+        onParent: () => showView(ROUTES.FISH),
+        onSearch: (query) => updateFishBrowseResults(appMain, query)
+    });
+
+    restoreFishScroll(fishBrowseState.scrollY);
+}
+
+function updateFishBrowseResults(appMain, query) {
+    const collectionFish = getFishForCollection(getActiveFish());
+    const matches = searchFishRecords(collectionFish, query, FISH_CATEGORY_DATA, FISH_LEGACY_CATEGORY_ID_MAP);
+    renderSearchResults(appMain, matches, {
+        emptyMessage: `No Fish matched within ${getFishCollectionConfig().title}.`,
+        renderRecord: renderFishSearchResultCard,
+        onResultSelect: openFishDetailFromBrowse
+    });
+}
+
+function openFishDetailFromGuide(fishId) {
+    const fish = findRecordById(getActiveFish(), fishId);
+    if (!fish || !isFishDetailReady(fish)) {
+        console.warn(`Fish detail is not production-ready: ${fishId}`);
+        return;
+    }
+
+    clearDetailNavigationStack();
+    fishGuideState.scrollY = window.scrollY;
+    pushDetailNavigationContext({
+        route: ROUTES.FISH,
+        label: "Fish Guide",
+        state: { fishGuideState: { ...fishGuideState } }
+    });
+    selectedFishId = fishId;
+    showView(ROUTES.FISH_DETAIL);
+}
+
+function openFishDetailFromBrowse(fishId) {
+    const fish = findRecordById(getActiveFish(), fishId);
+    if (!fish || !isFishDetailReady(fish)) {
+        console.warn(`Fish detail is not production-ready: ${fishId}`);
+        return;
+    }
+
+    clearDetailNavigationStack();
+    fishBrowseState.scrollY = window.scrollY;
+    pushDetailNavigationContext({
+        route: ROUTES.FISH_BROWSE,
+        label: getFishCollectionConfig().title,
+        state: {
+            selectedFishCollectionKey,
+            fishBrowseState: { ...fishBrowseState }
+        }
+    });
+    selectedFishId = fishId;
+    showView(ROUTES.FISH_DETAIL);
+}
+
+function getFishRelationshipContexts(fishId) {
+    return getFishRelationshipsForFish(fishId)
+        .map((relationship) => {
+            const relatedFishId = relationship.fishIds.find((id) => id !== fishId);
+            const relatedFish = findRecordById(getActiveFish(), relatedFishId);
+            if (!relatedFish) return null;
+            return {
+                relationship,
+                relatedFish,
+                relatedMedia: getFishPrimaryMedia(relatedFish.id)
+            };
+        })
+        .filter(Boolean);
+}
+
+function getFishRigRecommendationContexts(fishId) {
+    if (typeof FISH_RIG_GUIDANCE === "undefined") return [];
+    const guidance = FISH_RIG_GUIDANCE.find((record) => record.fishId === fishId && record.isActive === true);
+    if (!guidance) return [];
+
+    return guidance.rigRecommendations
+        .map((recommendation) => {
+            const rig = findRecordById(RIG_DATA, recommendation.rigId);
+            if (!rig || rig.isActive !== true) return null;
+            return { ...recommendation, rig };
+        })
+        .filter(Boolean);
+}
+
+function renderFishDetailView(appMain) {
+    const fish = findRecordById(getActiveFish(), selectedFishId);
+    const returnContext = peekDetailNavigationContext();
+    if (!fish || !isFishDetailReady(fish)) {
+        console.warn(`Fish was not found: ${selectedFishId}`);
+        if (returnContext && returnToDetailNavigationContext()) return;
+        showView(ROUTES.FISH);
+        return;
+    }
+
+    renderFishDetail(appMain, {
+        record: fish,
+        category: getFishCategory(getFishCategoryId(fish)),
+        primaryMedia: getFishPrimaryMedia(fish.id),
+        relationships: getFishRelationshipContexts(fish.id),
+        rigRecommendations: getFishRigRecommendationContexts(fish.id),
+        parentLabel: returnContext?.label ?? "Fish Guide",
+        onParent: returnContext ? returnToDetailNavigationContext : () => showView(ROUTES.FISH),
+        onRelationshipSelect: openFishComparisonFromDetail,
+        onRigSelect: openRigDetailFromFish
+    });
+}
+
+function openFishComparisonCatalog() {
+    clearDetailNavigationStack();
+    fishGuideState.scrollY = window.scrollY;
+    fishComparisonCatalogScrollY = 0;
+    showView(ROUTES.FISH_COMPARE_CATALOG);
+}
+
+function getFishComparisonContexts() {
+    const activeFish = getActiveFish();
+    return getActiveFishRelationships()
+        .map((relationship) => {
+            const fishA = findRecordById(activeFish, relationship.fishIds[0]);
+            const fishB = findRecordById(activeFish, relationship.fishIds[1]);
+            if (!fishA || !fishB) return null;
+            return {
+                relationship,
+                fishA,
+                fishB,
+                mediaA: getFishPrimaryMedia(fishA.id),
+                mediaB: getFishPrimaryMedia(fishB.id)
+            };
+        })
+        .filter(Boolean);
+}
+
+function renderFishComparisonCatalogView(appMain) {
+    renderFishComparisonCatalog(appMain, {
+        comparisons: getFishComparisonContexts(),
+        parentLabel: "Fish Guide",
+        onParent: () => showView(ROUTES.FISH),
+        onSelect: openFishComparisonFromCatalog
+    });
+    restoreFishScroll(fishComparisonCatalogScrollY);
+}
+
+function openFishComparisonFromCatalog(relationshipId) {
+    const relationship = getActiveFishRelationships().find((item) => item.id === relationshipId);
+    if (!relationship) {
+        console.warn(`Fish comparison was not found: ${relationshipId}`);
+        return;
+    }
+
+    clearDetailNavigationStack();
+    fishComparisonCatalogScrollY = window.scrollY;
+    pushDetailNavigationContext({
+        route: ROUTES.FISH_COMPARE_CATALOG,
+        label: "Compare Similar Fish",
+        state: { scrollY: fishComparisonCatalogScrollY }
+    });
+    selectedFishRelationshipId = relationshipId;
+    showView(ROUTES.FISH_COMPARE);
+}
+
+function openFishComparisonFromDetail(relationshipId) {
+    const relationship = getActiveFishRelationships().find((item) => item.id === relationshipId);
+    const fish = findRecordById(getActiveFish(), selectedFishId);
+    if (!relationship || !fish || !relationship.fishIds.includes(fish.id)) {
+        console.warn(`Fish comparison could not be opened: ${relationshipId}`);
+        return;
+    }
+
+    pushDetailNavigationContext({
+        route: ROUTES.FISH_DETAIL,
+        label: fish.name,
+        state: { selectedFishId: fish.id }
+    });
+    selectedFishRelationshipId = relationshipId;
+    showView(ROUTES.FISH_COMPARE);
+}
+
+function renderFishComparisonView(appMain) {
+    const relationship = getActiveFishRelationships().find((item) => item.id === selectedFishRelationshipId);
+    const returnContext = peekDetailNavigationContext();
+    if (!relationship) {
+        console.warn(`Fish comparison was not found: ${selectedFishRelationshipId}`);
+        if (returnContext && returnToDetailNavigationContext()) return;
+        showView(ROUTES.FISH_COMPARE_CATALOG);
+        return;
+    }
+
+    const fishA = findRecordById(getActiveFish(), relationship.fishIds[0]);
+    const fishB = findRecordById(getActiveFish(), relationship.fishIds[1]);
+    if (!fishA || !fishB) {
+        console.warn(`Fish comparison participants are unavailable: ${relationship.id}`);
+        if (returnContext && returnToDetailNavigationContext()) return;
+        showView(ROUTES.FISH_COMPARE_CATALOG);
+        return;
+    }
+
+    renderFishComparison(appMain, {
+        relationship,
+        fishA,
+        fishB,
+        mediaA: getFishPrimaryMedia(fishA.id),
+        mediaB: getFishPrimaryMedia(fishB.id),
+        parentLabel: returnContext?.label ?? "Compare Similar Fish",
+        onParent: returnContext ? returnToDetailNavigationContext : () => showView(ROUTES.FISH_COMPARE_CATALOG),
+        onFishSelect: openFishDetailFromComparison
+    });
+}
+
+function openFishDetailFromComparison(fishId) {
+    const fish = findRecordById(getActiveFish(), fishId);
+    const relationship = getActiveFishRelationships().find((item) => item.id === selectedFishRelationshipId);
+    if (!fish || !relationship || !relationship.fishIds.includes(fish.id)) {
+        console.warn(`Fish comparison participant could not be opened: ${fishId}`);
+        return;
+    }
+
+    const fishA = findRecordById(getActiveFish(), relationship.fishIds[0]);
+    const fishB = findRecordById(getActiveFish(), relationship.fishIds[1]);
+    pushDetailNavigationContext({
+        route: ROUTES.FISH_COMPARE,
+        label: `${fishA?.name ?? relationship.fishIds[0]} vs ${fishB?.name ?? relationship.fishIds[1]}`,
+        state: { selectedFishRelationshipId: relationship.id }
+    });
+    selectedFishId = fish.id;
+    showView(ROUTES.FISH_DETAIL);
+}
+
+function openRigDetailFromFish(rigId) {
+    const fish = findRecordById(getActiveFish(), selectedFishId);
+    const rig = findRecordById(RIG_DATA, rigId);
+    if (!fish || !rig || rig.isActive !== true) {
+        console.warn(`Related Fish or Rig could not be opened: ${rigId}`);
+        return;
+    }
+
+    pushDetailNavigationContext({
+        route: ROUTES.FISH_DETAIL,
+        label: fish.name,
+        state: { selectedFishId: fish.id }
+    });
+    selectedRigId = rig.id;
+    selectedRigCollectionKey = "all";
+    showView(ROUTES.RIG_DETAIL);
 }
 
 function renderRigGuideView(appMain) {
@@ -473,10 +881,10 @@ function renderRigDetailView(appMain) {
     const rig = findRecordById(RIG_DATA, selectedRigId);
     const fromGuideSearch = selectedRigCollectionKey === "guide";
     const returnContext = peekDetailNavigationContext();
-    const fromRelatedKnot = returnContext?.route === ROUTES.KNOT_DETAIL;
+    const hasConnectedReturn = [ROUTES.KNOT_DETAIL, ROUTES.FISH_DETAIL].includes(returnContext?.route);
     if (!rig) {
         console.warn(`Rig was not found: ${selectedRigId}`);
-        if (fromRelatedKnot && returnToDetailNavigationContext()) return;
+        if (hasConnectedReturn && returnToDetailNavigationContext()) return;
         showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE);
         return;
     }
@@ -484,11 +892,11 @@ function renderRigDetailView(appMain) {
     const collection = getRigCollectionConfig();
     renderInstructionDetail(appMain, {
         record: rig,
-        parentLabel: fromRelatedKnot
+        parentLabel: hasConnectedReturn
             ? returnContext.label
             : (fromGuideSearch ? "Rig Guide" : collection.title),
         selections: getRigReadinessSelections(rig.id),
-        onParent: fromRelatedKnot
+        onParent: hasConnectedReturn
             ? returnToDetailNavigationContext
             : () => showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE),
         onKnotSelect: openKnotDetailFromRig,

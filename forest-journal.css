@@ -643,3 +643,212 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 }
 .knot-media-link:hover { background: color-mix(in srgb, var(--accent-knots) 26%, var(--surface-hover)); }
 .knot-media-link:focus-visible { outline: 3px solid var(--accent-knots); outline-offset: 3px; }
+
+/* =========================================================
+   FISH GUIDE — PRODUCTION PACKAGE 1
+   ========================================================= */
+
+.fish-guide-content { display: grid; gap: var(--space-8); }
+.fish-guide-section > h3 { margin-bottom: var(--space-2); }
+.fish-guide-section > p { margin-bottom: var(--space-4); color: var(--text-muted); }
+.fish-collection-card,
+.fish-compare-entry { --card-accent: var(--accent-fish); }
+
+.search-result-card--fish {
+    background:
+        linear-gradient(110deg, color-mix(in srgb, var(--accent-fish) 14%, transparent), transparent 52%),
+        var(--surface-elevated);
+}
+.fish-result-card__category {
+    margin-bottom: var(--space-1);
+    color: color-mix(in srgb, var(--accent-fish) 78%, white 22%);
+    font-size: .85rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+}
+.fish-result-card__image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    margin: var(--space-4) 0;
+    border: 1px solid color-mix(in srgb, var(--accent-fish) 40%, var(--border));
+    border-radius: var(--radius-small);
+    object-fit: contain;
+    background: color-mix(in srgb, var(--surface) 78%, black 22%);
+}
+.fish-result-card__family,
+.fish-result-card__aliases {
+    margin-top: var(--space-2);
+    color: var(--text-muted);
+    font-size: .92rem;
+}
+
+.detail-view--fish .detail-eyebrow,
+.detail-view--fish-comparison .detail-eyebrow {
+    color: color-mix(in srgb, var(--accent-fish) 78%, white 22%);
+}
+.fish-detail-header {
+    margin-bottom: var(--space-5);
+    padding: var(--space-5);
+    border-left: 5px solid var(--accent-fish);
+    border-radius: var(--radius);
+    background:
+        linear-gradient(110deg, color-mix(in srgb, var(--accent-fish) 14%, transparent), transparent 52%),
+        var(--surface-elevated);
+}
+.fish-detail-header > p:last-child { margin-bottom: 0; }
+.fish-scientific-name { margin-bottom: var(--space-3); color: var(--text-muted); font-style: italic; }
+.fish-family,
+.fish-aliases { color: var(--text-muted); }
+
+.fish-primary-media {
+    margin: 0 0 var(--space-5);
+    padding: var(--space-4);
+    border: 1px solid color-mix(in srgb, var(--accent-fish) 48%, var(--border));
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+.fish-primary-media--identity {
+    margin: var(--space-4) 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+}
+.fish-primary-media--identity .fish-primary-media__image {
+    border: 1px solid color-mix(in srgb, var(--accent-fish) 40%, var(--border));
+}
+.fish-primary-media__image {
+    width: 100%;
+    max-height: 520px;
+    border-radius: var(--radius-small);
+    object-fit: contain;
+    background: color-mix(in srgb, var(--surface-elevated) 78%, black 22%);
+}
+.fish-media-attribution { margin: var(--space-2) 0 0; color: var(--text-subtle); font-size: .82rem; }
+
+.fish-identification-section { border-color: color-mix(in srgb, var(--accent-fish) 50%, var(--border)); }
+.fish-identification-list li::marker { color: var(--accent-fish); }
+
+.fish-similar-section {
+    margin-bottom: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-color: color-mix(in srgb, var(--accent-fish) 38%, var(--border));
+}
+.fish-similar-section h3 { margin-bottom: var(--space-2); font-size: 1rem; }
+.fish-similar-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
+.fish-similar-link {
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: var(--space-3);
+    width: 100%;
+    padding: var(--space-2);
+    border: 1px solid color-mix(in srgb, var(--accent-fish) 48%, var(--border));
+    border-radius: var(--radius-small);
+    background: color-mix(in srgb, var(--accent-fish) 11%, transparent);
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+}
+.fish-similar-link:hover { border-color: var(--accent-fish); background: color-mix(in srgb, var(--accent-fish) 20%, transparent); }
+.fish-similar-link:focus-visible { outline: 3px solid var(--accent-fish); outline-offset: 3px; }
+.fish-similar-link__image {
+    width: 84px;
+    height: 56px;
+    border-radius: var(--radius-small);
+    object-fit: contain;
+    background: color-mix(in srgb, var(--surface-elevated) 78%, black 22%);
+}
+.fish-similar-link__body {
+    display: grid;
+    align-content: center;
+    gap: 2px;
+    min-width: 0;
+}
+.fish-similar-link__name { font-weight: 800; }
+.fish-similar-link__action { color: var(--accent-fish); font-size: .86rem; font-weight: 800; }
+
+.fish-at-a-glance .tag-list { gap: var(--space-1) var(--space-2); }
+.fish-at-a-glance .tag-list li { padding: 4px 8px; font-size: .86rem; }
+
+.fish-rig-section { border-color: color-mix(in srgb, var(--accent-fish) 38%, var(--border)); }
+.fish-rig-section__header p { margin-bottom: 0; color: var(--text-muted); }
+.fish-rig-application-list { display: grid; gap: var(--space-4); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+.fish-rig-application-item { display: grid; gap: var(--space-2); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border); }
+.fish-rig-application-item:last-child { padding-bottom: 0; border-bottom: 0; }
+.fish-rig-link-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.fish-rig-link { border-color: color-mix(in srgb, var(--accent-fish) 48%, var(--border)); background: color-mix(in srgb, var(--accent-fish) 11%, transparent); }
+.fish-rig-link:hover { border-color: var(--accent-fish); background: color-mix(in srgb, var(--accent-fish) 20%, transparent); }
+.fish-rig-link:focus-visible { outline-color: var(--accent-fish); }
+
+.fish-comparison-catalog-grid { display: grid; gap: var(--space-4); }
+.fish-comparison-catalog-card {
+    display: grid;
+    gap: var(--space-4);
+    width: 100%;
+    padding: var(--space-4);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--accent-fish);
+    border-radius: var(--radius);
+    background: var(--surface-elevated);
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+}
+.fish-comparison-catalog-card:hover { border-color: var(--accent-fish); background: var(--surface-hover); }
+.fish-comparison-catalog-card:focus-visible { outline: 3px solid var(--accent-fish); outline-offset: 3px; }
+.fish-comparison-catalog-card__images { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
+.fish-comparison-catalog-card__image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-small);
+    object-fit: contain;
+    background: var(--surface);
+}
+.fish-comparison-catalog-card__title { font-size: 1.08rem; font-weight: 800; }
+.fish-comparison-catalog-card__action { color: var(--accent-fish); font-weight: 800; }
+
+.fish-comparison-header {
+    margin-bottom: var(--space-5);
+    padding: var(--space-5);
+    border-left: 5px solid var(--accent-fish);
+    border-radius: var(--radius);
+    background:
+        linear-gradient(110deg, color-mix(in srgb, var(--accent-fish) 14%, transparent), transparent 52%),
+        var(--surface-elevated);
+}
+.fish-comparison-header > p:last-child { margin-bottom: 0; }
+.fish-comparison-grid { display: grid; gap: var(--space-5); }
+.fish-comparison-side {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+    background: var(--surface-elevated);
+}
+.fish-comparison-side h3 { margin-bottom: var(--space-1); }
+.fish-comparison-side__image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-small);
+    object-fit: contain;
+    background: var(--surface);
+}
+.fish-comparison-side .detail-list { margin-bottom: var(--space-4); }
+.fish-comparison-side .internal-knowledge-link { margin-top: auto; }
+
+@media (max-width: 439px) {
+    .fish-similar-grid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 640px) {
+    .fish-comparison-grid,
+    .fish-comparison-catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 900px) {
+    .fish-collection-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .fish-primary-media { padding: var(--space-5); }
+}

@@ -14,6 +14,60 @@ const MEDIA_DATA_BUILD_INFO = Object.freeze({
 
 const MEDIA_DATA = Object.freeze([
     {
+        id: "rainbow-trout-primary-identification",
+        ownerType: "fish",
+        ownerId: "rainbow-trout",
+        role: "primary-identification",
+        type: "image",
+        file: "images/fish/rainbow-trout-primary-identification.webp",
+        alt: "Rainbow Trout illustration showing a pink side stripe, dark spotting across the body and tail, and a distinctly forked tail",
+        caption: "Rainbow Trout",
+        license: {
+            status: "Public Domain — artwork commissioned by the U.S. Fish and Wildlife Service",
+            type: "Public Domain",
+            creator: "Duane Raver",
+            sourceUrl: "https://www.fws.gov/media/rainbow-trout-11",
+            licenseUrl: null,
+            attributionRequired: false,
+            attributionText: null,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-22",
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 721 dimensions; embedded metadata removed."
+        },
+        productionStatus: "Approved primary Fish identification illustration",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "brown-trout-primary-identification",
+        ownerType: "fish",
+        ownerId: "brown-trout",
+        role: "primary-identification",
+        type: "image",
+        file: "images/fish/brown-trout-primary-identification.webp",
+        alt: "Brown Trout illustration showing black and red-orange body spots with pale halos and a mostly unspotted tail",
+        caption: "Brown Trout",
+        license: {
+            status: "Public Domain — artwork commissioned by the U.S. Fish and Wildlife Service",
+            type: "Public Domain",
+            creator: "Duane Raver",
+            sourceUrl: "https://www.fws.gov/media/brown-trout-0",
+            licenseUrl: null,
+            attributionRequired: false,
+            attributionText: null,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-22",
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 749 dimensions; embedded metadata removed."
+        },
+        productionStatus: "Approved primary Fish identification illustration",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
         id: "fixed-bobber-reference",
         ownerType: "tackle",
         ownerId: "fixed-bobber",

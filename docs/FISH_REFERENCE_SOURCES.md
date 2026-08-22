@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.0.1  
 **Document Status:** Approved — Production Authoring Standard  
 **Implementation Status:** Standard active; per-Fish evidence population proceeds with Fish production authoring  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
@@ -291,11 +291,102 @@ These entries document the approved Phase 0 taxonomy decision and provide the in
 **Reviewed date:** 2026-08-22  
 **Notes:** Uses `Micropterus nigricans` and records `M. salmoides` as former/synonymous nomenclature; useful corroboration for the approved project taxonomy rule.
 
+## MDC-RAINBOW-TROUT
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Rainbow Trout — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/rainbow-trout  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-22  
+**Notes:** Supports Salmonidae family, field-identification traits, cold-water habitat, Ozark spring/stream occurrence, Lake Taneycomo occurrence, and stocked game-fish context.
+
+## MDC-BROWN-TROUT
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Brown Trout — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/brown-trout  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-22  
+**Notes:** Supports Salmonidae family, `German Brown Trout` alternate common name, field-identification traits, cold-water habitat, Ozark stream/Lake Taneycomo occurrence, and cover/deep-water associations.
+
+## ODWC-RAINBOW-TROUT
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Trout, Rainbow — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/trout-rainbow  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-22  
+**Notes:** Corroborates Rainbow-versus-Brown identification using side iridescence, black tail spotting, and white belly; also documents Oklahoma trout occurrence and current-oriented fishing context.
+
+## ODWC-BROWN-TROUT
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Trout, Brown — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/trout-brown  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-22  
+**Notes:** Corroborates `German brown trout` terminology and Brown-versus-Rainbow identification using orange/red side spots, few or no black tail spots, and cream belly.
+
 # Evidence Entries — Production Population Status
 
 Per-Fish and pairwise evidence population begins with FISH-008/FISH-009 production authoring. Do not fabricate empty “complete” evidence records merely to satisfy documentation appearance before the corresponding canonical Fish content is researched.
 
 Every Fish activated under the new production contract must satisfy the evidence/readiness rules in this document before activation.
+
+## Rainbow Trout (`rainbow-trout`)
+
+Regional Inclusion
+- MDC-RAINBOW-TROUT — Ozark spring branches, spring-fed streams, and Lake Taneycomo establish occurrence in the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-RAINBOW-TROUT
+
+Identification
+- MDC-RAINBOW-TROUT
+- ODWC-RAINBOW-TROUT
+
+Habitat / Waterbody
+- MDC-RAINBOW-TROUT
+
+Taxonomy / Evidence Notes
+- AFS-NAMES-8 lists `Oncorhynchus mykiss` as Rainbow Trout; MDC independently uses the same scientific identity and places it in Salmonidae.
+
+## Brown Trout (`brown-trout`)
+
+Regional Inclusion
+- MDC-BROWN-TROUT — Ozark streams and Lake Taneycomo establish occurrence in the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-BROWN-TROUT
+
+Identification
+- MDC-BROWN-TROUT
+- ODWC-BROWN-TROUT
+
+Habitat / Waterbody
+- MDC-BROWN-TROUT
+
+Aliases
+- MDC-BROWN-TROUT
+- ODWC-BROWN-TROUT
+
+Taxonomy / Evidence Notes
+- AFS-NAMES-8 lists `Salmo trutta` as Brown Trout; MDC independently uses the same scientific identity and places it in Salmonidae.
+
+## brown-trout-vs-rainbow-trout
+
+Brown Trout distinction evidence
+- MDC-BROWN-TROUT
+- ODWC-BROWN-TROUT
+
+Rainbow Trout distinction evidence
+- MDC-RAINBOW-TROUT
+- ODWC-RAINBOW-TROUT
+
+Notes
+- Pairwise wording is limited to visible side coloration/spotting, tail spotting/shape, and belly-color distinctions supported by the two official state field guides.
 
 # Related Documents
 
