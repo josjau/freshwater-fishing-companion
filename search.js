@@ -1,7 +1,6 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: search.js
-   REPLACEMENT: SHARED SEARCH + KNOT SEARCH UTILITIES
    PURPOSE: Provides reusable record lookup/search plus deterministic,
    beginner-oriented Knot relevance ranking and task-intent matching.
    ========================================================== */

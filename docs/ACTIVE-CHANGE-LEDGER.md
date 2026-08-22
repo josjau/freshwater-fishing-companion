@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.7  
+**Document Revision:** 1.0.8  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `e39b3d40275292c42e3b83fb6c2230860f17cd8b`  
+**Reconciliation Baseline:** `d2d24df8782bf99d575d3fd9ef41365ebf4a365f`  
 **Last Updated:** 2026-08-22
 
 # Purpose
@@ -51,10 +51,12 @@ Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical 
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture | D057–D061 + `data-model/02-FISH.md` + `data-model/09-RELATIONSHIPS.md` + `FISH_REFERENCE_SOURCES.md` | Implement the approved 30-Fish target architecture in staged, validated production packages. |
-| FISH-009 | APPROVED / PENDING IMPLEMENTATION | Locked Fish UX | Fish Phase 0 archive + D051/D061 + current Fish data-model standards | Implement landing/search/compare/browse/detail identification-first UX; preserve scoped search and connected-navigation semantics. |
+| FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture | D057–D061 + `data-model/02-FISH.md` + `data-model/09-RELATIONSHIPS.md` + `FISH_REFERENCE_SOURCES.md` | Complete post-push/live validation for Trout Production Package 1, then continue the staged target migration with Gar while preserving the mixed-schema transition rules. |
+| FISH-009 | APPROVED / PENDING IMPLEMENTATION | Locked Fish UX | Fish Phase 0 archive + D051/D061 + current Fish data-model standards | Validate the approved Trout landing/search/browse/detail/compare/navigation implementation, then reuse that Fish presentation baseline for Gar unless a reviewed domain-specific deviation is required. |
 | FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish. |
 | FISH-011 | DEFERRED / NOT AUTOMATIC IMPLEMENTATION | Deferred Fish candidates outside V1 | Future explicit scope/evidence | Do not treat excluded candidates as unfinished V1 work. |
+
+**Current staged checkpoint:** Trout Production Package 1 has completed local deterministic validation and user review. Package closure remains pending GitHub post-push verification and mandatory live-site validation. Trout closure is the gate before beginning Gar production work.
 
 # Named Future Architecture / Product Gates
 

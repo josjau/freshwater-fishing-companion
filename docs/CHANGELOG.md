@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.1.1  
+**Document Revision:** 2.1.2  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-08-21
+**Last Updated:** 2026-08-22
 
 # Purpose
 
@@ -17,6 +17,29 @@ Do not record exact active audit section, exact session resume point, current bl
 For current formal continuation use `HANDOFF.md`. For material non-closed items use `ACTIVE-CHANGE-LEDGER.md`.
 
 # Unreleased
+
+## Fish Guide — Trout Production Package 1
+
+### Added
+
+- Added the canonical Fish category registry and activated the Trout category through the first fully migrated Fish package.
+- Added Brown Trout and migrated Rainbow Trout to the approved Fish production schema/readiness contract.
+- Added the deterministic Brown Trout ↔ Rainbow Trout identification relationship with evidence-backed field distinctions.
+- Added approved USFWS public-domain primary identification media for Rainbow Trout and Brown Trout.
+- Added approved Fish-to-Rig guidance linking both Trout to the canonical Split-Shot Bait Rig.
+
+### Changed
+
+- Implemented Fish Guide landing search, category browse, Fish detail, Similar Fish comparison, comparison catalog, and context-preserving Fish navigation.
+- Preserved the other existing live Fish during the staged mixed-schema migration instead of taking unmigrated records offline.
+- Established the approved Fish identity layout: Category → Name → identification image → scientific name → summary → family → aliases, with no redundant visible Fish-name caption under the image.
+- Made Fish selection cards mirror the Fish identity/detail hierarchy.
+- Applied the Rig-detail baseline to Fish supporting sections: compact media-backed Similar Fish choices, Rig-style Habitat & Water at-a-glance treatment, and canonical Rig links instead of duplicated Rig instructions.
+- Expanded deterministic repository validation for Fish categories, migrated Fish readiness, Fish identification relationships, Fish-to-Rig references, source evidence, search helpers, and Fish media requirements.
+
+### Sources
+
+- Reconciled Trout taxonomy, identification, habitat/waterbody, aliases, pairwise distinctions, and media provenance in `FISH_REFERENCE_SOURCES.md`.
 
 ## Rig Guide — Four-State Adequacy Reconciliation
 

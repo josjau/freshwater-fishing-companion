@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.2.0  
+**Document Revision:** 2.2.1  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-22
@@ -49,18 +49,20 @@ For a new project session:
 
 # Current Product Milestone
 
-**Fish Guide — Production Build Ready**
+**Fish Guide — Trout Production Package 1 Pending Validation**
 
 Repository Audit Cleanup is closed. Fish Guide Phase 0 is also **CLOSED** after explicit user approval of FISH-007 on 2026-08-22.
 
 FISH-001 through FISH-006 were resolved during Phase 0 and their durable production contract is now owned by the current Fish data-model, relationship, media/source, and search/navigation standards. FISH-007 released the production gate.
 
-The next active Fish work is:
+The active Fish work remains:
 
 - **FISH-008 — approved Fish production architecture implementation**
 - **FISH-009 — approved Fish UX implementation**
 
-Current production source still reflects the pre-Fish-production state until those implementation packages land and validate. Phase 0 closure authorizes production work; it does not pretend that the target Fish schema or UX is already implemented.
+**Trout Production Package 1** is the first staged implementation of that contract. It migrates Rainbow Trout, adds Brown Trout, adds their pairwise identification relationship, approved primary identification media, and approved Split-Shot Bait Rig guidance while preserving the existing legacy Fish records during the mixed-schema transition.
+
+The package has completed local deterministic validation and user review. It is **not closed** until the package is pushed to GitHub, the pushed source is re-verified, and the mandatory live-site validation gate passes.
 
 # Fish Production Contract
 
@@ -79,6 +81,20 @@ The completed Phase 0 design record is retained under:
 - `archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
 
 Historical OPEN/PENDING wording inside those archived records reflects the state at the time and does not override current governing documents.
+
+## Established Fish Detail Pattern
+
+The approved Trout implementation establishes the working Fish presentation baseline for the next Fish categories:
+
+- Fish selection cards mirror the Fish identity/detail hierarchy.
+- Fish identity order is Category → Name → primary identification image → scientific name → summary → family → aliases when present.
+- The primary identification image does not repeat the Fish name as an extra visible caption.
+- Compare Similar Fish follows the identity card, uses compact media-backed comparison choices, and supports up to two choices side-by-side at normal widths.
+- How to Identify It remains Fish-owned identification content.
+- Habitat & Water uses the established Rig at-a-glance visual grammar.
+- Rigs to Start With uses the connected-knowledge pattern and links to canonical Rig detail instead of restating Rig instructions.
+
+This is a Fish-domain application of the existing Rig-detail baseline, not a separate site-wide design language.
 
 # Repository Integrity Baseline
 
@@ -104,11 +120,11 @@ The existing repository-integrity validator remains the single deterministic val
 
 1. Read the Google Drive Working State and re-fetch authoritative GitHub `main`.
 2. Confirm Fish Guide Phase 0/FISH-007 remains closed; do not repeat FISH-001–007 design work without new verified evidence or an explicit scope change.
-3. Read the current Fish production contract listed above and `ACTIVE-CHANGE-LEDGER.md`.
-4. Begin **FISH-008 / FISH-009 production implementation** using staged, dependency-safe packages. Before proposing an edit to any existing source file, re-fetch that exact file from current GitHub `main`.
-5. Preserve FISH-003 staged activation: intermediate packages do not need all 30 Fish active, but every active Fish must satisfy its complete readiness contract.
-6. Keep UX-002 visible as **APPROVED / PENDING IMPLEMENTATION**. When the affected search source is deliberately opened, replace the rejected scope-only helper wording with curated, beginner-useful examples that are mechanically proven to return results inside the exact selected collection; there is no hard example-count limit.
-7. Continue required static/post-push validation and the mandatory live-site validation gate for runtime/user-visible changes before final closure.
+3. If Trout Production Package 1 has not yet been pushed, apply the approved package and commit/push it without adding unrelated changes.
+4. Re-fetch the exact pushed GitHub source, verify the package diff/static checks, then complete the mandatory live-site validation for Fish landing/search/browse/detail/compare/navigation and responsive behavior.
+5. Only after those gates pass, record Trout Package 1 as closed and begin the next staged Fish category: **Gar**. Use the approved Trout Fish presentation pattern as the Gar baseline unless a Gar-specific need justifies a reviewed deviation.
+6. Preserve FISH-003 staged activation: intermediate packages do not need all 30 Fish active, but every active migrated Fish must satisfy its complete readiness contract; legacy Fish remain available during the transition until deliberately migrated.
+7. Keep UX-002 visible as **APPROVED / PENDING IMPLEMENTATION** for the still-affected Rig/Knot scoped helpers; Fish helper examples must remain beginner-useful and mechanically valid for their exact active scope.
 
 # Non-Negotiable Working Rules
 

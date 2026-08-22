@@ -1,7 +1,6 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/fish.js
-   REPLACEMENT: MS2.1 - FISH DATA FOUNDATION
    PURPOSE: Provides canonical application-owned Fish records
    for search, browsing, identification, recommendations, and
    related-knowledge navigation.
