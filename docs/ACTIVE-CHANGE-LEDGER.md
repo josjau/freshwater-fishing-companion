@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.12  
+**Document Revision:** 1.0.13  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431`  
+**Reconciliation Baseline:** `cc7840c6ae96bc488e3f443be7e6e5f737508e38`  
 **Last Updated:** 2026-08-22
 
 # Purpose
@@ -47,16 +47,16 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 
 # Fish Guide — Production
 
-Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical items and are no longer active ledger entries. Current Fish work is production implementation of the approved architecture/UX.
+Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical items and are no longer active ledger entries. Trout Production Package 1 and Gar Production Package are closed. Current Fish work is production implementation of the approved architecture/UX across the remaining locked library.
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture | D057–D061 + `data-model/02-FISH.md` + `data-model/09-RELATIONSHIPS.md` + `FISH_REFERENCE_SOURCES.md` | Trout Package 1 is closed. Continue staged target migration with the approved Gar review package while preserving the mixed-schema transition and full activation-readiness rules. |
-| FISH-009 | APPROVED / PENDING IMPLEMENTATION | Locked Fish UX | Fish Phase 0 archive + D051/D061 + current Fish data-model standards | Trout Fish UX is live-validated and remains the baseline. Current Gar review uses presentation-only subject framing for whitespace-heavy Fish art, with compact and detail contexts tuned independently, and extends Specialized Targeting with reusable external-search research topics. Review 1 crop/simple enlargement and Review 2 zoom/pan experiments remain rejected. |
+| FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture | D057–D061 + `data-model/02-FISH.md` + `data-model/09-RELATIONSHIPS.md` + `FISH_REFERENCE_SOURCES.md` | Start Production Wave 1 with Common Carp + Freshwater Drum + Paddlefish. Use evidence-supported target-schema migration, verified primary media, deliberate Fish-to-Rig evaluation, staged readiness, and the established mixed-schema transition. If Wave 1 validates cleanly, continue with larger coherent waves rather than returning automatically to one-Fish packages. |
+| FISH-009 | APPROVED / PENDING IMPLEMENTATION | Locked Fish UX | Fish Phase 0 archive + D051/D061 + validated Trout/Gar Fish presentation | Use the validated Trout/Gar presentation baseline. In Wave 1, implement the approved Specialized Targeting ordering correction when shared Fish renderer/CSS is opened: description → `Try searching for` research guidance → a more prominent Safety subsection. Apply the corrected shared pattern to Gar as a regression update and use it for Paddlefish; do not add Specialized Targeting to Fish without demonstrated need. Continue per-Fish image framing only where whitespace/viewability requires it, evaluating width, height, centering, and diagnostic-feature clearance. |
 | FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish. |
 | FISH-011 | DEFERRED / NOT AUTOMATIC IMPLEMENTATION | Deferred Fish candidates outside V1 | Future explicit scope/evidence | Do not treat excluded candidates as unfinished V1 work. |
 
-**Current staged checkpoint:** Trout Production Package 1 is CLOSED at GitHub baseline `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` after static and user-confirmed fresh-session live validation. Gar is the active review category: Longnose Gar + Spotted Gar, approved pairwise identification, verified uncropped USFWS primary media, no Fish-to-Rig guidance, and Specialized Targeting / Safety with external-search research topics. Current review framing is presentation-only and preserves canonical media. Gar uses separate compact/comparison and taller Fish Detail framing; Trout framing is also being reviewed in this combined package, with Rainbow adjusted lower to preserve dorsal-fin clearance. Review 1 crop/simple enlargement and Review 2 zoom/pan enlargement remain rejected.
+**Current staged checkpoint:** Trout Production Package 1 is CLOSED at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431`. Gar Production Package is CLOSED at source commit `cc7840c6ae96bc488e3f443be7e6e5f737508e38` after exact package/GitHub verification, deterministic validation, and user-confirmed deployed Gar/Trout review PASS. The next production wave is Common Carp + Freshwater Drum + Paddlefish. After that wave validates cleanly, preferred coherent waves are: Walleye/Sauger + Catfish; Bass; then Sunfish & Crappie. Reduce wave size only when a real evidence/media/relationship/product decision requires it.
 
 # Named Future Architecture / Product Gates
 

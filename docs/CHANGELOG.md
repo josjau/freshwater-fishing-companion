@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.1.3  
+**Document Revision:** 2.1.4  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-22
@@ -46,6 +46,34 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 - Corrected Fish Guide Home behavior so returning to Dashboard clears the Fish Guide landing query/scroll state before re-entry.
 - Post-push verification and user fresh-session/incognito validation confirmed expected Trout landing/search/browse/detail/compare/navigation behavior; Trout Production Package 1 is closed at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431`.
 - A broader follow-up Hotfix 2 was prepared during diagnosis but was not applied and is superseded unless a fresh-load regression later proves it necessary.
+
+## Fish Guide — Gar Production Package
+
+### Added
+
+- Added Longnose Gar and Spotted Gar as production-schema Fish records.
+- Added the deterministic Longnose Gar ↔ Spotted Gar identification relationship with evidence-backed snout and spotting distinctions.
+- Added verified USFWS Duane Raver public-domain primary-identification media for both Gar species.
+- Added reusable Specialized Targeting presentation support with species-specific external research topics for specialized tackle, techniques, hookset approaches, and current regulations.
+
+### Changed
+
+- Extended the Fish image presentation system with opt-in, per-Fish subject framing for whitespace-heavy identification artwork without altering canonical media files.
+- Added separate compact/comparison and Fish Detail framing contexts, evaluating both horizontal and vertical subject occupancy, centering, and diagnostic-feature clearance.
+- Applied the subject-framing approach to Trout where justified and corrected Rainbow Trout vertical placement to preserve dorsal-fin clearance.
+- Rewrote affected user-facing Fish/Rig/Knot/Reel Setup copy to remove internal release/build terminology and use angler-facing production wording.
+- Preserved the approved Gar boundary: no Gar Fish-to-Rig guidance, no Gar-specific canonical Rig, no rope-lure construction, and no interactive crop/zoom viewer.
+
+### Sources
+
+- Reconciled Gar taxonomy, identification, habitat/waterbody, aliases, pairwise distinctions, regional evidence, and media provenance in `FISH_REFERENCE_SOURCES.md`.
+
+### Corrected / Validated
+
+- Rejected and removed the earlier Gar tight-crop/simple-enlargement and zoom/pan experiments after review showed they did not materially improve identification.
+- Post-push verification confirmed every changed GitHub blob matched the approved Gar Review 9 package, including both binary Gar media assets.
+- Deterministic validation passed JavaScript syntax, all 8 repository-integrity groups, CSS brace balance, and source whitespace checks.
+- User confirmed the deployed Gar/Trout review PASS; Gar Production Package is closed at source commit `cc7840c6ae96bc488e3f443be7e6e5f737508e38` (`Fish - Gar Final`).
 
 ## Rig Guide — Four-State Adequacy Reconciliation
 
