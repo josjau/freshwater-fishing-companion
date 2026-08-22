@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.1.2  
+**Document Revision:** 2.2.0  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
-**Last Updated:** 2026-08-21
+**Last Updated:** 2026-08-22
 
 # Purpose
 
@@ -43,19 +43,42 @@ For a new project session:
 | What changed materially over time? | `CHANGELOG.md` |
 | What historical milestones were completed? | frozen `MILESTONES.md` |
 | What does a domain own? | the applicable data-model/domain standard |
-| What happened during a bounded workstream? | active workstream record while active; archive/Git history after closeout |
+| What happened during a bounded closed workstream? | retained archive/Git history after durable truth is promoted |
 
 `SPECIFICATION.md` is retired from active maintenance and remains only as a supersession/retirement pointer after its unique requirements were reconciled.
 
 # Current Product Milestone
 
-**Fish Guide — Phase 0 In Progress**
+**Fish Guide — Production Build Ready**
 
-The Repository Audit Cleanup gate is closed. Fish Guide Phase 0 is active.
+Repository Audit Cleanup is closed. Fish Guide Phase 0 is also **CLOSED** after explicit user approval of FISH-007 on 2026-08-22.
 
-FISH-005 Four-State reconciliation is **CLOSED** after Rig #21 implementation, post-push/static validation, user-confirmed live-site validation PASS, formal documentation reconciliation, and explicit user closure approval. **FISH-006 is the current Phase 0 continuation point.**
+FISH-001 through FISH-006 were resolved during Phase 0 and their durable production contract is now owned by the current Fish data-model, relationship, media/source, and search/navigation standards. FISH-007 released the production gate.
 
-Fish **production implementation remains blocked by FISH-007** until the remaining Phase 0 items are resolved or deliberately parked, Phase 0 is reconciled, and the Phase 0 closeout gate passes.
+The next active Fish work is:
+
+- **FISH-008 — approved Fish production architecture implementation**
+- **FISH-009 — approved Fish UX implementation**
+
+Current production source still reflects the pre-Fish-production state until those implementation packages land and validate. Phase 0 closure authorizes production work; it does not pretend that the target Fish schema or UX is already implemented.
+
+# Fish Production Contract
+
+Before editing Fish production source, read at minimum:
+
+- `docs/data-model/02-FISH.md`
+- `docs/data-model/09-RELATIONSHIPS.md`
+- `docs/FISH_REFERENCE_SOURCES.md`
+- `docs/MEDIA_GUIDE.md`
+- `docs/DECISIONS.md` D057–D061
+- `docs/DEVELOPMENT_WORKFLOW.md`
+
+The completed Phase 0 design record is retained under:
+
+- `archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0.md`
+- `archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
+
+Historical OPEN/PENDING wording inside those archived records reflects the state at the time and does not override current governing documents.
 
 # Repository Integrity Baseline
 
@@ -79,11 +102,13 @@ The existing repository-integrity validator remains the single deterministic val
 
 # Exact Resume Point
 
-1. Re-fetch authoritative GitHub `main`.
-2. Read `docs/workstreams/FISH-GUIDE-PHASE-0.md` and the Fish entries in `ACTIVE-CHANGE-LEDGER.md`.
-3. Treat **FISH-005 as CLOSED**; do not repeat the completed Four-State Rig adequacy audit without new evidence or changed scope.
-4. Continue Fish Phase 0 at **FISH-006**, while preserving any newer user-approved Working State delta for FISH-001–004 until its separate formal promotion/closeout.
-5. Satisfy **FISH-007** before any Fish production source implementation begins.
+1. Read the Google Drive Working State and re-fetch authoritative GitHub `main`.
+2. Confirm Fish Guide Phase 0/FISH-007 remains closed; do not repeat FISH-001–007 design work without new verified evidence or an explicit scope change.
+3. Read the current Fish production contract listed above and `ACTIVE-CHANGE-LEDGER.md`.
+4. Begin **FISH-008 / FISH-009 production implementation** using staged, dependency-safe packages. Before proposing an edit to any existing source file, re-fetch that exact file from current GitHub `main`.
+5. Preserve FISH-003 staged activation: intermediate packages do not need all 30 Fish active, but every active Fish must satisfy its complete readiness contract.
+6. Keep UX-002 visible as **APPROVED / PENDING IMPLEMENTATION**. When the affected search source is deliberately opened, replace the rejected scope-only helper wording with curated, beginner-useful examples that are mechanically proven to return results inside the exact selected collection; there is no hard example-count limit.
+7. Continue required static/post-push validation and the mandatory live-site validation gate for runtime/user-visible changes before final closure.
 
 # Non-Negotiable Working Rules
 
@@ -97,6 +122,7 @@ The existing repository-integrity validator remains the single deterministic val
 - Material decisions, confirmed defects, parked/deferred/rejected outcomes, and implementation/validation state must not exist only in chat.
 - During long active sessions, update Working State at material boundaries; at formal checkpoints promote durable truth to the correct GitHub owner and reconcile the Active Change Ledger.
 - Historical/closed records do not override current governing documents.
+- Do not introduce newly discovered semantic/content/source changes inside an implementation package without explicit user approval.
 
 # Historical References
 
@@ -104,6 +130,8 @@ Repository Audit provenance is retained under:
 
 - `archive/workstreams/repository-audit/`
 
-The archive preserves historical workstream states and evidence. Older OPEN/PENDING/PASS wording inside those records reflects the state at the time and does not override current governing documents or this Handoff.
+Fish Guide Phase 0 provenance is retained under:
 
-For completed Knot/Rig details, use governing docs plus retained archive/Git history rather than expanding this Handoff.
+- `archive/workstreams/fish-guide/`
+
+Archives preserve historical workstream state and evidence. Older OPEN/PENDING/PASS wording inside those records reflects the state at the time and does not override current governing documents or this Handoff.

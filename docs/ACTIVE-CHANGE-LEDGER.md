@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.6  
+**Document Revision:** 1.0.7  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `4785b72cdd8509db198c9cfd48327f4724bf1bcd`  
-**Last Updated:** 2026-08-21
+**Reconciliation Baseline:** `e39b3d40275292c42e3b83fb6c2230860f17cd8b`  
+**Last Updated:** 2026-08-22
 
 # Purpose
 
@@ -32,6 +32,7 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
 | UX-001 | APPROVED / PENDING IMPLEMENTATION | Site-wide context-preserving Parent navigation (D051) | D051, `NAVIGATION-PAGE-STANDARD.md` | Implement/reconcile broader routing; validate nested navigation, restored view/query/filter/scroll, Reel Setup interactions, narrow viewport, keyboard/focus. |
+| UX-002 | APPROVED / PENDING IMPLEMENTATION | Scoped search helper/example alignment | D061 + approved scoped-helper implementation standard | Replace the currently rejected scope-only Rig/Knot helper wording with curated beginner-useful examples that are mechanically validated to return at least one result in the exact collection where shown. No hard example-count limit. Implement when the affected search source is deliberately reopened. |
 | UX-004 | DEFERRED TO NAMED GATE | Dashboard / Global Search entry point | Roadmap Global Search milestone | Define cross-domain scope, grouping, ranking/ambiguity, and presentation; avoid indiscriminate result dump. |
 | UX-005 | DEFERRED TO NAMED GATE | Compact detail density outside Rigs | Domain-specific review | Reuse only after the target domain demonstrates the Rig density pattern fits. |
 | UX-006 | PARKED | Technically verified local Rig visual library | Rig/media future quality gate | Use licensed/verified/manual/reference-grounded media only; generated finished/build-step Rig imagery remains prohibited. |
@@ -44,18 +45,14 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 | REG-001 | OPEN | Four-State Regulations entry strategy | Regulations product/design gate | Decide external multi-state gateway vs in-app hub, state selection/saved region, official OK/KS/MO/AR destinations, freshness, Fish Detail gateway, and privacy/location assumptions. |
 | TACKLE-004 | OPEN | Tackle-root `Check Rig Readiness` placeholder | D020 + Tackle/My Tackle milestone | Remove, rename/redefine as a secondary aggregate view, or explicitly approve; do not auto-build a separate primary readiness page. |
 
-# Fish Guide Phase 0 — Active
+# Fish Guide — Production
+
+Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical items and are no longer active ledger entries. Current Fish work is production implementation of the approved architecture/UX.
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| FISH-001 | OPEN | Identification relationship ID convention | Fish Phase 0 | Approve deterministic stable IDs plus duplicate/reversed-pair validation. |
-| FISH-002 | OPEN | Fish-to-Rig guidance optionality/source/IDs | Fish Phase 0 | Decide requiredness, source file name, and guidance-record ID convention. |
-| FISH-003 | OPEN | Fish activation / staged-release readiness | Fish Phase 0 | Decide whether V1 inclusion and runtime `isActive` need separate readiness semantics. |
-| FISH-004 | OPEN | Fish media implementation contract | Fish Phase 0 + MEDIA_GUIDE | Decide role requiredness, attribution null/absence semantics, stable media/file naming, alt text, derivatives. |
-| FISH-006 | OPEN | Fish reference-source documentation + integrity validation | Fish Phase 0 | Define source evidence, regional inclusion evidence, taxonomy/ID/habitat sourcing, and repeatable Fish integrity checks. |
-| FISH-007 | REQUIRED | Close Fish Block 0.7 / Phase 0 | Fish Phase 0 | Resolve/park FISH-001–006, reconcile docs, close Phase 0 before production. |
-| FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture | D057–D061 + Fish workstream | Implement only after Phase 0 closes. |
-| FISH-009 | APPROVED / PENDING IMPLEMENTATION | Locked Fish UX | Fish workstream + D051 | Implement landing/search/compare/browse/detail identification-first UX after Phase 0 closes. |
+| FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture | D057–D061 + `data-model/02-FISH.md` + `data-model/09-RELATIONSHIPS.md` + `FISH_REFERENCE_SOURCES.md` | Implement the approved 30-Fish target architecture in staged, validated production packages. |
+| FISH-009 | APPROVED / PENDING IMPLEMENTATION | Locked Fish UX | Fish Phase 0 archive + D051/D061 + current Fish data-model standards | Implement landing/search/compare/browse/detail identification-first UX; preserve scoped search and connected-navigation semantics. |
 | FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish. |
 | FISH-011 | DEFERRED / NOT AUTOMATIC IMPLEMENTATION | Deferred Fish candidates outside V1 | Future explicit scope/evidence | Do not treat excluded candidates as unfinished V1 work. |
 
