@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.2.0  
+**Document Revision:** 1.2.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-21
 
@@ -307,12 +307,36 @@ Sequence:
 8. User commits and pushes the coherent update.
 9. Verify the commit and affected files on GitHub.
 10. Update current-state documentation immediately if the push changed the repository state and those status changes were not already included in the same push.
-11. Validate the live deployment when applicable.
+11. Apply the Live-Site Validation Gate below when the change affects runtime or user-visible behavior.
 12. Record each meaningful validation result or known failure in the active validation/current-state documentation.
 13. If validation produces required corrections, package those corrections and their status documentation coherently.
 14. Only then mark the session/module/section finalized.
 
 Avoid unnecessary pushes and deployments, but do not trade fewer pushes for incomplete validation or stale documentation.
+
+# Live-Site Validation Gate
+
+Live-site validation is mandatory before final validation/closeout for any change that affects runtime or user-visible behavior, including HTML, CSS, JavaScript, application data rendered in the UI, navigation, search, media presentation, or connected-knowledge behavior. Documentation work does not substitute for this gate.
+
+Required sequence for an applicable change:
+
+1. Land the reviewed implementation on authoritative GitHub `main`.
+2. Re-fetch and verify the actual commit/files from GitHub.
+3. Complete applicable static, syntax, relationship, repository-integrity, and other non-live checks.
+4. Validate the deployed/live site for the changed behavior and relevant regression paths.
+5. Record the live-site result and any failures in the active workstream/current-state documentation.
+6. Reconcile closeout documentation and request/record any required user closure approval.
+7. Only then mark the implementation/workstream `Validated`, `Finalized`, or `Closed`.
+
+If the assistant cannot directly exercise the live site/browser in the current environment, the implementation remains `Implemented / Unvalidated` or `Partially Validated` until the user or another authorized tester confirms the live-site result. In that case, provide a concise scope-specific validation checklist; do not silently skip the gate.
+
+Live validation should cover the changed feature plus the directly affected navigation, rendering, responsive presentation, browser-console/runtime behavior, references/assets, and connected reverse-navigation/search behavior that are material to the change. Do not expand the checklist into unrelated site-wide retesting unless the change is cross-cutting.
+
+A live-site failure blocks finalization. Record the failure, correct it, re-push/re-verify as needed, and repeat the affected live checks before closeout.
+
+Permanent sequence for UI/runtime-affecting work:
+
+> GitHub implementation → post-push/static validation → live-site validation → documentation/closure reconciliation.
 
 # Module Procedure
 
