@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.5  
+**Document Revision:** 1.0.6  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `4785b72cdd8509db198c9cfd48327f4724bf1bcd`  
@@ -52,7 +52,6 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 | FISH-002 | OPEN | Fish-to-Rig guidance optionality/source/IDs | Fish Phase 0 | Decide requiredness, source file name, and guidance-record ID convention. |
 | FISH-003 | OPEN | Fish activation / staged-release readiness | Fish Phase 0 | Decide whether V1 inclusion and runtime `isActive` need separate readiness semantics. |
 | FISH-004 | OPEN | Fish media implementation contract | Fish Phase 0 + MEDIA_GUIDE | Decide role requiredness, attribution null/absence semantics, stable media/file naming, alt text, derivatives. |
-| FISH-005 | OPEN | Four-State reconciliation outside Fish — implementation/validation complete | D057 + D027 + Fish Phase 0 | Rig adequacy audit, Rig #21 implementation, post-push validation, and formal documentation reconciliation are complete; obtain explicit user closure approval, then remove this entry and continue FISH-006. |
 | FISH-006 | OPEN | Fish reference-source documentation + integrity validation | Fish Phase 0 | Define source evidence, regional inclusion evidence, taxonomy/ID/habitat sourcing, and repeatable Fish integrity checks. |
 | FISH-007 | REQUIRED | Close Fish Block 0.7 / Phase 0 | Fish Phase 0 | Resolve/park FISH-001–006, reconcile docs, close Phase 0 before production. |
 | FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture | D057–D061 + Fish workstream | Implement only after Phase 0 closes. |

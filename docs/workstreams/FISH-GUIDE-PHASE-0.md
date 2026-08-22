@@ -6,7 +6,7 @@
 **Milestone:** Fish Guide  
 **Recorded:** 2026-08-18  
 **Runtime Environment:** Windows Desktop + Microsoft Edge + GitHub Desktop
-**Current Reconciliation:** FISH-005 Rig-domain implementation/validation complete; explicit FISH-005 closure approval pending
+**Current Reconciliation:** FISH-005 CLOSED; FISH-006 is the current Phase 0 continuation point
 
 # Purpose
 
@@ -1618,7 +1618,7 @@ At the next discussion:
 
 # FISH-005 — Four-State Reconciliation Outside Fish
 
-**Status:** IMPLEMENTATION / POST-PUSH VALIDATION / DOCUMENTATION RECONCILIATION COMPLETE — EXPLICIT USER CLOSURE APPROVAL PENDING
+**Status:** CLOSED — implementation, post-push/static validation, user-confirmed live-site validation, documentation reconciliation, and explicit user closure approval complete
 
 FISH-005 applied the D057 Four-State principle to adjacent fishing-method coverage without reopening valid existing domain decisions.
 
@@ -1649,6 +1649,10 @@ Post-push validation confirmed:
 - JavaScript syntax passes,
 - repository integrity passes.
 
+Live-site validation was subsequently **user-confirmed PASS** on 2026-08-21 for the landed Rig #21/FISH-005 scope. No live-site defect was reported. This satisfies the required live-site validation gate for this workstream.
+
+Explicit user approval to close FISH-005 was recorded on 2026-08-21. FISH-005 is therefore closed.
+
 The landed package also contained two narrow same-file corrections: the Slip Bobber `bait` note was changed from “worms, minnows, or small jigs” to “worms or minnows where legal,” and stale Rig build metadata was corrected from Knot-package wording to Rig Four-State reconciliation wording. The Slip Bobber wording change did not alter components, assembly, difficulty, knots, or runtime behavior. These corrections are documented explicitly because they were discovered during package preparation and were not separately reviewed before the package was applied; future newly discovered semantic/content changes require explicit user approval before inclusion.
 
 # Current Phase 0 Reconciliation Checkpoint — Resume Here
@@ -1657,16 +1661,14 @@ The landed package also contained two narrow same-file corrections: the Slip Bob
 
 Current status relevant to this checkpoint:
 
-- FISH-005 — implementation, post-push validation, and formal documentation reconciliation complete; **explicit user closure approval pending**.
-- FISH-006 — OPEN; next unresolved Phase 0 work after FISH-005 closes.
+- FISH-005 — **CLOSED** after implementation, post-push/static validation, user-confirmed live-site validation PASS, formal documentation reconciliation, and explicit user closure approval.
+- FISH-006 — **OPEN / CURRENT**; next unresolved Phase 0 work.
 - FISH-007 — REQUIRED final Phase 0 close gate before Fish production.
 - Newer user-approved Working State decisions for FISH-001 through FISH-004 are outside this Rig #21/FISH-005 reconciliation and must not be silently altered here.
 
 Next action:
 
-1. Obtain explicit user approval to close FISH-005.
-2. Remove/close the FISH-005 Active Change Ledger item after approval.
-3. Continue FISH-006.
-4. Complete FISH-007 before beginning production Fish source implementation.
+1. Continue FISH-006.
+2. Complete FISH-007 before beginning production Fish source implementation.
 
 Do not repeat the completed Four-State Rig adequacy audit unless new verified evidence or a changed regional/product scope explicitly reopens it.

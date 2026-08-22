@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.1.1  
+**Document Revision:** 2.1.2  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-21
@@ -53,7 +53,7 @@ For a new project session:
 
 The Repository Audit Cleanup gate is closed. Fish Guide Phase 0 is active.
 
-FISH-005 Four-State reconciliation has completed its Rig-domain audit, Rig #21 implementation, post-push source validation, and formal documentation reconciliation. Explicit user approval to close FISH-005 is the remaining FISH-005 gate.
+FISH-005 Four-State reconciliation is **CLOSED** after Rig #21 implementation, post-push/static validation, user-confirmed live-site validation PASS, formal documentation reconciliation, and explicit user closure approval. **FISH-006 is the current Phase 0 continuation point.**
 
 Fish **production implementation remains blocked by FISH-007** until the remaining Phase 0 items are resolved or deliberately parked, Phase 0 is reconciled, and the Phase 0 closeout gate passes.
 
@@ -81,10 +81,9 @@ The existing repository-integrity validator remains the single deterministic val
 
 1. Re-fetch authoritative GitHub `main`.
 2. Read `docs/workstreams/FISH-GUIDE-PHASE-0.md` and the Fish entries in `ACTIVE-CHANGE-LEDGER.md`.
-3. Confirm the landed FISH-005/Rig #21 reconciliation remains valid; do not repeat the completed Four-State Rig adequacy audit without new evidence or scope.
-4. Obtain explicit user approval to close **FISH-005**.
-5. After FISH-005 closes, continue the remaining Fish Phase 0 work at **FISH-006**, while preserving any newer user-approved Working State delta for FISH-001–004 until its separate formal promotion/closeout.
-6. Satisfy **FISH-007** before any Fish production source implementation begins.
+3. Treat **FISH-005 as CLOSED**; do not repeat the completed Four-State Rig adequacy audit without new evidence or changed scope.
+4. Continue Fish Phase 0 at **FISH-006**, while preserving any newer user-approved Working State delta for FISH-001–004 until its separate formal promotion/closeout.
+5. Satisfy **FISH-007** before any Fish production source implementation begins.
 
 # Non-Negotiable Working Rules
 
