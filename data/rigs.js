@@ -2012,7 +2012,7 @@ const RIG_DATA = Object.freeze([
                 tackleId: "bait",
                 quantity: 1,
                 required: true,
-                notes: "Nightcrawlers, minnows, leeches, or approved artificial trailers may be used with a compatible harness."
+                notes: "Nightcrawlers, minnows, leeches, or suitable artificial trailers may be used with a compatible harness."
             }
         ],
         knotApplications: [
@@ -2133,7 +2133,7 @@ const RIG_DATA = Object.freeze([
         setupNotes: [
             "Twelve to twenty-four inches above the hook is a practical starting distance; adjust for depth, current, and presentation.",
             "Use the lightest split-shot weight that gets the bait to the intended depth or maintains the contact you need.",
-            "This canonical build uses the hook and split shot directly on the main line without a float, sliding sinker, swivel, or required leader."
+            "This setup uses the hook and split shot directly on the main line without a float, sliding sinker, swivel, or required leader."
         ],
         commonMistakes: [
             "Using more split-shot weight than needed and making the bait move unnaturally.",

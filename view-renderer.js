@@ -231,6 +231,93 @@ function buildFishMediaMarkup(media, className, loading = "lazy") {
     return `<img class="${className}" src="${media.file}" alt="${media.alt ?? ""}" loading="${loading}" decoding="async">`;
 }
 
+const FISH_IMAGE_FRAMING = Object.freeze({
+    "rainbow-trout": Object.freeze({
+        compact: Object.freeze({
+            scale: 1.03,
+            aspectRatio: "2.8 / 1",
+            positionY: "29%",
+            offsetX: "0.8%"
+        }),
+        detail: Object.freeze({
+            scale: 1.00,
+            aspectRatio: "2.2 / 1",
+            positionY: "30%",
+            offsetX: "0.8%"
+        })
+    }),
+    "brown-trout": Object.freeze({
+        compact: Object.freeze({
+            scale: 1.28,
+            aspectRatio: "2.8 / 1",
+            positionY: "45%",
+            offsetX: "-2.7%"
+        }),
+        detail: Object.freeze({
+            scale: 1.18,
+            aspectRatio: "2.2 / 1",
+            positionY: "45%",
+            offsetX: "-2.7%"
+        })
+    }),
+    "longnose-gar": Object.freeze({
+        compact: Object.freeze({
+            scale: 1.30,
+            aspectRatio: "4 / 1",
+            positionY: "30%",
+            offsetX: "2.4%"
+        }),
+        detail: Object.freeze({
+            scale: 1.30,
+            aspectRatio: "5 / 2",
+            positionY: "18%",
+            offsetX: "2.4%"
+        })
+    }),
+    "spotted-gar": Object.freeze({
+        compact: Object.freeze({
+            scale: 1.08,
+            aspectRatio: "4 / 1",
+            positionY: "31%",
+            offsetX: "0.8%"
+        }),
+        detail: Object.freeze({
+            scale: 1.08,
+            aspectRatio: "5 / 2",
+            positionY: "20%",
+            offsetX: "0.8%"
+        })
+    })
+});
+
+function buildFishFramedMediaMarkup(
+    fish,
+    media,
+    imageClass,
+    frameClass,
+    loading = "lazy",
+    framingContext = "compact"
+) {
+    const fishFraming = FISH_IMAGE_FRAMING[fish?.id];
+    const framing = fishFraming?.[framingContext] ?? fishFraming?.compact;
+    if (!framing || !media?.file) {
+        return buildFishMediaMarkup(media, imageClass, loading);
+    }
+
+    const framingStyle = [
+        `--fish-image-scale: ${framing.scale}`,
+        `--fish-frame-aspect: ${framing.aspectRatio}`,
+        `--fish-image-position-y: ${framing.positionY}`,
+        `--fish-image-offset-x: ${framing.offsetX}`
+    ].join("; ");
+
+    return `
+        <span class="fish-image-frame ${frameClass}" style="${framingStyle};">
+            ${buildFishMediaMarkup(media, `${imageClass} fish-image-frame__image`, loading)}
+        </span>
+    `;
+}
+
 function buildFishResultCardMarkup(fish, category, primaryMedia, isDetailAvailable = true) {
     const scientificNameMarkup = fish.scientificName
         ? `<span class="search-result-card__scientific-name">${fish.scientificName}</span>`
@@ -244,10 +331,16 @@ function buildFishResultCardMarkup(fish, category, primaryMedia, isDetailAvailab
     const aliasesMarkup = Array.isArray(fish.aliases) && fish.aliases.length
         ? `<span class="fish-result-card__aliases"><strong>Also known as:</strong> ${fish.aliases.join(", ")}</span>`
         : "";
+    const primaryImageMarkup = buildFishFramedMediaMarkup(
+        fish,
+        primaryMedia,
+        "fish-result-card__image",
+        "fish-result-card__image-frame"
+    );
     const content = `
         <span class="fish-result-card__category">${category?.name ?? "Fish"}</span>
         <span class="search-result-card__title">${fish.name}</span>
-        ${buildFishMediaMarkup(primaryMedia, "fish-result-card__image")}
+        ${primaryImageMarkup}
         ${scientificNameMarkup}
         ${summaryMarkup}
         ${familyMarkup}
@@ -278,7 +371,7 @@ function renderFishGuideLanding(appMain, config) {
         {
             key: "all",
             title: "All Fish",
-            description: `Browse all ${config.activeFishCount ?? 0} currently active Fish A–Z.`
+            description: `Browse all ${config.activeFishCount ?? 0} Fish A–Z.`
         },
         ...categories.map((category) => ({
             key: category.id,
@@ -299,7 +392,7 @@ function renderFishGuideLanding(appMain, config) {
         ? `
             <button class="dashboard-card dashboard-card--workflow fish-compare-entry" type="button" data-fish-compare-catalog>
                 <span class="dashboard-card__title">Compare Similar Fish</span>
-                <span class="dashboard-card__description">Compare approved look-alike Fish pairs using verified field-identification differences.</span>
+                <span class="dashboard-card__description">Compare similar Fish side by side using the visible traits that best distinguish them.</span>
                 <span class="dashboard-card__action">Compare →</span>
             </button>
         `
@@ -309,7 +402,7 @@ function renderFishGuideLanding(appMain, config) {
         <section class="content-view fish-guide-view" aria-labelledby="fish-guide-title">
             ${buildPageNavigationMarkup()}
             <h2 id="fish-guide-title">Fish Guide</h2>
-            <p>Search by Fish identity, compare approved similar Fish, or browse the active Fish library.</p>
+            <p>Search for a Fish, compare similar species, or browse by group.</p>
             <form class="search-form section-search-form" data-fish-search-form>
                 <label class="search-label" for="fish-guide-search-input">Search all Fish</label>
                 ${buildSearchControlsMarkup("fish-guide-search-input", config.searchPlaceholder)}
@@ -322,7 +415,7 @@ function renderFishGuideLanding(appMain, config) {
                 ${compareMarkup ? `
                     <section class="fish-guide-section" aria-labelledby="fish-compare-title">
                         <h3 id="fish-compare-title">Compare Similar Fish</h3>
-                        <p>Use focused pairwise comparisons for Fish that are genuinely useful to tell apart.</p>
+                        <p>Use side-by-side comparisons to focus on the traits that are easiest to see in the field.</p>
                         <div class="dashboard-grid">${compareMarkup}</div>
                     </section>
                 ` : ""}
@@ -392,7 +485,12 @@ function renderFishDetail(appMain, detailConfig) {
                 <div class="fish-similar-grid">
                     ${relationships.map((context) => `
                         <button class="fish-similar-link" type="button" data-fish-relationship-id="${context.relationship.id}">
-                            ${buildFishMediaMarkup(context.relatedMedia, "fish-similar-link__image")}
+                            ${buildFishFramedMediaMarkup(
+                                context.relatedFish,
+                                context.relatedMedia,
+                                "fish-similar-link__image",
+                                "fish-similar-link__image-frame"
+                            )}
                             <span class="fish-similar-link__body">
                                 <span class="fish-similar-link__name">${context.relatedFish.name}</span>
                                 <span class="fish-similar-link__action">Compare <span aria-hidden="true">→</span></span>
@@ -427,12 +525,35 @@ function renderFishDetail(appMain, detailConfig) {
             <section class="detail-section fish-rig-section">
                 <div class="fish-rig-section__header">
                     <h3>Rigs to Start With</h3>
-                    <p>Select a Rig for the canonical setup and tying instructions.</p>
+                    <p>Select a Rig to open its setup and tying instructions.</p>
                 </div>
                 <ul class="fish-rig-application-list">
                     ${buildRigGroup("Primary", primaryRigs)}
                     ${buildRigGroup("Alternatives", alternativeRigs)}
                 </ul>
+            </section>
+        `
+        : "";
+    const specializedTargeting = detailConfig.specializedTargeting;
+    const researchTopics = Array.isArray(specializedTargeting?.researchTopics)
+        ? specializedTargeting.researchTopics.filter((topic) => typeof topic === "string" && topic.trim())
+        : [];
+    const researchTopicsMarkup = researchTopics.length
+        ? `
+            <p><strong>Try searching for:</strong></p>
+            <ul class="detail-list">
+                ${researchTopics.map((topic) => `<li>“${topic}”</li>`).join("")}
+            </ul>
+            ${specializedTargeting.researchNote ? `<p>${specializedTargeting.researchNote}</p>` : ""}
+        `
+        : "";
+    const specializedTargetingMarkup = specializedTargeting?.body
+        ? `
+            <section class="detail-section detail-section--safety fish-specialized-targeting">
+                <h3>Specialized Targeting</h3>
+                <p>${specializedTargeting.body}</p>
+                ${specializedTargeting.safety ? `<p><strong>Safety:</strong> ${specializedTargeting.safety}</p>` : ""}
+                ${researchTopicsMarkup}
             </section>
         `
         : "";
@@ -444,7 +565,14 @@ function renderFishDetail(appMain, detailConfig) {
                 <p class="detail-eyebrow">${category?.name ?? "Fish"}</p>
                 <h2 id="fish-detail-title">${record.name}</h2>
                 <figure class="fish-primary-media fish-primary-media--identity">
-                    ${buildFishMediaMarkup(media, "fish-primary-media__image", "eager")}
+                    ${buildFishFramedMediaMarkup(
+                        record,
+                        media,
+                        "fish-primary-media__image",
+                        "fish-primary-media__image-frame",
+                        "eager",
+                        "detail"
+                    )}
                     ${attributionMarkup}
                 </figure>
                 <p class="fish-scientific-name">${record.scientificName}</p>
@@ -463,6 +591,7 @@ function renderFishDetail(appMain, detailConfig) {
                 <div class="rig-at-a-glance__group"><h3>Common Habitat</h3>${buildTagList(record.habitatTags)}</div>
                 <div class="rig-at-a-glance__group"><h3>Common Waters</h3>${buildTagList(record.waterbodyTypes)}</div>
             </section>
+            ${specializedTargetingMarkup}
             ${rigMarkup}
         </article>
     `;
@@ -487,13 +616,23 @@ function renderFishComparisonCatalog(appMain, config) {
         <section class="content-view fish-comparison-catalog" aria-labelledby="fish-comparison-catalog-title">
             ${buildPageNavigationMarkup(config.parentLabel)}
             <h2 id="fish-comparison-catalog-title">Compare Similar Fish</h2>
-            <p>Choose an approved pair to review the most useful field-identification differences.</p>
+            <p>Choose a pair to compare the most useful visible identification differences.</p>
             <div class="fish-comparison-catalog-grid">
                 ${comparisons.map((comparison) => `
                     <button class="fish-comparison-catalog-card" type="button" data-fish-relationship-id="${comparison.relationship.id}">
                         <span class="fish-comparison-catalog-card__images">
-                            ${buildFishMediaMarkup(comparison.mediaA, "fish-comparison-catalog-card__image")}
-                            ${buildFishMediaMarkup(comparison.mediaB, "fish-comparison-catalog-card__image")}
+                            ${buildFishFramedMediaMarkup(
+                                comparison.fishA,
+                                comparison.mediaA,
+                                "fish-comparison-catalog-card__image",
+                                "fish-comparison-catalog-card__image-frame"
+                            )}
+                            ${buildFishFramedMediaMarkup(
+                                comparison.fishB,
+                                comparison.mediaB,
+                                "fish-comparison-catalog-card__image",
+                                "fish-comparison-catalog-card__image-frame"
+                            )}
                         </span>
                         <span class="fish-comparison-catalog-card__title">${comparison.fishA.name} vs ${comparison.fishB.name}</span>
                         <span class="fish-comparison-catalog-card__action">Compare →</span>
@@ -522,7 +661,13 @@ function renderFishComparison(appMain, config) {
         <section class="fish-comparison-side">
             <h3>${fish.name}</h3>
             <p class="fish-scientific-name">${fish.scientificName}</p>
-            ${buildFishMediaMarkup(media, "fish-comparison-side__image", "eager")}
+            ${buildFishFramedMediaMarkup(
+                fish,
+                media,
+                "fish-comparison-side__image",
+                "fish-comparison-side__image-frame",
+                "eager"
+            )}
             <ul class="detail-list">${distinctionsFor(fish.id)}</ul>
             <button class="internal-knowledge-link" type="button" data-fish-detail-id="${fish.id}">
                 View ${fish.name} <span aria-hidden="true">→</span>
@@ -536,7 +681,7 @@ function renderFishComparison(appMain, config) {
             <header class="detail-header fish-comparison-header">
                 <p class="detail-eyebrow">Field Identification</p>
                 <h2 id="fish-comparison-title">${config.fishA.name} vs ${config.fishB.name}</h2>
-                <p>Compare the strongest visible differences for this approved Fish pair.</p>
+                <p>Focus on the visible traits that best distinguish these two Fish.</p>
             </header>
             <section class="detail-section fish-comparison-differences">
                 <h3>Key Differences</h3>
@@ -704,7 +849,7 @@ function buildKnotUsageMarkup(record, usageContexts) {
         : "";
 
     if (rigContexts.length === 0) {
-        return `${taskMarkup}<p class="knot-empty-context">No active Rig currently references this Knot.</p>`;
+        return `${taskMarkup}<p class="knot-empty-context">No Rig in the guide currently references this Knot.</p>`;
     }
 
     const rigListId = `knot-rig-usage-${record.id}`;

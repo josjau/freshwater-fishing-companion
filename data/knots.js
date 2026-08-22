@@ -105,7 +105,7 @@ const KNOT_DATA = Object.freeze([
             "Beginner setups where a compact knot seated directly against the terminal eye is appropriate."
         ],
         limitations: [
-            "The standard single-line Improved Clinch is not the preferred generic braid connection in Version 1; braid may require a doubled-line modification or a different knot such as the Palomar.",
+            "The standard single-line Improved Clinch is not the preferred generic braid connection; braid may require a doubled-line modification or a different knot such as the Palomar.",
             "Because the knot seats directly against the eye, it does not provide the free-moving terminal loop of a Non-Slip Loop Knot."
         ],
         tyingSteps: [
@@ -233,7 +233,7 @@ const KNOT_DATA = Object.freeze([
         ],
         limitations: [
             "The connection is less suitable when the two lines differ dramatically in diameter; a more specialized connection such as the Alberto may be preferable in that situation.",
-            "Braided line needs more wraps than ordinary monofilament or fluorocarbon in the approved Version 1 method."
+            "Braided line needs more wraps than ordinary monofilament or fluorocarbon; use the higher braid wrap count shown in the tying steps."
         ],
         tyingSteps: [
             "Overlap the two lines by several inches so there is enough tag length to form a knot on each side.",
@@ -362,7 +362,7 @@ const KNOT_DATA = Object.freeze([
         limitations: [
             "One side of the connection must have enough free length to pass through the formed loop twice.",
             "The finished connection is bulkier and less clean than some more complex line-to-line knots.",
-            "Version 1 does not treat this as the preferred braid-focused connection; Double Uni or Alberto provides clearer braid-specific guidance."
+            "This is not the preferred braid-focused connection; Double Uni or Alberto provides clearer braid-specific guidance."
         ],
         tyingSteps: [
             "Lay the two lines parallel and overlap them by several inches.",
@@ -424,8 +424,8 @@ const KNOT_DATA = Object.freeze([
         ],
         limitations: [
             "A lure that already uses a split ring often does not need an additional free-moving loop connection.",
-            "The correct wrap count varies with unusually light or heavy leader material; the Version 1 five-wrap method targets common freshwater line sizes.",
-            "Version 1 supports monofilament and fluorocarbon rather than braid for this canonical terminal-loop method."
+            "The correct wrap count varies with unusually light or heavy leader material; the five-wrap method shown here targets common freshwater line sizes.",
+            "This terminal-loop method is intended for monofilament and fluorocarbon rather than braid."
         ],
         tyingSteps: [
             "Tie a loose overhand knot in the line, leaving enough tag end to complete the connection, then pass the tag end through the terminal eye.",
@@ -484,7 +484,7 @@ const KNOT_DATA = Object.freeze([
         ],
         limitations: [
             "This is a branch loop formed in the middle of a line or leader, not a free-moving terminal loop for tying a lure directly to the end of the line.",
-            "Version 1 limits generic compatibility to monofilament because the strongest official application evidence is for monofilament leader systems."
+            "Use monofilament leader for this method; the supporting application guidance is based on monofilament leader systems."
         ],
         tyingSteps: [
             "Form a fairly large loop in the line at the location where the branch is needed.",
@@ -544,8 +544,8 @@ const KNOT_DATA = Object.freeze([
         ],
         limitations: [
             "The Snell is a hook-specific connection rather than a general knot for attaching swivels or lures.",
-            "Several legitimate Snell variants exist. Version 1 intentionally teaches the traditional loop-wrapped Snell method and does not combine it with other Snell geometries.",
-            "The Version 1 method assumes an eyed hook; hook-eye orientation and hook design should be appropriate for the intended snelled presentation."
+            "Several legitimate Snell variants exist. This page teaches the traditional loop-wrapped Snell method rather than combining multiple Snell geometries.",
+            "This method assumes an eyed hook; hook-eye orientation and hook design should be appropriate for the intended snelled presentation."
         ],
         tyingSteps: [
             "Pass the leader through the hook eye, then pass it through the eye a second time in the same direction, leaving a large loop beside the hook.",

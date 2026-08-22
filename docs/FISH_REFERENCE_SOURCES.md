@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.0.1  
+**Document Revision:** 1.0.2  
 **Document Status:** Approved — Production Authoring Standard  
 **Implementation Status:** Standard active; per-Fish evidence population proceeds with Fish production authoring  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
@@ -327,6 +327,42 @@ These entries document the approved Phase 0 taxonomy decision and provide the in
 **Reviewed date:** 2026-08-22  
 **Notes:** Corroborates `German brown trout` terminology and Brown-versus-Rainbow identification using orange/red side spots, few or no black tail spots, and cream belly.
 
+## MDC-LONGNOSE-GAR
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Longnose Gar — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/longnose-gar  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-22  
+**Notes:** Supports `Lepisosteus osseus`, Lepisosteidae family, Needlenose Gar/Billfish/Billy Gar aliases, very long narrow snout identification, Ozark regional occurrence, reservoir/stream habitat, aquatic vegetation/deeper-pool associations, specialized-hooking context, and gar-roe toxicity.
+
+## MDC-SPOTTED-GAR
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Spotted Gar — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/spotted-gar  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-22  
+**Notes:** Supports `Lepisosteus oculatus`, Lepisosteidae family, diagnostic head/snout/fin spotting, southeast-Kansas Neosho River occurrence, aquatic-vegetation/standing-timber habitat, specialized-hooking context, and gar-roe toxicity.
+
+## USFWS-LONGNOSE-GAR-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Longnose gar — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/longnose-gar-7  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-22  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; original 1200 x 769 JPEG; Public Domain; species identified as `Lepisosteus osseus`.
+
+## USFWS-SPOTTED-GAR-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Spotted gar — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/spotted-gar  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-22  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; original 1200 x 799 JPEG; Public Domain; species identified as `Lepisosteus oculatus`.
+
 # Evidence Entries — Production Population Status
 
 Per-Fish and pairwise evidence population begins with FISH-008/FISH-009 production authoring. Do not fabricate empty “complete” evidence records merely to satisfy documentation appearance before the corresponding canonical Fish content is researched.
@@ -387,6 +423,56 @@ Rainbow Trout distinction evidence
 
 Notes
 - Pairwise wording is limited to visible side coloration/spotting, tail spotting/shape, and belly-color distinctions supported by the two official state field guides.
+
+## Longnose Gar (`longnose-gar`)
+
+Regional Inclusion
+- MDC-LONGNOSE-GAR — Clear, high-gradient Ozark streams and large Ozark reservoirs establish occurrence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-LONGNOSE-GAR
+
+Identification
+- MDC-LONGNOSE-GAR
+
+Habitat / Waterbody
+- MDC-LONGNOSE-GAR
+
+Aliases
+- MDC-LONGNOSE-GAR
+
+Taxonomy / Evidence Notes
+- MDC uses `Lepisosteus osseus`, places the species in Lepisosteidae, and documents the approved alternate common names Needlenose Gar, Billfish, and Billy Gar.
+
+## Spotted Gar (`spotted-gar`)
+
+Regional Inclusion
+- MDC-SPOTTED-GAR — Neosho River occurrence in southeast Kansas establishes occurrence within the approved Southeast Kansas target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-SPOTTED-GAR
+
+Identification
+- MDC-SPOTTED-GAR
+
+Habitat / Waterbody
+- MDC-SPOTTED-GAR
+
+Taxonomy / Evidence Notes
+- MDC uses `Lepisosteus oculatus`, places the species in Lepisosteidae, and documents the approved diagnostic spotting pattern.
+
+## longnose-gar-vs-spotted-gar
+
+Longnose Gar distinction evidence
+- MDC-LONGNOSE-GAR
+
+Spotted Gar distinction evidence
+- MDC-SPOTTED-GAR
+
+Notes
+- Pairwise wording is limited to the beginner-useful snout-proportion and head/fin spotting distinctions explicitly described in the official MDC field guides.
 
 # Related Documents
 

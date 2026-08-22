@@ -38,7 +38,7 @@ function buildKnotInstructionMediaMarkup(record) {
                 <div>
                     <p class="knot-media-section__eyebrow">Visual Guide</p>
                     <h3 id="knot-media-title">${title}</h3>
-                    <p>Verified external instruction from ${provider}. The numbered steps on this page remain the canonical method.</p>
+                    <p>Verified external instruction from ${provider}. Use the numbered steps on this page as the primary tying method.</p>
                 </div>
                 <span class="knot-media-section__type">${getKnotMediaTypeLabel(media.type)}</span>
             </div>

@@ -223,6 +223,49 @@ const FISH_DATA = Object.freeze([
         family: "Sciaenidae",
         habitatTags: ["Rock", "Channel", "Open Water", "Deep Water"],
         waterbodyTypes: ["Lake", "River", "Reservoir"]
+    },
+    {
+        id: "longnose-gar",
+        name: "Longnose Gar",
+        summary:
+            "An armored, elongated gar recognized by its extremely long, " +
+            "narrow snout and round dark spots on the fins and sometimes the body.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Lepisosteus osseus",
+        categoryId: "gar",
+        family: "Lepisosteidae",
+        aliases: ["Needlenose Gar", "Billfish", "Billy Gar"],
+        identificationTraits: [
+            "The snout is extremely long and narrow.",
+            "At the nostrils, the snout is narrower than the eye diameter.",
+            "Round dark spots mark the unpaired fins and may also occur on the body.",
+            "The upper body is brown to dark olive and grades to a white belly."
+        ],
+        habitatTags: ["Current", "Grass", "Deep Water"],
+        waterbodyTypes: ["Reservoir", "River", "Creek"]
+    },
+    {
+        id: "spotted-gar",
+        name: "Spotted Gar",
+        summary:
+            "An armored gar recognized by well-defined round dark spots " +
+            "across the top of the head, snout, and fins.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Lepisosteus oculatus",
+        categoryId: "gar",
+        family: "Lepisosteidae",
+        aliases: [],
+        identificationTraits: [
+            "Well-defined round dark spots cover the top of the head and snout.",
+            "Round dark spots are prominent on the paired fins and other fins.",
+            "The upper body is brownish or olive and grades to white below."
+        ],
+        habitatTags: ["Grass", "Timber"],
+        waterbodyTypes: ["River", "Creek"]
     }
 ]);
 

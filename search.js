@@ -95,7 +95,8 @@ function searchRecords(records, query, fields = ["name"]) {
 
 const FISH_SEARCH_HELPERS = Object.freeze({
     all: Object.freeze(["bass", "bluegill", "rainbow", "brown"]),
-    trout: Object.freeze(["rainbow", "brown", "German Brown"])
+    trout: Object.freeze(["rainbow", "brown", "German Brown"]),
+    gar: Object.freeze(["longnose", "spotted", "Needlenose"])
 });
 
 function getFishCategoryName(record, categoryData = [], legacyCategoryMap = {}) {

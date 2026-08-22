@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.1.2  
+**Document Revision:** 2.1.3  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-22
@@ -40,6 +40,12 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 ### Sources
 
 - Reconciled Trout taxonomy, identification, habitat/waterbody, aliases, pairwise distinctions, and media provenance in `FISH_REFERENCE_SOURCES.md`.
+
+### Corrected / Validated
+
+- Corrected Fish Guide Home behavior so returning to Dashboard clears the Fish Guide landing query/scroll state before re-entry.
+- Post-push verification and user fresh-session/incognito validation confirmed expected Trout landing/search/browse/detail/compare/navigation behavior; Trout Production Package 1 is closed at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431`.
+- A broader follow-up Hotfix 2 was prepared during diagnosis but was not applied and is superseded unless a fresh-load regression later proves it necessary.
 
 ## Rig Guide — Four-State Adequacy Reconciliation
 

@@ -45,6 +45,31 @@ const FISH_IDENTIFICATION_RELATIONSHIPS = Object.freeze([
                 text: "The belly is silvery white rather than cream-colored."
             }
         ]
+    },
+    {
+        id: "longnose-gar-vs-spotted-gar",
+        fishIds: ["longnose-gar", "spotted-gar"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "longnose-gar",
+                text: "The snout is exceptionally long and narrow; at the nostrils it is narrower than the eye diameter."
+            },
+            {
+                fishId: "longnose-gar",
+                text: "Dark spotting is concentrated on the fins and may also occur on the body rather than prominently covering the head."
+            },
+            {
+                fishId: "spotted-gar",
+                text: "The snout is noticeably shorter and broader than the Longnose Gar's."
+            },
+            {
+                fishId: "spotted-gar",
+                text: "Well-defined round dark spots cover the top of the head, snout, and paired fins."
+            }
+        ]
     }
 ]);
 

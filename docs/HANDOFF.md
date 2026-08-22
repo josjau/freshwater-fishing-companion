@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.2.1  
+**Document Revision:** 2.2.5  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-22
@@ -49,20 +49,18 @@ For a new project session:
 
 # Current Product Milestone
 
-**Fish Guide — Trout Production Package 1 Pending Validation**
+**Fish Guide — Gar Production Package Review**
 
-Repository Audit Cleanup is closed. Fish Guide Phase 0 is also **CLOSED** after explicit user approval of FISH-007 on 2026-08-22.
+Repository Audit Cleanup and Fish Guide Phase 0 are closed. Trout Production Package 1 is also **CLOSED** after GitHub verification, static validation, and user-confirmed fresh-session live validation on 2026-08-22. Its closure baseline is `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` (`Fish - Search Fix`). The broader prepared Hotfix 2 was not applied and is superseded unless a fresh-load regression later proves it necessary.
 
-FISH-001 through FISH-006 were resolved during Phase 0 and their durable production contract is now owned by the current Fish data-model, relationship, media/source, and search/navigation standards. FISH-007 released the production gate.
-
-The active Fish work remains:
+FISH-001 through FISH-007 are terminal Phase 0 history. The active Fish work remains:
 
 - **FISH-008 — approved Fish production architecture implementation**
 - **FISH-009 — approved Fish UX implementation**
 
-**Trout Production Package 1** is the first staged implementation of that contract. It migrates Rainbow Trout, adds Brown Trout, adds their pairwise identification relationship, approved primary identification media, and approved Split-Shot Bait Rig guidance while preserving the existing legacy Fish records during the mixed-schema transition.
+The next staged category is **Gar**, using the validated Trout Fish presentation as the baseline. The approved review scope is Longnose Gar + Spotted Gar, their pairwise identification relationship, verified USFWS Duane Raver primary-identification media, no Fish-to-Rig guidance, and the approved Specialized Targeting / Safety presentation. Gar Review 1 cropping/simple enlargement and Review 2 zoom/pan enlargement were rejected after live review. The current review uses the uncropped canonical media with presentation-only subject framing where excessive source whitespace reduces visibility. Compact selection/comparison framing and the taller Fish Detail framing are evaluated separately. Gar Specialized Targeting also provides short external-search research topics so anglers can continue into specialized tackle, techniques, and current regulations without expanding the Companion's canonical Rig/Technique scope.
 
-The package has completed local deterministic validation and user review. It is **not closed** until the package is pushed to GitHub, the pushed source is re-verified, and the mandatory live-site validation gate passes.
+Gar remains review-stage work until the review package is approved, applied/pushed, re-verified from GitHub, and passes mandatory live-site validation.
 
 # Fish Production Contract
 
@@ -93,6 +91,8 @@ The approved Trout implementation establishes the working Fish presentation base
 - How to Identify It remains Fish-owned identification content.
 - Habitat & Water uses the established Rig at-a-glance visual grammar.
 - Rigs to Start With uses the connected-knowledge pattern and links to canonical Rig detail instead of restating Rig instructions.
+- Fish artwork with excessive built-in whitespace may use presentation-only, per-Fish subject framing; compact and Fish Detail contexts are tuned independently, natural proportions and diagnostic extremities must be preserved, and canonical media files remain unchanged.
+- Fish that genuinely require specialized equipment, tactics, techniques, or regulation-sensitive methods may use Specialized Targeting with concise safety/context guidance plus a few useful external-search research topics. Paddlefish and future specialized Fish use this same pattern when their production packages are built.
 
 This is a Fish-domain application of the existing Rig-detail baseline, not a separate site-wide design language.
 
@@ -118,12 +118,12 @@ The existing repository-integrity validator remains the single deterministic val
 
 # Exact Resume Point
 
-1. Read the Google Drive Working State and re-fetch authoritative GitHub `main`.
-2. Confirm Fish Guide Phase 0/FISH-007 remains closed; do not repeat FISH-001–007 design work without new verified evidence or an explicit scope change.
-3. If Trout Production Package 1 has not yet been pushed, apply the approved package and commit/push it without adding unrelated changes.
-4. Re-fetch the exact pushed GitHub source, verify the package diff/static checks, then complete the mandatory live-site validation for Fish landing/search/browse/detail/compare/navigation and responsive behavior.
-5. Only after those gates pass, record Trout Package 1 as closed and begin the next staged Fish category: **Gar**. Use the approved Trout Fish presentation pattern as the Gar baseline unless a Gar-specific need justifies a reviewed deviation.
-6. Preserve FISH-003 staged activation: intermediate packages do not need all 30 Fish active, but every active migrated Fish must satisfy its complete readiness contract; legacy Fish remain available during the transition until deliberately migrated.
+1. Read the Google Drive Working State and re-fetch authoritative GitHub `main`; current verified baseline is `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` unless newer verified work exists.
+2. Treat Trout Production Package 1 as CLOSED. Do not apply the superseded Hotfix 2 unless a fresh-load regression explicitly reopens it.
+3. Continue Gar Production Package review with Longnose Gar + Spotted Gar using the validated Trout layout/interaction baseline. Current review work includes final image-framing refinement plus Specialized Targeting research-topic presentation.
+4. Preserve the approved Gar boundary: no Gar-specific canonical Rig, rope-lure construction, specialized tackle, or specialized targeting Technique/Lure implementation in Version 1. Specialized Targeting may provide concise external-search research topics for anglers who want to pursue those methods outside the Companion.
+5. Preserve FISH-003 staged activation: every active migrated Fish must satisfy complete record/category/evidence/media/relationship readiness; legacy Fish remain available until deliberately migrated.
+6. After Gar review approval, prepare the final repo-relative package from freshly verified GitHub source, run integrated deterministic validation, then require post-push and live-site validation before Gar closure.
 7. Keep UX-002 visible as **APPROVED / PENDING IMPLEMENTATION** for the still-affected Rig/Knot scoped helpers; Fish helper examples must remain beginner-useful and mechanically valid for their exact active scope.
 
 # Non-Negotiable Working Rules

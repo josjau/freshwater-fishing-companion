@@ -28,47 +28,47 @@ const FISH_CATEGORY_DATA = Object.freeze([
     {
         id: "bass",
         name: "Bass",
-        summary: "Browse the Version 1 bass group for beginner identification and reference."
+        summary: "Browse bass species and the basic traits used to identify them."
     },
     {
         id: "catfish",
         name: "Catfish",
-        summary: "Browse the Version 1 catfish group for beginner identification and reference."
+        summary: "Browse catfish species and the basic traits used to identify them."
     },
     {
         id: "sunfish-crappie",
         name: "Sunfish & Crappie",
-        summary: "Browse sunfish, rock-bass relatives, and crappie together for beginner identification."
+        summary: "Browse sunfish, rock-bass relatives, and crappie together to make similar species easier to sort out."
     },
     {
         id: "walleye-sauger",
         name: "Walleye & Sauger",
-        summary: "Browse Walleye, Sauger, and Saugeye together for beginner identification."
+        summary: "Browse Walleye, Sauger, and Saugeye together to compare their similar body shapes and markings."
     },
     {
         id: "trout",
         name: "Trout",
-        summary: "Browse cold-water trout in the Version 1 Fish Guide."
+        summary: "Browse trout species and compare markings, fin shape, and other identification traits."
     },
     {
         id: "gar",
         name: "Gar",
-        summary: "Browse gar species in the Version 1 Fish Guide."
+        summary: "Browse gar species and compare snout shape, spotting, and other identification traits."
     },
     {
         id: "carp",
         name: "Carp",
-        summary: "Browse carp species in the Version 1 Fish Guide."
+        summary: "Browse carp species and the basic traits used to identify them."
     },
     {
         id: "drum",
         name: "Drum",
-        summary: "Browse Freshwater Drum in the Version 1 Fish Guide."
+        summary: "Browse Freshwater Drum identification and reference information."
     },
     {
         id: "paddlefish",
         name: "Paddlefish",
-        summary: "Browse Paddlefish in the Version 1 Fish Guide."
+        summary: "Browse Paddlefish identification and reference information."
     }
 ]);
 

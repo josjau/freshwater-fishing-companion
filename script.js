@@ -68,7 +68,7 @@ const RIG_COLLECTIONS = Object.freeze({
     }),
     all: Object.freeze({
         title: "All Rigs",
-        description: "Browse every currently implemented Rig in the library."
+        description: "Browse every Rig in the guide."
     })
 });
 
@@ -81,10 +81,35 @@ const RIG_DIFFICULTY_ORDER = Object.freeze([
     "Expert"
 ]);
 
+const FISH_SPECIALIZED_TARGETING = Object.freeze({
+    "longnose-gar": Object.freeze({
+        body: "Gar can be caught with conventional fishing tackle, but their hard, bony jaws can make reliable hooksets difficult. Anglers who target Gar regularly may use specialized tackle or techniques. Check current local regulations before choosing a specialized method.",
+        safety: "Do not eat Gar eggs (roe); they are toxic to humans.",
+        researchTopics: Object.freeze([
+            "longnose gar fishing tackle",
+            "longnose gar fishing techniques",
+            "gar hookset techniques",
+            "longnose gar fishing regulations [your state]"
+        ]),
+        researchNote: "For regulations, prioritize your state wildlife agency or official fishing regulations."
+    }),
+    "spotted-gar": Object.freeze({
+        body: "Gar can be caught with conventional fishing tackle, but their hard, bony jaws can make reliable hooksets difficult. Anglers who target Gar regularly may use specialized tackle or techniques. Check current local regulations before choosing a specialized method.",
+        safety: "Do not eat Gar eggs (roe); they are toxic to humans.",
+        researchTopics: Object.freeze([
+            "spotted gar fishing tackle",
+            "spotted gar fishing techniques",
+            "gar hookset techniques",
+            "spotted gar fishing regulations [your state]"
+        ]),
+        researchNote: "For regulations, prioritize your state wildlife agency or official fishing regulations."
+    })
+});
+
 const KNOT_COLLECTIONS = Object.freeze({
     all: Object.freeze({
         title: "All Knots",
-        description: "Browse every active Version 1 Knot in the library.",
+        description: "Browse every Knot in the guide.",
         isAvailable: true
     }),
     core: Object.freeze({
@@ -104,7 +129,7 @@ const KNOT_COLLECTIONS = Object.freeze({
     }),
     advanced: Object.freeze({
         title: "Advanced Knots",
-        description: "Advanced Knot instruction will be added when a future approved library expansion requires it.",
+        description: "More specialized knots for advanced connections.",
         isAvailable: false
     })
 });
@@ -319,14 +344,14 @@ function getFishCollectionConfig() {
         return {
             key: "all",
             title: "All Fish",
-            description: "Browse every currently active Fish in canonical-name A–Z order."
+            description: "Browse all Fish A–Z."
         };
     }
 
     const category = getFishCategory(selectedFishCollectionKey);
     return category
         ? { key: category.id, title: category.name, description: category.summary }
-        : { key: "all", title: "All Fish", description: "Browse every currently active Fish in canonical-name A–Z order." };
+        : { key: "all", title: "All Fish", description: "Browse all Fish A–Z." };
 }
 
 function restoreFishScroll(scrollY) {
@@ -506,6 +531,7 @@ function renderFishDetailView(appMain) {
         primaryMedia: getFishPrimaryMedia(fish.id),
         relationships: getFishRelationshipContexts(fish.id),
         rigRecommendations: getFishRigRecommendationContexts(fish.id),
+        specializedTargeting: FISH_SPECIALIZED_TARGETING[fish.id] ?? null,
         parentLabel: returnContext?.label ?? "Fish Guide",
         onParent: returnContext ? returnToDetailNavigationContext : () => showView(ROUTES.FISH),
         onRelationshipSelect: openFishComparisonFromDetail,
@@ -663,7 +689,7 @@ function renderRigGuideView(appMain) {
             onSearch: (query) => updateRigGuideSearchResults(appMain, query)
         },
         cards: [
-            { id: "browse-all-rigs", title: "All Rigs", description: "Browse every Rig currently implemented in the library.", isAvailable: true },
+            { id: "browse-all-rigs", title: "All Rigs", description: "Browse every Rig in the guide.", isAvailable: true },
             { id: "browse-core-rigs", title: "Core Rigs", description: "Six curated setups that form a broadly useful fishing toolkit.", isAvailable: true },
             { id: "browse-beginner-rigs", title: "Beginner", description: "Seven simple rigs with forgiving assembly and broad usefulness.", isAvailable: true },
             { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Three approachable rigs that require a little more setup precision.", isAvailable: true },
@@ -1646,7 +1672,7 @@ function renderReelSetupLineSelectionComplete(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             },
             {
@@ -1753,7 +1779,7 @@ function renderReelSetupTargetGuidanceStep(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             },
             {
@@ -2034,7 +2060,7 @@ function renderReelSetupEquipmentMismatchStep(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             }
         ],
@@ -2121,7 +2147,7 @@ function renderReelSetupEquipmentCompleteStep(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             },
             {
@@ -2263,7 +2289,7 @@ function renderReelSetupBackingDecisionStep(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             }
         ],
@@ -2289,7 +2315,7 @@ function getReelSpoolConnectionPlan(lineType, backingChoice) {
 
     if (backingChoice.id === "monofilament-backing") {
         return {
-            description: `Attach the monofilament backing to the spool first, then join the backing to ${lineType.title}. Canonical Knot instructions stay in the Knot Guide and open from the actions below.`,
+            description: `Attach the monofilament backing to the spool first, then join the backing to ${lineType.title}. Open the Knot instructions you need from the actions below.`,
             knotActions: [
                 { id: "view-arbor-knot", knotId: "arbor-knot", title: "View Arbor Knot", description: "Use the Arbor Knot to secure the monofilament backing to the reel spool." },
                 { id: "view-double-uni-knot", knotId: "double-uni-knot", title: "View Double Uni Knot", description: `Use the Double Uni Knot to join the monofilament backing to ${lineType.title}.` }
@@ -2305,7 +2331,7 @@ function getReelSpoolConnectionPlan(lineType, backingChoice) {
     }
 
     return {
-        description: `Attach ${lineType.title} directly to the reel spool. The canonical Arbor Knot instructions open from the action below.`,
+        description: `Attach ${lineType.title} directly to the reel spool. Open the Arbor Knot instructions from the action below.`,
         knotActions: [
             { id: "view-arbor-knot", knotId: "arbor-knot", title: "View Arbor Knot", description: `Use the Arbor Knot to secure ${lineType.title} to the reel spool before winding line.` }
         ]
@@ -2366,7 +2392,7 @@ function renderReelSetupSpoolConnectionPlanStep(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             },
             {
@@ -2431,7 +2457,7 @@ function renderReelSetupSpoolingInstructionsStep(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             },
             {
@@ -2499,7 +2525,7 @@ function renderReelSetupLeaderDecisionStep(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             },
             {
@@ -2565,7 +2591,7 @@ function renderReelSetupLeaderMaterialStep(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             },
             {
@@ -2620,7 +2646,7 @@ function renderReelSetupLeaderSetupStep(appMain) {
     }
 
     const description = hasLeader
-        ? `You selected ${leaderChoice.title}. Use the setup guidance below as a beginner starting point, then connect the leader to the ${lineType.title.toLowerCase()} main line with the canonical line-to-line Knot handoff.`
+        ? `You selected ${leaderChoice.title}. Use the setup guidance below as a starting point, then connect the leader to the ${lineType.title.toLowerCase()} main line with the recommended line-to-line Knot.`
         : "No separate leader will be added. The spooled main line remains the working line for the later Rig connection; use previous-step navigation if you want to revisit that decision.";
 
     const cards = [
@@ -2637,7 +2663,7 @@ function renderReelSetupLeaderSetupStep(appMain) {
         cards.push({
             id: "view-double-uni-knot",
             title: "View Double Uni Knot",
-            description: `Use the canonical Double Uni Knot instructions to connect ${lineType.title} main line to the selected ${leaderChoice.title.toLowerCase()}.`,
+            description: `Use the Double Uni Knot instructions to connect ${lineType.title} main line to the selected ${leaderChoice.title.toLowerCase()}.`,
             isAvailable: true
         });
     }
@@ -2646,7 +2672,7 @@ function renderReelSetupLeaderSetupStep(appMain) {
         {
             id: "start-reel-setup-over",
             title: "Start Over",
-            description: "Clear the temporary Reel Setup state and return to the first step.",
+            description: "Clear your current Reel Setup choices and return to the first step.",
             isAvailable: true
         },
         {
@@ -2733,7 +2759,7 @@ function renderReelSetupReelReadyCheckStep(appMain) {
             {
                 id: "start-reel-setup-over",
                 title: "Start Over",
-                description: "Clear the temporary Reel Setup state and return to the first step.",
+                description: "Clear your current Reel Setup choices and return to the first step.",
                 isAvailable: true
             },
             {
