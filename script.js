@@ -237,6 +237,7 @@ function showView(route) {
 
     if (route === ROUTES.DASHBOARD) {
         clearDetailNavigationStack();
+        fishGuideState = { query: "", scrollY: 0 };
         currentView = ROUTES.DASHBOARD;
         appMain.innerHTML = dashboardMarkup;
         initializeDashboardRouting();
