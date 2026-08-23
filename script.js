@@ -103,6 +103,17 @@ const FISH_SPECIALIZED_TARGETING = Object.freeze({
             "spotted gar fishing regulations [your state]"
         ]),
         researchNote: "For regulations, prioritize your state wildlife agency or official fishing regulations."
+    }),
+    "paddlefish": Object.freeze({
+        body: "Because Paddlefish feed by filtering plankton rather than chasing bait or lures, anglers commonly target them with specialized snagging tackle during limited seasons and in designated waters. Equipment, legal methods, seasons, permits, and size limits vary by state and waterbody, so check current regulations before fishing.",
+        safety: "Paddlefish snagging commonly uses heavy line, large treble hooks, and heavy sinkers. Keep clear of other anglers, control casts and sweeping hooksets, and use extra caution when landing fish or freeing snagged tackle.",
+        researchTopics: Object.freeze([
+            "paddlefish snagging tackle",
+            "paddlefish snagging techniques",
+            "paddlefish regulations [your state]",
+            "paddlefish season and size limits [your state]"
+        ]),
+        researchNote: "For regulations, prioritize your state wildlife agency or official fishing regulations."
     })
 });
 
@@ -848,6 +859,30 @@ function openRigDetailFromKnot(rigId) {
     showView(ROUTES.RIG_DETAIL);
 }
 
+function openRigDetailFromComponentReference(rigId) {
+    const currentRig = findRecordById(RIG_DATA, selectedRigId);
+    const nextRig = findRecordById(RIG_DATA, rigId);
+    if (!currentRig || currentRig.isActive !== true || !nextRig || nextRig.isActive !== true) {
+        console.warn(`Related Rig could not be opened: ${rigId}`);
+        return;
+    }
+
+    if (currentRig.id === nextRig.id) return;
+
+    pushDetailNavigationContext({
+        route: ROUTES.RIG_DETAIL,
+        label: currentRig.name,
+        state: {
+            selectedRigId,
+            selectedRigCollectionKey
+        }
+    });
+
+    selectedRigId = nextRig.id;
+    selectedRigCollectionKey = "all";
+    showView(ROUTES.RIG_DETAIL);
+}
+
 function openKnotDetailFromRig(knotId) {
     const rig = findRecordById(RIG_DATA, selectedRigId);
     const knot = findRecordById(KNOT_DATA, knotId);
@@ -908,7 +943,7 @@ function renderRigDetailView(appMain) {
     const rig = findRecordById(RIG_DATA, selectedRigId);
     const fromGuideSearch = selectedRigCollectionKey === "guide";
     const returnContext = peekDetailNavigationContext();
-    const hasConnectedReturn = [ROUTES.KNOT_DETAIL, ROUTES.FISH_DETAIL].includes(returnContext?.route);
+    const hasConnectedReturn = [ROUTES.KNOT_DETAIL, ROUTES.FISH_DETAIL, ROUTES.RIG_DETAIL].includes(returnContext?.route);
     if (!rig) {
         console.warn(`Rig was not found: ${selectedRigId}`);
         if (hasConnectedReturn && returnToDetailNavigationContext()) return;
@@ -927,6 +962,7 @@ function renderRigDetailView(appMain) {
             ? returnToDetailNavigationContext
             : () => showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE),
         onKnotSelect: openKnotDetailFromRig,
+        onRigSelect: openRigDetailFromComponentReference,
         onReadinessChange: (tackleId, isOwned) =>
             updateRigReadinessSelection(rig.id, tackleId, isOwned)
     });

@@ -287,6 +287,48 @@ const FISH_IMAGE_FRAMING = Object.freeze({
             positionY: "20%",
             offsetX: "0.8%"
         })
+    }),
+    "common-carp": Object.freeze({
+        compact: Object.freeze({
+            scale: 1.00,
+            aspectRatio: "2.6 / 1",
+            positionY: "36%",
+            offsetX: "0%"
+        }),
+        detail: Object.freeze({
+            scale: 1.00,
+            aspectRatio: "1200 / 835",
+            positionY: "50%",
+            offsetX: "0%"
+        })
+    }),
+    "freshwater-drum": Object.freeze({
+        compact: Object.freeze({
+            scale: 1.08,
+            aspectRatio: "2.5 / 1",
+            positionY: "46%",
+            offsetX: "-1%"
+        }),
+        detail: Object.freeze({
+            scale: 1.00,
+            aspectRatio: "1200 / 731",
+            positionY: "50%",
+            offsetX: "0%"
+        })
+    }),
+    "paddlefish": Object.freeze({
+        compact: Object.freeze({
+            scale: 1.00,
+            aspectRatio: "3.1 / 1",
+            positionY: "42%",
+            offsetX: "0%"
+        }),
+        detail: Object.freeze({
+            scale: 1.00,
+            aspectRatio: "1200 / 762",
+            positionY: "50%",
+            offsetX: "0%"
+        })
     })
 });
 
@@ -544,17 +586,22 @@ function renderFishDetail(appMain, detailConfig) {
             <ul class="detail-list">
                 ${researchTopics.map((topic) => `<li>“${topic}”</li>`).join("")}
             </ul>
-            ${specializedTargeting.researchNote ? `<p>${specializedTargeting.researchNote}</p>` : ""}
+            ${specializedTargeting.researchNote ? `<p class="fish-specialized-research-note">${specializedTargeting.researchNote}</p>` : ""}
         `
         : "";
     const specializedTargetingMarkup = specializedTargeting?.body
         ? `
-            <section class="detail-section detail-section--safety fish-specialized-targeting">
+            <section class="detail-section fish-specialized-targeting">
                 <h3>Specialized Targeting</h3>
                 <p>${specializedTargeting.body}</p>
-                ${specializedTargeting.safety ? `<p><strong>Safety:</strong> ${specializedTargeting.safety}</p>` : ""}
                 ${researchTopicsMarkup}
             </section>
+            ${specializedTargeting.safety ? `
+                <section class="detail-section detail-section--safety fish-specialized-safety">
+                    <h3>Safety</h3>
+                    <p>${specializedTargeting.safety}</p>
+                </section>
+            ` : ""}
         `
         : "";
 
@@ -576,13 +623,13 @@ function renderFishDetail(appMain, detailConfig) {
                     ${attributionMarkup}
                 </figure>
                 <p class="fish-scientific-name">${record.scientificName}</p>
-                <p>${record.summary}</p>
                 <p class="fish-family"><strong>Family:</strong> ${record.family}</p>
                 ${aliasesMarkup}
             </header>
             ${similarMarkup}
             <section class="detail-section fish-identification-section">
                 <h3>How to Identify It</h3>
+                <p class="fish-identification-summary">${record.summary}</p>
                 <ul class="detail-list fish-identification-list">
                     ${record.identificationTraits.map((trait) => `<li>${trait}</li>`).join("")}
                 </ul>
@@ -840,7 +887,7 @@ function buildKnotUsageMarkup(record, usageContexts) {
                 <div class="internal-knowledge-link-list">
                     ${taskContexts.map((task) => `
                         <button class="internal-knowledge-link" type="button" data-knot-task-link-id="${task.taskId}">
-                            ${task.title} <span aria-hidden="true">→</span>
+                            ${task.title} <span aria-hidden="true">&rarr;</span>
                         </button>
                     `).join("")}
                 </div>
@@ -857,10 +904,10 @@ function buildKnotUsageMarkup(record, usageContexts) {
         const isInitiallyHidden = index >= KNOT_USAGE_VISIBLE_RIG_LIMIT;
         return `
             <li${isInitiallyHidden ? ' data-knot-rig-usage-extra hidden' : ""}>
-                <button class="internal-knowledge-link knot-rig-link" type="button" data-knot-rig-id="${usage.rigId}">
-                    ${usage.title} <span aria-hidden="true">→</span>
+                <button class="compact-link-row compact-link-row--knot" type="button" data-knot-rig-id="${usage.rigId}">
+                    <span>${usage.title}</span>
+                    <span aria-hidden="true">&rsaquo;</span>
                 </button>
-                <span>${usage.difficulty} · ${usage.labels.join(" · ")}</span>
             </li>
         `;
     }).join("");
@@ -881,7 +928,7 @@ function buildKnotUsageMarkup(record, usageContexts) {
         ${taskMarkup}
         <div class="knot-usage-group knot-usage-group--rigs">
             <span class="knot-usage-group__label">Rigs that use this Knot</span>
-            <ul class="knot-usage-list" id="${rigListId}">${rigItems}</ul>
+            <ul class="knot-usage-list compact-link-list" id="${rigListId}">${rigItems}</ul>
             ${toggleMarkup}
         </div>
     `;
@@ -940,8 +987,27 @@ function getKnotRecord(knotId) {
 function buildRigKnotApplications(record) {
     if (!Array.isArray(record?.knotApplications) || record.knotApplications.length === 0) return "";
 
-    const applicationsMarkup = record.knotApplications.map((application) => {
-        const knotLinks = application.recommendedKnotIds
+    const groupedApplications = [];
+    const groupByKnotSet = new Map();
+
+    record.knotApplications.forEach((application) => {
+        const recommendedKnotIds = Array.isArray(application.recommendedKnotIds)
+            ? application.recommendedKnotIds
+            : [];
+        const groupKey = recommendedKnotIds.join("|");
+        let group = groupByKnotSet.get(groupKey);
+
+        if (!group) {
+            group = { recommendedKnotIds, applications: [] };
+            groupByKnotSet.set(groupKey, group);
+            groupedApplications.push(group);
+        }
+
+        group.applications.push(application);
+    });
+
+    const applicationsMarkup = groupedApplications.map((group) => {
+        const knotLinks = group.recommendedKnotIds
             .map((knotId) => {
                 const knot = getKnotRecord(knotId);
                 if (!knot) {
@@ -957,11 +1023,30 @@ function buildRigKnotApplications(record) {
             .filter(Boolean)
             .join("");
 
+        const isSharedSet = group.applications.length > 1;
+        const applicationMarkup = isSharedSet
+            ? `
+                <div class="rig-knot-use-group">
+                    <strong>Use these knots for:</strong>
+                    <ul class="rig-knot-use-list">
+                        ${group.applications.map((application) => `<li>${application.label}</li>`).join("")}
+                    </ul>
+                </div>
+            `
+            : `<strong>${group.applications[0].label}</strong>`;
+        const notesMarkup = group.applications
+            .filter((application) => application.notes)
+            .map((application) => isSharedSet
+                ? `<p><strong>${application.label}:</strong> ${application.notes}</p>`
+                : `<p>${application.notes}</p>`
+            )
+            .join("");
+
         return `
-            <li class="rig-knot-application-item">
-                <strong>${application.label}</strong>
+            <li class="rig-knot-application-item${isSharedSet ? " rig-knot-application-item--grouped" : ""}">
+                ${applicationMarkup}
                 <div class="rig-knot-link-list">${knotLinks}</div>
-                ${application.notes ? `<p>${application.notes}</p>` : ""}
+                ${notesMarkup}
             </li>
         `;
     }).join("");
@@ -970,7 +1055,7 @@ function buildRigKnotApplications(record) {
         <section class="detail-section rig-knot-section">
             <div class="rig-knot-section__header">
                 <h3>Knots You'll Tie</h3>
-                <p>Select a recommended Knot for tying instructions. Parent returns you to this Rig.</p>
+                <p>Select a recommended Knot to view tying instructions.</p>
             </div>
             <ul class="rig-knot-application-list">${applicationsMarkup}</ul>
         </section>
@@ -1009,14 +1094,14 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
     const usageMarkup = buildKnotUsageMarkup(record, usageContexts);
     const referencesMarkup = record.referenceLinks?.length
         ? `
-            <div class="knot-reference-block">
-                <h4>Verified References</h4>
+            <details class="detail-section detail-section--supporting knot-sources-section">
+                <summary>Sources & References</summary>
                 <div class="rig-reference-links knot-reference-links">
                     ${record.referenceLinks.map((reference) => `
                         <a class="rig-reference-link knot-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span aria-hidden="true">↗</span></a>
                     `).join("")}
                 </div>
-            </div>
+            </details>
         `
         : "";
 
@@ -1047,7 +1132,6 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
             <section class="detail-section detail-section--build knot-tying-section">
                 <h3>How to Tie It</h3>
                 <ol class="detail-steps knot-tying-steps">${record.tyingSteps.map((step) => `<li>${step}</li>`).join("")}</ol>
-                ${referencesMarkup}
             </section>
             <section class="detail-section detail-section--supporting knot-check-section">
                 <h3>Check Your Knot</h3>
@@ -1061,6 +1145,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
                 <h3>When to Choose Another Knot</h3>
                 <ul class="detail-list">${record.limitations.map((limitation) => `<li>${limitation}</li>`).join("")}</ul>
             </section>
+            ${referencesMarkup}
         </article>
     `;
 
@@ -1115,16 +1200,14 @@ function getTackleRecord(tackleId) {
     return record?.isActive === true ? record : null;
 }
 
-function getRelatedRigNames(tackleId) {
+function getRelatedRigRecords(tackleId) {
     if (!tackleId || typeof RIG_DATA === "undefined") return [];
 
-    return RIG_DATA
-        .filter((rig) =>
-            rig.isActive === true &&
-            Array.isArray(rig.componentRequirements) &&
-            rig.componentRequirements.some((requirement) => requirement.tackleId === tackleId)
-        )
-        .map((rig) => rig.name);
+    return RIG_DATA.filter((rig) =>
+        rig.isActive === true &&
+        Array.isArray(rig.componentRequirements) &&
+        rig.componentRequirements.some((requirement) => requirement.tackleId === tackleId)
+    );
 }
 
 function getReferenceMedia(referenceRecord) {
@@ -1142,94 +1225,160 @@ function buildReferenceImageMarkup(referenceRecord, className, loading = "lazy")
     return `<img class="${className}" src="${media.file}" alt="${media.alt}" loading="${loading}" decoding="async">`;
 }
 
-function renderReferencePopover(referenceId, triggerElement) {
+function renderReferencePopover(referenceId, triggerElement, options = {}) {
     if (typeof TACKLE_DATA === "undefined") {
         console.error("Tackle reference data is not available.");
         return;
     }
 
-    const referenceRecord = findRecordById(TACKLE_DATA, referenceId);
-    if (!referenceRecord || referenceRecord.isActive !== true) {
+    const initialReference = findRecordById(TACKLE_DATA, referenceId);
+    if (!initialReference || initialReference.isActive !== true) {
         console.warn(`Reference record was not found: ${referenceId}`);
         return;
     }
 
     document.querySelector("[data-reference-popover]")?.remove();
 
-    const aliasesMarkup = referenceRecord.aliases?.length ? `
-        <section class="reference-popover__section"><h3>Also Called</h3><p>${referenceRecord.aliases.join(", ")}</p></section>
-    ` : "";
-
-    const recognitionMarkup = referenceRecord.recognitionNotes?.length ? `
-        <section class="reference-popover__section"><h3>How to Recognize It</h3><ul>
-            ${referenceRecord.recognitionNotes.map((note) => `<li>${note}</li>`).join("")}
-        </ul></section>
-    ` : "";
-
-    const variantsMarkup = referenceRecord.commonVariants?.length ? `
-        <section class="reference-popover__section"><h3>Common Variants</h3><p>${referenceRecord.commonVariants.join(", ")}</p></section>
-    ` : "";
-
-    const relatedRigNames = getRelatedRigNames(referenceRecord.id);
-    const rigsMarkup = relatedRigNames.length ? `
-        <section class="reference-popover__section"><h3>Used In</h3><p>${relatedRigNames.join(", ")}</p></section>
-    ` : "";
-
-    const relatedTackleMarkup = referenceRecord.relatedTackleIds?.length ? `
-        <section class="reference-popover__section">
-            <h3>Related Components</h3>
-            <div class="reference-popover__related">
-                ${referenceRecord.relatedTackleIds.map((relatedId) => {
-                    const related = findRecordById(TACKLE_DATA, relatedId);
-                    if (!related || related.isActive !== true) return "";
-                    return `<button class="reference-popover__related-link" type="button" data-related-reference-id="${related.id}">${related.name} <span aria-hidden="true">ⓘ</span></button>`;
-                }).join("")}
-            </div>
-        </section>
-    ` : "";
-
     const dialog = document.createElement("dialog");
     dialog.className = "reference-popover";
     dialog.dataset.referencePopover = "";
     dialog.setAttribute("aria-labelledby", "reference-popover-title");
-    dialog.innerHTML = `
-        <div class="reference-popover__shell">
-            <header class="reference-popover__header">
-                <div>
-                    <p class="reference-popover__eyebrow">${referenceRecord.category}</p>
-                    <h2 id="reference-popover-title">${referenceRecord.name}</h2>
+
+    const referenceHistory = [];
+    let activeReferenceId = referenceId;
+    let isNavigatingAway = false;
+
+    const closeDialog = () => {
+        if (dialog.open) dialog.close();
+    };
+
+    const renderReferenceContent = (nextReferenceId, pushCurrent = false) => {
+        const referenceRecord = findRecordById(TACKLE_DATA, nextReferenceId);
+        if (!referenceRecord || referenceRecord.isActive !== true) {
+            console.warn(`Reference record was not found: ${nextReferenceId}`);
+            return;
+        }
+
+        if (pushCurrent && activeReferenceId && activeReferenceId !== nextReferenceId) {
+            referenceHistory.push(activeReferenceId);
+        }
+        activeReferenceId = nextReferenceId;
+
+        const aliasesMarkup = referenceRecord.aliases?.length ? `
+            <section class="reference-popover__section"><h3>Also Called</h3><p>${referenceRecord.aliases.join(", ")}</p></section>
+        ` : "";
+
+        const recognitionMarkup = referenceRecord.recognitionNotes?.length ? `
+            <section class="reference-popover__section"><h3>How to Recognize It</h3><ul>
+                ${referenceRecord.recognitionNotes.map((note) => `<li>${note}</li>`).join("")}
+            </ul></section>
+        ` : "";
+
+        const variantsMarkup = referenceRecord.commonVariants?.length ? `
+            <section class="reference-popover__section"><h3>Common Variants</h3><p>${referenceRecord.commonVariants.join(", ")}</p></section>
+        ` : "";
+
+        const relatedRigs = getRelatedRigRecords(referenceRecord.id);
+        const rigsMarkup = relatedRigs.length ? `
+            <section class="reference-popover__section">
+                <h3>Used In</h3>
+                <div class="compact-link-list reference-popover__link-list">
+                    ${relatedRigs.map((rig) => `
+                        <button class="compact-link-row" type="button" data-reference-rig-id="${rig.id}">
+                            <span>${rig.name}</span>
+                            <span aria-hidden="true">&rsaquo;</span>
+                        </button>
+                    `).join("")}
                 </div>
-                <button class="reference-popover__close" type="button" data-reference-close aria-label="Close ${referenceRecord.name} information">×</button>
-            </header>
-            ${buildReferenceImageMarkup(referenceRecord, "reference-popover__image", "eager")}
-            <div class="reference-popover__body">
-                <p class="reference-popover__summary">${referenceRecord.summary}</p>
-                <section class="reference-popover__section"><h3>What It Does</h3><p>${referenceRecord.purpose}</p></section>
-                ${aliasesMarkup}${recognitionMarkup}${variantsMarkup}${rigsMarkup}${relatedTackleMarkup}
+            </section>
+        ` : "";
+
+        const relatedTackleMarkup = referenceRecord.relatedTackleIds?.length ? `
+            <section class="reference-popover__section">
+                <h3>Related Components</h3>
+                <div class="compact-link-list reference-popover__link-list">
+                    ${referenceRecord.relatedTackleIds.map((relatedId) => {
+                        const related = findRecordById(TACKLE_DATA, relatedId);
+                        if (!related || related.isActive !== true) return "";
+                        return `
+                            <button class="compact-link-row" type="button" data-related-reference-id="${related.id}">
+                                <span>${related.name}</span>
+                                <span aria-hidden="true">&rsaquo;</span>
+                            </button>
+                        `;
+                    }).join("")}
+                </div>
+            </section>
+        ` : "";
+
+        const previousReference = referenceHistory.length
+            ? findRecordById(TACKLE_DATA, referenceHistory[referenceHistory.length - 1])
+            : null;
+        const backMarkup = previousReference
+            ? `<button class="reference-popover__back" type="button" data-reference-back>&larr; Back to ${previousReference.name}</button>`
+            : "";
+
+        dialog.innerHTML = `
+            <div class="reference-popover__shell">
+                <header class="reference-popover__header">
+                    <div class="reference-popover__header-main">
+                        ${backMarkup}
+                        <p class="reference-popover__eyebrow">${referenceRecord.category}</p>
+                        <h2 id="reference-popover-title">${referenceRecord.name}</h2>
+                    </div>
+                    <button class="reference-popover__close" type="button" data-reference-close aria-label="Close ${referenceRecord.name} information">&times;</button>
+                </header>
+                ${buildReferenceImageMarkup(referenceRecord, "reference-popover__image", "eager")}
+                <div class="reference-popover__body">
+                    <p class="reference-popover__summary">${referenceRecord.summary}</p>
+                    <section class="reference-popover__section"><h3>What It Does</h3><p>${referenceRecord.purpose}</p></section>
+                    ${aliasesMarkup}${recognitionMarkup}${variantsMarkup}${rigsMarkup}${relatedTackleMarkup}
+                </div>
             </div>
-        </div>
-    `;
+        `;
 
-    document.body.append(dialog);
-    const closeDialog = () => { if (dialog.open) dialog.close(); };
-    dialog.querySelector("[data-reference-close]")?.addEventListener("click", closeDialog);
-    dialog.addEventListener("click", (event) => { if (event.target === dialog) closeDialog(); });
-    dialog.addEventListener("close", () => { dialog.remove(); triggerElement?.focus(); });
-
-    dialog.querySelectorAll("[data-related-reference-id]").forEach((relatedButton) => {
-        relatedButton.addEventListener("click", () => {
-            const nextReferenceId = relatedButton.dataset.relatedReferenceId;
-            dialog.addEventListener("close", () => renderReferencePopover(nextReferenceId, triggerElement), { once: true });
-            closeDialog();
+        dialog.querySelector("[data-reference-close]")?.addEventListener("click", closeDialog);
+        dialog.querySelector("[data-reference-back]")?.addEventListener("click", () => {
+            const previousReferenceId = referenceHistory.pop();
+            if (previousReferenceId) renderReferenceContent(previousReferenceId, false);
         });
+        dialog.querySelectorAll("[data-related-reference-id]").forEach((relatedButton) => {
+            relatedButton.addEventListener("click", () => {
+                renderReferenceContent(relatedButton.dataset.relatedReferenceId, true);
+            });
+        });
+        dialog.querySelectorAll("[data-reference-rig-id]").forEach((rigButton) => {
+            rigButton.addEventListener("click", () => {
+                const nextRigId = rigButton.dataset.referenceRigId;
+                if (nextRigId === options.currentRigId) {
+                    closeDialog();
+                    return;
+                }
+                isNavigatingAway = true;
+                closeDialog();
+                options.onRigSelect?.(nextRigId);
+            });
+        });
+    };
+
+    dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeDialog();
+    });
+    dialog.addEventListener("close", () => {
+        dialog.remove();
+        if (!isNavigatingAway) triggerElement?.focus();
     });
 
+    document.body.append(dialog);
+    renderReferenceContent(referenceId, false);
     dialog.showModal();
 }
 
-function initializeReferenceLinks(appMain) {
+function initializeReferenceLinks(appMain, options = {}) {
     appMain.querySelectorAll("[data-reference-id]").forEach((referenceLink) => {
-        referenceLink.addEventListener("click", () => renderReferencePopover(referenceLink.dataset.referenceId, referenceLink));
+        referenceLink.addEventListener("click", () => {
+            renderReferencePopover(referenceLink.dataset.referenceId, referenceLink, options);
+        });
     });
 }
 
@@ -1321,34 +1470,28 @@ function renderInstructionDetail(appMain, detailConfig) {
 
         return `
             <li class="rig-component-item">
-                <div class="rig-component-item__heading">
+                <div class="rig-component-item__row">
+                    <label class="rig-component-owned" for="${checkboxId}">
+                        <input
+                            id="${checkboxId}"
+                            class="rig-component-owned__checkbox"
+                            type="checkbox"
+                            data-component-owned-id="${component.tackleId}"
+                            ${isOwned ? "checked" : ""}
+                        >
+                        <span class="rig-component-owned__name">${componentName}</span>
+                    </label>
                     <button
-                        class="reference-link"
+                        class="reference-info-button"
                         type="button"
                         data-reference-id="${component.tackleId}"
-                        aria-label="More information about ${componentName}"
-                    >
-                        <span>${componentName}</span>
-                        <span class="reference-link__icon" aria-hidden="true">ⓘ</span>
-                    </button>
+                        aria-label="Identification help for ${componentName}"
+                    ><span aria-hidden="true">&#9432;</span></button>
                     ${
                         component.required
                             ? '<span class="rig-component-item__required">Required</span>'
                             : '<span class="detail-list__optional">Optional</span>'
                     }
-                </div>
-                <div class="rig-component-item__detail-row">
-                    <p>${component.notes}</p>
-                    <label class="rig-component-owned" for="${checkboxId}">
-                    <input
-                        id="${checkboxId}"
-                        class="rig-component-owned__checkbox"
-                        type="checkbox"
-                        data-component-owned-id="${component.tackleId}"
-                        ${isOwned ? "checked" : ""}
-                    >
-                        <span>I have this</span>
-                    </label>
                 </div>
             </li>
         `;
@@ -1367,23 +1510,23 @@ function renderInstructionDetail(appMain, detailConfig) {
                 <div class="rig-at-a-glance__group"><h3>Best For</h3>${buildTagList(record.useCases)}</div>
                 <div class="rig-at-a-glance__group"><h3>Good Conditions</h3>${buildTagList(record.conditionTags)}</div>
             </section>
-            ${buildRigTutorial(record)}
-            ${record.tutorialVideo ? "" : buildRigReferenceLinks(record)}
             <section class="detail-section rig-requirements-section">
                 <div class="rig-requirements-section__header">
                     <div>
                         <h3>What You Need</h3>
-                        <p>Mark the tackle you have. Select any item name for identification help.</p>
+                        <p>Check each item you have. Select <span class="reference-link__icon" aria-hidden="true">&#9432;</span> for identification help.</p>
                     </div>
                     <div class="readiness-status" data-readiness-status aria-live="polite"></div>
                 </div>
                 <ul class="rig-component-list">${componentsMarkup}</ul>
             </section>
-            ${buildRigKnotApplications(record)}
             <section class="detail-section detail-section--build">
                 <h3>How to Build It</h3>
                 <ol class="detail-steps">${record.assemblySteps.map((step) => `<li>${step}</li>`).join("")}</ol>
             </section>
+            ${buildRigTutorial(record)}
+            ${record.tutorialVideo ? "" : buildRigReferenceLinks(record)}
+            ${buildRigKnotApplications(record)}
             <section class="detail-section detail-section--supporting"><h3>Setup Notes</h3><ul class="detail-list">${record.setupNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
             <section class="detail-section detail-section--supporting"><h3>Common Mistakes</h3><ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul></section>
             <section class="detail-section detail-section--supporting detail-section--safety"><h3>Safety</h3><ul class="detail-list">${record.safetyNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
@@ -1438,7 +1581,7 @@ function renderInstructionDetail(appMain, detailConfig) {
         });
     });
 
-    initializeReferenceLinks(appMain);
+    initializeReferenceLinks(appMain, { onRigSelect: detailConfig.onRigSelect, currentRigId: record.id });
     initializeRigTutorial(appMain);
     initializeHomeNavigation(appMain);
     updateReadinessStatus();

@@ -38,6 +38,32 @@ const FISH_RIG_GUIDANCE = Object.freeze([
                 reason: "A light split-shot presentation works through pools, current seams, and cover edges while keeping a natural bait presentation."
             }
         ]
+    },
+    {
+        fishId: "common-carp",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "basic-bottom-rig",
+                priority: "Primary",
+                reason: "A sliding-sinker bottom presentation keeps bait near the bottom while allowing a Common Carp to take it with less immediate resistance."
+            }
+        ]
+    },
+    {
+        fishId: "freshwater-drum",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "basic-bottom-rig",
+                priority: "Primary",
+                reason: "A slip-sinker bottom presentation keeps natural bait near the bottom in deeper channels, pools, and reservoirs where Freshwater Drum commonly feed."
+            }
+        ]
     }
 ]);
 

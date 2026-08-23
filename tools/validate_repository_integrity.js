@@ -427,11 +427,11 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         "bass",
         "catfish",
         "sunfish-crappie",
-        "walleye-sauger",
         "trout",
-        "gar",
+        "walleye-sauger",
         "carp",
         "drum",
+        "gar",
         "paddlefish"
     ];
     const categoryFields = ["id", "name", "summary"];

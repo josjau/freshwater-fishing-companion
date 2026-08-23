@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.0.2  
+**Document Revision:** 1.0.3  
 **Document Status:** Approved — Production Authoring Standard  
 **Implementation Status:** Standard active; per-Fish evidence population proceeds with Fish production authoring  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
@@ -363,6 +363,87 @@ These entries document the approved Phase 0 taxonomy decision and provide the in
 **Reviewed date:** 2026-08-22  
 **Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; original 1200 x 799 JPEG; Public Domain; species identified as `Lepisosteus oculatus`.
 
+## MDC-COMMON-CARP
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Common Carp — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/common-carp  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-22  
+**Notes:** Supports `Cyprinus carpio`, Cyprinidae family, statewide Missouri occurrence, large-stream/lake/impoundment habitat, shallow feeding and deeper-pool use, two pairs of upper-jaw barbels, long dorsal fin, stout saw-toothed dorsal/anal front spine, crosshatched dark-edged scales, and brassy-olive coloration.
+
+## USGS-COMMON-CARP
+
+**Authority / publisher:** U.S. Geological Survey — Nonindigenous Aquatic Species  
+**Title:** Common Carp (`Cyprinus carpio`) — Species Profile  
+**URL:** https://nas.er.usgs.gov/queries/factsheet.aspx?speciesID=4  
+**Source type:** Official federal species profile  
+**Reviewed date:** 2026-08-22  
+**Notes:** Corroborates `Cyprinus carpio` identity and documents European carp and German carp as established alternate names.
+
+## USFWS-COMMON-CARP-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Common carp — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/common-carp-9  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-22  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; original 1200 x 835 JPEG; Public Domain; species identified as `Cyprinus carpio`.
+
+## MDC-FRESHWATER-DRUM
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Freshwater Drum — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/freshwater-drum  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-22  
+**Notes:** Supports `Aplodinotus grunniens`, Sciaenidae family, Sheepshead/Sheephead alternate names, statewide Missouri occurrence, large-river/lake/impoundment habitat, deep pools and mixed mud/sand bottom associations, and the approved humpbacked profile, two-part dorsal fin, milky-white lips, and pelvic-fin identification traits.
+
+## USFWS-FRESHWATER-DRUM-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Freshwater drum — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/freshwater-drum-2  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-22  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; supplied original is 1200 x 731 JPEG; Public Domain; species identified as `Aplodinotus grunniens`.
+
+## MDC-PADDLEFISH
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Paddlefish — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/paddlefish  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-22  
+**Notes:** Supports `Polyodon spathula`, Polyodontidae family, Spoonbill alternate name, paddle-shaped snout, toothless adult mouth, small forward/downward-directed eyes, unequal-lobed forked tail, filter-feeding biology, big-river/open-water habitat, and reservoir populations.
+
+## MDC-PADDLEFISH-SEASON
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Paddlefish — Missouri fishing season and regulations  
+**URL:** https://mdc.mo.gov/fishing/seasons/paddlefish  
+**Source type:** Official state fishing regulations / regional occurrence evidence  
+**Reviewed date:** 2026-08-22  
+**Notes:** Establishes regulated Paddlefish snagging in Table Rock Lake, providing direct occurrence/angling evidence within the approved Southwest Missouri target region; also documents water-specific season and length-limit rules.
+
+## MDC-PADDLEFISH-TIPS
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Paddlefish: Tips For Fishing  
+**URL:** https://mdc.mo.gov/fishing/species/paddlefish/paddlefish-tips-fishing  
+**Source type:** Official state fisheries targeting and safety guidance  
+**Reviewed date:** 2026-08-22  
+**Notes:** Supports snagging as the dependable targeting method for filter-feeding Paddlefish, heavy-line/large-sinker/large-treble-hook equipment, sweeping snagging motion, regulation checks, and explicit caution around heavy line, large hooks, balance, landing, and handling.
+
+## USFWS-PADDLEFISH-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Paddlefish — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/paddlefish-32  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-22  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; original 1200 x 762 JPEG; Public Domain; species identified as `Polyodon spathula`.
+
 # Evidence Entries — Production Population Status
 
 Per-Fish and pairwise evidence population begins with FISH-008/FISH-009 production authoring. Do not fabricate empty “complete” evidence records merely to satisfy documentation appearance before the corresponding canonical Fish content is researched.
@@ -473,6 +554,82 @@ Spotted Gar distinction evidence
 
 Notes
 - Pairwise wording is limited to the beginner-useful snout-proportion and head/fin spotting distinctions explicitly described in the official MDC field guides.
+
+## Common Carp (`common-carp`)
+
+Regional Inclusion
+- MDC-COMMON-CARP — Statewide Missouri occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-COMMON-CARP
+
+Identification
+- MDC-COMMON-CARP
+
+Habitat / Waterbody
+- MDC-COMMON-CARP
+
+Aliases
+- USGS-COMMON-CARP
+
+Media Provenance
+- USFWS-COMMON-CARP-RAVER
+
+Taxonomy / Evidence Notes
+- The production aliases are limited to European Carp and German Carp even though USGS documents additional established alternate names.
+
+## Freshwater Drum (`freshwater-drum`)
+
+Regional Inclusion
+- MDC-FRESHWATER-DRUM — Statewide Missouri occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-FRESHWATER-DRUM
+
+Identification
+- MDC-FRESHWATER-DRUM
+
+Habitat / Waterbody
+- MDC-FRESHWATER-DRUM
+
+Aliases
+- MDC-FRESHWATER-DRUM
+
+Media Provenance
+- USFWS-FRESHWATER-DRUM-RAVER
+
+Taxonomy / Evidence Notes
+- The approved aliases preserve both Sheepshead and Sheephead because the official MDC field guide documents both forms.
+
+## Paddlefish (`paddlefish`)
+
+Regional Inclusion
+- MDC-PADDLEFISH-SEASON — Table Rock Lake establishes occurrence and regulated angling within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-PADDLEFISH
+
+Identification
+- MDC-PADDLEFISH
+
+Habitat / Waterbody
+- MDC-PADDLEFISH
+
+Aliases
+- MDC-PADDLEFISH
+
+Media Provenance
+- USFWS-PADDLEFISH-RAVER
+
+Targeting / Regulation / Safety Notes
+- MDC-PADDLEFISH-TIPS — Supports the approved Specialized Targeting guidance, heavy snagging tackle context, and safety language.
+- MDC-PADDLEFISH-SEASON — Supports the instruction to verify current water-specific seasons, methods, and size limits.
+
+Taxonomy / Evidence Notes
+- No Fish-to-Rig guidance record is created because the documented dependable targeting method relies on specialized snagging equipment outside the Companion's current canonical Rig library.
 
 # Related Documents
 

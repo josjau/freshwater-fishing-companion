@@ -25,6 +25,7 @@ const FISH_LEGACY_CATEGORY_ID_MAP = Object.freeze({
 });
 
 const FISH_CATEGORY_DATA = Object.freeze([
+    // Broad / primary target categories — alphabetical within this tier.
     {
         id: "bass",
         name: "Bass",
@@ -41,20 +42,17 @@ const FISH_CATEGORY_DATA = Object.freeze([
         summary: "Browse sunfish, rock-bass relatives, and crappie together to make similar species easier to sort out."
     },
     {
-        id: "walleye-sauger",
-        name: "Walleye & Sauger",
-        summary: "Browse Walleye, Sauger, and Saugeye together to compare their similar body shapes and markings."
-    },
-    {
         id: "trout",
         name: "Trout",
         summary: "Browse trout species and compare markings, fin shape, and other identification traits."
     },
     {
-        id: "gar",
-        name: "Gar",
-        summary: "Browse gar species and compare snout shape, spotting, and other identification traits."
+        id: "walleye-sauger",
+        name: "Walleye & Sauger",
+        summary: "Browse Walleye, Sauger, and Saugeye together to compare their similar body shapes and markings."
     },
+
+    // Secondary / specialized target categories — alphabetical within this tier.
     {
         id: "carp",
         name: "Carp",
@@ -64,6 +62,11 @@ const FISH_CATEGORY_DATA = Object.freeze([
         id: "drum",
         name: "Drum",
         summary: "Browse Freshwater Drum identification and reference information."
+    },
+    {
+        id: "gar",
+        name: "Gar",
+        summary: "Browse gar species and compare snout shape, spotting, and other identification traits."
     },
     {
         id: "paddlefish",

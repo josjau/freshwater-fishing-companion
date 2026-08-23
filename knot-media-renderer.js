@@ -69,7 +69,7 @@ renderKnotInstructionDetail = function renderKnotInstructionDetailWithMedia(appM
     const mediaMarkup = buildKnotInstructionMediaMarkup(record);
     if (!mediaMarkup) return;
 
-    tyingSection.insertAdjacentHTML("beforebegin", mediaMarkup);
+    tyingSection.insertAdjacentHTML("afterend", mediaMarkup);
 };
 
 console.info(

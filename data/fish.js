@@ -198,14 +198,21 @@ const FISH_DATA = Object.freeze([
         id: "common-carp",
         name: "Common Carp",
         summary:
-            "A large-bodied fish with barbels near the mouth and large, " +
-            "prominent scales.",
+            "A heavy-bodied, brassy-olive carp recognized by two pairs of " +
+            "barbels, large dark-edged scales, and a long dorsal fin.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Cyprinus carpio",
-        category: "Carp",
+        categoryId: "carp",
         family: "Cyprinidae",
+        aliases: ["European Carp", "German Carp"],
+        identificationTraits: [
+            "Two pairs of barbels are present around the upper jaw.",
+            "The dorsal fin is long, with a stout saw-toothed spine at the front.",
+            "Large dark-edged scales create a crosshatched appearance along the body.",
+            "The upper body is brassy olive and grades toward a yellowish-white belly."
+        ],
         habitatTags: ["Shallow Water", "Mud", "Grass", "Open Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
@@ -213,15 +220,22 @@ const FISH_DATA = Object.freeze([
         id: "freshwater-drum",
         name: "Freshwater Drum",
         summary:
-            "A deep-bodied freshwater fish with a long dorsal fin and " +
-            "a rounded, silvery profile.",
+            "A silvery, deep-bodied fish recognized by its humpbacked profile, " +
+            "milky-white lips, and long two-part dorsal fin.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Aplodinotus grunniens",
-        category: "Drum",
+        categoryId: "drum",
         family: "Sciaenidae",
-        habitatTags: ["Rock", "Channel", "Open Water", "Deep Water"],
+        aliases: ["Sheepshead", "Sheephead"],
+        identificationTraits: [
+            "The silvery, deep body rises steeply from the snout toward the dorsal fin, creating a humpbacked profile.",
+            "The long dorsal fin is divided into two distinct sections.",
+            "The lips are milky white.",
+            "The pelvic fins are white and may be tinged orange."
+        ],
+        habitatTags: ["Rock", "Channel", "Deep Water", "Mud"],
         waterbodyTypes: ["Lake", "River", "Reservoir"]
     },
     {
@@ -266,6 +280,28 @@ const FISH_DATA = Object.freeze([
         ],
         habitatTags: ["Grass", "Timber"],
         waterbodyTypes: ["River", "Creek"]
+    },
+    {
+        id: "paddlefish",
+        name: "Paddlefish",
+        summary:
+            "A large, sharklike filter-feeder recognized instantly by its long " +
+            "paddle-shaped snout, smooth body, and deeply forked tail.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Polyodon spathula",
+        categoryId: "paddlefish",
+        family: "Polyodontidae",
+        aliases: ["Spoonbill"],
+        identificationTraits: [
+            "The snout is greatly elongated and paddle shaped.",
+            "The large adult mouth is toothless and positioned far back beneath the head.",
+            "Small eyes point downward and forward near the front of the mouth.",
+            "The tail is deeply forked, with the upper lobe longer than the lower lobe."
+        ],
+        habitatTags: ["Current", "Open Water", "Deep Water"],
+        waterbodyTypes: ["River", "Reservoir"]
     }
 ]);
 
