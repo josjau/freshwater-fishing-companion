@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.1.5  
+**Document Revision:** 2.1.6  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-08-22
+**Last Updated:** 2026-08-23
 
 # Purpose
 
@@ -17,6 +17,33 @@ Do not record exact active audit section, exact session resume point, current bl
 For current formal continuation use `HANDOFF.md`. For material non-closed items use `ACTIVE-CHANGE-LEDGER.md`.
 
 # Unreleased
+
+## Fish Guide — Production Wave 2: Walleye / Sauger + Catfish
+
+### Added
+
+- Migrated Walleye and Channel Catfish to the approved production Fish schema and added Sauger, Saugeye, Blue Catfish, Flathead Catfish, Black Bullhead, and Yellow Bullhead as active production Fish.
+- Added seven Fish-identification relationships covering Walleye/Sauger/Saugeye and the approved Catfish comparison pairs.
+- Added eight Fish-to-Rig guidance records for the Wave 2 Fish, referencing only active canonical Rigs.
+- Added verified primary-identification media and provenance for all eight Wave 2 Fish, including the approved Duane Raver Saugeye illustration.
+- Expanded `FISH_REFERENCE_SOURCES.md` with Wave 2 taxonomy, regional inclusion, identification, habitat/waterbody, comparison, guidance, and media evidence.
+
+### Changed
+
+- Standardized current Fish primary media presentation around isolated/transparent Fish displayed over the canonical `#f4f0e8` reference-media surface while preserving source identity and diagnostic anatomy.
+- Standardized Fish Selection image blocks at 2.4:1 and Fish Detail identity image blocks at 2.2:1, with independent per-Fish scale/position tuning rather than per-species frame sizes.
+- Standardized Compare Fish presentation blocks and added compare-specific per-Fish fit tuning while preserving natural proportions and anatomy clearance.
+- Kept Compare Similar Fish thumbnails at 84 × 56, vertically centered them against the complete text group, restored two-up desktop behavior, and retained one tile per row on mobile/narrow layouts.
+- Removed redundant `Rigs to Start With` helper copy.
+- Increased external `↗` prominence and replaced thin-font internal `→` rendering with a heavier directional-arrow treatment while preserving internal/external destination semantics.
+
+### Corrected / Validated
+
+- Corrected Common Carp Selection framing so the dorsal fin retains safe clearance.
+- Background-isolation QA verified transparent Fish edges against light, dark, and canonical reference surfaces, with explicit attention to fins/spines, translucent fin edges, catfish barbels, gar snouts/jaws, Paddlefish rostrum, tails, and pale body edges.
+- Wave 2 Review v3 landed in GitHub commit `8399ae0cee0f5c4b9301041c904707430352bbd1` (`Fish - Walleye Sauger Refinement`) as exactly 22 changed files.
+- Desktop/mobile review approved Fish Selection cards, Fish ID image framing, transparency/background treatment, Fish-edge quality, Compare Similar Fish responsive behavior, and the external/internal arrow treatments.
+- Wave 2 remains open for one known Fish-specific visual defect: some Fish on the main Compare Fish page are not visually centered inside the otherwise accepted standardized image blocks. Final screenshot-based correction and desktop/mobile validation remain before Wave 2 closure.
 
 ## Fish Guide — Production Wave 1: Carp + Drum + Paddlefish
 

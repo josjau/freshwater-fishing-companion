@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.9  
+**Document Revision:** 1.0.10  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-19
+**Last Updated:** 2026-08-23
 
 # Purpose
 
@@ -226,6 +226,57 @@ Diagnostic features may include:
 - Gill-cover features
 
 The Fish page may surround the verified photograph with field-guide information, but the photograph should remain trustworthy evidence rather than becoming a decorative generated infographic.
+
+## Fish Isolation and Reference-Surface Standard
+
+When the approved source rights permit modification and the Fish can be isolated without losing diagnostic detail, production Fish media may use a transparent background and render the isolated Fish over the canonical `#f4f0e8` reference-media surface.
+
+The transparent Fish file and the UI surface have separate responsibilities:
+
+- the Fish asset preserves the verified subject and transparency,
+- the application supplies the fixed `#f4f0e8` presentation surface,
+- do not bake a new cream background into an otherwise clean transparent Fish merely to match the UI.
+
+Background removal is a preservation operation, not an illustration cleanup pass. Remove only pixels that are demonstrably background. Do not recolor, reshape, repaint, retouch, reconstruct, sharpen into new geometry, or otherwise alter the Fish itself.
+
+Special edge protection is required for thin, pale, translucent, or diagnostic anatomy, including:
+
+- dorsal spines and fin rays,
+- translucent fin membranes/edges,
+- catfish barbels,
+- gar snouts and jaws,
+- Paddlefish rostrum,
+- tail margins,
+- pale belly/body edges,
+- genuine open spaces between fins/body structures.
+
+Before approving an isolated Fish asset:
+
+1. Compare the isolated result directly with the untouched approved source.
+2. Inspect the alpha edge at high magnification.
+3. Inspect the result on light, dark, and canonical `#f4f0e8` backgrounds.
+4. Verify complete diagnostic anatomy and natural proportions remain intact.
+5. Preserve a safe transparent perimeter around all anatomy rather than tightly trimming the file to the Fish silhouette.
+6. Record background removal in the Media transformation/change metadata.
+
+If clean isolation cannot be achieved without losing or materially altering Fish detail, keep the source-faithful background or obtain a better source. Visual uniformity never overrides identification accuracy.
+
+Do not infer modification permission from artist attribution or government-site hosting alone. Per-asset rights/provenance review remains mandatory before background removal or other derivative processing.
+
+## Fish Presentation Framing
+
+Canonical Fish source/provenance remains authoritative; presentation framing does not change Fish identity/media ownership.
+
+Standardized UI image blocks should control the presentation surface while per-Fish scale/position settings control how the Fish fits inside that block. Do not distort natural proportions to make differently shaped species appear equally tall.
+
+Current approved Fish presentation contexts include:
+
+- Selection Card image block: 2.4:1,
+- Fish Detail identity image block: 2.2:1,
+- Compare Similar Fish thumbnail: 84 × 56,
+- dedicated Compare Fish contexts use standardized blocks with independent per-Fish fit tuning.
+
+All framing must preserve diagnostic extremities and safe clearance. Long/narrow Fish such as gar may legitimately retain more vertical negative space than deep-bodied Fish; do not vertically stretch them to imitate the apparent occupancy of trout or carp.
 
 # Tackle Media
 
@@ -508,6 +559,11 @@ Before approval, verify:
 - Diagnostic traits visible
 - Source and license verified
 - No generated approximation used as primary identification evidence
+- Any background isolation is permitted by the source rights and removes only background pixels
+- Thin/translucent/diagnostic anatomy remains intact after isolation
+- Transparent edges are checked on light, dark, and `#f4f0e8` backgrounds
+- Fish presentation framing preserves natural proportions and complete diagnostic extremities
+- Canonical source/provenance remains traceable after any approved transformation
 
 ## Tackle
 
