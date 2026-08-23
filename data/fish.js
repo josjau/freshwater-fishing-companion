@@ -124,31 +124,170 @@ const FISH_DATA = Object.freeze([
         id: "channel-catfish",
         name: "Channel Catfish",
         summary:
-            "A common catfish with a deeply forked tail and sensory barbels " +
-            "around the mouth.",
+            "A common catfish recognized by its deeply forked tail, sensory " +
+            "barbels, and the curved lower edge of its anal fin.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Ictalurus punctatus",
-        category: "Catfish",
+        categoryId: "catfish",
         family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The tail is deeply forked.",
+            "The lower edge of the anal fin is curved rather than straight.",
+            "Sensory barbels surround the mouth.",
+            "Dark side spots may be present, especially on smaller fish, but the spotting can become faint or absent."
+        ],
         habitatTags: ["Channel", "Current", "Timber", "Open Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
+    },
+    {
+        id: "blue-catfish",
+        name: "Blue Catfish",
+        summary:
+            "A large catfish recognized by its deeply forked tail and the " +
+            "long, straight lower edge of its anal fin.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Ictalurus furcatus",
+        categoryId: "catfish",
+        family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The tail is deeply forked.",
+            "The anal fin is long, with a straight lower edge.",
+            "The body is generally a plain blue-gray rather than strongly spotted."
+        ],
+        habitatTags: ["Channel", "Current", "Deep Water", "Rock"],
+        waterbodyTypes: ["River", "Reservoir"]
+    },
+    {
+        id: "flathead-catfish",
+        name: "Flathead Catfish",
+        summary:
+            "A heavy-bodied catfish recognized by its broad flattened head, " +
+            "projecting lower jaw, and tail that is not deeply forked.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Pylodictis olivaris",
+        categoryId: "catfish",
+        family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The head is broad and noticeably flattened.",
+            "The lower jaw projects beyond the upper jaw.",
+            "The tail is not deeply forked like the tail of a Channel or Blue Catfish."
+        ],
+        habitatTags: ["Timber", "Brush", "Channel", "Deep Water"],
+        waterbodyTypes: ["River", "Reservoir"]
+    },
+    {
+        id: "black-bullhead",
+        name: "Black Bullhead",
+        summary:
+            "A compact bullhead catfish recognized by its dark chin barbels " +
+            "and a nearly square tail with a slight notch.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Ameiurus melas",
+        categoryId: "catfish",
+        family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The chin barbels are dark gray to black.",
+            "The tail is not forked and has a slight notch along the rear edge.",
+            "The body has the compact, broad-headed profile typical of bullhead catfish."
+        ],
+        habitatTags: ["Mud", "Shallow Water"],
+        waterbodyTypes: ["Pond", "Lake", "Reservoir", "River", "Creek"]
+    },
+    {
+        id: "yellow-bullhead",
+        name: "Yellow Bullhead",
+        summary:
+            "A compact bullhead catfish recognized by its white or yellow " +
+            "chin barbels and nearly straight, unforked tail.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Ameiurus natalis",
+        categoryId: "catfish",
+        family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The chin barbels are white or yellow rather than dark.",
+            "The tail is unforked, with a rear edge that is nearly straight.",
+            "The body has the compact, broad-headed profile typical of bullhead catfish."
+        ],
+        habitatTags: ["Grass", "Shallow Water"],
+        waterbodyTypes: ["Pond", "Lake", "River", "Creek"]
     },
     {
         id: "walleye",
         name: "Walleye",
         summary:
-            "A streamlined predator recognized by its large reflective eyes " +
-            "and prominent canine teeth.",
+            "A streamlined percid recognized by an unspotted spiny dorsal fin, " +
+            "few or no cheek scales, and large reflective eyes.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Sander vitreus",
-        category: "Walleye",
+        categoryId: "walleye-sauger",
         family: "Percidae",
+        aliases: [],
+        identificationTraits: [
+            "The spiny dorsal fin lacks distinct individual dark spots.",
+            "The cheeks have few scales or may appear smooth.",
+            "The eyes are large and reflective."
+        ],
         habitatTags: ["Rock", "Open Water", "Current", "Deep Water"],
         waterbodyTypes: ["Lake", "River", "Reservoir"]
+    },
+    {
+        id: "sauger",
+        name: "Sauger",
+        summary:
+            "A streamlined river-oriented percid recognized by distinct spots " +
+            "on the spiny dorsal fin, scaled cheeks, and dark body saddles.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Sander canadensis",
+        categoryId: "walleye-sauger",
+        family: "Percidae",
+        aliases: ["Sand Pike"],
+        identificationTraits: [
+            "Distinct individual dark spots mark the spiny dorsal fin.",
+            "The cheeks are covered with scales.",
+            "Dark saddle-like blotches cross the back and upper sides."
+        ],
+        habitatTags: ["Current", "Channel", "Deep Water"],
+        waterbodyTypes: ["River", "Reservoir", "Lake"]
+    },
+    {
+        id: "saugeye",
+        name: "Saugeye",
+        summary:
+            "A Walleye-Sauger hybrid recognized by spots and bars in the " +
+            "spiny dorsal webbing, scaled cheeks, and intermediate markings.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Sander vitreus × Sander canadensis",
+        categoryId: "walleye-sauger",
+        family: "Percidae",
+        aliases: [],
+        identificationTraits: [
+            "The spiny dorsal webbing shows distinct spots together with bars or streaks.",
+            "The cheeks are covered with scales.",
+            "Gold-brown body blotching is intermediate between typical Walleye and Sauger markings."
+        ],
+        habitatTags: ["Open Water", "Deep Water"],
+        waterbodyTypes: ["Lake", "Reservoir"]
     },
     {
         id: "rainbow-trout",

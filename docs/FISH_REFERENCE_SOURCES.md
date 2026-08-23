@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.0.3  
+**Document Revision:** 1.0.6  
 **Document Status:** Approved — Production Authoring Standard  
 **Implementation Status:** Standard active; per-Fish evidence population proceeds with Fish production authoring  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
-**Last Updated:** 2026-08-22
+**Last Updated:** 2026-08-23
 
 # Purpose
 
@@ -26,6 +26,7 @@ Fish Guide Phase 0 is closed. Per-Fish evidence entries are populated as the app
 5. Conflicting authoritative sources are documented and reviewed explicitly; they are never silently resolved.
 6. Deterministic validation checks evidence structure/reference resolution. Human review determines scientific adequacy, source authority, and freshness.
 7. The evidence model is provisionally approved and deliberately adjustable if real production authoring demonstrates a better practical burden/structure. Any adjustment requires an explicit documented decision; no silent drift.
+8. Production Fish identification media uses a transparent Fish layer over the same shared neutral reference-media surface used for Tackle components when the source rights permit modification. Background removal must preserve all Fish anatomy and diagnostic detail; if clean isolation cannot be achieved without risking detail loss, retain the source background until a better asset is available.
 
 # Required Evidence Categories
 
@@ -444,6 +445,267 @@ These entries document the approved Phase 0 taxonomy decision and provide the in
 **Reviewed date:** 2026-08-22  
 **Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; original 1200 x 762 JPEG; Public Domain; species identified as `Polyodon spathula`.
 
+## MDC-WALLEYE
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Walleye — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/walleye  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports `Sander vitreus`, Percidae family, reflective-eye identification, large-stream/lake/reservoir occurrence, open-water/deep-pool/rock associations, and Missouri regional inclusion.
+
+## MDC-SAUGER
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Sauger — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/sauger  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports `Sander canadensis`, Percidae family, Sand Pike alternate name, distinct spiny-dorsal spots, scaled cheeks, dark saddle marks, flowing-water/current habitat, and bottom-oriented minnow fishing in swift rocky water.
+
+## ODWC-SAUGER
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Sauger — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/sauger  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Establishes Oklahoma occurrence including the Neosho River, supports Percidae family context, river/stream habitat, and the Walleye/Sauger/Saugeye spiny-dorsal identification framework.
+
+## ODWC-SAUGEYE
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Saugeye — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/saugeye  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports Saugeye as the Walleye-Sauger hybrid, spots-and-bars spiny-dorsal identification, scaled-cheek context, reservoir occurrence, near-bottom ledge/drop-off habitat, and jig/crankbait/live-bait targeting context.
+
+## ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Statewide Daily & Size Limits — Walleye, Sauger & Saugeye identification  
+**URL:** https://www.wildlifedepartment.com/fishing/regs/statewide-daily-size-limits  
+**Source type:** Official state fishing regulations / identification reference  
+**Reviewed date:** 2026-08-23  
+**Notes:** Provides concise current diagnostic distinctions: Walleye has no spots on the spiny dorsal fin and few or no cheek scales; Sauger has distinct dorsal spots and scaled cheeks; Saugeye has spots and bars in the dorsal webbing and scaled cheeks.
+
+## KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+
+**Authority / publisher:** Kansas Department of Wildlife and Parks  
+**Title:** Identification of Walleye, Sauger, and Saugeye  
+**URL:** https://ksoutdoors.com/content/download/7063/34347/file/Poster%20Fish%20ID%20Perch.pdf  
+**Source type:** Official state fisheries identification reference  
+**Reviewed date:** 2026-08-23  
+**Notes:** Corroborates cheek scaling and first-dorsal distinctions among all three taxa, including circular Sauger spots and Saugeye streaks/rows of spots.
+
+## AFS-SAUGEYE-NOTATION
+
+**Authority / publisher:** American Fisheries Society / Fisheries  
+**Title:** Creating a Digital Repository of Calcified Structures from Known-Age Fishes, a Century in the Making  
+**URL:** https://academic.oup.com/fisheries/article/47/8/357/7816507  
+**Source type:** Professional fisheries publication / hybrid-name corroboration  
+**Reviewed date:** 2026-08-23  
+**Notes:** Uses `Saugeye Sander vitreus × S. canadensis`, corroborating the project’s AFS-first parent-order notation alongside AFS-NAMES-8 parent-species names.
+
+## KDWP-SOUTHEAST-SAUGEYE
+
+**Authority / publisher:** Kansas Department of Wildlife and Parks  
+**Title:** Southeast Region Fishing Reports — Bone Creek Reservoir Saugeye  
+**URL:** https://ksoutdoors.com/Fishing/Fishing-Reports/Southeast-Region  
+**Source type:** Official state fisheries report / regional occurrence evidence  
+**Reviewed date:** 2026-08-23  
+**Notes:** Documents a managed Saugeye fishery at Bone Creek Reservoir in southeast Kansas and supports flats/deep-water/structure associations plus jighead-and-plastic targeting.
+
+## MNDNR-WALLEYE-TACTICS
+
+**Authority / publisher:** Minnesota Department of Natural Resources  
+**Title:** How to catch a walleye  
+**URL:** https://www.dnr.state.mn.us/gofishing/how-catch-walleye.html  
+**Source type:** Official state fisheries angling guidance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports jigging, slip-sinker/Lindy-style live bait, and bobber fishing above reefs/humps as standard Walleye presentations.
+
+## ODWC-WALLEYE-SAUGEYE-TACTICS
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Perch vs. Percidae: How-To Catch Walleye & Saugeye  
+**URL:** https://www.wildlifedepartment.com/outdoorok/ooj/perch-vs-percidae-how-catch-walleye-saugeye  
+**Source type:** Official state fisheries angling guidance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports bottom contact, Lindy-style natural-bait rigs, jigheads with live bait or soft plastics, and bottom-bouncing spinner-harness presentations for Walleye/Saugeye.
+
+## MDC-CHANNEL-CATFISH
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Channel Catfish — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/channel-catfish  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports `Ictalurus punctatus`, Ictaluridae family, statewide Missouri occurrence, deeply forked tail, rounded/convex anal-fin edge, variable dark spotting, barbels, impoundment/stream habitat, deep pools, timber/cover, and still-fishing context.
+
+## MDC-BLUE-CATFISH
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Blue Catfish — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/blue-catfish  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports `Ictalurus furcatus`, Ictaluridae family, forked tail, straight-edged long anal fin, unspotted blue-silver body, big-river/current habitat, sand/gravel/rubble substrate, and Missouri occurrence.
+
+## ODWC-OOLOGAH-BLUE-CATFISH
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Oologah Lake  
+**URL:** https://www.wildlifedepartment.com/fishing/wheretofish/northeast/oologah-lake  
+**Source type:** Official state fisheries waterbody profile / regional occurrence evidence  
+**Reviewed date:** 2026-08-23  
+**Notes:** Lists Blue Catfish among Fish Species of Interest at Oologah Lake in northeast Oklahoma, directly establishing occurrence inside the project’s target region.
+
+## MDC-FLATHEAD-CATFISH
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Flathead Catfish — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/flathead-catfish  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports `Pylodictis olivaris`, Ictaluridae family, broad flattened head, projecting lower jaw, tail not deeply forked, large-stream/reservoir occurrence, deep pools, submerged logs, drift and cover associations.
+
+## MDC-BLACK-BULLHEAD
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Black Bullhead — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/black-bullhead  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports `Ameiurus melas`, Ictaluridae family, statewide Missouri occurrence, dark chin barbels, slightly notched unforked tail, turbid/silty low-current habitat, muddy backwaters, and small-creek pools.
+
+## MDC-YELLOW-BULLHEAD
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Yellow Bullhead — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/yellow-bullhead  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports `Ameiurus natalis`, Ictaluridae family, statewide Missouri/Ozark occurrence, white chin barbels, nearly straight unforked tail, quiet vegetated backwater/stream habitat, and bottom-oriented angling context.
+
+## ODWC-BLACK-BULLHEAD
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Black Bullhead Catfish — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/black-bullhead-catfish  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Corroborates `Ameiurus melas`, black barbels, squared/unforked bullhead tail form, muddy slow-water habitat, and lake/pond/reservoir/slow-river associations.
+
+## ODWC-YELLOW-BULLHEAD
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Yellow Bullhead Catfish — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/yellow-bullhead-catfish  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-23  
+**Notes:** Corroborates `Ameiurus natalis`, white/yellow barbels, squared/unforked bullhead tail form, and quiet vegetated stream/backwater habitat.
+
+## MNDNR-CATFISH-BIOLOGY
+
+**Authority / publisher:** Minnesota Department of Natural Resources  
+**Title:** Catfish biology and identification  
+**URL:** https://www.dnr.state.mn.us/fish/catfish/biology.html  
+**Source type:** Official state fisheries biology reference  
+**Reviewed date:** 2026-08-23  
+**Notes:** Supports Yellow Bullhead use of clear, weedy ponds/lakes and slow streams, and corroborates pale lower barbels; also provides general bullhead pond/lake/creek context.
+
+## MDC-CATFISH-BIG-RIVER
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Big River Catfishing  
+**URL:** https://mdc.mo.gov/fishing/species/catfish/big-river-catfishing  
+**Source type:** Official state fisheries angling guidance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Documents the sliding slip-sinker/swivel/leader/hook bottom setup for Blue and Flathead Catfish and states the same basic setup works for Channel Catfish when downsized.
+
+## ODWC-CHANNEL-CATFISH-RIG
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Fishing Fun in the Sun!  
+**URL:** https://www.wildlifedepartment.com/outdoorok/ooj/fishing-fun-sun  
+**Source type:** Official state fisheries beginner angling guidance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Explicitly identifies a simple bobber with baited hook as the most basic Channel Catfish rig and also describes a sliding-sinker deeper-water setup.
+
+## USFWS-WALLEYE-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Walleye — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/walleye-1  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; supplied original is 1200 x 740 JPEG; Public Domain.
+
+## USFWS-SAUGER-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Sauger — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/sauger-2  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; supplied original is 1200 x 781 JPEG; Public Domain.
+
+## VADWR-SAUGEYE-RAVER
+
+**Authority / publisher:** Virginia Department of Wildlife Resources / eRegulations  
+**Title:** Fish Identification — Saugeye / Duane Raver-USFWS illustration attribution  
+**URL:** https://www.eregulations.com/virginia/fishing/fish-identification  
+**Source type:** Official state Fish identification and exact artwork attribution  
+**Reviewed date:** 2026-08-23  
+**Notes:** The page contains the Saugeye illustration and states that all Fish illustrations other than the separately named exceptions are Duane Raver/USFWS, establishing the exact Saugeye artwork as part of that Raver/USFWS set. ODWC independently identifies its matching Saugeye Sportfish ID artwork as Duane Raver. U.S. Fish and Wildlife Service media pages for the commissioned Raver Fish-art series explicitly mark those works Public Domain; a dedicated FWS Saugeye media landing page was not located, so this provenance chain is recorded explicitly.
+
+## USFWS-CHANNEL-CATFISH-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Channel catfish — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/chanel-catfish  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; supplied original is 1200 x 765 JPEG; Public Domain.
+
+## USFWS-BLUE-CATFISH-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Blue catfish — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/blue-catfish  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; supplied original is 1200 x 798 JPEG; Public Domain.
+
+## USFWS-FLATHEAD-CATFISH-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Flathead catfish — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/flathead-catfish  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; supplied original is 1200 x 814 JPEG; Public Domain.
+
+## USFWS-BLACK-BULLHEAD-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Black bullhead — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/black-bullhead  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; supplied original is 1200 x 778 JPEG; Public Domain.
+
+## USFWS-YELLOW-BULLHEAD-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Yellow bullhead — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/yellow-bullhead-10  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-23  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; supplied original is 1200 x 813 JPEG; Public Domain.
+
 # Evidence Entries — Production Population Status
 
 Per-Fish and pairwise evidence population begins with FISH-008/FISH-009 production authoring. Do not fabricate empty “complete” evidence records merely to satisfy documentation appearance before the corresponding canonical Fish content is researched.
@@ -630,6 +892,293 @@ Targeting / Regulation / Safety Notes
 
 Taxonomy / Evidence Notes
 - No Fish-to-Rig guidance record is created because the documented dependable targeting method relies on specialized snagging equipment outside the Companion's current canonical Rig library.
+
+## Walleye (`walleye`)
+
+Regional Inclusion
+- MDC-WALLEYE — Large streams throughout Missouri and stocked reservoir occurrence establish presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-WALLEYE
+
+Identification
+- ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+- KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+- MDC-WALLEYE
+
+Habitat / Waterbody
+- MDC-WALLEYE
+
+Media Provenance
+- USFWS-WALLEYE-RAVER
+
+Rig Guidance / Targeting
+- MNDNR-WALLEYE-TACTICS — Supports jig, slip-sinker live bait, and bobber presentations.
+- ODWC-WALLEYE-SAUGEYE-TACTICS — Corroborates bottom-oriented Lindy-style, jighead, and bottom-bouncing spinner-harness presentations.
+
+Taxonomy / Evidence Notes
+- AFS-NAMES-8 and MDC use `Sander vitreus` in Percidae.
+
+## Sauger (`sauger`)
+
+Regional Inclusion
+- ODWC-SAUGER — Neosho River occurrence establishes presence within the approved Northeast Oklahoma target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-SAUGER
+
+Identification
+- ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+- KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+- MDC-SAUGER
+
+Habitat / Waterbody
+- ODWC-SAUGER
+- MDC-SAUGER
+
+Aliases
+- MDC-SAUGER
+
+Media Provenance
+- USFWS-SAUGER-RAVER
+
+Rig Guidance / Targeting
+- MDC-SAUGER — Supports slowly trolled minnows near bottom in swift rocky areas and establishes the strong current/bottom-contact context behind the approved guidance.
+- ODWC-WALLEYE-SAUGEYE-TACTICS — Corroborates bottom-oriented jighead and live-bait presentation patterns within the Walleye/Sauger/Saugeye group.
+
+Taxonomy / Evidence Notes
+- Production aliases deliberately retain only `Sand Pike` even though MDC documents additional regional common names.
+
+## Saugeye (`saugeye`)
+
+Regional Inclusion
+- KDWP-SOUTHEAST-SAUGEYE — Bone Creek Reservoir establishes a managed Saugeye fishery within the approved Southeast Kansas target region.
+
+Taxonomy / Family
+- AFS-NAMES-8 — Supports the canonical parent-species names.
+- AFS-SAUGEYE-NOTATION — Corroborates `Sander vitreus × S. canadensis` parent order and hybrid notation.
+- ODWC-SAUGEYE — Confirms Saugeye as a Walleye-Sauger hybrid in Percidae context.
+
+Identification
+- ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+- KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+
+Habitat / Waterbody
+- ODWC-SAUGEYE
+- KDWP-SOUTHEAST-SAUGEYE
+
+Media Provenance
+- VADWR-SAUGEYE-RAVER — Exact Saugeye artwork attribution to Duane Raver/USFWS.
+- ODWC-SAUGEYE — Independently credits the matching Saugeye identification artwork to Duane Raver.
+
+Rig Guidance / Targeting
+- ODWC-WALLEYE-SAUGEYE-TACTICS — Supports bottom contact, jighead/soft-plastic, Lindy-style live bait, and bottom-bouncing spinner-harness presentations.
+- KDWP-SOUTHEAST-SAUGEYE — Corroborates jigheads with plastics, deeper flats, and structure-oriented presentation.
+
+Taxonomy / Evidence Notes
+- Parent order follows the approved AFS-first project convention: `Sander vitreus × Sander canadensis`.
+- Production primary uses the user-supplied transparent Duane Raver/USFWS Saugeye illustration. Virginia DWR/eRegulations establishes exact-artwork Raver/USFWS attribution and ODWC independently corroborates the artist. A dedicated FWS Saugeye media page was not located, so the source ledger preserves the full provenance chain rather than overstating a direct FWS landing-page record.
+- The source already carries transparency, so no background removal is applied to the Saugeye illustration. Presentation consistency is provided by the same shared neutral reference-media surface used for Tackle components and the other production Fish.
+
+## sauger-vs-walleye
+
+Sauger distinction evidence
+- ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+- KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+- MDC-SAUGER
+
+Walleye distinction evidence
+- ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+- KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+
+Notes
+- The comparison leads with spiny-dorsal spotting and cheek scaling; body saddles are supporting evidence rather than a sole identifier.
+
+## saugeye-vs-walleye
+
+Saugeye distinction evidence
+- ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+- KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+
+Walleye distinction evidence
+- ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+- KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+
+Notes
+- The comparison leads with dorsal-webbing spots/bars and cheek scaling rather than relying on color alone.
+
+## sauger-vs-saugeye
+
+Sauger distinction evidence
+- ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+- KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+- MDC-SAUGER
+
+Saugeye distinction evidence
+- ODWC-WALLEYE-SAUGER-SAUGEYE-ID
+- KDWP-WALLEYE-SAUGER-SAUGEYE-ID
+
+Notes
+- Both Fish have scaled cheeks, so the first diagnostic split is individual round Sauger dorsal spots versus the Saugeye combination of spots with bars/streaks in the webbing.
+
+## Channel Catfish (`channel-catfish`)
+
+Regional Inclusion
+- MDC-CHANNEL-CATFISH — Statewide Missouri occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-CHANNEL-CATFISH
+
+Identification
+- MDC-CHANNEL-CATFISH
+
+Habitat / Waterbody
+- MDC-CHANNEL-CATFISH
+
+Media Provenance
+- USFWS-CHANNEL-CATFISH-RAVER
+
+Rig Guidance / Targeting
+- MDC-CATFISH-BIG-RIVER — Supports the approved sliding-sinker bottom setup and explicitly says the same basic setup works for Channel Catfish when downsized.
+- ODWC-CHANNEL-CATFISH-RIG — Supports the approved simple fixed-bobber starting presentation.
+
+## Blue Catfish (`blue-catfish`)
+
+Regional Inclusion
+- ODWC-OOLOGAH-BLUE-CATFISH — Oologah Lake in northeast Oklahoma lists Blue Catfish among Fish Species of Interest, directly supporting target-region inclusion.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-BLUE-CATFISH
+
+Identification
+- MDC-BLUE-CATFISH
+
+Habitat / Waterbody
+- MDC-BLUE-CATFISH
+
+Media Provenance
+- USFWS-BLUE-CATFISH-RAVER
+
+Rig Guidance / Targeting
+- MDC-CATFISH-BIG-RIVER — Directly supports the sliding-sinker bottom presentation used by the canonical Basic Bottom Rig.
+
+## Flathead Catfish (`flathead-catfish`)
+
+Regional Inclusion
+- MDC-FLATHEAD-CATFISH — Statewide appropriate-habitat occurrence, including reservoirs and large streams, establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-FLATHEAD-CATFISH
+
+Identification
+- MDC-FLATHEAD-CATFISH
+
+Habitat / Waterbody
+- MDC-FLATHEAD-CATFISH
+
+Media Provenance
+- USFWS-FLATHEAD-CATFISH-RAVER
+
+Rig Guidance / Targeting
+- MDC-CATFISH-BIG-RIVER — Directly supports the sliding-sinker bottom presentation used by the canonical Basic Bottom Rig.
+
+## Black Bullhead (`black-bullhead`)
+
+Regional Inclusion
+- MDC-BLACK-BULLHEAD — Nearly statewide Missouri distribution establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-BLACK-BULLHEAD
+
+Identification
+- MDC-BLACK-BULLHEAD
+- ODWC-BLACK-BULLHEAD
+
+Habitat / Waterbody
+- MDC-BLACK-BULLHEAD
+- ODWC-BLACK-BULLHEAD
+
+Media Provenance
+- USFWS-BLACK-BULLHEAD-RAVER
+
+Rig Guidance / Targeting
+- MDC-BLACK-BULLHEAD — Documents bottom feeding and the quiet/muddy-water context behind the approved Basic Bottom Rig starting guidance.
+
+## Yellow Bullhead (`yellow-bullhead`)
+
+Regional Inclusion
+- MDC-YELLOW-BULLHEAD — Widespread Missouri occurrence and strong Ozark representation establish presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-YELLOW-BULLHEAD
+
+Identification
+- MDC-YELLOW-BULLHEAD
+- ODWC-YELLOW-BULLHEAD
+
+Habitat / Waterbody
+- MDC-YELLOW-BULLHEAD
+- ODWC-YELLOW-BULLHEAD
+- MNDNR-CATFISH-BIOLOGY — Corroborates clear weedy pond/lake and slow-stream use.
+
+Media Provenance
+- USFWS-YELLOW-BULLHEAD-RAVER
+
+Rig Guidance / Targeting
+- MDC-YELLOW-BULLHEAD — Supports close-to-bottom bait fishing in quiet vegetated habitats.
+
+## blue-catfish-vs-channel-catfish
+
+Blue Catfish distinction evidence
+- MDC-BLUE-CATFISH
+
+Channel Catfish distinction evidence
+- MDC-CHANNEL-CATFISH
+
+Notes
+- The comparison leads with straight-versus-curved anal-fin edge; tail shape is explicitly not treated as diagnostic because both species have deeply forked tails.
+
+## black-bullhead-vs-yellow-bullhead
+
+Black Bullhead distinction evidence
+- MDC-BLACK-BULLHEAD
+- ODWC-BLACK-BULLHEAD
+
+Yellow Bullhead distinction evidence
+- MDC-YELLOW-BULLHEAD
+- ODWC-YELLOW-BULLHEAD
+
+Notes
+- Chin-barbel color is the primary beginner diagnostic; tail-edge shape is supporting evidence.
+
+## black-bullhead-vs-flathead-catfish
+
+Black Bullhead distinction evidence
+- MDC-BLACK-BULLHEAD
+
+Flathead Catfish distinction evidence
+- MDC-FLATHEAD-CATFISH
+
+Notes
+- The comparison leads with the Flathead Catfish's broad flattened head and projecting lower jaw versus the compact bullhead profile.
+
+## flathead-catfish-vs-yellow-bullhead
+
+Flathead Catfish distinction evidence
+- MDC-FLATHEAD-CATFISH
+
+Yellow Bullhead distinction evidence
+- MDC-YELLOW-BULLHEAD
+
+Notes
+- The comparison leads with Flathead head/jaw shape; pale Yellow Bullhead chin barbels are supporting evidence.
 
 # Related Documents
 

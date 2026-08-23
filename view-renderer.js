@@ -233,125 +233,129 @@ function buildFishMediaMarkup(media, className, loading = "lazy") {
 
 const FISH_IMAGE_FRAMING = Object.freeze({
     "rainbow-trout": Object.freeze({
-        compact: Object.freeze({
-            scale: 1.03,
-            aspectRatio: "2.8 / 1",
-            positionY: "29%",
-            offsetX: "0.8%"
-        }),
-        detail: Object.freeze({
-            scale: 1.00,
-            aspectRatio: "2.2 / 1",
-            positionY: "30%",
-            offsetX: "0.8%"
-        })
+        selection: Object.freeze({ scale: 1.06, positionY: "30%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.06, positionY: "17%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 0.91, positionY: "30%", offsetX: "0%" }),
+        compareCatalog: Object.freeze({ scale: 0.91, positionY: "30%", offsetX: "0%" }),
+        compareDetail: Object.freeze({ scale: 0.92, positionY: "30%", offsetX: "0%" })
     }),
     "brown-trout": Object.freeze({
-        compact: Object.freeze({
-            scale: 1.28,
-            aspectRatio: "2.8 / 1",
-            positionY: "45%",
-            offsetX: "-2.7%"
-        }),
-        detail: Object.freeze({
-            scale: 1.18,
-            aspectRatio: "2.2 / 1",
-            positionY: "45%",
-            offsetX: "-2.7%"
-        })
+        selection: Object.freeze({ scale: 1.27, positionY: "43%", offsetX: "-2.7%" }),
+        detail: Object.freeze({ scale: 1.31, positionY: "39%", offsetX: "-2.7%" }),
+        similar: Object.freeze({ scale: 1.18, positionY: "43%", offsetX: "-2.7%" }),
+        compareCatalog: Object.freeze({ scale: 1.18, positionY: "43%", offsetX: "-2.7%" }),
+        compareDetail: Object.freeze({ scale: 1.18, positionY: "43%", offsetX: "-2.7%" })
     }),
     "longnose-gar": Object.freeze({
-        compact: Object.freeze({
-            scale: 1.30,
-            aspectRatio: "4 / 1",
-            positionY: "30%",
-            offsetX: "2.4%"
-        }),
-        detail: Object.freeze({
-            scale: 1.30,
-            aspectRatio: "5 / 2",
-            positionY: "18%",
-            offsetX: "2.4%"
-        })
+        selection: Object.freeze({ scale: 1.28, positionY: "21%", offsetX: "2.4%" }),
+        detail: Object.freeze({ scale: 1.28, positionY: "5%", offsetX: "2.4%" }),
+        similar: Object.freeze({ scale: 1.17, positionY: "21%", offsetX: "2.4%" }),
+        compareCatalog: Object.freeze({ scale: 1.17, positionY: "21%", offsetX: "2.4%" }),
+        compareDetail: Object.freeze({ scale: 1.19, positionY: "21%", offsetX: "2.4%" })
     }),
     "spotted-gar": Object.freeze({
-        compact: Object.freeze({
-            scale: 1.08,
-            aspectRatio: "4 / 1",
-            positionY: "31%",
-            offsetX: "0.8%"
-        }),
-        detail: Object.freeze({
-            scale: 1.08,
-            aspectRatio: "5 / 2",
-            positionY: "20%",
-            offsetX: "0.8%"
-        })
+        selection: Object.freeze({ scale: 1.08, positionY: "26%", offsetX: "0.8%" }),
+        detail: Object.freeze({ scale: 1.08, positionY: "15%", offsetX: "0.8%" }),
+        similar: Object.freeze({ scale: 0.98, positionY: "26%", offsetX: "0.8%" }),
+        compareCatalog: Object.freeze({ scale: 0.98, positionY: "26%", offsetX: "0.8%" }),
+        compareDetail: Object.freeze({ scale: 0.95, positionY: "26%", offsetX: "0.8%" })
     }),
     "common-carp": Object.freeze({
-        compact: Object.freeze({
-            scale: 1.00,
-            aspectRatio: "2.6 / 1",
-            positionY: "36%",
-            offsetX: "0%"
-        }),
-        detail: Object.freeze({
-            scale: 1.00,
-            aspectRatio: "1200 / 835",
-            positionY: "50%",
-            offsetX: "0%"
-        })
+        selection: Object.freeze({ scale: 1.00, positionY: "42%", offsetX: "-1.5%" }),
+        detail: Object.freeze({ scale: 1.08, positionY: "38%", offsetX: "-3%" }),
+        similar: Object.freeze({ scale: 1.05, positionY: "42%", offsetX: "-1.5%" }),
+        compareCatalog: Object.freeze({ scale: 1.05, positionY: "42%", offsetX: "-1.5%" }),
+        compareDetail: Object.freeze({ scale: 0.98, positionY: "42%", offsetX: "-3%" })
     }),
     "freshwater-drum": Object.freeze({
-        compact: Object.freeze({
-            scale: 1.08,
-            aspectRatio: "2.5 / 1",
-            positionY: "46%",
-            offsetX: "-1%"
-        }),
-        detail: Object.freeze({
-            scale: 1.00,
-            aspectRatio: "1200 / 731",
-            positionY: "50%",
-            offsetX: "0%"
-        })
+        selection: Object.freeze({ scale: 1.06, positionY: "45%", offsetX: "-1%" }),
+        detail: Object.freeze({ scale: 1.18, positionY: "42%", offsetX: "-1%" }),
+        similar: Object.freeze({ scale: 1.12, positionY: "45%", offsetX: "-1%" }),
+        compareCatalog: Object.freeze({ scale: 1.12, positionY: "45%", offsetX: "-1%" }),
+        compareDetail: Object.freeze({ scale: 1.21, positionY: "45%", offsetX: "-1%" })
     }),
     "paddlefish": Object.freeze({
-        compact: Object.freeze({
-            scale: 1.00,
-            aspectRatio: "3.1 / 1",
-            positionY: "42%",
-            offsetX: "0%"
-        }),
-        detail: Object.freeze({
-            scale: 1.00,
-            aspectRatio: "1200 / 762",
-            positionY: "50%",
-            offsetX: "0%"
-        })
+        selection: Object.freeze({ scale: 1.00, positionY: "42%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.00, positionY: "35%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 0.85, positionY: "42%", offsetX: "0%" }),
+        compareCatalog: Object.freeze({ scale: 0.85, positionY: "42%", offsetX: "0%" }),
+        compareDetail: Object.freeze({ scale: 0.84, positionY: "42%", offsetX: "0%" })
+    }),
+    "walleye": Object.freeze({
+        selection: Object.freeze({ scale: 1.06, positionY: "24%", offsetX: "-1%" }),
+        detail: Object.freeze({ scale: 1.13, positionY: "8%", offsetX: "-1%" }),
+        similar: Object.freeze({ scale: 1.00, positionY: "24%", offsetX: "-1%" }),
+        compareCatalog: Object.freeze({ scale: 1.00, positionY: "24%", offsetX: "-1%" }),
+        compareDetail: Object.freeze({ scale: 1.05, positionY: "24%", offsetX: "-1%" })
+    }),
+    "sauger": Object.freeze({
+        selection: Object.freeze({ scale: 1.12, positionY: "43%", offsetX: "1%" }),
+        detail: Object.freeze({ scale: 1.21, positionY: "40%", offsetX: "1%" }),
+        similar: Object.freeze({ scale: 1.12, positionY: "43%", offsetX: "1%" }),
+        compareCatalog: Object.freeze({ scale: 1.12, positionY: "43%", offsetX: "1%" }),
+        compareDetail: Object.freeze({ scale: 1.00, positionY: "43%", offsetX: "1%" })
+    }),
+    "saugeye": Object.freeze({
+        selection: Object.freeze({ scale: 0.88, positionY: "54%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 0.94, positionY: "57%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 0.85, positionY: "54%", offsetX: "0%" }),
+        compareCatalog: Object.freeze({ scale: 0.85, positionY: "54%", offsetX: "0%" }),
+        compareDetail: Object.freeze({ scale: 0.82, positionY: "54%", offsetX: "0%" })
+    }),
+    "channel-catfish": Object.freeze({
+        selection: Object.freeze({ scale: 1.14, positionY: "23%", offsetX: "-1%" }),
+        detail: Object.freeze({ scale: 1.14, positionY: "8%", offsetX: "-1%" }),
+        similar: Object.freeze({ scale: 1.02, positionY: "23%", offsetX: "-1%" }),
+        compareCatalog: Object.freeze({ scale: 1.02, positionY: "23%", offsetX: "-1%" }),
+        compareDetail: Object.freeze({ scale: 1.00, positionY: "23%", offsetX: "-1%" })
+    }),
+    "blue-catfish": Object.freeze({
+        selection: Object.freeze({ scale: 1.40, positionY: "24%", offsetX: "-2%" }),
+        detail: Object.freeze({ scale: 1.40, positionY: "12%", offsetX: "-2%" }),
+        similar: Object.freeze({ scale: 1.32, positionY: "24%", offsetX: "-2%" }),
+        compareCatalog: Object.freeze({ scale: 1.32, positionY: "24%", offsetX: "-2%" }),
+        compareDetail: Object.freeze({ scale: 1.24, positionY: "24%", offsetX: "-2%" })
+    }),
+    "flathead-catfish": Object.freeze({
+        selection: Object.freeze({ scale: 1.02, positionY: "42%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.05, positionY: "38%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 0.94, positionY: "42%", offsetX: "0%" }),
+        compareCatalog: Object.freeze({ scale: 0.94, positionY: "42%", offsetX: "0%" }),
+        compareDetail: Object.freeze({ scale: 0.88, positionY: "42%", offsetX: "0%" })
+    }),
+    "black-bullhead": Object.freeze({
+        selection: Object.freeze({ scale: 1.16, positionY: "32%", offsetX: "-3%" }),
+        detail: Object.freeze({ scale: 1.30, positionY: "23%", offsetX: "-4%" }),
+        similar: Object.freeze({ scale: 1.27, positionY: "32%", offsetX: "-3%" }),
+        compareCatalog: Object.freeze({ scale: 1.27, positionY: "32%", offsetX: "-3%" }),
+        compareDetail: Object.freeze({ scale: 1.33, positionY: "32%", offsetX: "-3%" })
+    }),
+    "yellow-bullhead": Object.freeze({
+        selection: Object.freeze({ scale: 1.39, positionY: "39%", offsetX: "-2%" }),
+        detail: Object.freeze({ scale: 1.49, positionY: "35%", offsetX: "-2%" }),
+        similar: Object.freeze({ scale: 1.35, positionY: "39%", offsetX: "-2%" }),
+        compareCatalog: Object.freeze({ scale: 1.35, positionY: "39%", offsetX: "-2%" }),
+        compareDetail: Object.freeze({ scale: 1.30, positionY: "39%", offsetX: "-2%" })
     })
 });
-
 function buildFishFramedMediaMarkup(
     fish,
     media,
     imageClass,
     frameClass,
     loading = "lazy",
-    framingContext = "compact"
+    framingContext = "selection"
 ) {
-    const fishFraming = FISH_IMAGE_FRAMING[fish?.id];
-    const framing = fishFraming?.[framingContext] ?? fishFraming?.compact;
-    if (!framing || !media?.file) {
-        return buildFishMediaMarkup(media, imageClass, loading);
-    }
+    if (!media?.file) return "";
 
+    const fishFraming = FISH_IMAGE_FRAMING[fish?.id];
+    const framing = fishFraming?.[framingContext] ?? {};
     const framingStyle = [
-        `--fish-image-scale: ${framing.scale}`,
-        `--fish-frame-aspect: ${framing.aspectRatio}`,
-        `--fish-image-position-y: ${framing.positionY}`,
-        `--fish-image-offset-x: ${framing.offsetX}`
-    ].join("; ");
+        `--fish-image-scale: ${framing.scale ?? 1}`,
+        framing.aspectRatio ? `--fish-frame-aspect: ${framing.aspectRatio}` : null,
+        `--fish-image-position-y: ${framing.positionY ?? "50%"}`,
+        `--fish-image-offset-x: ${framing.offsetX ?? "0%"}`
+    ].filter(Boolean).join("; ");
 
     return `
         <span class="fish-image-frame ${frameClass}" style="${framingStyle};">
@@ -377,7 +381,9 @@ function buildFishResultCardMarkup(fish, category, primaryMedia, isDetailAvailab
         fish,
         primaryMedia,
         "fish-result-card__image",
-        "fish-result-card__image-frame"
+        "fish-result-card__image-frame",
+        "lazy",
+        "selection"
     );
     const content = `
         <span class="fish-result-card__category">${category?.name ?? "Fish"}</span>
@@ -396,7 +402,7 @@ function buildFishResultCardMarkup(fish, category, primaryMedia, isDetailAvailab
     return `
         <button class="search-result-card search-result-card--fish" type="button" data-result-id="${fish.id}">
             ${content}
-            <span class="search-result-card__action">View Fish →</span>
+            <span class="search-result-card__action">View Fish <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
         </button>
     `;
 }
@@ -426,7 +432,7 @@ function renderFishGuideLanding(appMain, config) {
         <button class="dashboard-card fish-collection-card" type="button" data-fish-collection-key="${card.key}">
             <span class="dashboard-card__title">${card.title}</span>
             <span class="dashboard-card__description">${card.description}</span>
-            <span class="dashboard-card__action">Browse →</span>
+            <span class="dashboard-card__action">Browse <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
         </button>
     `).join("");
 
@@ -435,7 +441,7 @@ function renderFishGuideLanding(appMain, config) {
             <button class="dashboard-card dashboard-card--workflow fish-compare-entry" type="button" data-fish-compare-catalog>
                 <span class="dashboard-card__title">Compare Similar Fish</span>
                 <span class="dashboard-card__description">Compare similar Fish side by side using the visible traits that best distinguish them.</span>
-                <span class="dashboard-card__action">Compare →</span>
+                <span class="dashboard-card__action">Compare <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
             </button>
         `
         : "";
@@ -531,11 +537,13 @@ function renderFishDetail(appMain, detailConfig) {
                                 context.relatedFish,
                                 context.relatedMedia,
                                 "fish-similar-link__image",
-                                "fish-similar-link__image-frame"
+                                "fish-similar-link__image-frame",
+                                "lazy",
+                                "similar"
                             )}
                             <span class="fish-similar-link__body">
                                 <span class="fish-similar-link__name">${context.relatedFish.name}</span>
-                                <span class="fish-similar-link__action">Compare <span aria-hidden="true">→</span></span>
+                                <span class="fish-similar-link__action">Compare <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
                             </span>
                         </button>
                     `).join("")}
@@ -555,7 +563,7 @@ function renderFishDetail(appMain, detailConfig) {
                 <div class="fish-rig-link-list">
                     ${records.map((item) => `
                         <button class="internal-knowledge-link fish-rig-link" type="button" data-fish-rig-id="${item.rig.id}">
-                            ${item.rig.name} <span aria-hidden="true">→</span>
+                            ${item.rig.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
                         </button>
                     `).join("")}
                 </div>
@@ -565,10 +573,7 @@ function renderFishDetail(appMain, detailConfig) {
     const rigMarkup = recommendations.length
         ? `
             <section class="detail-section fish-rig-section">
-                <div class="fish-rig-section__header">
-                    <h3>Rigs to Start With</h3>
-                    <p>Select a Rig to open its setup and tying instructions.</p>
-                </div>
+                <h3>Rigs to Start With</h3>
                 <ul class="fish-rig-application-list">
                     ${buildRigGroup("Primary", primaryRigs)}
                     ${buildRigGroup("Alternatives", alternativeRigs)}
@@ -672,17 +677,21 @@ function renderFishComparisonCatalog(appMain, config) {
                                 comparison.fishA,
                                 comparison.mediaA,
                                 "fish-comparison-catalog-card__image",
-                                "fish-comparison-catalog-card__image-frame"
+                                "fish-comparison-catalog-card__image-frame",
+                                "lazy",
+                                "compareCatalog"
                             )}
                             ${buildFishFramedMediaMarkup(
                                 comparison.fishB,
                                 comparison.mediaB,
                                 "fish-comparison-catalog-card__image",
-                                "fish-comparison-catalog-card__image-frame"
+                                "fish-comparison-catalog-card__image-frame",
+                                "lazy",
+                                "compareCatalog"
                             )}
                         </span>
                         <span class="fish-comparison-catalog-card__title">${comparison.fishA.name} vs ${comparison.fishB.name}</span>
-                        <span class="fish-comparison-catalog-card__action">Compare →</span>
+                        <span class="fish-comparison-catalog-card__action">Compare <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
                     </button>
                 `).join("")}
             </div>
@@ -713,11 +722,12 @@ function renderFishComparison(appMain, config) {
                 media,
                 "fish-comparison-side__image",
                 "fish-comparison-side__image-frame",
-                "eager"
+                "eager",
+                "compareDetail"
             )}
             <ul class="detail-list">${distinctionsFor(fish.id)}</ul>
             <button class="internal-knowledge-link" type="button" data-fish-detail-id="${fish.id}">
-                View ${fish.name} <span aria-hidden="true">→</span>
+                View ${fish.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
             </button>
         </section>
     `;
@@ -760,7 +770,7 @@ function buildKnotResultCardMarkup(knot) {
             <span class="search-result-card__title">${knot.name}</span>
             <span class="search-result-card__meta">${knot.difficulty}</span>
             <span class="search-result-card__summary">${knot.summary}</span>
-            <span class="search-result-card__action">View instructions →</span>
+            <span class="search-result-card__action">View instructions <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
         </button>
     `;
 }
@@ -773,8 +783,8 @@ function renderKnotGuideLanding(appMain, config) {
 
     const taskMarkup = config.tasks.map((task) => {
         const actionLabel = task.id === "attach-line-to-reel"
-            ? "Get your reel ready →"
-            : "Choose this task →";
+            ? 'Get your reel ready <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>'
+            : 'Choose this task <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>';
         const isImportantTask = ["attach-line-to-reel", "terminal-attachment"].includes(task.id);
         const taskClassName = [
             "dashboard-card",
@@ -1016,7 +1026,7 @@ function buildRigKnotApplications(record) {
                 }
                 return `
                     <button class="internal-knowledge-link rig-knot-link" type="button" data-rig-knot-id="${knot.id}">
-                        ${knot.name} <span aria-hidden="true">→</span>
+                        ${knot.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
                     </button>
                 `;
             })
@@ -1084,7 +1094,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
                     const label = lineType?.title ?? lineTypeId;
                     return `
                         <button class="internal-knowledge-link" type="button" data-line-type-id="${lineTypeId}">
-                            ${label} <span aria-hidden="true">→</span>
+                            ${label} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
                         </button>
                     `;
                 }).join("")}
@@ -1098,7 +1108,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
                 <summary>Sources & References</summary>
                 <div class="rig-reference-links knot-reference-links">
                     ${record.referenceLinks.map((reference) => `
-                        <a class="rig-reference-link knot-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span aria-hidden="true">↗</span></a>
+                        <a class="rig-reference-link knot-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
                     `).join("")}
                 </div>
             </details>
@@ -1390,7 +1400,7 @@ function buildRigReferenceLinks(record) {
             <p class="rig-reference-intro">Use these external sources for additional technical cross-checking.</p>
             <div class="rig-reference-links">
                 ${record.referenceLinks.map((reference) => `
-                    <a class="rig-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span aria-hidden="true">↗</span></a>
+                    <a class="rig-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
                 `).join("")}
             </div>
         </section>
@@ -1408,7 +1418,7 @@ function buildRigTutorial(record) {
                     <h3>Rig Tutorial</h3>
                     <p>${tutorial.title} · ${tutorial.creator}</p>
                 </div>
-                <a class="rig-tutorial-section__external" href="${tutorial.externalUrl}" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>
+                <a class="rig-tutorial-section__external" href="${tutorial.externalUrl}" target="_blank" rel="noopener noreferrer">Watch on YouTube <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
             </div>
             <button class="rig-tutorial-load" type="button" data-rig-tutorial-load data-video-id="${tutorial.videoId}" data-video-title="${tutorial.title}">
                 <span class="rig-tutorial-load__icon" aria-hidden="true">▶</span>
