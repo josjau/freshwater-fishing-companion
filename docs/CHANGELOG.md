@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.1.4  
+**Document Revision:** 2.1.5  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-22
@@ -18,6 +18,39 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 
 # Unreleased
 
+## Fish Guide — Production Wave 1: Carp + Drum + Paddlefish
+
+### Added
+
+- Migrated Common Carp and Freshwater Drum to the approved production Fish schema and added Paddlefish as an active production Fish.
+- Added verified U.S. Fish and Wildlife Service Duane Raver public-domain primary-identification media for Common Carp, Freshwater Drum, and Paddlefish with local WebP production assets and recorded provenance.
+- Added Primary Basic Bottom Rig guidance for Common Carp and Freshwater Drum after deliberate Fish-to-Rig evaluation.
+- Added Paddlefish Specialized Targeting guidance instead of forcing a normal Fish-to-Rig recommendation for a species commonly targeted through specialized, regulation-sensitive snagging methods.
+- Added supporting Fish reference-source evidence for the three Wave 1 Fish.
+
+### Changed
+
+- Reordered Fish Guide categories using the approved angler-priority tiers with alphabetical ordering inside each tier.
+- Corrected compact selection-card framing for Common Carp, Freshwater Drum, and Paddlefish while preserving the canonical source media files and diagnostic extremities.
+- Refined Fish detail hierarchy so identity metadata remains in the Fish identity area while the concise identification summary leads **How to Identify It**, eliminating duplicated descriptive information.
+- Standardized normal Fish information sections on the clean plain-border treatment validated during Paddlefish review.
+- Standardized Safety as a semantic warning treatment rather than ordinary information-card emphasis.
+- Standardized **Compare Similar Fish** as a workflow/action card using the approved workflow treatment.
+- Corrected the shared Specialized Targeting sequence to description → research guidance → regulation/source note → prominent Safety, including regression application to Gar.
+- Simplified repeated Basic Bottom Rig Knot recommendations by grouping identical applications under one recommended Knot set while preserving each connection purpose.
+- Reordered Rig detail flow so `What You Need`, `How to Build It`, `Rig Tutorial`, and `Knots You'll Tie` follow a more natural task sequence.
+- Reordered Knot instructional flow so the Visual Guide sits with `How to Tie It`, supporting references no longer interrupt primary tying instruction, and Rig relationship presentation avoids repeating Rig descriptions.
+- Added compact contextual-navigation trials for Tackle component Used In / Related Components and reduced repeated component-description content in Rig readiness tiles.
+
+### Corrected / Validated
+
+- Corrected Fish selection framing after review identified top/bottom clearance, right-edge clipping, and Paddlefish dorsal-fin cropping.
+- Corrected Specialized Targeting research-note spacing and preserved explicit Safety prominence.
+- Corrected Rig readiness visual cues so missing requirements use a clear red semantic state and complete requirements use a distinct ready green.
+- Review 5 package source/assets were confirmed on GitHub source commit `be8b2164f62770ef30a4a3cac8238aa5f4f004f7` (`Fish - UX tweaks - Visibility fixes`); package JavaScript syntax, CSS brace structure, and ZIP integrity passed.
+- User mobile-device validation approved the Fish-specific Wave 1 result: all three new Fish image frames, Fish identity/identification separation, plain-border information sections, Safety treatment, and Compare Similar Fish workflow treatment.
+- Cross-domain Rig/Knot/link/detail inconsistencies observed during mobile review were deliberately carried into `V1-DESIGN-AUDIT.md` rather than keeping validated Fish production open or applying unreviewed site-wide styling changes.
+
 ## Fish Guide — Trout Production Package 1
 
 ### Added
@@ -32,8 +65,7 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 
 - Implemented Fish Guide landing search, category browse, Fish detail, Similar Fish comparison, comparison catalog, and context-preserving Fish navigation.
 - Preserved the other existing live Fish during the staged mixed-schema migration instead of taking unmigrated records offline.
-- Established the approved Fish identity layout: Category → Name → identification image → scientific name → summary → family → aliases, with no redundant visible Fish-name caption under the image.
-- Made Fish selection cards mirror the Fish identity/detail hierarchy.
+- Established the initial Fish identity layout and made Fish selection cards mirror the Fish detail hierarchy; later Wave 1 review refined descriptive summary placement into **How to Identify It** to avoid duplication.
 - Applied the Rig-detail baseline to Fish supporting sections: compact media-backed Similar Fish choices, Rig-style Habitat & Water at-a-glance treatment, and canonical Rig links instead of duplicated Rig instructions.
 - Expanded deterministic repository validation for Fish categories, migrated Fish readiness, Fish identification relationships, Fish-to-Rig references, source evidence, search helpers, and Fish media requirements.
 
@@ -179,7 +211,7 @@ Meaningful landed results:
 - Completed the approved 20-Rig library across six learning tiers.
 - Final tier counts: 6 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert.
 - Preserved six-member Core Rig registry/order.
-- Expanded canonical Tackle and recognition-media registries to 29 records each.
+- Expanded canonical Tackle/media foundation to 29 records at the completed Rig-guide milestone.
 - Integrated final seven Rigs and six final canonical Tackle concepts.
 - Implemented/validated build-first tutorial coverage/fallbacks for final tiers.
 - Validated recognition media, readiness persistence, desktop/mobile presentation, console health, and deployed artifact integrity.

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.2.6  
+**Document Revision:** 2.2.7  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-22
@@ -44,34 +44,26 @@ For a new project session:
 | What historical milestones were completed? | frozen `MILESTONES.md` |
 | What does a domain own? | the applicable data-model/domain standard |
 | What happened during a bounded closed workstream? | retained archive/Git history after durable truth is promoted |
+| What governs the required final Version 1 visual/mobile audit? | `V1-DESIGN-AUDIT.md` |
 
 `SPECIFICATION.md` is retired from active maintenance and remains only as a supersession/retirement pointer after its unique requirements were reconciled.
 
 # Current Product Milestone
 
-**Fish Guide — Production Wave 1: Carp + Drum + Paddlefish**
+**Fish Guide — Production Wave 2: Walleye / Sauger + Catfish**
 
 Repository Audit Cleanup and Fish Guide Phase 0 are closed. Trout Production Package 1 is **CLOSED** at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` (`Fish - Search Fix`) after GitHub verification, static validation, and user-confirmed fresh-session live validation. The broader prepared Hotfix 2 was not applied and remains superseded unless a fresh-load regression later proves it necessary.
 
 Gar Production Package is also **CLOSED**. Longnose Gar + Spotted Gar landed at `cc7840c6ae96bc488e3f443be7e6e5f737508e38` (`Fish - Gar Final`) with their deterministic comparison relationship, verified USFWS Duane Raver primary-identification media, approved evidence/search content, no Fish-to-Rig guidance, production-copy cleanup, reusable subject-centered Fish image framing, and Specialized Targeting with external research topics. Post-push package fidelity and deterministic validation passed, and the user confirmed the deployed Gar/Trout review PASS.
 
+Fish Guide Production Wave 1 — **Common Carp + Freshwater Drum + Paddlefish** — is **CLOSED** at source commit `be8b2164f62770ef30a4a3cac8238aa5f4f004f7` (`Fish - UX tweaks - Visibility fixes`). The pushed GitHub blobs match the approved Review 5 package for all Wave 1 package files. User mobile-device validation approved Common Carp, Freshwater Drum, and Paddlefish image framing; Fish identity/identification separation; plain-border Fish information sections; semantic Safety treatment; and the standardized workflow treatment used by Compare Similar Fish. The same mobile review exposed cross-domain Rig/Knot/link/detail-page design inconsistencies that are intentionally deferred to the required final Version 1 design audit rather than reopening the validated Fish content. Those findings are owned by `docs/V1-DESIGN-AUDIT.md` and the Active Change Ledger.
+
 FISH-001 through FISH-007 are terminal Phase 0 history. The active Fish work remains:
 
-- **FISH-008 — approved Fish production architecture implementation**
-- **FISH-009 — approved Fish UX implementation**
+- **FISH-008 — approved Fish production architecture implementation across the remaining locked library**
+- **FISH-009 — approved Fish UX implementation across the remaining locked library**
 
-The next coherent production wave is **Common Carp + Freshwater Drum + Paddlefish**. Common Carp and Freshwater Drum require no Version 1 pairwise identification relationship. Paddlefish also requires no pairwise identification relationship, but it should use the established Specialized Targeting pattern because deliberate targeting commonly involves specialized/regulation-sensitive methods outside the Companion's built-in guidance.
-
-A user-approved carry-forward presentation correction must be implemented when the shared Fish renderer/CSS is next opened: Specialized Targeting should present its description first, then `Try searching for` research guidance, then a more visually prominent **Safety** subsection. Apply the corrected shared pattern to Gar as a regression update in that next Fish build; do not create a separate Gar review solely for this follow-up.
-
-After the first combined wave validates cleanly, the preferred production sequence is larger coherent waves rather than returning to one-category-at-a-time experimentation:
-
-1. Common Carp + Freshwater Drum + Paddlefish.
-2. Walleye / Sauger group + Catfish group.
-3. Bass group.
-4. Sunfish & Crappie group.
-
-Adjust wave size only when evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
+The next coherent production wave is **Walleye / Sauger group + Catfish group**. After that wave, continue with Bass, then Sunfish & Crappie, unless evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
 
 # Fish Production Contract
 
@@ -93,20 +85,46 @@ Historical OPEN/PENDING wording inside those archived records reflects the state
 
 ## Established Fish Detail Pattern
 
-The validated Trout and Gar implementations establish the working Fish presentation baseline for remaining Fish production:
+The validated Trout, Gar, and Wave 1 implementations establish the working Fish presentation baseline for remaining Fish production:
 
 - Fish selection cards mirror the Fish identity/detail hierarchy.
-- Fish identity order is Category → Name → primary identification image → scientific name → summary → family → aliases when present.
+- Fish identity presents Category/Name, primary identification image, scientific name, family, and aliases when present; descriptive identification summary belongs in **How to Identify It** rather than being repeated in the identity card.
 - The primary identification image does not repeat the Fish name as an extra visible caption.
 - Compare Similar Fish follows the identity card, uses compact media-backed comparison choices, and supports up to two choices side-by-side at normal widths.
-- How to Identify It remains Fish-owned identification content.
-- Habitat & Water uses the established Rig at-a-glance visual grammar.
-- Rigs to Start With uses the connected-knowledge pattern and links to canonical Rig detail instead of restating Rig instructions.
+- **Compare Similar Fish** is an approved workflow/action card and uses the standardized workflow visual treatment rather than ordinary browse-card treatment.
+- How to Identify It owns the Fish summary plus detailed identification traits.
+- Normal Fish information sections use the approved plain/basic-border treatment.
+- Safety uses a deliberate semantic warning treatment rather than ordinary information-card emphasis.
+- Habitat & Water uses the established compact at-a-glance visual grammar.
+- Rigs to Start With uses connected knowledge and links to canonical Rig detail instead of restating Rig instructions.
 - Fish artwork with excessive built-in whitespace may use presentation-only, per-Fish subject framing; compact and Fish Detail contexts are tuned independently, both width and height/centering must be evaluated, natural proportions and diagnostic extremities must be preserved, and canonical media files remain unchanged.
-- Fish that genuinely require specialized equipment, tactics, techniques, or regulation-sensitive methods may use Specialized Targeting with concise context plus useful external-search research topics. The approved forward ordering is Specialized Targeting description → `Try searching for` research guidance → prominent Safety subsection when safety content exists.
+- Fish that genuinely require specialized equipment, tactics, techniques, or regulation-sensitive methods may use Specialized Targeting with concise context plus useful external-search research topics. The validated ordering is Specialized Targeting description → `Try searching for` research guidance → prominent semantic Safety subsection when safety content exists.
 - Production-facing copy must be written for anglers; internal release/build terminology such as `Version 1`, `canonical`, or implementation-state language should not leak into user-facing descriptions when plain user-oriented wording is available.
 
-This is a Fish-domain application of the existing Rig-detail baseline, not a separate site-wide design language.
+These are validated Fish-domain presentation rules. Cross-domain normalization of links, section borders/accents, Core emphasis, compact relationship lists, popovers, and mobile density belongs to the required final Version 1 design audit and must not silently reopen approved Fish semantic content.
+
+# Version 1 Design Audit Carry-Forward
+
+`docs/V1-DESIGN-AUDIT.md` is the canonical backlog and execution standard for the required final site-wide visual/mobile audit.
+
+The audit was created from findings observed during actual mobile validation of Fish Guide Production Wave 1. It includes, among other items:
+
+- Rig `What You Need` density and `ⓘ` placement,
+- one-Rig responsive two-column trial rather than automatic site-wide two-column conversion,
+- component-popover Used In / Related Components navigation and Back behavior,
+- compact text links versus pill/chip comparison on real mobile,
+- consistent internal versus external link semantics and icon placement,
+- reusable group/subsection heading treatment,
+- Knot relationship-link consistency,
+- Rig `Knots You'll Tie` context-label versus Knot-destination consistency,
+- plain information-border versus accent/bloom semantics across Fish/Rig/Knot,
+- Core designation versus section-level accenting,
+- all-Knot opening-description treatment audit,
+- Knot Visual Guide treatment and placement,
+- unnecessary empty relationship copy,
+- overall mobile density and space utilization.
+
+This final design audit is a **required Version 1 completion gate**, but it is not a blocker for continuing Fish production now.
 
 # Repository Integrity Baseline
 
@@ -130,15 +148,16 @@ The existing repository-integrity validator remains the single deterministic val
 
 # Exact Resume Point
 
-1. Read the Google Drive Working State and re-fetch authoritative GitHub `main`; expected baseline is the Gar-closeout documentation commit that follows `cc7840c6ae96bc488e3f443be7e6e5f737508e38` unless newer verified work exists.
-2. Treat both Trout Production Package 1 and Gar Production Package as CLOSED. Do not reopen rejected Gar crop/zoom experiments or the superseded Trout Hotfix 2 without new evidence.
-3. Start **Production Wave 1: Common Carp + Freshwater Drum + Paddlefish** with an evidence/content review before source implementation. Use the locked Phase 0 membership and relationship decisions rather than re-auditing inclusion.
-4. For each Fish, prepare evidence-supported canonical content, verified primary-identification media/provenance, framing only if demonstrated necessary, deliberate Fish-to-Rig guidance evaluation, and scoped Search behavior. Common Carp, Freshwater Drum, and Paddlefish have no required Version 1 pairwise identification relationships.
-5. Include the already-approved Specialized Targeting layout correction in this wave when shared renderer/CSS is opened: description → research topics → prominent Safety. Regression-check existing Gar after the shared change. Paddlefish should use the corrected specialized pattern; Common Carp and Freshwater Drum should not receive it without a demonstrated need.
+1. Read the Google Drive Working State and re-fetch authoritative GitHub `main`; expected source baseline is `be8b2164f62770ef30a4a3cac8238aa5f4f004f7` plus the Fish Wave 1 documentation-closeout commit that follows it, unless newer verified work exists.
+2. Treat Trout Production Package 1, Gar Production Package, and Fish Guide Production Wave 1 (Common Carp + Freshwater Drum + Paddlefish) as CLOSED. Do not reopen their approved content/media/presentation without new evidence or a confirmed regression.
+3. Start **Production Wave 2: Walleye / Sauger group + Catfish group** with evidence/content review before source implementation. Use the locked Phase 0 membership and relationship decisions rather than re-auditing inclusion.
+4. For each Fish, prepare evidence-supported canonical content, verified primary-identification media/provenance, framing only if demonstrated necessary, deliberate Fish-to-Rig guidance evaluation, applicable pairwise identification relationships, and scoped Search behavior.
+5. Reuse the validated Fish presentation baseline from Trout/Gar/Wave 1. Do not fold deferred Rig/Knot/site-wide design-audit work into the Fish wave merely because shared renderer/CSS is touched; only active Fish requirements and confirmed regressions belong in the Fish package.
 6. Preserve FISH-003 staged activation: every active migrated Fish must satisfy complete record/category/evidence/media/relationship readiness; legacy Fish remain available until deliberately migrated.
-7. After semantic/content approval for the wave, build one coherent review package where practical; then use the normal user review → push → GitHub/static verification → live-site validation → **automatic documentation/closure reconciliation** sequence. The user should not have to separately request foreseeable closeout documentation after final approval and PASS validation.
-8. If Wave 1 validates cleanly, proceed with larger coherent waves: Walleye/Sauger + Catfish, then Bass, then Sunfish & Crappie, unless a real content/media/decision issue requires a smaller boundary.
-9. Keep UX-002 visible as **APPROVED / PENDING IMPLEMENTATION** for the still-affected Rig/Knot scoped helpers; Fish helper examples must remain beginner-useful and mechanically valid for their exact active scope.
+7. Continue the normal content approval → coherent review package → user review → push → exact GitHub/static verification → mandatory live/mobile validation as applicable → automatic documentation/closure reconciliation sequence.
+8. After Walleye/Sauger + Catfish validates cleanly, proceed with Bass, then Sunfish & Crappie unless a real evidence/media/relationship/product decision requires a smaller boundary.
+9. Keep `UX-009` / `docs/V1-DESIGN-AUDIT.md` visible as a required final Version 1 design-completion gate. During active builds, append newly discovered cross-domain design inconsistencies to that audit rather than allowing them to disappear into chat history.
+10. Keep UX-002 visible as **APPROVED / PENDING IMPLEMENTATION** for still-affected Rig/Knot scoped helpers; Fish helper examples must remain beginner-useful and mechanically valid for their exact active scope.
 
 # Non-Negotiable Working Rules
 
