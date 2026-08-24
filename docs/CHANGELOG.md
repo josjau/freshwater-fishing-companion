@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.3.2  
+**Document Revision:** 2.3.3  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-24
@@ -35,6 +35,11 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 - First Wave 3 browser review confirmed the Compare Similar Fish centering rules and the standardized Selection/Fish ID image blocks; no centering defects were found.
 - Reverted internal navigation arrows from the CSS-drawn shaft/head treatment to the native `→` glyph; the user approved the corrected treatment. Standardized all application navigation-arrow glyphs on shared `font-weight: 800` while preserving `←` back, `→` internal, `↗` external, and existing compact-row `›` semantics.
 
+### Validation Status
+
+- Final user browser review approved all Wave 3 changes, including the six Bass Fish, six comparison relationships, 12 Fish-to-Rig recommendations, image framing/centering, rights attribution, native internal-arrow treatment, and app-wide navigation-arrow weight normalization.
+- Repository integrity, syntax/structure, locked-package fidelity, approved Bass asset hashes, and working-package round-trip checks pass. The package remains uncommitted until separate explicit commit/push authorization.
+
 ## Local Repository Workflow Transition — Closed
 
 ### Added
@@ -59,7 +64,7 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 
 - Repository documentation now recovers the authority model, current status, material open gates, exact Wave 3 scope, media provenance/rights state, and exact resume point without chat history or Google.
 - The transition closeout passed repository integrity, complete-diff, stale-reference, and GitHub post-push verification before the former Google Working State was marked retired.
-- Wave 3 Bass is ready for a separate task; production Fish source/media implementation remains not started and requires scope-specific authorization.
+- At workflow-transition closure, Wave 3 Bass was ready for a separate task and production Fish source/media implementation had not yet started; the later Wave 3 entry above records the subsequent implementation and approval state.
 
 ## Local Repository Workflow Transition — First-Computer Checkpoint
 

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.6.0  
+**Document Revision:** 0.6.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-24
 
@@ -918,7 +918,7 @@ This Four-State direction is also the Companion's forward regional content focus
 
 **Reason:** The region reflects the user's near-term fishing focus and has substantial freshwater species/method overlap with the earlier Northeast Oklahoma / Southwest Kansas scope, making progressive reconciliation more accurate and lower-risk than project-wide invalidation.
 
-**Current implementation status:** Approved and active. Fish Guide Phase 0 is closed; Trout, Gar, Production Wave 1, and Production Wave 2 have implemented the Four-State production direction. Wave 3 Bass is the next approved package; its locked workstream is ready for a separate task and production implementation has not started.
+**Current implementation status:** Approved and active. Fish Guide Phase 0 is closed; Trout, Gar, Production Wave 1, and Production Wave 2 have implemented the Four-State production direction. Wave 3 Bass is implemented, validated, and user-approved in the uncommitted Drive working package; commit/push and post-push verification remain before that wave closes.
 
 **Future trigger:** apply Four-State adequacy as each domain is audited or materially modified. Significant rewiring requires explicit discussion before implementation.
 

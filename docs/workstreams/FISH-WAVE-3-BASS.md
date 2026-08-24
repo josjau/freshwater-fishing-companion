@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Fish Guide Production Wave 3: Bass
 
 **Document:** FISH-WAVE-3-BASS.md  
-**Document Revision:** 1.2.2
+**Document Revision:** 1.2.3
 **Document Status:** Approved — Active Workstream  
-**Implementation Status:** Implemented Locally / Internal Validation Passed / User Browser Review In Progress
+**Implementation Status:** Implemented / Validated / User Approved / Pending Commit + Post-Push Verification
 **Decision Baseline:** D016, D051, D056–D061  
 **Last Updated:** 2026-08-24
 
@@ -22,7 +22,7 @@ This workstream contains exactly six Fish:
 
 Northern Rock Bass remains in the later Sunfish & Crappie package. The existing Largemouth, Smallmouth, and Spotted records will be migrated to the approved production contract. White, Striped, and Hybrid Striped are new production records.
 
-The user approved all six processed images and separately authorized the complete local production review implementation on 2026-08-24. The resulting source, evidence, media records, and repository assets are present only as uncommitted local changes; GitHub `main` remains unchanged pending user browser review and later explicit commit/push authorization.
+The user approved all six processed images, separately authorized the complete local production implementation, and approved the final browser presentation on 2026-08-24. The resulting source, evidence, media records, and repository assets remain uncommitted in the Drive working package; GitHub `main` remains unchanged pending separate explicit commit/push authorization and post-push verification.
 
 # Locked Canonical Records
 
@@ -187,23 +187,25 @@ Internal validation completed against the local review set:
 - Browser console: **PASS** — no warning or error entries during the tested flows.
 - First user browser review on 2026-08-24: **PASS** for Compare Similar Fish centering and the Selection/Fish ID image-block standards; the user reported no off-center Fish presentation.
 - First user browser review on 2026-08-24: **CORRECTION REQUIRED** for the CSS-drawn internal directional arrow. The arrow did not sit naturally with the text and its design was rejected.
-- Follow-up browser review on 2026-08-24: **PASS / USER APPROVED** for the restored native Unicode `→` treatment with modest typographic emphasis. The approved `font-weight: 800` is now the application-wide navigation-arrow weight for back `←`, internal-forward `→`, external `↗`, and established compact-row `›` glyphs; representative cross-app review of that normalization remains pending.
+- Follow-up browser review on 2026-08-24: **PASS / USER APPROVED** for the restored native Unicode `→` treatment with modest typographic emphasis. The approved `font-weight: 800` is now the application-wide navigation-arrow weight for back `←`, internal-forward `→`, external `↗`, and established compact-row `›` glyphs.
+- Final representative cross-app review on 2026-08-24: **PASS / USER APPROVED ALL CHANGES** for back/internal/external/compact-row arrow-weight normalization and the complete Wave 3 production presentation. No Wave 3 browser defect remains open.
 
-This is not a finalized or cross-computer checkpoint. Nothing has been committed or pushed, and the user still must approve the complete local production presentation.
+This is a user-approved pre-commit checkpoint. Nothing has been committed or pushed; Wave 3 remains open only for final local documentation reconciliation, separate explicit commit/push authorization, and post-push GitHub verification.
 
 # Acceptance Gates
 
-Wave 3 cannot close until:
+Wave 3 content/UX acceptance gates are **SATISFIED** in the user-approved Drive working package:
 
 - all six canonical records match the locked package,
-- all six pairwise relationship IDs exist and resolve bidirectionally as required by the relationship contract,
+- all six pairwise relationship IDs exist and resolve as required by the relationship contract,
 - all twelve approved Fish-to-Rig recommendations and tiers exist exactly,
 - six primary media records/assets pass identity, provenance, rights, transformation, path, format, size, framing, and mobile-readability checks,
-- `FISH_REFERENCE_SOURCES.md` has complete per-Fish and per-relationship evidence entries,
-- syntax, repository-integrity, relationship, search, desktop, mobile, and live/runtime checks pass for the affected scope,
-- governing/current-state documentation is reconciled locally for review and later pushed/re-fetched from GitHub after explicit authorization,
-- the user approves the final visual result.
+- `FISH_REFERENCE_SOURCES.md` contains the required per-Fish and relationship evidence,
+- syntax, repository-integrity, relationship/search, desktop/mobile, and relevant live/runtime checks pass for the affected scope,
+- the user approved the complete visual result, including navigation-arrow normalization.
+
+The remaining **closeout-only** gates are: apply the final documentation reconciliation to the real local Git checkout, obtain separate explicit commit/push authorization, push, re-fetch GitHub, verify the committed tree, then archive/close this workstream.
 
 # Exact Resume Point
 
-Apply the regenerated Drive review ZIP to the local Git checkout and spot-check the normalized `font-weight: 800` navigation-arrow treatment on representative `←`, `→`, `↗`, and compact-row `›` surfaces. Preserve the already-approved Compare Similar Fish centering, Selection/Fish ID image-block presentation, and native internal-arrow treatment unless a new defect is observed. Rerun affected validation and complete the Bass browser review. When the user approves the complete production result, perform the repository-wide documentation closure sweep, reconcile the final diff, then wait for explicit commit/push authorization.
+Apply the final documentation-closeout review ZIP to the real local Git checkout. Verify branch/HEAD/origin/remote/status and confirm the complete diff matches the user-approved Drive working package plus documentation closeout only. Do not commit or push until the user gives separate explicit authorization. After push, re-fetch GitHub `main`, verify the committed tree and validations, reconcile Drive `Working Source/Current` to the new Git baseline, then archive/close this workstream and proceed to the next Fish package.

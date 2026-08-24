@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.4.2  
+**Document Revision:** 0.4.3  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
 **Last Updated:** 2026-08-24
@@ -43,7 +43,7 @@ The original validated 20-Rig library remains canonical. The additive Four-State
 # Canonical Product Sequence
 
 1. **Knots** — completed / validated / closed.
-2. **Fish Guide** — active milestone; Wave 3 Bass is the next production package.
+2. **Fish Guide** — active milestone; Wave 3 Bass is user-approved and pending commit/post-push verification, after which Sunfish & Crappie is the next planned production package.
 3. **What Should I Throw**.
 4. **Tackle Reference / Find Tackle**.
 5. **Settings / User Data Architecture Gate**.

@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.4.2  
+**Document Revision:** 1.4.3  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** Wave 3 Bass — Fish presentation and native internal arrow approved; app-wide navigation-arrow weight normalization prepared for review  
+**Workstream Status:** Wave 3 Bass — USER APPROVED / final documentation closeout complete / pending explicit commit-push authorization  
 **Committed Baseline:** `24224d9693267911205318dd9da2373f3e5c299d`  
 **Last Updated:** 2026-08-24
 
@@ -24,7 +24,7 @@ Completed history and durable decisions do not accumulate here. Before a commit 
 
 # Current Workstream
 
-**Fish Guide — Production Wave 3: Bass** is open at the recovered review-package gate.
+**Fish Guide — Production Wave 3: Bass** is open only at the final pre-commit/post-push closeout gate.
 
 Current approved Wave 3 scope remains exactly:
 
@@ -91,18 +91,15 @@ Previously validated against the recovered local Wave 3 review tree:
 - ODWC attribution visibility — PASS
 - browser warnings/errors — PASS
 
-Because the Fish-to-Rig set changed from 10 to 12 recommendations after those checks, the regenerated review package must rerun source/package validation before commit. User browser review also remains open.
+The regenerated working package passes locked-package fidelity for the exact six Bass Fish, six relationship IDs, twelve recommendation/tier assignments, six primary Media records, and six approved asset hashes. Repository integrity, JavaScript syntax, CSS structure, stale-workflow scan, and full working-package round-trip checks also pass.
 
-User browser review on 2026-08-24 confirmed that Compare Similar Fish centering and the standardized Selection/Fish ID image blocks are correct with no off-center presentation. The CSS-drawn internal directional arrow was rejected; the restored native Unicode `→` treatment with modest typographic emphasis was then explicitly approved. The approved weight is now being normalized across all navigation-arrow glyphs in the app (`←`, `→`, `↗`, and established compact-row `›`) using shared `font-weight: 800`; representative cross-app review remains pending.
+User browser review on 2026-08-24 is complete and **APPROVED ALL CHANGES**. Compare Similar Fish centering, standardized Selection/Fish ID image blocks, the restored native Unicode `→` treatment, and representative `font-weight: 800` back/internal/external/compact-row navigation-arrow surfaces are approved. No Wave 3 visual defect remains open.
 
 # Exact Resume Point
 
-1. Apply the corrected review ZIP directly over the existing local Git checkout; do **not** replace or copy the `.git` directory.
+1. Apply the final documentation-closeout review ZIP directly over the existing local Git checkout; do **not** replace or copy the `.git` directory.
 2. Verify local Git metadata: repository root, branch `main`, status, local `HEAD`, local `origin/main`, and remote.
-3. Review the Git diff and confirm it represents the intended recovered Wave 3 + workflow/documentation reconciliation package plus the approved internal-arrow correction only.
-4. Run/confirm the required validators against the applied package.
-5. Spot-check the normalized `font-weight: 800` navigation-arrow treatment on representative surfaces: `←` Back/Home navigation, `→` internal actions, `↗` external destinations, and compact-row `›` affordances. Preserve the already-approved Fish centering/image-block presentation unless a new defect is observed.
-6. Continue/complete the Bass browser review: six Bass Fish, all six comparisons, Rig links, aliases/search, ODWC attribution, and desktop/mobile framing.
-7. Record any defect in the current Drive working state, correct Drive first, regenerate the review ZIP, and repeat the affected validation.
-8. When the package is approved, perform the documentation impact sweep and wait for explicit commit/push authorization.
-9. After push, re-fetch GitHub, verify the committed tree, reconcile Drive `Current` to the new Git baseline, and trim this file back to only remaining open work.
+3. Review the complete Git diff and confirm it matches the user-approved Drive working package plus final documentation closeout only.
+4. If the local tree differs from the validated package, rerun the affected validators and resolve the mismatch before commit.
+5. Wait for **separate explicit commit/push authorization**; the user's approval of the changes is not itself push authorization.
+6. After push, re-fetch GitHub `main`, verify the committed tree and validations, reconcile Drive `Current` to the new Git baseline, close/archive Wave 3, and trim this file to the next active workstream only.

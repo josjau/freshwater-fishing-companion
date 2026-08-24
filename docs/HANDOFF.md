@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.6.2  
+**Document Revision:** 2.6.3  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-24
@@ -58,7 +58,7 @@ The unavailable second computer does not block project work. Before it later bec
 
 # Current Product Milestone
 
-**Fish Guide — Production Wave 3: Bass — USER BROWSER REVIEW IN PROGRESS / APP-WIDE ARROW-WEIGHT REVIEW PENDING**
+**Fish Guide — Production Wave 3: Bass — USER APPROVED / PENDING COMMIT + POST-PUSH VERIFICATION**
 
 Repository Audit Cleanup and Fish Guide Phase 0 are closed. Trout Production Package 1 is **CLOSED** at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` (`Fish - Search Fix`) after GitHub verification, static validation, and user-confirmed fresh-session live validation. The broader prepared Hotfix 2 was not applied and remains superseded unless a fresh-load regression later proves it necessary.
 
@@ -75,7 +75,7 @@ FISH-001 through FISH-007 are terminal Phase 0 history. The active Fish work rem
 
 The active product task is **Production Wave 3 — Bass**. The user approved all six processed images and completed explicit Fish-to-Rig review, producing a 12-recommendation set. Its durable package decisions are owned by `docs/workstreams/FISH-WAVE-3-BASS.md`; current recovery/review status is owned by `WORKING_STATE.md`. The review set is uncommitted and has not been pushed. After Bass closes, continue with Sunfish & Crappie unless evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
 
-Wave 3 browser review confirmed the Compare Similar Fish centering rules and the standardized Selection/Fish ID image blocks with no centering defects. The CSS-drawn internal directional arrow was rejected for alignment/appearance; the restored native Unicode `→` treatment was then user-approved. The same `font-weight: 800` is now applied to navigation-arrow glyphs throughout the app, with representative back/internal/external/chevron review still required before the broader Bass review closes.
+Wave 3 browser review is complete. The user approved Compare Similar Fish centering, the standardized Selection/Fish ID image blocks, the restored native Unicode `→` treatment, and the shared `font-weight: 800` normalization across representative back `←`, internal `→`, external `↗`, and compact-row `›` navigation surfaces. No additional Wave 3 browser defect remains open; only final local documentation reconciliation, explicit commit/push authorization, and post-push GitHub verification remain before the wave closes.
 
 # Fish Production Contract
 
@@ -165,11 +165,11 @@ The existing repository-integrity validator remains the single deterministic val
 
 # Exact Resume Point
 
-1. Keep this checkout as the sole write-authorized copy while the Wave 3 files remain uncommitted.
-2. Open the repository site locally and review the six-Fish Bass collection, every Fish detail, all six comparisons, rig links, search/aliases, ODWC attribution, and desktop/mobile framing.
-3. If review finds a defect, keep the correction bounded to Wave 3 and rerun the affected syntax, integrity, package-fidelity, and browser checks.
-4. When the user approves the complete production result, reconcile the final diff and documentation.
-5. Commit and push only after separate explicit authorization, then re-fetch and verify GitHub before closing Wave 3.
+1. Apply the final documentation-closeout review ZIP over the existing local Git checkout; do not replace or copy the `.git` directory.
+2. Verify branch `main`, local `HEAD`, local `origin/main`, remote URL, and complete Git status/diff from the actual checkout.
+3. Confirm the final diff matches the user-approved Wave 3 working package plus documentation closeout only; rerun the required repository-integrity/syntax checks if the local checkout differs from the validated package.
+4. Do not commit or push until the user gives separate explicit commit/push authorization.
+5. After push, re-fetch GitHub `main`, verify the committed tree and validations, reconcile Drive `Working Source/Current` to the new Git baseline, close/archive the Wave 3 workstream, and trim live Working State to the next active package.
 
 When a second computer later becomes available, treat its clean pull and repository-documentation-only recovery test as receiving-device onboarding. It is not a blocker to the Wave 3 task on this verified computer.
 

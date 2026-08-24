@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Version 1 Design Audit
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.5  
+**Document Revision:** 1.0.6  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
 **Last Updated:** 2026-08-24
@@ -114,6 +114,7 @@ Wave 2 desktop/mobile review validates these directional-icon semantics:
 - Directional arrows must have enough visual size/weight to remain legible beside bold destination text.
 - Wave 3 review rejected the CSS-drawn internal arrow because its shaft/head construction did not sit naturally with the text. The user approved the restored native Unicode `→` treatment and made native glyphs the directional-arrow standard rather than CSS-drawn shaft/head icons.
 - All navigation-arrow glyphs use a shared **font weight of 800** throughout the application. This includes back `←`, internal-forward `→`, external `↗`, and the existing compact-row chevron `›` where that row pattern is used. Glyph-specific size and spacing may vary only enough to preserve optical alignment; weight remains consistent.
+- Wave 3 representative cross-app review approved that shared weight on back, internal, external, and compact-row navigation surfaces. Treat the glyph family and weight as an established standard in the final Version 1 audit rather than reopening it for redesign.
 - Directional glyphs should be separately wrapped/styled so arrow weight can remain consistent without unnecessarily changing the destination-label typography.
 
 The remaining audit work is to formalize the broader visual grammar:
