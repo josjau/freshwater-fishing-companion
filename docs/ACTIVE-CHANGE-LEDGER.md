@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.16  
+**Document Revision:** 1.1.0  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `f47ece0d243457d90a8b980855130af043d98a05`  
-**Last Updated:** 2026-08-23
+**Reconciliation Baseline:** `ee0149a81bab06c1f7650482ed30ffcc5111bfcd`  
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -13,7 +13,7 @@ This ledger keeps every material non-closed project item visible until it receiv
 
 It does not duplicate full design reasoning. Each entry identifies the current status, the controlling detailed owner/gate, and the required next action.
 
-GitHub `main` owns formal state. The Google Drive Working State may contain newer in-progress delta between formal GitHub checkpoints; durable changes must be reconciled back here at the next formal checkpoint.
+GitHub `main` owns formal state. Local `WORKING_STATE.md` owns the live local workstream/resume state. During the open workflow migration, the Google Drive Working State may contain newer migration delta; durable changes must be reconciled into the correct GitHub owner at the next formal checkpoint.
 
 # Status Vocabulary
 
@@ -26,6 +26,12 @@ GitHub `main` owns formal state. The Google Drive Working State may contain newe
 - **BLOCKED** — dependent work may not proceed until named conditions close.
 
 Closed, superseded, rejected, and deliberate non-action items are not maintained here unless temporarily needed to explain an active dependency. Their provenance remains in decisions, closed workstreams, archive, Changelog, Milestones, and Git history.
+
+# Workflow Transition
+
+| ID | Status | Item | Canonical detail / gate | Next action |
+|---|---|---|---|---|
+| WF-001 | IMPLEMENTED / PENDING VALIDATION | Local repository Work/Codex continuity and cross-computer workflow transition | `WORKING_STATE.md`, `HANDOFF.md`, D062, `DEVELOPMENT_WORKFLOW.md` | Confirm the first-computer checkpoint—the commit containing `WORKING_STATE.md`—is verified on GitHub `main`; then, when the second computer is available, pull that checkpoint, confirm a clean matching checkout, and pass a fresh-chat repository-documentation-only recovery test. Only then close the transition and retire/freeze the Google Working State as the active continuity source. |
 
 # Cross-Domain UX / Source Follow-Ups
 
@@ -48,7 +54,7 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 
 # Fish Guide — Production
 
-Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical items and are no longer active ledger entries. Trout Production Package 1, Gar Production Package, Production Wave 1 (Common Carp + Freshwater Drum + Paddlefish), and Production Wave 2 (Walleye / Sauger + Catfish) are closed. Current Fish work is Production Wave 3 — Bass.
+Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical items and are no longer active ledger entries. Trout Production Package 1, Gar Production Package, Production Wave 1 (Common Carp + Freshwater Drum + Paddlefish), and Production Wave 2 (Walleye / Sauger + Catfish) are closed. Production Wave 3 — Bass is the next Fish package, but Fish work is paused until WF-001 closes.
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
@@ -99,4 +105,4 @@ These items are not current blockers and must not be promoted merely because the
 4. PARKED/DEFERRED entries must retain a meaningful trigger/gate.
 5. Placeholder UI does not create an implementation requirement.
 6. Historical PASS/CLOSED records do not override later approved architecture.
-7. Working State updates may precede this file during an active session, but formal checkpointing must reconcile material delta back into this ledger.
+7. Local Working State updates may precede this file during an active session, but formal checkpointing must reconcile material non-closed delta back into this ledger.

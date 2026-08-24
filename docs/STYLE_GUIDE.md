@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.3.5
+**Document Revision:** 1.4.0
 **Document Status:** Approved
-**Last Updated:** 2026-08-23
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -369,20 +369,20 @@ Documentation must distinguish current implementation from approved future work.
 
 Material durable decisions must also preserve enough context to recover the decision without chat history: the decision itself, its reason, current implementation status, future/revisit trigger, and canonical owner/document. `DEVELOPMENT_WORKFLOW.md` defines the permanent Durable Decision Context standard.
 
-# Source Replacement Standard
+# Source Edit and Diff Review Standard
 
-Complete-file replacement is the default project delivery method. Complete-file replacement describes the delivery artifact; it does not authorize broad or unrelated edits.
+Direct edits in the verified local checkout are the default project delivery method. The complete GitHub Desktop diff is the review artifact. This does not authorize broad or unrelated edits.
 
 For an existing source file:
 
-1. Fetch the latest GitHub version.
+1. Verify the local checkout against the intended GitHub baseline.
 2. Make only the approved changes.
-3. Return the complete resulting file.
-4. Preserve unrelated current behavior.
-5. Diff the finished replacement against the fetched source; any unrelated diff is a failure unless explicitly authorized.
-6. Package coherent multi-file updates together when practical.
+3. Preserve unrelated current behavior.
+4. Inspect the complete resulting file where structural/truncation risk exists.
+5. Review the complete diff against the verified baseline; any unrelated diff is a failure unless explicitly authorized.
+6. Keep coherent multi-file updates together in one reviewable local change set when practical.
 
-An unrelated diff in a full-file replacement is a failure unless the unrelated change was explicitly authorized.
+ZIP delivery is an exceptional fallback, not the normal local workflow. An unrelated diff remains a failure unless explicitly authorized.
 
 Coherent repository changes should follow the commit, delivery, and session-closeout rules in `DEVELOPMENT_WORKFLOW.md`.
 

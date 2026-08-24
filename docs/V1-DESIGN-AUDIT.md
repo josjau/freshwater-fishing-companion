@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Version 1 Design Audit
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.1  
+**Document Revision:** 1.0.2  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-08-23
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -44,7 +44,7 @@ Fish Guide Production Wave 1 was user-approved after mobile validation. Wave 2 r
 - Wave 2 Selection and Fish Detail image blocks use standardized presentation geometry with independent per-Fish fit tuning rather than species-specific frame dimensions.
 - Compare Similar Fish keeps its 84 × 56 thumbnail size. Desktop may use two choices side-by-side; actual mobile review validated one comparison tile per row as the preferred narrow-screen treatment.
 
-Fish semantic/content validation is closed for completed Fish. Production Wave 2 remains open only for its known main Compare Fish page centering defect and final validation. The final design audit may reconcile shared visual grammar, but it must not silently reopen approved Fish facts, media provenance, relationships, or guidance.
+Fish semantic/content validation is closed for completed Fish. Production Wave 2 is closed after the Compare Fish anatomical body-axis alignment correction passed desktop/mobile review and post-push verification. The final design audit may reconcile shared visual grammar, but it must not silently reopen approved Fish facts, media provenance, relationships, or guidance.
 
 # Audit Method
 

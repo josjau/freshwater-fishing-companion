@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.4.7  
+**Document Revision:** 0.5.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-19
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -26,7 +26,7 @@ This document records long-term architectural decisions.
 | D011 | Canonical Glossary | Approved |
 | D012 | Inventory-Centric Architecture | Approved |
 | D013 | Canonical Inventory Locations | Approved |
-| D014 | GitHub-Authoritative Replacement Workflow | Approved |
+| D014 | GitHub-Authoritative Local Repository Workflow | Approved |
 | D015 | Unified Field-Guide Visual System | Approved |
 | D016 | Identification-Safe Fish Media | Approved |
 | D017 | Verified Rig References and Text Instructions | Approved |
@@ -74,6 +74,7 @@ This document records long-term architectural decisions.
 | D059 | Fish Category Registry and Lifecycle Ownership | Approved |
 | D060 | Northern Rock Bass Identity and Shared Aliases | Approved |
 | D061 | Hierarchical Scoped Search | Approved |
+| D062 | Local Repository Work/Codex Operating Model | Approved |
 
 # D001 – Local-First Architecture
 
@@ -141,23 +142,23 @@ Inventory is the parent domain for equipment, consumables, setups, and related i
 
 Inventory locations use reusable location records.
 
-# D014 – GitHub-Authoritative Replacement Workflow
+# D014 – GitHub-Authoritative Local Repository Workflow
 
-GitHub `main` is authoritative for existing project files.
+GitHub `main` is authoritative for committed production source and formally reconciled documentation. GitHub `origin/main` is the synchronization point between each computer's local checkout.
 
-The latest GitHub version must be fetched before changing an existing file. Chat memory or a previously proposed file is never authoritative file content.
+The local checkout must be verified against the intended GitHub baseline before changing an existing file. Chat memory, a previously proposed file, a downloaded package, or an uncommitted file on another computer is never authoritative content for the active checkout.
 
-Complete-file replacement is the default final delivery artifact for changed existing files. This delivery rule does not authorize broad edits: semantic changes remain limited to the approved scope, and unrelated differences inside a replacement are failures unless separately authorized.
+Direct local edits are the default delivery method. The complete GitHub Desktop diff is the user review surface. This does not authorize broad edits: semantic changes remain limited to the approved scope, and unrelated differences are failures unless separately authorized.
 
-Coherent multi-file production changes normally use a repository-relative ZIP containing only repository files/folders so the user can review and apply the package through GitHub Desktop. Assistant direct GitHub writes are limited by default to Markdown documentation; production source/data/media/configuration direct writes require explicit authorization for the specific action or current session.
+Production source/data/media/configuration local writes require explicit authorization for the specific scope. Commit/push also requires explicit authorization. ZIP delivery remains an exceptional fallback when the normal local/direct path is unavailable; it is not the normal workflow.
 
 Commit economy is required: use as few commits as practical while preserving reviewability, validation boundaries, rollback safety, and current documentation. Fewer commits never justify stale documentation or an overbroad unreviewable commit.
 
-Every repository write must be re-fetched and integrity-verified from GitHub before it is considered complete. A complete resulting source file remains the validation copy after planned edits to that file are complete.
+Every local write must pass diff/integrity validation before commit, and every pushed write must be re-fetched/integrity-verified from GitHub before it is considered complete.
 
 A session ending before section closeout triggers the Session-End Documentation Gate in `DEVELOPMENT_WORKFLOW.md`; approved decisions and current continuation state must not remain only in chat history.
 
-Detailed procedure: `DEVELOPMENT_WORKFLOW.md`.
+Detailed procedure: `DEVELOPMENT_WORKFLOW.md`. D062 owns the cross-computer, one-write-chat, and repository Working State operating model.
 
 # D015 – Unified Field-Guide Visual System
 
@@ -518,11 +519,11 @@ Canonical Tackle and My Tackle/Inventory remain separate domains. A dedicated Re
 
 # D038 – Repository Handoff Entrypoint
 
-`docs/HANDOFF.md` is the first-read repository entrypoint for future chats and contributors.
+`docs/HANDOFF.md` is the compact formal repository entrypoint for future chats and contributors. `docs/WORKING_STATE.md` is the first-read live local state and exact-resume record.
 
 It is a current-state map, not a duplicate specification. It must point to the governing documents and clearly distinguish Current, Approved / Not Implemented, In Progress, Validated, temporary bridges, open decisions, and next recommended work.
 
-A future session should be able to begin by reading `docs/HANDOFF.md` and following its referenced governing documents without relying on prior chat history.
+A future session should perform repository preflight, read `docs/WORKING_STATE.md` and `docs/HANDOFF.md`, and follow their referenced governing documents without relying on prior chat history.
 
 # D039 – Documentation-Validated Closeout
 
@@ -914,7 +915,7 @@ This Four-State direction is also the Companion's forward regional content focus
 
 **Reason:** The region reflects the user's near-term fishing focus and has substantial freshwater species/method overlap with the earlier Northeast Oklahoma / Southwest Kansas scope, making progressive reconciliation more accurate and lower-risk than project-wide invalidation.
 
-**Current implementation status:** Approved/locked for Fish Guide Phase 0. No Fish production source has yet been changed by the Phase 0 work.
+**Current implementation status:** Approved and active. Fish Guide Phase 0 is closed; Trout, Gar, Production Wave 1, and Production Wave 2 have implemented the Four-State production direction. Wave 3 Bass is the next Fish package but is paused by the workflow transition.
 
 **Future trigger:** apply Four-State adequacy as each domain is audited or materially modified. Significant rewiring requires explicit discussion before implementation.
 
@@ -950,7 +951,7 @@ Current Conditions remains a separate semantic domain. Recommendation suitabilit
 
 **Reason:** where a Fish characteristically lives is intrinsic species Reference Knowledge; whether today's conditions make a place/approach suitable is a different fact.
 
-**Current implementation status:** Approved/locked Phase 0 architecture; production Fish implementation pending.
+**Current implementation status:** Approved and implemented incrementally through the closed Trout, Gar, Production Wave 1, and Production Wave 2 packages; remaining locked-library production migration is pending.
 
 **Future trigger:** revisit only if a second real domain demonstrates a reusable taxonomy/ownership need that cannot be served without changing this model.
 
@@ -978,7 +979,7 @@ Category records do not own `isActive`. Individual `Fish.isActive` is the sole F
 
 **Reason:** category identity/presentation/order is reusable Fish-domain Reference Knowledge, while activation belongs to the actual Fish entities. A second category lifecycle flag would create conflicting state.
 
-**Current implementation status:** Approved/locked Phase 0 architecture; production implementation pending.
+**Current implementation status:** The category registry is production implemented and expands through staged Fish packages. Trout, Gar, Carp, Drum, Paddlefish, Walleye/Sauger, and Catfish packages are closed; the remaining locked library is pending.
 
 **Future trigger:** revisit only when actual Fish taxonomy/navigation requirements demonstrate a need beyond the current registry.
 
@@ -1001,7 +1002,7 @@ All relationships use the stable canonical ID `northern-rock-bass` rather than d
 
 **Reason:** the canonical identity is scientifically specific while common regional names can be ambiguous. Modeling the alias honestly is safer for identification than artificially making it unique.
 
-**Current implementation status:** Approved/locked Fish Phase 0 identity; production implementation pending.
+**Current implementation status:** Approved/locked identity retained for the later Sunfish & Crappie production wave. Fish Guide Phase 0 is closed; Northern Rock Bass has not yet reached its production package.
 
 **Future trigger:** update only if authoritative taxonomic/regional naming evidence requires a canonical identity correction.
 
@@ -1040,3 +1041,23 @@ Relevance ranking operates only after scope filtering. Scope outranks ranking.
 **Future trigger:** apply the same principle to new searchable domains and to future Global Search provider orchestration.
 
 **Canonical owners:** D061, search/navigation standards, and domain-specific search documentation.
+
+# D062 – Local Repository Work/Codex Operating Model
+
+**Decision:** Normal project work uses direct edits in a verified local GitHub Desktop checkout. Each computer has its own checkout; GitHub `origin/main` is the cross-computer synchronization point. `docs/WORKING_STATE.md` is the live local state/exact-resume record, `docs/HANDOFF.md` is the compact formal recovery entrypoint, and `docs/ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward items.
+
+Use one chat per coherent outcome/workstream. Only one chat may be write-authorized against the same checkout at a time. Other chats may perform bounded read-only research/analysis when they do not edit the repository or create competing project state.
+
+Uncommitted files do not synchronize across computers. Before handoff, either commit/push the reviewed checkpoint or restore a clean tree and preserve the exact state in the still-authoritative continuity layer. On the receiving computer, fetch/pull, confirm a clean checkout, and verify the expected commit before substantive work.
+
+Continue on `main` for the current single-writer workflow. Revisit branching only when a concrete need such as concurrent development or a PWA staging/preview workflow exists.
+
+Use a localhost development server for normal local browser validation. ZIP delivery is an exceptional fallback rather than the normal update mechanism.
+
+**Reason:** Direct local access removes cloud-chat/ZIP transfer friction, makes GitHub Desktop's complete diff the review surface, and allows project continuity to live with the repository. The one-writer and explicit handoff rules prevent competing uncommitted state and false cross-computer assumptions.
+
+**Current implementation status:** Approved and implemented on the first computer through the documentation checkpoint containing this decision. Transition closure remains pending verification that the checkpoint is on GitHub `main`, second-computer pull/clean-state verification, and a fresh-chat repository-documentation-only recovery test. Fish work remains paused until explicit transition closure.
+
+**Future trigger:** Revisit the branch model, concurrency controls, or local server tooling only when an actual collaboration, preview, deployment, or PWA requirement demonstrates the need.
+
+**Canonical owners:** D062 owns the durable operating decision. `DEVELOPMENT_WORKFLOW.md` owns procedure; `WORKING_STATE.md` owns live state/resume; `HANDOFF.md` owns compact recovery; `ACTIVE-CHANGE-LEDGER.md` owns the non-closed transition item.

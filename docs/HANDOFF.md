@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.2.9  
+**Document Revision:** 2.3.0  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
-**Last Updated:** 2026-08-23
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -14,7 +14,7 @@ It intentionally does **not** duplicate complete milestone history, domain archi
 
 GitHub `main` remains authoritative for production source and formally reconciled documentation.
 
-The Google Drive **Freshwater Fishing Companion — Working State** remains the high-frequency cross-chat in-progress delta between formal GitHub checkpoints:
+`WORKING_STATE.md` is the live local current-state and exact-resume record. During the open workflow migration, the Google Drive **Freshwater Fishing Companion — Working State** remains authoritative for any migration delta not yet reconciled into GitHub:
 
 https://docs.google.com/document/d/1Eg_ipGeTGjBiRF3V2CIOtWuuouRxPOh0TMuLcxRj0MU
 
@@ -22,12 +22,13 @@ https://docs.google.com/document/d/1Eg_ipGeTGjBiRF3V2CIOtWuuouRxPOh0TMuLcxRj0MU
 
 For a new project session:
 
-1. Read the Working State document.
-2. Re-fetch authoritative GitHub `main`.
+1. Confirm repository root, branch, working-tree status, local `HEAD`, local `origin/main`, and remote.
+2. Read `WORKING_STATE.md` for the live workstream and exact resume point.
 3. Read this Handoff.
 4. Read `ACTIVE-CHANGE-LEDGER.md` for every material non-closed item.
 5. Read the governing document for the specific work being resumed.
-6. Never assume a prior proposed file version was implemented; verify GitHub first.
+6. While Working State says the workflow transition is open, also read the Google Working State before substantive work—except during the explicitly designated repository-documentation-only recovery test, which must first establish its result without consulting Google.
+7. Never assume a prior proposed or local file version was committed/pushed; verify the actual repository state first.
 
 # Formal Authority Map
 
@@ -39,6 +40,7 @@ For a new project session:
 | How must implementation/documentation work be performed? | `DEVELOPMENT_WORKFLOW.md` |
 | What is the product milestone order and future direction? | `ROADMAP.md` |
 | What non-closed work must remain visible? | `ACTIVE-CHANGE-LEDGER.md` |
+| What is the live local workstream state and exact resume point? | `WORKING_STATE.md` |
 | What is the latest formal continuation point? | `HANDOFF.md` |
 | What changed materially over time? | `CHANGELOG.md` |
 | What historical milestones were completed? | frozen `MILESTONES.md` |
@@ -47,6 +49,14 @@ For a new project session:
 | What governs the required final Version 1 visual/mobile audit? | `V1-DESIGN-AUDIT.md` |
 
 `SPECIFICATION.md` is retired from active maintenance and remains only as a supersession/retirement pointer after its unique requirements were reconciled.
+
+# Current Operational Workstream
+
+**Workflow Transition — IN PROGRESS / PENDING CROSS-COMPUTER VALIDATION**
+
+Fish production is paused. The approved documentation-only transition establishes direct local-repository work, repository-backed Working State, one write-authorized chat per checkout, GitHub `origin/main` as the cross-computer synchronization point, and a deliberate commit/push handoff boundary.
+
+The transition cannot close until the same verified checkpoint is present cleanly on both computers and a fresh chat on the second computer successfully recovers the correct state from repository documentation alone. The second computer is not currently available, so that validation is intentionally deferred to a later session. Until closure, the Google Working State remains authoritative for unreconciled migration delta.
 
 # Current Product Milestone
 
@@ -155,31 +165,33 @@ The existing repository-integrity validator remains the single deterministic val
 
 # Exact Resume Point
 
-1. Read the Google Drive Working State and re-fetch authoritative GitHub `main` before any Wave 3 source edit.
-2. Treat Trout Production Package 1, Gar Production Package, Fish Guide Production Wave 1, and Fish Guide Production Wave 2 as **CLOSED**. Do not reopen their approved content/media/presentation without new evidence or a confirmed regression.
-3. Resume **Production Wave 3 — Bass** from the current GitHub Fish registry and governing Fish documents. Identify the exact Bass records already present, any missing approved Bass candidates, and the migration/additive package boundary.
-4. Verify Four-State inclusion and evidence for each proposed Bass Fish; define taxonomy, identification traits, aliases, habitat/waterbody tags, required pairwise identification relationships, primary-identification media/provenance, and Fish-to-Rig guidance before implementation.
-5. Reuse the validated Wave 2 Fish presentation/media standards. Do not create a new Bass-specific UX unless a demonstrated Bass requirement cannot fit the existing pattern.
-6. Questions, semantic/content/source changes, and package-boundary changes remain discussion-first. Mechanical implementation of already approved architecture may proceed only after the exact Wave 3 package scope is settled.
-7. Run deterministic/static validation and require both desktop and actual-mobile review before Wave 3 closure.
-8. Keep `UX-009` / `docs/V1-DESIGN-AUDIT.md` visible as a required final Version 1 design-completion gate; append cross-domain design findings there instead of resolving them opportunistically during Fish production.
-9. Keep UX-002 visible as **APPROVED / PENDING IMPLEMENTATION** for still-affected Rig/Knot scoped helpers.
+1. Continue **Workflow Transition only**. Do not resume Fish source or media work.
+2. Read `WORKING_STATE.md` and compare its checkpoint/resume instructions with the actual local Git state.
+3. Determine whether the commit containing `WORKING_STATE.md` is present and verified on GitHub `main`. If not, complete review/validation, obtain commit/push authorization, push it, and verify every written file.
+4. If the checkpoint is verified, confirm the current checkout is clean and local `HEAD` matches `origin/main` and the verified GitHub checkpoint.
+5. Leave the transition open until the second computer is available.
+6. In that later session, pull the same verified checkpoint on the second computer, confirm a clean matching checkout, and start a fresh chat rooted at that repository.
+7. Require the fresh chat to identify the authority model, Workflow Transition status, and exact resume point from repository documentation alone, without prior chat history or the Google Working State.
+8. Only after that recovery test passes may the transition be explicitly closed and the Google Working State retired/frozen as the active continuity source.
+9. Start Wave 3 Bass in a separate task after transition closure. The protected post-transition Fish resume boundary is recorded in `WORKING_STATE.md`.
 
 # Non-Negotiable Working Rules
 
-- GitHub `main` is authoritative for existing repository files.
-- Fetch the latest GitHub version before changing an existing source file.
+- GitHub `main` is authoritative for committed production source and formally reconciled documentation.
+- Verify the local checkout against the intended GitHub baseline before changing an existing file.
 - Follow the Repository Integrity and Drift Prevention Standard in `DEVELOPMENT_WORKFLOW.md` before substantive work and at closeout.
 - Make targeted semantic edits unless a broader replacement/consolidation has been explicitly approved.
-- After all planned edits to an existing source file are complete, provide a full-file validation copy.
+- After planned edits are complete, inspect the resulting file where structural risk exists and review the complete local diff before commit.
 - Do not assume a previously proposed file version was implemented.
 - Finish/validate the active segment or deliberately park it before moving to a dependent segment.
 - Material decisions, confirmed defects, parked/deferred/rejected outcomes, and implementation/validation state must not exist only in chat.
-- Questions, review findings, and change suggestions are discussion-only until the user explicitly approves implementation; maintain a running change set and consolidate review packages where practical.
-- During long active sessions, update Working State at material boundaries; at formal checkpoints promote durable truth to the correct GitHub owner and reconcile the Active Change Ledger.
+- Questions, review findings, and change suggestions are discussion-only until the user explicitly approves implementation; maintain one coherent reviewable local change set where practical.
+- During active sessions, update local `WORKING_STATE.md` at material boundaries; at formal checkpoints promote durable truth to the correct GitHub owner and reconcile the Active Change Ledger.
+- Use one chat per coherent outcome/workstream, and allow only one write-authorized chat against the same checkout at a time.
+- Before moving work to another computer, commit and push the reviewed checkpoint; uncommitted files are never a cross-computer handoff.
 - When final user approval and required validation complete a section, perform the foreseeable closeout documentation automatically; do not wait for a separate documentation request.
 - Historical/closed records do not override current governing documents.
-- Do not introduce newly discovered semantic/content/source changes inside an implementation package without explicit user approval.
+- Do not introduce newly discovered semantic/content/source changes inside an approved implementation scope without explicit user approval.
 
 # Historical References
 

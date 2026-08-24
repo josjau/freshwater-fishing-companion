@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.2.1  
+**Document Revision:** 1.3.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-21
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -11,7 +11,7 @@ This document defines the permanent development, editing, validation, documentat
 
 # Source of Truth
 
-GitHub `main` is authoritative for all existing project source files.
+GitHub `main` is authoritative for committed production source and formally reconciled documentation. Each computer has its own local checkout; GitHub `origin/main` is the synchronization point between them.
 
 Repository:
 
@@ -19,17 +19,39 @@ Repository:
 
 Before changing an existing file:
 
-1. Fetch the latest version from GitHub.
-2. Base all work only on that verified version.
-3. Never assume a previously proposed, staged, or downloaded version was implemented.
-4. Never use chat memory as authoritative file content.
-5. After the user pushes, verify the resulting GitHub state before considering the work complete.
+1. Confirm repository root, branch, working-tree status, local `HEAD`, local `origin/main`, and remote.
+2. Fetch/pull as needed through the normal GitHub Desktop workflow and verify the local checkout matches the intended GitHub baseline.
+3. Base work only on that verified local version.
+4. Never assume a previously proposed, staged, downloaded, or uncommitted version was implemented or synchronized.
+5. Never use chat memory as authoritative file content.
+6. After a push, re-fetch/verify the resulting GitHub state before considering the work complete.
+
+# Local Repository / Cross-Computer Operating Model
+
+The normal Work/Codex workflow is direct local-repository work:
+
+1. Each computer uses its own GitHub Desktop checkout.
+2. Codex reads and edits the files in the active local checkout.
+3. `docs/WORKING_STATE.md` records the live local workstream, status, gates, and exact resume point.
+4. Use one chat per coherent outcome/workstream.
+5. Only one chat may be write-authorized against the same checkout at a time. Other chats may perform bounded read-only research/analysis when they do not edit the repository or create competing state.
+6. The user reviews the complete local diff in GitHub Desktop.
+7. Use one deliberate closeout commit/push for a coherent reviewed segment when practical. A required cross-computer/session-preservation checkpoint is a valid additional commit boundary.
+8. Never begin on another computer while required work exists only as uncommitted files on the first. Commit/push the reviewed checkpoint or restore a clean tree and preserve the exact state in the still-authoritative continuity layer.
+9. On the receiving computer, fetch/pull, confirm a clean tree, and verify `HEAD` matches the expected GitHub checkpoint before opening substantive work.
+10. Continue on `main` unless a concrete future need—such as concurrent development or a PWA staging/preview workflow—justifies a branch decision.
+
+Local browser validation uses a localhost development server. `file://` is not the normal validation path as the project advances toward PWA behavior. Hosted HTTPS and actual-mobile validation remain required where the applicable acceptance gate calls for them.
+
+## Workflow-transition authority
+
+Until the repository-backed workflow is verified on both computers and a fresh chat successfully recovers from local repository documentation alone, the Google Working State remains authoritative for any migration delta not yet reconciled into GitHub. During the explicitly designated recovery test, the fresh chat must first recover and report state from repository documentation without consulting Google; external comparison may occur only after the test result is established. Do not retire/freeze Google as the active continuity source or resume Fish work before explicit transition closure.
 
 # Repository Handoff
 
-`HANDOFF.md` is the first-read current-state map for future sessions and contributors. It points to governing documents and must remain concise rather than duplicating them.
+`HANDOFF.md` is the compact formal recovery map. `WORKING_STATE.md` is the first-read live local current-state and exact-resume record. Both point to governing documents and must remain role-bounded rather than duplicating them.
 
-A new session should read `HANDOFF.md` and the governing files it references before proposing project changes.
+A new session performs repository preflight, reads `WORKING_STATE.md`, `HANDOFF.md`, the Active Change Ledger, and the governing files for its scope before proposing project changes.
 
 # Continuous Documentation State
 
@@ -54,33 +76,35 @@ After every meaningful implementation, correction, or validation push:
 6. Update `CHANGELOG.md` when meaningful implementation or corrective behavior landed.
 7. Update governing documents immediately when a permanent rule or durable decision changed.
 
-The repository must be sufficient to reconstruct the current state after an unexpected chat/session boundary. The user should not have to supply missing recent history that could have been recorded with the preceding implementation push.
+`WORKING_STATE.md` must also be updated at material local decision, changed-scope, implementation, validation, deferment, and resume-point boundaries. Durable content is then promoted to the correct canonical owner at a formal checkpoint.
+
+The repository must be sufficient to reconstruct the current state after an unexpected chat/session boundary. The user should not have to supply missing recent history that could have been recorded locally or with the preceding checkpoint push.
 
 Final closeout remains required, but closeout is a reconciliation/verification step rather than the first time documentation catches up with implementation.
 
-# Default Delivery Method
+# Default Local Delivery Method
 
-Complete-file replacement is the default implementation workflow.
+Direct edits in the verified local checkout are the default implementation workflow.
 
-Complete-file replacement describes the **delivery artifact**, not authorization to make broad edits. The semantic change scope remains limited to the approved work; unrelated differences inside a replacement file are failures unless separately approved.
+The user-facing review artifact is the complete GitHub Desktop diff for the coherent workstream. This does not authorize broad edits: semantic change scope remains limited to the approved work, and unrelated differences are failures unless separately approved.
 
-For every existing source file that changes:
+For every changed existing file:
 
-- Return the complete resulting file.
-- Do not make partial patches the final implementation artifact.
-- Preserve unrelated current behavior unless the approved change requires otherwise.
-- Make only the changes needed for the planned module, but return the full file.
-- Treat the delivered file as the full-file validation copy.
+- derive the edit from the verified local/GitHub baseline,
+- preserve unrelated content and behavior,
+- make only the approved changes,
+- inspect the complete resulting file where truncation or structural risk exists,
+- review the complete diff before commit.
 
 For coherent multi-file or asset-heavy work:
 
-- Prefer one ZIP package containing the complete coherent segment whenever practical.
-- Preserve repository-relative paths.
-- Clearly identify replacement files, new files, moved files, and removals in the chat delivery summary.
-- Do not place package manifests, validation notes, staging instructions, package READMEs, or other delivery-only artifacts inside the repository ZIP unless they are explicitly approved permanent repository documents.
-- Keep related source, documentation, and imagery together so the user can review one coherent GitHub Desktop diff.
-- Minimize GitHub pushes: when implementation and its required documentation can safely be reviewed together, deliver them in the same package and target one coherent commit/push.
-- Do not minimize pushes at the cost of stale current-state documentation. If implementation is intentionally pushed before runtime validation, its documentation must state `Implemented / Unvalidated` in that same repository state whenever practical.
+- keep related source, documentation, validation changes, and approved imagery in one reviewable local change set when practical,
+- identify changed, new, moved, archived, and removed files clearly,
+- do not add delivery-only manifests, staging notes, or package READMEs to the repository unless explicitly approved as permanent artifacts,
+- target one coherent commit/push when implementation and truthful documentation can safely travel together,
+- never reduce commit count by leaving current-state documentation stale.
+
+ZIP delivery remains an exceptional fallback for a blocked local/direct delivery path, not the normal workflow.
 
 # Commit Economy
 
@@ -102,9 +126,7 @@ Permanent priority when these goals conflict:
 
 # Production Write Approval Gate
 
-Assistant direct GitHub writes are limited by default to Markdown documentation (`.md`) when needed to keep repository state, decisions, validation results, and handoff information current.
-
-Production assets and source require user review and explicit authorization for the specific direct-write action. This includes, but is not limited to:
+Production assets and source require explicit user authorization for the specific local write scope. This includes, but is not limited to:
 
 - images and other media,
 - JavaScript,
@@ -116,37 +138,37 @@ Production assets and source require user review and explicit authorization for 
 
 Default workflow for those files:
 
-1. Build the complete proposed replacement/package from the latest verified GitHub baseline.
-2. Provide the files or coherent ZIP to the user for review.
-3. Do not write those production files to GitHub unless the user explicitly approves that direct write after review.
-4. The user may instead copy/upload the reviewed files and push them through GitHub Desktop.
-5. After the user push, verify the actual commit and affected files on GitHub.
+1. Settle and obtain approval for the exact production scope.
+2. Edit the verified local checkout only within that scope.
+3. Validate the coherent local result and present the complete GitHub Desktop diff for review.
+4. Do not commit or push unless the user explicitly authorizes that action.
+5. After the user/authorized push, verify the actual commit and affected files on GitHub.
 
-A prior approval for one production update does not grant blanket approval for later production writes. Ask again before each new direct-write set unless the user explicitly changes this rule for the applicable session or action.
+A prior approval for one production update does not grant blanket approval for later production writes. Ask again before each new write scope unless the user explicitly changes this rule for the applicable session or action.
 
 # Delivery Fallback
 
-For project changes that are already authorized for direct GitHub delivery, use this fallback when the direct write path fails:
+For project changes that are already authorized, use this fallback only when the normal local/direct delivery path fails:
 
-1. Attempt the authorized direct GitHub write once through the normal delivery path.
-2. If the direct write fails, do not stall the workflow or repeatedly retry the same blocked path without new evidence that another attempt will succeed.
+1. Attempt the authorized normal local/direct path once.
+2. If it fails, do not repeatedly retry the same blocked path without new evidence.
 3. Package the exact intended change as a production ZIP that preserves repository-relative paths and contains only the authorized permanent repository files.
 4. Provide the ZIP to the user for manual application through the normal local repository/GitHub Desktop workflow.
-5. After the user confirms the ZIP was applied and pushed, re-fetch the affected files from authoritative GitHub `main`.
+5. After the user confirms the ZIP was applied and pushed, re-fetch/verify the affected files from authoritative GitHub `main`.
 6. Validate that GitHub matches the intended package before treating the change as complete.
 
 This fallback does **not** expand direct-write authority. Production source, data, media, CSS, HTML, JavaScript, configuration, and other protected project files remain subject to the Production Write Approval Gate above. A failed write never converts an unapproved production change into an authorized one.
 
-# Decision-to-Package Continuity
+# Decision-to-Workstream Continuity
 
 When a decision is finalized during an active build segment:
 
 1. Incorporate the decision into the active implementation plan immediately.
 2. Identify every governing/status/data-model document affected.
 3. Update those documents as part of the active segment rather than waiting for the user to request documentation separately.
-4. Include the implementation and required documentation in the same coherent delivery package whenever practical.
+4. Include the implementation and required documentation in the same coherent local change set whenever practical.
 5. Do not split a coherent segment into repeated source-only and documentation-only pushes merely because the decisions were discussed at different moments.
-6. If a decision is deliberately parked rather than implemented now, document the parked decision in the same active segment package.
+6. If a decision is deliberately parked rather than implemented now, document it in the same active workstream/checkpoint.
 
 The user should not have to repeatedly ask for documentation that is a foreseeable consequence of an approved in-stream decision.
 
@@ -192,6 +214,7 @@ Ownership rules:
 - operational workflow rules belong in `DEVELOPMENT_WORKFLOW.md`,
 - domain decisions belong in their relevant data-model/governing documents,
 - active section/audit state belongs in the active workstream record,
+- `WORKING_STATE.md` owns the live local status and exact resume point,
 - `HANDOFF.md` owns the first-read continuation map,
 - Handoff must not become the sole canonical owner of durable decisions.
 
@@ -231,50 +254,58 @@ Additional archive categories are not created speculatively.
 
 Permanent principle: **Git history preserves ordinary revisions; the repository archive preserves independently useful historical artifacts.**
 
-# Full-File Replacement Integrity
+# Local Edit Integrity
 
 For an existing file:
 
-1. Fetch the latest GitHub file.
+1. Verify the local checkout against the intended GitHub baseline.
 2. Define the authorized edit scope.
 3. Apply only the approved changes.
-4. Produce the complete resulting file.
-5. Diff the replacement against the fetched source.
+4. Inspect the complete resulting file where structural/truncation risk exists.
+5. Diff the local result against the verified baseline.
 6. Any unrelated diff is a failure unless it was explicitly authorized.
-7. Do not silently fold unrelated cleanup, optimization, or redesign into the replacement.
+7. Do not silently fold unrelated cleanup, optimization, or redesign into the edit.
 
 Mature approved UI behavior is a protected regression target.
 
-# Replacement-Integrity Gate
+# Large-Rewrite / Replacement-Integrity Gate
 
-Before any replacement package containing an existing documentation file is delivered, a mechanical preservation check is mandatory.
+Before any local documentation change set containing an existing file is presented for commit, a mechanical preservation check is mandatory.
 
-The gate must compare each replacement against the exact GitHub baseline used to create it and must fail the package before delivery if any of the following occurs without explicit authorization:
+The gate compares each changed documentation file against the exact baseline used to create it and fails the change set before review/commit if any of the following occurs without explicit authorization:
 
 - an existing Markdown heading disappears,
 - the replacement shrinks by more than 10 percent of baseline line count,
 - deleted lines exceed 10 percent of baseline line count,
 - a large rewrite is detected even though the authorized scope is targeted,
-- a package-only artifact appears in the repository payload.
+- a delivery-only artifact appears in the repository.
 
 A deliberate large documentation rewrite may bypass the size thresholds only when the user explicitly approves that rewrite before the file is generated. Heading removal still requires explicit authorization.
 
 For repository-side checking, `tools/validate_replacement_integrity.py` provides the same conservative guard against accidental document truncation by comparing working-tree Markdown files with `HEAD`. This validator is a safety net, not a substitute for deriving replacements from the latest verified GitHub contents.
 
-For assistant-generated packages, the equivalent baseline comparison must be run before the ZIP is created. A package that fails the gate must not be delivered.
+For an exceptional ZIP fallback, the equivalent baseline comparison must also run before the ZIP is created. A change set that fails the gate must not be committed or delivered.
 
-# Post-Write Integrity Validation
+# Local and Post-Push Integrity Validation
 
-Every file write must be validated from the authoritative remote repository after the write. A successful write/commit response alone is not sufficient evidence that the file is intact.
+Every local file write must be validated before commit, and every pushed file must be validated again from the authoritative remote repository. A successful edit, commit, or push response alone is not sufficient evidence that the file is intact.
 
 This rule applies to:
 
-- direct assistant Markdown writes to GitHub,
+- Codex local repository writes,
 - user commits/pushes through GitHub Desktop,
 - corrective/restoration writes,
 - any other workflow that changes an existing or newly created repository file.
 
-After every file write:
+After local writes and before review/commit:
+
+1. Confirm each intended file exists and is non-empty unless empty was explicitly intended.
+2. Inspect the complete diff against the verified baseline.
+3. Verify the beginning/end and every approved inserted/replaced section where truncation risk exists.
+4. Confirm unrelated headings/content remain preserved.
+5. Run applicable deterministic validation.
+
+After push:
 
 1. Re-fetch the written file from the target branch/commit.
 2. Confirm the file is non-empty unless an empty file was explicitly intended.
@@ -289,7 +320,7 @@ After every file write:
 
 For a targeted edit, the validation should confirm both sides of the change: the intended new content is present and previously existing unrelated content remains intact.
 
-This post-write gate is mandatory even when pre-write replacement-integrity checks passed. Pre-write checks prevent bad payloads; post-write checks prove the authoritative repository received the intended complete file.
+The post-push gate is mandatory even when local integrity checks passed. Local checks prevent bad commits; post-push checks prove the authoritative repository received the intended complete file.
 
 # User Repository Workflow
 
@@ -297,20 +328,19 @@ The user normally updates the repository through GitHub Desktop.
 
 Sequence:
 
-1. Verify current GitHub source.
-2. Review architecture and standards.
-3. Plan the module.
-4. Generate all complete replacement files, required documentation, and required imagery for the coherent segment.
-5. Package the complete coherent segment once whenever practical.
-6. User copies the package into the local repository.
-7. User reviews the GitHub Desktop diff.
-8. User commits and pushes the coherent update.
+1. Perform repository preflight and verify the intended GitHub baseline.
+2. Read Working State, Handoff, the Active Change Ledger, architecture/standards, and scope-specific owners.
+3. Plan and obtain approval for the workstream scope.
+4. Edit the local repository directly.
+5. Update required current-state/governing documentation in the same coherent local change set when practical.
+6. Run applicable local integrity, syntax, relationship, and repository validation.
+7. User reviews the complete GitHub Desktop diff.
+8. User commits/pushes, or explicitly authorizes the assistant to commit/push the reviewed checkpoint.
 9. Verify the commit and affected files on GitHub.
-10. Update current-state documentation immediately if the push changed the repository state and those status changes were not already included in the same push.
-11. Apply the Live-Site Validation Gate below when the change affects runtime or user-visible behavior.
-12. Record each meaningful validation result or known failure in the active validation/current-state documentation.
-13. If validation produces required corrections, package those corrections and their status documentation coherently.
-14. Only then mark the session/module/section finalized.
+10. Apply the Live-Site Validation Gate when the change affects runtime or user-visible behavior.
+11. Record each meaningful validation result or known failure in Working State and the applicable validation/governing owner.
+12. If validation requires corrections, implement/review them coherently and repeat the affected checks.
+13. Only then mark the session/module/section finalized.
 
 Avoid unnecessary pushes and deployments, but do not trade fewer pushes for incomplete validation or stale documentation.
 
@@ -375,7 +405,7 @@ Recommend a materially better design before implementation. Do not agree automat
 
 Identify:
 
-- Existing files to replace
+- Existing files to edit
 - New files to add
 - Files to archive/remove
 - Data ownership
@@ -392,7 +422,7 @@ Create all required implementation files, documentation, and media for the appro
 
 When original diagrams are appropriate, create the needed images instead of leaving placeholders simply to avoid asset work.
 
-For Tackle recognition-media work, `MEDIA_GUIDE.md`'s Tackle Media Generation Gate is mandatory. A new or replacement Tackle recognition asset must not enter a delivery package until it has passed the real-photo search, geometry verification, current-library visual comparison, mobile-recognition, licensing/provenance, format, and style checks defined there.
+For Tackle recognition-media work, `MEDIA_GUIDE.md`'s Tackle Media Generation Gate is mandatory. A new or replacement Tackle recognition asset must not enter the reviewed local change set until it has passed the real-photo search, geometry verification, current-library visual comparison, mobile-recognition, licensing/provenance, format, and style checks defined there.
 
 ## Validate
 
@@ -412,21 +442,20 @@ Validate as applicable:
 
 A failed validation criterion changes repository status immediately. Record the failure before proceeding with unrelated expansion work.
 
-## Package
+## Review
 
-Deliver:
+Present:
 
-- Complete replacement files
-- New files
-- Complete media set
+- Complete GitHub Desktop diff/file list
+- New, changed, moved, archived, and removed files
 - Required governing/status documentation
-- Repository-relative paths
+- Validation results and remaining gates
 - Removal/archive instructions when needed
-- Validation checklist in chat or a permanent workstream document, not as a temporary repository-root package artifact
+- Validation checklist in chat or a permanent workstream document, not as a temporary repository-root artifact
 
 ## Commit and Verify
 
-The user normally commits and pushes through GitHub Desktop unless a current session explicitly authorizes direct GitHub commit application after review.
+The user normally commits and pushes the reviewed local change set through GitHub Desktop unless the current session explicitly authorizes the assistant to commit/push after review.
 
 After push or authorized direct commit:
 
@@ -435,7 +464,7 @@ After push or authorized direct commit:
 - Apply the mandatory Post-Write Integrity Validation gate to every written file.
 - Do not assume local/staged work reached GitHub.
 - Rule out GitHub Pages deployment lag before altering otherwise-correct source.
-- Confirm the active workstream/HANDOFF state accurately describes what is now on `main`; correct stale status before starting another build segment.
+- Confirm `WORKING_STATE.md`, the Active Change Ledger, and Handoff accurately describe what is now on `main`; correct stale status before starting another build segment.
 
 # Documentation Closeout
 
@@ -446,12 +475,12 @@ A session, module, or section is not finalized until all relevant documentation 
 Closeout sequence:
 
 1. Identify all decisions, current-state changes, deferred work, known failures, corrections, and open issues produced by the segment.
-2. Fetch the latest relevant documentation from GitHub.
-3. Reconcile all affected governing documents and `HANDOFF.md` with the already-current active workstream state.
+2. Verify the local documentation baseline against GitHub.
+3. Reconcile `WORKING_STATE.md`, affected governing documents, the Active Change Ledger, and `HANDOFF.md`.
 4. Classify every repository artifact retired by the segment as **GIT HISTORY ONLY**, **ARCHIVE**, or **DELETE**; complete and verify any required archival move before closeout.
-5. Return complete replacement documentation files as part of the coherent segment package whenever practical.
-6. User reviews, commits, and pushes, or explicitly authorizes the assistant to apply the reviewed documentation commit when the current session workflow permits it.
-7. Verify the actual GitHub files after push using the mandatory Post-Write Integrity Validation gate.
+5. Present the complete coherent documentation diff for review.
+6. User reviews, commits, and pushes, or explicitly authorizes the assistant to commit/push the reviewed documentation checkpoint.
+7. Verify the actual GitHub files after push using the mandatory Local and Post-Push Integrity Validation gate.
 8. Confirm that Planned, In Progress, Implemented / Unvalidated, Partially Validated, Validated, Finalized, Approved / Not Implemented, and Open states are represented accurately where applicable.
 9. Only then mark the segment finalized.
 
@@ -494,8 +523,8 @@ When a permanent standard is agreed:
 1. Add it to the correct governing document.
 2. Add an architectural decision when it has long-term structural impact.
 3. Update cross-references and `HANDOFF.md` when current state or future work changes.
-4. Include those documentation changes with the active coherent package when practical.
-5. Verify the documentation after push using the mandatory Post-Write Integrity Validation gate.
+4. Include those documentation changes with the active coherent local change set when practical.
+5. Verify the documentation after push using the mandatory Local and Post-Push Integrity Validation gate.
 
 A new chat should be able to reconstruct the project's operating rules and current implementation state from GitHub alone.
 
@@ -531,9 +560,9 @@ Once a revised decision is finalized, update GitHub so the repository again beco
 
 Any command the user is expected to run or copy/paste must be placed in a fenced code block. Do not bury executable commands inside prose or inline code when the user needs to interact with them directly.
 
-# Manual-Edit Exception
+# User-Performed Manual-Edit Exception
 
-Whole-file replacement remains the default.
+Direct local edits are the default.
 
 If the user explicitly asks for a manual targeted edit:
 
@@ -546,16 +575,16 @@ If the user explicitly asks for a manual targeted edit:
 
 # No-Churn Rule
 
-Before generating a replacement, reconcile:
+Before editing, reconcile:
 
 - Approved architecture
 - Latest GitHub source
 - Related logic and data contracts
 - Likely follow-on requirements
 
-Do not replace a file again immediately for a foreseeable issue.
+Do not edit the same file again immediately for a foreseeable issue.
 
-A new replacement is justified when testing finds a defect, GitHub changed, requirements changed, or new verified evidence requires correction.
+A follow-up edit is justified when testing finds a defect, GitHub changed, requirements changed, or new verified evidence requires correction.
 
 # Repository Integrity and Drift Prevention Standard
 
@@ -563,13 +592,13 @@ This section is the permanent workflow owner for the Repository Integrity and Dr
 
 ## Mandatory controls
 
-1. **Repository preflight.** Before a substantive new session, section, workstream, or implementation block, read the current Handoff/Working State as applicable, re-fetch authoritative GitHub `main`, and verify the relevant governing and source files before planning changes.
+1. **Repository preflight.** Before a substantive new session, section, workstream, or implementation block, verify repository root/branch/status/HEAD/upstream, read local Working State and Handoff, compare the checkout with authoritative GitHub `main`, and verify the relevant governing/source files before planning changes.
 2. **Governing-document and decision precedence.** Current governing documents and current approved decisions outrank Drafts, plans, workstreams, archives, historical records, and old chat conclusions. A newer discussion does not supersede an approved decision until it is explicitly approved and promoted.
 3. **Exact baseline tracking for bounded work.** Record the exact starting GitHub commit for a bounded section/workstream when repository state will change. Do not add universal commit-freshness metadata to every living document; Git history remains file-level provenance.
 4. **Dependency/change-impact review.** Before edits, identify affected source owners, relationships, UI flows, documentation, validators, media, regressions, and downstream dependencies.
 5. **Supersession/retirement discipline.** When an artifact stops being current, explicitly determine whether it remains current, becomes Superseded, is retained as **ARCHIVE**, remains **GIT HISTORY ONLY**, or is **DELETE**. Retired authoritative-looking copies must not remain in active/current locations.
 6. **Authority/lifecycle labels.** Governing documentation distinguishes document lifecycle from implementation/workstream status. Use the approved document lifecycle terminology and avoid ambiguous status wording that can masquerade as current implementation truth.
-7. **Documentation closeout and post-write verification.** Documentation is part of implementation. Every write must be re-fetched from GitHub and validated against its verified baseline; a successful write or commit response alone is not proof of completion.
+7. **Documentation closeout and write verification.** Documentation is part of implementation. Local writes must pass diff/integrity checks before commit; pushed writes must be re-fetched from GitHub and validated against their verified baseline. A successful edit, commit, or push response alone is not proof of completion.
 8. **Cross-reference and stale-status scan.** At meaningful section/workstream closeout, inspect affected governing documents, Handoff, Active Change Ledger, related data-model documents, and explicit current-state structures for stale or contradictory references. Historical evidence is not mechanically rewritten solely to normalize old wording.
 9. **Mechanical versus human validation boundary.** Automate deterministic checks such as required files, IDs, relationships, structured statuses, known stale patterns, and source reachability. Architectural meaning, narrative correctness, technical fishing accuracy, suitability, rights/source judgment, and decision interpretation remain human-reviewed.
 10. **Event-based repository reconciliation.** Perform a broader read-only reconciliation at major milestone or architecture-gate closeout and whenever material drift evidence appears. A calendar-only full-repository audit is not required merely to satisfy cadence.

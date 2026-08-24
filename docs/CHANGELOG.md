@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.1.7  
+**Document Revision:** 2.2.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-08-23
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -17,6 +17,29 @@ Do not record exact active audit section, exact session resume point, current bl
 For current formal continuation use `HANDOFF.md`. For material non-closed items use `ACTIVE-CHANGE-LEDGER.md`.
 
 # Unreleased
+
+## Local Repository Workflow Transition — First-Computer Checkpoint
+
+### Added
+
+- Added `docs/WORKING_STATE.md` as the live local current-state and exact-resume record.
+- Added root `AGENTS.md` with concise repository startup, authority, change-control, and closeout instructions for Codex.
+- Added D062 for the approved local repository Work/Codex operating model.
+- Added WF-001 to keep the transition visible until cross-computer and fresh-chat recovery validation passes.
+
+### Changed
+
+- Made direct edits in a verified local GitHub Desktop checkout the normal workflow, with the complete local diff as the review surface and ZIP delivery retained only as an exceptional fallback.
+- Defined GitHub `origin/main` as the cross-computer synchronization point and prohibited transferring required state through uncommitted files.
+- Established one coherent chat per workstream and one write-authorized chat per checkout at a time.
+- Reconciled Handoff, workflow, architecture, style, Fish implementation-status annotations, and the Version 1 design-audit Wave 2 closure state.
+
+### Validation Status
+
+- The first-computer repository continuity checkpoint is implemented in this documentation change and passed local integrity validation before commit.
+- The existing repository-integrity validator passes all 8 validation groups; documentation preservation review found no unrelated heading/content loss.
+- Transition closure remains pending second-computer clean-checkout verification and a fresh-chat repository-documentation-only recovery test.
+- Fish work remains paused until explicit transition closure.
 
 ## Fish Guide — Production Wave 2: Walleye / Sauger + Catfish
 

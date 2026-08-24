@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.5.1  
+**Document Revision:** 0.6.0  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-21
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -16,6 +16,8 @@ Where this document distinguishes **Current** from **Approved / Not Implemented*
 # Current Source Structure
 
 ```text
+AGENTS.md
+
 .github/
     workflows/
         external-reference-health.yml
@@ -37,8 +39,11 @@ themes/
         legacy-dark-theme.css
 
 data/
+    fish-categories.js
     fish.js
     rigs.js
+    fish-identification.js
+    fish-rig-guidance.js
     knots.js
     knot-guidance.js
     reel-guidance.js
@@ -46,6 +51,7 @@ data/
     media.js
 
 images/
+    fish/
     tackle/
     rigs/
 
@@ -62,19 +68,21 @@ tools/
 docs/
     ACTIVE-CHANGE-LEDGER.md
     ARCHITECTURE.md
-    HANDOFF.md
     CHANGELOG.md
     DECISIONS.md
     DEVELOPMENT_WORKFLOW.md
     EXTERNAL_REFERENCE_MAINTENANCE.md
+    FISH_REFERENCE_SOURCES.md
+    HANDOFF.md
     MEDIA_GUIDE.md
     MILESTONES.md
     PROJECT.md
     ROADMAP.md
     SPECIFICATION.md
     STYLE_GUIDE.md
+    V1-DESIGN-AUDIT.md
+    WORKING_STATE.md
     data-model/
-    workstreams/
 ```
 
 `SPECIFICATION.md` remains in the repository as a superseded retirement pointer and is not an active governing source.
@@ -82,8 +90,11 @@ docs/
 Required production JavaScript load order from `index.html` remains:
 
 ```text
+data/fish-categories.js
 data/fish.js
 data/rigs.js
+data/fish-identification.js
+data/fish-rig-guidance.js
 data/knots.js
 data/knot-guidance.js
 data/reel-guidance.js
@@ -135,7 +146,7 @@ Existing validated domains retain their original selection/validation context an
 
 Regional reconciliation is additive by default. Existing valid content is not removed or invalidated merely because the geographic focus expanded.
 
-The existing 20-Rig library was originally selected and validated for Northeast Oklahoma and Southwest Kansas. It remains canonical and validated; a later Four-State adequacy audit determines whether materially important regional setup/method coverage is missing.
+The original 20-Rig library was selected and validated for Northeast Oklahoma and Southwest Kansas. It remains canonical and validated. The completed additive Four-State adequacy audit added Split-Shot Bait Rig as canonical Rig #21 and found no other material ordinary-Rig gap.
 
 # Theme Architecture
 
@@ -177,14 +188,15 @@ Canonical roles:
 - `DEVELOPMENT_WORKFLOW.md` — implementation, validation, documentation, and closeout procedure.
 - `ROADMAP.md` — product milestone order and future product direction.
 - `ACTIVE-CHANGE-LEDGER.md` — material non-closed carry-forward items.
+- `WORKING_STATE.md` — live local current-state and exact-resume record.
 - `HANDOFF.md` — compact formal GitHub recovery/continuation entrypoint.
 - `CHANGELOG.md` — curated meaningful landed-change history.
 - frozen `MILESTONES.md` — historical milestone record only.
 - domain/data-model standards — canonical domain-specific ownership.
 
-`SPECIFICATION.md` is retired from active maintenance.
+`SPECIFICATION.md` is retired from active maintenance. Root `AGENTS.md` is a concise agent startup/change-control pointer and does not own project state.
 
-The Google Drive **Freshwater Fishing Companion — Working State** is the high-frequency in-progress delta between formal GitHub checkpoints. GitHub remains formal authority. At logical checkpoints, durable Working State content is promoted to the correct GitHub owner, `ACTIVE-CHANGE-LEDGER.md` is reconciled, and Handoff is updated only for formal recovery/resume information.
+GitHub `main` remains formal cross-computer authority. `WORKING_STATE.md` is the high-frequency local state/resume layer; durable content is promoted to the correct GitHub owner, the Active Change Ledger is reconciled, and Handoff remains compact. Until the local-workflow migration passes cross-computer and fresh-chat recovery validation, the Google Working State remains authoritative for any migration delta not yet reconciled into GitHub. After explicit transition closure it is retired/frozen as the active continuity source.
 
 # Knowledge Architecture
 
@@ -235,13 +247,13 @@ Search scope is hierarchical where navigation defines a narrower eligible univer
 
 Owns canonical Fish records and stable Fish IDs.
 
-Current production remains the pre-Fish-production seed state. Locked future Fish production architecture is governed by D057–D061 and Fish Phase 0 workstreams.
+Current production is in a deliberate staged migration. Trout, Gar, Production Wave 1, and Production Wave 2 Fish use the approved production schema; remaining locked-library Fish may retain the legacy seed shape until their production package lands. `data-model/02-FISH.md` owns the exact current contract/status.
 
 Fish identification media is accuracy-critical and follows `MEDIA_GUIDE.md`.
 
 ## `data/rigs.js`
 
-Owns 20 active canonical Rig records and facts intrinsic to physical setup, including:
+Owns 21 active canonical Rig records and facts intrinsic to physical setup, including:
 
 - stable Rig ID,
 - name and summary,
@@ -352,7 +364,7 @@ Coordinates application routing and major view transitions including Dashboard r
 
 # Rig Guide Architecture
 
-**Current validated state:** 20 active canonical Rigs across six learning tiers using the completed connected-knowledge/navigation architecture.
+**Current validated state:** 21 active canonical Rigs across six learning tiers using the completed connected-knowledge/navigation architecture. The original 20-Rig milestone is closed; Split-Shot Bait Rig is the validated Four-State addition.
 
 Current landing/browse flow:
 
@@ -538,6 +550,8 @@ Current Tackle reference assets use optimized WebP on fixed `#f4f0e8`.
 
 `HANDOFF.md` is the compact formal GitHub recovery/continuation entrypoint.
 
+`WORKING_STATE.md` is the live local workstream and exact-resume record.
+
 `ACTIVE-CHANGE-LEDGER.md` is the single formal GitHub owner of material non-closed carry-forward items.
 
 A session/module/section is not finalized until relevant documentation is updated, pushed/applied, inspected on authoritative GitHub, and validated.
@@ -550,12 +564,14 @@ Meaningful cross-segment decisions receive the same documentation discipline as 
 
 Permanent rules include:
 
-- fetch latest GitHub source before editing,
+- verify the local checkout against GitHub `main` before editing,
+- read local Working State, Handoff, the Active Change Ledger, and applicable governing documents before substantive work,
+- use one write-authorized chat per checkout/workstream,
+- commit/push a reviewed checkpoint before cross-computer handoff,
 - keep semantic change scope targeted unless broader replacement/consolidation is approved,
-- provide complete validation copies after planned edits,
-- review coherent multi-file production updates through GitHub Desktop by default,
+- review coherent local changes through the complete GitHub Desktop diff by default,
 - verify GitHub after every write/push,
 - complete documentation closeout before declaring a segment finalized,
 - do not begin a dependent build segment while the current one remains unfinalized,
 - preserve meaningful cross-segment decisions/defers/parks/rejects,
-- apply the Working State / formal checkpoint model during long sessions.
+- apply the local Working State / formal checkpoint model during active sessions.
