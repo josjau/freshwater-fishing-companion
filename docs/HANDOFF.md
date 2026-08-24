@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.6.3  
+**Document Revision:** 2.6.4  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-24
@@ -58,7 +58,7 @@ The unavailable second computer does not block project work. Before it later bec
 
 # Current Product Milestone
 
-**Fish Guide — Production Wave 3: Bass — USER APPROVED / PENDING COMMIT + POST-PUSH VERIFICATION**
+**Fish Guide — Sunfish & Crappie — NEXT PLANNED PACKAGE / NOT STARTED**
 
 Repository Audit Cleanup and Fish Guide Phase 0 are closed. Trout Production Package 1 is **CLOSED** at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` (`Fish - Search Fix`) after GitHub verification, static validation, and user-confirmed fresh-session live validation. The broader prepared Hotfix 2 was not applied and remains superseded unless a fresh-load regression later proves it necessary.
 
@@ -73,9 +73,9 @@ FISH-001 through FISH-007 are terminal Phase 0 history. The active Fish work rem
 - **FISH-008 — approved Fish production architecture implementation across the remaining locked library**
 - **FISH-009 — approved Fish UX implementation across the remaining locked library**
 
-The active product task is **Production Wave 3 — Bass**. The user approved all six processed images and completed explicit Fish-to-Rig review, producing a 12-recommendation set. Its durable package decisions are owned by `docs/workstreams/FISH-WAVE-3-BASS.md`; current recovery/review status is owned by `WORKING_STATE.md`. The review set is uncommitted and has not been pushed. After Bass closes, continue with Sunfish & Crappie unless evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
+Production Wave 3 — Bass is **CLOSED**. The six processed images, six Fish records, six deterministic comparison relationships, and 12 Fish-to-Rig recommendations are committed, validated, and post-push verified. The historical package record is retained at `archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`. The next planned product task is **Sunfish & Crappie**, not yet started.
 
-Wave 3 browser review is complete. The user approved Compare Similar Fish centering, the standardized Selection/Fish ID image blocks, the restored native Unicode `→` treatment, and the shared `font-weight: 800` normalization across representative back `←`, internal `→`, external `↗`, and compact-row `›` navigation surfaces. No additional Wave 3 browser defect remains open; only final local documentation reconciliation, explicit commit/push authorization, and post-push GitHub verification remain before the wave closes.
+Wave 3 browser review and repository closeout are complete. The user approved Compare Similar Fish centering, the standardized Selection/Fish ID image blocks, the restored native Unicode `→` treatment, and the shared `font-weight: 800` normalization across representative back `←`, internal `→`, external `↗`, and compact-row `›` navigation surfaces. No Wave 3 browser or closeout gate remains open.
 
 # Fish Production Contract
 
@@ -165,13 +165,13 @@ The existing repository-integrity validator remains the single deterministic val
 
 # Exact Resume Point
 
-1. Apply the final documentation-closeout review ZIP over the existing local Git checkout; do not replace or copy the `.git` directory.
-2. Verify branch `main`, local `HEAD`, local `origin/main`, remote URL, and complete Git status/diff from the actual checkout.
-3. Confirm the final diff matches the user-approved Wave 3 working package plus documentation closeout only; rerun the required repository-integrity/syntax checks if the local checkout differs from the validated package.
-4. Do not commit or push until the user gives separate explicit commit/push authorization.
-5. After push, re-fetch GitHub `main`, verify the committed tree and validations, reconcile Drive `Working Source/Current` to the new Git baseline, close/archive the Wave 3 workstream, and trim live Working State to the next active package.
+1. Verify current GitHub `main` and confirm Drive `Working Source/Current` is reconciled before new user-facing application work.
+2. Read `WORKING_STATE.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, and the governing Fish/evidence/media/relationship documents.
+3. Create/lock the Sunfish & Crappie production workstream before production edits.
+4. Prepare and review Wave 4 Fish data, evidence, comparison relationships, and media candidates before writing user-facing source.
+5. Keep documentation current during the wave and use the closeout validator so final closeout remains a short mechanical state transition.
 
-When a second computer later becomes available, treat its clean pull and repository-documentation-only recovery test as receiving-device onboarding. It is not a blocker to the Wave 3 task on this verified computer.
+When a second computer later becomes available, treat its clean pull and repository-documentation-only recovery test as receiving-device onboarding. It is not a blocker to the current Fish production milestone.
 
 # Non-Negotiable Working Rules
 

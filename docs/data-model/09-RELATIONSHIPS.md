@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.5.4  
+**Document Revision:** 0.5.5  
 **Document Status:** Approved  
-**Implementation Status:** Mixed — validated current relationships through Wave 2 plus the user-approved Wave 3 Bass working set pending commit/post-push verification  
+**Implementation Status:** Mixed — validated current relationships through closed Wave 3 Bass; remaining locked-library relationship packages pending  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, FISH-001–FISH-007  
 **Last Updated:** 2026-08-24
 
@@ -182,7 +182,7 @@ Individual Rig records do not store duplicate Core membership/order fields solel
 
 # Fish Production Relationships — Implemented / Staged Expansion
 
-Fish Guide Phase 0 is closed. The approved Fish relationship architecture is implemented. `FISH_IDENTIFICATION_RELATIONSHIPS` and `FISH_RIG_GUIDANCE` now contain validated records for Fish completed through the closed Trout, Gar, Production Wave 1, and Production Wave 2 packages. Remaining locked-library relationships are added only when their Fish production package is authored and validated.
+Fish Guide Phase 0 is closed. The approved Fish relationship architecture is implemented. `FISH_IDENTIFICATION_RELATIONSHIPS` and `FISH_RIG_GUIDANCE` now contain validated records for Fish completed through the closed Trout, Gar, Production Wave 1, Production Wave 2, and Production Wave 3 Bass packages. Remaining locked-library relationships are added only when their Fish production package is authored and validated.
 
 ## Fish Identification / Confusion Relationships
 
@@ -453,7 +453,7 @@ Do not require every approved Fish relationship to be active on every intermedia
 
 FISH-003 permits staged activation. Each migrated/additive Fish or dependency-safe group must satisfy the applicable relationship/media/source/readiness contract for that package.
 
-Closed Fish relationship packages currently include Trout, Gar, Production Wave 1, and Production Wave 2. Production Wave 3 — Bass is the active pre-commit package; its six locked pair IDs and identification direction are owned by `../workstreams/FISH-WAVE-3-BASS.md`, and all six records are implemented, validated, and user-approved in the uncommitted working set. Separate explicit commit/push authorization and post-push GitHub verification remain open.
+Closed Fish relationship packages currently include Trout, Gar, Production Wave 1, Production Wave 2, and Production Wave 3 — Bass. Wave 3's six locked pair IDs and identification direction are preserved in `../../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`; all six records are committed, validated, post-push verified, and closed. Sunfish & Crappie is the next planned Fish relationship package.
 
 Final Fish Version 1 completion separately requires:
 
