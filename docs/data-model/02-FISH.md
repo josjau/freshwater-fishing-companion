@@ -1,27 +1,47 @@
 # Freshwater Fishing Companion
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.4.0  
+**Document Revision:** 0.4.1  
 **Document Status:** Approved — Production Baseline + Fish Production Contract  
-**Implementation Status:** Current schema implemented; approved Fish production architecture not yet implemented  
+**Implementation Status:** Staged production implementation active; Trout, Gar, Wave 1, and Wave 2 packages validated/closed; remaining locked library pending  
 **Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056–D061, FISH-001–FISH-007  
-**Last Updated:** 2026-08-22
+**Last Updated:** 2026-08-23
 
 ---
 
 # Purpose
 
-This document distinguishes the Fish schema that exists on current production `main` from the approved Fish production contract released by Fish Guide Phase 0 / FISH-007.
+This document defines the approved Fish production contract and records the staged migration state currently present on production `main`.
 
 Fish owns facts intrinsic to the species. Recommendations, pairwise identification guidance, Media attachment, regulations, source provenance, and User Knowledge belong to their respective owners rather than being duplicated into Fish.
 
-Phase 0 is closed. Production implementation may now proceed in staged, validated packages. Until a target field or registry is actually implemented and validated, the **Current Production Schema** section below remains authoritative for runtime source shape.
+Fish Guide Phase 0 is closed. Production implementation proceeds in staged, validated packages. Fish already migrated by a closed production package use the approved target schema; Fish not yet migrated may temporarily retain the legacy seed shape until their approved production package lands. The mixed migration state is deliberate and temporary.
 
 ---
 
-# Current Production Schema — Implemented
+# Current Production Schema — Staged Migration
 
-`data/fish.js` currently stores canonical Fish records with exactly these fields:
+`data/fish.js` currently contains a deliberate mixed-schema migration state.
+
+Fish completed through the closed Trout, Gar, Production Wave 1, and Production Wave 2 packages use the approved production shape:
+
+```text
+id
+name
+summary
+createdVersion
+lastModifiedVersion
+isActive
+scientificName
+categoryId
+family
+aliases[]
+identificationTraits[]
+habitatTags[]
+waterbodyTypes[]
+```
+
+Fish whose production package has not yet landed may temporarily retain the legacy seed shape:
 
 ```text
 id
@@ -37,9 +57,9 @@ habitatTags[]
 waterbodyTypes[]
 ```
 
-Current production therefore uses the text field `category`. It does **not** yet implement `categoryId`, `aliases[]`, `identificationTraits[]`, the Fish category registry, Fish-identification relationship data, Fish-to-Rig guidance data, or required Fish primary-identification Media coverage.
+The canonical Fish category registry, Fish-identification relationship registry, Fish-to-Rig guidance registry, Fish Media readiness contract, and per-Fish source-evidence ledger are implemented and expand incrementally as each production package closes.
 
-The existing production fields remain authoritative until the approved Fish production migration deliberately replaces them.
+Do not infer that a legacy-shaped Fish has satisfied the production contract merely because it remains active during staged migration. Its package must still complete the target schema, evidence, primary Media, applicable identification relationships, and validation requirements below.
 
 ---
 
@@ -63,9 +83,9 @@ habitatTags[]
 waterbodyTypes[]
 ```
 
-Target-model changes relative to current production:
+Target-model changes relative to the legacy seed shape:
 
-- replace current `category` text with canonical `categoryId`,
+- replace legacy `category` text with canonical `categoryId`,
 - add legitimate alternate common names through `aliases[]`,
 - add intrinsic observable identification guidance through `identificationTraits[]`,
 - preserve Fish-owned `habitatTags[]` and `waterbodyTypes[]`,
@@ -144,7 +164,7 @@ Creek
 
 # Fish Category Registry
 
-Approved future source concept:
+Implemented source:
 
 ```text
 FISH_CATEGORY_DATA
@@ -178,7 +198,7 @@ Rules:
 - Category order is owned by the category registry.
 - Category records do not own `isActive`.
 - Category visibility/counts are derived from active member Fish.
-- every Fish `categoryId` must resolve to exactly one canonical category.
+- every migrated Fish `categoryId` must resolve to exactly one canonical category.
 - category assignment is project-owned beginner navigation taxonomy and does not require external biological evidence.
 
 ---
@@ -235,9 +255,9 @@ Deferred/non-Version-1 candidates are not inserted as inactive placeholders mere
 
 Version 1 membership and runtime activation are separate concepts.
 
-An approved Version 1 Fish may exist temporarily with `isActive: false` while its production package is authored or validated. Staged activation of individual Fish or dependency-safe groups is allowed.
+An approved Version 1 Fish may exist temporarily with `isActive: false` while its production package is authored or validated. Staged activation of individual Fish or dependency-safe groups is allowed. During the active migration, legacy seed Fish may also remain active until their package deliberately replaces them; legacy activation does not waive target-production readiness.
 
-Before a Fish may be `isActive: true`, it must have:
+Before a newly migrated/additive Fish may be considered production-ready, it must have:
 
 1. a complete valid canonical Fish record,
 2. a valid `categoryId`,
@@ -262,6 +282,8 @@ Pairwise field-identification knowledge belongs outside Fish in:
 data/fish-identification.js
 FISH_IDENTIFICATION_RELATIONSHIPS
 ```
+
+This registry is implemented and expands as production packages land.
 
 Relationship shape:
 
@@ -320,6 +342,8 @@ Fish-to-Rig recommendation Decision Knowledge belongs outside Fish and Rig in:
 data/fish-rig-guidance.js
 FISH_RIG_GUIDANCE
 ```
+
+This registry is implemented and expands through deliberate per-Fish evaluation during production authoring.
 
 There is **no separate guidance-record `id`**. `fishId` uniquely identifies the record for its Fish.
 
@@ -396,7 +420,7 @@ ownerType: fish-identification
 role: comparison
 ```
 
-Every active Fish requires exactly one active `primary-identification` Media record. Supplemental and comparison Media are optional.
+Every production-ready active Fish requires exactly one active `primary-identification` Media record. Supplemental and comparison Media are optional.
 
 Fish Media naming, path, alt-text, attribution, `changesMade`, licensing/provenance, and technical rules are governed by `MEDIA_GUIDE.md` and the FISH-004 contract released by Phase 0.
 
@@ -422,7 +446,7 @@ The current provisionally approved evidence model requires each Version 1 Fish t
 
 One authoritative source may support multiple evidence categories. Citation-per-field is not required. The evidence burden/structure may be deliberately adjusted if real authoring demonstrates a better practical model, but such changes must be documented rather than silently drifting.
 
-The deterministic repository validator checks structural evidence completeness/reference resolution. Scientific truth, source quality, and freshness remain human-reviewed.
+The deterministic repository validator checks structural evidence completeness/reference resolution for migrated production Fish. Scientific truth, source quality, and freshness remain human-reviewed.
 
 ---
 
@@ -430,11 +454,11 @@ The deterministic repository validator checks structural evidence completeness/r
 
 ## Current production
 
-Current search consumes fields that actually exist in current `data/fish.js`.
+Current search supports the deliberate staged migration and consumes whichever approved/legacy identity fields are actually present for each Fish until the 30-Fish migration is complete.
 
 ## Approved Fish production search identity
 
-Version 1 Fish identity search uses:
+Migrated Version 1 Fish identity search uses:
 
 ```text
 name
@@ -492,7 +516,7 @@ Jurisdiction-specific occurrence/regulation facts, recommendation relationships,
 
 # Production Validation Contract
 
-Extend the existing:
+The existing validator is:
 
 ```text
 tools/validate_repository_integrity.js
@@ -503,7 +527,8 @@ Do not create a competing Fish validator.
 As Fish production data lands, deterministic validation must cover, as applicable:
 
 - Fish category IDs/required fields and absence of category `isActive`,
-- Fish exact approved fields and controlled vocabularies,
+- migrated Fish exact approved fields and controlled vocabularies,
+- deliberate temporary legacy-record handling during staged migration,
 - duplicate values inside Fish arrays,
 - rejection of legacy `category` after the migration is complete,
 - rejection of forbidden speculative/duplicate-owner fields,
@@ -514,6 +539,23 @@ As Fish production data lands, deterministic validation must cover, as applicabl
 - staged activation without falsely requiring all 30 Fish active on every intermediate commit.
 
 Final Version 1 closeout separately verifies the complete 30-Fish/20-pair/media/source-evidence target.
+
+---
+
+# Current Production Package Status
+
+Closed Fish production packages:
+
+- Trout Production Package 1 — Rainbow Trout + Brown Trout
+- Gar Production Package — Longnose Gar + Spotted Gar
+- Production Wave 1 — Common Carp + Freshwater Drum + Paddlefish
+- Production Wave 2 — Walleye / Sauger + Catfish
+
+Active package:
+
+- Production Wave 3 — Bass
+
+After Bass, the planned next package is Sunfish & Crappie unless a genuine evidence/media/relationship/product issue requires a smaller boundary.
 
 ---
 
