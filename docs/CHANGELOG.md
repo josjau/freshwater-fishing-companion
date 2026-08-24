@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.1.6  
+**Document Revision:** 2.1.7  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-23
@@ -36,6 +36,7 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 - Kept Compare Similar Fish thumbnails at 84 × 56, vertically centered them against the complete text group, restored two-up desktop behavior, and retained one tile per row on mobile/narrow layouts.
 - Removed redundant `Rigs to Start With` helper copy.
 - Increased external `↗` prominence and replaced thin-font internal `→` rendering with a heavier directional-arrow treatment while preserving internal/external destination semantics.
+- Added compare-specific vertical Fish offsets so dedicated Compare Fish cards can align Fish on a shared anatomical body-axis baseline instead of relying on raw image bounding-box centering.
 
 ### Corrected / Validated
 
@@ -43,7 +44,9 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 - Background-isolation QA verified transparent Fish edges against light, dark, and canonical reference surfaces, with explicit attention to fins/spines, translucent fin edges, catfish barbels, gar snouts/jaws, Paddlefish rostrum, tails, and pale body edges.
 - Wave 2 Review v3 landed in GitHub commit `8399ae0cee0f5c4b9301041c904707430352bbd1` (`Fish - Walleye Sauger Refinement`) as exactly 22 changed files.
 - Desktop/mobile review approved Fish Selection cards, Fish ID image framing, transparency/background treatment, Fish-edge quality, Compare Similar Fish responsive behavior, and the external/internal arrow treatments.
-- Wave 2 remains open for one known Fish-specific visual defect: some Fish on the main Compare Fish page are not visually centered inside the otherwise accepted standardized image blocks. Final screenshot-based correction and desktop/mobile validation remain before Wave 2 closure.
+- Final Compare Fish alignment refinement landed at `d55cf21d7de0099c259de70ad5b113a4d78ea91d` (`Fish - Compare Card Refinement`) and was merged into `main` at `f47ece0d243457d90a8b980855130af043d98a05`.
+- Final desktop/mobile review approved the corrected main Compare Fish page. Post-push verification confirmed the two refinement files match the approved review package, JavaScript syntax passes, CSS structure passes, and no source drift was detected.
+- Fish Guide Production Wave 2 is **CLOSED**.
 
 ## Fish Guide — Production Wave 1: Carp + Drum + Paddlefish
 
