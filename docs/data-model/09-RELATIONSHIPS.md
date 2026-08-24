@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.5.0  
+**Document Revision:** 0.5.1  
 **Document Status:** Approved  
-**Implementation Status:** Mixed — current validated relationships plus approved Fish production relationships  
+**Implementation Status:** Mixed — validated current relationships plus staged Fish production relationships implemented through Wave 2  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, FISH-001–FISH-007  
-**Last Updated:** 2026-08-22
+**Last Updated:** 2026-08-23
 
 ---
 
@@ -13,7 +13,7 @@
 
 This document defines how canonical entities, Decision Knowledge, and User Knowledge relate within Freshwater Fishing Companion.
 
-Relationships use stable identifiers and follow the site's semantic single-owner rule. This document distinguishes relationships already implemented and validated from Fish production relationships approved by the closed Fish Guide Phase 0 but not yet implemented.
+Relationships use stable identifiers and follow the site's semantic single-owner rule. Fish production relationships approved by the closed Fish Guide Phase 0 are now implemented incrementally through staged Fish packages; the registries remain incomplete only because the remaining locked Fish library has not yet finished production migration.
 
 ---
 
@@ -23,11 +23,11 @@ Relationships use stable identifiers and follow the site's semantic single-owner
 
 Curated facts and reusable fishing concepts, including implemented Fish, Rigs, Knots, Tackle, and Media plus approved future domains such as Techniques, Conditions, and a possible separate Lure domain.
 
-Fish pairwise field-identification relationships are approved Reference Knowledge owned by `FISH_IDENTIFICATION_RELATIONSHIPS`.
+Fish pairwise field-identification relationships are Reference Knowledge owned by `FISH_IDENTIFICATION_RELATIONSHIPS`. The registry is implemented and expands with each approved Fish production package.
 
 ## Layer 2 — Decision Knowledge
 
-Guidance derived from Reference Knowledge and context. Current examples include Knot task guidance and Reel & Line Setup guidance. Approved Fish production Decision Knowledge includes curated Fish-to-Rig recommendations owned by `FISH_RIG_GUIDANCE`.
+Guidance derived from Reference Knowledge and context. Current examples include Knot task guidance, Reel & Line Setup guidance, and curated Fish-to-Rig recommendations owned by `FISH_RIG_GUIDANCE`. The Fish guidance registry is implemented and expands through deliberate per-Fish evaluation.
 
 ## Layer 3 — User Knowledge
 
@@ -73,7 +73,7 @@ Rig.variationIds[]
     -> related Rig
 ```
 
-and approved future Fish-to-Rig guidance, which may be absent when no defensible curated recommendation exists.
+and Fish-to-Rig guidance, which may be absent when no defensible curated recommendation exists.
 
 ## Derived Inverse
 
@@ -89,7 +89,7 @@ Derived:
 Tackle -> Used In -> matching active Rigs
 ```
 
-The same principle applies to approved Fish relationships: reverse Fish-to-Fish comparison access derives from one stored identification relationship, and any future Rig-to-Fish presentation derives from Fish-to-Rig guidance.
+The same principle applies to Fish relationships: reverse Fish-to-Fish comparison access derives from one stored identification relationship, and any future Rig-to-Fish presentation derives from Fish-to-Rig guidance.
 
 ## Deferred
 
@@ -126,7 +126,7 @@ The Repository Audit Section 4 Tackle cleanup is **implemented, validated, and c
 
 Multiple Media records may share an owner when a demonstrated feature requires multiple assets. Any role, ordering, or presentation-priority semantics belong to Media or an explicitly justified relationship entity.
 
-For Fish production, approved relationship-owned comparison Media uses:
+For Fish production, relationship-owned comparison Media uses:
 
 ```text
 ownerType: "fish-identification"
@@ -180,9 +180,9 @@ Individual Rig records do not store duplicate Core membership/order fields solel
 
 ---
 
-# Approved Fish Production Relationships — Not Yet Implemented
+# Fish Production Relationships — Implemented / Staged Expansion
 
-Fish Guide Phase 0 is closed and these relationships are approved for production implementation. Their absence from current source is expected until FISH-008/FISH-009 packages land.
+Fish Guide Phase 0 is closed. The approved Fish relationship architecture is implemented. `FISH_IDENTIFICATION_RELATIONSHIPS` and `FISH_RIG_GUIDANCE` now contain validated records for Fish completed through the closed Trout, Gar, Production Wave 1, and Production Wave 2 packages. Remaining locked-library relationships are added only when their Fish production package is authored and validated.
 
 ## Fish Identification / Confusion Relationships
 
@@ -195,7 +195,7 @@ FISH_IDENTIFICATION_RELATIONSHIPS
 
 Knowledge layer: **Reference Knowledge**.
 
-Approved record shape:
+Record shape:
 
 ```text
 id
@@ -267,7 +267,7 @@ Guidance is optional per Fish. A Fish does not require a guidance record merely 
 
 There is **no separate guidance record ID**. `fishId` identifies the record for the canonical Fish.
 
-Approved record shape:
+Record shape:
 
 ```text
 fishId
@@ -326,7 +326,7 @@ Missing guidance does not block Fish activation. Any guidance record that does e
 
 # Fish Media Relationships
 
-Fish-specific Media role/readiness rules are approved for production:
+Fish-specific Media role/readiness rules are implemented for migrated production Fish:
 
 ```text
 ownerType: "fish"
@@ -342,7 +342,7 @@ ownerId: <identification relationship ID>
 role: "comparison"
 ```
 
-Every active Fish must resolve to exactly one active `primary-identification` Media record. Supplemental Fish Media and relationship comparison Media are optional.
+Every production-ready active Fish must resolve to exactly one active `primary-identification` Media record. Supplemental Fish Media and relationship comparison Media are optional.
 
 Runtime ownership derives from `ownerType` / `ownerId` / `role`; do not parse Media IDs or filenames to infer ownership.
 
@@ -356,10 +356,7 @@ Current examples:
 
 - Knot task guidance owns task-first discovery vocabulary and curated task-to-Knot ordering.
 - Reel & Line Setup guidance owns its guided decision paths and references canonical Knot IDs where tying instruction is required.
-
-Approved Fish production example:
-
-- `FISH_RIG_GUIDANCE` owns Fish-to-Rig curated recommendation priority and reason.
+- `FISH_RIG_GUIDANCE` owns Fish-to-Rig curated recommendation priority and reason for Fish whose production packages provide guidance.
 
 These registries do not make their workflow fields part of canonical Knot, Rig, Fish, or Tackle entities.
 
@@ -392,7 +389,7 @@ The following relationship families remain unresolved until their respective arc
 - Product Definition relationships,
 - My Tackle owned-item mappings beyond the approved ownership boundary.
 
-Fish ↔ Rig curated starting guidance is **not** part of this deferred list; its owner/shape is now approved as `FISH_RIG_GUIDANCE` above.
+Fish ↔ Rig curated starting guidance is **not** part of this deferred list; its owner/shape is implemented as `FISH_RIG_GUIDANCE` above.
 
 Search or UI needs do not authorize speculative canonical relationship fields.
 
@@ -443,7 +440,7 @@ For implemented and approved production relationship domains, validate as applic
 - every active Media entity attachment resolves according to the owning domain's lifecycle rules,
 - Fish identification relationship participants/distinctions resolve and obey FISH-001 deterministic pair rules,
 - Fish-to-Rig guidance Fish/Rig references resolve and obey optionality/cardinality/priority/reason rules,
-- every active Fish has exactly one active primary-identification Media relationship,
+- every production-ready migrated Fish has exactly one active primary-identification Media relationship,
 - ordinary production relationship IDs are not used as forward-planning placeholders.
 
 The current production Rig library contains 21 active Rigs, including Split-Shot Bait Rig.
@@ -454,7 +451,9 @@ The current production Rig library contains 21 active Rigs, including Split-Shot
 
 Do not require every approved Fish relationship to be active on every intermediate production commit.
 
-FISH-003 permits staged activation. Each active Fish or dependency-safe group must satisfy the applicable relationship/media/source/readiness contract for that package.
+FISH-003 permits staged activation. Each migrated/additive Fish or dependency-safe group must satisfy the applicable relationship/media/source/readiness contract for that package.
+
+Closed Fish relationship packages currently include Trout, Gar, Production Wave 1, and Production Wave 2. Production Wave 3 — Bass is the active package.
 
 Final Fish Version 1 completion separately requires:
 
@@ -487,7 +486,7 @@ Do not create a competing Fish/relationship validator.
 Relationship validation should verify, where applicable:
 
 - referenced IDs exist and are of the expected type,
-- required relationships are present,
+- required relationships are present for completed production packages,
 - every stored canonical relationship has an identifiable semantic owner,
 - inverse storage is not duplicated merely for UI, search, reporting, or convenience,
 - any derived cache/index can be regenerated from its canonical owner,
