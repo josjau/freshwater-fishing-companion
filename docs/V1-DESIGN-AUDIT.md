@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Version 1 Design Audit
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.0.1  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-08-22
+**Last Updated:** 2026-08-23
 
 # Purpose
 
@@ -31,7 +31,7 @@ Design target:
 
 # Fish Guide Baseline — Validated
 
-Fish Guide Production Wave 1 was user-approved after mobile validation. These Fish-specific results are established working standards unless the later site-wide audit demonstrates a cross-domain reason to normalize presentation without changing Fish semantic content.
+Fish Guide Production Wave 1 was user-approved after mobile validation. Wave 2 review has additionally validated several Fish presentation refinements. These Fish-specific results are established working standards unless the later site-wide audit demonstrates a cross-domain reason to normalize presentation without changing Fish semantic content.
 
 - Common Carp, Freshwater Drum, and Paddlefish selection-card image framing is approved.
 - Fish identity separates identity metadata from identification instruction: the identity area presents image/name/scientific name/family/aliases, while the Fish summary leads **How to Identify It** with detailed traits following.
@@ -39,9 +39,12 @@ Fish Guide Production Wave 1 was user-approved after mobile validation. These Fi
 - Safety uses a deliberate semantic warning treatment rather than ordinary information-card emphasis.
 - **Compare Similar Fish** uses the approved workflow/action-card emphasis.
 - Workflow/action cards should use a standardized workflow visual language; the final audit must identify every qualifying site-wide card before expanding that treatment.
-- Per-Fish presentation framing may adjust whitespace-heavy artwork without altering canonical media files; natural proportions and diagnostic extremities remain protected.
+- Per-Fish presentation framing may adjust whitespace-heavy artwork without altering canonical media/source identity; natural proportions and diagnostic extremities remain protected.
+- Wave 2 establishes the current Fish reference-surface treatment: eligible isolated/transparent Fish display over the exact `#f4f0e8` reference-media surface.
+- Wave 2 Selection and Fish Detail image blocks use standardized presentation geometry with independent per-Fish fit tuning rather than species-specific frame dimensions.
+- Compare Similar Fish keeps its 84 × 56 thumbnail size. Desktop may use two choices side-by-side; actual mobile review validated one comparison tile per row as the preferred narrow-screen treatment.
 
-Fish semantic/content validation is closed for the completed Fish. The final design audit may reconcile shared visual grammar, but it must not silently reopen approved Fish facts, media provenance, relationships, or guidance.
+Fish semantic/content validation is closed for completed Fish. Production Wave 2 remains open only for its known main Compare Fish page centering defect and final validation. The final design audit may reconcile shared visual grammar, but it must not silently reopen approved Fish facts, media provenance, relationships, or guidance.
 
 # Audit Method
 
@@ -92,24 +95,28 @@ The findings below are intentionally preserved for the final audit. Unless marke
 - Related-component navigation must allow movement inside the existing contextual-information flow and provide a Back path to the prior component; users should not have to close the popover to recover context.
 - `Used In` and `Related Components` should have a shared, stronger subsection-heading treatment and a subtle divider that identifies the **group**.
 - Individual linked items inside a group should not each receive their own divider.
-- Compact text-link trial: left-align the destination label and place the internal-navigation icon immediately after the label, for example `Fixed Bobber Rig →`; do not right-align the arrow at the far edge of the row.
+- Compact text-link trial: left-align the destination label and place the internal-navigation icon immediately after the label; do not right-align the arrow at the far edge of the row.
 - Pill/chip comparison: use one representative Rig/component popover to compare pill/chip relationship links against compact text links on an actual mobile device. The user prefers the visual appearance of pills but does not want their space cost assumed acceptable without the comparison.
 - Slight popover typography/spacing reduction may be tested, but readability and touch interaction take precedence.
 - Instructional copy for component help must point to the actual `ⓘ` control rather than telling the user to select the item name.
 
 ## 3. Link Language and Semantics
 
-**Status:** STANDARDIZATION REQUIRED
+**Status:** ARROW SEMANTICS APPROVED / BROADER STANDARDIZATION REQUIRED
 
 The application needs one recognizable cross-domain link grammar.
 
-Approved direction to validate and formalize:
+Wave 2 desktop/mobile review validates these directional-icon semantics:
+
+- External destinations use `↗`.
+- Internal directional navigation uses `→` when an arrow cue is appropriate.
+- The icon stays immediately adjacent to the destination text rather than being detached at the far edge of the row.
+- Directional arrows must have enough visual size/weight to remain legible beside bold destination text; a CSS-drawn internal arrow is acceptable when the font glyph is visually too thin.
+
+The remaining audit work is to formalize the broader visual grammar:
 
 - Internal knowledge/navigation links use one consistent internal color family/treatment.
 - External links use a visually distinct external color/treatment.
-- External destinations retain the established `↗` meaning.
-- Internal-navigation iconography should immediately follow the destination text, with `→` as the current trial direction.
-- Do not place link iconography at the far right merely to fill a row.
 - Link **semantics** must remain recognizable even when the space-appropriate visual shape differs.
 
 The audit must deliberately decide where each of these shapes belongs:

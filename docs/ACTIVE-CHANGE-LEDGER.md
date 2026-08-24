@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.0.14  
+**Document Revision:** 1.0.15  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `be8b2164f62770ef30a4a3cac8238aa5f4f004f7`  
-**Last Updated:** 2026-08-22
+**Reconciliation Baseline:** `8399ae0cee0f5c4b9301041c904707430352bbd1`  
+**Last Updated:** 2026-08-23
 
 # Purpose
 
@@ -48,16 +48,16 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 
 # Fish Guide — Production
 
-Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical items and are no longer active ledger entries. Trout Production Package 1, Gar Production Package, and Production Wave 1 (Common Carp + Freshwater Drum + Paddlefish) are closed. Current Fish work is production implementation of the approved architecture/UX across the remaining locked library.
+Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical items and are no longer active ledger entries. Trout Production Package 1, Gar Production Package, and Production Wave 1 (Common Carp + Freshwater Drum + Paddlefish) are closed. Production Wave 2 source has landed but remains open for final Fish-specific review/validation.
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture — remaining library | D057–D061 + `data-model/02-FISH.md` + `data-model/09-RELATIONSHIPS.md` + `FISH_REFERENCE_SOURCES.md` | Continue with Production Wave 2: Walleye / Sauger + Catfish. Use evidence-supported target-schema migration, verified primary media, deliberate Fish-to-Rig evaluation, staged readiness, and required pairwise identification relationships. After that wave, proceed with Bass, then Sunfish & Crappie unless a genuine evidence/media/relationship/product decision requires a smaller boundary. |
-| FISH-009 | APPROVED / PENDING IMPLEMENTATION | Locked Fish UX — remaining library | Fish Phase 0 archive + D051/D061 + validated Trout/Gar/Wave 1 presentation | Reuse the validated Fish presentation baseline: identity metadata separated from How to Identify It; plain-border information sections; semantic Safety treatment; workflow treatment for Compare Similar Fish; per-Fish framing only where demonstrated necessary; Specialized Targeting only where justified. Do not fold deferred Rig/Knot/site-wide audit work into Fish production. |
+| FISH-008 | IMPLEMENTED / PENDING VALIDATION | Locked Fish production architecture — Wave 2 landed; remaining library still pending | D057–D061 + `data-model/02-FISH.md` + `data-model/09-RELATIONSHIPS.md` + `FISH_REFERENCE_SOURCES.md` | Wave 2 source is landed at `8399ae0cee0f5c4b9301041c904707430352bbd1`. Complete the remaining main Compare Fish visual-centering review and required desktop/mobile validation before Wave 2 closure. After closure, continue with Bass, then Sunfish & Crappie unless a genuine evidence/media/relationship/product decision requires a smaller boundary. |
+| FISH-009 | IMPLEMENTED / PENDING VALIDATION | Locked Fish UX — Wave 2 landed; remaining library still pending | Fish Phase 0 archive + D051/D061 + validated Trout/Gar/Wave 1/Wave 2 presentation | Preserve the approved Wave 2 presentation: standardized Selection/Fish ID framing, transparent eligible Fish over `#f4f0e8`, responsive Compare Similar Fish behavior, and approved link-arrow treatments. Resolve only the remaining main Compare Fish per-Fish centering issue after screenshot review/discussion; then validate on desktop and actual mobile before closure. |
 | FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish. |
 | FISH-011 | DEFERRED / NOT AUTOMATIC IMPLEMENTATION | Deferred Fish candidates outside V1 | Future explicit scope/evidence | Do not treat excluded candidates as unfinished V1 work. |
 
-**Current staged checkpoint:** Trout Production Package 1 is CLOSED at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431`. Gar Production Package is CLOSED at source commit `cc7840c6ae96bc488e3f443be7e6e5f737508e38`. Fish Guide Production Wave 1 — Common Carp + Freshwater Drum + Paddlefish — is CLOSED at source commit `be8b2164f62770ef30a4a3cac8238aa5f4f004f7` after approved Review 5 package fidelity checks, static validation, and user-confirmed mobile Fish validation. Cross-domain Rig/Knot/link/detail findings from that mobile review are preserved under UX-009 / `V1-DESIGN-AUDIT.md` and do not keep the Fish wave open. The next production wave is Walleye/Sauger + Catfish; after that, Bass, then Sunfish & Crappie.
+**Current staged checkpoint:** Production Wave 2 landed at `8399ae0cee0f5c4b9301041c904707430352bbd1` (`Fish - Walleye Sauger Refinement`) as one 22-file commit. The landed Wave 2 state contains 22 active Fish, 9 total Fish-identification relationships, 12 total Fish-to-Rig guidance records, and 15 active primary Fish media records. Desktop/mobile review approved Selection cards, Fish ID images, transparent Fish/background treatment, Fish-edge preservation, Compare Similar Fish desktop/mobile responsive behavior, and external/internal arrow treatments. The remaining Wave 2 blocker is the main Compare Fish page: some Fish are not visually centered inside the otherwise accepted standardized image blocks. User screenshots are required on resume; discuss before implementation. Wave 2 is **not closed**.
 
 # Named Future Architecture / Product Gates
 
