@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.2.8  
+**Document Revision:** 2.2.9  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-23
@@ -50,24 +50,22 @@ For a new project session:
 
 # Current Product Milestone
 
-**Fish Guide — Production Wave 2: Walleye / Sauger + Catfish — IMPLEMENTED / REVIEW OPEN**
+**Fish Guide — Production Wave 3: Bass — STARTED**
 
 Repository Audit Cleanup and Fish Guide Phase 0 are closed. Trout Production Package 1 is **CLOSED** at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` (`Fish - Search Fix`) after GitHub verification, static validation, and user-confirmed fresh-session live validation. The broader prepared Hotfix 2 was not applied and remains superseded unless a fresh-load regression later proves it necessary.
 
-Gar Production Package is also **CLOSED**. Longnose Gar + Spotted Gar landed at `cc7840c6ae96bc488e3f443be7e6e5f737508e38` (`Fish - Gar Final`) with their deterministic comparison relationship, verified USFWS Duane Raver primary-identification media, approved evidence/search content, no Fish-to-Rig guidance, production-copy cleanup, reusable subject-centered Fish image framing, and Specialized Targeting with external research topics. Post-push package fidelity and deterministic validation passed, and the user confirmed the deployed Gar/Trout review PASS.
+Gar Production Package is **CLOSED** at `cc7840c6ae96bc488e3f443be7e6e5f737508e38` (`Fish - Gar Final`) with Longnose Gar + Spotted Gar, their deterministic comparison relationship, verified USFWS Duane Raver primary-identification media, approved evidence/search content, no Fish-to-Rig guidance, production-copy cleanup, reusable subject-centered Fish image framing, and Specialized Targeting with external research topics.
 
-Fish Guide Production Wave 1 — **Common Carp + Freshwater Drum + Paddlefish** — is **CLOSED** at source commit `be8b2164f62770ef30a4a3cac8238aa5f4f004f7` (`Fish - UX tweaks - Visibility fixes`). The pushed GitHub blobs match the approved Review 5 package for all Wave 1 package files. User mobile-device validation approved Common Carp, Freshwater Drum, and Paddlefish image framing; Fish identity/identification separation; plain-border Fish information sections; semantic Safety treatment; and the standardized workflow treatment used by Compare Similar Fish. The same mobile review exposed cross-domain Rig/Knot/link/detail-page design inconsistencies that are intentionally deferred to the required final Version 1 design audit rather than reopening the validated Fish content. Those findings are owned by `docs/V1-DESIGN-AUDIT.md` and the Active Change Ledger.
+Fish Guide Production Wave 1 — **Common Carp + Freshwater Drum + Paddlefish** — is **CLOSED** at source commit `be8b2164f62770ef30a4a3cac8238aa5f4f004f7` (`Fish - UX tweaks - Visibility fixes`) after package fidelity checks, static validation, and user-confirmed mobile Fish validation.
 
-Production Wave 2 source landed at `8399ae0cee0f5c4b9301041c904707430352bbd1` (`Fish - Walleye Sauger Refinement`). The commit is one commit ahead of the Wave 1 documentation baseline and changes exactly 22 repository files. It migrates/adds Walleye, Sauger, Saugeye, Channel Catfish, Blue Catfish, Flathead Catfish, Black Bullhead, and Yellow Bullhead; adds seven Fish-identification relationships and eight Fish-to-Rig guidance records; updates Fish evidence/media; and lands the reviewed Fish image/background/framing and navigation-arrow presentation work.
-
-Desktop/mobile review of the landed Wave 2 state approved the Fish Selection cards, Fish ID image framing, isolated transparent Fish over the canonical `#f4f0e8` reference surface, Fish-edge/anatomy preservation, the external `↗` and internal `→` navigation treatments, and Compare Similar Fish behavior with two-up desktop layout and one tile per row on mobile. **Wave 2 is not closed.** The remaining known Fish-specific defect is visual centering on the main Compare Fish page: standardized image blocks are acceptable, but some Fish appear off-kilter inside those blocks. The user will provide screenshots on resume. Do not tune those positions until the screenshots are reviewed and the corrections are discussed/approved.
+Fish Guide Production Wave 2 — **Walleye / Sauger + Catfish** — is **CLOSED**. The primary Wave 2 source landed at `8399ae0cee0f5c4b9301041c904707430352bbd1` (`Fish - Walleye Sauger Refinement`). The final Compare Fish anatomical body-axis alignment refinement landed at `d55cf21d7de0099c259de70ad5b113a4d78ea91d` (`Fish - Compare Card Refinement`) and was merged into `main` at `f47ece0d243457d90a8b980855130af043d98a05`. Final desktop/mobile review approved the corrected main Compare Fish presentation. Post-push verification confirmed the refinement files match the approved review package, JavaScript syntax passes, CSS structure passes, and no source drift was detected.
 
 FISH-001 through FISH-007 are terminal Phase 0 history. The active Fish work remains:
 
 - **FISH-008 — approved Fish production architecture implementation across the remaining locked library**
 - **FISH-009 — approved Fish UX implementation across the remaining locked library**
 
-Current work remains **Production Wave 2** until the main Compare Fish centering defect is resolved and the required desktop/mobile validation passes. After Wave 2 closes, continue with Bass, then Sunfish & Crappie, unless evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
+Current work is **Production Wave 3 — Bass**. After Bass closes, continue with Sunfish & Crappie unless evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
 
 # Fish Production Contract
 
@@ -89,7 +87,7 @@ Historical OPEN/PENDING wording inside those archived records reflects the state
 
 ## Established Fish Detail Pattern
 
-The validated Trout, Gar, Wave 1, and approved portions of Wave 2 establish the working Fish presentation baseline for remaining Fish production:
+The validated Trout, Gar, Wave 1, and Wave 2 implementations establish the working Fish presentation baseline for remaining Fish production:
 
 - Fish selection cards mirror the Fish identity/detail hierarchy.
 - Fish identity presents Category/Name, primary identification image, scientific name, family, and aliases when present; descriptive identification summary belongs in **How to Identify It** rather than being repeated in the identity card.
@@ -98,6 +96,7 @@ The validated Trout, Gar, Wave 1, and approved portions of Wave 2 establish the 
 - Eligible Fish identification assets may be isolated to transparency and displayed over the exact canonical reference-media surface `#f4f0e8`; background removal is limited to non-Fish pixels and must not alter Fish color, anatomy, markings, proportions, fin rays, barbels, snouts, tails, or other diagnostic detail.
 - Compare Similar Fish follows the identity card and keeps the existing 84 × 56 thumbnail. At normal desktop widths it may use up to two choices side-by-side; on mobile/narrow layouts it uses one comparison tile per row. The thumbnail remains vertically centered against the full text group.
 - **Compare Similar Fish** is an approved workflow/action card and uses the standardized workflow visual treatment rather than ordinary browse-card treatment.
+- Dedicated Compare Fish uses standardized image blocks with per-Fish scale/position tuning. Fish pairs are visually aligned by a shared anatomical body-axis baseline rather than raw image bounding-box centering; compare-specific tuning must preserve natural proportions and complete diagnostic anatomy.
 - How to Identify It owns the Fish summary plus detailed identification traits.
 - Normal Fish information sections use the approved plain/basic-border treatment.
 - Safety uses a deliberate semantic warning treatment rather than ordinary information-card emphasis.
@@ -130,9 +129,9 @@ The audit was created from findings observed during actual mobile validation of 
 - unnecessary empty relationship copy,
 - overall mobile density and space utilization.
 
-Wave 2 review validated the directional icon convention itself: external destinations retain `↗`; internal destinations that use a directional arrow use `→`, positioned with the destination text and rendered with sufficient visual weight. The final audit still owns broader cross-domain color-family, pill-versus-text, and shape-selection normalization.
+Wave 2 validated the directional icon convention itself: external destinations retain `↗`; internal destinations that use a directional arrow use `→`, positioned with the destination text and rendered with sufficient visual weight. The final audit still owns broader cross-domain color-family, pill-versus-text, and shape-selection normalization.
 
-This final design audit is a **required Version 1 completion gate**, but it is not a blocker for continuing Fish production after the current Wave 2 defect closes.
+The final design audit is a **required Version 1 completion gate**, but it is not a blocker for continuing Fish production.
 
 # Repository Integrity Baseline
 
@@ -156,15 +155,15 @@ The existing repository-integrity validator remains the single deterministic val
 
 # Exact Resume Point
 
-1. Read the Google Drive Working State and re-fetch authoritative GitHub `main`. The verified landed Wave 2 source checkpoint is `8399ae0cee0f5c4b9301041c904707430352bbd1`; expect a documentation-only closeout commit immediately after it unless newer verified work exists.
-2. Treat Trout Production Package 1, Gar Production Package, and Fish Guide Production Wave 1 (Common Carp + Freshwater Drum + Paddlefish) as CLOSED. Do not reopen their approved content/media/presentation without new evidence or a confirmed regression.
-3. Treat **Production Wave 2: Walleye / Sauger + Catfish** as **IMPLEMENTED / REVIEW OPEN**, not closed. Do not repeat its completed evidence/media/content authoring unless a new defect or explicit scope change requires it.
-4. Resume from the user's screenshots of the **main Compare Fish page**. Discuss the observed per-Fish centering problems before changing source. Questions/change suggestions remain discussion-only until the user explicitly authorizes implementation.
-5. If centering corrections are approved, re-fetch the exact current `view-renderer.js` / `forest-journal.css` baseline and make only the necessary compare-page presentation adjustments. Preserve approved Selection, Fish ID, transparency/background, Compare Similar Fish responsive behavior, and arrow treatments.
-6. Re-run deterministic/static checks and perform both desktop and actual-mobile validation. Mobile review is part of the Fish acceptance gate; desktop-only approval is insufficient.
-7. Do not close Wave 2 until the user confirms the main Compare Fish page and the remaining Wave 2 review surface PASS. After final PASS, automatically reconcile closure documentation and advance to Bass, then Sunfish & Crappie unless a real evidence/media/relationship/product decision requires a smaller boundary.
-8. Keep `UX-009` / `docs/V1-DESIGN-AUDIT.md` visible as a required final Version 1 design-completion gate. During active builds, append newly discovered cross-domain design inconsistencies to that audit rather than allowing them to disappear into chat history.
-9. Keep UX-002 visible as **APPROVED / PENDING IMPLEMENTATION** for still-affected Rig/Knot scoped helpers; Fish helper examples must remain beginner-useful and mechanically valid for their exact active scope.
+1. Read the Google Drive Working State and re-fetch authoritative GitHub `main` before any Wave 3 source edit.
+2. Treat Trout Production Package 1, Gar Production Package, Fish Guide Production Wave 1, and Fish Guide Production Wave 2 as **CLOSED**. Do not reopen their approved content/media/presentation without new evidence or a confirmed regression.
+3. Resume **Production Wave 3 — Bass** from the current GitHub Fish registry and governing Fish documents. Identify the exact Bass records already present, any missing approved Bass candidates, and the migration/additive package boundary.
+4. Verify Four-State inclusion and evidence for each proposed Bass Fish; define taxonomy, identification traits, aliases, habitat/waterbody tags, required pairwise identification relationships, primary-identification media/provenance, and Fish-to-Rig guidance before implementation.
+5. Reuse the validated Wave 2 Fish presentation/media standards. Do not create a new Bass-specific UX unless a demonstrated Bass requirement cannot fit the existing pattern.
+6. Questions, semantic/content/source changes, and package-boundary changes remain discussion-first. Mechanical implementation of already approved architecture may proceed only after the exact Wave 3 package scope is settled.
+7. Run deterministic/static validation and require both desktop and actual-mobile review before Wave 3 closure.
+8. Keep `UX-009` / `docs/V1-DESIGN-AUDIT.md` visible as a required final Version 1 design-completion gate; append cross-domain design findings there instead of resolving them opportunistically during Fish production.
+9. Keep UX-002 visible as **APPROVED / PENDING IMPLEMENTATION** for still-affected Rig/Knot scoped helpers.
 
 # Non-Negotiable Working Rules
 
