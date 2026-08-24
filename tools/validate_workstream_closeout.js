@@ -11,10 +11,7 @@ function arg(name, fallback = "") {
 const repoRoot = path.resolve(__dirname, "..");
 const workstream = arg("workstream");
 const activePath = arg("active-path");
-const aliases = arg("aliases", workstream)
-  .split(",")
-  .map((v) => v.trim())
-  .filter(Boolean);
+const aliases = arg("aliases", workstream).split(",").map((v) => v.trim()).filter(Boolean);
 
 if (!workstream) {
   console.error("Usage: node tools/validate_workstream_closeout.js --workstream \"Wave 3\" [--aliases \"Wave 3,Bass\"] [--active-path docs/workstreams/FISH-WAVE-3-BASS.md]");
@@ -32,6 +29,7 @@ const stalePatterns = [
   /post-push.*remain/i,
   /after\s+.*\s+closes/i,
   /current\s+local\s+review\s+package/i,
+  /local\s+.*review\s+set/i,
 ];
 
 function walk(dir) {
@@ -45,6 +43,11 @@ function walk(dir) {
   return out;
 }
 
+function hasAlias(text) {
+  const lower = text.toLowerCase();
+  return aliases.some((a) => a && lower.includes(a.toLowerCase()));
+}
+
 const failures = [];
 if (activePath && fs.existsSync(path.join(repoRoot, activePath))) {
   failures.push(`${activePath}: closing workstream still exists at active path`);
@@ -53,10 +56,12 @@ if (activePath && fs.existsSync(path.join(repoRoot, activePath))) {
 for (const file of walk(repoRoot)) {
   const rel = path.relative(repoRoot, file).replace(/\\/g, "/");
   const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
+  let sectionHeading = "";
   lines.forEach((line, idx) => {
-    if (!aliases.some((a) => a && line.toLowerCase().includes(a.toLowerCase()))) return;
+    if (/^#{1,3}\s+/.test(line)) sectionHeading = line;
+    if (!stalePatterns.some((p) => p.test(line))) return;
     if (/\b(no|not)\b.*\b(uncommitted|pending|active)\b/i.test(line)) return;
-    if (stalePatterns.some((p) => p.test(line))) failures.push(`${rel}:${idx + 1}: ${line.trim()}`);
+    if (hasAlias(line) || hasAlias(sectionHeading)) failures.push(`${rel}:${idx + 1}: ${line.trim()}`);
   });
 }
 
