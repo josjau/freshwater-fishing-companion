@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.3.0  
+**Document Revision:** 1.4.0  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-24
 
@@ -45,7 +45,19 @@ Local browser validation uses a localhost development server. `file://` is not t
 
 ## Workflow-transition authority
 
-Until the repository-backed workflow is verified on both computers and a fresh chat successfully recovers from local repository documentation alone, the Google Working State remains authoritative for any migration delta not yet reconciled into GitHub. During the explicitly designated recovery test, the fresh chat must first recover and report state from repository documentation without consulting Google; external comparison may occur only after the test result is established. Do not retire/freeze Google as the active continuity source or resume Fish work before explicit transition closure.
+The repository-workflow transition is closed. GitHub `main` and current repository documentation are sufficient to recover current state, exact resume, durable decisions, non-closed items, implementation/validation status, evidence/provenance, and next actions. The former Google Working State is retired as an active continuity source and may be consulted only as historical migration evidence; it never overrides current repository authority.
+
+## Receiving-computer onboarding
+
+An unavailable second computer does not pause work on a verified active checkout. Before any new or previously unverified computer becomes the write-authorized workspace:
+
+1. Fetch/pull the expected GitHub `main` checkpoint.
+2. Confirm a clean working tree and matching local `HEAD`/`origin/main`.
+3. Start a fresh task rooted at that checkout.
+4. Recover and report the authority model, current workstream, material open gates, and exact resume point from repository documentation alone.
+5. Resolve any mismatch before substantive writes.
+
+This is a receiving-device safety gate, not a project-wide milestone blocker.
 
 # Repository Handoff
 
@@ -585,6 +597,23 @@ Before editing, reconcile:
 Do not edit the same file again immediately for a foreseeable issue.
 
 A follow-up edit is justified when testing finds a defect, GitHub changed, requirements changed, or new verified evidence requires correction.
+
+# Affected-File Audit / Fix Cycle
+
+When a file or tightly coupled functional domain is deliberately opened for an approved change, also review already-approved pending items that affect that same file or behavior.
+
+For each such item, explicitly classify it as:
+
+- implement in the coherent change,
+- defer to its named gate,
+- park with a meaningful trigger,
+- reject/supersede with the reason preserved.
+
+Include an already-approved item in the current change only when it is compatible with the authorized scope, shares the affected implementation surface, and can be validated coherently. Validate both the individual change and the integrated behavior.
+
+Newly discovered semantics, product decisions, schema changes, or scope expansions do not become authorized merely because the file is open. Record the finding and obtain the necessary decision or write authorization before implementation.
+
+Permanent principle: **use deliberate file openings to reconcile known compatible work without turning them into permission for opportunistic scope expansion.**
 
 # Repository Integrity and Drift Prevention Standard
 

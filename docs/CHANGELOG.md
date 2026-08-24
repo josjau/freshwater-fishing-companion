@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.2.0  
+**Document Revision:** 2.3.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-24
@@ -18,28 +18,37 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 
 # Unreleased
 
-## Local Repository Workflow Transition — First-Computer Checkpoint
+## Local Repository Workflow Transition — Closed
 
 ### Added
 
 - Added `docs/WORKING_STATE.md` as the live local current-state and exact-resume record.
 - Added root `AGENTS.md` with concise repository startup, authority, change-control, and closeout instructions for Codex.
 - Added D062 for the approved local repository Work/Codex operating model.
-- Added WF-001 to keep the transition visible until cross-computer and fresh-chat recovery validation passes.
+- Added `docs/workstreams/FISH-WAVE-3-BASS.md` as the complete locked six-Fish package, evidence/media, rights, implementation-boundary, and resume owner.
+- Added D063 for the foundational Dashboard/Tackle knowledge-hub boundary, D064 for the required future Repository Disaster Recovery / Reconstruction gate, and D065 for deferred Slip Bobber alternate-terminal modeling.
+- Added the affected-file audit/fix cycle and Fish original-acquisition/verification gate to their permanent workflow/media owners.
 
 ### Changed
 
 - Made direct edits in a verified local GitHub Desktop checkout the normal workflow, with the complete local diff as the review surface and ZIP delivery retained only as an exceptional fallback.
 - Defined GitHub `origin/main` as the cross-computer synchronization point and prohibited transferring required state through uncommitted files.
-- Established one coherent chat per workstream and one write-authorized chat per checkout at a time.
-- Reconciled Handoff, workflow, architecture, style, Fish implementation-status annotations, and the Version 1 design-audit Wave 2 closure state.
+- Established one coherent task per workstream and one write-authorized task per checkout at a time.
+- Reconciled every valid current decision, implementation state, open gate, source/media selection, rights caveat, and exact resume instruction from the migration record into the appropriate repository owner.
+- Closed WF-001 and removed it from the active ledger. A second computer now has a receiving-device onboarding check rather than being a project-wide blocker.
+- Retired the former Google Working State as an active continuity source while preserving it as historical migration evidence.
 
 ### Validation Status
 
-- The first-computer repository continuity checkpoint is implemented in this documentation change and passed local integrity validation before commit.
-- The existing repository-integrity validator passes all 8 validation groups; documentation preservation review found no unrelated heading/content loss.
-- Transition closure remains pending second-computer clean-checkout verification and a fresh-chat repository-documentation-only recovery test.
-- Fish work remains paused until explicit transition closure.
+- Repository documentation now recovers the authority model, current status, material open gates, exact Wave 3 scope, media provenance/rights state, and exact resume point without chat history or Google.
+- The transition closeout passed repository integrity, complete-diff, stale-reference, and GitHub post-push verification before the former Google Working State was marked retired.
+- Wave 3 Bass is ready for a separate task; production Fish source/media implementation remains not started and requires scope-specific authorization.
+
+## Local Repository Workflow Transition — First-Computer Checkpoint
+
+- The initial repository continuity package landed at `0051c60741137c80087fc1276f495e9e37c497b7` (`Transition to repository-backed workflow`).
+- That checkpoint added Working State, root agent instructions, D062, direct-local workflow rules, and the original WF-001 validation gate.
+- The later transition-closeout entry above supersedes its temporary second-computer/project-blocking and Google-active-authority state while preserving the checkpoint as landed history.
 
 ## Fish Guide — Production Wave 2: Walleye / Sauger + Catfish
 

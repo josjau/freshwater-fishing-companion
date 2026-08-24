@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.5.0  
+**Document Revision:** 0.6.0  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-24
 
@@ -75,6 +75,9 @@ This document records long-term architectural decisions.
 | D060 | Northern Rock Bass Identity and Shared Aliases | Approved |
 | D061 | Hierarchical Scoped Search | Approved |
 | D062 | Local Repository Work/Codex Operating Model | Approved |
+| D063 | Dashboard Knowledge Hubs and Tackle Capability Boundary | Approved |
+| D064 | Repository Disaster Recovery / Reconstruction Gate | Approved |
+| D065 | Slip Bobber Alternate-Terminal Modeling Gate | Approved |
 
 # D001 – Local-First Architecture
 
@@ -915,7 +918,7 @@ This Four-State direction is also the Companion's forward regional content focus
 
 **Reason:** The region reflects the user's near-term fishing focus and has substantial freshwater species/method overlap with the earlier Northeast Oklahoma / Southwest Kansas scope, making progressive reconciliation more accurate and lower-risk than project-wide invalidation.
 
-**Current implementation status:** Approved and active. Fish Guide Phase 0 is closed; Trout, Gar, Production Wave 1, and Production Wave 2 have implemented the Four-State production direction. Wave 3 Bass is the next Fish package but is paused by the workflow transition.
+**Current implementation status:** Approved and active. Fish Guide Phase 0 is closed; Trout, Gar, Production Wave 1, and Production Wave 2 have implemented the Four-State production direction. Wave 3 Bass is the next approved package; its locked workstream is ready for a separate task and production implementation has not started.
 
 **Future trigger:** apply Four-State adequacy as each domain is audited or materially modified. Significant rewiring requires explicit discussion before implementation.
 
@@ -1056,8 +1059,60 @@ Use a localhost development server for normal local browser validation. ZIP deli
 
 **Reason:** Direct local access removes cloud-chat/ZIP transfer friction, makes GitHub Desktop's complete diff the review surface, and allows project continuity to live with the repository. The one-writer and explicit handoff rules prevent competing uncommitted state and false cross-computer assumptions.
 
-**Current implementation status:** Approved and implemented on the first computer through the documentation checkpoint containing this decision. Transition closure remains pending verification that the checkpoint is on GitHub `main`, second-computer pull/clean-state verification, and a fresh-chat repository-documentation-only recovery test. Fish work remains paused until explicit transition closure.
+**Current implementation status:** Approved, implemented, and transition-closed. GitHub/repository documentation is the complete active continuity system. The former Google Working State is retired as an active source. A second computer remains subject to receiving-device pull/clean-state/recovery onboarding before it becomes write-authorized, but its availability does not block work on a verified checkout.
 
 **Future trigger:** Revisit the branch model, concurrency controls, or local server tooling only when an actual collaboration, preview, deployment, or PWA requirement demonstrates the need.
 
-**Canonical owners:** D062 owns the durable operating decision. `DEVELOPMENT_WORKFLOW.md` owns procedure; `WORKING_STATE.md` owns live state/resume; `HANDOFF.md` owns compact recovery; `ACTIVE-CHANGE-LEDGER.md` owns the non-closed transition item.
+**Canonical owners:** D062 owns the durable operating decision. `DEVELOPMENT_WORKFLOW.md` owns procedure; `WORKING_STATE.md` owns live state/resume; `HANDOFF.md` owns compact recovery. The closed transition remains in Changelog and Git history rather than the active ledger.
+
+# D063 – Dashboard Knowledge Hubs and Tackle Capability Boundary
+
+**Decision:** The Dashboard exposes four foundational knowledge domains: Fish Guide, Knots, Rig Guide, and Tackle. Each is a connected-knowledge hub rather than an isolated page. Tackle is the root capability/domain and must keep two distinct meanings visible:
+
+- **Tackle Reference / Find Tackle** — canonical equipment/consumable knowledge and recognition.
+- **My Tackle** — user-owned inventory and readiness state.
+
+The Tackle root may route into both capabilities, but it must not merge reference facts and user-owned state into one ambiguous source of truth. Rig detail derives readiness from Rig requirements plus My Tackle ownership under D020/D028; it does not create a separate competing Tackle authority.
+
+**Reason:** Beginners need stable domain entry points and fast movement through connected knowledge. Treating Tackle as both a foundational hub and a boundary between reference knowledge and user knowledge preserves navigation clarity while preventing duplicate ownership/readiness models.
+
+**Current implementation status:** The four foundational Dashboard domains and Tackle root behavior are current. Tackle Reference exists in its current scope. The full My Tackle capability remains Approved / Not Implemented under D028, the Settings/User Data gate, and the Roadmap.
+
+**Future trigger:** Revalidate the Tackle root routing and labels when the full Tackle Reference milestone or My Tackle is implemented; do not collapse the two capabilities for convenience.
+
+**Canonical owners:** D063 owns the durable product/knowledge boundary. D020/D028 own readiness and My Tackle authority; `ARCHITECTURE.md` owns the knowledge layers; `ROADMAP.md` owns implementation order.
+
+# D064 – Repository Disaster Recovery / Reconstruction Gate
+
+**Decision:** Before a major Version 1 release, or earlier if the repository begins to contain irreplaceable User Knowledge or other non-reconstructible artifacts, the project must implement and validate an independent repository disaster-recovery/reconstruction plan beyond the active working checkout.
+
+The gate must define:
+
+- recovery coverage for source, documentation, media, workflows/configuration, and intentionally retained archive evidence,
+- which artifacts are irreplaceable versus reproducible,
+- at least one independent mirror/export/backup path beyond the active checkout,
+- restoration and reconstruction procedure,
+- integrity and completeness validation after restoration,
+- recovery-point/retention expectations and the responsible maintenance cadence.
+
+**Reason:** Git history and a synchronized remote reduce ordinary device-loss risk, but they do not by themselves prove recovery from account loss, repository deletion/corruption, media loss, or future irreplaceable local user artifacts. Designing this only after such artifacts exist would accept avoidable loss risk.
+
+**Current implementation status:** Approved / Deferred to named gate. The current repository and GitHub remote support ordinary source continuity, but the independent disaster-recovery/reconstruction plan has not been designed or validated. This is not a current Fish production blocker.
+
+**Future trigger:** Complete before major Version 1 release or before irreplaceable User Knowledge enters scope, whichever occurs first.
+
+**Canonical owners:** D064 owns the durable requirement. `ROADMAP.md` owns its release ordering and `ACTIVE-CHANGE-LEDGER.md` keeps GATE-012 visible until implementation/validation closes.
+
+# D065 – Slip Bobber Alternate-Terminal Modeling Gate
+
+**Decision:** The current canonical Slip Bobber Rig remains the hook-plus-live/natural-bait setup represented by its existing `componentRequirements[]` and assembly. A jig presentation is a legitimate alternate terminal configuration, but it must not be represented by casually relabeling canonical `bait`, adding an ad hoc optional jig field, or making the current ready-to-fish component list internally contradictory.
+
+If the product later needs both hook+bait and jig terminal choices in one Rig experience, first define a reusable alternate-terminal/variant model that can truthfully express component substitution, assembly, readiness, knot, and presentation consequences. A separate canonical Rig is also an option if evidence shows the setups should not share one record.
+
+**Reason:** Canonical component requirements drive assembly and readiness. Treating mutually exclusive terminal choices as simultaneous required/optional components would make ownership/readiness and instructions misleading. The current wording correction accurately describes bait without prematurely creating a one-off schema.
+
+**Current implementation status:** The current bait note is corrected and validated in production. Alternate-terminal modeling is Deferred / Not Implemented and does not block current Rig or Fish work.
+
+**Future trigger:** Revisit when an approved user workflow requires choosing between mutually exclusive terminal configurations within one canonical Rig, or when another Rig demonstrates the need for the same reusable model.
+
+**Canonical owners:** D065 and `data-model/03-RIGS.md` own the durable boundary. `ACTIVE-CHANGE-LEDGER.md` keeps GATE-013 visible until a future explicit gate resolves it.

@@ -18,7 +18,7 @@ Before substantive work:
 - `docs/HANDOFF.md` is the compact formal recovery entrypoint.
 - `docs/ACTIVE-CHANGE-LEDGER.md` is the formal owner of material non-closed carry-forward items.
 - Governing documents and current approved decisions outrank plans, archives, historical records, and old chat conclusions.
-- While `docs/WORKING_STATE.md` says the workflow transition is open, the Google Working State remains authoritative for any migration delta not yet reconciled into GitHub. Exception: during the explicitly designated repository-documentation-only recovery test, first recover and report state from local repository documentation without consulting Google; compare external state only after the test result is established.
+- The former Google Working State is retired as an active continuity source. It may be consulted only as historical migration evidence and never overrides GitHub `main` or current repository documentation.
 
 ## Change control
 
@@ -33,5 +33,6 @@ Before substantive work:
 - Update `docs/WORKING_STATE.md` at material decision, scope, implementation, validation, deferment, and resume-point boundaries.
 - Promote durable rules and decisions to their canonical governing documents; do not make Working State a duplicate specification.
 - Before moving work to another computer, commit and push the reviewed checkpoint. Never rely on uncommitted files to synchronize computers.
+- A new or previously unverified computer may not become the write-authorized checkout until it has pulled the expected GitHub checkpoint, confirmed a clean matching tree, and demonstrated repository-documentation-only recovery of the current state and exact resume point.
 - At closeout, validate the complete diff, reconcile Working State and the Active Change Ledger, and verify the resulting GitHub state.
 - Do not begin a dependent workstream until the current one is finalized or deliberately parked with an explicit resume point.

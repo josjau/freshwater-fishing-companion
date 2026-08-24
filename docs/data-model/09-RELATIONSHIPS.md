@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.5.1  
+**Document Revision:** 0.5.2  
 **Document Status:** Approved  
 **Implementation Status:** Mixed — validated current relationships plus staged Fish production relationships implemented through Wave 2  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, FISH-001–FISH-007  
-**Last Updated:** 2026-08-23
+**Last Updated:** 2026-08-24
 
 ---
 
@@ -453,7 +453,7 @@ Do not require every approved Fish relationship to be active on every intermedia
 
 FISH-003 permits staged activation. Each migrated/additive Fish or dependency-safe group must satisfy the applicable relationship/media/source/readiness contract for that package.
 
-Closed Fish relationship packages currently include Trout, Gar, Production Wave 1, and Production Wave 2. Production Wave 3 — Bass is the active package.
+Closed Fish relationship packages currently include Trout, Gar, Production Wave 1, and Production Wave 2. Production Wave 3 — Bass is the next approved package; its six locked pair IDs and identification direction are owned by `../workstreams/FISH-WAVE-3-BASS.md`, and production implementation has not started.
 
 Final Fish Version 1 completion separately requires:
 

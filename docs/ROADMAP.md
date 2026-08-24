@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.4.1  
+**Document Revision:** 0.4.2  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-08-21
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -43,7 +43,7 @@ The original validated 20-Rig library remains canonical. The additive Four-State
 # Canonical Product Sequence
 
 1. **Knots** — completed / validated / closed.
-2. **Fish Guide** — next product milestone after Repository Audit Cleanup releases the Fish gate.
+2. **Fish Guide** — active milestone; Wave 3 Bass is the next production package.
 3. **What Should I Throw**.
 4. **Tackle Reference / Find Tackle**.
 5. **Settings / User Data Architecture Gate**.
@@ -263,6 +263,10 @@ These are rejected/out of scope for Version 1 rather than automatic future backl
 # Release / Segment Completion
 
 Feature/segment completion requires the applicable implementation, testing, GitHub verification, runtime validation, and documentation closeout defined by `DEVELOPMENT_WORKFLOW.md`.
+
+## Repository Disaster Recovery / Reconstruction Gate
+
+Before a major Version 1 release—or earlier if irreplaceable User Knowledge or other non-reconstructible artifacts enter scope—the project must implement and validate D064/GATE-012. That gate requires independent recovery coverage beyond the active checkout, a defined restoration/reconstruction procedure, integrity validation, and explicit recovery-point/retention expectations. It is not a blocker to the current Fish production milestone.
 
 # Related Documents
 

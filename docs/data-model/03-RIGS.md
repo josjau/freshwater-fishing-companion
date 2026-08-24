@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.3.1  
+**Document Revision:** 0.3.2  
 **Document Status:** Approved  
 **Implementation Status:** Validated — 21 active canonical Rigs  
-**Decision Baseline:** D024, D025, D026, D027, D028, D042-D049, D056, D057
+**Decision Baseline:** D024, D025, D026, D027, D028, D042-D049, D056, D057, D065
 
 ---
 
@@ -71,6 +71,14 @@ Authoritative Rig-to-Tackle usage relationship. Each requirement references cano
 Canonical Tackle owns component identity and display name. Tackle does not store inverse `rigIds[]` solely for **Used In** navigation.
 
 A separate requirement-level ID is not required by the current feature set.
+
+### Alternate-terminal configurations — Deferred / Not Implemented
+
+Current `componentRequirements[]` describes one coherent ready-to-fish setup. It does not model mutually exclusive terminal branches inside one Rig.
+
+The canonical Slip Bobber Rig currently owns the hook-plus-live/natural-bait configuration. A jig is a legitimate alternate presentation, but it is not a simultaneous `bait` value and must not be added as an ad hoc optional requirement that makes assembly/readiness ambiguous.
+
+Before one Rig can offer hook+bait **or** jig terminal choices, approve a reusable model for component substitution, assembly steps, readiness, knots, and setup/presentation consequences—or approve a separate Rig when the configurations should remain distinct. This is deferred under D065 and does not block the current 21-Rig library.
 
 ## knotApplications[]
 

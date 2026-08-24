@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.3.0  
+**Document Revision:** 2.4.0  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-24
@@ -14,9 +14,7 @@ It intentionally does **not** duplicate complete milestone history, domain archi
 
 GitHub `main` remains authoritative for production source and formally reconciled documentation.
 
-`WORKING_STATE.md` is the live local current-state and exact-resume record. During the open workflow migration, the Google Drive **Freshwater Fishing Companion — Working State** remains authoritative for any migration delta not yet reconciled into GitHub:
-
-https://docs.google.com/document/d/1Eg_ipGeTGjBiRF3V2CIOtWuuouRxPOh0TMuLcxRj0MU
+`WORKING_STATE.md` (**Freshwater Fishing Companion — Working State**) is the live repository current-state and exact-resume record. The former Google Working State is retired as an active continuity source and is preserved only as historical migration evidence.
 
 # Start Here
 
@@ -27,8 +25,7 @@ For a new project session:
 3. Read this Handoff.
 4. Read `ACTIVE-CHANGE-LEDGER.md` for every material non-closed item.
 5. Read the governing document for the specific work being resumed.
-6. While Working State says the workflow transition is open, also read the Google Working State before substantive work—except during the explicitly designated repository-documentation-only recovery test, which must first establish its result without consulting Google.
-7. Never assume a prior proposed or local file version was committed/pushed; verify the actual repository state first.
+6. Never assume a prior proposed or local file version was committed/pushed; verify the actual repository state first.
 
 # Formal Authority Map
 
@@ -52,15 +49,15 @@ For a new project session:
 
 # Current Operational Workstream
 
-**Workflow Transition — IN PROGRESS / PENDING CROSS-COMPUTER VALIDATION**
+**Workflow Transition — CLOSED**
 
-Fish production is paused. The approved documentation-only transition establishes direct local-repository work, repository-backed Working State, one write-authorized chat per checkout, GitHub `origin/main` as the cross-computer synchronization point, and a deliberate commit/push handoff boundary.
+The repository now owns current state, exact resume, durable decisions, open gates, implementation/validation state, and workstream evidence without depending on the former Google Working State. Direct local-repository work, one write-authorized task per checkout, GitHub `origin/main` synchronization, and deliberate commit/push handoff boundaries are the normal operating model.
 
-The transition cannot close until the same verified checkpoint is present cleanly on both computers and a fresh chat on the second computer successfully recovers the correct state from repository documentation alone. The second computer is not currently available, so that validation is intentionally deferred to a later session. Until closure, the Google Working State remains authoritative for unreconciled migration delta.
+The unavailable second computer does not block project work. Before it later becomes write-authorized, it must pull a clean matching checkpoint and pass repository-documentation-only recovery as a receiving-device onboarding check.
 
 # Current Product Milestone
 
-**Fish Guide — Production Wave 3: Bass — STARTED**
+**Fish Guide — Production Wave 3: Bass — READY / NOT STARTED**
 
 Repository Audit Cleanup and Fish Guide Phase 0 are closed. Trout Production Package 1 is **CLOSED** at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` (`Fish - Search Fix`) after GitHub verification, static validation, and user-confirmed fresh-session live validation. The broader prepared Hotfix 2 was not applied and remains superseded unless a fresh-load regression later proves it necessary.
 
@@ -75,7 +72,7 @@ FISH-001 through FISH-007 are terminal Phase 0 history. The active Fish work rem
 - **FISH-008 — approved Fish production architecture implementation across the remaining locked library**
 - **FISH-009 — approved Fish UX implementation across the remaining locked library**
 
-Current work is **Production Wave 3 — Bass**. After Bass closes, continue with Sunfish & Crappie unless evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
+The next separate product task is **Production Wave 3 — Bass**. Its six-Fish boundary and all approved resume decisions are owned by `docs/workstreams/FISH-WAVE-3-BASS.md`. After Bass closes, continue with Sunfish & Crappie unless evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
 
 # Fish Production Contract
 
@@ -165,15 +162,15 @@ The existing repository-integrity validator remains the single deterministic val
 
 # Exact Resume Point
 
-1. Continue **Workflow Transition only**. Do not resume Fish source or media work.
-2. Read `WORKING_STATE.md` and compare its checkpoint/resume instructions with the actual local Git state.
-3. Determine whether the commit containing `WORKING_STATE.md` is present and verified on GitHub `main`. If not, complete review/validation, obtain commit/push authorization, push it, and verify every written file.
-4. If the checkpoint is verified, confirm the current checkout is clean and local `HEAD` matches `origin/main` and the verified GitHub checkpoint.
-5. Leave the transition open until the second computer is available.
-6. In that later session, pull the same verified checkpoint on the second computer, confirm a clean matching checkout, and start a fresh chat rooted at that repository.
-7. Require the fresh chat to identify the authority model, Workflow Transition status, and exact resume point from repository documentation alone, without prior chat history or the Google Working State.
-8. Only after that recovery test passes may the transition be explicitly closed and the Google Working State retired/frozen as the active continuity source.
-9. Start Wave 3 Bass in a separate task after transition closure. The protected post-transition Fish resume boundary is recorded in `WORKING_STATE.md`.
+1. Start a separate **Wave 3 Bass** task; do not treat this transition-closeout task as production authorization.
+2. Confirm a clean verified checkout on GitHub `main`.
+3. Read `WORKING_STATE.md`, the Active Change Ledger, `docs/workstreams/FISH-WAVE-3-BASS.md`, and every Fish/media/workflow owner named by that workstream.
+4. Begin with exact-original acquisition and verification planning. The assistant attempts direct acquisition first; user file transfer is a fallback only when direct acquisition fails or bytes cannot be verified.
+5. Obtain explicit media-write authorization before adding staging or production assets to the repository.
+6. Process and validate the six transparent WebP candidates, manifest, and contact sheet; obtain user approval of the media set.
+7. Obtain separate production source authorization before changing Fish data, identification relationships, Fish-to-Rig guidance, or media records.
+
+When a second computer later becomes available, treat its clean pull and repository-documentation-only recovery test as receiving-device onboarding. It is not a blocker to the Wave 3 task on this verified computer.
 
 # Non-Negotiable Working Rules
 

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.6.0  
+**Document Revision:** 0.7.0  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-24
 
@@ -83,6 +83,8 @@ docs/
     V1-DESIGN-AUDIT.md
     WORKING_STATE.md
     data-model/
+    workstreams/
+        FISH-WAVE-3-BASS.md
 ```
 
 `SPECIFICATION.md` remains in the repository as a superseded retirement pointer and is not an active governing source.
@@ -196,7 +198,7 @@ Canonical roles:
 
 `SPECIFICATION.md` is retired from active maintenance. Root `AGENTS.md` is a concise agent startup/change-control pointer and does not own project state.
 
-GitHub `main` remains formal cross-computer authority. `WORKING_STATE.md` is the high-frequency local state/resume layer; durable content is promoted to the correct GitHub owner, the Active Change Ledger is reconciled, and Handoff remains compact. Until the local-workflow migration passes cross-computer and fresh-chat recovery validation, the Google Working State remains authoritative for any migration delta not yet reconciled into GitHub. After explicit transition closure it is retired/frozen as the active continuity source.
+GitHub `main` is the formal cross-computer authority. `WORKING_STATE.md` is the high-frequency state/resume layer; durable content is promoted to the correct GitHub owner, the Active Change Ledger is reconciled, and Handoff remains compact. The repository is the complete active continuity system. The former Google Working State is retired and preserved only as historical migration evidence.
 
 # Knowledge Architecture
 
@@ -207,6 +209,8 @@ The application uses three knowledge layers:
 3. **User Knowledge** — inventory, catches, preferences, saved/user-created state.
 
 Do not blur these layers without an explicit architecture decision.
+
+The Dashboard exposes four foundational connected-knowledge domains: Fish Guide, Knots, Rig Guide, and Tackle. Tackle is the root domain, while **Tackle Reference / Find Tackle** and **My Tackle** remain distinct capabilities on opposite sides of the Reference Knowledge/User Knowledge boundary. D063 owns this durable product boundary; D020/D028 own readiness and My Tackle authority.
 
 # Search and Connected-Knowledge Architecture
 

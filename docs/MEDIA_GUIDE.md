@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.10  
+**Document Revision:** 1.0.11  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-23
+**Last Updated:** 2026-08-24
 
 # Purpose
 
@@ -226,6 +226,22 @@ Diagnostic features may include:
 - Gill-cover features
 
 The Fish page may surround the verified photograph with field-guide information, but the photograph should remain trustworthy evidence rather than becoming a decorative generated infographic.
+
+## Fish Original Acquisition and Verification Gate
+
+For every approved Fish media selection:
+
+1. Start from the authoritative source record and attempt direct acquisition of the exact original before asking the user to transfer a file.
+2. Use user transfer only when direct acquisition fails, access requires the user's authenticated context, or the acquired bytes cannot be verified.
+3. Before processing, record and verify the source record URL, direct file URL when available, original filename, pixel dimensions, content hash, creator/credit, rights statement, and review result.
+4. Preserve the exact acquired original outside production output until verification and processing are complete. Do not silently replace it with a rendition, thumbnail, recompressed copy, or visually similar alternative.
+5. If expected dimensions, filename, hash, subject identity, creator, or rights evidence does not match, stop at an explicit acquisition/rights gate. Do not process the mismatch as though it were the approved original.
+6. Verify rights for the exact file and intended local redistribution/modification. Do not infer Public Domain or modification permission solely from an artist credit, a government-site host, or another related file's status.
+7. Record every transformation. Background isolation, crop/canvas placement, resizing, color-mode conversion, WebP encoding, and metadata changes must remain traceable to the untouched verified source.
+8. Produce a manifest and contact sheet for multi-asset Fish packages. Show source identity, input/output dimensions, file size, transformation notes, and visual/rights status.
+9. Obtain user approval of processed Fish media before attaching it to production records or treating the media package as closed.
+
+Production or staging writes inside the repository remain subject to the specific source/media authorization gate in `DEVELOPMENT_WORKFLOW.md`.
 
 ## Fish Isolation and Reference-Surface Standard
 
