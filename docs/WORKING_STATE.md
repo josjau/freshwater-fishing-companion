@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.4.4  
+**Document Revision:** 1.4.5  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** Fish Guide — Sunfish & Crappie next planned production package / NOT STARTED  
+**Workstream Status:** Fish Guide — Sunfish & Crappie planning active / production not started  
 **Wave 3 Closeout Baseline:** `19b91b6303b3a3369f0c0a9dd6ac1018457d9b7f`  
 **Last Updated:** 2026-08-24
 
@@ -29,7 +29,15 @@ This file is intentionally a **compact current-work record only**. It owns the a
 - Post-push GitHub verification: PASS.
 - Historical package/evidence record: `archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`.
 
-The next planned Fish production package is **Sunfish & Crappie** unless a genuine evidence/media/relationship/product issue requires a smaller boundary. Production work for that package has not started.
+**Production Wave 4 — Sunfish & Crappie is in planning. Production has not started.**
+
+Active planning record:
+
+- `docs/workstreams/FISH-WAVE-4-SUNFISH-CRAPPIE.md`
+
+The proposed Wave 4 package contains nine Fish and five deterministic identification relationships. The Fish identity/versioning/comparison package has been reviewed for structural fit but is **not yet explicitly user-locked**.
+
+The current media direction is an illustration-first set. Eight Fish have a preferred Duane Raver / USFWS-style illustration direction. Ozark Bass remains the only open primary-media gate: no exact-species Public Domain or Creative Commons scientific illustration was found. The preferred path is permission/license for Al Agnew's exact-species Ozark Bass illustration; the alternate permission path is the Ozark Bass illustration from *The Fishes of Missouri*. A Matthew Patterson/USFWS Public Domain photograph remains the safe fallback but is not the user's preferred primary presentation.
 
 # Open Cross-Domain Finding
 
@@ -39,13 +47,15 @@ The Rig `useCases[]` species-specific wording remains a semantic-owner/data-qual
 
 - Wave 3 GitHub source and closeout documentation commits: present on `main` and post-push verified.
 - No user-facing uncommitted Wave 3 package remains active.
-- Documentation-only workflow updates may advance GitHub beyond the Wave 3 closeout SHA; startup must always verify current `main`.
-- After any direct documentation commit, reconcile Drive `Working Source/Current` to the new committed tree before using it as the base for new user-facing work.
+- Wave 4 planning documentation is now on GitHub; no Wave 4 production source/data/media changes have been written.
+- Documentation-only workflow/planning updates have advanced GitHub beyond the stored Drive working package.
+- Drive `Working Source/Current` must be refreshed from the then-current GitHub `main` before any Wave 4 user-facing source/data/media work begins.
 
 # Current Validation State
 
 - Wave 3 JavaScript/repository-integrity/package-fidelity/media-hash/browser/mobile/search/attribution checks: PASS.
 - Final user review of Wave 3 presentation and navigation-arrow normalization: APPROVED.
+- Wave 4 planning/media research: documented; production validation not applicable yet.
 
 # Commit / Validation Documentation Closure Gate
 
@@ -53,8 +63,8 @@ Every user-facing commit candidate requires full-tree mechanical verification pl
 
 # Exact Resume Point
 
-1. Verify current GitHub `main` and read `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, and the governing Fish/evidence/media/relationship documents.
-2. Confirm Drive `Working Source/Current` matches the current committed tree before starting new user-facing application work.
-3. Create/lock the Sunfish & Crappie production workstream before production edits.
-4. For user-facing files: Drive working package → review ZIP → local user/browser validation → explicit commit/push authorization → GitHub verification.
-5. For documentation-only changes: direct GitHub update from the latest verified file → documentation impact/preservation checks → post-write GitHub verification → Drive reconciliation.
+1. Verify current GitHub `main` and read `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, `docs/workstreams/FISH-WAVE-4-SUNFISH-CRAPPIE.md`, and the governing Fish/evidence/media/relationship documents.
+2. Resolve the Ozark Bass primary-illustration permission decision: preferred Al Agnew; alternate MDC/*The Fishes of Missouri*; Public Domain USFWS photograph remains the safe fallback but is not preferred.
+3. Obtain explicit user lock of the proposed nine-Fish Wave 4 data/versioning package, five comparison relationships, and final media-source direction.
+4. Refresh/reconcile Drive `Working Source/Current` to the then-current GitHub `main` before any user-facing Wave 4 write.
+5. After those gates close, use the normal Drive working package → review ZIP → local/browser validation → explicit commit/push authorization → GitHub verification workflow for production implementation.
