@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.3.3  
+**Document Revision:** 2.3.4  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-24
@@ -25,6 +25,7 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 - Restored the Drive-working-package → local-validation → GitHub-commit operating model after the repository-only transition proved vulnerable to working-state drift.
 - Replaced the manually maintained exploded Drive working mirror with an atomic full-tree ZIP + manifest model.
 - Made repository Working State current-only and added a mandatory per-commit documentation impact sweep in which every durable documentation file is explicitly UPDATED or VERIFIED — NO CHANGE REQUIRED.
+- Added deterministic workstream-closeout validation so stale active/pending/uncommitted status is detected mechanically before a workstream is declared closed.
 
 ## Fish Guide — Production Wave 3: Bass
 
@@ -38,7 +39,7 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 ### Validation Status
 
 - Final user browser review approved all Wave 3 changes, including the six Bass Fish, six comparison relationships, 12 Fish-to-Rig recommendations, image framing/centering, rights attribution, native internal-arrow treatment, and app-wide navigation-arrow weight normalization.
-- Repository integrity, syntax/structure, locked-package fidelity, approved Bass asset hashes, and working-package round-trip checks pass. The package remains uncommitted until separate explicit commit/push authorization.
+- Repository integrity, syntax/structure, locked-package fidelity, approved Bass asset hashes, and working-package round-trip checks passed. Wave 3 source/user-facing implementation landed at `0b982bbbe10b0b2758759869e6682d6b6734475e`, closeout documentation landed at `19b91b6303b3a3369f0c0a9dd6ac1018457d9b7f`, and Wave 3 is closed.
 
 ## Local Repository Workflow Transition — Closed
 

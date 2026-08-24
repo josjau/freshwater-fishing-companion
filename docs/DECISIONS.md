@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.6.1  
+**Document Revision:** 0.6.2  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-24
 
@@ -149,11 +149,11 @@ Inventory locations use reusable location records.
 
 GitHub `main` is authoritative for committed production source and formally reconciled documentation. GitHub `origin/main` is the synchronization point between each computer's local checkout.
 
-The local checkout must be verified against the intended GitHub baseline before changing an existing file. Chat memory, a previously proposed file, a downloaded package, or an uncommitted file on another computer is never authoritative content for the active checkout.
+For user-facing application work, the local checkout must be verified against the intended GitHub baseline before local validation. Chat memory, a previously proposed file, a downloaded package, or an uncommitted file on another computer is never authoritative content for the active checkout.
 
-Direct local edits are the default delivery method. The complete GitHub Desktop diff is the user review surface. This does not authorize broad edits: semantic changes remain limited to the approved scope, and unrelated differences are failures unless separately authorized.
+User-facing application work is prepared in the authoritative Drive working package and delivered to the local checkout for browser/user validation. Documentation-only changes may be written and committed directly to GitHub after verifying the latest GitHub file contents, completing the applicable documentation impact/preservation checks, and verifying the post-write result; documentation-only work does not require local browser/user validation.
 
-Production source/data/media/configuration writes require explicit authorization for the specific scope. Commit/push also requires explicit authorization. Under D062, the approved Drive working package is delivered to the local validation checkout by review ZIP; the ZIP never contains `.git` and does not itself authorize commit/push.
+Production source/data/media/configuration writes require explicit authorization for the specific scope, and production/user-facing commit/push requires explicit authorization. Under D062, the approved Drive working package is delivered to the local validation checkout by review ZIP; the ZIP never contains `.git` and does not itself authorize commit/push. Documentation-only commits are standing-authorized when required to keep durable project state current.
 
 Commit economy is required: use as few commits as practical while preserving reviewability, validation boundaries, rollback safety, and current documentation. Fewer commits never justify stale documentation or an overbroad unreviewable commit.
 
@@ -918,7 +918,7 @@ This Four-State direction is also the Companion's forward regional content focus
 
 **Reason:** The region reflects the user's near-term fishing focus and has substantial freshwater species/method overlap with the earlier Northeast Oklahoma / Southwest Kansas scope, making progressive reconciliation more accurate and lower-risk than project-wide invalidation.
 
-**Current implementation status:** Approved and active. Fish Guide Phase 0 is closed; Trout, Gar, Production Wave 1, and Production Wave 2 have implemented the Four-State production direction. Wave 3 Bass is implemented, validated, and user-approved in the uncommitted Drive working package; commit/push and post-push verification remain before that wave closes.
+**Current implementation status:** Approved and active. Fish Guide Phase 0 is closed; Trout, Gar, Production Wave 1, and Production Wave 2 have implemented the Four-State production direction. Wave 3 Bass is committed, validated, post-push verified, and closed; Sunfish & Crappie is the next planned Fish production package.
 
 **Future trigger:** apply Four-State adequacy as each domain is audited or materially modified. Significant rewiring requires explicit discussion before implementation.
 
@@ -1047,9 +1047,9 @@ Relevance ranking operates only after scope filtering. Scope outranks ranking.
 
 # D062 – Drive Working Package / Local Validation / GitHub Commit Operating Model
 
-**Decision:** GitHub `main` is authoritative for the committed source baseline and formally reconciled documentation. Between commits, Google Drive `Working Source/Current` owns the authoritative working tree as an **atomic full-tree ZIP plus manifest**. The local Git checkout is the application/browser-validation copy of that Drive working tree.
+**Decision:** GitHub `main` is authoritative for committed production source and formally reconciled documentation. For approved uncommitted **user-facing application work**, Google Drive `Working Source/Current` owns the authoritative working tree as an **atomic full-tree ZIP plus manifest**. The local Git checkout is the application/browser-validation copy of that Drive working tree. Documentation-only changes may land directly on GitHub from the latest verified file contents and are then reconciled into Drive.
 
-Approved edits are made to the Drive working tree first, then delivered as a review ZIP that preserves repository-relative paths and is extracted over the existing local checkout. The local `.git` directory is never part of a review ZIP. Local-only edits are not durable working truth and must be reconciled back into Drive before they can become an approved package.
+Approved user-facing edits are made to the Drive working tree first, then delivered as a review ZIP that preserves repository-relative paths and is extracted over the existing local checkout. The local `.git` directory is never part of a review ZIP. Local-only user-facing edits are not durable working truth and must be reconciled back into Drive before they can become an approved package. Documentation-only work does not require local browser/user validation.
 
 Use one chat/session per coherent outcome. Only one session may be write-authorized for the active working package at a time. Other sessions may perform bounded read-only research when they do not create competing working state.
 
@@ -1061,11 +1061,11 @@ Continue on `main` for the current single-writer workflow. Revisit branching onl
 
 **Reason:** The repository-only transition demonstrated that direct local edits and a manually maintained exploded Drive mirror can drift independently. An atomic Drive working package preserves an exact cross-session working state, keeps GitHub clearly authoritative for committed truth, lets the local checkout remain the strongest validation surface, and eliminates file-by-file Drive mirror drift. The explicit documentation sweep prevents durable decisions from remaining stranded in temporary state or stale Git documentation.
 
-**Current implementation status:** Approved and being re-established through the 2026-08-24 recovery checkpoint. The prior exploded Drive `Current` mirror is retired in favor of the atomic working package model. GitHub remains at the pre-recovery committed baseline until the recovered package is locally reviewed and explicitly authorized for commit/push.
+**Current implementation status:** Approved and active. The prior exploded Drive `Current` mirror is retired in favor of the atomic user-facing working-package model. Wave 3 Bass completed the recovered workflow and is committed, validated, post-push verified, and closed. Documentation-only direct-to-Git updates are active under the same verification/impact discipline.
 
 **Future trigger:** Revisit package representation only if a reliable tool can maintain an exploded Drive mirror with deterministic full-tree verification, or if branching/deployment/concurrency requirements make a different workflow materially safer.
 
-**Canonical owners:** D062 owns the durable operating model. `DEVELOPMENT_WORKFLOW.md` owns procedure; `WORKING_STATE.md` owns current state/resume; `HANDOFF.md` owns compact recovery; Drive `Working Source/Current` owns the current working package between commits.
+**Canonical owners:** D062 owns the durable operating model. `DEVELOPMENT_WORKFLOW.md` owns procedure; `WORKING_STATE.md` owns current state/resume; `HANDOFF.md` owns compact recovery; Drive `Working Source/Current` owns approved uncommitted user-facing application work between commits.
 
 # D063 – Dashboard Knowledge Hubs and Tackle Capability Boundary
 

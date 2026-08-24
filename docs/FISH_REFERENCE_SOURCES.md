@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.1.0  
+**Document Revision:** 1.1.1  
 **Document Status:** Approved — Production Authoring Standard  
-**Implementation Status:** Standard active; evidence populated through the local Wave 3 Bass review set, with the remaining Fish library pending  
+**Implementation Status:** Standard active; evidence populated through closed Wave 3 Bass, with the remaining Fish library pending  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
 **Last Updated:** 2026-08-24
 
@@ -17,7 +17,7 @@ This document is not a duplicate runtime external-link registry. It supports aut
 
 Fish Guide Phase 0 is closed. Per-Fish evidence entries are populated as the approved 30-Fish production library is authored. The absence of target-library evidence entries before the corresponding production data is authored does not mean the current pre-migration Fish source has already satisfied the target production contract.
 
-The approved evidence/media package for Production Wave 3 — Bass is preserved in `workstreams/FISH-WAVE-3-BASS.md`. Its authoritative source anchors are now promoted into the per-Fish and per-relationship structures in this ledger as part of the local production review set.
+The approved evidence/media package for Production Wave 3 — Bass is preserved at `../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`. Its authoritative source anchors are promoted into the per-Fish and per-relationship structures in this ledger; Wave 3 is closed.
 
 # Governing Principles
 

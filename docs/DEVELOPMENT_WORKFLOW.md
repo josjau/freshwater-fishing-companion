@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.4.0  
+**Document Revision:** 1.4.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-24
 
@@ -93,6 +93,32 @@ After every meaningful implementation, correction, or validation push:
 The repository must be sufficient to reconstruct the current state after an unexpected chat/session boundary. The user should not have to supply missing recent history that could have been recorded locally or with the preceding checkpoint push.
 
 Final closeout remains required, but closeout is a reconciliation/verification step rather than the first time documentation catches up with implementation.
+
+# Fast Workstream Closeout Standard
+
+Closeout is a verification and state-transition step, not the first time documentation catches up with implementation. Keep durable documentation current during the workstream so routine closeout remains mechanical.
+
+After final user-facing approval:
+
+1. Freeze the approved Drive user-facing package; do not continue source churn inside the closing package.
+2. Run one final applicable repository validation pass for integrity, syntax, relationships, media, and package fidelity.
+3. Run `tools/validate_workstream_closeout.js` against the closing workstream. It must mechanically detect stale active/pending/uncommitted/review language and an active workstream path that should have been retired.
+4. Make required documentation-only closure changes directly on GitHub from the latest verified file contents. Local browser/user validation is not required for documentation-only changes.
+5. Verify the resulting GitHub `main` SHA and changed-file set once.
+6. Reconcile Drive `Working Source/Current` once to the committed baseline and trim Live Working State to open carryover/next work only.
+7. Run the closeout validator again against the final GitHub state. Zero unexplained stale references is required before declaring the workstream closed.
+
+The repository-wide documentation impact sweep remains mandatory, but it is a disposition check: every durable owner is `UPDATED` or `VERIFIED — NO CHANGE REQUIRED`. It is not a requirement to serially reread or rewrite every documentation file when the impact is already mechanically and semantically bounded.
+
+Documentation-only path:
+
+`latest verified GitHub file -> targeted documentation edit/commit -> impact/preservation checks -> post-write GitHub verification -> Drive reconciliation`
+
+User-facing application path:
+
+`GitHub baseline -> Drive Working Source -> review ZIP -> local/browser approval -> explicit production commit/push authorization -> GitHub verification -> Drive reconciliation`
+
+Routine closeout should normally take only a few minutes. Longer closeout is justified when deterministic validation discovers a real defect, drift, or undocumented decision.
 
 # Default Local Delivery Method
 
