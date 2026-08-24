@@ -45,7 +45,7 @@ Local browser validation uses a localhost development server. `file://` is not t
 
 ## Workflow-transition authority
 
-The repository-workflow transition is closed. GitHub `main` and current repository documentation are sufficient to recover current state, exact resume, durable decisions, non-closed items, implementation/validation status, evidence/provenance, and next actions. The former Google Working State is retired as an active continuity source and may be consulted only as historical migration evidence; it never overrides current repository authority.
+The repository-only transition was superseded by the recovered operating model in D062. GitHub `main` owns the committed baseline. Google Drive `Working Source/Current` owns the approved uncommitted working tree as an atomic full-tree ZIP plus manifest. `WORKING_STATE.md` is compact current/resume context only. The former large Google Working State is retired as active authority, and Chat Logs are disaster-recovery evidence only.
 
 ## Receiving-computer onboarding
 
@@ -116,7 +116,7 @@ For coherent multi-file or asset-heavy work:
 - target one coherent commit/push when implementation and truthful documentation can safely travel together,
 - never reduce commit count by leaving current-state documentation stale.
 
-ZIP delivery remains an exceptional fallback for a blocked local/direct delivery path, not the normal workflow.
+ZIP delivery is the normal controlled transport from the authoritative Drive working package to the local validation checkout. Review ZIPs preserve repository-relative paths and never contain `.git`.
 
 # Commit Economy
 
@@ -151,25 +151,27 @@ Production assets and source require explicit user authorization for the specifi
 Default workflow for those files:
 
 1. Settle and obtain approval for the exact production scope.
-2. Edit the verified local checkout only within that scope.
-3. Validate the coherent local result and present the complete GitHub Desktop diff for review.
-4. Do not commit or push unless the user explicitly authorizes that action.
-5. After the user/authorized push, verify the actual commit and affected files on GitHub.
+2. Modify the authoritative Drive working tree for that scope and regenerate its full-tree ZIP/manifest.
+3. Deliver the review ZIP and extract it over the existing local Git checkout; never include or replace `.git`.
+4. Validate the coherent local result and review the complete Git diff.
+5. Correct defects in Drive first, regenerate the ZIP, reapply, and repeat the affected validation.
+6. Do not commit or push unless the user explicitly authorizes that action.
+7. After the authorized push, verify the actual commit and affected files on GitHub, reconcile the Drive package to the committed baseline, and trim Working State to open carryover only.
 
 A prior approval for one production update does not grant blanket approval for later production writes. Ask again before each new write scope unless the user explicitly changes this rule for the applicable session or action.
 
-# Delivery Fallback
+# Review ZIP Transport
 
-For project changes that are already authorized, use this fallback only when the normal local/direct delivery path fails:
+The review ZIP is the normal transport from the authoritative Drive working package to the local validation checkout. It must:
 
-1. Attempt the authorized normal local/direct path once.
-2. If it fails, do not repeatedly retry the same blocked path without new evidence.
-3. Package the exact intended change as a production ZIP that preserves repository-relative paths and contains only the authorized permanent repository files.
-4. Provide the ZIP to the user for manual application through the normal local repository/GitHub Desktop workflow.
-5. After the user confirms the ZIP was applied and pushed, re-fetch/verify the affected files from authoritative GitHub `main`.
-6. Validate that GitHub matches the intended package before treating the change as complete.
+1. represent the exact current full working tree,
+2. preserve repository-relative paths,
+3. exclude `.git` and other local Git metadata,
+4. carry a manifest with the committed GitHub baseline and full-tree hashes,
+5. be regenerated whenever an approved correction changes the Drive working tree, and
+6. be applied over the existing local checkout so GitHub Desktop/Git can expose the complete diff against the committed baseline.
 
-This fallback does **not** expand direct-write authority. Production source, data, media, CSS, HTML, JavaScript, configuration, and other protected project files remain subject to the Production Write Approval Gate above. A failed write never converts an unapproved production change into an authorized one.
+Review ZIP transport does **not** expand write or commit authority. Production source, data, media, CSS, HTML, JavaScript, configuration, and other protected project files remain subject to the Production Write Approval Gate above.
 
 # Decision-to-Workstream Continuity
 
@@ -296,7 +298,15 @@ A deliberate large documentation rewrite may bypass the size thresholds only whe
 
 For repository-side checking, `tools/validate_replacement_integrity.py` provides the same conservative guard against accidental document truncation by comparing working-tree Markdown files with `HEAD`. This validator is a safety net, not a substitute for deriving replacements from the latest verified GitHub contents.
 
-For an exceptional ZIP fallback, the equivalent baseline comparison must also run before the ZIP is created. A change set that fails the gate must not be committed or delivered.
+Before any review ZIP is created, verify the complete intended Drive working tree against the committed GitHub baseline and current approved delta. A package that fails the gate must not be delivered.
+
+## Documentation Closure Gate
+
+Every commit candidate requires a repository-wide documentation impact sweep in addition to source/runtime validation. Every durable repository documentation file receives an explicit disposition: **UPDATED** or **VERIFIED — NO CHANGE REQUIRED** after checking the commit scope against that document's responsibility.
+
+The sweep must consider at minimum architecture, durable decisions, data-model/relationship ownership, evidence/provenance, media, UX/design audit, workflow, active ledger, handoff/current state, roadmap/milestones, changelog, and the active workstream. A file may be unchanged, but it may not be unreviewed.
+
+Before commit approval, move durable information out of temporary Working State into its canonical repository owner. A commit is not ready while a durable decision exists only in chat or Working State.
 
 # Local and Post-Push Integrity Validation
 

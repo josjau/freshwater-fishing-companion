@@ -153,7 +153,7 @@ The local checkout must be verified against the intended GitHub baseline before 
 
 Direct local edits are the default delivery method. The complete GitHub Desktop diff is the user review surface. This does not authorize broad edits: semantic changes remain limited to the approved scope, and unrelated differences are failures unless separately authorized.
 
-Production source/data/media/configuration local writes require explicit authorization for the specific scope. Commit/push also requires explicit authorization. ZIP delivery remains an exceptional fallback when the normal local/direct path is unavailable; it is not the normal workflow.
+Production source/data/media/configuration writes require explicit authorization for the specific scope. Commit/push also requires explicit authorization. Under D062, the approved Drive working package is delivered to the local validation checkout by review ZIP; the ZIP never contains `.git` and does not itself authorize commit/push.
 
 Commit economy is required: use as few commits as practical while preserving reviewability, validation boundaries, rollback safety, and current documentation. Fewer commits never justify stale documentation or an overbroad unreviewable commit.
 
@@ -1045,25 +1045,27 @@ Relevance ranking operates only after scope filtering. Scope outranks ranking.
 
 **Canonical owners:** D061, search/navigation standards, and domain-specific search documentation.
 
-# D062 – Local Repository Work/Codex Operating Model
+# D062 – Drive Working Package / Local Validation / GitHub Commit Operating Model
 
-**Decision:** Normal project work uses direct edits in a verified local GitHub Desktop checkout. Each computer has its own checkout; GitHub `origin/main` is the cross-computer synchronization point. `docs/WORKING_STATE.md` is the live local state/exact-resume record, `docs/HANDOFF.md` is the compact formal recovery entrypoint, and `docs/ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward items.
+**Decision:** GitHub `main` is authoritative for the committed source baseline and formally reconciled documentation. Between commits, Google Drive `Working Source/Current` owns the authoritative working tree as an **atomic full-tree ZIP plus manifest**. The local Git checkout is the application/browser-validation copy of that Drive working tree.
 
-Use one chat per coherent outcome/workstream. Only one chat may be write-authorized against the same checkout at a time. Other chats may perform bounded read-only research/analysis when they do not edit the repository or create competing project state.
+Approved edits are made to the Drive working tree first, then delivered as a review ZIP that preserves repository-relative paths and is extracted over the existing local checkout. The local `.git` directory is never part of a review ZIP. Local-only edits are not durable working truth and must be reconciled back into Drive before they can become an approved package.
 
-Uncommitted files do not synchronize across computers. Before handoff, either commit/push the reviewed checkpoint or restore a clean tree and preserve the exact state in the still-authoritative continuity layer. On the receiving computer, fetch/pull, confirm a clean checkout, and verify the expected commit before substantive work.
+Use one chat/session per coherent outcome. Only one session may be write-authorized for the active working package at a time. Other sessions may perform bounded read-only research when they do not create competing working state.
 
-Continue on `main` for the current single-writer workflow. Revisit branching only when a concrete need such as concurrent development or a PWA staging/preview workflow exists.
+`docs/WORKING_STATE.md` is intentionally compact and current-only. Completed work and durable decisions are promoted to their canonical repository owners before commit and removed from Working State after reconciliation. `HANDOFF.md` is the compact repository recovery entrypoint and `ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward items.
 
-Use a localhost development server for normal local browser validation. ZIP delivery is an exceptional fallback rather than the normal update mechanism.
+Every commit candidate must pass both a full-tree mechanical verification and a repository documentation impact sweep. Every durable repository documentation file receives an explicit disposition: **UPDATED** or **VERIFIED — NO CHANGE REQUIRED**. A commit may not close while durable truth exists only in chat or Working State.
 
-**Reason:** Direct local access removes cloud-chat/ZIP transfer friction, makes GitHub Desktop's complete diff the review surface, and allows project continuity to live with the repository. The one-writer and explicit handoff rules prevent competing uncommitted state and false cross-computer assumptions.
+Continue on `main` for the current single-writer workflow. Revisit branching only when real concurrency, preview, deployment, or PWA requirements justify it.
 
-**Current implementation status:** Approved, implemented, and transition-closed. GitHub/repository documentation is the complete active continuity system. The former Google Working State is retired as an active source. A second computer remains subject to receiving-device pull/clean-state/recovery onboarding before it becomes write-authorized, but its availability does not block work on a verified checkout.
+**Reason:** The repository-only transition demonstrated that direct local edits and a manually maintained exploded Drive mirror can drift independently. An atomic Drive working package preserves an exact cross-session working state, keeps GitHub clearly authoritative for committed truth, lets the local checkout remain the strongest validation surface, and eliminates file-by-file Drive mirror drift. The explicit documentation sweep prevents durable decisions from remaining stranded in temporary state or stale Git documentation.
 
-**Future trigger:** Revisit the branch model, concurrency controls, or local server tooling only when an actual collaboration, preview, deployment, or PWA requirement demonstrates the need.
+**Current implementation status:** Approved and being re-established through the 2026-08-24 recovery checkpoint. The prior exploded Drive `Current` mirror is retired in favor of the atomic working package model. GitHub remains at the pre-recovery committed baseline until the recovered package is locally reviewed and explicitly authorized for commit/push.
 
-**Canonical owners:** D062 owns the durable operating decision. `DEVELOPMENT_WORKFLOW.md` owns procedure; `WORKING_STATE.md` owns live state/resume; `HANDOFF.md` owns compact recovery. The closed transition remains in Changelog and Git history rather than the active ledger.
+**Future trigger:** Revisit package representation only if a reliable tool can maintain an exploded Drive mirror with deterministic full-tree verification, or if branching/deployment/concurrency requirements make a different workflow materially safer.
+
+**Canonical owners:** D062 owns the durable operating model. `DEVELOPMENT_WORKFLOW.md` owns procedure; `WORKING_STATE.md` owns current state/resume; `HANDOFF.md` owns compact recovery; Drive `Working Source/Current` owns the current working package between commits.
 
 # D063 – Dashboard Knowledge Hubs and Tackle Capability Boundary
 

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.3.0  
+**Document Revision:** 2.3.2  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-24
@@ -17,6 +17,23 @@ Do not record exact active audit section, exact session resume point, current bl
 For current formal continuation use `HANDOFF.md`. For material non-closed items use `ACTIVE-CHANGE-LEDGER.md`.
 
 # Unreleased
+
+## Workflow / Continuity Recovery
+
+### Changed
+
+- Restored the Drive-working-package → local-validation → GitHub-commit operating model after the repository-only transition proved vulnerable to working-state drift.
+- Replaced the manually maintained exploded Drive working mirror with an atomic full-tree ZIP + manifest model.
+- Made repository Working State current-only and added a mandatory per-commit documentation impact sweep in which every durable documentation file is explicitly UPDATED or VERIFIED — NO CHANGE REQUIRED.
+
+## Fish Guide — Production Wave 3: Bass
+
+### Changed
+
+- Completed explicit Fish-to-Rig review: added Largemouth Inline Spinner Setup as Alternative, added Smallmouth Ned Rig as Alternative, and changed Live-Bait Slip-Sinker Rig from Primary to Alternative for Striped and Hybrid Striped Bass.
+- Recorded the Rig `useCases[]` species-applicability ownership defect for the Version 1 UX Design Audit rather than duplicating more Fish applicability inside Rig records.
+- First Wave 3 browser review confirmed the Compare Similar Fish centering rules and the standardized Selection/Fish ID image blocks; no centering defects were found.
+- Reverted internal navigation arrows from the CSS-drawn shaft/head treatment to the native `→` glyph; the user approved the corrected treatment. Standardized all application navigation-arrow glyphs on shared `font-weight: 800` while preserving `←` back, `→` internal, `↗` external, and existing compact-row `›` semantics.
 
 ## Local Repository Workflow Transition — Closed
 

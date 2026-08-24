@@ -8,8 +8,7 @@
 "use strict";
 
 const MEDIA_DATA_BUILD_INFO = Object.freeze({
-    file: "data/media.js",
-    milestone: "Knot Guide — Production Package 4"
+    file: "data/media.js"
 });
 
 const MEDIA_DATA = Object.freeze([
@@ -414,6 +413,168 @@ const MEDIA_DATA = Object.freeze([
             changesMade: "Converted from the source JPEG to WebP at the original 1200 x 813 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
         },
         productionStatus: "Approved primary Fish identification illustration",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "largemouth-bass-primary-identification",
+        ownerType: "fish",
+        ownerId: "largemouth-bass",
+        role: "primary-identification",
+        type: "image",
+        file: "images/fish/largemouth-bass-primary-identification.webp",
+        alt: "Largemouth Bass illustration showing a large mouth, broad horizontal side stripe, and deeply notched dorsal fin",
+        caption: "Largemouth Bass",
+        license: {
+            status: "Public Domain — artwork commissioned by the U.S. Fish and Wildlife Service",
+            type: "Public Domain",
+            creator: "Duane Raver",
+            sourceUrl: "https://www.fws.gov/media/largemouth-bass-5",
+            licenseUrl: null,
+            attributionRequired: false,
+            attributionText: null,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-24",
+            changesMade: "Converted from the verified 1200 x 778 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+        },
+        productionStatus: "User-approved primary Fish identification illustration",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "smallmouth-bass-primary-identification",
+        ownerType: "fish",
+        ownerId: "smallmouth-bass",
+        role: "primary-identification",
+        type: "image",
+        file: "images/fish/smallmouth-bass-primary-identification.webp",
+        alt: "Smallmouth Bass illustration showing a smaller mouth, vertical side bars, and connected dorsal fin",
+        caption: "Smallmouth Bass",
+        license: {
+            status: "Public Domain — artwork commissioned by the U.S. Fish and Wildlife Service",
+            type: "Public Domain",
+            creator: "Duane Raver",
+            sourceUrl: "https://www.fws.gov/media/smallmouth-bass-19",
+            licenseUrl: null,
+            attributionRequired: false,
+            attributionText: null,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-24",
+            changesMade: "Converted from the verified 1200 x 742 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+        },
+        productionStatus: "User-approved primary Fish identification illustration",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "spotted-bass-primary-identification",
+        ownerType: "fish",
+        ownerId: "spotted-bass",
+        role: "primary-identification",
+        type: "image",
+        file: "images/fish/spotted-bass-primary-identification.webp",
+        alt: "Spotted Bass illustration showing a lateral stripe, rows of dark spots below it, and connected dorsal fin",
+        caption: "Spotted Bass",
+        license: {
+            status: "Approved with documented rights caveat — exact ODWC file is not independently verified Public Domain and the source-site footer states All Rights Reserved",
+            type: "Copyright status not independently verified",
+            creator: "Duane Raver (credited by the ODWC source record)",
+            sourceUrl: "https://www.wildlifedepartment.com/wildlife/field-guide/fish/bass-spotted",
+            licenseUrl: null,
+            attributionRequired: true,
+            attributionText: "Illustration credited to Duane Raver; source: Oklahoma Department of Wildlife Conservation.",
+            commercialUseAllowed: null,
+            modificationAllowed: null,
+            reviewedDate: "2026-08-24",
+            changesMade: "Preserved source transparency and resized the verified 1740 x 1130 ODWC PNG proportionally to 1200 x 779; encoded as transparent WebP without crop, recolor, reshaping, or background compositing."
+        },
+        productionStatus: "User-approved primary Fish identification illustration with documented ODWC rights caveat",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "white-bass-primary-identification",
+        ownerType: "fish",
+        ownerId: "white-bass",
+        role: "primary-identification",
+        type: "image",
+        file: "images/fish/white-bass-primary-identification.webp",
+        alt: "White Bass illustration showing a deep body, arched back, and horizontal side stripes",
+        caption: "White Bass",
+        license: {
+            status: "Public Domain — artwork commissioned by the U.S. Fish and Wildlife Service",
+            type: "Public Domain",
+            creator: "Duane Raver",
+            sourceUrl: "https://www.fws.gov/media/white-bass-1",
+            licenseUrl: null,
+            attributionRequired: false,
+            attributionText: null,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-24",
+            changesMade: "Converted from the verified 1200 x 734 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+        },
+        productionStatus: "User-approved primary Fish identification illustration",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "striped-bass-primary-identification",
+        ownerType: "fish",
+        ownerId: "striped-bass",
+        role: "primary-identification",
+        type: "image",
+        file: "images/fish/striped-bass-primary-identification.webp",
+        alt: "Striped Bass illustration showing a slender body and strong mostly continuous horizontal stripes",
+        caption: "Striped Bass",
+        license: {
+            status: "Public Domain — artwork commissioned by the U.S. Fish and Wildlife Service",
+            type: "Public Domain",
+            creator: "Duane Raver",
+            sourceUrl: "https://www.fws.gov/media/striped-bass-12",
+            licenseUrl: null,
+            attributionRequired: false,
+            attributionText: null,
+            commercialUseAllowed: true,
+            modificationAllowed: true,
+            reviewedDate: "2026-08-24",
+            changesMade: "Converted from the verified 1200 x 772 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+        },
+        productionStatus: "User-approved primary Fish identification illustration",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "hybrid-striped-bass-primary-identification",
+        ownerType: "fish",
+        ownerId: "hybrid-striped-bass",
+        role: "primary-identification",
+        type: "image",
+        file: "images/fish/hybrid-striped-bass-primary-identification.webp",
+        alt: "Hybrid Striped Bass illustration showing an intermediate body depth and broken horizontal side stripes",
+        caption: "Hybrid Striped Bass",
+        license: {
+            status: "Approved with documented rights caveat — exact ODWC file is not independently verified Public Domain and the source-site footer states All Rights Reserved",
+            type: "Copyright status not independently verified",
+            creator: "Duane Raver (credited by the ODWC source record)",
+            sourceUrl: "https://www.wildlifedepartment.com/wildlife/field-guide/fish/bass-striped-hybrid",
+            licenseUrl: null,
+            attributionRequired: true,
+            attributionText: "Illustration credited to Duane Raver; source: Oklahoma Department of Wildlife Conservation.",
+            commercialUseAllowed: null,
+            modificationAllowed: null,
+            reviewedDate: "2026-08-24",
+            changesMade: "Preserved source transparency and resized the verified 1740 x 1130 ODWC PNG proportionally to 1200 x 779; encoded as transparent WebP without crop, recolor, reshaping, or background compositing."
+        },
+        productionStatus: "User-approved primary Fish identification illustration with documented ODWC rights caveat",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -1358,6 +1519,5 @@ const MEDIA_DATA = Object.freeze([
 
 console.info(
     `[Loaded] ${MEDIA_DATA_BUILD_INFO.file} | ` +
-    `${MEDIA_DATA_BUILD_INFO.milestone} | ` +
     `${MEDIA_DATA.length} records`
 );

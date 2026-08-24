@@ -730,7 +730,7 @@ function renderRigSearchResultCard(rig) {
             <span class="search-result-card__title">${rig.name}</span>
             <span class="search-result-card__meta">${rig.difficulty}</span>
             <span class="search-result-card__summary">${rig.summary}</span>
-            <span class="search-result-card__action">View instructions →</span>
+            <span class="search-result-card__action">View instructions <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
         </button>
     `;
 }
@@ -1274,8 +1274,16 @@ function renderReelSetupNavigation(appMain) {
     backButton.className = "page-navigation";
     backButton.style.marginBottom = "0";
 
+    const setBackButtonLabel = (label) => {
+        const arrow = document.createElement("span");
+        arrow.className = "link-arrow link-arrow--back";
+        arrow.setAttribute("aria-hidden", "true");
+        arrow.textContent = "←";
+        backButton.replaceChildren(arrow, document.createTextNode(` ${label}`));
+    };
+
     if (previous) {
-        backButton.textContent = `← ${previous.label}`;
+        setBackButtonLabel(previous.label);
         backButton.addEventListener("click", () => {
             reelSetupState.stepId = previous.stepId;
             showView(ROUTES.REEL_SETUP);
@@ -1283,7 +1291,7 @@ function renderReelSetupNavigation(appMain) {
     } else {
         const returnContext = peekDetailNavigationContext();
         const fromKnotDetail = returnContext?.route === ROUTES.KNOT_DETAIL;
-        backButton.textContent = fromKnotDetail ? `← ${returnContext.label}` : "← Knots";
+        setBackButtonLabel(fromKnotDetail ? returnContext.label : "Knots");
         backButton.addEventListener("click", () => {
             resetReelSetupState();
             if (fromKnotDetail && returnToDetailNavigationContext()) return;

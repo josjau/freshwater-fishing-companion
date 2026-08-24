@@ -1,146 +1,108 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.1.0  
+**Document Revision:** 1.4.2  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** Workflow Transition — Closed; Wave 3 Bass ready for a separate task  
-**Transition Baseline:** `ee0149a81bab06c1f7650482ed30ffcc5111bfcd`  
+**Workstream Status:** Wave 3 Bass — Fish presentation and native internal arrow approved; app-wide navigation-arrow weight normalization prepared for review  
+**Committed Baseline:** `24224d9693267911205318dd9da2373f3e5c299d`  
 **Last Updated:** 2026-08-24
 
 # Purpose
 
-This file is the repository-backed continuity record for active work that has not yet reached final closeout. It records the current workstream, actual implementation/validation state, unresolved gates, and exact resume point.
+This file is intentionally a **compact current-work record only**. It owns the active repository workstream, current validation/synchronization state, unresolved gates, and exact resume point.
 
-It does not replace durable owners such as `ARCHITECTURE.md`, `DECISIONS.md`, `DEVELOPMENT_WORKFLOW.md`, domain/data-model documents, active workstream records, or the formal Active Change Ledger. Durable truth is promoted to the correct owner at a logical checkpoint.
+Completed history and durable decisions do not accumulate here. Before a commit closes a session, package, section, defect, or decision, durable information must be promoted to its canonical repository owner. After GitHub reconciliation, remove completed material from this file except for explicitly open carryover.
 
-# Authority During the Workflow Transition
+# Authority Model
 
-The transition is now closed. The current authority model is:
-
-1. GitHub `main` is authoritative for committed production source and formally reconciled documentation.
-2. This file is the live current-state and exact-resume record for any verified local checkout.
-3. `HANDOFF.md` is the compact formal recovery entrypoint and points here for the current continuation state.
-4. Uncommitted local changes exist only on the active computer and are not a cross-computer checkpoint.
-5. The former Google document **Freshwater Fishing Companion — Working State** is retired as an active continuity source. It is preserved only as historical migration evidence and does not need to be read for project recovery or substantive work.
+1. GitHub `main` is authoritative for the committed source baseline and formally reconciled documentation.
+2. Google Drive `Working Source/Current` is the authoritative **working-tree package** between commits and may intentionally be ahead of GitHub.
+3. The Drive working tree is stored atomically as a canonical full-tree ZIP plus manifest rather than as a manually maintained exploded mirror.
+4. The local repository is the application/browser-validation copy of the Drive working tree. Local-only edits are not durable working truth.
+5. `HANDOFF.md` is the compact repository recovery entrypoint; `ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward items.
+6. Chat history is context only. The Google Drive Chat Logs file is disaster-recovery evidence only and is not an operational authority.
 
 # Current Workstream
 
-**No implementation workstream is currently open.**
+**Fish Guide — Production Wave 3: Bass** is open at the recovered review-package gate.
 
-The repository-workflow transition is closed. Direct work in a verified local checkout, repository-backed continuity, one write-authorized task per checkout, deliberate commit/push boundaries, and GitHub `origin/main` synchronization are now the normal operating model.
+Current approved Wave 3 scope remains exactly:
 
-The next product workstream is a separate **Fish Guide — Production Wave 3: Bass** task. Its approved scope, exact locked decisions, evidence/media provenance, rights caveats, implementation boundary, and resume procedure are owned by `docs/workstreams/FISH-WAVE-3-BASS.md`.
+- Largemouth Bass
+- Smallmouth Bass
+- Spotted Bass
+- White Bass
+- Striped Bass
+- Hybrid Striped Bass
 
-# Workflow Transition Closeout
+All six processed Fish images remain user-approved. The six Fish records and six deterministic identification relationships are present in the recovered working tree.
 
-The transition package established and reconciled:
+The Fish-to-Rig review is now explicitly complete with **12 approved recommendations**:
 
-- root `AGENTS.md` startup, authority, write-control, and closeout instructions,
-- repository-backed Working State and compact Handoff roles,
-- the Active Change Ledger as the single owner of material non-closed carry-forward items,
-- direct local repository work with GitHub `origin/main` as the cross-computer synchronization point,
-- one coherent task per outcome and one write-authorized task per checkout,
-- durable decision/context promotion and an affected-file audit/fix cycle,
-- receiving-computer onboarding without making an unavailable second computer a project-wide blocker,
-- the locked Wave 3 Bass package and exact resume procedure,
-- deferred Repository Disaster Recovery / Reconstruction and Rig alternate-terminal gates,
-- the former Google Working State's retirement after repository continuity parity and GitHub verification.
+- Largemouth Bass — Texas Rig — Primary
+- Largemouth Bass — Inline Spinner Setup — Alternative
+- Smallmouth Bass — Jighead + Soft Plastic — Primary
+- Smallmouth Bass — Ned Rig — Alternative
+- Spotted Bass — Jighead + Soft Plastic — Primary
+- White Bass — Jighead + Soft Plastic — Primary
+- White Bass — Inline Spinner Setup — Primary
+- White Bass — Live-Bait Slip-Sinker Rig — Alternative
+- Striped Bass — Jighead + Soft Plastic — Primary
+- Striped Bass — Live-Bait Slip-Sinker Rig — Alternative
+- Hybrid Striped Bass — Jighead + Soft Plastic — Primary
+- Hybrid Striped Bass — Live-Bait Slip-Sinker Rig — Alternative
 
-The commit containing this revision is the transition-closeout checkpoint. Git history owns its exact SHA; do not place a commit's own SHA inside the commit.
+# Open Cross-Domain Finding
 
-# Verified Starting Baseline
+The Rig `useCases[]` species-specific wording is a semantic-owner/data-quality defect under D056. Fish applicability belongs to `FISH_RIG_GUIDANCE`, not to duplicated species lists inside Rig `useCases[]`. The finding is recorded in `V1-DESIGN-AUDIT.md` and must be addressed during that planned audit unless it directly blocks an earlier active workstream.
 
-- Repository root: `C:\Users\joshua.jauert\OneDrive - Northeast Oklahoma Electric Coop\Desktop\Personal\Fishing Companion\freshwater-fishing-companion`
-- Branch: `main`
-- Transition starting baseline: `ee0149a81bab06c1f7650482ed30ffcc5111bfcd`
-- First repository-continuity checkpoint: `0051c60741137c80087fc1276f495e9e37c497b7`
-- Remote: `https://github.com/josjau/freshwater-fishing-companion.git`
-- Starting worktree at each recorded baseline: clean
+Do not add more Fish names to Rig `useCases[]` as a workaround.
 
-# Approved Local Operating Model
+# Recovery / Synchronization Status
 
-- Each computer has its own GitHub Desktop checkout.
-- GitHub `origin/main` is the cross-computer synchronization point.
-- Codex works directly in the verified local repository on the active computer.
-- Continue on `main` for the current single-writer model unless a concrete future concurrency, preview, deployment, or PWA need justifies a branch decision.
-- Use one task per coherent outcome/workstream.
-- Only one task may be write-authorized against the same checkout at a time.
-- Other tasks may perform bounded read-only research or analysis without creating competing project state.
-- At startup, verify repository root, branch, status, local `HEAD`, local `origin/main`, and remote before substantive work.
-- Read this file, Handoff, the Active Change Ledger, and applicable governing/workstream documents before editing.
-- Update this file at material decision, changed-scope, implementation, validation, deferment, and resume-point boundaries.
-- Promote finalized durable truth to its canonical owner at a formal checkpoint.
-- Review the complete local diff before a deliberate commit/push.
-- Never move work to another computer while required state exists only as uncommitted files.
-- Use a localhost development server for normal browser validation; `file://` is not the normal validation path.
-- ZIP delivery is an exceptional fallback, not the normal workflow.
+- Current GitHub `main` baseline: `24224d9693267911205318dd9da2373f3e5c299d` (`Close repository workflow transition`).
+- The failed repository-only transition left the prior Drive exploded `Working Source/Current` mirror stale.
+- The user-supplied `freshwater-fishing-companion(3).zip` recovered the actual uncommitted local content state; it contains no `.git` directory, which is expected for review packages.
+- The stale exploded Drive mirror is being retired/archived.
+- The replacement Drive `Working Source/Current` baseline is the validated full-tree ZIP generated from the recovered tree plus the approved corrections in this session.
+- Git metadata (branch, local HEAD, local origin/main, status, remote) must be verified from the user's actual local checkout after the new review ZIP is applied and before commit/push authorization.
 
-# Receiving-Computer Onboarding
+# Commit / Validation Documentation Closure Gate
 
-The unavailable second computer is not a blocker to continuing project work on this verified checkout. Before that computer later becomes the write-authorized workspace:
+Every commit candidate requires both:
 
-1. Fetch/pull GitHub `main` and confirm the expected checkpoint.
-2. Confirm a clean working tree whose local `HEAD` matches `origin/main`.
-3. Start a fresh task rooted at that checkout.
-4. Require the task to recover the authority model, current workstream, material open gates, and exact resume point from repository documentation alone.
-5. Resolve any mismatch before authorizing writes on that computer.
+1. **Full-tree mechanical verification** — the approved Drive working ZIP, local extracted tree, and intended commit file set must contain no unexpected, missing, stale, or local-only permanent repository files.
+2. **Repository documentation impact sweep** — every durable repository documentation file receives an explicit disposition for the commit: **UPDATED** or **VERIFIED — NO CHANGE REQUIRED** after checking whether the commit affects its responsibility.
 
-This is a device-onboarding safety check, not a reason to pause work on an already verified computer.
+A commit is not ready if a durable decision exists only in chat, Live Working State, or an unreconciled Drive note.
 
-# Transition Validation Still Required
+# Current Validation State
 
-No project-wide transition gate remains. The transition is closed. A new or previously unverified computer still must pass the receiving-computer onboarding procedure before it becomes write-authorized; that device-specific check does not pause work on an already verified checkout.
+Previously validated against the recovered local Wave 3 review tree:
 
-# Repository-Only Recovery Coverage
+- JavaScript syntax — PASS
+- canonical repository-integrity validator — PASS
+- six Fish records — PASS
+- six identification relationships — PASS
+- six approved Bass image assets — PASS
+- desktop 1280 px review — PASS
+- 390 px mobile review — PASS
+- alias/scientific-name search — PASS
+- ODWC attribution visibility — PASS
+- browser warnings/errors — PASS
 
-Repository continuity replaces the former Google document through these single owners:
+Because the Fish-to-Rig set changed from 10 to 12 recommendations after those checks, the regenerated review package must rerun source/package validation before commit. User browser review also remains open.
 
-| Recovery need | Repository owner |
-|---|---|
-| Current status and exact resume | this `WORKING_STATE.md` |
-| Compact startup/authority map | `HANDOFF.md` and root `AGENTS.md` |
-| Every material non-closed item/gate | `ACTIVE-CHANGE-LEDGER.md` |
-| Durable decisions and reasons | `DECISIONS.md` |
-| Workflow, write control, validation, and closeout rules | `DEVELOPMENT_WORKFLOW.md` |
-| Current architecture and document/source ownership | `ARCHITECTURE.md` |
-| Product order and future gates | `ROADMAP.md` |
-| Domain contracts | applicable data-model/domain documents |
-| Fish evidence and media standards | `FISH_REFERENCE_SOURCES.md` and `MEDIA_GUIDE.md` |
-| Exact active package, selected evidence/media, rights caveats, and acceptance gates | `workstreams/FISH-WAVE-3-BASS.md` |
-| Meaningful landed implementations/corrections | `CHANGELOG.md`, authoritative source, and Git history |
-| Closed bounded evidence | retained archive/workstream records when independently valuable; otherwise Git history |
-
-A fresh task must be able to answer what is authoritative, what is current, what remains open, what has and has not been implemented/validated, why the durable decisions exist, and exactly what action comes next by following this map. Google is not required for any of those tasks.
-
-# Local Validation
-
-- Existing repository-integrity validator: **PASS** — all 8 validation groups passed and the validator modified no repository content.
-- Replacement-integrity review: approved structural exceptions are limited to this deliberate Working State closeout rewrite; retained historical/transition headings and manual complete-diff review protect unrelated content.
-- Scope review: documentation only; no production source, data, media, configuration, dependency, or Fish staging file changed.
-- Repository-only recovery coverage: **PASS** — authority, current state, non-closed gates, durable decisions/reasons, implementation/validation status, Bass scope/evidence/media/rights state, and exact resume are all recoverable through the owner map above.
-- Closeout verification: the checkpoint containing this revision must be present on GitHub `main` and all written files must match the verified pushed blobs before the preserved Google document receives its retired notice.
-
-# Protected Fish State
-
-- Fish Guide Phase 0 is closed.
-- Trout Production Package 1, Gar Production Package, Production Wave 1, and Production Wave 2 are closed.
-- Wave 3 Bass contains exactly six Fish: Largemouth Bass, Smallmouth Bass, Spotted Bass, White Bass, Striped Bass, and Hybrid Striped Bass.
-- Northern Rock Bass remains in the later Sunfish & Crappie package.
-- Wave 3 semantic scope, canonical records, identification direction, relationship IDs, Fish-to-Rig guidance, and primary-media selections are approved and locked in `docs/workstreams/FISH-WAVE-3-BASS.md`.
-- No Wave 3 production source or production media implementation has begun.
-- Fish source/data/media writes still require explicit authorization for their specific scope.
+User browser review on 2026-08-24 confirmed that Compare Similar Fish centering and the standardized Selection/Fish ID image blocks are correct with no off-center presentation. The CSS-drawn internal directional arrow was rejected; the restored native Unicode `→` treatment with modest typographic emphasis was then explicitly approved. The approved weight is now being normalized across all navigation-arrow glyphs in the app (`←`, `→`, `↗`, and established compact-row `›`) using shared `font-weight: 800`; representative cross-app review remains pending.
 
 # Exact Resume Point
 
-Start a separate Wave 3 Bass task. Before any source or media write:
-
-1. Perform repository preflight and confirm a clean checkout on authoritative GitHub `main`.
-2. Read `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, `docs/workstreams/FISH-WAVE-3-BASS.md`, and the governing Fish, relationship, evidence, media, decision, and workflow documents named there.
-3. Reconfirm that the six-Fish package is locked and that production source/media implementation has not begun.
-4. Attempt direct acquisition of the six exact approved originals from the authoritative sources recorded in the workstream. Ask the user to transfer a file only if direct acquisition fails or the acquired bytes cannot be verified.
-5. Verify each original's identity, dimensions, filename where known, provenance, rights status, and content hash before processing.
-6. Obtain explicit authorization before writing staging or production media into the repository.
-7. Process six transparent WebP candidates without altering Fish anatomy or diagnostic detail; create the media manifest and contact sheet; run the Fish media validation gate; obtain user approval of the processed media.
-8. Re-fetch current repository patterns/baseline and obtain separate explicit authorization before editing production Fish data, relationships, guidance, or media records.
-
-Do not redefine the package from scratch. A genuine evidence, rights, acquisition, or implementation conflict must be recorded as a named gate rather than silently changing the locked decisions.
+1. Apply the corrected review ZIP directly over the existing local Git checkout; do **not** replace or copy the `.git` directory.
+2. Verify local Git metadata: repository root, branch `main`, status, local `HEAD`, local `origin/main`, and remote.
+3. Review the Git diff and confirm it represents the intended recovered Wave 3 + workflow/documentation reconciliation package plus the approved internal-arrow correction only.
+4. Run/confirm the required validators against the applied package.
+5. Spot-check the normalized `font-weight: 800` navigation-arrow treatment on representative surfaces: `←` Back/Home navigation, `→` internal actions, `↗` external destinations, and compact-row `›` affordances. Preserve the already-approved Fish centering/image-block presentation unless a new defect is observed.
+6. Continue/complete the Bass browser review: six Bass Fish, all six comparisons, Rig links, aliases/search, ODWC attribution, and desktop/mobile framing.
+7. Record any defect in the current Drive working state, correct Drive first, regenerate the review ZIP, and repeat the affected validation.
+8. When the package is approved, perform the documentation impact sweep and wait for explicit commit/push authorization.
+9. After push, re-fetch GitHub, verify the committed tree, reconcile Drive `Current` to the new Git baseline, and trim this file back to only remaining open work.

@@ -8,11 +8,118 @@
 "use strict";
 
 const FISH_RIG_GUIDANCE_BUILD_INFO = Object.freeze({
-    file: "data/fish-rig-guidance.js",
-    milestone: "Fish Guide — Production Package 1"
+    file: "data/fish-rig-guidance.js"
 });
 
 const FISH_RIG_GUIDANCE = Object.freeze([
+    {
+        fishId: "largemouth-bass",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "texas-rig",
+                priority: "Primary",
+                reason: "A Texas-rigged soft plastic can be worked through grass, brush, timber, and other shallow cover with reduced snagging."
+            },
+            {
+                rigId: "inline-spinner-setup",
+                priority: "Alternative",
+                reason: "An inline spinner gives a simple moving presentation for covering pond edges, sparse cover, and open pockets when Largemouth Bass are actively feeding."
+            }
+        ]
+    },
+    {
+        fishId: "smallmouth-bass",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A jighead and soft plastic provides a compact presentation that can be cast, drifted, hopped, or worked near rock and current."
+            },
+            {
+                rigId: "ned-rig",
+                priority: "Alternative",
+                reason: "A Ned Rig provides a compact finesse option for working rock, gravel, open bottom, and pressured or clear water when Smallmouth Bass respond better to a slower presentation."
+            }
+        ]
+    },
+    {
+        fishId: "spotted-bass",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A jighead and soft plastic can maintain depth and bottom contact around rock, channels, current, and deeper structure."
+            }
+        ]
+    },
+    {
+        fishId: "white-bass",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A jighead and small baitfish-shaped soft plastic can be cast or worked vertically through schooling fish in current and open water."
+            },
+            {
+                rigId: "inline-spinner-setup",
+                priority: "Primary",
+                reason: "An inline spinner provides a compact moving presentation for covering water and reaching actively feeding schools."
+            },
+            {
+                rigId: "live-bait-slip-sinker-rig",
+                priority: "Alternative",
+                reason: "A slip-sinker live-bait presentation offers a slower option for holding bait near deeper fish or along current breaks."
+            }
+        ]
+    },
+    {
+        fishId: "striped-bass",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A jighead and baitfish-shaped soft plastic can be cast or worked vertically at the depth of Striped Bass feeding in open water or current."
+            },
+            {
+                rigId: "live-bait-slip-sinker-rig",
+                priority: "Alternative",
+                reason: "A slip-sinker live-bait rig keeps bait near deeper fish while allowing a natural presentation with limited immediate resistance."
+            }
+        ]
+    },
+    {
+        fishId: "hybrid-striped-bass",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A jighead and baitfish-shaped soft plastic can be matched to schooling Hybrid Striped Bass and worked through open water or current."
+            },
+            {
+                rigId: "live-bait-slip-sinker-rig",
+                priority: "Alternative",
+                reason: "A slip-sinker live-bait presentation provides a controlled way to fish natural bait near deeper schools and current breaks."
+            }
+        ]
+    },
     {
         fishId: "rainbow-trout",
         createdVersion: "0.6.0",
@@ -213,6 +320,5 @@ const FISH_RIG_GUIDANCE = Object.freeze([
 
 console.info(
     `[Loaded] ${FISH_RIG_GUIDANCE_BUILD_INFO.file} | ` +
-    `${FISH_RIG_GUIDANCE_BUILD_INFO.milestone} | ` +
     `${FISH_RIG_GUIDANCE.length} guidance records`
 );

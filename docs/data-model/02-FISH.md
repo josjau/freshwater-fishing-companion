@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.4.2  
+**Document Revision:** 0.4.3  
 **Document Status:** Approved — Production Baseline + Fish Production Contract  
-**Implementation Status:** Staged production implementation active; Trout, Gar, Wave 1, and Wave 2 packages validated/closed; remaining locked library pending  
+**Implementation Status:** Staged production implementation active; Trout, Gar, Wave 1, and Wave 2 validated/closed; Wave 3 Bass implemented locally pending user review; remaining locked library pending  
 **Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056–D061, FISH-001–FISH-007  
 **Last Updated:** 2026-08-24
 
@@ -551,11 +551,11 @@ Closed Fish production packages:
 - Production Wave 1 — Common Carp + Freshwater Drum + Paddlefish
 - Production Wave 2 — Walleye / Sauger + Catfish
 
-Next approved package:
+Current local review package:
 
-- Production Wave 3 — Bass — locked six-Fish package in `../workstreams/FISH-WAVE-3-BASS.md`; production source/media implementation not started
+- Production Wave 3 — Bass — exact locked six-Fish package in `../workstreams/FISH-WAVE-3-BASS.md`; production source/media/evidence implementation is present and internally validated as an uncommitted local review set, with user browser approval and later commit/push still pending
 
-After Bass, the planned next package is Sunfish & Crappie unless a genuine evidence/media/relationship/product issue requires a smaller boundary.
+After Bass closes, the planned next package is Sunfish & Crappie unless a genuine evidence/media/relationship/product issue requires a smaller boundary.
 
 ---
 

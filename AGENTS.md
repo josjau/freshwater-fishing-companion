@@ -7,18 +7,19 @@ These instructions apply to the entire repository.
 Before substantive work:
 
 1. Confirm the repository root, current branch, working-tree status, local `HEAD`, local `origin/main`, and remote URL.
-2. Read `docs/WORKING_STATE.md`, `docs/HANDOFF.md`, and `docs/ACTIVE-CHANGE-LEDGER.md`.
+2. Read `docs/WORKING_STATE.md`, `docs/HANDOFF.md`, and `docs/ACTIVE-CHANGE-LEDGER.md`, then verify the current Google Drive `Working Source/Current` package when work depends on uncommitted state.
 3. Read `docs/DEVELOPMENT_WORKFLOW.md` plus the governing architecture, decision, data-model, media, or workstream documents for the requested scope.
 4. Compare the recorded resume point with the actual repository state. Do not rely on chat history as authority.
 
 ## Authority
 
 - GitHub `main` is authoritative for committed production source and formally reconciled documentation.
-- `docs/WORKING_STATE.md` is the live local current-state and exact-resume record.
+- Google Drive `Working Source/Current` is the authoritative working-tree package between commits and may be ahead of GitHub.
+- `docs/WORKING_STATE.md` is the compact current-state and exact-resume record; it must not become a historical journal.
 - `docs/HANDOFF.md` is the compact formal recovery entrypoint.
 - `docs/ACTIVE-CHANGE-LEDGER.md` is the formal owner of material non-closed carry-forward items.
 - Governing documents and current approved decisions outrank plans, archives, historical records, and old chat conclusions.
-- The former Google Working State is retired as an active continuity source. It may be consulted only as historical migration evidence and never overrides GitHub `main` or current repository documentation.
+- The former large Google Working State is retired as active authority. The current Drive working package is operational state; the separate Chat Logs file is disaster-recovery evidence only and must not be used as source authority.
 
 ## Change control
 
@@ -30,9 +31,9 @@ Before substantive work:
 
 ## Continuity and closeout
 
-- Update `docs/WORKING_STATE.md` at material decision, scope, implementation, validation, deferment, and resume-point boundaries.
-- Promote durable rules and decisions to their canonical governing documents; do not make Working State a duplicate specification.
-- Before moving work to another computer, commit and push the reviewed checkpoint. Never rely on uncommitted files to synchronize computers.
+- Keep `docs/WORKING_STATE.md` limited to active work, unresolved gates, synchronization/validation status, and the exact resume point.
+- Promote durable rules, decisions, completed package results, and closed defects to their canonical governing documents before commit; remove completed history from Working State after reconciliation.
+- Represent every approved uncommitted working change in the Drive `Working Source/Current` full-tree package. Local-only files are not a cross-session checkpoint.
 - A new or previously unverified computer may not become the write-authorized checkout until it has pulled the expected GitHub checkpoint, confirmed a clean matching tree, and demonstrated repository-documentation-only recovery of the current state and exact resume point.
-- At closeout, validate the complete diff, reconcile Working State and the Active Change Ledger, and verify the resulting GitHub state.
+- At closeout, validate the complete diff and full tree, perform the repository-wide documentation impact sweep (every durable doc = UPDATED or VERIFIED — NO CHANGE REQUIRED), reconcile Working State and the Active Change Ledger, and verify the resulting GitHub state.
 - Do not begin a dependent workstream until the current one is finalized or deliberately parked with an explicit resume point.

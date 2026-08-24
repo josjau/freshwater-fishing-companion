@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.2.0  
+**Document Revision:** 1.3.2  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `ee0149a81bab06c1f7650482ed30ffcc5111bfcd`  
@@ -13,7 +13,7 @@ This ledger keeps every material non-closed project item visible until it receiv
 
 It does not duplicate full design reasoning. Each entry identifies the current status, the controlling detailed owner/gate, and the required next action.
 
-GitHub `main` owns formal state. `WORKING_STATE.md` owns the live workstream/resume state. The former Google Working State is retired as an active continuity source and does not own current delta.
+GitHub `main` owns committed formal state. Google Drive `Working Source/Current` owns the exact approved uncommitted working tree; `WORKING_STATE.md` owns compact live workstream/resume context. The former large Google Working State is retired as active authority.
 
 # Status Vocabulary
 
@@ -41,7 +41,7 @@ No active transition item remains. WF-001 closed after repository continuity par
 | UX-005 | DEFERRED TO NAMED GATE | Compact detail density outside Rigs | Domain-specific review | Reuse only after the target domain demonstrates the Rig density pattern fits. |
 | UX-006 | PARKED | Technically verified local Rig visual library | Rig/media future quality gate | Use licensed/verified/manual/reference-grounded media only; generated finished/build-step Rig imagery remains prohibited. |
 | UX-008 | DEFERRED TO NAMED GATE | Package-era source headers such as `REPLACEMENT` | Next deliberate edit to an affected permanent source file | Remove obsolete package-era header language when that file is next intentionally edited; do not create unrelated source churn solely for comments. |
-| UX-009 | REQUIRED | Version 1 full site-wide design/mobile audit | `V1-DESIGN-AUDIT.md` | After Version 1 functional scope is sufficiently stable, execute the component-first site-wide audit, reconcile inconsistent visual/link/container semantics, and require PASS on an actual mobile device before Version 1 design is considered complete. Continue recording cross-domain findings there during active builds rather than resolving them opportunistically. |
+| UX-009 | REQUIRED | Version 1 full site-wide design/mobile audit | `V1-DESIGN-AUDIT.md` | After Version 1 functional scope is sufficiently stable, execute the component-first site-wide audit, including the recorded Rig `useCases[]` species-applicability ownership defect under D056. Treat the approved native directional-glyph grammar and shared `font-weight: 800` navigation-arrow rule as established standards to verify, not redesign. Reconcile remaining inconsistent visual/link/container semantics and duplicated relationship semantics, then require PASS on an actual mobile device before Version 1 design is complete. |
 
 # Regulations / Tackle Open Design
 
@@ -52,16 +52,18 @@ No active transition item remains. WF-001 closed after repository continuity par
 
 # Fish Guide — Production
 
-Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical items and are no longer active ledger entries. Trout Production Package 1, Gar Production Package, Production Wave 1 (Common Carp + Freshwater Drum + Paddlefish), and Production Wave 2 (Walleye / Sauger + Catfish) are closed. Production Wave 3 — Bass is the next separate product task. Its locked six-Fish package is approved; production source/media implementation has not begun.
+Fish Guide Phase 0 is closed. FISH-001 through FISH-007 are terminal historical items and are no longer active ledger entries. Trout Production Package 1, Gar Production Package, Production Wave 1 (Common Carp + Freshwater Drum + Paddlefish), and Production Wave 2 (Walleye / Sauger + Catfish) are closed. Production Wave 3 — Bass is the active product task. Its six-Fish package is recovered into the Drive working package with the user-approved 12-recommendation Fish-to-Rig set; regenerated package validation, user browser approval, and later explicit commit/push authorization remain open.
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture — remaining library | D057–D061 + `data-model/02-FISH.md` + `data-model/09-RELATIONSHIPS.md` + `FISH_REFERENCE_SOURCES.md` + `workstreams/FISH-WAVE-3-BASS.md` | Start a separate Wave 3 task from the locked six-Fish workstream. Attempt direct acquisition/verification of the six selected originals first; use user transfer only as fallback. After processed-media approval and separate source-write authorization, implement the locked records, six relationship IDs, and Fish-to-Rig guidance using the current closed Wave 2 pattern. After Bass, proceed with Sunfish & Crappie unless a genuine evidence/media/relationship/product decision requires a smaller boundary. |
-| FISH-009 | APPROVED / PENDING IMPLEMENTATION | Locked Fish UX — remaining library | Fish Phase 0 archive + D051/D061 + `workstreams/FISH-WAVE-3-BASS.md` + validated Trout/Gar/Wave 1/Wave 2 presentation | Reuse the closed Wave 2 Fish presentation baseline for the locked Bass package: standardized Selection/Fish ID framing, transparent eligible Fish over `#f4f0e8`, responsive Compare Similar Fish behavior, anatomical body-axis alignment for dedicated Compare Fish, approved internal/external arrow treatments, plain-border information sections, and semantic Safety treatment. Media/contact-sheet approval and mobile review remain acceptance gates. |
+| FISH-008 | APPROVED / PENDING IMPLEMENTATION | Locked Fish production architecture — remaining library | D057–D061 + `data-model/02-FISH.md` + `data-model/09-RELATIONSHIPS.md` + `FISH_REFERENCE_SOURCES.md` + `workstreams/FISH-WAVE-3-BASS.md` | Validate and close the local Wave 3 Bass review set, then proceed with Sunfish & Crappie unless a genuine evidence/media/relationship/product decision requires a smaller boundary. The status remains library-wide because Fish outside Wave 3 are still pending. |
+| FISH-009 | APPROVED / PENDING IMPLEMENTATION | Locked Fish UX — remaining library | Fish Phase 0 archive + D051/D061 + `workstreams/FISH-WAVE-3-BASS.md` + validated Trout/Gar/Wave 1/Wave 2 presentation | The corrected native `→` arrow, Compare Similar Fish centering, and Selection/Fish ID image-block presentation are user-approved. Verify the app-wide `font-weight: 800` navigation-arrow normalization on representative back/internal/external/chevron surfaces, complete the remaining desktop/mobile review, and close only after approved source is committed, pushed, re-fetched, and verified. Continue using the validated Fish presentation baseline for later packages. |
 | FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish. |
 | FISH-011 | DEFERRED / NOT AUTOMATIC IMPLEMENTATION | Deferred Fish candidates outside V1 | Future explicit scope/evidence | Do not treat excluded candidates as unfinished V1 work. |
 
 **Closed Wave 2 checkpoint:** Wave 2 source landed at `8399ae0cee0f5c4b9301041c904707430352bbd1` (`Fish - Walleye Sauger Refinement`). The final Compare Fish anatomical-alignment refinement landed at `d55cf21d7de0099c259de70ad5b113a4d78ea91d` (`Fish - Compare Card Refinement`) and was merged into `main` at `f47ece0d243457d90a8b980855130af043d98a05`. Final review approved the main Compare Fish page on desktop and mobile. Post-push verification confirmed the two refinement files match the approved review package, JavaScript syntax passes, CSS structure passes, and no source drift was detected. Wave 2 is **CLOSED**. The active Fish production wave is **Wave 3 — Bass**.
+
+**Current Wave 3 checkpoint:** All six processed images are user-approved. Explicit Fish-to-Rig review is complete with 12 approved recommendations. The recovered working package contains six production Fish, six deterministic comparison pairs, evidence entries, Media records/assets, and per-context image framing. Browser review confirmed Compare Similar Fish centering and the standardized Selection/Fish ID image blocks. The CSS-drawn internal arrow was rejected; the restored native Unicode `→` treatment was subsequently user-approved. The same `font-weight: 800` is now staged across all application navigation-arrow glyphs (`←`, `→`, `↗`, and established compact-row `›`) for representative cross-app review. Regenerated package validation and completion of user browser review remain required. The set remains uncommitted and unpushed. While the affected source files were open, obsolete package-era build labels were removed from the four Fish/Media registries and `view-renderer.js` under UX-008; UX-008 remains active for other affected permanent source files when they are deliberately reopened.
 
 # Named Future Architecture / Product Gates
 
@@ -105,4 +107,5 @@ These items are not current blockers and must not be promoted merely because the
 4. PARKED/DEFERRED entries must retain a meaningful trigger/gate.
 5. Placeholder UI does not create an implementation requirement.
 6. Historical PASS/CLOSED records do not override later approved architecture.
-7. Local Working State updates may precede this file during an active session, but formal checkpointing must reconcile material non-closed delta back into this ledger.
+7. Working State may record current-session delta first, but formal checkpointing must reconcile material non-closed items here and durable truth into the correct canonical owner.
+8. Before every commit, every durable repository documentation file receives an explicit UPDATED or VERIFIED — NO CHANGE REQUIRED disposition; no applicable document may be silently skipped.

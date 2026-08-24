@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.0.7  
+**Document Revision:** 1.1.0  
 **Document Status:** Approved — Production Authoring Standard  
-**Implementation Status:** Standard active; per-Fish evidence population proceeds with Fish production authoring  
+**Implementation Status:** Standard active; evidence populated through the local Wave 3 Bass review set, with the remaining Fish library pending  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
 **Last Updated:** 2026-08-24
 
@@ -17,7 +17,7 @@ This document is not a duplicate runtime external-link registry. It supports aut
 
 Fish Guide Phase 0 is closed. Per-Fish evidence entries are populated as the approved 30-Fish production library is authored. The absence of target-library evidence entries before the corresponding production data is authored does not mean the current pre-migration Fish source has already satisfied the target production contract.
 
-The locked pre-implementation evidence/media package for Production Wave 3 — Bass is preserved in `workstreams/FISH-WAVE-3-BASS.md`. During implementation, promote its authoritative source anchors into the per-Fish and per-relationship structures in this ledger before evidence completeness can close; do not redefine the locked package from scratch.
+The approved evidence/media package for Production Wave 3 — Bass is preserved in `workstreams/FISH-WAVE-3-BASS.md`. Its authoritative source anchors are now promoted into the per-Fish and per-relationship structures in this ledger as part of the local production review set.
 
 # Governing Principles
 
@@ -708,6 +708,96 @@ These entries document the approved Phase 0 taxonomy decision and provide the in
 **Reviewed date:** 2026-08-23  
 **Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; supplied original is 1200 x 813 JPEG; Public Domain.
 
+## ODWC-LARGEMOUTH-BASS
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Bass, Largemouth — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/bass-largemouth  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-24  
+**Notes:** Supports Oklahoma occurrence, Centrarchidae context, shallow cover and reservoir/river habitat, mouth-hinge and dorsal-notch identification, horizontal side stripe, tongue-patch context, and soft-plastic targeting around cover.
+
+## ODWC-SMALLMOUTH-BASS
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Bass, Smallmouth — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/bass-smallmouth  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-24  
+**Notes:** Supports Oklahoma occurrence, `Micropterus dolomieu`, Centrarchidae, Bronzeback terminology, rock/current habitat, mouth-hinge and connected-dorsal identification, vertical side bars, tongue-patch context, and compact lure/jig targeting.
+
+## ODWC-SPOTTED-BASS
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Bass, Spotted — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/bass-spotted  
+**Source type:** Official state wildlife/fisheries field guide and approved media source record  
+**Reviewed date:** 2026-08-24  
+**Notes:** Supports Oklahoma occurrence, `Micropterus punctulatus`, Centrarchidae, Kentucky Bass terminology, rock/current/channel/deep-water associations, mouth-hinge, spot-row, connected-dorsal and tongue-patch identification, and jig targeting. The page credits the selected illustration to Duane Raver. The exact ODWC-hosted file is not independently verified Public Domain and the host footer states All Rights Reserved; the production Media record preserves this caveat and does not overstate the license.
+
+## ODWC-WHITE-BASS
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Bass, White — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/bass-white  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-24  
+**Notes:** Supports Oklahoma occurrence, `Morone chrysops`, Moronidae, Sand Bass terminology, open-water/current habitat, deep body and arched-back identification, single tongue-patch context, and jig, spinner, and live-bait targeting.
+
+## ODWC-STRIPED-BASS
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Bass, Striped — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/bass-striped  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-24  
+**Notes:** Supports Oklahoma occurrence, `Morone saxatilis`, Moronidae, Striper terminology, open/deep-water and current associations, slender body, mostly continuous stripe pattern, two tongue patches, and jig/live-bait targeting.
+
+## ODWC-HYBRID-STRIPED-BASS
+
+**Authority / publisher:** Oklahoma Department of Wildlife Conservation  
+**Title:** Bass, Striped Hybrid — Oklahoma Field Guide  
+**URL:** https://www.wildlifedepartment.com/wildlife/field-guide/fish/bass-striped-hybrid  
+**Source type:** Official state wildlife/fisheries field guide and approved media source record  
+**Reviewed date:** 2026-08-24  
+**Notes:** Supports Oklahoma occurrence, White Bass–Striped Bass hybrid identity, Moronidae context, Wiper and Whiterock Bass terminology, open/deep-water and current associations, intermediate body depth, broken stripe identification, variable tongue-patch context, and jig/live-bait targeting. The page credits the selected illustration to Duane Raver. The exact ODWC-hosted file is not independently verified Public Domain and the host footer states All Rights Reserved; the production Media record preserves this caveat and does not overstate the license.
+
+## USFWS-LARGEMOUTH-BASS-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Largemouth bass — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/largemouth-bass-5  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-24  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified original is 1200 x 778 JPEG; Public Domain. Historical media naming does not override the project's AFS-governed canonical scientific identity.
+
+## USFWS-SMALLMOUTH-BASS-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Smallmouth bass — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/smallmouth-bass-19  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-24  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified original is 1200 x 742 JPEG; Public Domain.
+
+## USFWS-WHITE-BASS-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** White bass — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/white-bass-1  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-24  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified original is 1200 x 734 JPEG; Public Domain.
+
+## USFWS-STRIPED-BASS-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Striped bass — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/striped-bass-12  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-24  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified original is 1200 x 772 JPEG; Public Domain.
+
 # Evidence Entries — Production Population Status
 
 Per-Fish and pairwise evidence population begins with FISH-008/FISH-009 production authoring. Do not fabricate empty “complete” evidence records merely to satisfy documentation appearance before the corresponding canonical Fish content is researched.
@@ -1181,6 +1271,223 @@ Yellow Bullhead distinction evidence
 
 Notes
 - The comparison leads with Flathead head/jaw shape; pale Yellow Bullhead chin barbels are supporting evidence.
+
+## Largemouth Bass (`largemouth-bass`)
+
+Regional Inclusion
+- ODWC-LARGEMOUTH-BASS — Oklahoma occurrence establishes presence within the approved Northeast Oklahoma target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- AFS-LARGEMOUTH-2026
+- MDC-LARGEMOUTH
+
+Identification
+- ODWC-LARGEMOUTH-BASS
+
+Habitat / Waterbody
+- ODWC-LARGEMOUTH-BASS
+
+Media Provenance
+- USFWS-LARGEMOUTH-BASS-RAVER
+
+Rig Guidance / Targeting
+- ODWC-LARGEMOUTH-BASS — Supports soft-plastic targeting around shallow vegetation and cover behind the approved Texas Rig starting guidance.
+
+Taxonomy / Evidence Notes
+- Canonical production identity follows AFS-NAMES-8: `Micropterus nigricans`. Former/synonymous `Micropterus salmoides` is retained here as provenance rather than as a common-name alias.
+
+## Smallmouth Bass (`smallmouth-bass`)
+
+Regional Inclusion
+- ODWC-SMALLMOUTH-BASS — Oklahoma occurrence establishes presence within the approved Northeast Oklahoma target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- ODWC-SMALLMOUTH-BASS
+
+Identification
+- ODWC-SMALLMOUTH-BASS
+
+Habitat / Waterbody
+- ODWC-SMALLMOUTH-BASS
+
+Aliases
+- ODWC-SMALLMOUTH-BASS
+
+Media Provenance
+- USFWS-SMALLMOUTH-BASS-RAVER
+
+Rig Guidance / Targeting
+- ODWC-SMALLMOUTH-BASS — Supports compact lure/jig targeting in rock and current behind the approved Jighead + Soft Plastic guidance.
+
+## Spotted Bass (`spotted-bass`)
+
+Regional Inclusion
+- ODWC-SPOTTED-BASS — Oklahoma occurrence establishes presence within the approved Northeast Oklahoma target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- ODWC-SPOTTED-BASS
+
+Identification
+- ODWC-SPOTTED-BASS
+
+Habitat / Waterbody
+- ODWC-SPOTTED-BASS
+
+Aliases
+- ODWC-SPOTTED-BASS
+
+Media Provenance
+- ODWC-SPOTTED-BASS
+
+Rig Guidance / Targeting
+- ODWC-SPOTTED-BASS — Supports jig targeting around rock, channel, current, and deeper structure.
+
+Rights / Evidence Notes
+- The selected ODWC illustration carries the exact-file rights caveat documented in the source catalog, Media registry, and Wave 3 workstream. It is not labeled independently verified Public Domain.
+
+## White Bass (`white-bass`)
+
+Regional Inclusion
+- ODWC-WHITE-BASS — Oklahoma occurrence establishes presence within the approved Northeast Oklahoma target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- ODWC-WHITE-BASS
+
+Identification
+- ODWC-WHITE-BASS
+
+Habitat / Waterbody
+- ODWC-WHITE-BASS
+
+Aliases
+- ODWC-WHITE-BASS
+
+Media Provenance
+- USFWS-WHITE-BASS-RAVER
+
+Rig Guidance / Targeting
+- ODWC-WHITE-BASS — Supports jig, inline-spinner, and live-bait approaches for open-water schools and current.
+
+## Striped Bass (`striped-bass`)
+
+Regional Inclusion
+- ODWC-STRIPED-BASS — Oklahoma occurrence establishes presence within the approved Northeast Oklahoma target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- ODWC-STRIPED-BASS
+
+Identification
+- ODWC-STRIPED-BASS
+
+Habitat / Waterbody
+- ODWC-STRIPED-BASS
+
+Aliases
+- ODWC-STRIPED-BASS
+
+Media Provenance
+- USFWS-STRIPED-BASS-RAVER
+
+Rig Guidance / Targeting
+- ODWC-STRIPED-BASS — Supports jig and live-bait approaches for open/deep water and current.
+
+## Hybrid Striped Bass (`hybrid-striped-bass`)
+
+Regional Inclusion
+- ODWC-HYBRID-STRIPED-BASS — Oklahoma occurrence establishes presence within the approved Northeast Oklahoma target region.
+
+Taxonomy / Family
+- AFS-NAMES-8 — Supports the canonical parent-species names used in the hybrid notation.
+- ODWC-HYBRID-STRIPED-BASS
+
+Identification
+- ODWC-HYBRID-STRIPED-BASS
+
+Habitat / Waterbody
+- ODWC-HYBRID-STRIPED-BASS
+
+Aliases
+- ODWC-HYBRID-STRIPED-BASS
+
+Media Provenance
+- ODWC-HYBRID-STRIPED-BASS
+
+Rig Guidance / Targeting
+- ODWC-HYBRID-STRIPED-BASS — Supports jig and live-bait approaches for schooling fish in open water and current.
+
+Rights / Evidence Notes
+- The selected ODWC illustration carries the exact-file rights caveat documented in the source catalog, Media registry, and Wave 3 workstream. It is not labeled independently verified Public Domain.
+
+## largemouth-bass-vs-smallmouth-bass
+
+Largemouth Bass distinction evidence
+- ODWC-LARGEMOUTH-BASS
+
+Smallmouth Bass distinction evidence
+- ODWC-SMALLMOUTH-BASS
+
+Notes
+- The comparison leads with mouth-hinge position and dorsal connection; side markings support the identification, and color alone is not decisive.
+
+## largemouth-bass-vs-spotted-bass
+
+Largemouth Bass distinction evidence
+- ODWC-LARGEMOUTH-BASS
+
+Spotted Bass distinction evidence
+- ODWC-SPOTTED-BASS
+
+Notes
+- The comparison leads with mouth-hinge position and the deep-versus-connected dorsal split; rows of spots below the lateral stripe support Spotted Bass identification.
+
+## smallmouth-bass-vs-spotted-bass
+
+Smallmouth Bass distinction evidence
+- ODWC-SMALLMOUTH-BASS
+
+Spotted Bass distinction evidence
+- ODWC-SPOTTED-BASS
+
+Notes
+- The comparison leads with mouth-hinge position and vertical bars versus a lateral stripe with rows of spots below it.
+
+## striped-bass-vs-white-bass
+
+Striped Bass distinction evidence
+- ODWC-STRIPED-BASS
+
+White Bass distinction evidence
+- ODWC-WHITE-BASS
+
+Notes
+- Body profile and one-versus-two tongue-patch structure lead the comparison; horizontal stripes are supporting evidence.
+
+## hybrid-striped-bass-vs-white-bass
+
+Hybrid Striped Bass distinction evidence
+- ODWC-HYBRID-STRIPED-BASS
+
+White Bass distinction evidence
+- ODWC-WHITE-BASS
+
+Notes
+- Intermediate body depth and broken stripe pattern separate the hybrid from the deeper, arched White Bass. Hybrid tongue-patch presentation is not treated as solely deterministic.
+
+## hybrid-striped-bass-vs-striped-bass
+
+Hybrid Striped Bass distinction evidence
+- ODWC-HYBRID-STRIPED-BASS
+
+Striped Bass distinction evidence
+- ODWC-STRIPED-BASS
+
+Notes
+- The hybrid's deeper intermediate body and broken stripes contrast with the Striped Bass's slender profile, mostly continuous stripes, and two distinct parallel tongue patches.
 
 # Related Documents
 

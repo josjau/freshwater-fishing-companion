@@ -8,11 +8,160 @@
 "use strict";
 
 const FISH_IDENTIFICATION_BUILD_INFO = Object.freeze({
-    file: "data/fish-identification.js",
-    milestone: "Fish Guide — Production Package 1"
+    file: "data/fish-identification.js"
 });
 
 const FISH_IDENTIFICATION_RELATIONSHIPS = Object.freeze([
+    {
+        id: "largemouth-bass-vs-smallmouth-bass",
+        fishIds: ["largemouth-bass", "smallmouth-bass"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "largemouth-bass",
+                text: "The mouth hinge extends behind the rear edge of the eye."
+            },
+            {
+                fishId: "largemouth-bass",
+                text: "A broad horizontal side stripe and a deep notch between the weakly connected dorsal-fin sections support the identification."
+            },
+            {
+                fishId: "smallmouth-bass",
+                text: "The mouth hinge ends in front of the rear edge of the eye."
+            },
+            {
+                fishId: "smallmouth-bass",
+                text: "Vertical side bars and connected dorsal-fin sections support the identification; color alone is not decisive."
+            }
+        ]
+    },
+    {
+        id: "largemouth-bass-vs-spotted-bass",
+        fishIds: ["largemouth-bass", "spotted-bass"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "largemouth-bass",
+                text: "The mouth hinge extends behind the rear edge of the eye."
+            },
+            {
+                fishId: "largemouth-bass",
+                text: "The dorsal-fin sections are weakly connected and separated by a deep notch."
+            },
+            {
+                fishId: "spotted-bass",
+                text: "The mouth hinge is approximately even with the rear edge of the eye."
+            },
+            {
+                fishId: "spotted-bass",
+                text: "Rows of dark spots below the lateral stripe and connected dorsal-fin sections support the identification."
+            }
+        ]
+    },
+    {
+        id: "smallmouth-bass-vs-spotted-bass",
+        fishIds: ["smallmouth-bass", "spotted-bass"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "smallmouth-bass",
+                text: "The mouth hinge ends in front of the rear edge of the eye."
+            },
+            {
+                fishId: "smallmouth-bass",
+                text: "Vertical bars rather than rows of spots below a lateral stripe mark the sides."
+            },
+            {
+                fishId: "spotted-bass",
+                text: "The mouth hinge is approximately even with the rear edge of the eye."
+            },
+            {
+                fishId: "spotted-bass",
+                text: "A lateral stripe with rows of dark spots below it separates the typical side pattern from a Smallmouth Bass."
+            }
+        ]
+    },
+    {
+        id: "striped-bass-vs-white-bass",
+        fishIds: ["striped-bass", "white-bass"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "striped-bass",
+                text: "The body is slender without the distinctly arched back of a White Bass."
+            },
+            {
+                fishId: "striped-bass",
+                text: "Strong horizontal stripes are mostly continuous, and the tongue has two distinct parallel tooth patches."
+            },
+            {
+                fishId: "white-bass",
+                text: "The body is deeper, with a distinctly arched back behind the head."
+            },
+            {
+                fishId: "white-bass",
+                text: "The tongue has one round or heart-shaped tooth patch; side striping is supporting evidence."
+            }
+        ]
+    },
+    {
+        id: "hybrid-striped-bass-vs-white-bass",
+        fishIds: ["hybrid-striped-bass", "white-bass"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "hybrid-striped-bass",
+                text: "The body is intermediate in depth and carries broken or discontinuous horizontal stripes."
+            },
+            {
+                fishId: "hybrid-striped-bass",
+                text: "Tongue-patch presentation is variable and should be used only as supporting evidence."
+            },
+            {
+                fishId: "white-bass",
+                text: "The body is distinctly deep with an arched back, and the horizontal striping is less strongly broken."
+            },
+            {
+                fishId: "white-bass",
+                text: "One round or heart-shaped tongue patch supports the White Bass identification."
+            }
+        ]
+    },
+    {
+        id: "hybrid-striped-bass-vs-striped-bass",
+        fishIds: ["hybrid-striped-bass", "striped-bass"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "hybrid-striped-bass",
+                text: "The body is deeper and more intermediate in profile than a typical Striped Bass."
+            },
+            {
+                fishId: "hybrid-striped-bass",
+                text: "Horizontal side stripes are commonly broken or discontinuous; tongue-patch presentation is variable."
+            },
+            {
+                fishId: "striped-bass",
+                text: "The body is more slender, without the Hybrid Striped Bass's intermediate depth."
+            },
+            {
+                fishId: "striped-bass",
+                text: "Strong horizontal stripes are mostly continuous, and two distinct parallel tongue patches support the identification."
+            }
+        ]
+    },
     {
         id: "brown-trout-vs-rainbow-trout",
         fishIds: ["brown-trout", "rainbow-trout"],
@@ -250,6 +399,5 @@ const FISH_IDENTIFICATION_RELATIONSHIPS = Object.freeze([
 
 console.info(
     `[Loaded] ${FISH_IDENTIFICATION_BUILD_INFO.file} | ` +
-    `${FISH_IDENTIFICATION_BUILD_INFO.milestone} | ` +
     `${FISH_IDENTIFICATION_RELATIONSHIPS.length} relationships`
 );

@@ -8,8 +8,7 @@
 "use strict";
 
 const VIEW_RENDERER_BUILD_INFO = Object.freeze({
-    file: "view-renderer.js",
-    milestone: "Knots — Connected Knowledge Navigation Closeout"
+    file: "view-renderer.js"
 });
 
 function buildSearchControlsMarkup(inputId, placeholder) {
@@ -28,10 +27,11 @@ function buildSearchControlsMarkup(inputId, placeholder) {
 }
 
 function buildPageNavigationMarkup(parentLabel = null) {
+    const backArrowMarkup = '<span class="link-arrow link-arrow--back" aria-hidden="true">←</span>';
     const parentMarkup = parentLabel
-        ? `<button class="page-navigation" type="button" data-parent-navigation>← ${parentLabel}</button>`
+        ? `<button class="page-navigation" type="button" data-parent-navigation>${backArrowMarkup} ${parentLabel}</button>`
         : "";
-    const homeLabel = parentLabel ? "Home" : "← Home";
+    const homeLabel = parentLabel ? "Home" : `${backArrowMarkup} Home`;
 
     return `
         <div class="page-navigation-group">
@@ -232,6 +232,48 @@ function buildFishMediaMarkup(media, className, loading = "lazy") {
 }
 
 const FISH_IMAGE_FRAMING = Object.freeze({
+    "largemouth-bass": Object.freeze({
+        selection: Object.freeze({ scale: 0.98, positionY: "24%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.03, positionY: "19%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 0.95, positionY: "41%", offsetX: "0%", offsetY: "5%" }),
+        compareCatalog: Object.freeze({ scale: 0.92, positionY: "41%", offsetX: "0%", offsetY: "5%" }),
+        compareDetail: Object.freeze({ scale: 0.94, positionY: "41%", offsetX: "0%", offsetY: "4%" })
+    }),
+    "smallmouth-bass": Object.freeze({
+        selection: Object.freeze({ scale: 1.18, positionY: "27%", offsetX: "-3.5%" }),
+        detail: Object.freeze({ scale: 1.22, positionY: "22%", offsetX: "-3.5%" }),
+        similar: Object.freeze({ scale: 1.17, positionY: "43%", offsetX: "-3.5%", offsetY: "3%" }),
+        compareCatalog: Object.freeze({ scale: 1.17, positionY: "43%", offsetX: "-3.5%", offsetY: "3%" }),
+        compareDetail: Object.freeze({ scale: 1.17, positionY: "43%", offsetX: "-3.5%", offsetY: "3%" })
+    }),
+    "spotted-bass": Object.freeze({
+        selection: Object.freeze({ scale: 0.98, positionY: "50%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.02, positionY: "50%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 0.95, positionY: "50%", offsetX: "0%", offsetY: "-1%" }),
+        compareCatalog: Object.freeze({ scale: 0.93, positionY: "50%", offsetX: "0%", offsetY: "-1%" }),
+        compareDetail: Object.freeze({ scale: 0.94, positionY: "50%", offsetX: "0%", offsetY: "-1%" })
+    }),
+    "white-bass": Object.freeze({
+        selection: Object.freeze({ scale: 1.27, positionY: "36%", offsetX: "-5.5%" }),
+        detail: Object.freeze({ scale: 1.31, positionY: "31%", offsetX: "-5.5%" }),
+        similar: Object.freeze({ scale: 1.27, positionY: "46%", offsetX: "-5.5%", offsetY: "2%" }),
+        compareCatalog: Object.freeze({ scale: 1.27, positionY: "46%", offsetX: "-5.5%", offsetY: "2%" }),
+        compareDetail: Object.freeze({ scale: 1.27, positionY: "46%", offsetX: "-5.5%", offsetY: "2%" })
+    }),
+    "striped-bass": Object.freeze({
+        selection: Object.freeze({ scale: 1.00, positionY: "40%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.05, positionY: "38%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 0.96, positionY: "47%", offsetX: "0%", offsetY: "1%" }),
+        compareCatalog: Object.freeze({ scale: 0.95, positionY: "47%", offsetX: "0%", offsetY: "1%" }),
+        compareDetail: Object.freeze({ scale: 0.96, positionY: "47%", offsetX: "0%", offsetY: "1%" })
+    }),
+    "hybrid-striped-bass": Object.freeze({
+        selection: Object.freeze({ scale: 0.96, positionY: "50%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 0.94, positionY: "50%", offsetX: "0%", offsetY: "-1%" }),
+        compareCatalog: Object.freeze({ scale: 0.93, positionY: "50%", offsetX: "0%", offsetY: "-1%" }),
+        compareDetail: Object.freeze({ scale: 0.94, positionY: "50%", offsetX: "0%", offsetY: "-1%" })
+    }),
     "rainbow-trout": Object.freeze({
         selection: Object.freeze({ scale: 1.06, positionY: "30%", offsetX: "0%" }),
         detail: Object.freeze({ scale: 1.06, positionY: "17%", offsetX: "0%" }),
@@ -898,7 +940,7 @@ function buildKnotUsageMarkup(record, usageContexts) {
                 <div class="internal-knowledge-link-list">
                     ${taskContexts.map((task) => `
                         <button class="internal-knowledge-link" type="button" data-knot-task-link-id="${task.taskId}">
-                            ${task.title} <span aria-hidden="true">&rarr;</span>
+                            ${task.title} <span class="link-arrow link-arrow--internal" aria-hidden="true">&rarr;</span>
                         </button>
                     `).join("")}
                 </div>
@@ -917,7 +959,7 @@ function buildKnotUsageMarkup(record, usageContexts) {
             <li${isInitiallyHidden ? ' data-knot-rig-usage-extra hidden' : ""}>
                 <button class="compact-link-row compact-link-row--knot" type="button" data-knot-rig-id="${usage.rigId}">
                     <span>${usage.title}</span>
-                    <span aria-hidden="true">&rsaquo;</span>
+                    <span class="link-arrow link-arrow--chevron" aria-hidden="true">&rsaquo;</span>
                 </button>
             </li>
         `;
@@ -1297,7 +1339,7 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
                     ${relatedRigs.map((rig) => `
                         <button class="compact-link-row" type="button" data-reference-rig-id="${rig.id}">
                             <span>${rig.name}</span>
-                            <span aria-hidden="true">&rsaquo;</span>
+                            <span class="link-arrow link-arrow--chevron" aria-hidden="true">&rsaquo;</span>
                         </button>
                     `).join("")}
                 </div>
@@ -1314,7 +1356,7 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
                         return `
                             <button class="compact-link-row" type="button" data-related-reference-id="${related.id}">
                                 <span>${related.name}</span>
-                                <span aria-hidden="true">&rsaquo;</span>
+                                <span class="link-arrow link-arrow--chevron" aria-hidden="true">&rsaquo;</span>
                             </button>
                         `;
                     }).join("")}
@@ -1326,7 +1368,7 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
             ? findRecordById(TACKLE_DATA, referenceHistory[referenceHistory.length - 1])
             : null;
         const backMarkup = previousReference
-            ? `<button class="reference-popover__back" type="button" data-reference-back>&larr; Back to ${previousReference.name}</button>`
+            ? `<button class="reference-popover__back" type="button" data-reference-back><span class="link-arrow link-arrow--back" aria-hidden="true">&larr;</span> Back to ${previousReference.name}</button>`
             : "";
 
         dialog.innerHTML = `
@@ -1598,4 +1640,4 @@ function renderInstructionDetail(appMain, detailConfig) {
     updateReadinessStatus();
 }
 
-console.info(`[Loaded] ${VIEW_RENDERER_BUILD_INFO.file} | ${VIEW_RENDERER_BUILD_INFO.milestone}`);
+console.info(`[Loaded] ${VIEW_RENDERER_BUILD_INFO.file}`);

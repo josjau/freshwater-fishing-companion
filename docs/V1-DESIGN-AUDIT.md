@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Version 1 Design Audit
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.2  
+**Document Revision:** 1.0.5  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
 **Last Updated:** 2026-08-24
@@ -102,7 +102,7 @@ The findings below are intentionally preserved for the final audit. Unless marke
 
 ## 3. Link Language and Semantics
 
-**Status:** ARROW SEMANTICS APPROVED / BROADER STANDARDIZATION REQUIRED
+**Status:** ARROW GLYPH / WEIGHT STANDARD APPROVED / BROADER STANDARDIZATION REQUIRED
 
 The application needs one recognizable cross-domain link grammar.
 
@@ -111,7 +111,10 @@ Wave 2 desktop/mobile review validates these directional-icon semantics:
 - External destinations use `↗`.
 - Internal directional navigation uses `→` when an arrow cue is appropriate.
 - The icon stays immediately adjacent to the destination text rather than being detached at the far edge of the row.
-- Directional arrows must have enough visual size/weight to remain legible beside bold destination text; a CSS-drawn internal arrow is acceptable when the font glyph is visually too thin.
+- Directional arrows must have enough visual size/weight to remain legible beside bold destination text.
+- Wave 3 review rejected the CSS-drawn internal arrow because its shaft/head construction did not sit naturally with the text. The user approved the restored native Unicode `→` treatment and made native glyphs the directional-arrow standard rather than CSS-drawn shaft/head icons.
+- All navigation-arrow glyphs use a shared **font weight of 800** throughout the application. This includes back `←`, internal-forward `→`, external `↗`, and the existing compact-row chevron `›` where that row pattern is used. Glyph-specific size and spacing may vary only enough to preserve optical alignment; weight remains consistent.
+- Directional glyphs should be separately wrapped/styled so arrow weight can remain consistent without unnecessarily changing the destination-label typography.
 
 The remaining audit work is to formalize the broader visual grammar:
 
@@ -237,6 +240,26 @@ The final audit must:
 - identify cards that are ordinary browse/reference destinations and must not receive the workflow treatment,
 - preserve one standardized workflow color/token and hierarchy,
 - avoid using workflow emphasis merely as decoration.
+
+## 13. Rig `useCases[]` Semantic Ownership / Fish-Specific Leakage
+
+**Status:** AUDIT REQUIRED / ARCHITECTURE CONSISTENCY DEFECT
+
+Fish applicability is owned by `FISH_RIG_GUIDANCE` Decision Knowledge, not by canonical Rig records. The current Rig model intentionally does not define `targetFishIds[]`, and any future Rig-to-Fish presentation must derive from `FISH_RIG_GUIDANCE` rather than duplicating the relationship on Rig.
+
+Several existing Rig `useCases[]` strings nevertheless name target Fish directly (for example, Jighead + Soft Plastic, Inline Spinner Setup, Live-Bait Slip-Sinker Rig, Ned Rig, and other bass-oriented Rig records). This creates semantic leakage: a user can follow a Fish-to-Rig recommendation into a Rig whose descriptive `useCases[]` wording appears to privilege a different species even though that wording is not the canonical Fish-applicability relationship.
+
+The Version 1 UX Design Audit must:
+
+- inventory every Rig `useCases[]` entry that names a Fish or Fish group,
+- determine whether each phrase is intrinsic Rig-use context or duplicated Fish-applicability guidance,
+- rewrite duplicated Fish-specific applicability as species-neutral presentation/condition/use-context language where practical,
+- keep canonical Fish-to-Rig suitability, ranking, and rationale exclusively in `FISH_RIG_GUIDANCE`,
+- derive any Rig-detail “Fish this Rig is useful for” presentation from `FISH_RIG_GUIDANCE` if such reverse presentation is retained or added,
+- do not add `targetFishIds[]`, `fishIds[]`, or another inverse Fish mapping to Rig merely to support UX, search, or navigation,
+- validate that revised Rig copy still explains the Rig clearly without misleading users about its broader applicability.
+
+This defect is intentionally parked for the site-wide UX Design Audit unless it blocks an active Fish-production review. It must not be solved by adding more species-specific duplication to Rig data.
 
 # Mobile Validation Matrix
 

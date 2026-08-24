@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.4.0
+**Document Revision:** 1.4.1
 **Document Status:** Approved
 **Last Updated:** 2026-08-24
 
@@ -309,7 +309,9 @@ Expected behavior:
 - External verified references use `↗` and open in a new tab.
 - Internal directional navigation uses `→` when an arrow cue is appropriate.
 - Directional icons stay immediately adjacent to the destination text rather than being detached at the far edge of a row.
-- Internal `→` and external `↗` must have enough visual size/weight to remain legible beside bold destination text; icon treatment may be drawn independently of the text glyph when needed for consistent weight.
+- Directional navigation uses native Unicode glyphs rather than CSS-drawn shaft/head icons.
+- All navigation-arrow glyphs use `font-weight: 800`: back `←`, internal-forward `→`, external `↗`, and the compact-row chevron `›` where that established row pattern is used. Glyph-specific size/spacing may vary only for optical alignment.
+- Arrow glyphs should be separately wrapped/styled so the arrow can carry the shared weight without forcing the destination label to the same weight.
 - External CTA labels should name the destination when practical instead of using generic wording such as `Browse` or `Learn More`.
 - The approved Dashboard Regulations CTA is `Go to ODWC Regulations ↗`.
 - `↗` indicates that the user is leaving the application for an external destination.

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.4.0  
+**Document Revision:** 2.6.2  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-24
@@ -14,14 +14,14 @@ It intentionally does **not** duplicate complete milestone history, domain archi
 
 GitHub `main` remains authoritative for production source and formally reconciled documentation.
 
-`WORKING_STATE.md` (**Freshwater Fishing Companion — Working State**) is the live repository current-state and exact-resume record. The former Google Working State is retired as an active continuity source and is preserved only as historical migration evidence.
+`WORKING_STATE.md` (**Freshwater Fishing Companion — Working State**) is the compact current-state/exact-resume record. Google Drive `Working Source/Current` owns the authoritative uncommitted working tree as a full-tree ZIP plus manifest. GitHub owns committed truth. The former large Google Working State is retired as active authority; Chat Logs are disaster-recovery evidence only.
 
 # Start Here
 
 For a new project session:
 
 1. Confirm repository root, branch, working-tree status, local `HEAD`, local `origin/main`, and remote.
-2. Read `WORKING_STATE.md` for the live workstream and exact resume point.
+2. Read `WORKING_STATE.md` for the current workstream/exact resume and verify the current Drive `Working Source/Current` package when unreconciled work exists.
 3. Read this Handoff.
 4. Read `ACTIVE-CHANGE-LEDGER.md` for every material non-closed item.
 5. Read the governing document for the specific work being resumed.
@@ -37,7 +37,8 @@ For a new project session:
 | How must implementation/documentation work be performed? | `DEVELOPMENT_WORKFLOW.md` |
 | What is the product milestone order and future direction? | `ROADMAP.md` |
 | What non-closed work must remain visible? | `ACTIVE-CHANGE-LEDGER.md` |
-| What is the live local workstream state and exact resume point? | `WORKING_STATE.md` |
+| What is the active workstream state and exact resume point? | `WORKING_STATE.md` |
+| What exact uncommitted working tree is authoritative between commits? | Google Drive `Working Source/Current` full-tree ZIP + manifest |
 | What is the latest formal continuation point? | `HANDOFF.md` |
 | What changed materially over time? | `CHANGELOG.md` |
 | What historical milestones were completed? | frozen `MILESTONES.md` |
@@ -51,13 +52,13 @@ For a new project session:
 
 **Workflow Transition — CLOSED**
 
-The repository now owns current state, exact resume, durable decisions, open gates, implementation/validation state, and workstream evidence without depending on the former Google Working State. Direct local-repository work, one write-authorized task per checkout, GitHub `origin/main` synchronization, and deliberate commit/push handoff boundaries are the normal operating model.
+The failed repository-only transition was recovered. The operating model is now GitHub committed baseline + atomic Drive working package + local validation checkout. Durable decisions and closed work belong in repository owners; `WORKING_STATE.md` remains current-only. Every commit requires a full-tree check and an explicit documentation impact sweep.
 
 The unavailable second computer does not block project work. Before it later becomes write-authorized, it must pull a clean matching checkpoint and pass repository-documentation-only recovery as a receiving-device onboarding check.
 
 # Current Product Milestone
 
-**Fish Guide — Production Wave 3: Bass — READY / NOT STARTED**
+**Fish Guide — Production Wave 3: Bass — USER BROWSER REVIEW IN PROGRESS / APP-WIDE ARROW-WEIGHT REVIEW PENDING**
 
 Repository Audit Cleanup and Fish Guide Phase 0 are closed. Trout Production Package 1 is **CLOSED** at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` (`Fish - Search Fix`) after GitHub verification, static validation, and user-confirmed fresh-session live validation. The broader prepared Hotfix 2 was not applied and remains superseded unless a fresh-load regression later proves it necessary.
 
@@ -72,7 +73,9 @@ FISH-001 through FISH-007 are terminal Phase 0 history. The active Fish work rem
 - **FISH-008 — approved Fish production architecture implementation across the remaining locked library**
 - **FISH-009 — approved Fish UX implementation across the remaining locked library**
 
-The next separate product task is **Production Wave 3 — Bass**. Its six-Fish boundary and all approved resume decisions are owned by `docs/workstreams/FISH-WAVE-3-BASS.md`. After Bass closes, continue with Sunfish & Crappie unless evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
+The active product task is **Production Wave 3 — Bass**. The user approved all six processed images and completed explicit Fish-to-Rig review, producing a 12-recommendation set. Its durable package decisions are owned by `docs/workstreams/FISH-WAVE-3-BASS.md`; current recovery/review status is owned by `WORKING_STATE.md`. The review set is uncommitted and has not been pushed. After Bass closes, continue with Sunfish & Crappie unless evidence, media, relationship complexity, or a genuine new product decision requires a smaller review boundary.
+
+Wave 3 browser review confirmed the Compare Similar Fish centering rules and the standardized Selection/Fish ID image blocks with no centering defects. The CSS-drawn internal directional arrow was rejected for alignment/appearance; the restored native Unicode `→` treatment was then user-approved. The same `font-weight: 800` is now applied to navigation-arrow glyphs throughout the app, with representative back/internal/external/chevron review still required before the broader Bass review closes.
 
 # Fish Production Contract
 
@@ -136,7 +139,7 @@ The audit was created from findings observed during actual mobile validation of 
 - unnecessary empty relationship copy,
 - overall mobile density and space utilization.
 
-Wave 2 validated the directional icon convention itself: external destinations retain `↗`; internal destinations that use a directional arrow use `→`, positioned with the destination text and rendered with sufficient visual weight. The final audit still owns broader cross-domain color-family, pill-versus-text, and shape-selection normalization.
+Wave 3 finalized the directional-glyph treatment: use native Unicode glyphs rather than CSS-drawn arrow geometry, preserve `←` for back, `→` for internal-forward, and `↗` for external navigation, and apply shared `font-weight: 800` to all navigation-arrow glyphs including the established compact-row `›`. The final audit still owns broader cross-domain color-family, pill-versus-text, and shape-selection normalization.
 
 The final design audit is a **required Version 1 completion gate**, but it is not a blocker for continuing Fish production.
 
@@ -162,13 +165,11 @@ The existing repository-integrity validator remains the single deterministic val
 
 # Exact Resume Point
 
-1. Start a separate **Wave 3 Bass** task; do not treat this transition-closeout task as production authorization.
-2. Confirm a clean verified checkout on GitHub `main`.
-3. Read `WORKING_STATE.md`, the Active Change Ledger, `docs/workstreams/FISH-WAVE-3-BASS.md`, and every Fish/media/workflow owner named by that workstream.
-4. Begin with exact-original acquisition and verification planning. The assistant attempts direct acquisition first; user file transfer is a fallback only when direct acquisition fails or bytes cannot be verified.
-5. Obtain explicit media-write authorization before adding staging or production assets to the repository.
-6. Process and validate the six transparent WebP candidates, manifest, and contact sheet; obtain user approval of the media set.
-7. Obtain separate production source authorization before changing Fish data, identification relationships, Fish-to-Rig guidance, or media records.
+1. Keep this checkout as the sole write-authorized copy while the Wave 3 files remain uncommitted.
+2. Open the repository site locally and review the six-Fish Bass collection, every Fish detail, all six comparisons, rig links, search/aliases, ODWC attribution, and desktop/mobile framing.
+3. If review finds a defect, keep the correction bounded to Wave 3 and rerun the affected syntax, integrity, package-fidelity, and browser checks.
+4. When the user approves the complete production result, reconcile the final diff and documentation.
+5. Commit and push only after separate explicit authorization, then re-fetch and verify GitHub before closing Wave 3.
 
 When a second computer later becomes available, treat its clean pull and repository-documentation-only recovery test as receiving-device onboarding. It is not a blocker to the Wave 3 task on this verified computer.
 

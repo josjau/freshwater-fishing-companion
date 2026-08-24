@@ -375,40 +375,12 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     flex: 0 0 auto;
     line-height: 1;
     vertical-align: -0.08em;
+    font-weight: 800;
 }
 .link-arrow--external { font-size: 1.3em; }
-.link-arrow--internal {
-    position: relative;
-    width: 1.1em;
-    height: .72em;
-    overflow: hidden;
-    margin-left: .08em;
-    font-size: 1em;
-    text-indent: -9999px;
-}
-.link-arrow--internal::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: calc(100% - .30em);
-    height: 2px;
-    border-radius: 999px;
-    background: currentColor;
-    transform: translateY(-50%);
-}
-.link-arrow--internal::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: .02em;
-    width: .42em;
-    height: .42em;
-    border-top: 2px solid currentColor;
-    border-right: 2px solid currentColor;
-    transform: translateY(-50%) rotate(45deg);
-    transform-origin: center;
-}
+.link-arrow--internal { margin-left: .06em; font-size: 1.2em; }
+.link-arrow--back { margin-right: .06em; font-size: 1.2em; }
+.link-arrow--chevron { font-size: 1.2em; }
 
 .reference-link { display: inline-flex; min-height: auto; align-items: center; gap: var(--space-1); margin: 0; padding: 0; border: 0; background: transparent; color: var(--text); font-weight: 800; text-align: left; cursor: pointer; }
 .reference-link:hover { color: var(--accent-hover); }

@@ -44,7 +44,7 @@ function buildKnotInstructionMediaMarkup(record) {
             </div>
             <a class="knot-media-link" href="${media.externalUrl}" target="_blank" rel="noopener noreferrer">
                 <span>${actionLabel}</span>
-                <span aria-hidden="true">↗</span>
+                <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span>
             </a>
         </section>
     `;

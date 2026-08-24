@@ -9,9 +9,7 @@
 "use strict";
 
 const FISH_DATA_BUILD_INFO = Object.freeze({
-    file: "data/fish.js",
-    milestone: "MS2.1",
-    replacement: "Fish Data Foundation"
+    file: "data/fish.js"
 });
 
 const FISH_DATA = Object.freeze([
@@ -19,29 +17,43 @@ const FISH_DATA = Object.freeze([
         id: "largemouth-bass",
         name: "Largemouth Bass",
         summary:
-            "A widely distributed freshwater predator recognized by " +
-            "its large mouth and dark horizontal side stripe.",
+            "A black bass recognized by a mouth hinge that extends behind " +
+            "the eye and a broad horizontal stripe along the side.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
-        scientificName: "Micropterus salmoides",
-        category: "Bass",
+        scientificName: "Micropterus nigricans",
+        categoryId: "bass",
         family: "Centrarchidae",
-        habitatTags: ["Grass", "Timber", "Brush", "Open Water"],
+        aliases: [],
+        identificationTraits: [
+            "The mouth hinge extends behind the rear edge of the eye when the mouth is closed.",
+            "A broad dark horizontal stripe runs along the side.",
+            "The two dorsal-fin sections are weakly connected and separated by a deep notch.",
+            "The tongue usually lacks the rough tooth patch found on many Smallmouth and Spotted Bass; color alone is not decisive."
+        ],
+        habitatTags: ["Grass", "Timber", "Brush", "Shallow Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
     {
         id: "smallmouth-bass",
         name: "Smallmouth Bass",
         summary:
-            "A bronze-colored bass commonly associated with clear water, " +
-            "rock, current, and cooler freshwater habitat.",
+            "A black bass recognized by a mouth hinge that ends before the " +
+            "rear edge of the eye and vertical bars along the side.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Micropterus dolomieu",
-        category: "Bass",
+        categoryId: "bass",
         family: "Centrarchidae",
+        aliases: ["Bronzeback"],
+        identificationTraits: [
+            "The mouth hinge ends in front of the rear edge of the eye when the mouth is closed.",
+            "Dark vertical bars commonly mark the sides.",
+            "The two dorsal-fin sections are connected rather than separated by a deep notch.",
+            "A rough tooth patch on the tongue can support the identification but should not be used alone."
+        ],
         habitatTags: ["Rock", "Open Water", "Current"],
         waterbodyTypes: ["Lake", "River", "Creek", "Reservoir"]
     },
@@ -49,16 +61,86 @@ const FISH_DATA = Object.freeze([
         id: "spotted-bass",
         name: "Spotted Bass",
         summary:
-            "A black bass with rows of dark spots below the lateral line " +
-            "and habitat preferences that often overlap other bass species.",
+            "A black bass recognized by a mouth hinge near the rear edge of " +
+            "the eye and rows of dark spots below the lateral stripe.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Micropterus punctulatus",
-        category: "Bass",
+        categoryId: "bass",
         family: "Centrarchidae",
-        habitatTags: ["Rock", "Timber", "Open Water", "Current"],
+        aliases: ["Kentucky Bass"],
+        identificationTraits: [
+            "The mouth hinge is approximately even with the rear edge of the eye when the mouth is closed.",
+            "A dark lateral stripe is accompanied by rows of dark spots below it.",
+            "The two dorsal-fin sections are connected and are not divided by the deep notch typical of a Largemouth Bass.",
+            "A rough tooth patch on the tongue can support the identification but should not be used alone."
+        ],
+        habitatTags: ["Rock", "Current", "Channel", "Deep Water"],
         waterbodyTypes: ["Lake", "River", "Reservoir"]
+    },
+    {
+        id: "white-bass",
+        name: "White Bass",
+        summary:
+            "A deep-bodied temperate bass recognized by its arched back, " +
+            "horizontal stripes, and a single tongue patch.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Morone chrysops",
+        categoryId: "bass",
+        family: "Moronidae",
+        aliases: ["Sand Bass"],
+        identificationTraits: [
+            "The body is deep, with a distinctly arched back behind the head.",
+            "The tongue has one round or heart-shaped tooth patch.",
+            "Horizontal side stripes support the identification, but body shape and tongue-patch pattern provide the stronger separation from Striped Bass."
+        ],
+        habitatTags: ["Open Water", "Current", "Deep Water"],
+        waterbodyTypes: ["Lake", "Reservoir", "River", "Creek"]
+    },
+    {
+        id: "striped-bass",
+        name: "Striped Bass",
+        summary:
+            "A slender temperate bass recognized by strong, mostly continuous " +
+            "horizontal stripes and two parallel tongue patches.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Morone saxatilis",
+        categoryId: "bass",
+        family: "Moronidae",
+        aliases: ["Striper"],
+        identificationTraits: [
+            "The body is slender and does not have the distinctly arched back of a White Bass.",
+            "Strong horizontal side stripes are mostly continuous rather than broken.",
+            "The tongue has two distinct parallel tooth patches."
+        ],
+        habitatTags: ["Open Water", "Deep Water", "Current"],
+        waterbodyTypes: ["Lake", "Reservoir", "River"]
+    },
+    {
+        id: "hybrid-striped-bass",
+        name: "Hybrid Striped Bass",
+        summary:
+            "A White Bass–Striped Bass hybrid recognized by its intermediate " +
+            "body depth and broken horizontal side stripes.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Morone chrysops × Morone saxatilis",
+        categoryId: "bass",
+        family: "Moronidae",
+        aliases: ["Wiper", "Whiterock Bass"],
+        identificationTraits: [
+            "The body is deeper than a typical Striped Bass and intermediate between the parent species.",
+            "Horizontal side stripes are commonly broken or discontinuous.",
+            "Tongue-patch presentation varies and should be treated as supporting evidence rather than the sole identifier."
+        ],
+        habitatTags: ["Open Water", "Current", "Deep Water"],
+        waterbodyTypes: ["Lake", "Reservoir", "River"]
     },
     {
         id: "bluegill",
@@ -446,7 +528,5 @@ const FISH_DATA = Object.freeze([
 
 console.info(
     `[Loaded] ${FISH_DATA_BUILD_INFO.file} | ` +
-    `${FISH_DATA_BUILD_INFO.milestone} | ` +
-    `${FISH_DATA_BUILD_INFO.replacement} | ` +
     `${FISH_DATA.length} records`
 );

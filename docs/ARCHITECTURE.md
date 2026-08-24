@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.7.0  
+**Document Revision:** 0.7.1  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-24
 
@@ -251,7 +251,7 @@ Search scope is hierarchical where navigation defines a narrower eligible univer
 
 Owns canonical Fish records and stable Fish IDs.
 
-Current production is in a deliberate staged migration. Trout, Gar, Production Wave 1, and Production Wave 2 Fish use the approved production schema; remaining locked-library Fish may retain the legacy seed shape until their production package lands. `data-model/02-FISH.md` owns the exact current contract/status.
+Current production is in a deliberate staged migration. Trout, Gar, Production Wave 1, and Production Wave 2 Fish use the approved production schema. The local uncommitted Wave 3 Bass review set migrates/adds its six approved Fish to that schema; remaining locked-library Fish may retain the legacy seed shape until their production package lands. `data-model/02-FISH.md` owns the exact current contract/status.
 
 Fish identification media is accuracy-critical and follows `MEDIA_GUIDE.md`.
 
@@ -312,6 +312,7 @@ Entity records do not maintain inverse media-ID arrays solely to locate attached
 Current production includes:
 
 - 29 canonical Tackle recognition-media attachments,
+- 21 active primary Fish identification-media attachments in the local Wave 3 review state,
 - approved external instructional-media records for all 10 Version 1 Knots.
 
 Future Fish, Rig, Lure, Technique, and other entity media use the same owner model unless a later explicit decision establishes a genuinely different semantic relationship.
