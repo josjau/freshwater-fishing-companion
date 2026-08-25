@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.6.4  
+**Document Revision:** 2.6.5  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-24
@@ -58,7 +58,7 @@ The unavailable second computer does not block project work. Before it later bec
 
 # Current Product Milestone
 
-**Fish Guide — Sunfish & Crappie — NEXT PLANNED PACKAGE / NOT STARTED**
+**Fish Guide — Sunfish & Crappie — PLANNING ACTIVE / PRODUCTION NOT STARTED**
 
 Repository Audit Cleanup and Fish Guide Phase 0 are closed. Trout Production Package 1 is **CLOSED** at `0ea38b53cde8f1390cc84ea2ccd135acd3ee4431` (`Fish - Search Fix`) after GitHub verification, static validation, and user-confirmed fresh-session live validation. The broader prepared Hotfix 2 was not applied and remains superseded unless a fresh-load regression later proves it necessary.
 
@@ -73,7 +73,9 @@ FISH-001 through FISH-007 are terminal Phase 0 history. The active Fish work rem
 - **FISH-008 — approved Fish production architecture implementation across the remaining locked library**
 - **FISH-009 — approved Fish UX implementation across the remaining locked library**
 
-Production Wave 3 — Bass is **CLOSED**. The six processed images, six Fish records, six deterministic comparison relationships, and 12 Fish-to-Rig recommendations are committed, validated, and post-push verified. The historical package record is retained at `archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`. The next planned product task is **Sunfish & Crappie**, not yet started.
+Production Wave 3 — Bass is **CLOSED**. The six processed images, six Fish records, six deterministic comparison relationships, and 12 Fish-to-Rig recommendations are committed, validated, and post-push verified. The historical package record is retained at `archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`.
+
+Production Wave 4 — Sunfish & Crappie is now in **planning** at `docs/workstreams/FISH-WAVE-4-SUNFISH-CRAPPIE.md`. The proposed nine-Fish identity/versioning package and five deterministic comparison relationships are ready for explicit user lock. Primary media selection is **9/9 selected**: seven individually verified Duane Raver/USFWS Public Domain illustrations plus two exact generated-image selections for Ozark Bass and Northern Rock Bass under explicit one-time user exceptions to the standing Fish-media generation prohibition. Those two exceptions are asset-specific and do not alter the general `MEDIA_GUIDE.md` standard. Production processing/attachment has not started.
 
 Wave 3 browser review and repository closeout are complete. The user approved Compare Similar Fish centering, the standardized Selection/Fish ID image blocks, the restored native Unicode `→` treatment, and the shared `font-weight: 800` normalization across representative back `←`, internal `→`, external `↗`, and compact-row `›` navigation surfaces. No Wave 3 browser or closeout gate remains open.
 
@@ -166,10 +168,12 @@ The existing repository-integrity validator remains the single deterministic val
 # Exact Resume Point
 
 1. Verify current GitHub `main` and confirm Drive `Working Source/Current` is reconciled before new user-facing application work.
-2. Read `WORKING_STATE.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, and the governing Fish/evidence/media/relationship documents.
-3. Create/lock the Sunfish & Crappie production workstream before production edits.
-4. Prepare and review Wave 4 Fish data, evidence, comparison relationships, and media candidates before writing user-facing source.
-5. Keep documentation current during the wave and use the closeout validator so final closeout remains a short mechanical state transition.
+2. Read `WORKING_STATE.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, `docs/workstreams/FISH-WAVE-4-SUNFISH-CRAPPIE.md`, and the governing Fish/evidence/media/relationship documents.
+3. Treat the two exact approved generated Fish images as narrow one-time exceptions only; do not reopen their image-selection research or generalize the exceptions.
+4. Obtain explicit user lock of the proposed Wave 4 nine-Fish data/versioning package, five comparison relationships, and final nine-image media direction.
+5. Refresh/reconcile Drive `Working Source/Current` to current GitHub `main` before any user-facing Wave 4 write.
+6. Process/validate the selected Wave 4 media and prepare the user-facing review package through the standard Drive working-package workflow.
+7. Keep documentation current during the wave and use the closeout validator so final closeout remains a short mechanical state transition.
 
 When a second computer later becomes available, treat its clean pull and repository-documentation-only recovery test as receiving-device onboarding. It is not a blocker to the current Fish production milestone.
 
