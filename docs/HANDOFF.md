@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Handoff
 
 **Document:** HANDOFF.md  
-**Document Revision:** 2.6.6  
+**Document Revision:** 2.7.0  
 **Document Status:** Approved  
 **Role:** Compact formal GitHub recovery/continuation entrypoint  
 **Last Updated:** 2026-08-25
@@ -47,14 +47,23 @@ The completed Version 1 Fish baseline is 30 active production-schema Fish, 30 pr
 
 # Next Product Milestone
 
-**What Should I Throw** is next.
+**Regulations — U.S. State Fishing Resource Gateway** is next.
 
-Before implementation:
+D066 approves the initial direction:
 
-- revalidate the Conditions domain/gate,
-- read the Recommendation/Technique/Conditions ownership decisions,
-- define milestone inputs, scoring/ranking, explanation model, and Technique dependencies without duplicating canonical Fish/Rig/Technique instructions,
-- preserve closed Fish Guide content unless a new evidence/content defect is discovered.
+- state-first selection,
+- initial coverage of the 48 contiguous U.S. states,
+- in-app state landing pages containing authoritative official-resource links,
+- regulations/licensing/limits/special-rules resources prioritized before secondary planning resources,
+- no project-owned nationwide legal-rule database or legal interpretation,
+- no automatic GPS/location selection or persistent preferred-state setting during this milestone,
+- future preferred states may be prioritized after User Data architecture exists without hiding the full supported list.
+
+`workstreams/REGULATIONS-PHASE-0.md` owns the initial planning package. Phase 0 must validate the taxonomy/data/UX model against the Four-State states plus structurally different states before implementation is locked.
+
+After Regulations closes, the roadmap sequence is **What Should I Throw? → Settings / User Data Architecture Gate → Tackle Reference / Find Tackle → My Tackle → Catch Log → Global Search → Favorites final decision**.
+
+D067 requires the User Data gate before material Tackle expansion so stable user/profile identity, retention, persistence, migration, backup/restore, and preference ownership are settled before My Tackle/Catch Log become authoritative.
 
 # Review Workflow Baseline
 

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.3.5  
+**Document Revision:** 2.3.6  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-25
@@ -18,6 +18,17 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 
 # Unreleased
 
+## Product Direction — Regulations Gateway / User Data Sequencing
+
+### Changed
+
+- Promoted **Regulations — U.S. State Fishing Resource Gateway** to the next product milestone after Fish Guide and moved **What Should I Throw?** behind it.
+- Approved contiguous-U.S. Regulations coverage as a deliberate exception to the Four-State curated-content scope: state-first navigation will index authoritative official resources rather than store or interpret changing legal limits/rules.
+- Approved a flexible state resource taxonomy covering regulations, licenses/permits, limits/seasons resources, special rules, special permits/tags, public fishing/access, stocking, agency reports/forecasts, aquatic-invasive-species information, and other official resources where available.
+- Deferred automatic location/GPS selection and persistent preferred-state behavior; future preferred states may be prioritized after User Data architecture exists while all supported states remain accessible.
+- Moved **Settings / User Data Architecture Gate** ahead of **Tackle Reference / Find Tackle** so stable user/profile identity, retention, persistence, migration, backup/restore, and preference ownership are resolved before My Tackle/Catch Log architecture depends on them. Canonical Tackle remains shared Reference Knowledge; actual owned tackle remains user-scoped User Knowledge.
+- Added D066/D067 and the active `REGULATIONS-PHASE-0` planning workstream. No production application source/data behavior changed in this documentation-only reconciliation.
+
 ## Fish Guide — Production Wave 4 / Version 1 Fish Milestone Closeout
 
 ### Changed
@@ -32,7 +43,7 @@ For current formal continuation use `HANDOFF.md`. For material non-closed items 
 - User approved the final R2 package on desktop and after actual-mobile upload/testing.
 - GitHub Repository Integrity passed all 8 validation groups for the Wave 4 source commit; Pages build/deployment also succeeded.
 - Wave 4 and the Fish Guide Version 1 production milestone are finalized/closed.
-- The next canonical product milestone is **What Should I Throw**.
+- At Fish Guide closeout, **What Should I Throw** was the then-current next milestone; the later Product Direction entry above records the approved subsequent reorder that promotes Regulations ahead of it.
 
 ## Workflow / Continuity Recovery
 

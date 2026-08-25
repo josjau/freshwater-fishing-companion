@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 07-USER-DATA.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.3.1  
 **Document Status:** Draft  
 **Implementation Status:** Mixed — transitional local state exists; authoritative User Knowledge schemas not implemented  
-**Decision Baseline:** D028, D029, D056
+**Decision Baseline:** D028, D029, D056, D067
 
 ---
 
@@ -32,6 +32,7 @@ Accordingly, the structures below are architectural domains and candidate concep
 
 - Reference Knowledge remains application-owned.
 - User Knowledge remains user-owned.
+- Persistent User Knowledge must belong to a deliberate stable user/profile identity; a storage bucket or device is not itself the semantic user.
 - User records should reference canonical IDs rather than duplicate canonical definitions whenever practical.
 - Every persisted field requires a demonstrated feature and documented owner.
 - User Knowledge is data, not markup.
@@ -56,13 +57,13 @@ These domain names do **not** approve the earlier candidate field lists as produ
 
 ---
 
-# User Profile — Schema Unresolved
+# User/Profile Identity — Required Architecture, Schema Unresolved
 
-Earlier planning identified possible profile concepts such as display name, experience level, measurement preference, and preferred region.
+D067 requires the Settings / User Data Architecture gate to establish a stable owner/context for persistent User Knowledge before My Tackle or Catch Log becomes authoritative.
 
-Those concepts remain design inputs. No canonical production User Profile schema is approved or implemented by this document.
+Version 1 may remain a single local user/profile and does not require authentication. The requirement is semantic ownership and migration clarity: persistent records must not implicitly treat "whatever is in this browser storage bucket" as the user with no stable ownership model.
 
-A future profile gate must justify each persisted field against a concrete feature.
+Earlier planning identified possible profile concepts such as display name, experience level, measurement preference, and preferred region. Those remain design inputs, not approved fields. The gate must distinguish the minimal stable identity needed to own User Knowledge from optional profile attributes that require separate feature justification.
 
 ---
 
@@ -71,6 +72,8 @@ A future profile gate must justify each persisted field against a concrete featu
 Preferences may eventually control application behavior such as display or workflow choices.
 
 No production Preferences schema is approved here. Candidate examples from earlier drafts must not be treated as committed fields.
+
+Under D066/D067, preferred Regulations states are an approved future preference concept to evaluate after the User Data architecture exists. The preferred behavior is prioritization/pinning while preserving access to the complete supported state list; no field name or persistence shape is approved yet.
 
 Preferences may never modify canonical Reference Knowledge.
 
@@ -158,17 +161,19 @@ Persistence choices must be made against the requirements of each approved User 
 
 # Implementation Gates
 
-Before each User Knowledge domain becomes authoritative, its implementation gate must settle:
+Before material Tackle expansion and before each persistent User Knowledge domain becomes authoritative, the Settings / User Data Architecture gate must settle the shared foundation and each domain gate must settle its specifics, including:
 
-1. exact field schema and field ownership,
-2. stable user-record identity where required,
+1. stable user/profile identity and record ownership,
+2. exact field schema and field ownership,
 3. canonical reference versus historical snapshot behavior,
 4. validation rules,
-5. persistence/storage behavior,
-6. migration/versioning requirements,
-7. backup/export/import requirements,
-8. rendering and sanitization boundaries,
-9. deletion and lifecycle behavior.
+5. persistence/storage technology and behavior,
+6. retention behavior, including browser/site-data clearing,
+7. migration/versioning requirements,
+8. backup/export/import/restore requirements,
+9. device-transfer expectations and optional synchronization boundaries,
+10. rendering and sanitization boundaries,
+11. deletion and lifecycle behavior.
 
 Do not create a universal user-data schema containing speculative fields merely to reserve future capability.
 

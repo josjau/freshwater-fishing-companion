@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.6.3  
+**Document Revision:** 0.6.4  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-25
 
@@ -78,6 +78,8 @@ This document records long-term architectural decisions.
 | D063 | Dashboard Knowledge Hubs and Tackle Capability Boundary | Approved |
 | D064 | Repository Disaster Recovery / Reconstruction Gate | Approved |
 | D065 | Slip Bobber Alternate-Terminal Modeling Gate | Approved |
+| D066 | Nationwide Regulations Resource Gateway and Coverage Exception | Approved |
+| D067 | User-Aware User Knowledge Architecture Before Tackle Expansion | Approved |
 
 # D001 – Local-First Architecture
 
@@ -401,11 +403,13 @@ Implemented cards remain fully interactive. Feature-preview pages, notification 
 
 External actions must clearly identify the destination and use `↗` to indicate navigation outside the application. Generic labels such as `Browse` or `Learn More` should be avoided when a specific destination can be named.
 
-The Dashboard Regulations CTA uses:
+**Current production:** the Dashboard Regulations CTA still uses:
 
 ```text
 Go to ODWC Regulations ↗
 ```
+
+**Approved future direction under D066:** when the Regulations gateway is implemented, the Dashboard **Regulations** card becomes internal navigation to the state selector and therefore follows internal-navigation semantics. The official destinations exposed on each state page remain external actions and use `↗` with destination-specific labels.
 
 External links open outside the application in a new tab/window as supported by the platform. `ⓘ` remains reserved for in-app contextual information.
 
@@ -1118,3 +1122,98 @@ If the product later needs both hook+bait and jig terminal choices in one Rig ex
 **Future trigger:** Revisit when an approved user workflow requires choosing between mutually exclusive terminal configurations within one canonical Rig, or when another Rig demonstrates the need for the same reusable model.
 
 **Canonical owners:** D065 and `data-model/03-RIGS.md` own the durable boundary. `ACTIVE-CHANGE-LEDGER.md` keeps GATE-013 visible until a future explicit gate resolves it.
+
+# D066 – Nationwide Regulations Resource Gateway and Coverage Exception
+
+**Decision:** Regulations becomes the next product milestone after the closed Fish Guide. The feature expands from the current Oklahoma-only external link into an in-app, state-first **U.S. State Fishing Resource Gateway** covering the **48 contiguous U.S. states** as its initial geographic scope.
+
+The broader Regulations coverage is an explicit exception to the application's Four-State curated-content focus. It does not automatically expand Fish, Rig, recommendation, Technique, Tackle, or other curated knowledge domains beyond their separately approved regional scope.
+
+The approved initial information architecture is:
+
+```text
+Dashboard
+-> Regulations
+-> Choose a State
+-> State Fishing Regulations & Resources
+-> official state destinations
+```
+
+The Dashboard name remains **Regulations**. The state landing page may organize official resources using a reusable taxonomy such as:
+
+**Before You Fish**
+
+- Fishing Regulations
+- Licenses & Permits
+- Seasons / Size / Bag-Limit resources
+- Special Regulations / Special Waters
+- Species-Specific Regulations
+- Special Permits / Tags / Stamps
+
+**Plan Your Trip**
+
+- Where to Fish / Public Access
+- Stocking Information
+- Official Fishing Reports / Forecasts
+- Aquatic Invasive Species information
+- Other Official Resources
+
+The taxonomy is normalized for user navigation, but individual states are not forced into identical agency structures. A state exposes only the official resources that actually exist and materially help an angler.
+
+Freshwater Fishing Companion stores the **resource directory**, not the changing legal rule itself. The future state/resource model may own state identity, agency identity, resource category, title/description, authoritative URL, active state, and human verification/freshness metadata. It must not make the application the authoritative owner of daily limits, possession limits, minimum lengths, season dates, legal methods, waterbody exceptions, or comparable legal requirements during this milestone.
+
+Regulatory/legal links must resolve to the responsible state authority or another clearly authoritative official government destination. The application does not provide its own legal interpretation. It may explain what a link is for, but the linked authority owns the actual rule.
+
+No automatic GPS/location detection or persistent preferred-state selection is part of this milestone. State selection is manual. After D067's User Data architecture exists, a later preference may identify preferred states and prioritize them in the selector while preserving access to the full supported list.
+
+The data/navigation design must not hard-code a 48-state structural ceiling; Alaska, Hawaii, territories, or other jurisdictions may be evaluated later as additive content without requiring a model rewrite.
+
+**Reason:** The application's geographic focus expanded beyond Oklahoma, making a direct ODWC-only Regulations card inconsistent with the product. A nationwide official-resource gateway provides high practical value to anglers without requiring the Companion to maintain volatile legal data across dozens of jurisdictions. Linking to official authorities preserves freshness and legal ownership, dramatically reduces maintenance risk, and avoids creating false confidence from stale copied rules. Because this domain is resource navigation rather than curated fishing knowledge, nationwide coverage can expand without implying nationwide Fish/recommendation completeness.
+
+The state-first design also creates a clean future personalization point: preferred states can later improve ordering without hiding other states or coupling Regulations to GPS/location privacy decisions prematurely.
+
+**Current implementation status:** Approved / Not Implemented. Current production still links the Dashboard Regulations card directly to Oklahoma. Phase 0 has not yet begun.
+
+**Future trigger:** begin `REGULATIONS-PHASE-0` to research representative state agency structures, validate the resource taxonomy, settle the State/State Resource model, settle selector/state-page UX, define link freshness/provenance requirements, and establish production waves. The Four-State region should be the first deep sample, supplemented by structurally different states before the nationwide model is locked.
+
+**Canonical owners:** D066 owns the durable product/architecture boundary; `ROADMAP.md` owns milestone order; `PROJECT.md` owns the geographic-scope exception; `ARCHITECTURE.md` owns source/knowledge boundaries; `EXTERNAL_REFERENCE_MAINTENANCE.md` owns ongoing link-maintenance policy; the active Regulations workstream owns Phase 0 planning detail.
+
+Permanent principle: **normalize navigation to official state resources; do not become the source of changing fishing law.**
+
+# D067 – User-Aware User Knowledge Architecture Before Tackle Expansion
+
+**Decision:** The **Settings / User Data Architecture Gate** moves ahead of **Tackle Reference / Find Tackle** in the canonical roadmap. The gate must settle the persistence and ownership foundation before Tackle is materially expanded and before My Tackle or Catch Log becomes authoritative.
+
+Canonical Tackle remains application-owned **Reference Knowledge**. It is not duplicated per user. Actual owned tackle belongs to **My Tackle User Knowledge** and must be associated with the user/profile model selected by the User Data gate. Catch Log, Preferences, future saved/favorite state, and other persistent User Knowledge must use the same ownership foundation rather than each inventing an independent storage island.
+
+The User Data gate must deliberately resolve at minimum:
+
+- storage technology and local-first persistence behavior,
+- what survives application updates and what happens when browser/site data is cleared,
+- stable user/profile identity for persisted User Knowledge,
+- Version 1 single-local-user versus future multi-profile boundaries,
+- whether authentication/accounts are required or explicitly deferred,
+- schema versioning and migration,
+- backup/export and restore/import behavior,
+- device-transfer expectations,
+- optional future synchronization boundaries,
+- device-local versus profile-owned settings,
+- preference ownership, including future preferred states for Regulations,
+- theme/preferences persistence where applicable.
+
+A user-aware architecture does **not** require a login system. Version 1 may use one local profile/identity if that is the simplest approved solution, but persisted My Tackle/Catch Log/Preferences must not implicitly treat a browser storage bucket as the user's identity with no migration or ownership model.
+
+`What Should I Throw?` remains ahead of this gate and must work without My Tackle. Once My Tackle exists, recommendations may optionally use owned inventory as a personalization/filter/ranking signal without making user inventory a prerequisite for the core recommendation engine.
+
+**Reason:** My Tackle and Catch Log are durable user-owned data. Designing them before retention, identity, migration, backup, and ownership are settled would bake feature-specific assumptions into storage and create avoidable migration risk. Moving the gate ahead of Tackle Reference also lets Tackle connected-knowledge/ownership UX be designed against a known User Knowledge boundary while preserving canonical Tackle as one shared app-owned catalog.
+
+This sequencing prevents the architecture from equating "the browser" with "the user," avoids multiple unrelated persistence models, and preserves a clean future path for device transfer, optional multi-profile support, backup/restore, and later synchronization if approved.
+
+**Current implementation status:** Approved architecture and roadmap sequencing / Not Implemented. Current readiness persistence remains transitional and is not authoritative ownership.
+
+**Future trigger:** after Regulations and What Should I Throw are closed, open the Settings / User Data Architecture milestone and settle the gate before materially expanding Tackle Reference or implementing authoritative My Tackle/Catch Log persistence.
+
+**Canonical owners:** D067 owns the durable sequencing/ownership decision; `ROADMAP.md` owns milestone order; `ARCHITECTURE.md` owns knowledge/storage boundaries; `data-model/01-FOUNDATION.md`, `05-TACKLE.md`, `05A-INVENTORY.md`, `07-USER-DATA.md`, and `08-BACKUP.md` own the corresponding data-model constraints.
+
+Permanent principle: **define who owns persistent User Knowledge and how it survives before building durable ownership/history features.**
+

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.3.5  
+**Document Revision:** 1.3.6  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `ee0149a81bab06c1f7650482ed30ffcc5111bfcd`  
@@ -47,7 +47,7 @@ No active transition item remains. WF-001 closed after repository continuity par
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| REG-001 | OPEN | Four-State Regulations entry strategy | Regulations product/design gate | Decide external multi-state gateway vs in-app hub, state selection/saved region, official OK/KS/MO/AR destinations, freshness, Fish Detail gateway, and privacy/location assumptions. |
+| REG-001 | APPROVED / PENDING PLANNING | Contiguous-U.S. Regulations resource gateway | D066 + `workstreams/REGULATIONS-PHASE-0.md` | Execute Phase 0: validate state/resource taxonomy, official-resource/provenance/freshness model, selector/state-page UX, representative-state sample, and production-wave plan before source implementation. |
 | TACKLE-004 | OPEN | Tackle-root `Check Rig Readiness` placeholder | D020 + Tackle/My Tackle milestone | Remove, rename/redefine as a secondary aggregate view, or explicitly approve; do not auto-build a separate primary readiness page. |
 
 # Fish Guide — Production
@@ -72,9 +72,9 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 | GATE-001 | DEFERRED TO NAMED GATE | Technique architecture and Rig↔Technique relationship ownership | Technique implementation gate; D003/D024/D056. |
 | GATE-002 | APPROVED / PENDING IMPLEMENTATION | Conditions domain | Revalidate before What Should I Throw. |
 | GATE-003 | DEFERRED TO NAMED GATE | Separate Lures domain | Revalidate at Lure/Tackle/Recommendation architecture gate. |
-| GATE-004 | APPROVED / PENDING IMPLEMENTATION | What Should I Throw | Next product milestone after Fish Guide closure. |
-| GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Roadmap milestone after recommendations. |
-| GATE-006 | REQUIRED | Settings / User Data Architecture | Before persistent My Tackle or Catch Log. |
+| GATE-004 | APPROVED / PENDING IMPLEMENTATION | What Should I Throw | Roadmap milestone after Regulations closes. |
+| GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Roadmap milestone after Settings / User Data Architecture closes under D067. |
+| GATE-006 | REQUIRED | Settings / User Data Architecture | After What Should I Throw and before material Tackle Reference expansion, My Tackle, or Catch Log; must settle user/profile identity, retention, persistence, migration, backup/restore, device transfer, and preference ownership under D067. |
 | GATE-007 | DEFERRED TO NAMED GATE | My Tackle | After User Data gate. |
 | GATE-008 | DEFERRED TO NAMED GATE | Catch Log | After User Data gate / My Tackle. |
 | GATE-009 | DEFERRED TO NAMED GATE | Global Search | After major searchable domains are stable. |
@@ -82,6 +82,7 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 | GATE-011 | DEFERRED TO NAMED GATE | Multi-theme support | Settings / User Preferences gate. |
 | GATE-012 | REQUIRED | Repository Disaster Recovery / Reconstruction | D064; implement and validate before major Version 1 release or before irreplaceable User Knowledge enters scope, whichever comes first. Not a current Fish blocker. |
 | GATE-013 | DEFERRED TO NAMED GATE | Reusable Rig alternate-terminal configuration modeling | D065 + `data-model/03-RIGS.md`; revisit when a user workflow requires mutually exclusive component/assembly/readiness branches within one Rig or another Rig demonstrates the same reusable need. |
+| GATE-014 | APPROVED / PENDING PLANNING | Regulations — U.S. State Fishing Resource Gateway | Current next product milestone after Fish Guide closure; D066 / REG-001 / `workstreams/REGULATIONS-PHASE-0.md`. |
 
 # Parking Lot — Deliberate Future Items
 

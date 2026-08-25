@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 08-BACKUP.md  
-**Document Revision:** 0.2.1  
+**Document Revision:** 0.2.2  
 **Document Status:** Draft  
 **Implementation Status:** Deferred / Not Implemented / Architecture Not Yet Approved  
-**Decision Baseline:** D029, D056
+**Decision Baseline:** D029, D056, D067
 
 ---
 
@@ -22,7 +22,7 @@ Backup design must follow the User Knowledge schemas that actually become author
 
 **Draft / Deferred / Not Implemented — backup and restore architecture must be approved at the User Data architecture gate.**
 
-The project is local-first, so user-controlled backup and restore is a reasonable future capability to evaluate. That direction is not yet a settled implementation architecture. The exact backup scope, file schema, storage technology, schema-version representation, migration pipeline, and included User Knowledge domains remain architecture-gate decisions.
+The project is local-first, so user-controlled backup and restore is a reasonable future capability to evaluate. That direction is not yet a settled implementation architecture. The exact backup scope, file schema, storage technology, schema-version representation, migration pipeline, included User Knowledge domains, and preservation of user/profile ownership relationships remain architecture-gate decisions under D067.
 
 Current transitional Rig-readiness local state is not authoritative My Tackle ownership and must not be promoted into ownership merely because backup functionality is later considered.
 
@@ -124,17 +124,18 @@ If backup is approved, stable canonical IDs referenced by User Knowledge may nee
 
 Before backup/restore production work begins, the User Data architecture gate must decide and approve at least:
 
-1. whether backup/restore is in the applicable product scope,
-2. which implemented User Knowledge domains are included,
-3. backup envelope and file format,
-4. schema/application compatibility metadata,
-5. validation rules,
-6. migration behavior,
-7. transactional restore/safety-copy behavior,
-8. import/export and conflict semantics,
-9. treatment of transitional/session/cache state,
-10. canonical-reference integrity behavior,
-11. privacy and optional external-storage boundaries.
+1. the stable user/profile ownership model whose User Knowledge is being backed up/restored,
+2. whether backup/restore is in the applicable product scope,
+3. which implemented User Knowledge domains are included,
+4. backup envelope and file format,
+5. schema/application compatibility metadata,
+6. validation rules,
+7. migration behavior,
+8. transactional restore/safety-copy behavior,
+9. import/export and conflict semantics,
+10. treatment of transitional/session/cache state,
+11. canonical-reference integrity behavior,
+12. privacy and optional external-storage boundaries.
 
 ---
 

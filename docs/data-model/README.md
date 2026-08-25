@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DATA MODEL INDEX  
-**Document Revision:** 0.3.1  
+**Document Revision:** 0.3.2  
 **Document Status:** Approved  
-**Decision Baseline:** D037, D056
+**Decision Baseline:** D037, D056, D067
 
 ---
 
@@ -19,6 +19,7 @@ This directory contains the governing data-model documents for Freshwater Fishin
 - Stable identifiers.
 - Reference Knowledge, Decision Knowledge, and User Knowledge remain distinct.
 - User records reference canonical entities whenever practical.
+- Persistent User Knowledge uses a deliberate stable user/profile ownership model selected before authoritative My Tackle/Catch Log implementation.
 - Local-first and offline-first direction.
 - Simplicity before complexity.
 - Derived inverse relationships are preferred over duplicate stored sources of truth.
@@ -64,7 +65,7 @@ This directory contains the governing data-model documents for Freshwater Fishin
 
 ## 05A — INVENTORY
 
-**Approved / Not Implemented.** Defines My Tackle ownership authority, transitional readiness boundary, and future implementation gate. Detailed owned-item and Fishing Setup schemas remain unresolved.
+**Approved / Not Implemented.** Defines My Tackle ownership authority, user/profile ownership boundary, transitional readiness boundary, and future implementation gate. Detailed owned-item and Fishing Setup schemas remain unresolved.
 
 ## 06 — LURES
 
@@ -72,7 +73,7 @@ This directory contains the governing data-model documents for Freshwater Fishin
 
 ## 07 — USER DATA
 
-**Mixed / Mostly Not Implemented.** Defines User Knowledge boundaries and implementation gates while recognizing current lightweight readiness persistence as transitional rather than a general authoritative User Data schema.
+**Mixed / Mostly Not Implemented.** Defines User Knowledge boundaries and the D067 user/profile/persistence architecture gate while recognizing current lightweight readiness persistence as transitional rather than a general authoritative User Data schema.
 
 ## 08 — BACKUP
 

@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** PROJECT.md  
-**Document Revision:** 0.3.1  
+**Document Revision:** 0.3.2  
 **Document Status:** Approved  
-**Decision Baseline:** D027, D038-D041  
-**Last Updated:** 2026-08-19
+**Decision Baseline:** D027, D038-D041, D057, D066  
+**Last Updated:** 2026-08-25
 
 # Purpose
 
@@ -38,6 +38,12 @@ Existing validated content may retain a narrower original selection or validatio
 
 Regional reconciliation is additive by default: important missing regional coverage may be added, but valid existing content is not automatically invalidated merely because the geographic focus expanded. If a regional finding would require significant architecture, data-model, or UI rewiring, that change must be discussed and approved before implementation.
 
+## Regulations Coverage Exception
+
+Regulations is an intentional geographic exception to the Four-State curated-content focus. The approved direction is a state-first official-resource gateway covering the **48 contiguous U.S. states**. This broader coverage does **not** expand Fish, Rig, recommendation, or other curated fishing-knowledge domains beyond their separately approved regional scope.
+
+The Companion links anglers to authoritative state resources rather than maintaining or interpreting changing legal rules itself. State pages may surface official regulations, licenses/permits, seasons and size/bag-limit resources, special-water and species-specific rules, special permits/tags, public fishing/access resources, stocking information, agency fishing reports/forecasts, aquatic-invasive-species guidance, and other high-value official angler resources when a state provides them.
+
 # Mission
 
 Provide a fast, trustworthy, and easy-to-use companion that helps a first-time or new angler move from uncertainty to actually fishing with as little unnecessary friction as practical.
@@ -55,7 +61,7 @@ It should address basic setup questions that experienced anglers may take for gr
 - Mobile-first.
 - Fast, simple, and intuitive.
 - Designed for use before the trip and on the bank, dock, kayak, or boat.
-- Link to official fishing regulations rather than maintaining copies.
+- Link to official fishing regulations and related state angler resources rather than maintaining or interpreting copies of changing legal rules.
 - Build only features that solve real problems.
 - Plan thoroughly before building.
 - Documentation is part of the product.
@@ -118,7 +124,7 @@ Planned capabilities include:
 - My Tackle inventory
 - Favorites or a later approved replacement
 - Learning guidance
-- Official regulation links
+- State-first official fishing regulations and angler-resource gateway
 - Smart recommendations
 
 Each capability is evaluated against the project's mission and current architecture before implementation.
@@ -158,7 +164,7 @@ The Companion is successful if a first-time or new angler can quickly answer que
 - How do I tie this knot?
 - Can I build this Rig with what I own or have available?
 - What useful information should I look at next?
-- Where can I verify the current fishing regulations?
+- Where can I find the official current regulations, licenses, limits, and special rules for the state I am fishing?
 
 while spending more time preparing to fish or fishing than navigating the application or searching elsewhere for basic setup information.
 

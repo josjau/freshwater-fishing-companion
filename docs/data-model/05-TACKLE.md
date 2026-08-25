@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 05-TACKLE.md  
-**Document Revision:** 0.2.0  
+**Document Revision:** 0.2.1  
 **Document Status:** Approved  
 **Implementation Status:** Validated  
-**Decision Baseline:** D019, D025, D026, D028, D037, D043, D056
+**Decision Baseline:** D019, D025, D026, D028, D037, D043, D056, D067
 
 ---
 
@@ -143,6 +143,8 @@ Search must not create duplicate canonical relationship ownership merely for dis
 Canonical Tackle belongs to Reference Knowledge.
 
 My Tackle belongs to User Knowledge and will record actual owned items when its detailed schema is implemented. Persistent user ownership must not be stored on canonical Tackle records.
+
+Under D067, owned-item records must belong to the stable user/profile ownership model selected by the Settings / User Data Architecture gate. Canonical Tackle remains one application-owned catalog shared across users/profiles. The Roadmap therefore places the User Data gate before material Tackle Reference expansion so connected ownership context is designed against a settled persistence/identity foundation.
 
 A future Product Definition may describe an exact commercial product if an approved feature demonstrates that need. Product Definitions are not required for basic canonical Tackle, My Tackle MVP, or Rig readiness.
 

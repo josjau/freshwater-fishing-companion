@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 00-GLOSSARY.md  
-**Document Revision:** 0.2.0  
+**Document Revision:** 0.2.1  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-19
+**Last Updated:** 2026-08-25
 
 ---
 
@@ -29,9 +29,13 @@ Answers: **What should I do?**
 
 ## User Knowledge
 
-Information created, maintained, or owned by the angler. Future authoritative examples include My Tackle, catches, favorites, preferences, and notes. Current lightweight Rig-readiness local state is transitional availability state rather than authoritative My Tackle ownership.
+Information created, maintained, or owned by the angler. Future authoritative examples include My Tackle, catches, favorites, preferences, and notes. Current lightweight Rig-readiness local state is transitional availability state rather than authoritative My Tackle ownership. Under D067, authoritative persistent User Knowledge must belong to the stable user/profile ownership model selected by the User Data Architecture gate.
 
 Answers: **What do I own, prefer, or record?**
+
+## User/Profile Identity
+
+The stable owner/context to which persistent User Knowledge belongs. The exact Version 1 representation is intentionally unresolved until the Settings / User Data Architecture gate. A user-aware model does not require authentication or multiple profiles; it prevents a browser storage bucket from being treated as an implicit identity with no documented ownership/migration boundary.
 
 ## Canonical Entity
 
@@ -55,7 +59,7 @@ Reference Knowledge describing a functional tackle type, such as Offset Hook, Bu
 
 ## My Tackle
 
-The approved future User Knowledge inventory domain containing actual fishing items owned by the user. Its detailed owned-item schema is not implemented. Once authoritative, persistent ownership may only be changed through explicit My Tackle ownership-management workflows.
+The approved future User Knowledge inventory domain containing actual fishing items owned by the user/profile. Its detailed owned-item schema is not implemented. Once authoritative, persistent ownership may only be changed through explicit My Tackle ownership-management workflows.
 
 ## Product Definition
 

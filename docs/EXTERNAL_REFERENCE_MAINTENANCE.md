@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — External Reference Maintenance
 
 **Document:** EXTERNAL_REFERENCE_MAINTENANCE.md  
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.1.0  
 **Document Status:** Approved  
 **Role:** Permanent maintenance standard for external references and externally hosted instructional media  
-**Last Updated:** 2026-08-21
+**Last Updated:** 2026-08-25
 
 # Purpose
 
@@ -12,11 +12,13 @@ This standard defines how Freshwater Fishing Companion detects stale external re
 
 # Scope
 
-Recurring automated checks cover active external destinations used by:
+Recurring automated checks currently cover active external destinations used by:
 
 - canonical Rig `referenceLinks`,
 - canonical Rig tutorial external URLs,
 - active external instructional Media destinations in `data/media.js`.
+
+**Approved / Not Implemented under D066:** when the Regulations gateway adds canonical state-resource links, every active official state-resource destination becomes part of the maintained external-reference surface. Phase 0 must define the exact source/data owner and checker integration before production. Regulatory/legal resources require human authority/freshness review in addition to reachability checks.
 
 Geometry/provenance URLs used only as evidence for an already-approved local project asset are not recurring link-check targets. Recheck those sources when the local asset is edited/replaced or when its provenance is questioned.
 
@@ -50,6 +52,8 @@ A human review confirms, as applicable:
 - the reference has not drifted into a materially different method, product, or subject.
 
 HTTP success alone does not satisfy human review.
+
+For future Regulations state-resource records, human review must also confirm that the destination still belongs to the responsible official authority and still serves the labeled purpose. Each active state resource must retain a human-verification/freshness date or equivalent provenance metadata defined by the Regulations data model. Phase 0 may adopt a stricter review cadence for regulatory resources than the general 180-day maximum when evidence shows that is warranted.
 
 # Review-Date Ownership
 

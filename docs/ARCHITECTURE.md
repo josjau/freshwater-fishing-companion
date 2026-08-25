@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.7.3  
+**Document Revision:** 0.7.4  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-25
 
@@ -150,6 +150,14 @@ Regional reconciliation is additive by default. Existing valid content is not re
 
 The original 20-Rig library was selected and validated for Northeast Oklahoma and Southwest Kansas. It remains canonical and validated. The completed additive Four-State adequacy audit added Split-Shot Bait Rig as canonical Rig #21 and found no other material ordinary-Rig gap.
 
+## Regulations geographic exception
+
+Regulations is an approved geographic exception under D066. Its official-resource navigation coverage is the 48 contiguous U.S. states, while the rest of the current curated fishing-knowledge architecture retains its separately approved regional scope.
+
+This does not make the application a nationwide regulations database. The future Regulations domain indexes authoritative state resources and associated provenance/freshness metadata; the responsible state authority owns the underlying legal requirements.
+
+**Approved / Not Implemented:** Dashboard **Regulations** becomes an internal state-selection route. A selected state opens an in-app resource landing page whose official destinations use the external-link semantics in D031. The exact State/State Resource source-file contract remains a Phase 0 design decision and must not be invented before that planning gate.
+
 # Theme Architecture
 
 **Current:** Forest Journal is the only production-supported Version 1 theme and remains the active visual/reference baseline.
@@ -211,6 +219,8 @@ The application uses three knowledge layers:
 Do not blur these layers without an explicit architecture decision.
 
 The Dashboard exposes four foundational connected-knowledge domains: Fish Guide, Knots, Rig Guide, and Tackle. Tackle is the root domain, while **Tackle Reference / Find Tackle** and **My Tackle** remain distinct capabilities on opposite sides of the Reference Knowledge/User Knowledge boundary. D063 owns this durable product boundary; D020/D028 own readiness and My Tackle authority.
+
+Regulations is a resource-navigation domain rather than a new owner of legal facts. It may normalize state/agency/resource identity and link metadata while legal requirements remain owned by the official state authorities.
 
 # Search and Connected-Knowledge Architecture
 
@@ -465,6 +475,8 @@ When My Tackle becomes authoritative:
 
 A commercial ProductDefinition layer is not required for My Tackle MVP.
 
+Under D067, authoritative My Tackle records must also belong to the stable user/profile ownership model selected by the Settings / User Data Architecture gate. Canonical Tackle remains shared application Reference Knowledge; only the owned-item records are user-scoped. The gate precedes material Tackle expansion in the Roadmap so retention, migration, backup, and ownership assumptions are settled before dependent User Knowledge workflows are designed.
+
 # User Knowledge Trust Boundary
 
 Canonical project data is trusted application content.
@@ -516,11 +528,13 @@ Specialized workflows may use separately approved semantics. Reel Setup is an ap
 
 External verified references use `↗`, open in a new tab/window as supported, and should name the destination when practical.
 
-Current Dashboard regulations label:
+**Current production Dashboard regulations label:**
 
 ```text
 Go to ODWC Regulations ↗
 ```
+
+**Approved / Not Implemented under D066:** the Dashboard Regulations card becomes internal navigation to the state selector. Official state resource destinations remain external and use `↗` with destination-specific labels.
 
 Do not use `ⓘ` to imply external navigation.
 

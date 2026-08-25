@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.4.1
+**Document Revision:** 1.4.2
 **Document Status:** Approved
-**Last Updated:** 2026-08-24
+**Last Updated:** 2026-08-25
 
 # Purpose
 
@@ -313,7 +313,7 @@ Expected behavior:
 - All navigation-arrow glyphs use `font-weight: 800`: back `←`, internal-forward `→`, external `↗`, and the compact-row chevron `›` where that established row pattern is used. Glyph-specific size/spacing may vary only for optical alignment.
 - Arrow glyphs should be separately wrapped/styled so the arrow can carry the shared weight without forcing the destination label to the same weight.
 - External CTA labels should name the destination when practical instead of using generic wording such as `Browse` or `Learn More`.
-- The approved Dashboard Regulations CTA is `Go to ODWC Regulations ↗`.
+- Current production uses `Go to ODWC Regulations ↗` on the Dashboard. Under approved D066 future behavior, the Dashboard **Regulations** card becomes an internal destination and uses internal-navigation semantics; official state resource links on the Regulations pages remain external `↗` actions with destination-specific labels.
 - `↗` indicates that the user is leaving the application for an external destination.
 - `→` indicates movement to another destination inside Freshwater Fishing Companion when a directional arrow is shown.
 - Do not use `ⓘ` for an external-navigation action.

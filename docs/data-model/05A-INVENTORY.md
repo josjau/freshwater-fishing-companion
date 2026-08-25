@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 05A-INVENTORY.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.3.1  
 **Document Status:** Draft  
 **Implementation Status:** Approved / Not Implemented  
-**Decision Baseline:** D028, D056
+**Decision Baseline:** D028, D056, D067
 
 ---
 
@@ -35,6 +35,8 @@ Canonical Tackle answers:
 My Tackle answers:
 
 > What fishing items do I actually own?
+
+Under D067, those owned items belong to the applicable stable user/profile identity selected by the User Data Architecture gate. Canonical Tackle remains global application Reference Knowledge rather than being duplicated per user.
 
 A commercial Product Definition layer is not required for My Tackle MVP or basic Rig readiness. Product Definition remains deferred until an approved product-specific feature demonstrates a need.
 
@@ -80,8 +82,9 @@ For owned items that satisfy supported Rig requirements, My Tackle should map to
 Conceptually:
 
 ```text
-Owned Item
-    -> canonical Tackle concept
+User/Profile
+    -> Owned Item
+        -> canonical Tackle concept
 ```
 
 The exact field name and cardinality are not approved until the My Tackle schema gate.
@@ -172,17 +175,18 @@ User-entered and imported text is untrusted by default and should render through
 
 # Implementation Gate
 
-Before My Tackle becomes authoritative, the architecture gate must settle at least:
+Before My Tackle becomes authoritative, the Settings / User Data Architecture gate and the later My Tackle design must settle at least:
 
-1. owned-item identity and field schema,
-2. canonical Tackle mapping semantics,
-3. durable-versus-consumable lifecycle requirements,
-4. quantity and variant behavior,
-5. explicit Add/Edit/Remove ownership workflows,
-6. transitional readiness-state replacement behavior,
-7. Fishing Setup schema if included in the same milestone,
-8. persistence, validation, migration, backup, and import/export requirements,
-9. User Knowledge rendering and sanitization boundaries.
+1. stable user/profile identity and owned-item ownership semantics,
+2. owned-item identity and field schema,
+3. canonical Tackle mapping semantics,
+4. durable-versus-consumable lifecycle requirements,
+5. quantity and variant behavior,
+6. explicit Add/Edit/Remove ownership workflows,
+7. transitional readiness-state replacement behavior,
+8. Fishing Setup schema if included in the same milestone,
+9. persistence, retention, validation, migration, backup, and import/export requirements,
+10. User Knowledge rendering and sanitization boundaries.
 
 ---
 
