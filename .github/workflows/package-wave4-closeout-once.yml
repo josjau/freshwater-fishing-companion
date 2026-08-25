@@ -1,0 +1,53 @@
+name: One-time Wave 4 Drive package
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/package-wave4-closeout-once.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build canonical full-tree package
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, pathlib, subprocess, zipfile
+          root = pathlib.Path('.')
+          transient = '.github/workflows/package-wave4-closeout-once.yml'
+          files = subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          files = [f for f in files if f and f != transient]
+          out = pathlib.Path('FCC-Working-Current-Wave4-Closeout.zip')
+          with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
+              for f in files:
+                  z.write(root / f, f)
+          digest = hashlib.sha256(out.read_bytes()).hexdigest()
+          manifest = pathlib.Path('FCC-Working-Current-Wave4-Closeout-MANIFEST.txt')
+          manifest.write_text(
+              'Freshwater Fishing Companion — Working Source/Current\n'
+              'Wave 4 / Fish Guide Version 1 closeout package\n'
+              'Canonical content tree: c1f0be14074f9fc910fb9b89a360780baea5f587\n'
+              'Packaging source commit: 07e0954cd35ef8a4e519538819e04373d6470474\n'
+              f'Files: {len(files)}\n'
+              f'ZIP SHA-256: {digest}\n'
+              'Transient packaging workflow excluded from ZIP.\n',
+              encoding='utf-8'
+          )
+          print(f'Packaged {len(files)} tracked files; SHA-256 {digest}')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fcc-wave4-closeout-working-source
+          path: |
+            FCC-Working-Current-Wave4-Closeout.zip
+            FCC-Working-Current-Wave4-Closeout-MANIFEST.txt
+          if-no-files-found: error
+          retention-days: 7
