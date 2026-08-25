@@ -1,19 +1,21 @@
 # Freshwater Fishing Companion — Fish Guide Production Wave 4: Sunfish & Crappie
 
 **Document:** FISH-WAVE-4-SUNFISH-CRAPPIE.md  
-**Document Revision:** 0.1.4  
+**Document Revision:** 0.1.5  
 **Document Status:** Active Planning / Session-Preservation Record  
-**Implementation Status:** Planning only — production not started; package lock pending  
-**Decision Baseline:** D016, D051, D056–D061  
-**Last Updated:** 2026-08-24
+**Implementation Status:** Package locked — production not started  
+**Decision Baseline:** D016, D048, D051, D056–D061  
+**Last Updated:** 2026-08-25
 
 # Purpose and Boundary
 
-This is the active planning record for Fish Guide Production Wave 4 — Sunfish & Crappie. It preserves the proposed nine-Fish package, comparison set, media research, approved one-time media exceptions, and exact continuation point without relying on chat history.
+This is the active planning record for Fish Guide Production Wave 4 — Sunfish & Crappie. It preserves the locked nine-Fish package, comparison set, media research, approved one-time media exceptions, and exact continuation point without relying on chat history.
 
-This file does **not** authorize production writes and does **not** convert discussion into an approved package lock. GitHub `main` remains authoritative for committed source and formally reconciled documentation. Production/user-facing work still requires the normal Drive working-package path and explicit production-write approval.
+On 2026-08-25 the user explicitly approved and locked the nine-Fish data/versioning package, five deterministic comparison relationships, and final nine-image media direction after the prior Fish-content and image review. The user explicitly allowed the lock to be reopened if the production review ZIP reveals a genuine issue.
 
-# Proposed Wave 4 Scope
+This file does **not** authorize commit/push of production source. GitHub `main` remains authoritative for committed source and formally reconciled documentation. Production/user-facing work still follows the normal Drive working-package → review ZIP → local/browser validation → explicit commit/push authorization workflow.
+
+# Locked Wave 4 Scope
 
 All nine Fish use `categoryId: "sunfish-crappie"` and family `Centrarchidae`:
 
@@ -27,7 +29,7 @@ All nine Fish use `categoryId: "sunfish-crappie"` and family `Centrarchidae`:
 8. Black Crappie — `Pomoxis nigromaculatus`
 9. White Crappie — `Pomoxis annularis`
 
-The proposed aliases are:
+Locked aliases:
 
 - Redear Sunfish — Shellcracker
 - Green Sunfish — Black Perch
@@ -36,9 +38,9 @@ The proposed aliases are:
 - Ozark Bass — Goggle-Eye
 - White Crappie — Papermouth; Bachelor Perch
 
-Bluegill, Warmouth, and Black Crappie have no proposed alias.
+Bluegill, Warmouth, and Black Crappie have no locked alias.
 
-# Proposed Identification Direction
+# Locked Identification Direction
 
 - **Bluegill:** small mouth; long pointed pectoral; black opercular flap; rear soft-dorsal blotch; blue chin/lower gill cover.
 - **Redear Sunfish:** small mouth; deep body; black opercular flap with orange/red rear spot; golden/olive sides often with bars.
@@ -50,9 +52,9 @@ Bluegill, Warmouth, and Black Crappie have no proposed alias.
 - **Black Crappie:** irregular speckles/blotches rather than vertical bars; 7–8 dorsal spines.
 - **White Crappie:** 5–10 vertical bars; usually 6 dorsal spines.
 
-The package received a source/architecture review during the 2026-08-24 session and no structural conflict was found, but the user has not yet given the explicit package-lock confirmation. Treat these values as **ready for lock review**, not as already approved production truth.
+The package received a source/architecture review during the 2026-08-24 session and no structural conflict was found. These values are now the locked implementation baseline. A genuine issue discovered during review may reopen the affected item; absence of such an issue does not trigger re-review.
 
-# Version Metadata Proposal
+# Locked Version Metadata
 
 The four existing legacy records preserve `createdVersion: "0.1.0"` and move `lastModifiedVersion` to `"0.6.0"`:
 
@@ -63,11 +65,11 @@ The four existing legacy records preserve `createdVersion: "0.1.0"` and move `la
 
 The five new production records use `"0.6.0"` for both `createdVersion` and `lastModifiedVersion`.
 
-This matches the staged Fish migration pattern already present on `main`, but remains part of the pending Wave 4 lock.
+This matches the staged Fish migration pattern already present on `main` and is part of the locked Wave 4 package.
 
-# Proposed Identification Relationships
+# Locked Identification Relationships
 
-Exactly five relationships are proposed:
+Exactly five relationships are locked:
 
 1. `bluegill-vs-redear-sunfish`
 2. `bluegill-vs-green-sunfish`
@@ -75,20 +77,18 @@ Exactly five relationships are proposed:
 4. `northern-rock-bass-vs-ozark-bass`
 5. `black-crappie-vs-white-crappie`
 
-These IDs follow the FISH-001 deterministic lexicographic rule. Adding these five to the 15 currently implemented relationships would complete the locked 20-pair Version 1 identification graph.
+These IDs follow the FISH-001 deterministic lexicographic rule. Adding these five to the 15 currently implemented relationships completes the locked 20-pair Version 1 identification graph.
 
-The strongest proposed pairwise structural distinctions are:
+The strongest locked pairwise structural distinctions are:
 
 - Warmouth: 3 anal spines vs Northern Rock Bass: 6 anal spines.
 - Black Crappie: 7–8 dorsal spines vs White Crappie: usually 6 dorsal spines.
 
-The user has not yet explicitly locked this five-pair package.
+# Locked Primary-Media Direction
 
-# Primary-Media Direction
+The user approved a visually coherent nine-illustration Wave 4 set rather than mixing eight illustrations with one isolated specimen photograph.
 
-The user wants a visually coherent nine-illustration Wave 4 set rather than mixing eight illustrations with one isolated specimen photograph.
-
-Current selected direction:
+Locked direction:
 
 - **Bluegill** — Duane Raver / USFWS Public Domain illustration
 - **Redear Sunfish** — Duane Raver / USFWS Public Domain illustration
@@ -122,7 +122,7 @@ Approved Ozark Bass generated asset:
 
 - Dimensions: **1535 × 1024**
 - SHA-256: `d67c5933f43381a243659e5031d87dbe3d2db460af002fa5898de03a1598073f`
-- Status: **selected for Wave 4 under one-time exception**
+- Status: **selected and locked for Wave 4 under one-time exception**
 
 The Ozark Bass source-selection/licensing gate is closed.
 
@@ -154,7 +154,7 @@ Approved Northern Rock Bass generated asset:
 - Dimensions: **1535 × 1024**
 - SHA-256: `43060979c0fc6035f66540c1d13eedc7c60449b9911008f1aca5c2232cd83a47`
 - Approved visual direction: darker dorsal region; stronger gold coloration; reddish eye; small rectangular scale pattern with black beading rather than broad irregular spotting
-- Status: **selected for Wave 4 under one-time exception**
+- Status: **selected and locked for Wave 4 under one-time exception**
 
 The earlier `Rock_bass_R.png` is retained only as research/reference history and is no longer the selected production candidate. The Northern Rock Bass media dispute is closed.
 
@@ -189,10 +189,10 @@ Historical references:
 
 # Current Media Status
 
-- Seven selected Duane Raver/USFWS Fish illustrations: source direction established as file-specific Public Domain; routine exact-original verification remains part of processing.
-- Northern Rock Bass: generated image explicitly approved and selected under a one-time exception; prior Raver rights dispute is closed.
-- Ozark Bass: generated image explicitly approved and selected under a one-time exception; prior licensing search is closed.
-- Wave 4 primary-media selection: **9/9 selected**.
+- Seven selected Duane Raver/USFWS Fish illustrations: source direction locked as file-specific Public Domain; routine exact-original verification remains part of processing.
+- Northern Rock Bass: generated image explicitly approved, selected, and locked under a one-time exception; prior Raver rights dispute is closed.
+- Ozark Bass: generated image explicitly approved, selected, and locked under a one-time exception; prior licensing search is closed.
+- Wave 4 primary-media selection: **9/9 LOCKED**.
 - No selected Wave 4 image has yet been processed/attached to production records through the normal production workflow.
 
 # Media Intake Checkpoint — 2026-08-24
@@ -227,23 +227,34 @@ Technical intake findings retained for historical traceability:
 - The seven supplied 1200-pixel JPEGs match the expected USFWS/Raver illustration family and are the selected Raver originals subject to routine exact-original verification during processing.
 - The two generated exceptions are selected as complete visual assets; do not reinterpret those exceptions as permission to generate additional Fish identification media.
 
+# Site-Wide Card-Page Requirement
+
+D048 already establishes the Dashboard as the reference standard for section/subset card grids and explicitly requires varied adjacent card accent colors. The current Compare Similar Fish catalog uses a valid specialized card structure because each card contains two Fish images, but its outer card treatment currently hard-codes the Fish accent for every peer card. That color behavior is a confirmed implementation defect rather than an approved design exception.
+
+On 2026-08-25 the user approved site-wide enforcement of the Dashboard-derived card treatment for all current and future peer card pages. `docs/CARD_PAGE_STANDARD.md` is the operational implementation standard. Specialized internal card content may remain specialized, but the outer card shell must preserve shared multi-accent, left-edge, interaction, focus, and responsive behavior unless a documented functional exception requires otherwise.
+
+The Compare Fish catalog correction should be included in the next user-facing review package while preserving its comparison-specific pair-image layout.
+
 # Production Boundary
 
-No Wave 4 production source/data/media write is authorized by this planning record.
+The Wave 4 decision lock is complete. Production source/data/media has not yet been committed or pushed.
 
-Before user-facing implementation:
+Before user-facing implementation is considered ready for local review:
 
-1. Obtain explicit user lock of the Fish data/versioning/comparison package and final nine-Fish media direction.
-2. Perform routine exact-original/source/rights verification for the seven selected Raver/USFWS Public Domain files under `MEDIA_GUIDE.md`.
-3. Preserve the two approved generated assets by exact hash and process them only as needed for the production presentation format; do not regenerate or silently substitute them.
-4. Ensure Google Drive `Working Source/Current` has been refreshed from current GitHub `main` before it is used as the Wave 4 working baseline.
-5. Obtain explicit production-write authorization for the intended Wave 4 scope.
+1. Perform routine exact-original/source/rights verification for the seven selected Raver/USFWS Public Domain files under `MEDIA_GUIDE.md`.
+2. Preserve the two approved generated assets by exact hash and process them only as needed for the production presentation format; do not regenerate or silently substitute them.
+3. Ensure Google Drive `Working Source/Current` has been refreshed from current GitHub `main` before it is used as the Wave 4 working baseline.
+4. Apply the locked Wave 4 implementation and the approved site-wide card-page correction in the Drive working tree.
+5. Deliver the normal repository-overlay review ZIP for local/browser validation.
+6. Do not commit/push production/user-facing source until the user explicitly approves the reviewed implementation and authorizes commit/push.
 
 # Exact Resume Point
 
-1. Re-fetch GitHub `main` and read this workstream plus `WORKING_STATE.md`, `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, `data-model/02-FISH.md`, `data-model/09-RELATIONSHIPS.md`, `FISH_REFERENCE_SOURCES.md`, and `MEDIA_GUIDE.md`.
-2. Treat the exact approved generated Ozark Bass and Northern Rock Bass images as the selected Wave 4 primary-identification assets under their two documented one-time exceptions. Do not generalize those exceptions.
-3. Treat the seven selected Raver/USFWS files as the remaining standard media set; complete their routine exact-file verification during processing rather than reopening image-selection research.
-4. Obtain the user's explicit Wave 4 lock confirmation for the proposed nine Fish, version treatment, five comparison relationships, and final media-source direction.
+1. Re-fetch GitHub `main` and read this workstream plus `WORKING_STATE.md`, `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, `CARD_PAGE_STANDARD.md`, `data-model/02-FISH.md`, `data-model/09-RELATIONSHIPS.md`, `FISH_REFERENCE_SOURCES.md`, and `MEDIA_GUIDE.md`.
+2. Treat the nine-Fish package, version treatment, five comparison relationships, and final nine-image media direction as LOCKED unless a genuine review issue is found.
+3. Treat the exact approved generated Ozark Bass and Northern Rock Bass images as the selected Wave 4 primary-identification assets under their two documented one-time exceptions. Do not generalize those exceptions.
+4. Treat the seven selected Raver/USFWS files as the remaining standard media set; complete their routine exact-file verification during processing rather than reopening image-selection research.
 5. Refresh/reconcile Drive `Working Source/Current` to the then-current GitHub `main` before any user-facing write.
-6. Only after those gates close, proceed to exact media processing and production implementation through the normal Drive review ZIP → local/browser validation → explicit commit/push authorization workflow.
+6. Prepare the actual repository-overlay Wave 4 review ZIP with the locked Fish implementation and approved site-wide card-page treatment correction.
+7. Use local/browser validation to identify any genuine issues. Reopen only affected locked decisions when review evidence requires it.
+8. Commit/push production/user-facing source only after explicit post-review authorization.

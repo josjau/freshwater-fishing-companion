@@ -8,7 +8,7 @@ Before substantive work:
 
 1. Verify current GitHub `main`. For user-facing work that uses a local checkout, also confirm repository root, current branch, working-tree status, local `HEAD`, local `origin/main`, and remote URL.
 2. Read `docs/WORKING_STATE.md`, `docs/HANDOFF.md`, and `docs/ACTIVE-CHANGE-LEDGER.md`, then verify the current Google Drive `Working Source/Current` package when work depends on uncommitted state.
-3. Read `docs/DEVELOPMENT_WORKFLOW.md` plus the governing architecture, decision, data-model, media, or workstream documents for the requested scope.
+3. Read `docs/DEVELOPMENT_WORKFLOW.md` plus the governing architecture, decision, data-model, media, or workstream documents for the requested scope. When card-based navigation or catalog UI is in scope, also read `docs/CARD_PAGE_STANDARD.md`.
 4. Compare the recorded resume point with the actual repository state. Do not rely on chat history as authority.
 
 ## Authority
@@ -29,6 +29,7 @@ Before substantive work:
 - Preserve unrelated user changes and keep edits bounded to the approved workstream.
 - Do not commit or push production/user-facing source unless the user explicitly authorizes that action.
 - Documentation-only commits are standing-authorized when needed to keep durable project state current, provided the latest GitHub file is verified first and documentation impact/preservation/post-write checks pass.
+- New or modified peer card grids must comply with D048 and `docs/CARD_PAGE_STANDARD.md`. Specialized internal card markup does not waive the shared dashboard-derived multi-accent, interaction, and responsive behavior contract.
 
 ## Continuity and closeout
 
