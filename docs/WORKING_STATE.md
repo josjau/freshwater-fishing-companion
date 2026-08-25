@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.4.5  
+**Document Revision:** 1.4.6  
 **Document Status:** Approved — Active Repository Continuity Record  
 **Workstream Status:** Fish Guide — Sunfish & Crappie planning active / production not started  
 **Wave 3 Closeout Baseline:** `19b91b6303b3a3369f0c0a9dd6ac1018457d9b7f`  
@@ -37,7 +37,9 @@ Active planning record:
 
 The proposed Wave 4 package contains nine Fish and five deterministic identification relationships. The Fish identity/versioning/comparison package has been reviewed for structural fit but is **not yet explicitly user-locked**.
 
-The current media direction is an illustration-first set. Eight Fish have a preferred Duane Raver / USFWS-style illustration direction. Ozark Bass remains the only open primary-media gate: no exact-species Public Domain or Creative Commons scientific illustration was found. The preferred path is permission/license for Al Agnew's exact-species Ozark Bass illustration; the alternate permission path is the Ozark Bass illustration from *The Fishes of Missouri*. A Matthew Patterson/USFWS Public Domain photograph remains the safe fallback but is not the user's preferred primary presentation.
+The media direction is now a nine-illustration set. Eight Fish use the preferred Duane Raver / USFWS-style illustration direction. For Ozark Bass, the user gave an explicit **one-time exception** on 2026-08-24 authorizing use of the approved generated Ozark Bass image despite the standing `MEDIA_GUIDE.md` prohibition on AI-generated/approximate photorealistic Fish as primary identification evidence. This exception applies only to this specific Ozark Bass asset and does not change the general Fish media standard or create precedent for any other Fish. The approved generated PNG is 1535 × 1024 with SHA-256 `d67c5933f43381a243659e5031d87dbe3d2db460af002fa5898de03a1598073f`. The earlier Al Agnew/onWater licensing paths remain research history/fallback context rather than active blockers.
+
+The Ozark Bass source-selection gate is therefore closed. Production processing/attachment of the selected media set has not yet occurred.
 
 # Open Cross-Domain Finding
 
@@ -55,7 +57,7 @@ The Rig `useCases[]` species-specific wording remains a semantic-owner/data-qual
 
 - Wave 3 JavaScript/repository-integrity/package-fidelity/media-hash/browser/mobile/search/attribution checks: PASS.
 - Final user review of Wave 3 presentation and navigation-arrow normalization: APPROVED.
-- Wave 4 planning/media research: documented; production validation not applicable yet.
+- Wave 4 planning/media research: documented; Ozark Bass generated-image one-time exception explicitly approved; production validation not applicable yet.
 
 # Commit / Validation Documentation Closure Gate
 
@@ -64,7 +66,8 @@ Every user-facing commit candidate requires full-tree mechanical verification pl
 # Exact Resume Point
 
 1. Verify current GitHub `main` and read `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, `docs/workstreams/FISH-WAVE-4-SUNFISH-CRAPPIE.md`, and the governing Fish/evidence/media/relationship documents.
-2. Resolve the Ozark Bass primary-illustration permission decision: preferred Al Agnew; alternate MDC/*The Fishes of Missouri*; Public Domain USFWS photograph remains the safe fallback but is not preferred.
-3. Obtain explicit user lock of the proposed nine-Fish Wave 4 data/versioning package, five comparison relationships, and final media-source direction.
-4. Refresh/reconcile Drive `Working Source/Current` to the then-current GitHub `main` before any user-facing Wave 4 write.
-5. After those gates close, use the normal Drive working package → review ZIP → local/browser validation → explicit commit/push authorization → GitHub verification workflow for production implementation.
+2. Treat the user-approved generated Ozark Bass image as the selected Wave 4 Ozark Bass media source under the documented one-time exception; do not generalize the exception to other Fish.
+3. Verify exact source/rights for the uploaded Northern Rock Bass Raver candidate and re-verify exact source/rights for every supplied Raver JPEG before processing.
+4. Obtain explicit user lock of the proposed nine-Fish Wave 4 data/versioning package, five comparison relationships, and final media-source direction.
+5. Refresh/reconcile Drive `Working Source/Current` to the then-current GitHub `main` before any user-facing Wave 4 write.
+6. After those gates close, process the selected nine-Fish media set and use the normal Drive working package → review ZIP → local/browser validation → explicit commit/push authorization → GitHub verification workflow for production implementation.
