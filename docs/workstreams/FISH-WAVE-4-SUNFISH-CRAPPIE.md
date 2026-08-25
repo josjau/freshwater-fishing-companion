@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Fish Guide Production Wave 4: Sunfish & Crappie
 
 **Document:** FISH-WAVE-4-SUNFISH-CRAPPIE.md  
-**Document Revision:** 0.1.1  
+**Document Revision:** 0.1.2  
 **Document Status:** Active Planning / Session-Preservation Record  
 **Implementation Status:** Planning only — production not started; package lock pending  
 **Decision Baseline:** D016, D051, D056–D061  
@@ -105,7 +105,7 @@ Every exact file still must pass the `MEDIA_GUIDE.md` acquisition, exact-byte, c
 
 ## Search conclusion
 
-A final focused search on 2026-08-24 did **not** locate an exact-species Ozark Bass (`Ambloplites constellatus`) scientific illustration that is clearly Public Domain, CC0, or Creative Commons and suitable for production under the Fish identification-media standard.
+Repeated focused searches on 2026-08-24 did **not** locate an exact-species Ozark Bass (`Ambloplites constellatus`) scientific illustration that is clearly Public Domain, CC0, or Creative Commons and suitable for production under the Fish identification-media standard.
 
 This scarcity is biologically/historically important: Ozark Bass was not formally distinguished from Northern Rock Bass until its 1977 description. Older artwork labeled only `Rock Bass` or `Ambloplites rupestris` cannot be reassigned to Ozark Bass without exact specimen/locality evidence.
 
@@ -152,15 +152,61 @@ USFWS has an exact-species Matthew Patterson image of `Ambloplites constellatus`
 FWS record:
 https://www.fws.gov/media/ambloplites-constellatus
 
-This remains the identification-safe, rights-safe fallback. It is **not the user's preferred Wave 4 primary selection** because it would leave Ozark Bass as the lone photograph in an otherwise illustrated category.
+Wikimedia Commons independently records the same Matthew Patterson/USFWS image as a United States federal-government work in the Public Domain:
+https://commons.wikimedia.org/wiki/File:Ambloplites_constellatus_FWS_20925.jpg
+
+The original is 4288 × 2848. This remains the identification-safe, rights-safe fallback. It is **not the user's preferred Wave 4 primary selection** because it would leave Ozark Bass as the lone photograph in an otherwise illustrated category.
+
+# Additional Rights-Safe Media Sweep — 2026-08-24
+
+Additional sweeps covered USFWS, USGS, National Park Service/Buffalo National River, Wikimedia Commons, FishBase, public scientific repositories, public-agency Fish pages, and image-search results. The goal was to find an exact-species illustration with fewer rights restrictions than the Al Agnew candidate.
+
+## Northern Rock Bass — new Public Domain illustration alternative
+
+A defensible rights-safe illustration alternative was located for Northern Rock Bass (`Ambloplites rupestris`):
+
+- **Artist:** Ted Walke
+- **Commission/source:** Pennsylvania Fish & Boat Commission
+- **Commons file:** `Rock Bass.jpg`
+- **Commons dimensions:** 359 × 178
+- **Commons rights:** Public Domain; the file page states that the copyright holder released the work into the Public Domain worldwide
+- **Commons record:** https://commons.wikimedia.org/wiki/File:Rock_Bass.jpg
+- **Independent reuse confirmation:** Smithsonian NEMESIS identifies the same Ted Walke/Pennsylvania Fish & Boat Commission illustration as Public Domain: https://invasions.si.edu/nemesis/species_summary/168097
+
+This candidate is materially stronger on rights provenance than the currently uploaded `Rock_bass_R.png`, whose exact hosted-file rights remain unverified. It is **not selected** because its available Commons resolution is much smaller and its visual treatment differs somewhat from the Raver set. Preserve it as a no-permission fallback.
+
+The uploaded Raver Rock Bass candidate remains preferred visually if its exact source and rights can be verified. The IGFA-hosted Raver Rock Bass image is **not** a safe substitute because the displayed image is marked as IGFA property; artist identity alone does not establish reuse rights.
+
+## Ozark Bass — open-license/photo alternatives found, but no open illustration
+
+| Candidate | Rights | Visual/type assessment | Status |
+|---|---|---|---|
+| Matthew Patterson/USFWS teaching-collection specimen, 4288 × 2848 | Public Domain | Exact species; clean specimen photograph | Rights-safe fallback; not preferred because it breaks the illustration set |
+| James River, Missouri 2018 angler-held Ozark Bass, 2932 × 2933 | CC BY-SA 4.0 | Exact species photo; fish is being held; share-alike/attribution obligations | Reusable with obligations but visually inferior for FCC |
+| M. Duren FishBase Ozark Bass photo | CC BY on FishBase listing | Exact-species photograph; individual asset/license should still be verified before use | Possible photo fallback; no advantage over FWS Public Domain specimen |
+| Jeremy V. Jordan Ozark Bass photo | CC BY-ND 4.0 | Exact-species photograph | Reject for FCC processing because NoDerivatives conflicts with background isolation/crop/derivative asset workflow |
+| `Ambloplites constellatus.jpg`, Wikimedia Commons/Buffalo National River category, 2048 × 1354 | Exact file-page license could not be retrieved during this sweep | Appears in a National Park Service-related Commons category | **Not cleared**; category membership/government context is not sufficient rights evidence |
+| Joseph R. Tomelleri Ozark Bass drawing used in a Buffalo National River/NPS brochure | Copyrighted/licensed artwork | Excellent scientific illustration and visual fit | **Not licensing-free**; Tomelleri's official site states that reproduction rights to his scientific fish drawings are licensed |
+| User-supplied `ozark-bass.png`, 800 × 533 | Unknown | Transparent exact-species-looking asset | No reliable web provenance match found by filename/dimensions; remains **not production-cleared** |
+
+Tomelleri rights reference:
+https://www.americanfishes.com/en/
+
+His official site explicitly describes licensing of his fish drawings for ID guides, books, websites, signage, clothing, and other reproduction uses. Therefore an NPS or other government use of Tomelleri artwork must not be interpreted as Public Domain without a file-specific grant.
+
+Wikimedia's current `Ambloplites constellatus` category contains only three files: the Public Domain FWS Patterson photograph, the unresolved `Ambloplites constellatus.jpg`, and the James River 2018 photograph. It does not expose a rights-cleared scientific illustration:
+https://commons.wikimedia.org/wiki/Category:Ambloplites_constellatus
+
+**Sweep result:** no exact-species Ozark Bass illustration was found that improves on Al Agnew while also eliminating the licensing/permission gate. The Al Agnew illustration therefore remains the preferred illustration candidate, with the Patterson/USFWS Public Domain specimen photo retained as the safest fallback.
 
 # Current Media Status
 
-- Illustration direction for eight Fish: identified/preferred; exact production files still require per-asset acquisition and rights verification.
-- Ozark Bass: exact-species illustration exists, but no open-license candidate was found.
+- Illustration direction for seven Raver/USFWS Fish: identified/preferred; exact production files still require per-asset acquisition and rights verification.
+- Northern Rock Bass: uploaded Raver candidate remains visually preferred but exact-file rights are unresolved; Ted Walke/Pennsylvania Fish & Boat Commission Public Domain illustration is now a documented no-permission fallback.
+- Ozark Bass: exact-species illustration exists through Al Agnew, but no open-license illustration candidate was found after repeated sweeps.
 - Preferred Ozark path: seek permission/license for the Al Agnew illustration.
 - Alternate Ozark permission path: request permission from Missouri Department of Conservation for the *Fishes of Missouri* illustration.
-- Safe fallback: Matthew Patterson/USFWS Public Domain photograph, retained but not selected as preferred primary media.
+- Safe Ozark fallback: Matthew Patterson/USFWS Public Domain photograph, retained but not selected as preferred primary media.
 - No uploaded image has been written to production as part of planning/media intake.
 
 # Media Intake Checkpoint — 2026-08-24
@@ -204,7 +250,8 @@ Before user-facing implementation:
 
 1. Re-fetch GitHub `main` and read this workstream plus `WORKING_STATE.md`, `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, `data-model/02-FISH.md`, `data-model/09-RELATIONSHIPS.md`, `FISH_REFERENCE_SOURCES.md`, and `MEDIA_GUIDE.md`.
 2. Resolve the **Ozark Bass illustration permission decision**: first choice Al Agnew through MHS Licensing; alternate MDC/*The Fishes of Missouri*; Public Domain USFWS photograph remains the safe fallback but is not preferred.
-3. Verify exact source/rights for the Northern Rock Bass Raver candidate and for every supplied Raver JPEG before processing.
-4. Obtain the user's explicit Wave 4 lock confirmation for the proposed nine Fish, version treatment, five comparison relationships, and final media-source direction.
-5. Refresh/reconcile Drive `Working Source/Current` to the then-current GitHub `main` before any user-facing write.
-6. Only after those gates close, proceed to exact media processing and production implementation through the normal Drive review ZIP → local/browser validation → explicit commit/push authorization workflow.
+3. Verify exact source/rights for the uploaded Northern Rock Bass Raver candidate. If that cannot be cleared, retain the Ted Walke/Pennsylvania Fish & Boat Commission Public Domain illustration as the no-permission illustration fallback.
+4. Re-verify exact source/rights for every supplied Raver JPEG before processing.
+5. Obtain the user's explicit Wave 4 lock confirmation for the proposed nine Fish, version treatment, five comparison relationships, and final media-source direction.
+6. Refresh/reconcile Drive `Working Source/Current` to the then-current GitHub `main` before any user-facing write.
+7. Only after those gates close, proceed to exact media processing and production implementation through the normal Drive review ZIP → local/browser validation → explicit commit/push authorization workflow.
