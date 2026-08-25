@@ -166,15 +166,24 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     transform: none;
 }
 .dashboard-card--unavailable .dashboard-card__action { color: var(--text-subtle); }
-.dashboard-card:nth-child(1) { --card-accent: var(--accent-fish); }
-.dashboard-card:nth-child(2) { --card-accent: var(--accent-rigs); }
-.dashboard-card:nth-child(3) { --card-accent: var(--accent-recommendations); }
-.dashboard-card:nth-child(4) { --card-accent: var(--accent-tackle); }
-.dashboard-card:nth-child(5) { --card-accent: var(--accent-knots); }
-.dashboard-card:nth-child(6) { --card-accent: var(--accent-catch-log); }
-.dashboard-card:nth-child(7) { --card-accent: var(--accent-favorites); }
-.dashboard-card:nth-child(8) { --card-accent: var(--accent-regulations); }
-.dashboard-card:nth-child(9) { --card-accent: var(--accent-settings); }
+.dashboard-card:nth-child(9n + 1),
+.fish-comparison-catalog-card:nth-child(9n + 1) { --card-accent: var(--accent-fish); }
+.dashboard-card:nth-child(9n + 2),
+.fish-comparison-catalog-card:nth-child(9n + 2) { --card-accent: var(--accent-rigs); }
+.dashboard-card:nth-child(9n + 3),
+.fish-comparison-catalog-card:nth-child(9n + 3) { --card-accent: var(--accent-recommendations); }
+.dashboard-card:nth-child(9n + 4),
+.fish-comparison-catalog-card:nth-child(9n + 4) { --card-accent: var(--accent-tackle); }
+.dashboard-card:nth-child(9n + 5),
+.fish-comparison-catalog-card:nth-child(9n + 5) { --card-accent: var(--accent-knots); }
+.dashboard-card:nth-child(9n + 6),
+.fish-comparison-catalog-card:nth-child(9n + 6) { --card-accent: var(--accent-catch-log); }
+.dashboard-card:nth-child(9n + 7),
+.fish-comparison-catalog-card:nth-child(9n + 7) { --card-accent: var(--accent-favorites); }
+.dashboard-card:nth-child(9n + 8),
+.fish-comparison-catalog-card:nth-child(9n + 8) { --card-accent: var(--accent-regulations); }
+.dashboard-card:nth-child(9n + 9),
+.fish-comparison-catalog-card:nth-child(9n + 9) { --card-accent: var(--accent-settings); }
 
 .dashboard-card.dashboard-card--workflow {
     --card-accent: var(--accent-workflow);
@@ -870,21 +879,33 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 
 .fish-comparison-catalog-grid { display: grid; gap: var(--space-4); }
 .fish-comparison-catalog-card {
+    --card-accent: var(--accent);
     display: grid;
     gap: var(--space-4);
     width: 100%;
+    height: 100%;
     padding: var(--space-4);
     border: 1px solid var(--border);
-    border-left: 5px solid var(--accent-fish);
+    border-left: 5px solid var(--card-accent);
     border-radius: var(--radius);
-    background: var(--surface-elevated);
+    background:
+        linear-gradient(90deg, color-mix(in srgb, var(--card-accent) 10%, transparent) 0, transparent 25px),
+        var(--surface-elevated);
+    box-shadow: var(--shadow-card);
     color: var(--text);
     text-align: left;
-    height: 100%;
     cursor: pointer;
 }
-.fish-comparison-catalog-card:hover { border-color: var(--accent-fish); background: var(--surface-hover); }
-.fish-comparison-catalog-card:focus-visible { outline: 3px solid var(--accent-fish); outline-offset: 3px; }
+.fish-comparison-catalog-card:hover {
+    border-color: var(--card-accent);
+    background:
+        linear-gradient(90deg, color-mix(in srgb, var(--card-accent) 15%, transparent) 0, transparent 30px),
+        var(--surface-hover);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+}
+.fish-comparison-catalog-card:active { background: var(--surface-active); transform: scale(0.985); }
+.fish-comparison-catalog-card:focus-visible { outline: 3px solid var(--card-accent); outline-offset: 3px; }
 .fish-comparison-catalog-card__images { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
 .fish-comparison-catalog-card__image {
     width: 100%;
@@ -900,7 +921,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     background: var(--reference-media-surface);
 }
 .fish-comparison-catalog-card__title { font-size: 1.08rem; font-weight: 800; }
-.fish-comparison-catalog-card__action { align-self: end; margin-top: auto; color: var(--accent-fish); font-weight: 800; }
+.fish-comparison-catalog-card__action { align-self: end; margin-top: auto; color: var(--card-accent); font-weight: 800; }
 
 .fish-comparison-header {
     margin-bottom: var(--space-5);

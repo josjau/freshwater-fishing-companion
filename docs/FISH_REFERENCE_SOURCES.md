@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.1.1  
+**Document Revision:** 1.2.1  
 **Document Status:** Approved — Production Authoring Standard  
-**Implementation Status:** Standard active; evidence populated through closed Wave 3 Bass, with the remaining Fish library pending  
+**Implementation Status:** Standard active; evidence populated through the Wave 4 Sunfish & Crappie review package, including approved Fish-to-Rig guidance, pending user validation and production commit  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
-**Last Updated:** 2026-08-24
+**Last Updated:** 2026-08-25
 
 # Purpose
 
@@ -798,6 +798,239 @@ These entries document the approved Phase 0 taxonomy decision and provide the in
 **Reviewed date:** 2026-08-24  
 **Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified original is 1200 x 772 JPEG; Public Domain.
 
+## MDC-BLUEGILL
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Bluegill — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/bluegill  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports `Lepomis macrochirus`, Centrarchidae, statewide Missouri occurrence, small-mouth identity, long pointed pectoral fin, black opercular flap, rear soft-dorsal blotch, blue chin/lower gill-cover coloration, and pond/reservoir/stream habitat with aquatic plants or other cover.
+
+## MDC-REDEAR-SUNFISH
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Redear Sunfish — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/redear-sunfish  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports `Lepomis microlophus`, Centrarchidae, Shellcracker terminology, southern-Missouri natural occurrence plus pond/reservoir stocking, small mouth, deep body, golden/light-olive sides with vertical bars, and the black opercular flap with a prominent orange/red rear spot. Also supports warm clear vegetated water and protected backwater habitat.
+
+## MDC-GREEN-SUNFISH
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Green Sunfish — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/green-sunfish  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports `Lepomis cyanellus`, Centrarchidae, Black Perch terminology, statewide Missouri occurrence, thick body, large mouth, blue head markings, pale/salmon fin margins, dark rear dorsal splotch, rounded pectoral fin, and use of ponds, lakes, streams, pools, and backwaters. The field guide also specifically identifies still-fishing with a cane pole and bobber using worms, grubs, or grasshoppers as an effective method.
+
+## MDC-LONGEAR-SUNFISH
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Longear Sunfish — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/longear-sunfish  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports `Lepomis megalotis`, Centrarchidae, Creek Perch terminology, southern-Missouri/Ozark occurrence, moderate mouth, elongated black often white-bordered opercular flap, rounded pectoral fin, and reservoir/pond/stream-pool habitat with rocky or sandy bottoms and aquatic vegetation.
+
+## MDC-NORTHERN-ROCK-BASS
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Northern Rock Bass — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/northern-rock-bass  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports `Ambloplites rupestris`, Centrarchidae, Goggle-Eye terminology, northern/southwestern Ozark occurrence, thick body, large mouth and eyes, 12 dorsal spines, 6 anal spines, parallel rows of dark side spots, and deeper-pool use around boulders, logs, and vegetation.
+
+## MDC-GOGGLE-EYE-RULE
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Goggle-eye (Ozark Bass, Rock Bass and Shadow Bass) and Warmouth — Missouri regulation terminology  
+**URL:** https://mdc.mo.gov/about-us/about-regulations/wildlife-code-missouri/3-csr-10-6530-goggle-eye-ozark-bass-rock-bass  
+**Source type:** Official state fisheries regulation / common-name terminology  
+**Reviewed date:** 2026-08-25  
+**Notes:** Establishes Missouri's use of `goggle-eye` as the regulatory umbrella/common terminology encompassing Ozark bass, rock bass, and shadow bass. Used only to support the approved shared Goggle-Eye alias context, not to collapse the three biological species.
+
+## MDC-WARMOUTH
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Warmouth — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/warmouth  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports `Lepomis gulosus`, Centrarchidae, southern/eastern Missouri occurrence, thick body, large mouth, dark/reddish-brown lines radiating behind the eye, 10 dorsal spines, and the 3-anal-spine distinction from the Northern Rock Bass's 6. Also supports vegetated low-current lakes, sloughs, overflows, and large impoundments.
+
+## MDC-BLACK-CRAPPIE
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Black Crappie — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/black-crappie  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports `Pomoxis nigromaculatus`, Centrarchidae, widespread Missouri occurrence including large Ozark reservoirs, irregular dark speckles/blotches rather than vertical bars, 7–8 dorsal spines, and open-water habitat with submerged timber or vegetation in standing waters and slow backwaters.
+
+## MDC-WHITE-CRAPPIE
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** White Crappie — Missouri field guide  
+**URL:** https://mdc.mo.gov/discover-nature/field-guide/white-crappie  
+**Source type:** Official state wildlife/fisheries field guide  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports `Pomoxis annularis`, Centrarchidae, Papermouth and Bachelor Perch terminology, near-statewide Missouri occurrence, 5–10 vertical side bars, usually 6 dorsal spines, and open-water/cover use in ponds, lakes, reservoirs, and slow-flowing river backwaters.
+
+## FWS-OZARK-BASS
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Ozark Bass (`Ambloplites constellatus`) species profile / taxonomic tree  
+**URL:** https://www.fws.gov/species/ozark-bass-ambloplites-constellatus  
+**Source type:** Official federal species/taxonomy record  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports the canonical Ozark Bass common/scientific identity; the linked FWS taxonomic tree places the species in Centrarchidae.
+
+## USGS-OZARK-BASS
+
+**Authority / publisher:** U.S. Geological Survey — Nonindigenous Aquatic Species Database  
+**Title:** Ozark Bass (`Ambloplites constellatus`) — Species Profile  
+**URL:** https://nas.er.usgs.gov/queries/factsheet.aspx?speciesid=372  
+**Source type:** Federal species profile / distribution and taxonomy evidence  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports `Ambloplites constellatus`, its distinction from former `A. rupestris` treatment, and native upper White River drainage occurrence in Arkansas and Missouri. This range directly includes the project's Southwest Missouri/Northwest Arkansas Four-State scope.
+
+## USFS-CENTRARCHID-IDENTIFICATION
+
+**Authority / publisher:** U.S. Forest Service Research and Development / Wiley-Blackwell  
+**Title:** Centrarchid identification and natural history — M. L. Warren, Jr.  
+**URL:** https://research.fs.usda.gov/treesearch/33889  
+**Source type:** Federal research publication / technical species-identification and habitat synthesis  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports Ozark Bass as an elongate/slender `Ambloplites`, the irregular/freckled dark-spot pattern versus the lined/row pattern of Northern Rock Bass, upper White River Ozark occurrence, and clear rocky pool/creek/small-to-medium-river habitat with boulder/log/bank cover. Also supports the comparative body-depth distinction used in the pairwise relationship.
+
+## MDC-BLUEGILL-TACTICS
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Sunfish: Tips For Bluegill Fishing  
+**URL:** https://mdc.mo.gov/fishing/species/sunfish/sunfish-tips-bluegill-fishing  
+**Source type:** Official state fisheries angling guidance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Explicitly supports bobber-and-worm fishing as the most popular Bluegill technique, lightly weighted bottom fishing, tiny jigs/spinners, and slow presentations. Used to support Fixed Bobber Rig as Primary and Split-Shot Bait Rig as Alternative.
+
+## MDC-LONGEAR-TACTICS
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Ask MDC — Longear Sunfish angling guidance  
+**URL:** https://mdc.mo.gov/magazines/missouri-conservationist/2022-10/ask-mdc  
+**Source type:** Official state conservation/fisheries angling guidance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports worms and other small natural baits plus small spinners for Longear Sunfish on light tackle. Used to support Fixed Bobber Rig as Primary and Inline Spinner Setup as Alternative.
+
+## MDC-GOGGLE-EYE-TACTICS
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Niangua River fishing prospects  
+**URL:** https://mdc.mo.gov/fishing/fishing-prospects/areas/niangua-river  
+**Source type:** Official state fisheries prospect / angling guidance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports plastic grubs and worms/earthworms fished close to woody cover and boulders for goggle-eye. Combined with the species-specific Rock Bass/Ozark Bass habitat evidence, this supports Jighead + Soft Plastic as Primary and Split-Shot Bait Rig as Alternative for the two `Ambloplites` Wave 4 Fish.
+
+## MDC-PANFISH-TACTICS-JAMES-REED
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** James A. Reed Memorial Wildlife Area Prospect Report  
+**URL:** https://mdc.mo.gov/fishing/fishing-prospects/reports/james-reed-memorial-wildlife-area-prospect-report  
+**Source type:** Official state fisheries prospect / angling guidance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Supports Redear presentations near bottom/cover with worms or small jigs and Crappie presentations using minnows or jigs under a bobber near woody/rocky cover. Used with the canonical Rig library to support the approved Redear and Crappie starting guidance.
+
+## MDC-CRAPPIE-JIG-BOBBER
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Why Go to Wappapello?  
+**URL:** https://mdc.mo.gov/magazines/conservationist/2006-03/why-go-wappapello  
+**Source type:** Official state conservation/fisheries angling feature  
+**Reviewed date:** 2026-08-25  
+**Notes:** Documents single-jig tightlining around cover and jig-below-float presentations for Crappie. Supports Jighead + Soft Plastic and Slip Bobber Rig as Primary starting choices; Double-Jig Crappie Rig remains a curated Alternative from the canonical Rig library.
+
+## USFWS-BLUEGILL-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Bluegill — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/bluegill-7  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified user-supplied original is 1200 x 791 JPEG, SHA-256 `47549c1ed908523d2f46befcde66ade4a6541efea676535bee74fb1c094c41af`; Public Domain.
+
+## USFWS-REDEAR-SUNFISH-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Redear Sunfish — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/redear-sunfish-5  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified user-supplied original is 1200 x 751 JPEG, SHA-256 `acf6b5c112ca9dc3ca8c3c2d51ada830704185072170bdab6c3b3616df1e14bb`; Public Domain.
+
+## USFWS-GREEN-SUNFISH-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Green Sunfish — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/green-sunfish  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified user-supplied original is 1200 x 789 JPEG, SHA-256 `f54acc33200e16a158357677da52a26f0abfaf821914fa60c95ef5d6ce406e00`; Public Domain.
+
+## USFWS-LONGEAR-SUNFISH-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Longear Sunfish — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/longear-sunfish  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified user-supplied original is 1200 x 729 JPEG, SHA-256 `64082d75527142ca15f03a828f946800b8991c7623fe117459112ee88efbd505`; Public Domain.
+
+## USFWS-WARMOUTH-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Warmouth — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/warmouth  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified user-supplied original is 1200 x 701 JPEG, SHA-256 `fb7866701c329d72e54b2f9a6751f5d3a3ef4c5897386dad84983dff2fca0af5`; Public Domain.
+
+## USFWS-BLACK-CRAPPIE-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Black Crappie — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/black-crappie-1  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified user-supplied original is 1200 x 783 JPEG, SHA-256 `426e84f5c5a4caee0d1de0dc0a6bd6a4df0c646102cd99c346134e98a3867b49`; Public Domain.
+
+## USFWS-WHITE-CRAPPIE-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** White Crappie — Duane Raver illustration  
+**URL:** https://www.fws.gov/media/white-crappie  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-08-25  
+**Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified user-supplied original is 1200 x 765 JPEG, SHA-256 `f4d1211090cd8dc71fb06591f8572d8020a3ae097fef030fbc0f54cbdd9daa53`; Public Domain.
+
+## PROJECT-NORTHERN-ROCK-BASS-GENERATED
+
+**Authority / publisher:** Freshwater Fishing Companion — user-approved project media decision  
+**Title:** Northern Rock Bass generated primary-identification illustration  
+**URL:** N/A — project-controlled generated asset supplied directly by the user  
+**Source type:** Project media provenance / documented one-time exception  
+**Reviewed date:** 2026-08-25  
+**Notes:** The one-time generated-media exception remains bounded to Northern Rock Bass. Historical approval recorded SHA-256 `43060979c0fc6035f66540c1d13eedc7c60449b9911008f1aca5c2232cd83a47`. The user supplied the selected visual again for this review package as a 1535 x 1024 PNG with transfer SHA-256 `a0f008be8c1fe8bdd8d6e200c8aec4243bb9edb6670ab1fff5c7dc07491656c5`; transfer-byte mismatch is preserved rather than misrepresented as hash equality. This generated asset is not labeled Public Domain.
+
+## PROJECT-OZARK-BASS-GENERATED
+
+**Authority / publisher:** Freshwater Fishing Companion — user-approved project media decision  
+**Title:** Ozark Bass generated primary-identification illustration  
+**URL:** N/A — project-controlled generated asset supplied directly by the user  
+**Source type:** Project media provenance / documented one-time exception  
+**Reviewed date:** 2026-08-25  
+**Notes:** The one-time generated-media exception remains bounded to Ozark Bass. Historical approval recorded SHA-256 `d67c5933f43381a243659e5031d87dbe3d2db460af002fa5898de03a1598073f`. The user supplied the selected visual again for this review package as a 1535 x 1024 PNG with transfer SHA-256 `ccc895f312f33d3957f3041680e9e8e7b123d2d9084c60fa304636ecbb514167`; transfer-byte mismatch is preserved rather than misrepresented as hash equality. This generated asset is not labeled Public Domain.
 # Evidence Entries — Production Population Status
 
 Per-Fish and pairwise evidence population begins with FISH-008/FISH-009 production authoring. Do not fabricate empty “complete” evidence records merely to satisfy documentation appearance before the corresponding canonical Fish content is researched.
@@ -1489,6 +1722,246 @@ Striped Bass distinction evidence
 Notes
 - The hybrid's deeper intermediate body and broken stripes contrast with the Striped Bass's slender profile, mostly continuous stripes, and two distinct parallel tongue patches.
 
+## Bluegill (`bluegill`)
+
+Regional Inclusion
+- MDC-BLUEGILL — Statewide Missouri occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-BLUEGILL
+
+Identification
+- MDC-BLUEGILL
+
+Habitat / Waterbody
+- MDC-BLUEGILL
+
+Media Provenance
+- USFWS-BLUEGILL-RAVER
+
+## Redear Sunfish (`redear-sunfish`)
+
+Regional Inclusion
+- MDC-REDEAR-SUNFISH — Natural southern-Missouri occurrence and widespread pond/reservoir stocking establish presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-REDEAR-SUNFISH
+
+Identification
+- MDC-REDEAR-SUNFISH
+
+Habitat / Waterbody
+- MDC-REDEAR-SUNFISH
+
+Aliases
+- MDC-REDEAR-SUNFISH
+
+Media Provenance
+- USFWS-REDEAR-SUNFISH-RAVER
+
+## Green Sunfish (`green-sunfish`)
+
+Regional Inclusion
+- MDC-GREEN-SUNFISH — Statewide Missouri occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-GREEN-SUNFISH
+
+Identification
+- MDC-GREEN-SUNFISH
+
+Habitat / Waterbody
+- MDC-GREEN-SUNFISH
+
+Aliases
+- MDC-GREEN-SUNFISH
+
+Media Provenance
+- USFWS-GREEN-SUNFISH-RAVER
+
+## Longear Sunfish (`longear-sunfish`)
+
+Regional Inclusion
+- MDC-LONGEAR-SUNFISH — Southern-Missouri and Ozark-stream occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-LONGEAR-SUNFISH
+
+Identification
+- MDC-LONGEAR-SUNFISH
+
+Habitat / Waterbody
+- MDC-LONGEAR-SUNFISH
+
+Aliases
+- MDC-LONGEAR-SUNFISH
+
+Media Provenance
+- USFWS-LONGEAR-SUNFISH-RAVER
+
+## Northern Rock Bass (`northern-rock-bass`)
+
+Regional Inclusion
+- MDC-NORTHERN-ROCK-BASS — Southwestern Ozark occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-NORTHERN-ROCK-BASS
+
+Identification
+- MDC-NORTHERN-ROCK-BASS
+
+Habitat / Waterbody
+- MDC-NORTHERN-ROCK-BASS
+
+Aliases
+- MDC-NORTHERN-ROCK-BASS
+- MDC-GOGGLE-EYE-RULE
+
+Media Provenance
+- PROJECT-NORTHERN-ROCK-BASS-GENERATED
+
+## Warmouth (`warmouth`)
+
+Regional Inclusion
+- MDC-WARMOUTH — Southern/eastern Missouri occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-WARMOUTH
+
+Identification
+- MDC-WARMOUTH
+
+Habitat / Waterbody
+- MDC-WARMOUTH
+
+Media Provenance
+- USFWS-WARMOUTH-RAVER
+
+## Ozark Bass (`ozark-bass`)
+
+Regional Inclusion
+- USGS-OZARK-BASS — Native upper White River drainage occurrence in Missouri and Arkansas directly covers the approved Southwest Missouri/Northwest Arkansas target region.
+
+Taxonomy / Family
+- FWS-OZARK-BASS
+- USGS-OZARK-BASS
+
+Identification
+- USFS-CENTRARCHID-IDENTIFICATION
+
+Habitat / Waterbody
+- USFS-CENTRARCHID-IDENTIFICATION
+
+Aliases
+- MDC-GOGGLE-EYE-RULE
+
+Media Provenance
+- PROJECT-OZARK-BASS-GENERATED
+
+Taxonomy / Evidence Notes
+- USGS records that Ozark Bass was formerly treated as `A. rupestris`; the current canonical application identity remains `Ambloplites constellatus`.
+
+## Black Crappie (`black-crappie`)
+
+Regional Inclusion
+- MDC-BLACK-CRAPPIE — Large Ozark reservoir occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-BLACK-CRAPPIE
+
+Identification
+- MDC-BLACK-CRAPPIE
+
+Habitat / Waterbody
+- MDC-BLACK-CRAPPIE
+
+Media Provenance
+- USFWS-BLACK-CRAPPIE-RAVER
+
+## White Crappie (`white-crappie`)
+
+Regional Inclusion
+- MDC-WHITE-CRAPPIE — Near-statewide Missouri occurrence establishes presence within the approved Southwest Missouri target region.
+
+Taxonomy / Family
+- AFS-NAMES-8
+- MDC-WHITE-CRAPPIE
+
+Identification
+- MDC-WHITE-CRAPPIE
+
+Habitat / Waterbody
+- MDC-WHITE-CRAPPIE
+
+Aliases
+- MDC-WHITE-CRAPPIE
+
+Media Provenance
+- USFWS-WHITE-CRAPPIE-RAVER
+
+## bluegill-vs-redear-sunfish
+
+Bluegill distinction evidence
+- MDC-BLUEGILL
+
+Redear Sunfish distinction evidence
+- MDC-REDEAR-SUNFISH
+
+Notes
+- The comparison leads with the Redear's orange/red opercular-flap spot versus the Bluegill's unspotted black flap, then uses pectoral shape, blue chin coloration, dorsal blotch, and body pattern as supporting field cues.
+
+## bluegill-vs-green-sunfish
+
+Bluegill distinction evidence
+- MDC-BLUEGILL
+
+Green Sunfish distinction evidence
+- MDC-GREEN-SUNFISH
+
+Notes
+- The comparison leads with small-versus-large mouth and deeper-versus-thicker/elongated body profile, then uses pectoral shape, facial markings, and fin margins as supporting cues.
+
+## northern-rock-bass-vs-warmouth
+
+Northern Rock Bass distinction evidence
+- MDC-NORTHERN-ROCK-BASS
+
+Warmouth distinction evidence
+- MDC-WARMOUTH
+
+Notes
+- The strongest structural distinction is 6 versus 3 anal spines; 12 versus 10 dorsal spines, Northern Rock Bass eye size/parallel spot rows, and Warmouth cheek lines provide supporting cues.
+
+## northern-rock-bass-vs-ozark-bass
+
+Northern Rock Bass distinction evidence
+- MDC-NORTHERN-ROCK-BASS
+- USFS-CENTRARCHID-IDENTIFICATION
+
+Ozark Bass distinction evidence
+- USFS-CENTRARCHID-IDENTIFICATION
+
+Notes
+- The comparison leads with Northern Rock Bass's regular parallel side-spot rows versus Ozark Bass's irregular freckling, with the thicker-versus-more-elongate body profile as supporting evidence.
+
+## black-crappie-vs-white-crappie
+
+Black Crappie distinction evidence
+- MDC-BLACK-CRAPPIE
+
+White Crappie distinction evidence
+- MDC-WHITE-CRAPPIE
+
+Notes
+- The comparison uses the official irregular-speckle versus vertical-bar pattern and the 7–8 versus usual-6 dorsal-spine distinction.
+
 # Related Documents
 
 - `data-model/02-FISH.md`
@@ -1499,3 +1972,21 @@ Notes
 - `EXTERNAL_REFERENCE_MAINTENANCE.md`
 - `../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0.md`
 - `../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
+# Wave 4 Fish-to-Rig Guidance Review — 2026-08-25
+
+The Wave 4 review adds curated `FISH_RIG_GUIDANCE` records for all nine Sunfish & Crappie Fish after browser review revealed that the Fish Detail `Rigs to Start With` section was absent. Guidance remains Decision Knowledge; it does not alter canonical Rig `useCases[]` or add inverse Fish lists to Rig records.
+
+Approved guidance:
+
+- Bluegill — Primary: Fixed Bobber Rig; Alternative: Split-Shot Bait Rig. Source anchors: `MDC-BLUEGILL-TACTICS`, `MDC-BLUEGILL`.
+- Redear Sunfish — Primary: Split-Shot Bait Rig; Alternative: Fixed Bobber Rig. Source anchors: `MDC-PANFISH-TACTICS-JAMES-REED`, `MDC-REDEAR-SUNFISH`.
+- Green Sunfish — Primary: Fixed Bobber Rig; Alternative: Jighead + Soft Plastic. Source anchor: `MDC-GREEN-SUNFISH`; the jighead option is a curated compact-lure alternative derived from the species' cover-oriented habitat and the canonical Rig's presentation role.
+- Longear Sunfish — Primary: Fixed Bobber Rig; Alternative: Inline Spinner Setup. Source anchors: `MDC-LONGEAR-TACTICS`, `MDC-LONGEAR-SUNFISH`.
+- Northern Rock Bass — Primary: Jighead + Soft Plastic; Alternative: Split-Shot Bait Rig. Source anchors: `MDC-GOGGLE-EYE-TACTICS`, `MDC-NORTHERN-ROCK-BASS`.
+- Warmouth — Primary: Jighead + Soft Plastic; Alternative: Fixed Bobber Rig. Source anchor: `MDC-WARMOUTH`; recommendation is a curated mapping to the species' low-current vegetation/stump-cover habitat and predatory diet, not a claim that the source prescribes those FCC Rig names.
+- Ozark Bass — Primary: Jighead + Soft Plastic; Alternative: Split-Shot Bait Rig. Source anchors: `MDC-GOGGLE-EYE-TACTICS`, `USGS-OZARK-BASS`, `USFS-CENTRARCHID-IDENTIFICATION`; the tactic mapping uses the documented close behavioral/habitat relationship to other goggle-eye plus Ozark Bass rocky-cover habitat.
+- Black Crappie — Primary: Jighead + Soft Plastic and Slip Bobber Rig; Alternative: Double-Jig Crappie Rig. Source anchors: `MDC-PANFISH-TACTICS-JAMES-REED`, `MDC-CRAPPIE-JIG-BOBBER`, `MDC-BLACK-CRAPPIE`.
+- White Crappie — Primary: Jighead + Soft Plastic and Slip Bobber Rig; Alternative: Double-Jig Crappie Rig. Source anchors: `MDC-PANFISH-TACTICS-JAMES-REED`, `MDC-CRAPPIE-JIG-BOBBER`, `MDC-WHITE-CRAPPIE`.
+
+The recommendation set respects the provisional relationship maxima in `data-model/09-RELATIONSHIPS.md` and every referenced Rig resolves to an active canonical Rig.
+

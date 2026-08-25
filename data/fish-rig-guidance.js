@@ -315,6 +315,178 @@ const FISH_RIG_GUIDANCE = Object.freeze([
                 reason: "A simple bottom rig keeps worms or other natural bait close to bottom around quiet, vegetated water where Yellow Bullheads commonly feed."
             }
         ]
+    },
+    {
+        fishId: "bluegill",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "fixed-bobber-rig",
+                priority: "Primary",
+                reason: "A small worm or similar bait below a light fixed bobber is a simple, effective way to target Bluegill around shallow cover and spawning areas."
+            },
+            {
+                rigId: "split-shot-bait-rig",
+                priority: "Alternative",
+                reason: "A lightly weighted split-shot bait presentation lets a small natural bait sink slowly toward deeper Bluegill with minimal resistance."
+            }
+        ]
+    },
+    {
+        fishId: "redear-sunfish",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "split-shot-bait-rig",
+                priority: "Primary",
+                reason: "A light split-shot bait rig keeps worms or other small natural baits close to bottom around cover, where Redear Sunfish commonly feed."
+            },
+            {
+                rigId: "fixed-bobber-rig",
+                priority: "Alternative",
+                reason: "A fixed bobber can suspend a worm near shallow cover or spawning areas when Redear Sunfish are feeding above bottom."
+            }
+        ]
+    },
+    {
+        fishId: "green-sunfish",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "fixed-bobber-rig",
+                priority: "Primary",
+                reason: "A small worm, grub, or insect bait below a fixed bobber is a simple way to fish the quiet creeks, ponds, and backwaters Green Sunfish commonly use."
+            },
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Alternative",
+                reason: "A small jighead and soft plastic provides a compact lure for probing pockets, edges, and cover when Green Sunfish are active."
+            }
+        ]
+    },
+    {
+        fishId: "longear-sunfish",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "fixed-bobber-rig",
+                priority: "Primary",
+                reason: "A small worm or insect bait under a fixed bobber is an easy presentation for Longear Sunfish in pools, edges, and slower pockets."
+            },
+            {
+                rigId: "inline-spinner-setup",
+                priority: "Alternative",
+                reason: "A small inline spinner is an effective moving option for covering clear creek pools and rocky or weedy edges."
+            }
+        ]
+    },
+    {
+        fishId: "northern-rock-bass",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A small jighead and soft plastic can be worked close to boulders, logs, and current breaks where Northern Rock Bass hold and feed."
+            },
+            {
+                rigId: "split-shot-bait-rig",
+                priority: "Alternative",
+                reason: "A split-shot bait rig presents worms or other natural bait close to rocky cover with a lighter, slower presentation."
+            }
+        ]
+    },
+    {
+        fishId: "warmouth",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A small jighead and soft plastic can be worked through vegetation, stump edges, and other low-current cover where Warmouth hide and feed."
+            },
+            {
+                rigId: "fixed-bobber-rig",
+                priority: "Alternative",
+                reason: "A fixed bobber suspends worms or other small bait beside shallow vegetation and cover without dragging directly through it."
+            }
+        ]
+    },
+    {
+        fishId: "ozark-bass",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A small jighead and soft plastic can be worked near boulders, logs, and rocky pool cover where Ozark Bass hold and feed."
+            },
+            {
+                rigId: "split-shot-bait-rig",
+                priority: "Alternative",
+                reason: "A split-shot bait rig offers a light natural-bait presentation around rocky cover and deeper pools."
+            }
+        ]
+    },
+    {
+        fishId: "black-crappie",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A small jighead and soft plastic can be cast or worked vertically around brush, timber, vegetation, and suspended Black Crappie."
+            },
+            {
+                rigId: "slip-bobber-rig",
+                priority: "Primary",
+                reason: "A slip bobber holds a minnow or jig at a controlled depth beside cover or over suspended Black Crappie."
+            },
+            {
+                rigId: "double-jig-crappie-rig",
+                priority: "Alternative",
+                reason: "A double-jig crappie rig provides two compact presentations for vertical or controlled-depth fishing when covering schooling fish."
+            }
+        ]
+    },
+    {
+        fishId: "white-crappie",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A small jighead and soft plastic can be cast or worked vertically around brush, timber, shallow flats, and suspended White Crappie."
+            },
+            {
+                rigId: "slip-bobber-rig",
+                priority: "Primary",
+                reason: "A slip bobber holds a minnow or jig at a controlled depth beside cover or over suspended White Crappie."
+            },
+            {
+                rigId: "double-jig-crappie-rig",
+                priority: "Alternative",
+                reason: "A double-jig crappie rig provides two compact presentations for vertical or controlled-depth fishing when covering schooling fish."
+            }
+        ]
     }
 ]);
 

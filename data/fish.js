@@ -149,11 +149,18 @@ const FISH_DATA = Object.freeze([
             "A common sunfish recognized by its deep body, small mouth, " +
             "and dark opercular flap.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Lepomis macrochirus",
-        category: "Sunfish",
+        categoryId: "sunfish-crappie",
         family: "Centrarchidae",
+        aliases: [],
+        identificationTraits: [
+            "The mouth is small relative to the deep body.",
+            "The pectoral fin is long and pointed.",
+            "The opercular flap is black, and a dark blotch marks the rear of the soft dorsal fin.",
+            "Blue coloration is often visible on the chin and lower gill-cover area."
+        ],
         habitatTags: ["Grass", "Brush", "Timber", "Shallow Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
@@ -161,16 +168,130 @@ const FISH_DATA = Object.freeze([
         id: "redear-sunfish",
         name: "Redear Sunfish",
         summary:
-            "A deep-bodied sunfish commonly identified by the colored edge " +
-            "on its opercular flap.",
+            "A deep-bodied sunfish commonly identified by the orange or red " +
+            "spot at the rear of its dark opercular flap.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Lepomis microlophus",
-        category: "Sunfish",
+        categoryId: "sunfish-crappie",
         family: "Centrarchidae",
+        aliases: ["Shellcracker"],
+        identificationTraits: [
+            "The mouth is small and the body is deep.",
+            "The black opercular flap has an orange or red spot at its rear edge.",
+            "The sides are commonly golden to olive and may show darker vertical bars."
+        ],
         habitatTags: ["Grass", "Brush", "Shallow Water"],
         waterbodyTypes: ["Pond", "Lake", "Reservoir"]
+    },
+    {
+        id: "green-sunfish",
+        name: "Green Sunfish",
+        summary:
+            "A thick-bodied sunfish recognized by its large mouth, blue facial " +
+            "markings, pale fin margins, and dark dorsal blotch.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Lepomis cyanellus",
+        categoryId: "sunfish-crappie",
+        family: "Centrarchidae",
+        aliases: ["Black Perch"],
+        identificationTraits: [
+            "The mouth is noticeably larger than a Bluegill's.",
+            "The body is comparatively elongated and thick rather than strongly disk-shaped.",
+            "Blue facial markings are visible on the cheek and lower head.",
+            "The fins often show pale or salmon-colored margins, and a dark blotch marks the rear of the soft dorsal fin."
+        ],
+        habitatTags: ["Shallow Water"],
+        waterbodyTypes: ["Pond", "Lake", "River", "Creek"]
+    },
+    {
+        id: "longear-sunfish",
+        name: "Longear Sunfish",
+        summary:
+            "A colorful sunfish recognized by its elongated black opercular " +
+            "flap, rounded pectoral fin, and moderate mouth.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Lepomis megalotis",
+        categoryId: "sunfish-crappie",
+        family: "Centrarchidae",
+        aliases: ["Creek Perch"],
+        identificationTraits: [
+            "The black opercular flap is distinctly elongated and is often bordered by white.",
+            "The pectoral fin is rounded rather than long and pointed.",
+            "The mouth is moderate in size rather than especially small or large."
+        ],
+        habitatTags: ["Rock", "Grass"],
+        waterbodyTypes: ["Pond", "Lake", "River", "Creek", "Reservoir"]
+    },
+    {
+        id: "northern-rock-bass",
+        name: "Northern Rock Bass",
+        summary:
+            "A thick-bodied sunfish recognized by its large eyes, 12 dorsal " +
+            "spines, 6 anal spines, and parallel rows of dark side spots.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Ambloplites rupestris",
+        categoryId: "sunfish-crappie",
+        family: "Centrarchidae",
+        aliases: ["Rock Bass", "Goggle-Eye"],
+        identificationTraits: [
+            "The body is thick, with a large mouth and conspicuously large eyes.",
+            "The dorsal fin has 12 spines.",
+            "The anal fin has 6 spines.",
+            "Dark side spots tend to form parallel rows rather than an irregular freckled pattern."
+        ],
+        habitatTags: ["Rock", "Timber", "Grass", "Deep Water"],
+        waterbodyTypes: ["River", "Creek", "Reservoir"]
+    },
+    {
+        id: "warmouth",
+        name: "Warmouth",
+        summary:
+            "A thick-bodied sunfish recognized by its large mouth, dark lines " +
+            "radiating from the eye, and three anal spines.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Lepomis gulosus",
+        categoryId: "sunfish-crappie",
+        family: "Centrarchidae",
+        aliases: [],
+        identificationTraits: [
+            "The mouth is large for a sunfish.",
+            "Dark lines radiate backward from the eye across the cheek.",
+            "The dorsal fin has 10 spines.",
+            "The anal fin has 3 spines, compared with 6 on a Northern Rock Bass."
+        ],
+        habitatTags: ["Grass", "Shallow Water"],
+        waterbodyTypes: ["Lake", "Reservoir", "River"]
+    },
+    {
+        id: "ozark-bass",
+        name: "Ozark Bass",
+        summary:
+            "A comparatively slender rock-bass relative recognized by irregular " +
+            "dark freckling rather than parallel rows of side spots.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Ambloplites constellatus",
+        categoryId: "sunfish-crappie",
+        family: "Centrarchidae",
+        aliases: ["Goggle-Eye"],
+        identificationTraits: [
+            "Dark side markings are irregular and freckled rather than arranged in the parallel rows typical of Northern Rock Bass.",
+            "The body is comparatively slender for a rock bass.",
+            "The eyes are typically smaller in proportion than those of Northern Rock Bass."
+        ],
+        habitatTags: ["Rock", "Deep Water"],
+        waterbodyTypes: ["River", "Creek"]
     },
     {
         id: "black-crappie",
@@ -179,11 +300,16 @@ const FISH_DATA = Object.freeze([
             "A slab-sided panfish with irregular dark spotting across " +
             "the body and fins.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Pomoxis nigromaculatus",
-        category: "Crappie",
+        categoryId: "sunfish-crappie",
         family: "Centrarchidae",
+        aliases: [],
+        identificationTraits: [
+            "Dark speckles and blotches are scattered irregularly across the sides rather than forming vertical bars.",
+            "The dorsal fin usually has 7 or 8 spines."
+        ],
         habitatTags: ["Brush", "Timber", "Grass", "Open Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
@@ -194,11 +320,16 @@ const FISH_DATA = Object.freeze([
             "A deep-bodied panfish generally showing vertical dark bars " +
             "rather than irregular spotting.",
         createdVersion: "0.1.0",
-        lastModifiedVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         scientificName: "Pomoxis annularis",
-        category: "Crappie",
+        categoryId: "sunfish-crappie",
         family: "Centrarchidae",
+        aliases: ["Papermouth", "Bachelor Perch"],
+        identificationTraits: [
+            "Five to 10 dark vertical bars commonly mark the sides.",
+            "The dorsal fin usually has 6 spines."
+        ],
         habitatTags: ["Brush", "Timber", "Open Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },

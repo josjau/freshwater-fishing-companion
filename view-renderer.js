@@ -378,6 +378,69 @@ const FISH_IMAGE_FRAMING = Object.freeze({
         similar: Object.freeze({ scale: 1.35, positionY: "39%", offsetX: "-2%" }),
         compareCatalog: Object.freeze({ scale: 1.35, positionY: "39%", offsetX: "-2%", offsetY: "5.0%" }),
         compareDetail: Object.freeze({ scale: 1.30, positionY: "39%", offsetX: "-2%" })
+    }),
+    "bluegill": Object.freeze({
+        selection: Object.freeze({ scale: 0.92, positionY: "45%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 1.40, positionY: "50%", offsetX: "0%", offsetY: "3%" }),
+        compareCatalog: Object.freeze({ scale: 1.40, positionY: "50%", offsetX: "0%", offsetY: "3%" }),
+        compareDetail: Object.freeze({ scale: 1.35, positionY: "50%", offsetX: "0%", offsetY: "3%" })
+    }),
+    "redear-sunfish": Object.freeze({
+        selection: Object.freeze({ scale: 1.10, positionY: "39%", offsetX: "-3%" }),
+        detail: Object.freeze({ scale: 1.10, positionY: "37%", offsetX: "-3%" }),
+        similar: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "-8%", offsetY: "5%" }),
+        compareCatalog: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "-8%", offsetY: "5%" }),
+        compareDetail: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "-8%", offsetY: "5%" })
+    }),
+    "green-sunfish": Object.freeze({
+        selection: Object.freeze({ scale: 1.10, positionY: "28%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.12, positionY: "24%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "0%", offsetY: "12%" }),
+        compareCatalog: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "0%", offsetY: "12%" }),
+        compareDetail: Object.freeze({ scale: 1.50, positionY: "50%", offsetX: "0%", offsetY: "12%" })
+    }),
+    "longear-sunfish": Object.freeze({
+        selection: Object.freeze({ scale: 1.10, positionY: "38%", offsetX: "-1%" }),
+        detail: Object.freeze({ scale: 1.10, positionY: "35%", offsetX: "-1%" }),
+        similar: Object.freeze({ scale: 1.50, positionY: "50%", offsetX: "-4.5%", offsetY: "6%" }),
+        compareCatalog: Object.freeze({ scale: 1.50, positionY: "50%", offsetX: "-4.5%", offsetY: "6%" }),
+        compareDetail: Object.freeze({ scale: 1.50, positionY: "50%", offsetX: "-4%", offsetY: "6%" })
+    }),
+    "northern-rock-bass": Object.freeze({
+        selection: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%", offsetY: "0%" }),
+        compareCatalog: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%", offsetY: "0%" }),
+        compareDetail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%", offsetY: "0%" })
+    }),
+    "warmouth": Object.freeze({
+        selection: Object.freeze({ scale: 1.12, positionY: "32%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.12, positionY: "26%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "0%", offsetY: "8%" }),
+        compareCatalog: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "0%", offsetY: "8%" }),
+        compareDetail: Object.freeze({ scale: 1.58, positionY: "50%", offsetX: "0%", offsetY: "8%" })
+    }),
+    "ozark-bass": Object.freeze({
+        selection: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 1.05, positionY: "50%", offsetX: "-1%", offsetY: "0%" }),
+        compareCatalog: Object.freeze({ scale: 1.05, positionY: "50%", offsetX: "-1%", offsetY: "0%" }),
+        compareDetail: Object.freeze({ scale: 1.05, positionY: "50%", offsetX: "-1%", offsetY: "0%" })
+    }),
+    "black-crappie": Object.freeze({
+        selection: Object.freeze({ scale: 1.00, positionY: "22%", offsetX: "0%" }),
+        detail: Object.freeze({ scale: 1.00, positionY: "17%", offsetX: "0%" }),
+        similar: Object.freeze({ scale: 1.40, positionY: "50%", offsetX: "-6%", offsetY: "14%" }),
+        compareCatalog: Object.freeze({ scale: 1.40, positionY: "50%", offsetX: "-6%", offsetY: "14%" }),
+        compareDetail: Object.freeze({ scale: 1.35, positionY: "50%", offsetX: "-6%", offsetY: "14%" })
+    }),
+    "white-crappie": Object.freeze({
+        selection: Object.freeze({ scale: 1.06, positionY: "5%", offsetX: "-2%" }),
+        detail: Object.freeze({ scale: 1.06, positionY: "0%", offsetX: "-2%" }),
+        similar: Object.freeze({ scale: 1.30, positionY: "50%", offsetX: "-5%", offsetY: "20%" }),
+        compareCatalog: Object.freeze({ scale: 1.30, positionY: "50%", offsetX: "-5%", offsetY: "20%" }),
+        compareDetail: Object.freeze({ scale: 1.28, positionY: "50%", offsetX: "-5%", offsetY: "20%" })
     })
 });
 function buildFishFramedMediaMarkup(

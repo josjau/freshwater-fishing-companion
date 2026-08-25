@@ -163,6 +163,131 @@ const FISH_IDENTIFICATION_RELATIONSHIPS = Object.freeze([
         ]
     },
     {
+        id: "bluegill-vs-redear-sunfish",
+        fishIds: ["bluegill", "redear-sunfish"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "bluegill",
+                text: "The black opercular flap lacks the orange or red rear spot that identifies a Redear Sunfish."
+            },
+            {
+                fishId: "bluegill",
+                text: "A long pointed pectoral fin, blue chin area, and dark rear soft-dorsal blotch support the identification."
+            },
+            {
+                fishId: "redear-sunfish",
+                text: "The black opercular flap has a distinct orange or red spot at its rear edge."
+            },
+            {
+                fishId: "redear-sunfish",
+                text: "The deep golden-to-olive body may show darker vertical bars; the mouth remains small."
+            }
+        ]
+    },
+    {
+        id: "bluegill-vs-green-sunfish",
+        fishIds: ["bluegill", "green-sunfish"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "bluegill",
+                text: "The body is deeper and the mouth is distinctly smaller than a Green Sunfish's."
+            },
+            {
+                fishId: "bluegill",
+                text: "A long pointed pectoral fin and black opercular flap support the Bluegill identification."
+            },
+            {
+                fishId: "green-sunfish",
+                text: "The mouth is noticeably larger and the body is comparatively elongated and thick."
+            },
+            {
+                fishId: "green-sunfish",
+                text: "Blue facial markings and pale or salmon-colored fin margins support the Green Sunfish identification."
+            }
+        ]
+    },
+    {
+        id: "northern-rock-bass-vs-warmouth",
+        fishIds: ["northern-rock-bass", "warmouth"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "northern-rock-bass",
+                text: "The anal fin has 6 spines rather than the Warmouth's 3."
+            },
+            {
+                fishId: "northern-rock-bass",
+                text: "Twelve dorsal spines, large eyes, and parallel rows of side spots support the identification."
+            },
+            {
+                fishId: "warmouth",
+                text: "The anal fin has 3 spines rather than the Northern Rock Bass's 6."
+            },
+            {
+                fishId: "warmouth",
+                text: "Ten dorsal spines and dark lines radiating backward from the eye support the identification."
+            }
+        ]
+    },
+    {
+        id: "northern-rock-bass-vs-ozark-bass",
+        fishIds: ["northern-rock-bass", "ozark-bass"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "northern-rock-bass",
+                text: "Dark side spots tend to form parallel rows, and the body is comparatively thick with larger-looking eyes."
+            },
+            {
+                fishId: "northern-rock-bass",
+                text: "The regular row-like side pattern is the strongest visual contrast with an Ozark Bass's irregular freckling."
+            },
+            {
+                fishId: "ozark-bass",
+                text: "Dark side markings are irregular and freckled rather than arranged in parallel rows."
+            },
+            {
+                fishId: "ozark-bass",
+                text: "The body is comparatively slender and the eyes are typically smaller in proportion than a Northern Rock Bass's."
+            }
+        ]
+    },
+    {
+        id: "black-crappie-vs-white-crappie",
+        fishIds: ["black-crappie", "white-crappie"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "black-crappie",
+                text: "Dark speckles and blotches are scattered irregularly across the sides instead of forming vertical bars."
+            },
+            {
+                fishId: "black-crappie",
+                text: "The dorsal fin usually has 7 or 8 spines."
+            },
+            {
+                fishId: "white-crappie",
+                text: "Five to 10 dark vertical bars commonly mark the sides."
+            },
+            {
+                fishId: "white-crappie",
+                text: "The dorsal fin usually has 6 spines."
+            }
+        ]
+    },
+    {
         id: "brown-trout-vs-rainbow-trout",
         fishIds: ["brown-trout", "rainbow-trout"],
         createdVersion: "0.6.0",
