@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.4.5  
+**Document Revision:** 0.4.6  
 **Document Status:** Approved — Production Baseline + Fish Production Contract  
-**Implementation Status:** Staged production implementation active; Trout, Gar, Wave 1, Wave 2, and Wave 3 Bass validated/closed; remaining locked library pending  
+**Implementation Status:** Version 1 production migration COMPLETE / VALIDATED / CLOSED — 30 active Fish on the approved production schema  
 **Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056–D061, FISH-001–FISH-007  
 **Last Updated:** 2026-08-24
 
@@ -11,19 +11,17 @@
 
 # Purpose
 
-This document defines the approved Fish production contract and records the staged migration state currently present on production `main`.
+This document defines the approved Fish production contract and records the completed Version 1 production state present on `main`.
 
 Fish owns facts intrinsic to the species. Recommendations, pairwise identification guidance, Media attachment, regulations, source provenance, and User Knowledge belong to their respective owners rather than being duplicated into Fish.
 
-Fish Guide Phase 0 is closed. Production implementation proceeds in staged, validated packages. Fish already migrated by a closed production package use the approved target schema; Fish not yet migrated may temporarily retain the legacy seed shape until their approved production package lands. The mixed migration state is deliberate and temporary.
+Fish Guide Phase 0 and Version 1 production are closed. All 30 locked Version 1 Fish have completed the approved production contract and use the production schema below. The former mixed-schema migration state is retired.
 
 ---
 
-# Current Production Schema — Staged Migration
+# Current Production Schema — Migration Complete
 
-`data/fish.js` currently contains a deliberate mixed-schema migration state.
-
-Fish completed through the closed Trout, Gar, Production Wave 1, Production Wave 2, and Production Wave 3 Bass packages use the approved production shape:
+`data/fish.js` contains 30 active canonical Fish. All 30 use the approved production shape:
 
 ```text
 id
@@ -41,25 +39,8 @@ habitatTags[]
 waterbodyTypes[]
 ```
 
-Fish whose production package has not yet landed may temporarily retain the legacy seed shape:
 
-```text
-id
-name
-summary
-createdVersion
-lastModifiedVersion
-isActive
-scientificName
-category
-family
-habitatTags[]
-waterbodyTypes[]
-```
-
-The canonical Fish category registry, Fish-identification relationship registry, Fish-to-Rig guidance registry, Fish Media readiness contract, and per-Fish source-evidence ledger are implemented and expand incrementally as each production package closes.
-
-Do not infer that a legacy-shaped Fish has satisfied the production contract merely because it remains active during staged migration. Its package must still complete the target schema, evidence, primary Media, applicable identification relationships, and validation requirements below.
+The canonical Fish category registry, 20-pair Fish-identification relationship graph, Fish-to-Rig guidance registry, 30 primary-identification Media attachments, and per-Fish source-evidence ledger are implemented. All Version 1 Fish have completed the migration/readiness contract.
 
 ---
 
@@ -454,7 +435,7 @@ The deterministic repository validator checks structural evidence completeness/r
 
 ## Current production
 
-Current search supports the deliberate staged migration and consumes whichever approved/legacy identity fields are actually present for each Fish until the 30-Fish migration is complete.
+Current Fish search consumes the approved production identity fields for all 30 Version 1 Fish. Legacy `category`-shape compatibility is no longer required by active Fish data.
 
 ## Approved Fish production search identity
 
@@ -550,9 +531,10 @@ Closed Fish production packages:
 - Gar Production Package — Longnose Gar + Spotted Gar
 - Production Wave 1 — Common Carp + Freshwater Drum + Paddlefish
 - Production Wave 2 — Walleye / Sauger + Catfish
-- Production Wave 3 — Bass — closed six-Fish package retained at `../../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`; production source/media/evidence implementation is committed, validated, post-push verified, and closed
+- Production Wave 3 — Bass — closed six-Fish package retained at `../../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`
+- Production Wave 4 — Sunfish & Crappie — closed nine-Fish package retained at `../../archive/workstreams/fish-guide/FISH-WAVE-4-SUNFISH-CRAPPIE.md`; source/media/evidence/relationship/guidance implementation is committed, desktop/mobile validated, post-push repository-integrity verified, and closed
 
-The planned next package is Sunfish & Crappie unless a genuine evidence/media/relationship/product issue requires a smaller boundary.
+The Version 1 Fish production migration is complete. Future Fish additions are new enhancement/scope work and do not represent unfinished Version 1 migration.
 
 ---
 

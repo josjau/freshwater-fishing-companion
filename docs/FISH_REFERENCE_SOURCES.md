@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.2.1  
+**Document Revision:** 1.2.2  
 **Document Status:** Approved — Production Authoring Standard  
-**Implementation Status:** Standard active; evidence populated through the Wave 4 Sunfish & Crappie review package, including approved Fish-to-Rig guidance, pending user validation and production commit  
+**Implementation Status:** Standard active; Version 1 evidence baseline COMPLETE through closed Wave 4 — 30 Fish / 20 identification pairs, with approved Fish-to-Rig guidance recorded where applicable  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
 **Last Updated:** 2026-08-25
 
@@ -15,9 +15,9 @@ It records **why the project trusts the Fish facts it publishes** without placin
 
 This document is not a duplicate runtime external-link registry. It supports authoring, review, auditability, taxonomy conflict handling, and deterministic evidence-completeness checks.
 
-Fish Guide Phase 0 is closed. Per-Fish evidence entries are populated as the approved 30-Fish production library is authored. The absence of target-library evidence entries before the corresponding production data is authored does not mean the current pre-migration Fish source has already satisfied the target production contract.
+Fish Guide Phase 0 and Version 1 Fish production are closed. Evidence coverage is populated for the complete approved 30-Fish production library and the 20-pair identification graph. Future Fish additions or factual corrections must extend this ledger without weakening the closed Version 1 evidence baseline.
 
-The approved evidence/media package for Production Wave 3 — Bass is preserved at `../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`. Its authoritative source anchors are promoted into the per-Fish and per-relationship structures in this ledger; Wave 3 is closed.
+The approved evidence/media package for Production Wave 3 — Bass is preserved at `../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`. The approved Wave 4 — Sunfish & Crappie package is preserved at `../archive/workstreams/fish-guide/FISH-WAVE-4-SUNFISH-CRAPPIE.md`. Their authoritative source anchors are promoted into the per-Fish and per-relationship structures in this ledger; both waves are closed.
 
 # Governing Principles
 

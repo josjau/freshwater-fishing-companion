@@ -4,7 +4,7 @@
 **Document Revision:** 1.0.6  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-08-24
+**Last Updated:** 2026-08-25
 
 # Purpose
 
@@ -31,7 +31,7 @@ Design target:
 
 # Fish Guide Baseline — Validated
 
-Fish Guide Production Wave 1 was user-approved after mobile validation. Wave 2 review has additionally validated several Fish presentation refinements. These Fish-specific results are established working standards unless the later site-wide audit demonstrates a cross-domain reason to normalize presentation without changing Fish semantic content.
+Fish Guide Production Wave 1 was user-approved after mobile validation. Waves 2–4 subsequently validated additional Fish presentation refinements. The Fish Guide milestone is now closed; these Fish-specific results are established working standards unless the later site-wide audit demonstrates a cross-domain reason to normalize presentation without changing Fish semantic content.
 
 - Common Carp, Freshwater Drum, and Paddlefish selection-card image framing is approved.
 - Fish identity separates identity metadata from identification instruction: the identity area presents image/name/scientific name/family/aliases, while the Fish summary leads **How to Identify It** with detailed traits following.
@@ -44,6 +44,8 @@ Fish Guide Production Wave 1 was user-approved after mobile validation. Wave 2 r
 - Wave 2 Selection and Fish Detail image blocks use standardized presentation geometry with independent per-Fish fit tuning rather than species-specific frame dimensions.
 - Compare Similar Fish keeps its 84 × 56 thumbnail size. Desktop may use two choices side-by-side; actual mobile review validated one comparison tile per row as the preferred narrow-screen treatment.
 
+- Wave 4 desktop/mobile review validated per-Fish Selection/Detail framing plus normalized Compare Fish catalog and Field Identification sizing/alignment; Northern Rock Bass served as the visual size reference for the close-shaped Sunfish/Crappie comparison set.
+- Wave 4 implemented the D048/CARD_PAGE_STANDARD multi-accent peer-card correction for Compare Fish; specialized pair imagery remains inside the shared Dashboard-derived card language.
 Fish semantic/content validation is closed for completed Fish. Production Wave 2 is closed after the Compare Fish anatomical body-axis alignment correction passed desktop/mobile review and post-push verification. The final design audit may reconcile shared visual grammar, but it must not silently reopen approved Fish facts, media provenance, relationships, or guidance.
 
 # Audit Method
@@ -302,7 +304,7 @@ The Version 1 design audit may close only when:
 
 # Relationship to Active Development
 
-This audit is a required Version 1 design-completion gate, not a blocker for the next Fish production wave. During ongoing builds:
+This audit is a required Version 1 design-completion gate. Fish production is closed; during subsequent product milestones:
 
 - fix domain-specific defects that block the active work,
 - record newly discovered cross-domain design inconsistencies here,

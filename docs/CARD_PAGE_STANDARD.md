@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Card Page Standard
 
 **Document:** CARD_PAGE_STANDARD.md  
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.0.1  
 **Document Status:** Approved  
 **Decision Baseline:** D015, D030, D042, D048  
 **Last Updated:** 2026-08-25
@@ -69,13 +69,13 @@ Any exception must be:
 
 Convenience, domain membership, a bespoke renderer, or implementation history are not sufficient reasons for an exception.
 
-# Current Compare Fish Finding
+# Compare Fish Implementation Status
 
-The existing Compare Similar Fish catalog uses specialized `fish-comparison-catalog-card` markup because each card presents a pair of Fish images and comparison-specific content. That specialized internal structure is valid.
+Compare Similar Fish retains specialized `fish-comparison-catalog-card` internals because each card presents a pair of Fish images and comparison-specific content. That specialized internal structure is valid.
 
-However, the current implementation assigns `var(--accent-fish)` to every comparison card instead of rotating through the shared card palette. That behavior conflicts with D048 and this standard and is a confirmed implementation defect, not an approved Fish-specific design exception.
+Production Wave 4 corrected the former implementation defect in which every comparison card used one Fish-domain accent. Compare Fish now participates in the deterministic shared multi-accent palette while preserving its pair-image layout and comparison-specific content. Desktop and actual-mobile review passed.
 
-The correction should preserve the comparison-specific image layout while bringing the outer card shell, accent rotation, and accent-coupled interaction states into the shared site-wide card system.
+This implementation is the reference example for the rule: specialized content may change the inside of a card without creating a separate outer card language.
 
 # Implementation Guidance
 

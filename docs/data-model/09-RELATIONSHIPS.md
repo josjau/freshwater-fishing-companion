@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.5.5  
+**Document Revision:** 0.5.6  
 **Document Status:** Approved  
-**Implementation Status:** Mixed — validated current relationships through closed Wave 3 Bass; remaining locked-library relationship packages pending  
+**Implementation Status:** Fish Version 1 relationships COMPLETE / VALIDATED / CLOSED — 20 identification pairs; 27 Fish guidance records currently active  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, FISH-001–FISH-007  
 **Last Updated:** 2026-08-24
 
@@ -13,7 +13,7 @@
 
 This document defines how canonical entities, Decision Knowledge, and User Knowledge relate within Freshwater Fishing Companion.
 
-Relationships use stable identifiers and follow the site's semantic single-owner rule. Fish production relationships approved by the closed Fish Guide Phase 0 are now implemented incrementally through staged Fish packages; the registries remain incomplete only because the remaining locked Fish library has not yet finished production migration.
+Relationships use stable identifiers and follow the site's semantic single-owner rule. The Fish Version 1 production relationship milestone is complete: the approved 20-pair identification graph is fully implemented and Fish-to-Rig guidance is populated for the 27 Fish with approved guidance records. Other future relationship domains/gates remain governed separately below.
 
 ---
 
@@ -180,9 +180,9 @@ Individual Rig records do not store duplicate Core membership/order fields solel
 
 ---
 
-# Fish Production Relationships — Implemented / Staged Expansion
+# Fish Production Relationships — Version 1 Complete
 
-Fish Guide Phase 0 is closed. The approved Fish relationship architecture is implemented. `FISH_IDENTIFICATION_RELATIONSHIPS` and `FISH_RIG_GUIDANCE` now contain validated records for Fish completed through the closed Trout, Gar, Production Wave 1, Production Wave 2, and Production Wave 3 Bass packages. Remaining locked-library relationships are added only when their Fish production package is authored and validated.
+Fish Guide Phase 0 and Version 1 production are closed. `FISH_IDENTIFICATION_RELATIONSHIPS` contains the complete approved 20-pair Version 1 graph. `FISH_RIG_GUIDANCE` contains 27 active Fish guidance records, including all 9 Wave 4 Fish and their 20 approved recommendations. Fish-to-Rig guidance remains optional per Fish and continues to be owned here rather than duplicated into Fish or Rig records.
 
 ## Fish Identification / Confusion Relationships
 
@@ -453,7 +453,7 @@ Do not require every approved Fish relationship to be active on every intermedia
 
 FISH-003 permits staged activation. Each migrated/additive Fish or dependency-safe group must satisfy the applicable relationship/media/source/readiness contract for that package.
 
-Closed Fish relationship packages currently include Trout, Gar, Production Wave 1, Production Wave 2, and Production Wave 3 — Bass. Wave 3's six locked pair IDs and identification direction are preserved in `../../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`; all six records are committed, validated, post-push verified, and closed. Sunfish & Crappie is the next planned Fish relationship package.
+Closed Fish relationship packages include Trout, Gar, Production Wave 1, Production Wave 2, Production Wave 3 — Bass, and Production Wave 4 — Sunfish & Crappie. Wave 3 provenance is preserved in `../../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`; Wave 4 provenance is preserved in `../../archive/workstreams/fish-guide/FISH-WAVE-4-SUNFISH-CRAPPIE.md`. The complete 20-pair Version 1 graph is committed, desktop/mobile validated, post-push repository-integrity verified, and closed.
 
 Final Fish Version 1 completion separately requires:
 

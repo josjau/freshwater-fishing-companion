@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.6.2  
+**Document Revision:** 0.6.3  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-24
+**Last Updated:** 2026-08-25
 
 # Purpose
 
@@ -918,7 +918,7 @@ This Four-State direction is also the Companion's forward regional content focus
 
 **Reason:** The region reflects the user's near-term fishing focus and has substantial freshwater species/method overlap with the earlier Northeast Oklahoma / Southwest Kansas scope, making progressive reconciliation more accurate and lower-risk than project-wide invalidation.
 
-**Current implementation status:** Approved and active. Fish Guide Phase 0 is closed; Trout, Gar, Production Wave 1, and Production Wave 2 have implemented the Four-State production direction. Wave 3 Bass is committed, validated, post-push verified, and closed; Sunfish & Crappie is the next planned Fish production package.
+**Current implementation status:** Approved and active. The Fish Guide Version 1 milestone is closed: all 30 locked Fish have completed the Four-State production direction through Wave 4, with desktop/mobile approval and post-push repository-integrity validation.
 
 **Future trigger:** apply Four-State adequacy as each domain is audited or materially modified. Significant rewiring requires explicit discussion before implementation.
 
@@ -954,7 +954,7 @@ Current Conditions remains a separate semantic domain. Recommendation suitabilit
 
 **Reason:** where a Fish characteristically lives is intrinsic species Reference Knowledge; whether today's conditions make a place/approach suitable is a different fact.
 
-**Current implementation status:** Approved and implemented incrementally through the closed Trout, Gar, Production Wave 1, and Production Wave 2 packages; remaining locked-library production migration is pending.
+**Current implementation status:** Approved and fully implemented across the closed 30-Fish Version 1 production library.
 
 **Future trigger:** revisit only if a second real domain demonstrates a reusable taxonomy/ownership need that cannot be served without changing this model.
 
@@ -982,7 +982,7 @@ Category records do not own `isActive`. Individual `Fish.isActive` is the sole F
 
 **Reason:** category identity/presentation/order is reusable Fish-domain Reference Knowledge, while activation belongs to the actual Fish entities. A second category lifecycle flag would create conflicting state.
 
-**Current implementation status:** The category registry is production implemented and expands through staged Fish packages. Trout, Gar, Carp, Drum, Paddlefish, Walleye/Sauger, and Catfish packages are closed; the remaining locked library is pending.
+**Current implementation status:** Fully implemented across all 30 Version 1 Fish. Every production Fish uses canonical `categoryId`; the legacy duplicated `category` field is retired from active Fish data.
 
 **Future trigger:** revisit only when actual Fish taxonomy/navigation requirements demonstrate a need beyond the current registry.
 
@@ -1005,7 +1005,7 @@ All relationships use the stable canonical ID `northern-rock-bass` rather than d
 
 **Reason:** the canonical identity is scientifically specific while common regional names can be ambiguous. Modeling the alias honestly is safer for identification than artificially making it unique.
 
-**Current implementation status:** Approved/locked identity retained for the later Sunfish & Crappie production wave. Fish Guide Phase 0 is closed; Northern Rock Bass has not yet reached its production package.
+**Current implementation status:** Implemented, desktop/mobile validated, and closed in Production Wave 4 — Sunfish & Crappie using canonical ID `northern-rock-bass` and the approved shared-alias behavior.
 
 **Future trigger:** update only if authoritative taxonomic/regional naming evidence requires a canonical identity correction.
 
@@ -1049,7 +1049,7 @@ Relevance ranking operates only after scope filtering. Scope outranks ranking.
 
 **Decision:** GitHub `main` is authoritative for committed production source and formally reconciled documentation. For approved uncommitted **user-facing application work**, Google Drive `Working Source/Current` owns the authoritative working tree as an **atomic full-tree ZIP plus manifest**. The local Git checkout is the application/browser-validation copy of that Drive working tree. Documentation-only changes may land directly on GitHub from the latest verified file contents and are then reconciled into Drive.
 
-Approved user-facing edits are made to the Drive working tree first, then delivered as a review ZIP that preserves repository-relative paths and is extracted over the existing local checkout. The local `.git` directory is never part of a review ZIP. Local-only user-facing edits are not durable working truth and must be reconciled back into Drive before they can become an approved package. Documentation-only work does not require local browser/user validation.
+Approved user-facing edits are made to the Drive working tree first, then delivered as a review ZIP that preserves repository-relative paths and is extracted over the existing local checkout. The local `.git` directory is never part of a review ZIP. Local-only user-facing edits are not durable working truth and must be reconciled back into Drive before they can become an approved package. Documentation-only work does not require local browser/user validation. After the first full review package establishes a verified baseline, correction revisions within the same unchanged review cycle are cumulative from the latest approved Drive/review package; `DEVELOPMENT_WORKFLOW.md` owns the exact delta-review procedure and invalidation conditions.
 
 Use one chat/session per coherent outcome. Only one session may be write-authorized for the active working package at a time. Other sessions may perform bounded read-only research when they do not create competing working state.
 
@@ -1061,7 +1061,7 @@ Continue on `main` for the current single-writer workflow. Revisit branching onl
 
 **Reason:** The repository-only transition demonstrated that direct local edits and a manually maintained exploded Drive mirror can drift independently. An atomic Drive working package preserves an exact cross-session working state, keeps GitHub clearly authoritative for committed truth, lets the local checkout remain the strongest validation surface, and eliminates file-by-file Drive mirror drift. The explicit documentation sweep prevents durable decisions from remaining stranded in temporary state or stale Git documentation.
 
-**Current implementation status:** Approved and active. The prior exploded Drive `Current` mirror is retired in favor of the atomic user-facing working-package model. Wave 3 Bass completed the recovered workflow and is committed, validated, post-push verified, and closed. Documentation-only direct-to-Git updates are active under the same verification/impact discipline.
+**Current implementation status:** Approved and active. The atomic Drive working-package model has now carried both Wave 3 and Wave 4 through review, correction, mobile validation, production commit, and closeout. Within one unchanged review cycle, subsequent R2/R3 corrections use the cumulative delta-review procedure in `DEVELOPMENT_WORKFLOW.md` rather than reconstructing the package from GitHub; the full baseline procedure resumes whenever the recorded baseline is invalidated. Documentation-only direct-to-Git updates remain active under the same verification/impact discipline.
 
 **Future trigger:** Revisit package representation only if a reliable tool can maintain an exploded Drive mirror with deterministic full-tree verification, or if branching/deployment/concurrency requirements make a different workflow materially safer.
 

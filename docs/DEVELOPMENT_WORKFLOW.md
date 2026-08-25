@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 1.4.1  
+**Document Revision:** 1.4.2  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-24
+**Last Updated:** 2026-08-25
 
 # Purpose
 
@@ -198,6 +198,31 @@ The review ZIP is the normal transport from the authoritative Drive working pack
 6. be applied over the existing local checkout so GitHub Desktop/Git can expose the complete diff against the committed baseline.
 
 Review ZIP transport does **not** expand write or commit authority. Production source, data, media, CSS, HTML, JavaScript, configuration, and other protected project files remain subject to the Production Write Approval Gate above.
+
+# Review-Cycle Correction Standard
+
+The first review package for a user-facing production workstream establishes the trusted review baseline. It performs the full applicable GitHub/Drive/governing-document preflight, verifies the source baseline, prepares the complete review package, and runs the full validation set required for that scope.
+
+After that first package, correction revisions such as R2/R3 use a **delta-review path** when the review baseline remains valid:
+
+1. Verify that GitHub `main` still matches the recorded baseline SHA for the review cycle.
+2. Treat the latest approved Drive `Working Source/Current` package / latest cumulative review package as the authoritative uncommitted working baseline; do not reconstruct the revision from GitHub when GitHub intentionally has not changed.
+3. Inspect the files actually being changed plus directly coupled governing/status documentation. A serial reread of unrelated governing documentation is not required.
+4. Apply only the approved correction.
+5. Rerun syntax, feature, relationship, media, package-fidelity, regression, or repository-integrity checks appropriate to the changed surface. Full expensive validation is repeated only where the correction or dependency risk justifies it.
+6. Regenerate the review ZIP as a **cumulative replacement package** containing all previously approved changes plus the new correction.
+7. Keep Drive Working Source/current-state documentation synchronized with the corrected cumulative package.
+
+The delta-review path is invalidated and the full baseline procedure resumes when any of the following is true:
+
+- GitHub `main` changed from the review-cycle baseline,
+- package lineage or the latest cumulative working state cannot be proven,
+- files were changed outside the controlled review package,
+- a new session cannot verify the current Drive package/working baseline,
+- the requested correction expands into a new product, architecture, data-model, or materially broader source decision,
+- final commit/closeout reconciliation requires a broader verification pass.
+
+This optimization does **not** relax production-write approval, explicit commit/push authorization, preservation requirements, or final closeout reconciliation. It prevents repeated baseline reconstruction when nothing authoritative changed.
 
 # Decision-to-Workstream Continuity
 

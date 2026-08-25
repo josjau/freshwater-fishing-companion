@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.3.4  
+**Document Revision:** 2.3.5  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-08-24
+**Last Updated:** 2026-08-25
 
 # Purpose
 
@@ -17,6 +17,22 @@ Do not record exact active audit section, exact session resume point, current bl
 For current formal continuation use `HANDOFF.md`. For material non-closed items use `ACTIVE-CHANGE-LEDGER.md`.
 
 # Unreleased
+
+## Fish Guide — Production Wave 4 / Version 1 Fish Milestone Closeout
+
+### Changed
+
+- Landed Production Wave 4 — Sunfish & Crappie at `fb951a18bdd4c33681644d188a45f2926114158d` with 9 Fish, 9 primary-identification assets, 5 deterministic comparison pairs, and 9 Fish-to-Rig guidance records containing 20 approved recommendations.
+- Completed screenshot-driven Selection/Fish Detail framing, normalized Compare Fish catalog sizing/alignment and Field Identification comparison sizing, and corrected Compare Fish to the site-wide Dashboard-derived multi-accent card standard.
+- Completed the locked 30-Fish Version 1 production migration, 30 primary-identification media attachments, and 20-pair Fish identification graph.
+- Codified the review-cycle delta workflow: the first review package establishes the full baseline; subsequent R2/R3 corrections use the latest cumulative Drive/review package when GitHub and package lineage are unchanged, with full baseline reconstruction only when the baseline is invalidated.
+
+### Validation Status
+
+- User approved the final R2 package on desktop and after actual-mobile upload/testing.
+- GitHub Repository Integrity passed all 8 validation groups for the Wave 4 source commit; Pages build/deployment also succeeded.
+- Wave 4 and the Fish Guide Version 1 production milestone are finalized/closed.
+- The next canonical product milestone is **What Should I Throw**.
 
 ## Workflow / Continuity Recovery
 

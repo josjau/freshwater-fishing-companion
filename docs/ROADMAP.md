@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.4.4  
+**Document Revision:** 0.4.5  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-08-24
+**Last Updated:** 2026-08-25
 
 # Purpose
 
@@ -43,7 +43,7 @@ The original validated 20-Rig library remains canonical. The additive Four-State
 # Canonical Product Sequence
 
 1. **Knots** — completed / validated / closed.
-2. **Fish Guide** — active milestone; Wave 3 Bass is closed/verified, and Sunfish & Crappie is the next planned production package unless a genuine evidence/media/relationship/product issue requires a smaller boundary.
+2. **Fish Guide** — completed / validated / closed; all 30 locked Version 1 Fish, 30 primary-identification media attachments, and the approved 20-pair identification graph are complete.
 3. **What Should I Throw**.
 4. **Tackle Reference / Find Tackle**.
 5. **Settings / User Data Architecture Gate**.
@@ -64,7 +64,7 @@ Future Knot quality improvements may add project-owned diagrams/controlled anima
 
 Fly reels/fly-line-specific setup and advanced baitcaster tuning/casting remain outside the completed workflow unless later approved.
 
-# 2. Fish Guide
+# 2. Fish Guide — Completed Milestone
 
 Build the complete Fish field-reference experience from the approved Phase 0 architecture after the Repository Audit Cleanup gate releases it.
 
@@ -83,7 +83,9 @@ Identification accuracy remains dominant.
 
 Fish-to-Lure and advanced lure/color/retrieve/weather/season/clarity/cover/depth optimization belong to later Decision Knowledge rather than canonical Fish.
 
-# 3. What Should I Throw
+The Fish Guide milestone closed with Production Wave 4 — Sunfish & Crappie after desktop/mobile approval and post-push repository-integrity validation. Future Fish additions or evidence corrections are maintenance/new-scope work and do not reopen the completed Version 1 milestone automatically.
+
+# 3. What Should I Throw — Next Milestone
 
 Build the primary Decision Knowledge recommendation experience after Fish.
 
