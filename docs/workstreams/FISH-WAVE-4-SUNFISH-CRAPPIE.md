@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Fish Guide Production Wave 4: Sunfish & Crappie
 
 **Document:** FISH-WAVE-4-SUNFISH-CRAPPIE.md  
-**Document Revision:** 0.1.0  
+**Document Revision:** 0.1.1  
 **Document Status:** Active Planning / Session-Preservation Record  
 **Implementation Status:** Planning only — production not started; package lock pending  
 **Decision Baseline:** D016, D051, D056–D061  
@@ -125,6 +125,12 @@ Agnew's official site treats his artwork as licensed commercial art and directs 
 Official licensing page:
 https://www.alagnew.com/licensing.html
 
+Current permission contact for non-apparel licensing:
+
+- MHS Licensing — `marty@mhslicensing.com`
+
+The intended permission request must explicitly cover application/website display, responsive resize/crop, non-Fish-background isolation to transparency, WebP conversion, attribution requirements, and public GitHub-repository distribution. A highest-resolution clean source file should also be requested because the currently supplied reference copy is only 320 × 213.
+
 ## Alternate permission candidate — *The Fishes of Missouri*
 
 USGS published an Ozark Plateau report containing an Ozark Bass illustration sourced from *The Fishes of Missouri*. The USGS report explicitly states that the illustrations are copyright 1997 by the Conservation Commission of the State of Missouri and were **used with permission**.
@@ -155,7 +161,32 @@ This remains the identification-safe, rights-safe fallback. It is **not the user
 - Preferred Ozark path: seek permission/license for the Al Agnew illustration.
 - Alternate Ozark permission path: request permission from Missouri Department of Conservation for the *Fishes of Missouri* illustration.
 - Safe fallback: Matthew Patterson/USFWS Public Domain photograph, retained but not selected as preferred primary media.
-- No image has been downloaded, processed, attached, or written to production as part of this planning session.
+- No uploaded image has been written to production as part of planning/media intake.
+
+# Media Intake Checkpoint — 2026-08-24
+
+The user supplied eleven local image files for Wave 4 media review. Originals are preserved unchanged. Exact file dimensions and SHA-256 values recorded at intake are:
+
+| Intended Fish / role | Supplied file | Dimensions | SHA-256 |
+|---|---|---:|---|
+| White Crappie primary candidate | `2810.jpg` | 1200 × 765 | `f4d1211090cd8dc71fb06591f8572d8020a3ae097fef030fbc0f54cbdd9daa53` |
+| Redear Sunfish primary candidate | `25321.jpg` | 1200 × 751 | `acf6b5c112ca9dc3ca8c3c2d51ada830704185072170bdab6c3b3616df1e14bb` |
+| Longear Sunfish primary candidate | `25322.jpg` | 1200 × 729 | `64082d75527142ca15f03a828f946800b8991c7623fe117459112ee88efbd505` |
+| Green Sunfish primary candidate | `25325.jpg` | 1200 × 789 | `f54acc33200e16a158357677da52a26f0abfaf821914fa60c95ef5d6ce406e00` |
+| Black Crappie primary candidate | `27685.jpg` | 1200 × 783 | `426e84f5c5a4caee0d1de0dc0a6bd6a4df0c646102cd99c346134e98a3867b49` |
+| Bluegill primary candidate | `27687.jpg` | 1200 × 791 | `47549c1ed908523d2f46befcde66ade4a6541efea676535bee74fb1c094c41af` |
+| Warmouth primary candidate | `27689.jpg` | 1200 × 701 | `fb7866701c329d72e54b2f9a6751f5d3a3ef4c5897386dad84983dff2fca0af5` |
+| Ozark Bass — Al Agnew reference candidate | `ozark bass.jpg` | 320 × 213 | `fd229781d3fe6fa0614d9ac5c29a88f32eedf7778baad773fbdc2ef15594e95f` |
+| Northern Rock Bass — Al Agnew alternate/reference | `rock bass.jpg` | 320 × 240 | `ce978bce4063ebf2e1e62600ce3d35cee12b6cc3c29828184129d97e69a18e06` |
+| Northern Rock Bass — Raver candidate | `Rock_bass_R.png` | 1400 × 934 | `cd415a2dcbe6cc3a57394906b3d43b1d460d60022658738072eefc11a7c51d1d` |
+| Ozark Bass alternate candidate | `ozark-bass.png` | 800 × 533 | `18e2ab2016820c6cdfb2af8c233db5f7a8f6644e6c44d606f673d9baac604886` |
+
+Technical intake findings:
+
+- `Rock_bass_R.png` is RGBA but its alpha channel is fully opaque; it still contains a background and would require background-only isolation if selected.
+- `ozark-bass.png` contains genuine transparency, but its exact creator/source/reuse rights are not yet established. It is **not production-cleared** and must not silently replace the Al Agnew candidate.
+- The seven supplied 1200-pixel JPEGs match the expected USFWS/Raver illustration family by filename/dimensions and remain subject to exact-source/rights verification before production processing.
+- No generative image reconstruction is authorized for Fish isolation. Background processing must preserve source anatomy, proportions, markings, fin rays, extremities, and visible source color.
 
 # Production Boundary
 
@@ -172,7 +203,8 @@ Before user-facing implementation:
 # Exact Resume Point
 
 1. Re-fetch GitHub `main` and read this workstream plus `WORKING_STATE.md`, `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, `DEVELOPMENT_WORKFLOW.md`, `data-model/02-FISH.md`, `data-model/09-RELATIONSHIPS.md`, `FISH_REFERENCE_SOURCES.md`, and `MEDIA_GUIDE.md`.
-2. Resolve the **Ozark Bass illustration permission decision**: first choice Al Agnew; alternate MDC/*The Fishes of Missouri*; Public Domain FWS photograph remains the safe fallback but is not preferred.
-3. Obtain the user's explicit Wave 4 lock confirmation for the proposed nine Fish, version treatment, five comparison relationships, and final media-source direction.
-4. Refresh/reconcile Drive `Working Source/Current` to the then-current GitHub `main` before any user-facing write.
-5. Only after those gates close, proceed to exact media acquisition/processing and production implementation through the normal Drive review ZIP → local/browser validation → explicit commit/push authorization workflow.
+2. Resolve the **Ozark Bass illustration permission decision**: first choice Al Agnew through MHS Licensing; alternate MDC/*The Fishes of Missouri*; Public Domain USFWS photograph remains the safe fallback but is not preferred.
+3. Verify exact source/rights for the Northern Rock Bass Raver candidate and for every supplied Raver JPEG before processing.
+4. Obtain the user's explicit Wave 4 lock confirmation for the proposed nine Fish, version treatment, five comparison relationships, and final media-source direction.
+5. Refresh/reconcile Drive `Working Source/Current` to the then-current GitHub `main` before any user-facing write.
+6. Only after those gates close, proceed to exact media processing and production implementation through the normal Drive review ZIP → local/browser validation → explicit commit/push authorization workflow.
