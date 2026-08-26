@@ -1781,6 +1781,10 @@ function renderRegulationsGatewayView(appMain, config) {
                 <div class="regulations-select-group">
                     <label class="search-label" for="regulations-state-select">State</label>
                     <select class="regulations-state-select" id="regulations-state-select" data-regulations-state-select></select>
+                    <div class="regulations-state-wheel-shell">
+                        <div class="regulations-state-wheel" data-regulations-state-wheel role="listbox" tabindex="0" aria-label="State"></div>
+                        <div class="regulations-state-wheel-selection" aria-hidden="true"></div>
+                    </div>
                 </div>
 
                 <button class="regulations-open-state" type="submit">View State <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></button>
@@ -1795,7 +1799,33 @@ function renderRegulationsGatewayView(appMain, config) {
     const input = appMain.querySelector("#regulations-state-search");
     const clearButton = appMain.querySelector("[data-regulations-search-clear]");
     const select = appMain.querySelector("[data-regulations-state-select]");
+    const wheel = appMain.querySelector("[data-regulations-state-wheel]");
     const status = appMain.querySelector("[data-regulations-search-status]");
+    let wheelScrollFrame = null;
+
+    const setSelectedState = (stateId, { scrollWheel = false, behavior = "auto" } = {}) => {
+        if (!stateId || !select) return;
+        const optionExists = Array.from(select.options).some((option) => option.value === stateId);
+        if (!optionExists) return;
+
+        select.value = stateId;
+        wheel?.querySelectorAll("[data-regulations-wheel-option]").forEach((option) => {
+            const isSelected = option.dataset.stateId === stateId;
+            option.classList.toggle("is-selected", isSelected);
+            option.setAttribute("aria-selected", String(isSelected));
+            if (isSelected) wheel.setAttribute("aria-activedescendant", option.id);
+        });
+
+        config.onSelectionChange?.(stateId);
+
+        if (scrollWheel && wheel) {
+            const wheelOption = wheel.querySelector(`[data-state-id="${stateId}"]`);
+            if (wheelOption) {
+                const targetTop = wheelOption.offsetTop - ((wheel.clientHeight - wheelOption.offsetHeight) / 2);
+                wheel.scrollTo({ top: targetTop, behavior });
+            }
+        }
+    };
 
     const renderOptions = (eligibleStates, preferredStateId = null) => {
         if (!select) return;
@@ -1803,14 +1833,28 @@ function renderRegulationsGatewayView(appMain, config) {
             `<option value="${state.id}">${state.name} (${state.abbreviation})</option>`
         ).join("");
 
-        const preferredExists = eligibleStates.some((state) => state.id === preferredStateId);
-        if (preferredExists) {
-            select.value = preferredStateId;
-        } else if (eligibleStates.length > 0) {
-            select.value = eligibleStates[0].id;
+        if (wheel) {
+            wheel.innerHTML = eligibleStates.map((state) => `
+                <button class="regulations-state-wheel-option" id="regulations-wheel-${state.id}" type="button"
+                    role="option" aria-selected="false" tabindex="-1"
+                    data-regulations-wheel-option data-state-id="${state.id}">${state.name} (${state.abbreviation})</button>
+            `).join("");
         }
+
+        const preferredExists = eligibleStates.some((state) => state.id === preferredStateId);
+        const selectedStateId = preferredExists ? preferredStateId : eligibleStates[0]?.id ?? null;
+
         select.disabled = eligibleStates.length === 0;
-        config.onSelectionChange?.(select.value || null);
+        if (wheel) wheel.setAttribute("aria-disabled", String(eligibleStates.length === 0));
+
+        if (selectedStateId) {
+            setSelectedState(selectedStateId);
+            requestAnimationFrame(() => setSelectedState(selectedStateId, { scrollWheel: true }));
+        } else {
+            select.value = "";
+            wheel?.removeAttribute("aria-activedescendant");
+            config.onSelectionChange?.(null);
+        }
     };
 
     const updateSearch = () => {
@@ -1820,7 +1864,7 @@ function renderRegulationsGatewayView(appMain, config) {
 
         if (!query) {
             renderOptions(states, config.selectedStateId);
-            if (status) status.textContent = `${states.length} pilot states available.`;
+            if (status) status.textContent = `${states.length} states available.`;
             return;
         }
 
@@ -1836,7 +1880,7 @@ function renderRegulationsGatewayView(appMain, config) {
         renderOptions(matches, matches[0]?.id ?? null);
         if (status) {
             status.textContent = matches.length === 0
-                ? "No pilot state matched that search."
+                ? "No state matched that search."
                 : `${matches.length} ${matches.length === 1 ? "state" : "states"} matched. ${matches[0].name} is selected.`;
         }
     };
@@ -1850,10 +1894,49 @@ function renderRegulationsGatewayView(appMain, config) {
         config.onQueryChange?.("");
         renderOptions(states, config.selectedStateId);
         clearButton.hidden = true;
-        if (status) status.textContent = `${states.length} pilot states available.`;
+        if (status) status.textContent = `${states.length} states available.`;
         input.focus();
     });
-    select?.addEventListener("change", () => config.onSelectionChange?.(select.value));
+    select?.addEventListener("change", () => setSelectedState(select.value));
+    wheel?.addEventListener("click", (event) => {
+        const option = event.target.closest("[data-regulations-wheel-option]");
+        if (!option) return;
+        setSelectedState(option.dataset.stateId, { scrollWheel: true, behavior: "smooth" });
+    });
+    wheel?.addEventListener("keydown", (event) => {
+        if (!["ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) return;
+        const options = Array.from(wheel.querySelectorAll("[data-regulations-wheel-option]"));
+        if (options.length === 0) return;
+
+        event.preventDefault();
+        const selectedIndex = Math.max(0, options.findIndex((option) => option.dataset.stateId === select?.value));
+        let targetIndex = selectedIndex;
+        if (event.key === "ArrowUp") targetIndex = Math.max(0, selectedIndex - 1);
+        if (event.key === "ArrowDown") targetIndex = Math.min(options.length - 1, selectedIndex + 1);
+        if (event.key === "Home") targetIndex = 0;
+        if (event.key === "End") targetIndex = options.length - 1;
+
+        setSelectedState(options[targetIndex].dataset.stateId, { scrollWheel: true, behavior: "smooth" });
+    });
+    wheel?.addEventListener("scroll", () => {
+        if (wheelScrollFrame) cancelAnimationFrame(wheelScrollFrame);
+        wheelScrollFrame = requestAnimationFrame(() => {
+            const options = Array.from(wheel.querySelectorAll("[data-regulations-wheel-option]"));
+            if (options.length === 0) return;
+
+            const wheelBounds = wheel.getBoundingClientRect();
+            const wheelCenter = wheelBounds.top + (wheelBounds.height / 2);
+            const nearestOption = options.reduce((nearest, option) => {
+                const optionBounds = option.getBoundingClientRect();
+                const distance = Math.abs((optionBounds.top + (optionBounds.height / 2)) - wheelCenter);
+                return !nearest || distance < nearest.distance ? { option, distance } : nearest;
+            }, null)?.option;
+
+            if (nearestOption && nearestOption.dataset.stateId !== select?.value) {
+                setSelectedState(nearestOption.dataset.stateId);
+            }
+        });
+    }, { passive: true });
     form?.addEventListener("submit", (event) => {
         event.preventDefault();
         if (!select?.value) return;

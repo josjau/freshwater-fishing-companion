@@ -1,0 +1,17 @@
+Freshwater Fishing Companion
+FCC 20 - Regulations Wave 2 - Selector UX Review
+
+Review scope:
+- view-renderer.js
+- forest-journal.css
+
+Changes under review:
+- Mobile-only wheel-style State selector
+- 4-5 visible state rows with scrolling/snapping behavior
+- Reduced Find a State card spacing
+- Desktop native selector retained
+- 'pilot states' wording removed from state-count/search-status text
+
+SHA-256:
+1a47c7315ee24fdc35029991f436f5f89c11dd164983f54a9e4e76608c177a1c  view-renderer.js
+acc335015f9c65b69f9aff3a9caa463d88c49046427822a9da3f6dbfb56ff4c8  forest-journal.css
