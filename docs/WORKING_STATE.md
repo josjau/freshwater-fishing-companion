@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.8.0  
+**Document Revision:** 1.8.1  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** Regulations Phase 0 — CLOSED / PASS; Production Wave 1 — R3 APPROVED / COMMIT PREP  
+**Workstream Status:** Regulations Phase 0 — CLOSED / PASS; Production Wave 1 — CLOSED / PASS; Production Wave 2 — READY FOR RESEARCH / DATA LOCK  
 **Wave 4 Source Baseline:** `fb951a18bdd4c33681644d188a45f2926114158d`  
 **Last Updated:** 2026-08-26
 
@@ -49,11 +49,11 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 - D067 preserves the later User Data architecture sequencing.
 - `workstreams/REGULATIONS-PHASE-0.md` is now **CLOSED / PASS** and owns the completed Phase 0 design/evidence/validation/wave baseline.
 - Phase 0 approved the state-selector/state-page UX, normalized resource model, authority/provenance rules, freshness/maintenance/alerting architecture, representative-state evidence, validation gates, and six-wave 48-state production strategy.
-- **Production Wave 1 — Architecture/UX Pilot R3** is implemented and user-approved in Drive Current for Oklahoma, Kansas, Missouri, Arkansas, California, Minnesota, Pennsylvania, and Texas.
+- **Production Wave 1 — Architecture/UX Pilot R3** is **CLOSED / PASS** for Oklahoma, Kansas, Missouri, Arkansas, California, Minnesota, Pennsylvania, and Texas. Source commit: `7621d6172bed803558b206dbfca8784540346085` (`Regulations - Wave 1 Final`).
 - The approved candidate adds the internal Regulations route, 8 State records, 30 StateResource records, 1 active Arkansas StateNotice, deterministic Regulations validation, Regulations external-reference checking, and the monthly Regulations maintenance workflow.
-- Wave 1 browser review passed state selection and outbound resource destinations. R3 visual review is approved, including the consolidated resource sections, shared multi-accent card treatment, Safety/Caution Special Alert treatment, responsibility-notice hierarchy, descriptive resource actions, Regulations as the first Important Dashboard card, and the retained divider/grid treatment.
+- Wave 1 desktop/browser and real-mobile review passed. Approved UX includes state selection, outbound official-resource destinations, consolidated resource sections, shared multi-accent card treatment, Safety/Caution Special Alert treatment, responsibility-notice hierarchy, descriptive resource actions, Regulations as the first Important Dashboard card, and the retained divider/grid treatment.
 - **Regulations Search is retained after Wave 1 review.** It accepts state name or two-letter abbreviation and remains useful as the selector grows; re-evaluate Search after a larger state set exists rather than removing it before Wave 2.
-- Production commit/push remains a separate explicit authorization gate. GitHub `main` is still unchanged at the recorded baseline until that authorization is granted and the local commit is verified.
+- Wave 1 source validation is complete: the real checkout passed all 9 repository-integrity validation groups, GitHub Repository Integrity run #71 passed, and GitHub Pages deployment passed for the source commit. Wave 1 is closed; no Wave 1 defect remains open.
 
 # Open Cross-Domain Carry-Forward
 
@@ -61,15 +61,12 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 - UX-002: scoped-search helper/example alignment remains pending when affected search source is deliberately reopened.
 - Rig `useCases[]` species-specific wording remains parked in `V1-DESIGN-AUDIT.md` under D056.
 - UX-009 required final Version 1 site-wide design/mobile audit remains open.
-- REG-001 / GATE-014 own the approved Regulations rollout; Wave 1 R3 is implemented/approved and awaiting final commit validation/authorization before Wave 2 begins.
+- REG-001 / GATE-014 continue to own the approved nationwide Regulations rollout. Wave 1 is closed; Wave 2 is the next active production segment.
 
 # Exact Resume Point
 
-1. Apply the final Wave 1 commit-prep ZIP over the verified local checkout based on GitHub `0949e7c8034ea5810ea9834470160c02f1fa56ed`.
-2. Confirm the local diff contains only the approved Wave 1 production scope plus the targeted documentation reconciliation from this closeout step; no unrelated changes or deletions.
-3. Run `node tools/validate_repository_integrity.js` in the real checkout and require PASS before commit.
-4. Treat Wave 1 UX review as approved: state selection PASS, official resource destinations PASS, R3 visual/layout changes approved, divider/grid treatment retained, and Regulations Search retained for re-evaluation after a larger state set exists.
-5. Obtain separate explicit production commit/push authorization before committing or pushing.
-6. After authorization, commit locally, push to GitHub, verify the resulting GitHub SHA and required CI/workflow results, then perform only the minimum post-commit state/Changelog reconciliation.
-7. After Wave 1 closeout, begin Wave 2 research/data lock for Alabama, Arizona, Colorado, Connecticut, Delaware, Florida, Georgia, and Idaho; do not reopen approved Wave 1 UX unless a later state exposes a genuine structural defect.
-8. Keep Fish Guide Version 1 closed and preserve all other named cross-domain carry-forward items in the Active Change Ledger.
+1. Treat Regulations Production Wave 1 as **CLOSED / PASS** at source commit `7621d6172bed803558b206dbfca8784540346085`; do not reopen its approved UX unless a later state exposes a genuine structural defect.
+2. Begin **Production Wave 2 research/data lock** for Alabama, Arizona, Colorado, Connecticut, Delaware, Florida, Georgia, and Idaho.
+3. Follow the established per-wave path: research official sources -> propose the Wave 2 data lock -> obtain approval -> write Drive Current -> cumulative validation/health check -> review only where needed -> commit/verify.
+4. Keep Regulations Search retained; re-evaluate only after a larger state set exists.
+5. Keep Fish Guide Version 1 closed and preserve all other named cross-domain carry-forward items in the Active Change Ledger.
