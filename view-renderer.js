@@ -1761,7 +1761,6 @@ function renderRegulationsGatewayView(appMain, config) {
     appMain.innerHTML = `
         <section class="content-view regulations-gateway-view" aria-labelledby="regulations-title">
             ${buildPageNavigationMarkup()}
-            <p class="regulations-authority-note">Freshwater Fishing Companion links to official resources. The responsible state authority owns the current fishing rules.</p>
             <h2 id="regulations-title">Regulations</h2>
             <p>Choose a state to find official fishing regulations, license information, access resources, and other state-agency tools.</p>
 
@@ -1809,6 +1808,7 @@ function renderRegulationsGatewayView(appMain, config) {
                     </section>
                 </div>
             </form>
+            <p class="regulations-authority-note">Freshwater Fishing Companion links to official resources. The responsible state authority owns the current fishing rules.</p>
         </section>
     `;
 
