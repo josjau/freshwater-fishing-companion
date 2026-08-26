@@ -975,3 +975,251 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     .fish-collection-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .fish-primary-media { padding: var(--space-5); }
 }
+
+/* ==========================================================
+   REGULATIONS — STATE RESOURCE GATEWAY
+   ========================================================== */
+
+.regulations-authority-note,
+.regulations-search-help,
+.regulations-agency-attribution {
+    color: var(--text-muted);
+}
+
+.regulations-authority-note {
+    max-width: 760px;
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--accent-regulations);
+    background: color-mix(in srgb, var(--accent-regulations) 10%, transparent);
+}
+
+.regulations-selector {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 720px;
+    margin-top: var(--space-6);
+    padding: var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-elevated);
+    box-shadow: var(--shadow-card);
+}
+
+.regulations-provisional-label {
+    display: inline-block;
+    margin-left: var(--space-2);
+    padding: 2px 8px;
+    border: 1px solid color-mix(in srgb, var(--accent-regulations) 65%, var(--border));
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    vertical-align: middle;
+}
+
+.regulations-search-help {
+    margin: var(--space-2) 0 0;
+    font-size: 0.85rem;
+}
+
+.regulations-state-select {
+    min-height: var(--touch-target);
+    width: 100%;
+    padding: 11px 38px 11px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-small);
+    background: var(--surface);
+    color: var(--text);
+}
+
+.regulations-state-select:focus-visible,
+.regulations-open-state:focus-visible {
+    outline: 3px solid var(--accent-regulations);
+    outline-offset: 2px;
+}
+
+.regulations-open-state {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-height: var(--touch-target);
+    padding: 10px 18px;
+    border: 1px solid var(--accent-regulations);
+    border-radius: var(--radius-small);
+    background: color-mix(in srgb, var(--accent-regulations) 22%, var(--surface));
+    color: var(--text);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.regulations-open-state:hover {
+    background: color-mix(in srgb, var(--accent-regulations) 30%, var(--surface-hover));
+}
+
+.regulations-search-status {
+    margin: 0;
+}
+
+.regulations-state-header {
+    margin-bottom: var(--space-5);
+}
+
+.regulations-state-header h2 {
+    margin-bottom: var(--space-1);
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+}
+
+.regulations-state-subtitle {
+    margin-bottom: 0;
+    color: var(--text);
+    font-size: clamp(1.05rem, 3vw, 1.25rem);
+    font-weight: 700;
+}
+
+.regulations-agency-attribution {
+    margin-bottom: 0;
+}
+
+.regulations-agency-attribution a,
+.regulations-notice a {
+    font-weight: 700;
+    text-underline-offset: 3px;
+}
+
+.regulations-notices {
+    margin-bottom: var(--space-6);
+}
+
+.regulations-notice {
+    margin-bottom: 0;
+}
+
+.regulations-notice h3 {
+    margin-bottom: var(--space-3);
+}
+
+.regulations-notice__title {
+    display: block;
+    margin-bottom: var(--space-2);
+}
+
+.regulations-notice p {
+    margin-bottom: var(--space-3);
+    color: var(--text-muted);
+}
+
+.regulations-resource-section {
+    margin-top: var(--space-6);
+}
+
+.regulations-resource-section h3 {
+    margin-bottom: var(--space-3);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.regulations-resource-card {
+    --card-accent: var(--accent);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--card-accent);
+    border-radius: var(--radius);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--card-accent) 10%, transparent) 0, transparent 25px), var(--surface-elevated);
+    box-shadow: var(--shadow-card);
+}
+
+.regulations-before-you-fish .regulations-resource-card { --card-accent: var(--accent-fish); }
+.regulations-plan-your-trip .regulations-resource-card { --card-accent: var(--accent-rigs); }
+
+.regulations-resource-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: var(--touch-target);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+}
+
+.regulations-resource-link:last-child {
+    border-bottom: 0;
+}
+
+.regulations-resource-link:hover {
+    background: color-mix(in srgb, var(--card-accent) 12%, var(--surface-hover));
+}
+
+.regulations-resource-link:focus-visible {
+    outline: 3px solid var(--card-accent);
+    outline-offset: -3px;
+}
+
+.regulations-resource-link__content {
+    display: grid;
+    min-width: 0;
+    gap: var(--space-1);
+}
+
+.regulations-resource-link__title {
+    font-weight: 800;
+}
+
+.regulations-resource-link__action {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: var(--space-1);
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.regulations-resource-status {
+    display: inline-flex;
+    width: fit-content;
+    margin-top: var(--space-1);
+    padding: 1px 7px;
+    border: 1px solid color-mix(in srgb, var(--warning) 60%, var(--border));
+    border-radius: 999px;
+    color: #f6dca4;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.regulations-agency-footer {
+    margin-top: var(--space-8);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 539px) {
+    .regulations-resource-link {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .regulations-resource-link__action {
+        align-self: flex-start;
+    }
+}
+
+@media (min-width: 700px) {
+    .regulations-selector {
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.65fr);
+        align-items: end;
+    }
+
+    .regulations-open-state,
+    .regulations-search-status {
+        grid-column: 1 / -1;
+    }
+
+    .regulations-resource-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

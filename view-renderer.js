@@ -1703,4 +1703,237 @@ function renderInstructionDetail(appMain, detailConfig) {
     updateReadinessStatus();
 }
 
+
+function getRegulationsResourceActionLabel(resource) {
+    const capabilities = new Set(Array.isArray(resource?.capabilities) ? resource.capabilities : []);
+    const title = String(resource?.title ?? "Official Resource");
+
+    switch (resource?.primaryCategory) {
+        case "regulations":
+            return "View Fishing Regulations";
+        case "licenses-permits":
+            if (capabilities.has("license-purchase") && !capabilities.has("license-information")) {
+                return "Buy Fishing License";
+            }
+            if (capabilities.has("license-purchase")) {
+                return "View Licenses & Purchase Options";
+            }
+            return "View License Information";
+        case "special-regulations":
+            return "View Special Regulations";
+        case "where-to-fish":
+            if (!/^where to fish/i.test(title) && capabilities.size >= 4) {
+                return `Explore ${title}`;
+            }
+            if (capabilities.has("fishing-forecasts")) {
+                return "Find Waters & Forecasts";
+            }
+            if (capabilities.has("waterbody-regulations")) {
+                return "Find Waters & Regulations";
+            }
+            if (capabilities.has("lake-information")) {
+                return "Find Waters & Lake Info";
+            }
+            return "Find Fishing Locations";
+        case "public-access":
+            return "View Public Access";
+        case "stocking":
+            return "View Stocking Information";
+        case "reports-forecasts":
+            if (capabilities.has("fishing-reports")) return "View Fishing Reports";
+            if (capabilities.has("fishing-forecasts")) return "View Fishing Forecasts";
+            return "View Reports & Forecasts";
+        default:
+            return `Open ${title}`;
+    }
+}
+
+function renderRegulationsGatewayView(appMain, config) {
+    if (!appMain || !config || !Array.isArray(config.states)) {
+        console.error("A valid Regulations gateway configuration is required.");
+        return;
+    }
+
+    const states = [...config.states].sort((first, second) =>
+        first.name.localeCompare(second.name, undefined, { sensitivity: "base" })
+    );
+
+    appMain.innerHTML = `
+        <section class="content-view regulations-gateway-view" aria-labelledby="regulations-title">
+            ${buildPageNavigationMarkup()}
+            <p class="regulations-authority-note">Freshwater Fishing Companion links to official resources. The responsible state authority owns the current fishing rules.</p>
+            <h2 id="regulations-title">Regulations</h2>
+            <p>Choose a state to find official fishing regulations, license information, access resources, and other state-agency tools.</p>
+
+            <form class="regulations-selector" data-regulations-selector-form>
+                <div class="regulations-search-group">
+                    <label class="search-label" for="regulations-state-search">Find a State <span class="regulations-provisional-label">Pilot Search</span></label>
+                    <div class="search-input-shell">
+                        <input class="search-input" id="regulations-state-search" type="search"
+                            placeholder="Try Oklahoma or OK" autocomplete="off" enterkeyhint="search">
+                        <button class="search-clear-button" type="button" data-regulations-search-clear aria-label="Clear search" hidden>
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <p class="regulations-search-help">Search by state name or 2-letter abbreviation. Typing selects the first matching state but does not open it.</p>
+                </div>
+
+                <div class="regulations-select-group">
+                    <label class="search-label" for="regulations-state-select">State</label>
+                    <select class="regulations-state-select" id="regulations-state-select" data-regulations-state-select></select>
+                </div>
+
+                <button class="regulations-open-state" type="submit">View State <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></button>
+                <p class="search-status regulations-search-status" data-regulations-search-status aria-live="polite"></p>
+            </form>
+        </section>
+    `;
+
+    initializeHomeNavigation(appMain);
+
+    const form = appMain.querySelector("[data-regulations-selector-form]");
+    const input = appMain.querySelector("#regulations-state-search");
+    const clearButton = appMain.querySelector("[data-regulations-search-clear]");
+    const select = appMain.querySelector("[data-regulations-state-select]");
+    const status = appMain.querySelector("[data-regulations-search-status]");
+
+    const renderOptions = (eligibleStates, preferredStateId = null) => {
+        if (!select) return;
+        select.innerHTML = eligibleStates.map((state) =>
+            `<option value="${state.id}">${state.name} (${state.abbreviation})</option>`
+        ).join("");
+
+        const preferredExists = eligibleStates.some((state) => state.id === preferredStateId);
+        if (preferredExists) {
+            select.value = preferredStateId;
+        } else if (eligibleStates.length > 0) {
+            select.value = eligibleStates[0].id;
+        }
+        select.disabled = eligibleStates.length === 0;
+        config.onSelectionChange?.(select.value || null);
+    };
+
+    const updateSearch = () => {
+        const query = String(input?.value ?? "").trim().toLocaleLowerCase();
+        config.onQueryChange?.(input?.value ?? "");
+        if (clearButton) clearButton.hidden = query.length === 0;
+
+        if (!query) {
+            renderOptions(states, config.selectedStateId);
+            if (status) status.textContent = `${states.length} pilot states available.`;
+            return;
+        }
+
+        const prefixMatches = states.filter((state) =>
+            state.name.toLocaleLowerCase().startsWith(query) || state.abbreviation.toLocaleLowerCase().startsWith(query)
+        );
+        const matches = prefixMatches.length > 0
+            ? prefixMatches
+            : states.filter((state) =>
+                state.name.toLocaleLowerCase().includes(query) || state.abbreviation.toLocaleLowerCase().includes(query)
+            );
+
+        renderOptions(matches, matches[0]?.id ?? null);
+        if (status) {
+            status.textContent = matches.length === 0
+                ? "No pilot state matched that search."
+                : `${matches.length} ${matches.length === 1 ? "state" : "states"} matched. ${matches[0].name} is selected.`;
+        }
+    };
+
+    if (input) input.value = config.initialQuery ?? "";
+    updateSearch();
+
+    input?.addEventListener("input", updateSearch);
+    clearButton?.addEventListener("click", () => {
+        input.value = "";
+        config.onQueryChange?.("");
+        renderOptions(states, config.selectedStateId);
+        clearButton.hidden = true;
+        if (status) status.textContent = `${states.length} pilot states available.`;
+        input.focus();
+    });
+    select?.addEventListener("change", () => config.onSelectionChange?.(select.value));
+    form?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!select?.value) return;
+        config.onSelectionChange?.(select.value);
+        config.onStateOpen?.(select.value);
+    });
+}
+
+function renderRegulationsStateView(appMain, config) {
+    if (!appMain || !config?.state || !Array.isArray(config.resources) || !Array.isArray(config.notices)) {
+        console.error("A valid Regulations state configuration is required.");
+        return;
+    }
+
+    const categoryPriority = new Map([
+        ["regulations", 0],
+        ["licenses-permits", 1]
+    ]);
+    const resources = [...config.resources].sort((first, second) =>
+        (categoryPriority.get(first.primaryCategory) ?? 10) - (categoryPriority.get(second.primaryCategory) ?? 10)
+    );
+    const beforeYouFish = resources.filter((resource) => resource.section === "before-you-fish");
+    const planYourTrip = resources.filter((resource) => resource.section === "plan-your-trip");
+
+    const buildResourceLinks = (records) => records.map((resource) => {
+        const unavailableMarkup = resource.status === "temporarily-unavailable"
+            ? '<span class="regulations-resource-status">Temporarily unavailable / limited</span>'
+            : "";
+        const actionLabel = getRegulationsResourceActionLabel(resource);
+        return `
+            <a class="regulations-resource-link" href="${resource.url}" target="_blank" rel="noopener noreferrer">
+                <span class="regulations-resource-link__content">
+                    <span class="regulations-resource-link__title">${resource.title}</span>
+                    ${unavailableMarkup}
+                </span>
+                <span class="regulations-resource-link__action">${actionLabel} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></span>
+            </a>
+        `;
+    }).join("");
+
+    const noticesMarkup = config.notices.length > 0 ? `
+        <div class="regulations-notices" aria-label="Current official notices">
+            ${config.notices.map((notice) => `
+                <aside class="detail-section detail-section--safety regulations-notice">
+                    <h3>Special Alert</h3>
+                    <strong class="regulations-notice__title">${notice.title}</strong>
+                    <p>${notice.summary}</p>
+                    <a href="${notice.url}" target="_blank" rel="noopener noreferrer">Read official notice <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
+                </aside>
+            `).join("")}
+        </div>
+    ` : "";
+
+    const sectionMarkup = (title, records, sectionClass) => records.length > 0 ? `
+        <section class="regulations-resource-section ${sectionClass}" aria-labelledby="${sectionClass}-title">
+            <h3 id="${sectionClass}-title">${title}</h3>
+            <div class="regulations-resource-card">
+                ${buildResourceLinks(records)}
+            </div>
+        </section>
+    ` : "";
+
+    appMain.innerHTML = `
+        <article class="content-view regulations-state-view" aria-labelledby="regulations-state-title">
+            ${buildPageNavigationMarkup("Regulations")}
+            <header class="regulations-state-header">
+                <h2 id="regulations-state-title">${config.state.name}</h2>
+                <p class="regulations-state-subtitle">Fishing Regulations & Resources</p>
+            </header>
+            ${noticesMarkup}
+            ${sectionMarkup("Before You Fish", beforeYouFish, "regulations-before-you-fish")}
+            ${sectionMarkup("Plan Your Trip", planYourTrip, "regulations-plan-your-trip")}
+            <footer class="regulations-agency-footer">
+                <p class="regulations-agency-attribution">Official resources from <a href="${config.state.agencyUrl}" target="_blank" rel="noopener noreferrer">${config.state.agencyName} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a></p>
+            </footer>
+        </article>
+    `;
+
+    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", config.onParent);
+    initializeHomeNavigation(appMain);
+}
+
 console.info(`[Loaded] ${VIEW_RENDERER_BUILD_INFO.file}`);

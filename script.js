@@ -26,6 +26,8 @@ const ROUTES = Object.freeze({
     RIG_BROWSE: "rig-browse",
     RIG_DETAIL: "rig-detail",
     RECOMMENDATIONS: "recommendations",
+    REGULATIONS: "regulations",
+    REGULATIONS_STATE: "regulations-state",
     TACKLE: "tackle",
     KNOTS: "knots",
     KNOT_BROWSE: "knot-browse",
@@ -160,6 +162,8 @@ let selectedKnotBrowseKey = "all";
 let selectedKnotTaskId = null;
 let selectedKnotDetailSource = "guide";
 let selectedLineTypeId = null;
+let selectedRegulationStateId = null;
+let regulationsGatewayState = { query: "" };
 let reelSetupState = createInitialReelSetupState();
 let detailNavigationStack = [];
 
@@ -248,6 +252,8 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.RIG_BROWSE]: renderRigBrowseView,
     [ROUTES.RIG_DETAIL]: renderRigDetailView,
     [ROUTES.RECOMMENDATIONS]: renderRecommendationsView,
+    [ROUTES.REGULATIONS]: renderRegulationsGatewayRoute,
+    [ROUTES.REGULATIONS_STATE]: renderRegulationsStateRoute,
     [ROUTES.TACKLE]: renderTackleView,
     [ROUTES.KNOTS]: renderKnotsView,
     [ROUTES.KNOT_BROWSE]: renderKnotBrowseView,
@@ -3117,6 +3123,80 @@ function renderKnotDetailView(appMain) {
         onRigSelect: openRigDetailFromKnot,
         onTaskSelect: openKnotTaskFromDetail,
         onLineTypeSelect: openLineTypeDetailFromKnot
+    });
+}
+
+
+function getActiveRegulationStates() {
+    if (typeof STATE_DATA === "undefined") return [];
+    return STATE_DATA
+        .filter((state) => state.active === true)
+        .slice()
+        .sort((first, second) => first.name.localeCompare(second.name, undefined, { sensitivity: "base" }));
+}
+
+function getRegulationState(stateId) {
+    if (typeof STATE_DATA === "undefined") return null;
+    return STATE_DATA.find((state) => state.id === stateId && state.active === true) ?? null;
+}
+
+function getRegulationStateResources(stateId) {
+    if (typeof STATE_RESOURCE_DATA === "undefined") return [];
+    return STATE_RESOURCE_DATA.filter((resource) =>
+        resource.stateId === stateId && resource.status !== "retired"
+    );
+}
+
+function getRegulationStateNotices(stateId) {
+    if (typeof STATE_NOTICE_DATA === "undefined") return [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return STATE_NOTICE_DATA.filter((notice) => {
+        if (notice.stateId !== stateId || notice.active !== true) return false;
+        if (!notice.expiresDate) return true;
+        const expires = new Date(`${notice.expiresDate}T00:00:00`);
+        return Number.isNaN(expires.getTime()) || expires >= today;
+    });
+}
+
+function openRegulationState(stateId) {
+    if (!getRegulationState(stateId)) return;
+    selectedRegulationStateId = stateId;
+    showView(ROUTES.REGULATIONS_STATE);
+}
+
+function renderRegulationsGatewayRoute(appMain) {
+    const states = getActiveRegulationStates();
+    if (!selectedRegulationStateId || !states.some((state) => state.id === selectedRegulationStateId)) {
+        selectedRegulationStateId = states[0]?.id ?? null;
+    }
+
+    renderRegulationsGatewayView(appMain, {
+        states,
+        selectedStateId: selectedRegulationStateId,
+        initialQuery: regulationsGatewayState.query,
+        onQueryChange: (query) => {
+            regulationsGatewayState.query = query;
+        },
+        onSelectionChange: (stateId) => {
+            selectedRegulationStateId = stateId;
+        },
+        onStateOpen: openRegulationState
+    });
+}
+
+function renderRegulationsStateRoute(appMain) {
+    const state = getRegulationState(selectedRegulationStateId);
+    if (!state) {
+        showView(ROUTES.REGULATIONS);
+        return;
+    }
+
+    renderRegulationsStateView(appMain, {
+        state,
+        resources: getRegulationStateResources(state.id),
+        notices: getRegulationStateNotices(state.id),
+        onParent: () => showView(ROUTES.REGULATIONS)
     });
 }
 

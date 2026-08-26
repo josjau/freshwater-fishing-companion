@@ -825,6 +825,131 @@ function validateFishSearchHelpers(canonicalData) {
     }
 }
 
+
+function validateRegulationsData(buildInfo, states, resources, notices) {
+    recordCheck("Regulations state/resource/notice schema, provenance, relationships, and freshness");
+
+    const stateFields = ["id", "name", "abbreviation", "agencyName", "agencyUrl", "verifiedDate", "active"];
+    const resourceFields = ["id", "stateId", "section", "primaryCategory", "capabilities", "title", "description", "url", "experienceType", "status", "authorityName", "authorityUrl", "sourceRelationship", "designationUrl", "verifiedDate"];
+    const noticeFields = ["id", "stateId", "title", "summary", "url", "authorityName", "authorityUrl", "sourceRelationship", "designationUrl", "createdDate", "verifiedDate", "expiresDate", "active"];
+    const sections = new Set(["before-you-fish", "plan-your-trip"]);
+    const categories = new Set(["regulations", "licenses-permits", "special-regulations", "where-to-fish", "public-access", "stocking", "reports-forecasts", "other-official-resource"]);
+    const capabilities = new Set(["statewide-regulations", "waterbody-regulations", "species-regulations", "seasons", "size-limits", "bag-limits", "legal-methods", "special-permits", "license-information", "license-purchase", "where-to-fish", "public-access", "interactive-map", "stocking", "fishing-reports", "fishing-forecasts", "lake-information", "fish-surveys"]);
+    const experienceTypes = new Set(["web-page", "pdf", "interactive-tool", "interactive-map", "external-portal"]);
+    const statuses = new Set(["active", "temporarily-unavailable", "retired"]);
+    const sourceRelationships = new Set(["direct", "officially-designated-external"]);
+    const urlPattern = /^https:\/\//i;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const parseDate = (value, label, required = true) => {
+        if ((value === null || value === "") && !required) return null;
+        if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+            fail(label, `invalid date ${JSON.stringify(value)}`);
+            return null;
+        }
+        const parsed = new Date(`${value}T00:00:00`);
+        if (Number.isNaN(parsed.getTime())) {
+            fail(label, `invalid date ${JSON.stringify(value)}`);
+            return null;
+        }
+        if (parsed > today) fail(label, `verification date is in the future: ${value}`);
+        return parsed;
+    };
+
+    const requireText = (value, label) => {
+        if (typeof value !== "string" || value.trim() === "") fail(label, "must be non-empty text");
+    };
+
+    const requireUrl = (value, label, required = true) => {
+        if ((value === null || value === "") && !required) return;
+        if (typeof value !== "string" || !urlPattern.test(value)) fail(label, `must be an https URL; found ${JSON.stringify(value)}`);
+    };
+
+    if (!isPlainObject(buildInfo)) fail("Regulations build info", "expected an object");
+    if (buildInfo && buildInfo.externalReferenceReviewedDate !== null) {
+        parseDate(buildInfo.externalReferenceReviewedDate, "Regulations externalReferenceReviewedDate");
+    }
+
+    validateUniqueIds(states, "State registry");
+    validateUniqueIds(resources, "StateResource registry");
+    validateUniqueIds(notices, "StateNotice registry");
+    const stateById = indexById(states);
+
+    for (const state of states) {
+        if (!isPlainObject(state)) continue;
+        validateExactFieldOrder(state, stateFields, "State registry");
+        requireText(state.name, `State ${state.id} name`);
+        if (typeof state.abbreviation !== "string" || !/^[A-Z]{2}$/.test(state.abbreviation)) fail("State registry", `${state.id}: abbreviation must be two uppercase letters`);
+        requireText(state.agencyName, `State ${state.id} agencyName`);
+        requireUrl(state.agencyUrl, `State ${state.id} agencyUrl`);
+        const verified = parseDate(state.verifiedDate, `State ${state.id} verifiedDate`);
+        if (typeof state.active !== "boolean") fail("State registry", `${state.id}: active must be Boolean`);
+        if (state.active === true && verified && (today - verified) / 86400000 > 90) fail("Regulations freshness", `${state.id}: State verification is older than 90 days`);
+    }
+
+    const resourcesByState = new Map();
+    const duplicateUrls = new Map();
+    for (const resource of resources) {
+        if (!isPlainObject(resource)) continue;
+        validateExactFieldOrder(resource, resourceFields, "StateResource registry");
+        if (!stateById.has(resource.stateId)) fail("StateResource relationships", `${resource.id}: orphan stateId ${resource.stateId}`);
+        if (!sections.has(resource.section)) fail("StateResource controlled values", `${resource.id}: invalid section ${JSON.stringify(resource.section)}`);
+        if (!categories.has(resource.primaryCategory)) fail("StateResource controlled values", `${resource.id}: invalid primaryCategory ${JSON.stringify(resource.primaryCategory)}`);
+        validateControlledArray(resource.capabilities, capabilities, `StateResource ${resource.id} capabilities`);
+        if (resource.capabilities.length === 0) fail("StateResource registry", `${resource.id}: capabilities must not be empty`);
+        requireText(resource.title, `StateResource ${resource.id} title`);
+        requireText(resource.description, `StateResource ${resource.id} description`);
+        requireUrl(resource.url, `StateResource ${resource.id} url`);
+        if (!experienceTypes.has(resource.experienceType)) fail("StateResource controlled values", `${resource.id}: invalid experienceType ${JSON.stringify(resource.experienceType)}`);
+        if (!statuses.has(resource.status)) fail("StateResource controlled values", `${resource.id}: invalid status ${JSON.stringify(resource.status)}`);
+        if (!sourceRelationships.has(resource.sourceRelationship)) fail("StateResource controlled values", `${resource.id}: invalid sourceRelationship ${JSON.stringify(resource.sourceRelationship)}`);
+        const hasAuthorityName = typeof resource.authorityName === "string" && resource.authorityName.trim() !== "";
+        const hasAuthorityUrl = typeof resource.authorityUrl === "string" && resource.authorityUrl.trim() !== "";
+        if (hasAuthorityName !== hasAuthorityUrl) fail("StateResource authority", `${resource.id}: authorityName and authorityUrl must be supplied together`);
+        if (hasAuthorityUrl) requireUrl(resource.authorityUrl, `StateResource ${resource.id} authorityUrl`);
+        if (resource.sourceRelationship === "officially-designated-external") requireUrl(resource.designationUrl, `StateResource ${resource.id} designationUrl`);
+        else if (resource.designationUrl !== null) fail("StateResource provenance", `${resource.id}: direct resource must use null designationUrl`);
+        const verified = parseDate(resource.verifiedDate, `StateResource ${resource.id} verifiedDate`);
+        if (["active", "temporarily-unavailable"].includes(resource.status) && verified && (today - verified) / 86400000 > 90) fail("Regulations freshness", `${resource.id}: resource verification is older than 90 days`);
+
+        if (!resourcesByState.has(resource.stateId)) resourcesByState.set(resource.stateId, []);
+        resourcesByState.get(resource.stateId).push(resource);
+        const duplicateKey = `${resource.stateId}|${resource.url}`;
+        if (duplicateUrls.has(duplicateKey)) console.warn(`[Regulations review warning] same-state duplicate destination: ${resource.stateId} ${resource.url}`);
+        duplicateUrls.set(duplicateKey, resource.id);
+    }
+
+    for (const state of states.filter((item) => item.active === true)) {
+        const stateResources = (resourcesByState.get(state.id) || []).filter((resource) => resource.status !== "retired");
+        const capabilitySet = new Set(stateResources.flatMap((resource) => resource.capabilities));
+        if (!capabilitySet.has("statewide-regulations")) fail("Regulations required capabilities", `${state.id}: missing statewide-regulations`);
+        if (!capabilitySet.has("license-information") && !capabilitySet.has("license-purchase")) fail("Regulations required capabilities", `${state.id}: missing license-information/license-purchase`);
+    }
+
+    for (const notice of notices) {
+        if (!isPlainObject(notice)) continue;
+        validateExactFieldOrder(notice, noticeFields, "StateNotice registry");
+        if (!stateById.has(notice.stateId)) fail("StateNotice relationships", `${notice.id}: orphan stateId ${notice.stateId}`);
+        requireText(notice.title, `StateNotice ${notice.id} title`);
+        requireText(notice.summary, `StateNotice ${notice.id} summary`);
+        requireUrl(notice.url, `StateNotice ${notice.id} url`);
+        if (!sourceRelationships.has(notice.sourceRelationship)) fail("StateNotice controlled values", `${notice.id}: invalid sourceRelationship ${JSON.stringify(notice.sourceRelationship)}`);
+        const hasAuthorityName = typeof notice.authorityName === "string" && notice.authorityName.trim() !== "";
+        const hasAuthorityUrl = typeof notice.authorityUrl === "string" && notice.authorityUrl.trim() !== "";
+        if (hasAuthorityName !== hasAuthorityUrl) fail("StateNotice authority", `${notice.id}: authorityName and authorityUrl must be supplied together`);
+        if (hasAuthorityUrl) requireUrl(notice.authorityUrl, `StateNotice ${notice.id} authorityUrl`);
+        if (notice.sourceRelationship === "officially-designated-external") requireUrl(notice.designationUrl, `StateNotice ${notice.id} designationUrl`);
+        else if (notice.designationUrl !== null) fail("StateNotice provenance", `${notice.id}: direct notice must use null designationUrl`);
+        parseDate(notice.createdDate, `StateNotice ${notice.id} createdDate`);
+        const verified = parseDate(notice.verifiedDate, `StateNotice ${notice.id} verifiedDate`);
+        const expires = parseDate(notice.expiresDate, `StateNotice ${notice.id} expiresDate`, false);
+        if (typeof notice.active !== "boolean") fail("StateNotice registry", `${notice.id}: active must be Boolean`);
+        if (notice.active === true && verified && (today - verified) / 86400000 > 30) fail("Regulations freshness", `${notice.id}: active notice verification is older than 30 days`);
+        if (notice.active === true && expires && expires < today) fail("Regulations notice expiry", `${notice.id}: known expiry has passed while notice remains active`);
+    }
+}
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
@@ -839,6 +964,7 @@ function validateCanonicalData() {
     const knotBindings = loadBindings("data/knots.js", ["KNOT_DATA", "CORE_KNOT_IDS"]);
     const tackleBindings = loadBindings("data/tackle.js", ["TACKLE_DATA"]);
     const guidanceBindings = loadBindings("data/knot-guidance.js", ["KNOT_TASK_DEFINITIONS"]);
+    const regulationsBindings = loadBindings("data/regulations.js", ["REGULATIONS_DATA_BUILD_INFO", "STATE_DATA", "STATE_RESOURCE_DATA", "STATE_NOTICE_DATA"]);
 
     const categories = requireArray(categoryBindings.FISH_CATEGORY_DATA, "Fish category registry");
     const legacyCategoryMap = isPlainObject(categoryBindings.FISH_LEGACY_CATEGORY_ID_MAP)
@@ -857,6 +983,9 @@ function validateCanonicalData() {
     const knots = requireArray(knotBindings.KNOT_DATA, "Knot registry");
     const tackle = requireArray(tackleBindings.TACKLE_DATA, "Tackle registry");
     const knotTasks = requireArray(guidanceBindings.KNOT_TASK_DEFINITIONS, "Knot task guidance");
+    const states = requireArray(regulationsBindings.STATE_DATA, "State registry");
+    const stateResources = requireArray(regulationsBindings.STATE_RESOURCE_DATA, "StateResource registry");
+    const stateNotices = requireArray(regulationsBindings.STATE_NOTICE_DATA, "StateNotice registry");
 
     validateCanonicalRecords(fish, "Fish registry");
     validateCanonicalRecords(rigs, "Rig registry");
@@ -866,6 +995,7 @@ function validateCanonicalData() {
     validateCoreRegistry(rigBindings.CORE_RIG_IDS, rigs, "Core Rig registry");
     validateCoreRegistry(knotBindings.CORE_KNOT_IDS, knots, "Core Knot registry");
     validateFishProductionData(fish, categories, fishIdentification, fishRigGuidance, rigs, legacyCategoryMap);
+    validateRegulationsData(regulationsBindings.REGULATIONS_DATA_BUILD_INFO, states, stateResources, stateNotices);
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
@@ -1087,7 +1217,10 @@ function validateCanonicalData() {
         fishRigGuidance,
         rigs,
         knots,
-        tackle
+        tackle,
+        states,
+        stateResources,
+        stateNotices
     };
 }
 

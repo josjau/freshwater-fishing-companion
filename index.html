@@ -21,6 +21,12 @@
             <h2 id="dashboard-title">Choose a Section</h2>
 
             <div class="dashboard-grid">
+                <button class="dashboard-card dashboard-card--primary" type="button" data-route="regulations">
+                    <span class="dashboard-card__title">Regulations</span>
+                    <span class="dashboard-card__description">Find official state fishing regulations, licenses, access, and planning resources.</span>
+                    <span class="dashboard-card__action">Choose a State <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                </button>
+
                 <button class="dashboard-card dashboard-card--primary" type="button" data-route="fish">
                     <span class="dashboard-card__title">Fish Guide</span>
                     <span class="dashboard-card__description">Learn to identify freshwater fish.</span>
@@ -63,13 +69,6 @@
                     <span class="dashboard-card__action">Browse <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
                 </button>
 
-                <a class="dashboard-card" href="https://www.wildlifedepartment.com/fishing/regs"
-                    target="_blank" rel="noopener noreferrer">
-                    <span class="dashboard-card__title">Regulations</span>
-                    <span class="dashboard-card__description">Open current official Oklahoma fishing regulations.</span>
-                    <span class="dashboard-card__action">Go to ODWC Regulations <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></span>
-                </a>
-
                 <button class="dashboard-card" type="button" data-route="settings">
                     <span class="dashboard-card__title">Settings</span>
                     <span class="dashboard-card__description">Manage appearance, preferences, and backups.</span>
@@ -93,6 +92,7 @@
     <script src="data/reel-guidance.js"></script>
     <script src="data/tackle.js"></script>
     <script src="data/media.js"></script>
+    <script src="data/regulations.js"></script>
     <script src="search.js"></script>
     <script src="view-renderer.js"></script>
     <script src="knot-media-renderer.js"></script>

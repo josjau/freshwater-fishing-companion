@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.3.8  
+**Document Revision:** 1.4.0  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `4e982d84ab6207efacfafe4fa92682046c6240cb`  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-08-26
 
 # Purpose
 
@@ -19,6 +19,7 @@ GitHub `main` owns committed formal state. Google Drive `Working Source/Current`
 
 - **OPEN** — unresolved decision/action requires discussion or work.
 - **APPROVED / PENDING IMPLEMENTATION** — direction is settled; implementation remains.
+- **IMPLEMENTED / APPROVED / PENDING COMMIT** — approved uncommitted implementation exists in Drive Current; final local validation and explicit commit/push authorization remain.
 - **IMPLEMENTED / PENDING VALIDATION** — change landed but required validation/closeout remains.
 - **DEFERRED TO NAMED GATE** — intentionally waits for a specific architecture/product gate.
 - **PARKED** — valid possible future item; not required now.
@@ -47,7 +48,7 @@ No active workflow-transition item remains. The 2026-08-25 Workflow Performance 
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| REG-001 | APPROVED / PENDING PLANNING | Contiguous-U.S. Regulations resource gateway | D066 + `workstreams/REGULATIONS-PHASE-0.md` | Execute Phase 0: validate state/resource taxonomy, official-resource/provenance/freshness model, selector/state-page UX, representative-state sample, and production-wave plan before source implementation. |
+| REG-001 | IMPLEMENTED / APPROVED / PENDING COMMIT | Contiguous-U.S. Regulations resource gateway | D066 + closed `workstreams/REGULATIONS-PHASE-0.md` | Wave 1 R3 is approved in Drive Current. Require final real-checkout integrity PASS and separate commit/push authorization, then verify GitHub/CI. Search is retained and should be re-evaluated after a larger state set exists; begin Wave 2 only after Wave 1 closeout. |
 | TACKLE-004 | OPEN | Tackle-root `Check Rig Readiness` placeholder | D020 + Tackle/My Tackle milestone | Remove, rename/redefine as a secondary aggregate view, or explicitly approve; do not auto-build a separate primary readiness page. |
 
 # Fish Guide — Production
@@ -76,7 +77,7 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 | GATE-011 | DEFERRED TO NAMED GATE | Multi-theme support | Settings / User Preferences gate. |
 | GATE-012 | REQUIRED | Repository Disaster Recovery / Reconstruction | D064; implement and validate before major Version 1 release or before irreplaceable User Knowledge enters scope, whichever comes first. Not a current Fish blocker. |
 | GATE-013 | DEFERRED TO NAMED GATE | Reusable Rig alternate-terminal configuration modeling | D065 + `data-model/03-RIGS.md`; revisit when a user workflow requires mutually exclusive component/assembly/readiness branches within one Rig or another Rig demonstrates the same reusable need. |
-| GATE-014 | APPROVED / PENDING PLANNING | Regulations — U.S. State Fishing Resource Gateway | Current next product milestone after Fish Guide closure; D066 / REG-001 / `workstreams/REGULATIONS-PHASE-0.md`. |
+| GATE-014 | IMPLEMENTED / APPROVED / PENDING COMMIT | Regulations — U.S. State Fishing Resource Gateway | Phase 0 closed PASS; Wave 1 R3 approved under D066 / REG-001 / `workstreams/REGULATIONS-PHASE-0.md`; commit verification remains before Wave 2. |
 
 # Parking Lot — Deliberate Future Items
 
