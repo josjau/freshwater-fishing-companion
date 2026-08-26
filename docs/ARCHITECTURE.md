@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.7.4  
+**Document Revision:** 0.7.5  
 **Document Status:** Approved  
 **Last Updated:** 2026-08-25
 
@@ -71,7 +71,9 @@ docs/
     ARCHITECTURE.md
     CHANGELOG.md
     DECISIONS.md
+    decisions/
     DEVELOPMENT_WORKFLOW.md
+    workflow/
     EXTERNAL_REFERENCE_MAINTENANCE.md
     FISH_REFERENCE_SOURCES.md
     HANDOFF.md
@@ -194,8 +196,8 @@ Canonical roles:
 
 - `PROJECT.md` — mission, target user, product scope, high-level boundaries.
 - `ARCHITECTURE.md` — current technical/source architecture and approved near-term source ownership.
-- `DECISIONS.md` — durable approved architectural/product/UX decisions.
-- `DEVELOPMENT_WORKFLOW.md` — implementation, validation, documentation, and closeout procedure.
+- `DECISIONS.md` — compact durable decision index; `decisions/*.md` own full decision bodies by domain.
+- `DEVELOPMENT_WORKFLOW.md` — compact workflow entrypoint; `workflow/*.md` own task-specific procedures.
 - `ROADMAP.md` — product milestone order and future product direction.
 - `ACTIVE-CHANGE-LEDGER.md` — material non-closed carry-forward items.
 - `WORKING_STATE.md` — live local current-state and exact-resume record.
@@ -206,7 +208,7 @@ Canonical roles:
 
 `SPECIFICATION.md` is retired from active maintenance. Root `AGENTS.md` is a concise agent startup/change-control pointer and does not own project state.
 
-GitHub `main` is the formal cross-computer authority. `WORKING_STATE.md` is the high-frequency state/resume layer; durable content is promoted to the correct GitHub owner, the Active Change Ledger is reconciled, and Handoff remains compact. The repository is the complete active continuity system. The former Google Working State is retired and preserved only as historical migration evidence.
+GitHub `main` is the committed authority. Google Drive `Working Source/Current` is the authoritative approved-uncommitted layer and contains the complete editable repository working tree under D068. `Working Source/Packages` is transport/checkpoint/review only. The Live Working State carries active review-cycle identity, approvals/defects, and the exact resume point; `WORKING_STATE.md` remains the repository continuity summary. Durable content is promoted to the correct repository owner, the Active Change Ledger is reconciled, and Handoff remains compact. The former large Google Working State is retired and preserved only as historical migration evidence.
 
 # Knowledge Architecture
 
@@ -583,14 +585,15 @@ Meaningful cross-segment decisions receive the same documentation discipline as 
 
 Permanent rules include:
 
-- verify the local checkout against GitHub `main` before editing,
-- read local Working State, Handoff, the Active Change Ledger, and applicable governing documents before substantive work,
-- use one write-authorized chat per checkout/workstream,
-- commit/push a reviewed checkpoint before cross-computer handoff,
+- verify GitHub `main`, the complete Drive working tree, and the Live Working State review-cycle identity before editing,
+- use the complete Drive `Working Source/Current` tree as the first working location for every approved uncommitted repository change, including documentation,
+- use one write-authorized project-chat cycle for edits to the active Drive working tree,
 - keep semantic change scope targeted unless broader replacement/consolidation is approved,
-- review coherent local changes through the complete GitHub Desktop diff by default,
+- generate review ZIPs/packages only when transport, local/browser validation, checkpointing, or recovery requires them,
+- preserve explicit production write and production commit/push authorization gates,
 - verify GitHub after every write/push,
 - complete documentation closeout before declaring a segment finalized,
 - do not begin a dependent build segment while the current one remains unfinalized,
 - preserve meaningful cross-segment decisions/defers/parks/rejects,
-- apply the local Working State / formal checkpoint model during active sessions.
+- use review-cycle identity, package hashes/changed-file sets, and targeted validation rather than repeated full-state reconstruction,
+- keep the supported execution environment connector-native in normal ChatGPT project chat; do not depend on ChatGPT Work.

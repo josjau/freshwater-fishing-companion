@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 07-USER-DATA.md  
-**Document Revision:** 0.3.1  
+**Document Revision:** 0.4.0  
 **Document Status:** Draft  
 **Implementation Status:** Mixed — transitional local state exists; authoritative User Knowledge schemas not implemented  
 **Decision Baseline:** D028, D029, D056, D067
@@ -119,9 +119,34 @@ Catch records must never modify canonical Fish or other Reference Knowledge.
 
 Backup history or metadata may be useful after backup/restore is implemented. No production Backup History record schema is approved here.
 
-Backup architecture is governed separately by `08-BACKUP.md` and must follow the actual authoritative User Knowledge schemas.
+Backup/restore architecture is governed by the gate below and must follow the actual authoritative User Knowledge schemas.
 
 ---
+
+# Backup / Restore Architecture Gate — Deferred
+
+No authoritative production backup/restore system or Version 1 backup schema is currently implemented or approved. Backup design must follow the User Knowledge schemas that actually become authoritative rather than pre-commit speculative fields or a monolithic user-data structure.
+
+If backup/restore enters implementation scope, the User Data architecture gate must decide at least:
+
+1. the stable user/profile owner whose User Knowledge is being backed up/restored;
+2. whether backup/restore is in the applicable product scope;
+3. which **implemented** User Knowledge domains are included;
+4. backup envelope/file format and user-control/portability requirements;
+5. schema/application compatibility metadata;
+6. pre-restore validation and canonical-reference integrity rules;
+7. migration behavior and unsupported-version handling;
+8. transactional restore, safety-copy, rollback, and failure reporting;
+9. replacement/merge/selective-restore/conflict semantics;
+10. treatment of transitional/session/cache state so temporary availability is never promoted into ownership/history;
+11. import/export handling and the existing untrusted-User-Knowledge rendering boundary;
+12. privacy, device-transfer expectations, and optional external/cloud-storage boundaries.
+
+JSON is a plausible portable/inspectable format but is **not** an approved Version 1 contract. Reference Knowledge should normally be restored with the application rather than duplicated as authoritative user backup data; stable canonical IDs may require compatibility handling.
+
+Any future restore should be transactional from the user's perspective and must not leave partially replaced User Knowledge after failed validation/migration/restore.
+
+Cloud storage/accounts are not assumed dependencies. Optional providers require separate explicit value/privacy/maintenance approval.
 
 # Data Ownership
 
@@ -192,7 +217,5 @@ Potential later capabilities include multiple profiles, cloud synchronization, s
 - 03-RIGS.md
 - 05-TACKLE.md
 - 05A-INVENTORY.md
-- 06-LURES.md
-- 08-BACKUP.md
 - 09-RELATIONSHIPS.md
 - ../DECISIONS.md

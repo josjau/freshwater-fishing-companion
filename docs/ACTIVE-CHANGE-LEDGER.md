@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.3.6  
+**Document Revision:** 1.3.7  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `ee0149a81bab06c1f7650482ed30ffcc5111bfcd`  
@@ -13,7 +13,7 @@ This ledger keeps every material non-closed project item visible until it receiv
 
 It does not duplicate full design reasoning. Each entry identifies the current status, the controlling detailed owner/gate, and the required next action.
 
-GitHub `main` owns committed formal state. Google Drive `Working Source/Current` owns the exact approved uncommitted working tree; `WORKING_STATE.md` owns compact live workstream/resume context. The former large Google Working State is retired as active authority.
+GitHub `main` owns committed formal state. Google Drive `Working Source/Current` owns all approved uncommitted repository changes against its recorded GitHub baseline; `WORKING_STATE.md` owns compact live workstream/resume context. The former large Google Working State is retired as source authority.
 
 # Status Vocabulary
 
@@ -29,7 +29,7 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 
 # Workflow Transition
 
-No active transition item remains. WF-001 closed after repository continuity parity, GitHub verification, and retirement of Google as an active continuity source. Closure history is retained in `CHANGELOG.md`, D062, and Git history; receiving-computer onboarding is an operating rule rather than an active project gate.
+The 2026-08-25 Workflow Performance Refactor is **IMPLEMENTED / PENDING REVIEW VALIDATION AND CLOSEOUT**. D068 owns the approved full-tree model: Drive `Working Source/Current` is the complete editable repository working tree; review ZIPs are transport/review snapshots; the local Git repository is the user validation/approval surface; GitHub `main` remains committed authority; and ChatGPT Work is not part of the supported workflow. Regulations Phase 0 remains blocked from substantive product work until this workflow refactor is validated and closed.
 
 # Cross-Domain UX / Source Follow-Ups
 

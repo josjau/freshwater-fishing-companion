@@ -268,7 +268,6 @@ Potential future capabilities include additional regional Rigs, richer interacti
 - 04-KNOTS.md
 - 05-TACKLE.md
 - 05A-INVENTORY.md
-- 06-LURES.md
 - 09-RELATIONSHIPS.md
 - ../DECISIONS.md
 - ../workstreams/REPOSITORY-AUDIT-SECTION-5-DECISION.md

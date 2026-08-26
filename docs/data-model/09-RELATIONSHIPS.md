@@ -526,9 +526,7 @@ Any future cache remains derived and non-authoritative unless an explicit later 
 - `04-KNOTS.md`
 - `05-TACKLE.md`
 - `05A-INVENTORY.md`
-- `06-LURES.md`
 - `07-USER-DATA.md`
-- `08-BACKUP.md`
 - `../ARCHITECTURE.md`
 - `../DECISIONS.md`
 - `../FISH_REFERENCE_SOURCES.md`

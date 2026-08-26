@@ -235,53 +235,25 @@ Phase 0 may move into implementation only after explicit approval of:
 - production-wave plan,
 - required validation.
 
-# Documentation Impact Disposition — This Decision Checkpoint
+# Documentation Ownership After Workflow R2 Consolidation
 
-## UPDATED
+The Regulations planning decision remains preserved. R2 changes documentation pathing, not Regulations product scope.
 
-- `PROJECT.md`
-- `ROADMAP.md`
-- `DECISIONS.md`
-- `ARCHITECTURE.md`
-- `ACTIVE-CHANGE-LEDGER.md`
-- `WORKING_STATE.md`
-- `HANDOFF.md`
-- `CHANGELOG.md`
-- `EXTERNAL_REFERENCE_MAINTENANCE.md`
-- `STYLE_GUIDE.md`
-- `data-model/00-GLOSSARY.md`
-- `data-model/05-TACKLE.md`
-- `data-model/05A-INVENTORY.md`
-- `data-model/07-USER-DATA.md`
-- `data-model/08-BACKUP.md`
-- `data-model/README.md`
-- `workstreams/REGULATIONS-PHASE-0.md` (new)
+Current governing owners for this workstream are:
 
-## VERIFIED — NO CHANGE REQUIRED
+- `PROJECT.md` — mission/coverage boundary;
+- `ROADMAP.md` — milestone sequence;
+- D066/D067 in `DECISIONS.md` / decision bodies — durable product/user-data boundaries;
+- `ARCHITECTURE.md` — resource-navigation and knowledge ownership boundary;
+- `UI_STANDARD.md` — state-selector/state-page/navigation/card interaction standards;
+- `EXTERNAL_REFERENCE_MAINTENANCE.md` — durable external-resource verification/maintenance standard;
+- `data-model/01-FOUNDATION.md`, `05-TACKLE.md`, `05A-INVENTORY.md`, `07-USER-DATA.md`, `09-RELATIONSHIPS.md` — applicable semantic/user-data boundaries;
+- `WORKING_STATE.md` — current repository resume point;
+- `ACTIVE-CHANGE-LEDGER.md` — REG-001/GATE-014 visibility;
+- this file — Phase 0 planning questions/evidence/completion gate.
 
-- `data-model/01-FOUNDATION.md`
-- `data-model/09-RELATIONSHIPS.md`
-- root `AGENTS.md`
-- `CARD_PAGE_STANDARD.md`
-- `DETAIL-PAGE-STANDARD.md`
-- `DEVELOPMENT_WORKFLOW.md`
-- `FISH_REFERENCE_SOURCES.md`
-- `KNOT_REFERENCE_SOURCES.md`
-- `MEDIA_GUIDE.md`
-- `MILESTONES.md` — frozen historical record; its old sequence/ODWC statements remain intentionally historical
-- `NAVIGATION-PAGE-STANDARD.md`
-- `RIG_REFERENCE_SOURCES.md`
-- `SPECIFICATION.md` — retired pointer
-- `V1-DESIGN-AUDIT.md`
-- `data-model/02-FISH.md`
-- `data-model/03-RIGS.md`
-- `data-model/03A-TECHNIQUES.md`
-- `data-model/03B-CONDITIONS.md`
-- `data-model/04-KNOTS.md`
-- `data-model/06-LURES.md`
-
-`data-model/06-LURES.md` already preserves the correct ownership boundary: future lure recommendations may consume user inventory, but actual ownership belongs to My Tackle/User Knowledge. No sequencing statement there is stale.
+Former Handoff, standalone glossary/Lure/Backup, separate card/detail/navigation standards, Milestones, and Specification are not active owners after R2; their durable content is consolidated elsewhere or retained in Git history.
 
 # Exact Resume Point
 
-After this documentation checkpoint is committed/reconciled, begin Phase 0 with research and architecture only. Do not create production Regulations source/data until the Phase 0 completion gate above is approved.
+After the Workflow/Documentation Performance Refactor is reviewed, committed, and closed, begin Phase 0 with research and architecture only. Do not create production Regulations source/data until the Phase 0 completion gate above is approved.

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 01-FOUNDATION.md  
-**Document Revision:** 0.3.1
+**Document Revision:** 0.4.0
 **Document Status:** Draft
 **Decision Baseline:** D029, D056
 
@@ -95,6 +95,86 @@ User Knowledge answers:
 > What do I own, prefer, or record?
 
 ---
+
+# Canonical Terminology
+
+The former standalone data-model glossary is consolidated here so foundational architecture terms have one owner.
+
+## User/Profile Identity
+
+The stable owner/context to which persistent User Knowledge belongs. The exact Version 1 representation remains unresolved until the Settings / User Data Architecture gate. A user-aware model does not require authentication or multiple profiles; it prevents a browser/device storage bucket from becoming an undocumented implicit identity.
+
+## Canonical Entity
+
+A reusable application-owned entity with a stable ID and one authoritative definition.
+
+## Semantic Owner
+
+The entity or domain for which a fact or relationship is intrinsically meaningful. Under D056, every canonical fact or relationship has exactly one authoritative semantic owner.
+
+## Derived Inverse
+
+A reverse relationship computed from its canonical owner rather than stored as a second authoritative copy. Current examples include Tackle **Used In** derived from Rig component requirements and Knot **Where You'll Use It** derived from Rig Knot applications.
+
+## Deferred Relationship
+
+An approved/plausible relationship whose semantic owner or storage shape has not yet been approved. Deferred relationships must not be represented by speculative production fields or empty placeholder arrays.
+
+## Canonical Tackle
+
+Reference Knowledge describing a reusable functional tackle type. It does not represent a user's exact owned item.
+
+## My Tackle
+
+Future authoritative User Knowledge containing actual fishing items owned by the applicable user/profile. Its detailed owned-item schema remains unresolved. Once authoritative, ownership changes only through explicit ownership-management workflows.
+
+## Product Definition
+
+A possible future Reference Knowledge entity describing a specific commercial product. It is not required for My Tackle MVP or basic Rig readiness and remains deferred until a demonstrated product-specific feature requires it.
+
+## Rig
+
+A canonical ready-to-fish setup/recipe that owns physical assembly, component requirements, real tied-connection context, and Rig-specific configuration.
+
+## Technique
+
+An approved future Reference Knowledge domain for reusable presentation behavior after a setup is built. No canonical Technique production dataset is implemented, and Rig↔Technique relationship ownership remains deferred.
+
+## Condition
+
+An approved future Reference Knowledge domain for reusable environmental/situational fishing context. No canonical Condition production dataset is implemented.
+
+## Lure
+
+A possible future separate canonical artificial-bait concept. A dedicated Lure production dataset is not currently implemented or approved; its boundary with current canonical Tackle is owned by the deferred Lure/Tackle architecture gate documented in `05-TACKLE.md`.
+
+## Media Ownership
+
+Canonical entity attachment is owned by Media through `ownerType` + `ownerId`; canonical entities do not maintain inverse media-ID arrays solely to locate Media that already identifies its owner.
+
+## Search
+
+The relevance-first process of finding the entity the user actually means. Search is an entry point, not the full destination.
+
+## Browse
+
+Category/collection-oriented exploration when the user does not necessarily know the exact entity name. Browse is distinct from Search.
+
+## Recommendation
+
+Decision Knowledge that helps choose among valid options for a goal/context. Recommendations are distinct from factual Search results.
+
+## Connected Knowledge
+
+Pertinent relationships exposed after an entity is identified, allowing movement to adjacent knowledge without duplicating canonical relationship storage.
+
+## Rig Readiness
+
+A derived buildability view answering: **Can I build this Rig with what I own or have available for this build/session?** Current local readiness state is transitional. When My Tackle becomes authoritative, Readiness reads ownership but does not write it.
+
+## Core Rigs
+
+The approved six-Rig confidence-building subset: Fixed Bobber Rig, Basic Bottom Rig, Jighead + Soft Plastic, Inline Spinner Setup, Texas Rig, and Slip Bobber Rig. Membership/order are owned by the curated `CORE_RIG_IDS` registry.
 
 # Core Principles
 
@@ -809,11 +889,8 @@ The data model shall evolve through deliberate decisions, verified requirements,
 - 04-KNOTS.md
 - 05-TACKLE.md
 - 05A-INVENTORY.md
-- 06-LURES.md
 - 07-USER-DATA.md
-- 08-BACKUP.md
 - 09-RELATIONSHIPS.md
 - ../PROJECT.md
-- ../SPECIFICATION.md
 - ../ARCHITECTURE.md
 - ../DECISIONS.md

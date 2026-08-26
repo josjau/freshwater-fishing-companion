@@ -1,146 +1,79 @@
-# Freshwater Fishing Companion
+# Freshwater Fishing Companion — Data Model Index
 
-**Document:** DATA MODEL INDEX  
-**Document Revision:** 0.3.2  
+**Document:** data-model/README.md  
+**Document Revision:** 0.4.0  
 **Document Status:** Approved  
-**Decision Baseline:** D037, D056, D067
-
----
+**Role:** Canonical data-model ownership map  
+**Decision Baseline:** D037, D056, D067  
+**Last Updated:** 2026-08-25
 
 # Purpose
 
-This directory contains the governing data-model documents for Freshwater Fishing Companion. The model is divided by semantic ownership so each concept has one authoritative definition and current implementation remains distinguishable from approved or deferred future architecture.
-
----
+This directory contains governing data-model documents divided by semantic ownership. The structure distinguishes implemented schemas, approved/not-implemented architecture, and deferred gates without creating standalone files merely to reserve speculative future domains.
 
 # Governing Principles
 
-- One authoritative semantic owner for every canonical fact or relationship.
+- One authoritative semantic owner for every canonical fact/relationship.
 - Stable identifiers.
 - Reference Knowledge, Decision Knowledge, and User Knowledge remain distinct.
 - User records reference canonical entities whenever practical.
-- Persistent User Knowledge uses a deliberate stable user/profile ownership model selected before authoritative My Tackle/Catch Log implementation.
-- Local-first and offline-first direction.
-- Simplicity before complexity.
+- Persistent User Knowledge uses the deliberate user/profile ownership model selected before authoritative My Tackle/Catch Log implementation.
+- Local-first/offline-first direction.
 - Derived inverse relationships are preferred over duplicate stored sources of truth.
-- Documentation must distinguish implemented schemas, approved-but-not-implemented designs, and deferred/unapproved design candidates.
-- Candidate fields are not production schema until an implementation gate approves and validates them.
-- A Draft document does not by itself approve the domain or architecture it discusses.
+- Candidate fields are not production schema until an implementation gate approves/validates them.
+- A Draft document does not by itself approve the domain/architecture it discusses.
+- No standalone data-model file is created solely to reserve a possible future entity.
 
----
+# Canonical Files and Status
 
-# Document Organization and Status
+| File | Role / current status |
+|---|---|
+| `01-FOUNDATION.md` | Foundational entity/field/ownership/search/recommendation/trust rules plus canonical architecture terminology. |
+| `02-FISH.md` | Current Fish schema plus explicitly separated approved/future Fish architecture. |
+| `03-RIGS.md` | Validated canonical Rig schema and ownership boundaries. |
+| `03A-TECHNIQUES.md` | Approved / Not Implemented Technique domain boundary. |
+| `03B-CONDITIONS.md` | Approved / Not Implemented Condition domain boundary. |
+| `04-KNOTS.md` | Validated canonical Knot schema/boundaries. |
+| `05-TACKLE.md` | Validated canonical functional Tackle schema plus the deferred separate-Lure architecture gate. |
+| `05A-INVENTORY.md` | Approved / Not Implemented My Tackle ownership boundary; detailed owned-item schema unresolved. |
+| `07-USER-DATA.md` | User Knowledge architecture boundary plus required User Data and deferred backup/restore gates. |
+| `09-RELATIONSHIPS.md` | Validated relationships, Decision Knowledge references, derived inverses, D056 ownership, and deferred future relationships. |
 
-## 00 — GLOSSARY
-
-**Approved.** Defines project architecture, ownership, implementation-status, and domain terminology.
-
-## 01 — FOUNDATION
-
-**Draft governing standard.** Defines global entity, field, ownership, validation, search, recommendation, trust-boundary, and simplicity standards.
-
-## 02 — FISH
-
-**Mixed.** Documents the current implemented Fish schema separately from the approved Fish Guide Phase 0 target expansion.
-
-## 03 — RIGS
-
-**Validated.** Documents the current 20-Rig canonical schema, component requirements, assembly ownership, Knot applications, variations, Media ownership boundary, and deferred Rig↔Technique relationship.
-
-## 03A — TECHNIQUES
-
-**Approved / Not Implemented.** Defines reusable presentation behavior and the future Technique architecture gate without pre-approving speculative relationship fields.
-
-## 03B — CONDITIONS
-
-**Approved / Not Implemented.** Defines the future Condition domain boundary without treating candidate taxonomy, weighting, or relationship fields as production schema.
-
-## 04 — KNOTS
-
-**Validated.** Defines the current canonical Knot schema and its boundaries with Rig context, Media ownership, Knot task guidance, and Reel & Line Setup Decision Knowledge.
-
-## 05 — TACKLE
-
-**Validated.** Defines the current canonical functional Tackle schema, Rig requirement relationship, derived `Used In` navigation, and Media-owned attachments.
-
-## 05A — INVENTORY
-
-**Approved / Not Implemented.** Defines My Tackle ownership authority, user/profile ownership boundary, transitional readiness boundary, and future implementation gate. Detailed owned-item and Fishing Setup schemas remain unresolved.
-
-## 06 — LURES
-
-**Draft / Deferred / Separate Domain Not Yet Approved.** Preserves the possible separate-Lure architecture questions and requires the Lure-versus-current-Tackle boundary and need for a separate entity to be approved before implementation.
-
-## 07 — USER DATA
-
-**Mixed / Mostly Not Implemented.** Defines User Knowledge boundaries and the D067 user/profile/persistence architecture gate while recognizing current lightweight readiness persistence as transitional rather than a general authoritative User Data schema.
-
-## 08 — BACKUP
-
-**Draft / Deferred / Not Implemented.** Preserves candidate backup/restore requirements and requires the User Data architecture gate to approve the product scope and architecture before implementation.
-
-## 09 — RELATIONSHIPS
-
-**Mixed.** Governs validated current relationships, Decision Knowledge references, derived inverses, D056 semantic ownership, and explicitly deferred future relationships.
-
----
+The former standalone glossary, speculative Lure model, and deferred Backup model were consolidated into `01-FOUNDATION.md`, `05-TACKLE.md`, and `07-USER-DATA.md` respectively. Their prior revisions remain recoverable in Git history.
 
 # Current Implemented Canonical Domains
 
-Current production Reference Knowledge includes:
+Current production Reference Knowledge includes Fish, Rigs, Knots, Tackle, and Media. Current Decision Knowledge includes Knot task guidance and Reel & Line Setup guidance.
 
-- Fish,
-- Rigs,
-- Knots,
-- Tackle,
-- Media.
+Technique, Conditions, My Tackle, backup/restore, and a possible separate Lure domain remain explicitly not-yet-implemented/deferred as documented by their surviving owners/gates.
 
-Current Decision Knowledge includes Knot task guidance and Reel & Line Setup guidance.
+# Deferred Model Policy
 
-Approved future domains such as Technique, Conditions, and My Tackle must not be treated as production datasets until implemented and validated. Backup and a possible separate Lure entity are deferred design candidates and must not be treated as approved architecture until their respective gates explicitly approve them.
+A dedicated general Recommendation model remains deferred until its schema is mature enough to document without inventing fields. ProductDefinition remains deferred until an approved commercial-product feature demonstrates the need.
 
----
-
-# Deferred Model Documents
-
-A dedicated general Recommendations model remains deferred until its schema is mature enough to document without inventing fields.
-
-A Product Definition model remains deferred until an approved commercial-product feature demonstrates the need.
-
-No standalone document should be created merely to reserve a possible future entity.
-
----
+Future domains receive a dedicated file only when the domain/architecture is sufficiently approved and complex to need an independent owner.
 
 # Reading Order
 
-1. `00-GLOSSARY.md`
-2. `01-FOUNDATION.md`
-3. domain document relevant to the active work
-4. `09-RELATIONSHIPS.md`
-5. `../ARCHITECTURE.md` and `../DECISIONS.md` for structural context
-
----
+1. `01-FOUNDATION.md`;
+2. the domain file relevant to active work;
+3. `09-RELATIONSHIPS.md` when relationship ownership is material;
+4. `../ARCHITECTURE.md` and applicable durable decisions for structural context.
 
 # Maintenance Policy
 
-- GitHub `main` source is authoritative for current implementation state.
-- Before changing an existing source/document, re-fetch its latest contents.
+- GitHub `main` is authoritative for committed implementation state; Drive `Working Source/Current` is authoritative for approved uncommitted work during an active cycle.
+- Before changing an existing source/document, use its latest verified contents.
 - Changes to one domain should not require rewriting unrelated domains.
-- Structural decisions belong in `../DECISIONS.md`.
-- Current implementation, Approved / Not Implemented architecture, and Deferred / Not Approved candidates must remain visibly distinguishable.
-- Candidate fields and relationships must not be described as production simply because they appear in planning documents.
-- Draft architecture must not be promoted to approved status without an explicit governing decision or approval record.
-- D056 single-owner semantics apply across all domains.
-- Nonexistent or speculative documents must not be linked as current authoritative sources.
-- After synchronization work, changed documents should be re-fetched and verified against the intended repository state.
-
----
+- Structural decisions belong in `../DECISIONS.md` / `../decisions/`.
+- Current implementation, Approved / Not Implemented, and Deferred / Not Approved states remain visibly distinguishable.
+- D056 single-owner semantics apply across domains.
+- After synchronization work, changed documents are rechecked against intended repository state.
 
 # Related Documents
 
-- `../HANDOFF.md`
+- `../WORKING_STATE.md`
 - `../PROJECT.md`
-- `../SPECIFICATION.md`
 - `../ARCHITECTURE.md`
 - `../STYLE_GUIDE.md`
 - `../ROADMAP.md`

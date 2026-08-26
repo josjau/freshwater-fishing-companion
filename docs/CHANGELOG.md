@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 2.3.6  
+**Document Revision:** 2.3.7  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-25
@@ -17,6 +17,20 @@ Do not record exact active audit section, exact session resume point, current bl
 For current formal continuation use `HANDOFF.md`. For material non-closed items use `ACTIVE-CHANGE-LEDGER.md`.
 
 # Unreleased
+
+## Workflow Architecture — Drive-First Working Tree Performance Refactor
+
+### Changed
+
+- Established D068: normal ChatGPT project chat with connected Google Drive/GitHub is the supported FCC execution environment; ChatGPT Work is explicitly outside the supported workflow.
+- Unified working authority so every intended repository change, including documentation-only changes, exists in Drive before GitHub commit.
+- Replaced ZIP-as-working-truth with a persistent complete editable repository working tree in Drive `Working Source/Current`; packages remain review/transport/checkpoint artifacts generated from that tree.
+- Preserved D062 as the superseded ZIP-era operating-model decision rather than rewriting its historical rationale.
+- Decomposed the monolithic `DECISIONS.md` into a compact index plus domain-owned `docs/decisions/` files while preserving all D001–D067 IDs and adding D068.
+- Decomposed `DEVELOPMENT_WORKFLOW.md` into a compact entrypoint plus task-specific `docs/workflow/` owners for startup, authority/sync, production changes, review/staging, documentation, closeout, and session handoff.
+- Codified review-cycle identity, cumulative Drive-tree review iterations, package/hash and changed-file lineage, disposition-matrix documentation impact review, no temporary one-time GitHub workflow rule, and normal ≤10-minute targets for bounded documentation/review/closeout operations without weakening validation.
+- Left `CHANGELOG.md` monolithic after evaluation because its current structure does not yet justify another ownership layer.
+- No production application behavior, data, media, CSS, HTML, or JavaScript changed.
 
 ## Product Direction — Regulations Gateway / User Data Sequencing
 

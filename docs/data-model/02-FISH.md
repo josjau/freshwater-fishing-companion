@@ -540,16 +540,14 @@ The Version 1 Fish production migration is complete. Future Fish additions are n
 
 # Related Documents
 
-- `00-GLOSSARY.md`
 - `01-FOUNDATION.md`
 - `03-RIGS.md`
 - `03B-CONDITIONS.md`
-- `06-LURES.md`
 - `07-USER-DATA.md`
 - `09-RELATIONSHIPS.md`
 - `../ARCHITECTURE.md`
 - `../DECISIONS.md`
-- `../NAVIGATION-PAGE-STANDARD.md`
+- `../UI_STANDARD.md`
 - `../MEDIA_GUIDE.md`
 - `../FISH_REFERENCE_SOURCES.md`
 - `../../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0.md`

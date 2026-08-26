@@ -166,6 +166,27 @@ Repository Audit Section 4 is **implemented / runtime-validated / closed**:
 
 ---
 
+# Deferred Separate Lure Domain Gate
+
+A separate canonical **Lure** domain is **not currently implemented or approved for implementation**. Some lure-like concepts correctly exist in canonical Tackle today because Tackle supports Rig requirements, recognition, search, and readiness.
+
+If future Recommendation/Lure workflows demonstrate that a separate reusable artificial-bait entity is needed, the Lure/Tackle architecture gate must settle before production data is created:
+
+1. whether a separate Lure entity provides demonstrated value beyond canonical Tackle;
+2. the exact semantic boundary between Lure and current Tackle;
+3. the canonical Lure field set, with purpose/ownership/validation for each field;
+4. Fish/Rig/Technique/Condition relationship ownership under D056;
+5. ProductDefinition relationships if commercial-product identity enters scope;
+6. My Tackle mapping/ownership behavior;
+7. media attachment requirements beyond the shared `ownerType` + `ownerId` model, if any;
+8. referential-integrity/migration requirements.
+
+Candidate concepts such as lure family/type, typical size/weight, common colors, action, beginner guidance, or common mistakes remain **design inputs, not approved production fields**.
+
+Do not add placeholder relationship arrays such as `targetFishIds[]`, `compatibleRigIds[]`, or `compatibleTechniqueIds[]`. Contextual lure suitability/ranking/rationale may belong to Decision Knowledge rather than intrinsic bidirectional Reference Knowledge.
+
+A manufacturer's commercial product and a reusable lure concept are different semantic entities. ProductDefinition modeling remains deferred until an approved product-specific feature requires it. Actual user-owned lure items belong to My Tackle/User Knowledge, not the canonical Lure/Tackle definition.
+
 # Future / Deferred
 
 Deferred until demonstrated by approved features:
@@ -182,11 +203,9 @@ Deferred until demonstrated by approved features:
 
 # Related Documents
 
-- `00-GLOSSARY.md`
 - `01-FOUNDATION.md`
 - `03-RIGS.md`
 - `05A-INVENTORY.md`
-- `06-LURES.md`
 - `09-RELATIONSHIPS.md`
 - `../ARCHITECTURE.md`
 - `../DECISIONS.md`

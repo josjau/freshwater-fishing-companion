@@ -45,7 +45,7 @@ Fish Guide Production Wave 1 was user-approved after mobile validation. Waves 2â
 - Compare Similar Fish keeps its 84 Ã— 56 thumbnail size. Desktop may use two choices side-by-side; actual mobile review validated one comparison tile per row as the preferred narrow-screen treatment.
 
 - Wave 4 desktop/mobile review validated per-Fish Selection/Detail framing plus normalized Compare Fish catalog and Field Identification sizing/alignment; Northern Rock Bass served as the visual size reference for the close-shaped Sunfish/Crappie comparison set.
-- Wave 4 implemented the D048/CARD_PAGE_STANDARD multi-accent peer-card correction for Compare Fish; specialized pair imagery remains inside the shared Dashboard-derived card language.
+- Wave 4 implemented the D048/UI_STANDARD multi-accent peer-card correction for Compare Fish; specialized pair imagery remains inside the shared Dashboard-derived card language.
 Fish semantic/content validation is closed for completed Fish. Production Wave 2 is closed after the Compare Fish anatomical body-axis alignment correction passed desktop/mobile review and post-push verification. The final design audit may reconcile shared visual grammar, but it must not silently reopen approved Fish facts, media provenance, relationships, or guidance.
 
 # Audit Method
@@ -314,8 +314,7 @@ This audit is a required Version 1 design-completion gate. Fish production is cl
 # Related Documents
 
 - `STYLE_GUIDE.md`
-- `DETAIL-PAGE-STANDARD.md`
-- `NAVIGATION-PAGE-STANDARD.md`
+- `UI_STANDARD.md`
 - `DEVELOPMENT_WORKFLOW.md`
 - `ACTIVE-CHANGE-LEDGER.md`
-- `HANDOFF.md`
+- `WORKING_STATE.md`

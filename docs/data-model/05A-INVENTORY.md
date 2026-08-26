@@ -201,8 +201,6 @@ Potential later capabilities include commercial Product Definitions, barcode sca
 - 01-FOUNDATION.md
 - 03-RIGS.md
 - 05-TACKLE.md
-- 06-LURES.md
 - 07-USER-DATA.md
-- 08-BACKUP.md
 - 09-RELATIONSHIPS.md
 - ../DECISIONS.md
