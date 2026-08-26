@@ -7,18 +7,17 @@ These instructions apply to the entire repository.
 Before substantive work:
 
 1. Verify current GitHub `main` SHA.
-2. Read `docs/WORKING_STATE.md` and `docs/HANDOFF.md`; read `docs/ACTIVE-CHANGE-LEDGER.md` when the requested scope can intersect open carry-forward.
+2. Read `docs/WORKING_STATE.md`; read `docs/ACTIVE-CHANGE-LEDGER.md` when the requested scope can intersect open carry-forward.
 3. Verify Google Drive `Working Source/Current` is the complete editable repository working tree and read the Live Working State for the active review-cycle identity/resume point.
-4. Read `docs/DEVELOPMENT_WORKFLOW.md` plus only the workflow/decision/domain owners material to the requested scope. When card-based navigation or catalog UI is in scope, also read `docs/CARD_PAGE_STANDARD.md`.
+4. Read `docs/DEVELOPMENT_WORKFLOW.md` plus only the workflow/decision/domain owners material to the requested scope. When UI/navigation/card/detail/search behavior is in scope, also read `docs/UI_STANDARD.md`.
 5. Compare the recorded resume point with GitHub and Drive state. Do not rely on chat history as authority.
-6. Use broader baseline reconstruction only when the invalidation conditions in `docs/workflow/AUTHORITY-AND-SYNC.md` apply.
+6. Use broader baseline reconstruction only when the invalidation conditions in `docs/DEVELOPMENT_WORKFLOW.md` apply.
 
 ## Authority
 
 - GitHub `main` is authoritative for committed production source and formally reconciled documentation.
 - Google Drive `Working Source/Current` is the complete editable repository working tree and is authoritative for **all approved uncommitted repository changes**. It may intentionally be ahead of GitHub during an active review cycle.
 - `docs/WORKING_STATE.md` is the compact current-state and exact-resume record; it must not become a historical journal.
-- `docs/HANDOFF.md` is the compact formal recovery entrypoint.
 - `docs/ACTIVE-CHANGE-LEDGER.md` is the formal owner of material non-closed carry-forward items.
 - Governing documents and current approved decisions outrank plans, archives, historical records, and old chat conclusions.
 - The former large Google Working State is retired as source authority. The current Live Working State is the compact operational decision/review-cycle/resume record; the separate Chat Logs file is disaster-recovery evidence only and must not be used as source authority.
@@ -31,7 +30,7 @@ Before substantive work:
 - Preserve unrelated user changes and keep edits bounded to the approved workstream.
 - Do not commit or push production/user-facing source unless the user explicitly authorizes that action.
 - Documentation-only commits are standing-authorized when needed to keep durable project state current, but the documentation change must exist in the authoritative Drive working tree first and applicable impact/preservation/post-write checks must pass.
-- New or modified peer card grids must comply with D048 and `docs/CARD_PAGE_STANDARD.md`. Specialized internal card markup does not waive the shared dashboard-derived multi-accent, interaction, and responsive behavior contract.
+- New or modified peer card grids must comply with D048 and `docs/UI_STANDARD.md`. Specialized internal card markup does not waive the shared Dashboard-derived multi-accent, interaction, and responsive behavior contract.
 
 ## Continuity and closeout
 

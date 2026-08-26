@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** PROJECT.md  
-**Document Revision:** 0.3.2  
+**Document Revision:** 0.3.3  
 **Document Status:** Approved  
 **Decision Baseline:** D027, D038-D041, D057, D066  
 **Last Updated:** 2026-08-25
@@ -148,7 +148,7 @@ The goal is to help a newer angler become successful with a small number of broa
 
 # Project Continuity
 
-`HANDOFF.md` is the repository current-state entrypoint for future sessions and contributors.
+`WORKING_STATE.md` is the single repository current-state and exact-resume entrypoint. `ACTIVE-CHANGE-LEDGER.md` preserves material non-closed carry-forward across workstreams.
 
 A session, module, or section is not finalized until relevant documentation is updated and validated in GitHub. The project does not move into a new build segment while the current segment remains unfinalized.
 
@@ -170,9 +170,10 @@ while spending more time preparing to fish or fishing than navigating the applic
 
 # Related Documents
 
-- `HANDOFF.md`
+- `WORKING_STATE.md`
+- `ACTIVE-CHANGE-LEDGER.md`
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
 - `DEVELOPMENT_WORKFLOW.md`
 - `ROADMAP.md`
-- `SPECIFICATION.md`
+- `UI_STANDARD.md`

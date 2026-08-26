@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.7.0  
+**Document Revision:** 0.7.1  
 **Document Status:** Approved  
 **Role:** Compact canonical decision index  
 **Last Updated:** 2026-08-25
@@ -20,7 +20,6 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 - [`decisions/ux-navigation.md`](decisions/ux-navigation.md) — UX, search, card, navigation, detail-density rules
 - [`decisions/product.md`](decisions/product.md) — product/domain scope and sequencing decisions
 - [`decisions/workflow.md`](decisions/workflow.md) — workflow, governance, continuity, archive/recovery decisions
-- [`decisions/README.md`](decisions/README.md) — migration/ownership map and preservation rules
 
 # Decision Index
 
@@ -36,7 +35,7 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 | D008 | Canonical Source Registry | Approved | [`decisions/data-model.md`](decisions/data-model.md#d008--canonical-source-registry) |
 | D009 | Three-Layer Knowledge Architecture | Approved | [`decisions/architecture.md`](decisions/architecture.md#d009--three-layer-knowledge-architecture) |
 | D010 | Canonical Taxonomies | Approved | [`decisions/data-model.md`](decisions/data-model.md#d010--canonical-taxonomies) |
-| D011 | Canonical Glossary | Approved | [`decisions/data-model.md`](decisions/data-model.md#d011--canonical-glossary) |
+| D011 | Canonical Terminology | Approved | [`decisions/data-model.md`](decisions/data-model.md#d011--canonical-terminology) |
 | D012 | Inventory-Centric Architecture | Approved | [`decisions/data-model.md`](decisions/data-model.md#d012--inventory-centric-architecture) |
 | D013 | Canonical Inventory Locations | Approved | [`decisions/data-model.md`](decisions/data-model.md#d013--canonical-inventory-locations) |
 | D014 | GitHub-Authoritative Local Repository Workflow | Approved | [`decisions/workflow.md`](decisions/workflow.md#d014--github-authoritative-local-repository-workflow) |
@@ -63,7 +62,7 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 | D035 | Single Production-Supported Theme | Approved | [`decisions/architecture.md`](decisions/architecture.md#d035--single-production-supported-theme) |
 | D036 | Status and Version Semantics | Approved | [`decisions/workflow.md`](decisions/workflow.md#d036--status-and-version-semantics) |
 | D037 | Data-Model Documentation Structure | Approved | [`decisions/data-model.md`](decisions/data-model.md#d037--data-model-documentation-structure) |
-| D038 | Repository Handoff Entrypoint | Approved | [`decisions/workflow.md`](decisions/workflow.md#d038--repository-handoff-entrypoint) |
+| D038 | Repository Continuity Entrypoint | Approved | [`decisions/workflow.md`](decisions/workflow.md#d038--repository-continuity-entrypoint) |
 | D039 | Documentation-Validated Closeout | Approved | [`decisions/workflow.md`](decisions/workflow.md#d039--documentation-validated-closeout) |
 | D040 | No Unvalidated Build Transition | Approved | [`decisions/workflow.md`](decisions/workflow.md#d040--no-unvalidated-build-transition) |
 | D041 | Cross-Segment Decision Capture and Parking | Approved | [`decisions/workflow.md`](decisions/workflow.md#d041--cross-segment-decision-capture-and-parking) |
@@ -87,9 +86,9 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 | D059 | Fish Category Registry and Lifecycle Ownership | Approved | [`decisions/data-model.md`](decisions/data-model.md#d059--fish-category-registry-and-lifecycle-ownership) |
 | D060 | Northern Rock Bass Identity and Shared Aliases | Approved | [`decisions/data-model.md`](decisions/data-model.md#d060--northern-rock-bass-identity-and-shared-aliases) |
 | D061 | Hierarchical Scoped Search | Approved | [`decisions/ux-navigation.md`](decisions/ux-navigation.md#d061--hierarchical-scoped-search) |
-| D062 | Drive Working Package / Local Validation / GitHub Commit Operating Model | Superseded by D068 | [`decisions/workflow.md`](decisions/workflow.md#d062--drive-working-package-local-validation-github-commit-operating-model) |
+| D062 | Drive Working Package / Local Validation / GitHub Commit Operating Model | Superseded by D068 | [`decisions/workflow.md`](decisions/workflow.md#d062--drive-working-package--local-validation--github-commit-operating-model) |
 | D063 | Dashboard Knowledge Hubs and Tackle Capability Boundary | Approved | [`decisions/architecture.md`](decisions/architecture.md#d063--dashboard-knowledge-hubs-and-tackle-capability-boundary) |
-| D064 | Repository Disaster Recovery / Reconstruction Gate | Approved | [`decisions/workflow.md`](decisions/workflow.md#d064--repository-disaster-recovery-reconstruction-gate) |
+| D064 | Repository Disaster Recovery / Reconstruction Gate | Approved | [`decisions/workflow.md`](decisions/workflow.md#d064--repository-disaster-recovery--reconstruction-gate) |
 | D065 | Slip Bobber Alternate-Terminal Modeling Gate | Approved | [`decisions/data-model.md`](decisions/data-model.md#d065--slip-bobber-alternate-terminal-modeling-gate) |
 | D066 | Nationwide Regulations Resource Gateway and Coverage Exception | Approved | [`decisions/product.md`](decisions/product.md#d066--nationwide-regulations-resource-gateway-and-coverage-exception) |
 | D067 | User-Aware User Knowledge Architecture Before Tackle Expansion | Approved | [`decisions/data-model.md`](decisions/data-model.md#d067--user-aware-user-knowledge-architecture-before-tackle-expansion) |

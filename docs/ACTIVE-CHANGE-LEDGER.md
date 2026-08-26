@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.3.7  
+**Document Revision:** 1.3.8  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `ee0149a81bab06c1f7650482ed30ffcc5111bfcd`  
+**Reconciliation Baseline:** `4e982d84ab6207efacfafe4fa92682046c6240cb`  
 **Last Updated:** 2026-08-25
 
 # Purpose
@@ -25,17 +25,17 @@ GitHub `main` owns committed formal state. Google Drive `Working Source/Current`
 - **REQUIRED** — applicable gate cannot pass without it.
 - **BLOCKED** — dependent work may not proceed until named conditions close.
 
-Closed, superseded, rejected, and deliberate non-action items are not maintained here unless temporarily needed to explain an active dependency. Their provenance remains in decisions, closed workstreams, archive, Changelog, Milestones, and Git history.
+Closed, superseded, rejected, and deliberate non-action items are not maintained here unless temporarily needed to explain an active dependency. Their provenance remains in decisions, closed workstreams, archive, Changelog, and Git history.
 
 # Workflow Transition
 
-The 2026-08-25 Workflow Performance Refactor is **IMPLEMENTED / PENDING REVIEW VALIDATION AND CLOSEOUT**. D068 owns the approved full-tree model: Drive `Working Source/Current` is the complete editable repository working tree; review ZIPs are transport/review snapshots; the local Git repository is the user validation/approval surface; GitHub `main` remains committed authority; and ChatGPT Work is not part of the supported workflow. Regulations Phase 0 remains blocked from substantive product work until this workflow refactor is validated and closed.
+No active workflow-transition item remains. The 2026-08-25 Workflow Performance Refactor is closed; D068 and the current workflow documents own the settled operating model. Closure history remains in `CHANGELOG.md`, D068, and Git history.
 
 # Cross-Domain UX / Source Follow-Ups
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| UX-001 | APPROVED / PENDING IMPLEMENTATION | Site-wide context-preserving Parent navigation (D051) | D051, `NAVIGATION-PAGE-STANDARD.md` | Implement/reconcile broader routing; validate nested navigation, restored view/query/filter/scroll, Reel Setup interactions, narrow viewport, keyboard/focus. |
+| UX-001 | APPROVED / PENDING IMPLEMENTATION | Site-wide context-preserving Parent navigation (D051) | D051, `UI_STANDARD.md` | Implement/reconcile broader routing; validate nested navigation, restored view/query/filter/scroll, Reel Setup interactions, narrow viewport, keyboard/focus. |
 | UX-002 | APPROVED / PENDING IMPLEMENTATION | Scoped search helper/example alignment | D061 + approved scoped-helper implementation standard | Replace the currently rejected scope-only Rig/Knot helper wording with curated beginner-useful examples that are mechanically validated to return at least one result in the exact collection where shown. No hard example-count limit. Implement when the affected search source is deliberately reopened. |
 | UX-004 | DEFERRED TO NAMED GATE | Dashboard / Global Search entry point | Roadmap Global Search milestone | Define cross-domain scope, grouping, ranking/ambiguity, and presentation; avoid indiscriminate result dump. |
 | UX-005 | DEFERRED TO NAMED GATE | Compact detail density outside Rigs | Domain-specific review | Reuse only after the target domain demonstrates the Rig density pattern fits. |
@@ -58,12 +58,6 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 |---|---|---|---|---|
 | FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish; implement through the next Decision Knowledge milestone rather than duplicating it into Fish. |
 | FISH-011 | DEFERRED / NOT AUTOMATIC IMPLEMENTATION | Deferred Fish candidates outside V1 | Future explicit scope/evidence | Do not treat excluded candidates as unfinished Version 1 Fish work. |
-
-**Closed Wave 2 checkpoint:** Wave 2 source landed at `8399ae0cee0f5c4b9301041c904707430352bbd1` (`Fish - Walleye Sauger Refinement`). The final Compare Fish anatomical-alignment refinement landed at `d55cf21d7de0099c259de70ad5b113a4d78ea91d` (`Fish - Compare Card Refinement`) and was merged into `main` at `f47ece0d243457d90a8b980855130af043d98a05`. Final review approved the main Compare Fish page on desktop and mobile. Post-push verification confirmed the two refinement files match the approved review package, JavaScript syntax passes, CSS structure passes, and no source drift was detected. Wave 2 is **CLOSED**.
-
-**Closed Wave 3 checkpoint:** Wave 3 source and user-facing implementation landed at `0b982bbbe10b0b2758759869e6682d6b6734475e` (`Fish - Wave 3 - Bass Final`). Final closeout documentation landed at `19b91b6303b3a3369f0c0a9dd6ac1018457d9b7f` (`Fish - Wave 3 - Closeout Documentation`). GitHub `main` was re-fetched and verified at that closeout baseline. All six processed images, 12 Fish-to-Rig recommendations, six Fish records, six deterministic comparison pairs, rights/provenance treatment, framing/centering, native Unicode `→`, and shared `font-weight: 800` navigation-arrow treatment are closed/validated. The historical workstream is retained under `../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`. UX-008 remains active for other affected permanent source files when they are deliberately reopened.
-
-**Closed Wave 4 / Fish Guide checkpoint:** Wave 4 source landed at `fb951a18bdd4c33681644d188a45f2926114158d` (`Fish - Wave 4 - Sunfish & Crappie Final`). The nine Sunfish & Crappie Fish, nine primary-identification assets, five deterministic comparison pairs, 9 Fish-to-Rig guidance records / 20 recommendations, Fish image-framing corrections, Compare Fish size/alignment corrections, and site-wide multi-accent comparison-card correction passed desktop and actual-mobile user review. GitHub Repository Integrity passed all 8 validation groups for the source commit. Wave 4 closes the locked 30-Fish Version 1 production migration and 20-pair identification graph. The historical package record is retained at `../archive/workstreams/fish-guide/FISH-WAVE-4-SUNFISH-CRAPPIE.md`. FISH-008/FISH-009 are terminal and removed from the active table.
 
 # Named Future Architecture / Product Gates
 
@@ -108,5 +102,5 @@ These items are not current blockers and must not be promoted merely because the
 4. PARKED/DEFERRED entries must retain a meaningful trigger/gate.
 5. Placeholder UI does not create an implementation requirement.
 6. Historical PASS/CLOSED records do not override later approved architecture.
-7. Working State may record current-session delta first, but formal checkpointing must reconcile material non-closed items here and durable truth into the correct canonical owner.
+7. Live Working State may record active-cycle detail first, but durable checkpointing must reconcile material non-closed items here and durable truth into the correct canonical owner.
 8. Before every commit, every durable repository documentation file receives an explicit UPDATED or VERIFIED — NO CHANGE REQUIRED disposition; no applicable document may be silently skipped.

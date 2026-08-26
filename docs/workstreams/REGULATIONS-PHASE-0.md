@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Regulations Phase 0
 
 **Document:** REGULATIONS-PHASE-0.md  
-**Document Revision:** 0.1.0  
+**Document Revision:** 0.1.1  
 **Document Status:** Approved  
-**Workstream Status:** APPROVED TO BEGIN / PLANNING NOT STARTED  
+**Workstream Status:** READY TO BEGIN / PLANNING NOT STARTED  
 **Decision Baseline:** D031, D055, D056, D066, D067  
 **Last Updated:** 2026-08-25
 
@@ -256,4 +256,4 @@ Former Handoff, standalone glossary/Lure/Backup, separate card/detail/navigation
 
 # Exact Resume Point
 
-After the Workflow/Documentation Performance Refactor is reviewed, committed, and closed, begin Phase 0 with research and architecture only. Do not create production Regulations source/data until the Phase 0 completion gate above is approved.
+The Workflow/Documentation Performance Refactor is closed. Begin Phase 0 now with research and architecture only. Start with the Four-State representative sample plus structurally different states sufficient to test the resource taxonomy and state-page model. Do not create production Regulations source/data until the Phase 0 completion gate above is approved.
