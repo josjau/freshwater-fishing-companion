@@ -1,14 +1,25 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.0.0  
+**Document Revision:** 3.1.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-08-26
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to `WORKING_STATE.md`; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-08-26 — Regulations Production Wave 1 — Closed
+
+Source commit `7621d6172bed803558b206dbfca8784540346085` — `Regulations - Wave 1 Final`
+
+- Completed the Regulations Architecture/UX Pilot for Oklahoma, Kansas, Missouri, Arkansas, California, Minnesota, Pennsylvania, and Texas: 8 State records, 30 StateResource records, and 1 active Arkansas StateNotice.
+- Added the internal Regulations route, A-Z state selector with retained state-name/two-letter-abbreviation Search, state resource pages, responsibility notice, Safety/Caution Special Alert treatment, consolidated multi-accent resource sections, descriptive official-resource actions, and Regulations as the first Important Dashboard card.
+- Added deterministic Regulations schema/provenance/freshness validation, Regulations external-reference checking, and the separate monthly Regulations Maintenance workflow with report-only human-review issue alerting.
+- Retained Search after Wave 1 review because it reduces selector scrolling as coverage grows; re-evaluate after a larger state set exists.
+- Real-checkout repository integrity passed all 9 validation groups; GitHub Repository Integrity run #71 passed; GitHub Pages deployment passed; desktop/browser and real-mobile review passed.
+- Wave 1 is CLOSED / PASS. Wave 2 is next: Alabama, Arizona, Colorado, Connecticut, Delaware, Florida, Georgia, and Idaho.
 
 # 2026-08-25 — Workflow / Documentation Performance Refactor — Closed
 
