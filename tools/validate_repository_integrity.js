@@ -1438,11 +1438,40 @@ function validateDocumentationGovernance() {
         "docs/DECISIONS.md",
         "docs/DEVELOPMENT_WORKFLOW.md",
         "docs/ROADMAP.md",
-        "docs/HANDOFF.md",
+        "docs/STYLE_GUIDE.md",
+        "docs/UI_STANDARD.md",
+        "docs/WORKING_STATE.md",
         "docs/ACTIVE-CHANGE-LEDGER.md",
         "docs/CHANGELOG.md",
+        "docs/data-model/README.md",
+        "docs/decisions/architecture.md",
+        "docs/decisions/data-model.md",
+        "docs/decisions/media.md",
+        "docs/decisions/product.md",
+        "docs/decisions/ux-navigation.md",
+        "docs/decisions/workflow.md",
+        "docs/workflow/PRODUCTION-CHANGES.md",
+        "docs/workflow/REVIEW-AND-STAGING.md",
+        "docs/workflow/DOCUMENTATION-AND-CLOSEOUT.md"
+    ];
+
+    const retiredDocs = [
+        "docs/HANDOFF.md",
         "docs/MILESTONES.md",
-        "docs/SPECIFICATION.md"
+        "docs/SPECIFICATION.md",
+        "docs/CARD_PAGE_STANDARD.md",
+        "docs/NAVIGATION-PAGE-STANDARD.md",
+        "docs/DETAIL-PAGE-STANDARD.md",
+        "docs/data-model/00-GLOSSARY.md",
+        "docs/data-model/06-LURES.md",
+        "docs/data-model/08-BACKUP.md",
+        "docs/decisions/README.md",
+        "docs/workflow/README.md",
+        "docs/workflow/AUTHORITY-AND-SYNC.md",
+        "docs/workflow/STARTUP.md",
+        "docs/workflow/DOCUMENTATION.md",
+        "docs/workflow/CLOSEOUT.md",
+        "docs/workflow/SESSION-HANDOFF.md"
     ];
 
     const docs = new Map();
@@ -1453,13 +1482,63 @@ function validateDocumentationGovernance() {
         }
     }
 
+    for (const relativePath of retiredDocs) {
+        if (fileExists(relativePath)) {
+            fail("Documentation governance", `retired documentation path must remain absent: ${relativePath}`);
+        }
+    }
+
     const requiredMarkers = new Map([
         [
-            "docs/HANDOFF.md",
+            "docs/ARCHITECTURE.md",
             [
-                "**Role:** Compact formal GitHub recovery/continuation entrypoint",
-                "`ACTIVE-CHANGE-LEDGER.md`",
-                "Freshwater Fishing Companion — Working State"
+                "**Role:** Current technical/source architecture and durable ownership boundaries",
+                "`docs/WORKING_STATE.md` is the single compact repository current-state/exact-resume entrypoint"
+            ]
+        ],
+        [
+            "docs/DECISIONS.md",
+            [
+                "**Role:** Compact canonical decision index",
+                "# Decision Files",
+                "[`decisions/workflow.md`](decisions/workflow.md)"
+            ]
+        ],
+        [
+            "docs/DEVELOPMENT_WORKFLOW.md",
+            [
+                "**Role:** Compact canonical workflow entrypoint",
+                "# Procedure Index",
+                "workflow/DOCUMENTATION-AND-CLOSEOUT.md"
+            ]
+        ],
+        [
+            "docs/ROADMAP.md",
+            [
+                "**Role:** Product milestone order and future direction",
+                "does **not** own exact active workstream status"
+            ]
+        ],
+        [
+            "docs/STYLE_GUIDE.md",
+            [
+                "**Role:** Code, data, file, and documentation conventions",
+                "those belong to `UI_STANDARD.md`"
+            ]
+        ],
+        [
+            "docs/UI_STANDARD.md",
+            [
+                "**Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard",
+                "# Card System",
+                "# Persistent Navigation Component"
+            ]
+        ],
+        [
+            "docs/WORKING_STATE.md",
+            [
+                "**Document Status:** Approved — Active Repository Continuity Record",
+                "# Exact Resume Point"
             ]
         ],
         [
@@ -1471,32 +1550,17 @@ function validateDocumentationGovernance() {
             ]
         ],
         [
-            "docs/ROADMAP.md",
-            [
-                "**Role:** Product milestone order and future direction",
-                "does **not** own exact active Repository Audit/workstream status"
-            ]
-        ],
-        [
-            "docs/MILESTONES.md",
-            [
-                "**Maintenance Status:** FROZEN HISTORICAL RECORD",
-                "It is **not** a current-state owner"
-            ]
-        ],
-        [
             "docs/CHANGELOG.md",
             [
                 "**Role:** Curated meaningful landed-change history",
-                "It is **not** a current project-status dashboard"
+                "curated project changelog, not a second Working State"
             ]
         ],
         [
-            "docs/SPECIFICATION.md",
+            "docs/data-model/README.md",
             [
-                "**Document Status:** Superseded",
-                "**Maintenance Status:** Retired from active maintenance",
-                "`SPECIFICATION.md` is no longer an active governing source"
+                "**Role:** Canonical data-model ownership map",
+                "# Canonical Files and Status"
             ]
         ]
     ]);
@@ -1513,13 +1577,38 @@ function validateDocumentationGovernance() {
         }
     }
 
+    const activeMechanicsFiles = [
+        "AGENTS.md",
+        "docs/PROJECT.md",
+        "docs/DECISIONS.md",
+        "docs/DEVELOPMENT_WORKFLOW.md",
+        "docs/ROADMAP.md",
+        "docs/WORKING_STATE.md"
+    ];
+    const retiredReferenceNames = retiredDocs.map((relativePath) => relativePath.replace(/^docs\//, ""));
+
+    for (const relativePath of activeMechanicsFiles) {
+        const text = relativePath === "AGENTS.md" ? readText(relativePath) : docs.get(relativePath);
+        if (text === null || text === undefined) {
+            continue;
+        }
+        for (const retiredReference of retiredReferenceNames) {
+            if (text.includes(retiredReference)) {
+                fail(
+                    "Documentation governance",
+                    `${relativePath}: active mechanics still reference retired documentation path ${retiredReference}`
+                );
+            }
+        }
+    }
+
     const staleCurrentStatePatterns = [
         /^##\s+Current Repository State\b/im,
         /^\*\*Implementation Status:\*\*\s*Repository Audit Section\s+\d+\b/im,
         /^\*\*Current Audit Section:\*\*\s*\d+\b/im
     ];
 
-    for (const relativePath of ["docs/ROADMAP.md", "docs/MILESTONES.md", "docs/CHANGELOG.md"]) {
+    for (const relativePath of ["docs/ROADMAP.md", "docs/CHANGELOG.md"]) {
         const text = docs.get(relativePath);
         if (text === undefined) {
             continue;
