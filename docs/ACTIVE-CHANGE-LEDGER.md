@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.4.0  
+**Document Revision:** 1.4.1  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `4e982d84ab6207efacfafe4fa92682046c6240cb`  
+**Reconciliation Baseline:** `7621d6172bed803558b206dbfca8784540346085`  
 **Last Updated:** 2026-08-26
 
 # Purpose
@@ -48,7 +48,7 @@ No active workflow-transition item remains. The 2026-08-25 Workflow Performance 
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| REG-001 | IMPLEMENTED / APPROVED / PENDING COMMIT | Contiguous-U.S. Regulations resource gateway | D066 + closed `workstreams/REGULATIONS-PHASE-0.md` | Wave 1 R3 is approved in Drive Current. Require final real-checkout integrity PASS and separate commit/push authorization, then verify GitHub/CI. Search is retained and should be re-evaluated after a larger state set exists; begin Wave 2 only after Wave 1 closeout. |
+| REG-001 | APPROVED / PENDING IMPLEMENTATION | Contiguous-U.S. Regulations resource gateway | D066 + closed `workstreams/REGULATIONS-PHASE-0.md` | Wave 1 is CLOSED / PASS at `7621d6172bed803558b206dbfca8784540346085` after desktop/browser, CI, Pages, and real-mobile validation. Continue with Wave 2: Alabama, Arizona, Colorado, Connecticut, Delaware, Florida, Georgia, and Idaho. Search remains retained and should be re-evaluated after a larger state set exists. |
 | TACKLE-004 | OPEN | Tackle-root `Check Rig Readiness` placeholder | D020 + Tackle/My Tackle milestone | Remove, rename/redefine as a secondary aggregate view, or explicitly approve; do not auto-build a separate primary readiness page. |
 
 # Fish Guide — Production
@@ -77,7 +77,7 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 | GATE-011 | DEFERRED TO NAMED GATE | Multi-theme support | Settings / User Preferences gate. |
 | GATE-012 | REQUIRED | Repository Disaster Recovery / Reconstruction | D064; implement and validate before major Version 1 release or before irreplaceable User Knowledge enters scope, whichever comes first. Not a current Fish blocker. |
 | GATE-013 | DEFERRED TO NAMED GATE | Reusable Rig alternate-terminal configuration modeling | D065 + `data-model/03-RIGS.md`; revisit when a user workflow requires mutually exclusive component/assembly/readiness branches within one Rig or another Rig demonstrates the same reusable need. |
-| GATE-014 | IMPLEMENTED / APPROVED / PENDING COMMIT | Regulations — U.S. State Fishing Resource Gateway | Phase 0 closed PASS; Wave 1 R3 approved under D066 / REG-001 / `workstreams/REGULATIONS-PHASE-0.md`; commit verification remains before Wave 2. |
+| GATE-014 | APPROVED / PENDING IMPLEMENTATION | Regulations — U.S. State Fishing Resource Gateway | Phase 0 and Wave 1 are closed PASS under D066 / REG-001 / `workstreams/REGULATIONS-PHASE-0.md`; Wave 2 is the next production segment. |
 
 # Parking Lot — Deliberate Future Items
 
