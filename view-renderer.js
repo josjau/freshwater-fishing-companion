@@ -1767,7 +1767,7 @@ function renderRegulationsGatewayView(appMain, config) {
 
             <form class="regulations-selector" data-regulations-selector-form>
                 <div class="regulations-search-group">
-                    <label class="search-label" for="regulations-state-search">Find a State <span class="regulations-provisional-label">Pilot Search</span></label>
+                    <label class="search-label" for="regulations-state-search">Find a State</label>
                     <div class="search-input-shell">
                         <input class="search-input" id="regulations-state-search" type="search"
                             placeholder="Try Oklahoma or OK" autocomplete="off" enterkeyhint="search">
@@ -1781,14 +1781,33 @@ function renderRegulationsGatewayView(appMain, config) {
                 <div class="regulations-select-group">
                     <label class="search-label" for="regulations-state-select">State</label>
                     <select class="regulations-state-select" id="regulations-state-select" data-regulations-state-select></select>
-                    <div class="regulations-state-wheel-shell">
-                        <div class="regulations-state-wheel" data-regulations-state-wheel role="listbox" tabindex="0" aria-label="State"></div>
-                        <div class="regulations-state-wheel-selection" aria-hidden="true"></div>
-                    </div>
+                    <button class="regulations-state-picker-trigger" type="button" data-regulations-picker-trigger
+                        aria-haspopup="dialog" aria-expanded="false" aria-controls="regulations-state-picker">
+                        <span data-regulations-picker-trigger-label></span>
+                        <span class="regulations-state-picker-trigger__arrow" aria-hidden="true">⌄</span>
+                    </button>
                 </div>
 
                 <button class="regulations-open-state" type="submit">View State <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></button>
                 <p class="search-status regulations-search-status" data-regulations-search-status aria-live="polite"></p>
+
+                <div class="regulations-state-picker" id="regulations-state-picker" data-regulations-state-picker hidden>
+                    <button class="regulations-state-picker__backdrop" type="button" data-regulations-picker-cancel tabindex="-1" aria-label="Close state picker"></button>
+                    <section class="regulations-state-picker__panel" role="dialog" aria-modal="true" aria-labelledby="regulations-state-picker-title">
+                        <div class="regulations-state-picker__header">
+                            <h3 id="regulations-state-picker-title">Select a State</h3>
+                            <button class="regulations-state-picker__close" type="button" data-regulations-picker-cancel aria-label="Close state picker">×</button>
+                        </div>
+                        <div class="regulations-state-wheel-shell">
+                            <div class="regulations-state-wheel" data-regulations-state-wheel role="listbox" tabindex="0" aria-label="State"></div>
+                            <div class="regulations-state-wheel-selection" aria-hidden="true"></div>
+                        </div>
+                        <div class="regulations-state-picker__actions">
+                            <button class="regulations-state-picker__cancel" type="button" data-regulations-picker-cancel>Cancel</button>
+                            <button class="regulations-state-picker__done" type="button" data-regulations-picker-done>Done</button>
+                        </div>
+                    </section>
+                </div>
             </form>
         </section>
     `;
@@ -1799,32 +1818,48 @@ function renderRegulationsGatewayView(appMain, config) {
     const input = appMain.querySelector("#regulations-state-search");
     const clearButton = appMain.querySelector("[data-regulations-search-clear]");
     const select = appMain.querySelector("[data-regulations-state-select]");
+    const picker = appMain.querySelector("[data-regulations-state-picker]");
+    const pickerTrigger = appMain.querySelector("[data-regulations-picker-trigger]");
+    const pickerTriggerLabel = appMain.querySelector("[data-regulations-picker-trigger-label]");
+    const pickerDone = appMain.querySelector("[data-regulations-picker-done]");
+    const pickerCancelButtons = appMain.querySelectorAll("[data-regulations-picker-cancel]");
     const wheel = appMain.querySelector("[data-regulations-state-wheel]");
     const status = appMain.querySelector("[data-regulations-search-status]");
+    let pickerDraftStateId = null;
     let wheelScrollFrame = null;
 
-    const setSelectedState = (stateId, { scrollWheel = false, behavior = "auto" } = {}) => {
+    const getStateLabel = (stateId) => {
+        const state = states.find((record) => record.id === stateId);
+        return state ? `${state.name} (${state.abbreviation})` : "Select a state";
+    };
+
+    const setWheelDraftState = (stateId, { scrollWheel = false, behavior = "auto" } = {}) => {
+        if (!stateId || !wheel) return;
+        const wheelOption = wheel.querySelector(`[data-state-id="${stateId}"]`);
+        if (!wheelOption) return;
+
+        pickerDraftStateId = stateId;
+        wheel.querySelectorAll("[data-regulations-wheel-option]").forEach((option) => {
+            const isSelected = option.dataset.stateId === stateId;
+            option.classList.toggle("is-selected", isSelected);
+            option.setAttribute("aria-selected", String(isSelected));
+        });
+        wheel.setAttribute("aria-activedescendant", wheelOption.id);
+
+        if (scrollWheel) {
+            const targetTop = wheelOption.offsetTop - ((wheel.clientHeight - wheelOption.offsetHeight) / 2);
+            wheel.scrollTo({ top: targetTop, behavior });
+        }
+    };
+
+    const setSelectedState = (stateId) => {
         if (!stateId || !select) return;
         const optionExists = Array.from(select.options).some((option) => option.value === stateId);
         if (!optionExists) return;
 
         select.value = stateId;
-        wheel?.querySelectorAll("[data-regulations-wheel-option]").forEach((option) => {
-            const isSelected = option.dataset.stateId === stateId;
-            option.classList.toggle("is-selected", isSelected);
-            option.setAttribute("aria-selected", String(isSelected));
-            if (isSelected) wheel.setAttribute("aria-activedescendant", option.id);
-        });
-
+        if (pickerTriggerLabel) pickerTriggerLabel.textContent = getStateLabel(stateId);
         config.onSelectionChange?.(stateId);
-
-        if (scrollWheel && wheel) {
-            const wheelOption = wheel.querySelector(`[data-state-id="${stateId}"]`);
-            if (wheelOption) {
-                const targetTop = wheelOption.offsetTop - ((wheel.clientHeight - wheelOption.offsetHeight) / 2);
-                wheel.scrollTo({ top: targetTop, behavior });
-            }
-        }
     };
 
     const renderOptions = (eligibleStates, preferredStateId = null) => {
@@ -1845,16 +1880,40 @@ function renderRegulationsGatewayView(appMain, config) {
         const selectedStateId = preferredExists ? preferredStateId : eligibleStates[0]?.id ?? null;
 
         select.disabled = eligibleStates.length === 0;
+        if (pickerTrigger) pickerTrigger.disabled = eligibleStates.length === 0;
         if (wheel) wheel.setAttribute("aria-disabled", String(eligibleStates.length === 0));
 
         if (selectedStateId) {
             setSelectedState(selectedStateId);
-            requestAnimationFrame(() => setSelectedState(selectedStateId, { scrollWheel: true }));
+            setWheelDraftState(selectedStateId);
         } else {
             select.value = "";
+            pickerDraftStateId = null;
+            if (pickerTriggerLabel) pickerTriggerLabel.textContent = "No matching states";
             wheel?.removeAttribute("aria-activedescendant");
             config.onSelectionChange?.(null);
         }
+    };
+
+    const closePicker = ({ commit = false } = {}) => {
+        if (!picker || picker.hidden) return;
+        if (commit && pickerDraftStateId) setSelectedState(pickerDraftStateId);
+        picker.hidden = true;
+        document.body.classList.remove("regulations-picker-open");
+        pickerTrigger?.setAttribute("aria-expanded", "false");
+        pickerTrigger?.focus();
+    };
+
+    const openPicker = () => {
+        if (!picker || !wheel || pickerTrigger?.disabled || !select?.value) return;
+        picker.hidden = false;
+        document.body.classList.add("regulations-picker-open");
+        pickerTrigger?.setAttribute("aria-expanded", "true");
+        pickerDraftStateId = select.value;
+        requestAnimationFrame(() => {
+            setWheelDraftState(pickerDraftStateId, { scrollWheel: true });
+            wheel.focus({ preventScroll: true });
+        });
     };
 
     const updateSearch = () => {
@@ -1898,10 +1957,19 @@ function renderRegulationsGatewayView(appMain, config) {
         input.focus();
     });
     select?.addEventListener("change", () => setSelectedState(select.value));
+    pickerTrigger?.addEventListener("click", openPicker);
+    pickerDone?.addEventListener("click", () => closePicker({ commit: true }));
+    pickerCancelButtons.forEach((button) => button.addEventListener("click", () => closePicker()));
+    picker?.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closePicker();
+        }
+    });
     wheel?.addEventListener("click", (event) => {
         const option = event.target.closest("[data-regulations-wheel-option]");
         if (!option) return;
-        setSelectedState(option.dataset.stateId, { scrollWheel: true, behavior: "smooth" });
+        setWheelDraftState(option.dataset.stateId, { scrollWheel: true, behavior: "smooth" });
     });
     wheel?.addEventListener("keydown", (event) => {
         if (!["ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) return;
@@ -1909,14 +1977,14 @@ function renderRegulationsGatewayView(appMain, config) {
         if (options.length === 0) return;
 
         event.preventDefault();
-        const selectedIndex = Math.max(0, options.findIndex((option) => option.dataset.stateId === select?.value));
+        const selectedIndex = Math.max(0, options.findIndex((option) => option.dataset.stateId === pickerDraftStateId));
         let targetIndex = selectedIndex;
         if (event.key === "ArrowUp") targetIndex = Math.max(0, selectedIndex - 1);
         if (event.key === "ArrowDown") targetIndex = Math.min(options.length - 1, selectedIndex + 1);
         if (event.key === "Home") targetIndex = 0;
         if (event.key === "End") targetIndex = options.length - 1;
 
-        setSelectedState(options[targetIndex].dataset.stateId, { scrollWheel: true, behavior: "smooth" });
+        setWheelDraftState(options[targetIndex].dataset.stateId, { scrollWheel: true, behavior: "smooth" });
     });
     wheel?.addEventListener("scroll", () => {
         if (wheelScrollFrame) cancelAnimationFrame(wheelScrollFrame);
@@ -1932,8 +2000,8 @@ function renderRegulationsGatewayView(appMain, config) {
                 return !nearest || distance < nearest.distance ? { option, distance } : nearest;
             }, null)?.option;
 
-            if (nearestOption && nearestOption.dataset.stateId !== select?.value) {
-                setSelectedState(nearestOption.dataset.stateId);
+            if (nearestOption && nearestOption.dataset.stateId !== pickerDraftStateId) {
+                setWheelDraftState(nearestOption.dataset.stateId);
             }
         });
     }, { passive: true });
