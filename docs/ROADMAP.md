@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.5.0  
+**Document Revision:** 0.5.1  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
 **Last Updated:** 2026-08-25
@@ -10,7 +10,7 @@
 
 This document defines the canonical planned product-development direction for Freshwater Fishing Companion.
 
-It deliberately does **not** own exact active Repository Audit/workstream status, current commit baselines, validation package state, or session resume instructions. Those belong to `HANDOFF.md`, `ACTIVE-CHANGE-LEDGER.md`, and active workstreams.
+It deliberately does **not** own exact active workstream status, current commit baselines, validation package state, or session resume instructions. Those belong to `WORKING_STATE.md`, `ACTIVE-CHANGE-LEDGER.md`, the Live Working State, and active workstreams.
 
 It does not override `DECISIONS.md` or `ARCHITECTURE.md`.
 
@@ -334,7 +334,7 @@ Before a major Version 1 release—or earlier if irreplaceable User Knowledge or
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
 - `DEVELOPMENT_WORKFLOW.md`
-- `HANDOFF.md`
+- `WORKING_STATE.md`
 - `ACTIVE-CHANGE-LEDGER.md`
-- `NAVIGATION-PAGE-STANDARD.md`
+- `UI_STANDARD.md`
 - applicable data-model/domain documents

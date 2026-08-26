@@ -1,97 +1,71 @@
-# Freshwater Fishing Companion
+# Freshwater Fishing Companion — Architecture
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.7.5  
+**Document Revision:** 0.8.0  
 **Document Status:** Approved  
+**Role:** Current technical/source architecture and durable ownership boundaries  
 **Last Updated:** 2026-08-25
 
 # Purpose
 
-This document defines the current application architecture and approved near-term source ownership for Freshwater Fishing Companion.
+This document defines the current application architecture, source ownership, and approved near-term structural boundaries for Freshwater Fishing Companion.
 
-GitHub `main` is authoritative for existing project files.
+`Current` means implemented on authoritative GitHub `main`. `Approved / Not Implemented` means settled direction that must not be mistaken for deployed functionality.
 
-Where this document distinguishes **Current** from **Approved / Not Implemented**, Current describes code/data that exists on authoritative `main`; Approved / Not Implemented describes settled architecture that must not be mistaken for deployed functionality.
+# Authority and Runtime
+
+- GitHub `main` is authoritative for committed source, documentation, and formal history.
+- Google Drive `Working Source/Current` is the complete editable repository working tree and owns approved uncommitted repository work under D068.
+- The Live Working State carries active review-cycle identity, approval/validation state, defects, and detailed resume context.
+- `docs/WORKING_STATE.md` is the single compact repository current-state/exact-resume entrypoint.
+- Review/checkpoint ZIPs in Drive Packages are transport artifacts, not working truth.
+- ChatGPT Work is not part of the supported FCC execution environment.
+
+The browser application remains plain HTML, CSS, and JavaScript hosted through GitHub Pages. Supported local functionality remains local-first/offline-first and must not depend on an unapproved recurring paid service.
 
 # Current Source Structure
 
 ```text
 AGENTS.md
-
-.github/
-    workflows/
-        external-reference-health.yml
-        repository-integrity.yml
-
 index.html
 forest-journal.css
-
-archive/
-    README.md
-    packages/
-    workstreams/
-
-themes/
-    README.md
-    concepts/
-        forest-copper.css
-        forest-gold.css
-        legacy-dark-theme.css
-
-data/
-    fish-categories.js
-    fish.js
-    rigs.js
-    fish-identification.js
-    fish-rig-guidance.js
-    knots.js
-    knot-guidance.js
-    reel-guidance.js
-    tackle.js
-    media.js
-
-images/
-    fish/
-    tackle/
-    rigs/
-
 search.js
 view-renderer.js
 knot-media-renderer.js
 script.js
 
+.github/workflows/
+archive/
+themes/
+data/
+images/
 tools/
-    check_external_references.js
-    validate_repository_integrity.js
-    validate_replacement_integrity.py
-    validate_workstream_closeout.js
-
 docs/
     ACTIVE-CHANGE-LEDGER.md
     ARCHITECTURE.md
     CHANGELOG.md
     DECISIONS.md
-    decisions/
     DEVELOPMENT_WORKFLOW.md
-    workflow/
     EXTERNAL_REFERENCE_MAINTENANCE.md
     FISH_REFERENCE_SOURCES.md
-    HANDOFF.md
+    KNOT_REFERENCE_SOURCES.md
     MEDIA_GUIDE.md
-    MILESTONES.md
     PROJECT.md
+    RIG_REFERENCE_SOURCES.md
     ROADMAP.md
-    SPECIFICATION.md
     STYLE_GUIDE.md
+    UI_STANDARD.md
     V1-DESIGN-AUDIT.md
     WORKING_STATE.md
     data-model/
+    decisions/
+    workflow/
     workstreams/
 ```
 
-`SPECIFICATION.md` remains in the repository as a superseded retirement pointer and is not an active governing source.
+Former `HANDOFF.md`, `MILESTONES.md`, `SPECIFICATION.md`, separate card/detail/navigation standards, and retired deferred data-model placeholders are not active owners. Their durable current content was consolidated before retirement; prior revisions remain recoverable in Git history.
 
-Required production JavaScript load order from `index.html` remains:
+Required production JavaScript load order remains:
 
 ```text
 data/fish-categories.js
@@ -110,490 +84,179 @@ knot-media-renderer.js
 script.js
 ```
 
-The production entrypoint and loaded-source reachability were re-audited on 2026-08-19 and passed. Deferred themes, repository archives, project documentation, development tools, and the reserved Rig-image directory are intentionally outside the browser runtime entrypoint.
+# Core Architectural Constraints
 
-# Base Architecture Constraints
+## Local-first core
 
-The application remains local-first and offline-first for supported local functions.
+Core/base functionality should work without recurring paid services. External sites, instructional media, regulation destinations, and other third-party resources are optional dependencies around the local application core.
 
-## Core recurring-service-cost boundary
+If an external dependency fails, otherwise-supported local navigation/reference content must continue to work and the failure must degrade gracefully. Third-party availability is never proof of factual correctness or freshness.
 
-The core/base local application architecture should not require recurring paid services in order to provide its supported local functionality.
+## Regional content
 
-A future feature may use an external or recurring-cost service only after explicit architectural/product approval establishes the value, dependency, failure mode, privacy implications, and maintenance burden.
-
-This requirement does not prohibit optional external references, hosted instructional media, future optional synchronization providers, or other separately approved integrations. It prohibits making the base local application dependent on an unapproved recurring paid service.
-
-## External dependency degradation boundary
-
-External sites, embeds, instructional media, regulation destinations, and other third-party resources are optional dependencies around the local application core.
-
-If an external resource is unavailable, blocked, removed, offline, or otherwise cannot load:
-
-- otherwise-supported local navigation and canonical local reference content must continue to operate,
-- the failure must degrade gracefully rather than break the surrounding workflow,
-- a clear fallback should be provided when an approved fallback exists,
-- the application must not silently treat third-party availability as proof of content correctness or freshness.
-
-This general rule complements the more specific media/reference fallback rules in `MEDIA_GUIDE.md` and the external CTA semantics in D031.
-
-# Regional Content Architecture
-
-The forward Version 1 regional content focus is:
+The forward Version 1 curated-content focus is:
 
 - Northeast Oklahoma
 - Southeast Kansas
 - Southwest Missouri
 - Northwest Arkansas
 
-Existing validated domains retain their original selection/validation context and are progressively reconciled against the Four-State focus when audited or materially modified.
+Existing validated content is progressively reconciled when audited or materially modified; valid content is not removed merely because the geographic focus expanded.
 
-Regional reconciliation is additive by default. Existing valid content is not removed or invalidated merely because the geographic focus expanded.
+**Regulations is the deliberate geographic exception under D066.** Its initial resource-navigation coverage is the 48 contiguous U.S. states. The application links to authoritative state resources rather than owning/interpreting changing legal rules.
 
-The original 20-Rig library was selected and validated for Northeast Oklahoma and Southwest Kansas. It remains canonical and validated. The completed additive Four-State adequacy audit added Split-Shot Bait Rig as canonical Rig #21 and found no other material ordinary-Rig gap.
+## Theme boundary
 
-## Regulations geographic exception
+**Current:** Forest Journal is the only production-supported Version 1 theme. Deferred theme concepts under `themes/concepts/` are not production themes and are outside current parity requirements.
 
-Regulations is an approved geographic exception under D066. Its official-resource navigation coverage is the 48 contiguous U.S. states, while the rest of the current curated fishing-knowledge architecture retains its separately approved regional scope.
-
-This does not make the application a nationwide regulations database. The future Regulations domain indexes authoritative state resources and associated provenance/freshness metadata; the responsible state authority owns the underlying legal requirements.
-
-**Approved / Not Implemented:** Dashboard **Regulations** becomes an internal state-selection route. A selected state opens an in-app resource landing page whose official destinations use the external-link semantics in D031. The exact State/State Resource source-file contract remains a Phase 0 design decision and must not be invented before that planning gate.
-
-# Theme Architecture
-
-**Current:** Forest Journal is the only production-supported Version 1 theme and remains the active visual/reference baseline.
-
-`themes/concepts/forest-copper.css`, `themes/concepts/forest-gold.css`, and `themes/concepts/legacy-dark-theme.css` are retained deferred theme candidates. They are not current production themes, do not require current component parity, and are outside the supported production validation matrix.
-
-**Approved / Not Implemented:** final multi-theme architecture belongs to the Settings / User Preferences architecture gate. Shared base/layout/component behavior should be centralized where practical; individual theme files should primarily own design tokens and deliberate visual overrides.
-
-Theme selection, persistence, device/profile ownership, backup/restore behavior, final supported-theme list, and final directory structure remain deferred to that gate.
-
-The reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
-
-# Archive Architecture
-
-`archive/` at repository root is the single canonical archive root.
-
-Ordinary prior revisions of tracked files stay in Git history. They are not copied into `archive/` merely because a file changed.
-
-Retired artifacts are explicitly classified:
-
-1. **GIT HISTORY ONLY** — ordinary prior revision or execution artifact whose only continuing value is historical recovery.
-2. **ARCHIVE** — independently useful audit/provenance/reconstruction/design-lineage evidence retained under `archive/`.
-3. **DELETE** — no continuing repository value beyond Git history.
-
-Archived material is historical evidence and does not override current governing documents, current data models, production assets, or active workstreams.
-
-Completed workstreams leave the active `docs/workstreams/` directory after closeout. Durable current truth is promoted first. Only independently valuable evidence is archived; ordinary execution history remains in Git history.
-
-# Documentation / Continuity Architecture
-
-Documentation uses single-owner semantics just as application data uses D056 single-owner semantics.
-
-Canonical roles:
-
-- `PROJECT.md` — mission, target user, product scope, high-level boundaries.
-- `ARCHITECTURE.md` — current technical/source architecture and approved near-term source ownership.
-- `DECISIONS.md` — compact durable decision index; `decisions/*.md` own full decision bodies by domain.
-- `DEVELOPMENT_WORKFLOW.md` — compact workflow entrypoint; `workflow/*.md` own task-specific procedures.
-- `ROADMAP.md` — product milestone order and future product direction.
-- `ACTIVE-CHANGE-LEDGER.md` — material non-closed carry-forward items.
-- `WORKING_STATE.md` — live local current-state and exact-resume record.
-- `HANDOFF.md` — compact formal GitHub recovery/continuation entrypoint.
-- `CHANGELOG.md` — curated meaningful landed-change history.
-- frozen `MILESTONES.md` — historical milestone record only.
-- domain/data-model standards — canonical domain-specific ownership.
-
-`SPECIFICATION.md` is retired from active maintenance. Root `AGENTS.md` is a concise agent startup/change-control pointer and does not own project state.
-
-GitHub `main` is the committed authority. Google Drive `Working Source/Current` is the authoritative approved-uncommitted layer and contains the complete editable repository working tree under D068. `Working Source/Packages` is transport/checkpoint/review only. The Live Working State carries active review-cycle identity, approvals/defects, and the exact resume point; `WORKING_STATE.md` remains the repository continuity summary. Durable content is promoted to the correct repository owner, the Active Change Ledger is reconciled, and Handoff remains compact. The former large Google Working State is retired and preserved only as historical migration evidence.
+**Approved / Not Implemented:** final multi-theme selection/persistence belongs to the Settings / User Data architecture gate. The reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
 
 # Knowledge Architecture
 
-The application uses three knowledge layers:
+The application uses three layers:
 
 1. **Reference Knowledge** — canonical facts and identities.
 2. **Decision Knowledge** — recommendations, rankings, and contextual derived guidance.
-3. **User Knowledge** — inventory, catches, preferences, saved/user-created state.
+3. **User Knowledge** — inventory, catches, preferences, and saved/user-created state.
 
 Do not blur these layers without an explicit architecture decision.
 
-The Dashboard exposes four foundational connected-knowledge domains: Fish Guide, Knots, Rig Guide, and Tackle. Tackle is the root domain, while **Tackle Reference / Find Tackle** and **My Tackle** remain distinct capabilities on opposite sides of the Reference Knowledge/User Knowledge boundary. D063 owns this durable product boundary; D020/D028 own readiness and My Tackle authority.
+The Dashboard exposes four foundational connected-knowledge domains: Fish Guide, Knots, Rig Guide, and Tackle. Tackle remains the root domain; **Tackle Reference / Find Tackle** is Reference Knowledge while **My Tackle** is User Knowledge. D063/D067 own the durable boundary and sequencing.
 
-Regulations is a resource-navigation domain rather than a new owner of legal facts. It may normalize state/agency/resource identity and link metadata while legal requirements remain owned by the official state authorities.
+Regulations is a resource-navigation domain, not a new owner of legal facts.
 
-# Search and Connected-Knowledge Architecture
+# Search and Connected Knowledge
 
 Search is relevance-first; connected knowledge is breadth-first.
-
-Search should identify the strongest intended entity rather than return every record that could match incidentally.
-
-Strong signals include canonical names, approved aliases, beginner terminology, scientific names where applicable, category, and deliberately indexed search metadata. Incidental description text is not sufficient by itself to justify a primary result.
-
-Interaction pattern:
 
 ```text
 Find
 -> Confirm the entity
 -> Expose pertinent relationships
--> Move into related knowledge quickly
+-> Move into related knowledge
 ```
 
-Examples:
+Canonical identity signals outrank incidental description text. Hierarchical navigation scopes the eligible search universe before ranking; deeper context must not silently broaden results.
 
-- Fish → Rigs, lures, conditions, knots, regulations, techniques.
-- Rig → target Fish, conditions, components, alternatives, assembly, techniques, readiness.
-- Tackle → definition, recognition, compatible Rigs, alternatives, related components, ownership context.
-- Knot → purpose, line compatibility, Rigs, instructions.
-- Lure → Fish, conditions, rigging, retrieve, color guidance, alternatives, ownership context.
+**Current:** `search.js` provides deterministic lightweight normalized matching plus reusable lookup/filter/sort helpers.
 
-Avoid information overload; related knowledge is progressively disclosed.
+**Approved / Not Implemented:** heavy fuzzy search, advanced typo tolerance, natural-language intent parsing, sophisticated confidence systems, and global cross-domain search remain deferred until demonstrated need.
 
-**Current:** `search.js` uses lightweight normalized matching with deterministic relevance ranking plus reusable lookup/filter/sort helpers. Strong canonical identity matches outrank lower-priority metadata; equal-confidence results retain stable source order.
+# Canonical Source Ownership
 
-Search scope is hierarchical where navigation defines a narrower eligible universe. Scope is applied before ranking; deeper navigation narrows rather than silently broadens results.
+## Fish
 
-**Approved / Not Implemented:** heavy fuzzy search, advanced typo tolerance, sophisticated confidence systems, natural-language intent parsing, and a global undifferentiated cross-domain result dump remain deferred until demonstrated need. Dashboard/Global Search is approved future direction but its final cross-domain result architecture is unresolved.
-
-# Source Ownership
-
-## `data/fish.js`
-
-Owns canonical Fish records and stable Fish IDs.
-
-The Version 1 Fish production migration is complete. All 30 active Fish use the approved production schema; no legacy `category`-shaped Fish records remain. `data-model/02-FISH.md` owns the exact Fish contract/status.
+- `data/fish-categories.js` owns category identity/order.
+- `data/fish.js` owns 30 active canonical Fish records and stable Fish IDs.
+- `data/fish-identification.js` owns deterministic similar-Fish comparison relationships.
+- `data/fish-rig-guidance.js` owns Fish-to-Rig Decision Knowledge; Fish applicability does not belong in Rig `useCases[]`.
 
 Fish identification media is accuracy-critical and follows `MEDIA_GUIDE.md`.
 
-## `data/rigs.js`
+## Rigs
 
-Owns 21 active canonical Rig records and facts intrinsic to physical setup, including:
+`data/rigs.js` owns 21 active canonical Rig records and physical setup facts including difficulty, use cases, conditions, component requirements, assembly, setup notes, mistakes, safety, variations, knot applications, references/tutorial metadata, versioning, and lifecycle state.
 
-- stable Rig ID,
-- name and summary,
-- difficulty,
-- use cases,
-- condition tags,
-- component requirements,
-- assembly steps,
-- setup notes,
-- common mistakes,
-- safety notes,
-- `variationIds[]`,
-- `knotApplications[]`,
-- verified external reference links,
-- optional verified tutorial-video metadata,
-- version metadata,
-- active state.
+- `assemblySteps` is the authoritative in-app build sequence.
+- `componentRequirements` owns Rig -> Tackle usage; reverse Tackle `Used In` is derived.
+- `CORE_RIG_IDS` owns Core membership/order.
+- Rig does not own inverse media IDs.
+- Reusable Technique architecture remains deferred until its named gate.
 
-`assemblySteps` is the authoritative in-app build sequence.
+## Knots and reel/line guidance
 
-Rig owns physical assembly/configuration. Reusable presentation behavior belongs to Technique; the future canonical Rig↔Technique relationship owner/shape remains deferred under D003/D024/D056 until the Technique gate.
+- `data/knots.js` owns canonical Knot identity, tying facts/instructions, compatibility, and lifecycle metadata.
+- `data/knot-guidance.js` owns task-oriented Knot selection guidance.
+- `data/reel-guidance.js` owns Reel & Line Setup guidance for Spinning, Spincast, and Baitcasting.
+- Rig-owned `knotApplications[]` owns Rig connection context; reverse Knot usage is derived.
 
-`componentRequirements` is the authoritative Rig→Tackle usage owner. Reverse Tackle `Used In` navigation is derived from active Rig requirements.
+The Knots milestone is closed and validated.
 
-A requirement references canonical Tackle through `tackleId`. Canonical Tackle owns display identity; Rig owns only Rig-specific usage context such as required/optional status, quantity, order, size/configuration guidance, assembly role, and setup notes.
+## Tackle and inventory
 
-`CORE_RIG_IDS` is the single owner of Core membership/order.
+`data/tackle.js` owns 29 active canonical functional Tackle concepts. Canonical Tackle describes functional types, not a user's commercial possessions.
 
-Rig records do not own inverse Media IDs. Future Rig media attaches through shared Media `ownerType: "rig"` + canonical Rig ID.
+Persistent owned tackle belongs to future My Tackle/User Knowledge. The current readiness store is transitional only and must not be mistaken for authoritative ownership.
 
-## `data/tackle.js`
+The Settings / User Data Architecture gate must settle stable user/profile identity, persistence, retention, migration, backup/restore, device transfer, and preference ownership before authoritative My Tackle/Catch Log User Knowledge and before material Tackle expansion under D067.
 
-Owns 29 active canonical functional Tackle concepts and stable Tackle identity.
+## Media
 
-Canonical Tackle represents functional types, not the user's exact commercial possessions.
-
-Tackle records do not maintain inverse `rigIds` or `mediaIds` merely for reverse navigation or lookup. Persistent user ownership belongs to future My Tackle/User Knowledge.
-
-## `data/media.js`
-
-Owns reusable cross-entity Media metadata and stable media IDs.
-
-Canonical attachment is owned by Media through:
+`data/media.js` owns reusable Media metadata and stable media IDs. Attachment is owned by Media through:
 
 ```text
 ownerType
 ownerId
 ```
 
-Entity records do not maintain inverse media-ID arrays solely to locate attached Media.
+Entity records do not maintain inverse media-ID arrays merely for lookup.
 
-Current production includes:
+Current production includes 29 Tackle recognition attachments, 30 primary Fish identification attachments, and approved instructional-media records for all 10 Version 1 Knots.
 
-- 29 canonical Tackle recognition-media attachments,
-- 30 active primary Fish identification-media attachments after the closed Wave 4 / Fish Guide milestone,
-- approved external instructional-media records for all 10 Version 1 Knots.
+`MEDIA_GUIDE.md` owns detailed rights, provenance, rendering, fallback, and asset-quality rules.
 
-Future Fish, Rig, Lure, Technique, and other entity media use the same owner model unless a later explicit decision establishes a genuinely different semantic relationship.
+# Presentation / Routing Ownership
 
-## `data/knots.js`
+- `view-renderer.js` owns reusable rendering, shared search/result UI, catalog/detail rendering, contextual Tackle references, derived relationship navigation, readiness presentation, sticky Parent/Home controls, and modal focus restoration.
+- `knot-media-renderer.js` owns Knot instructional-media rendering.
+- `script.js` coordinates application routing and major view transitions.
+- `UI_STANDARD.md` owns cross-domain UI/navigation/card/detail/search/mobile/accessibility behavior.
 
-Owns canonical Knot identity and reusable Knot facts including stable IDs, names, summaries, difficulty/core-related metadata where applicable, connection/line compatibility facts, authoritative tying instructions, common mistakes, final checks, and lifecycle/version metadata.
+User Knowledge/imported text is untrusted at rendering boundaries and must use safe DOM APIs unless a centrally owned sanitization path is explicitly approved.
 
-Knot does not own inverse Rig usage. Rig-owned `knotApplications[]` supplies physical connection context; reverse usage is derived.
+# Navigation / Context Architecture
 
-## `data/knot-guidance.js`
-
-Owns task-oriented Knot guidance/selection behavior distinct from canonical Knot identity and tying instructions.
-
-## `data/reel-guidance.js`
-
-Owns canonical Reel & Line Setup guidance/workflow data for the completed beginner workflow within the Knots milestone.
-
-It covers Spinning, Spincast, and Baitcasting line setup, beginner selection/compatibility/backing/spooling guidance, and canonical Knot handoffs. It is not a commercial reel catalog or general Technique domain.
-
-## `search.js`
-
-Owns reusable non-mutating lookup, relevance-ranked search, filter, and sort helpers.
-
-It intentionally remains lightweight/deterministic; more sophisticated fuzzy/intent systems are deferred under D022.
-
-## `view-renderer.js`
-
-Owns reusable rendering and UI interactions including:
-
-- child-card views,
-- shared search/result UI,
-- section landing/scoped subset search presentation,
-- Rig detail rendering,
-- external Rig references/tutorial player,
-- current My Tackle transitional rendering,
-- contextual `Name ⓘ` Tackle reference rendering,
-- canonical Tackle name resolution,
-- derived Tackle `Used In` navigation,
-- related-component popover navigation,
-- combined Rig requirements/readiness,
-- compact sticky Parent/Home navigation,
-- modal close/focus restoration.
-
-Any future rendering path receiving User Knowledge/imported content treats it as untrusted text and uses safe DOM APIs unless a centrally owned sanitization path is explicitly approved.
-
-## `knot-media-renderer.js`
-
-Owns Knot instructional-media rendering behavior. It consumes canonical Knot/Media facts but does not own Knot identity, tying facts, or Media attachment.
-
-## `script.js`
-
-Coordinates application routing and major view transitions including Dashboard restoration, Fish Guide, Rig Guide, Knot Guide/Reel Setup integration, My Tackle transitional behavior, and current readiness-state loading/persistence.
-
-# Rig Guide Architecture
-
-**Current validated state:** 21 active canonical Rigs across six learning tiers using the completed connected-knowledge/navigation architecture. The original 20-Rig milestone is closed; Split-Shot Bait Rig is the validated Four-State addition.
-
-Current landing/browse flow:
+Standard application navigation follows D051:
 
 ```text
-Dashboard
--> Rig Guide
-   -> Search all active Rigs
-   -> All Rigs
-   -> Core Rigs
-   -> Beginner
-   -> Beginner+
-   -> Intermediate
-   -> Intermediate+
-   -> Advanced
-   -> Expert
--> Rig Detail
-   -> Best For + Good Conditions
-   -> verified tutorial where approved / verified reference fallback
-   -> What You Need + Readiness
-   -> How to Build It
-   -> Setup Notes
-   -> Common Mistakes
-   -> Safety
-   -> connected Knot/Tackle knowledge where implemented
+Forward -> destination starts at top
+Parent  -> restores immediately preceding standard app context + applicable UI state + prior scroll
+Home    -> Dashboard starts at top and clears contextual return state
 ```
 
-The compact Rig-detail layout is validated for Rigs only and is not automatically a cross-domain standard.
+Specialized workflows may use separately approved semantics; Reel Setup is the established example.
 
-The initial 20-Rig library is complete; future additions are enhancement/regional-reconciliation scope.
+**Approved / Partially Implemented:** broader production routing still contains older all-transition top-reset behavior in places and remains an open UX-001 implementation item.
 
-Core Rigs remain, in order:
+# Regulations Architecture
 
-- Fixed Bobber Rig
-- Basic Bottom Rig
-- Jighead + Soft Plastic
-- Inline Spinner Setup
-- Texas Rig
-- Slip Bobber Rig
+**Approved / Not Implemented:** Dashboard **Regulations** becomes internal navigation to an A-Z/searchable state selector. A selected state opens an in-app resource landing page with official external destinations using D031 external-link semantics.
 
-# Knots and Reel & Line Setup Architecture
+The exact State / State Resource source-file contract is intentionally deferred to Regulations Phase 0. Phase 0 must validate representative-state evidence, normalized resource taxonomy, authority/provenance/freshness metadata, mobile/accessibility behavior, and production-wave strategy before source implementation.
 
-The Knots milestone is **PASS / VALIDATED / FINALIZED / CLOSED**.
+# Archive and Documentation Architecture
 
-Current production includes:
+`archive/` is the single repository archive root. Ordinary prior revisions stay in Git history. Retired artifacts are classified as:
 
-- 10 active canonical Knots,
-- four Core Knot IDs,
-- task-first Knot Guide navigation,
-- deterministic Knot search,
-- canonical in-app tying instructions,
-- all 20 Rigs audited with 31 real `knotApplications` tied connections,
-- verified instructional-media coverage for all 10 Knots,
-- completed Reel & Line Setup for Spinning, Spincast, and Baitcasting,
-- validated connected/contextual navigation among Rigs, Knots, Line Type references, and Reel Setup.
+1. **GIT HISTORY ONLY** — ordinary prior revision/history.
+2. **ARCHIVE** — independently useful audit/provenance/reconstruction evidence.
+3. **DELETE** — no continuing value beyond Git history.
 
-Reel & Line Setup is a specialized guided workflow and may use separately documented step-aware navigation semantics without redefining ordinary Parent behavior.
+Documentation uses single-owner semantics:
 
-# My Tackle / Readiness Architecture
-
-My Tackle is User Knowledge for actual equipment/consumable tackle owned by the angler.
-
-Canonical Tackle remains Reference Knowledge.
-
-## Current transitional readiness
-
-Storage key:
-
-```text
-freshwaterFishingCompanion.tackleReadiness.v1
-```
-
-Each Rig maintains independent current availability selections keyed by canonical Tackle IDs.
-
-Rules:
-
-- optional components do not block readiness,
-- all required components must be selected for Ready to Fish,
-- missing required components use canonical Tackle names,
-- malformed stored data falls back safely.
-
-## Approved / Not Implemented ownership model
-
-When My Tackle becomes authoritative:
-
-- My Tackle is the only persistent ownership source of truth,
-- Rig Readiness reads My Tackle,
-- owned required canonical Tackle types are automatically satisfied,
-- missing items may be marked temporarily available for the current build/session without changing ownership,
-- persistent ownership changes only through explicit My Tackle management,
-- Search/Readiness/Recommendations/usage inference/prior checkmarks may not silently create ownership,
-- existing transitional checkmarks do not automatically migrate into ownership,
-- basic readiness answers buildability; brand/product optimization is separate.
-
-A commercial ProductDefinition layer is not required for My Tackle MVP.
-
-Under D067, authoritative My Tackle records must also belong to the stable user/profile ownership model selected by the Settings / User Data Architecture gate. Canonical Tackle remains shared application Reference Knowledge; only the owned-item records are user-scoped. The gate precedes material Tackle expansion in the Roadmap so retention, migration, backup, and ownership assumptions are settled before dependent User Knowledge workflows are designed.
-
-# User Knowledge Trust Boundary
-
-Canonical project data is trusted application content.
-
-User-entered/imported content is untrusted by default:
-
-- render through safe DOM text APIs such as `textContent`,
-- do not concatenate user strings directly into `innerHTML`,
-- imported data follows the same trust boundary,
-- formatted user content, if later required, uses one centrally owned approved sanitization path.
-
-Permanent principle: **User Knowledge is data, not markup.**
-
-# Unavailable Feature Affordance
-
-Planned child cards may remain visible when they help communicate structure, but unavailable cards must be clearly marked `Coming Soon` or equivalent and must not retain hover/pointer/click affordances that imply working navigation.
-
-Permanent rule: **Anything that looks actionable must either perform an action or clearly communicate that it is unavailable.**
-
-# Interaction Depth
-
-Common field workflows should stay within approximately three intentional interactions from a relevant entry point whenever practical. Intermediate pages should exist only when they provide distinct value.
-
-# Navigation and Scroll Architecture
-
-Persistent/floating Parent/Home controls remain the shared visual standard for nested standard application views.
-
-Canonical standard behavior:
-
-```text
-Forward -> newly opened destination starts at top
-Parent  -> restores immediately preceding standard app context, applicable UI state, and prior scroll
-Home    -> Dashboard starts at top and contextual return state is cleared
-```
-
-A saved source scroll belongs only to the source context and must never transfer into a newly opened destination.
-
-Specialized workflows may use separately approved semantics. Reel Setup is an approved specialized example.
-
-**Current implementation note:** broader production routing still contains older all-transitions top-reset behavior in places. D051 is approved architecture but requires later deliberate source implementation/runtime validation where not already implemented.
-
-# Link Semantics
-
-## Contextual information
-
-`Name ⓘ` opens in-app contextual information without leaving the current page/context. Close restores focus to the original trigger.
-
-## External destination
-
-External verified references use `↗`, open in a new tab/window as supported, and should name the destination when practical.
-
-**Current production Dashboard regulations label:**
-
-```text
-Go to ODWC Regulations ↗
-```
-
-**Approved / Not Implemented under D066:** the Dashboard Regulations card becomes internal navigation to the state selector. Official state resource destinations remain external and use `↗` with destination-specific labels.
-
-Do not use `ⓘ` to imply external navigation.
-
-# Media Architecture
-
-`MEDIA_GUIDE.md` is authoritative for detailed media rules.
-
-Summary:
-
-- Fish — verified real photographs/scientific illustrations for identification.
-- Rigs — authoritative text assembly; verified licensed local media when available; otherwise permitted tutorial/external verified reference hierarchy.
-- Tackle — recognition-first real/semi-photorealistic catalog references anchored to real geometry.
-- Knots — canonical text instructions plus approved instructional Media; current V1 external instructional coverage is complete.
-- Lures — photography/accurate illustration according to recognition requirements.
-- Techniques — instructional media only where it improves understanding.
-
-Media owns entity attachment via `ownerType` + `ownerId`.
-
-# Storage Strategy
-
-GitHub Pages footprint remains a design constraint.
-
-General media targets:
-
-- contextual Tackle raster references: aggressively optimized, normally below ~150 KB,
-- Fish identification photos: roughly 150–300 KB when diagnostic detail requires it,
-- SVG: compact, avoid unnecessary embedded raster data.
-
-Current Tackle reference assets use optimized WebP on fixed `#f4f0e8`.
-
-# Repository Handoff and Closeout
-
-`HANDOFF.md` is the compact formal GitHub recovery/continuation entrypoint.
-
-`WORKING_STATE.md` is the live local workstream and exact-resume record.
-
-`ACTIVE-CHANGE-LEDGER.md` is the single formal GitHub owner of material non-closed carry-forward items.
-
-A session/module/section is not finalized until relevant documentation is updated, pushed/applied, inspected on authoritative GitHub, and validated.
-
-Meaningful cross-segment decisions receive the same documentation discipline as in-segment decisions.
+- `PROJECT.md` — mission/product scope.
+- `ARCHITECTURE.md` — current technical/source architecture.
+- `DECISIONS.md` + `decisions/*.md` — decision index and full durable decision bodies.
+- `DEVELOPMENT_WORKFLOW.md` + three `workflow/*.md` procedures — execution/governance.
+- `ROADMAP.md` — product milestone order/future direction.
+- `WORKING_STATE.md` — single current-state/exact-resume entrypoint.
+- `ACTIVE-CHANGE-LEDGER.md` — material non-closed carry-forward.
+- `STYLE_GUIDE.md` — code/data/file/document conventions.
+- `UI_STANDARD.md` — cross-domain UI interaction standards.
+- `CHANGELOG.md` — curated meaningful landed-change history.
+- domain/data-model/media/source/workstream documents — specialized ownership.
 
 # Development Architecture
 
-`DEVELOPMENT_WORKFLOW.md` is authoritative for implementation procedure.
+`DEVELOPMENT_WORKFLOW.md` is authoritative for implementation procedure. Permanent rules include:
 
-Permanent rules include:
-
-- verify GitHub `main`, the complete Drive working tree, and the Live Working State review-cycle identity before editing,
-- use the complete Drive `Working Source/Current` tree as the first working location for every approved uncommitted repository change, including documentation,
-- use one write-authorized project-chat cycle for edits to the active Drive working tree,
-- keep semantic change scope targeted unless broader replacement/consolidation is approved,
-- generate review ZIPs/packages only when transport, local/browser validation, checkpointing, or recovery requires them,
-- preserve explicit production write and production commit/push authorization gates,
-- verify GitHub after every write/push,
-- complete documentation closeout before declaring a segment finalized,
-- do not begin a dependent build segment while the current one remains unfinalized,
-- preserve meaningful cross-segment decisions/defers/parks/rejects,
-- use review-cycle identity, package hashes/changed-file sets, and targeted validation rather than repeated full-state reconstruction,
-- keep the supported execution environment connector-native in normal ChatGPT project chat; do not depend on ChatGPT Work.
+- verify current GitHub `main`, Drive Current, and Live Working State lineage before editing;
+- use Drive Current as the first working location for approved uncommitted repository changes;
+- keep changes targeted unless broader replacement/consolidation is explicitly approved;
+- preserve explicit production write and production commit/push authorization gates;
+- use review packages only when transport/local validation/checkpoint/recovery requires them;
+- verify GitHub after every write/push;
+- close documentation/state before declaring a segment finalized;
+- preserve durable cross-segment decisions/defers/parks/rejects;
+- prefer targeted validation and deterministic lineage over repeated full-state reconstruction;
+- do not depend on ChatGPT Work.

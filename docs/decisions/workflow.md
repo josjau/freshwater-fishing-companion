@@ -180,7 +180,7 @@ Documentation structure is deliberately lean: `DECISIONS.md` indexes six domain 
 
 **Tradeoff / risk:** Maintaining a complete Drive tree can make initial population/large refreshes more expensive with current connector capabilities. That cost is accepted for simpler authority/review semantics. Drift is controlled through starting-SHA/package/changed/deletion-set checks.
 
-**Current implementation status:** Drive full-tree implementation complete. R1 local review exposed documentation over-decomposition; R2 consolidates ownership/pathing and is pending local review, approval, GitHub commit, and closeout. Regulations Phase 0 remains parked until closeout.
+**Current implementation status:** Implemented / Validated / Closed. R1 review exposed documentation over-decomposition; R2 consolidated ownership/pathing and landed at GitHub commit `4e982d84ab6207efacfafe4fa92682046c6240cb`. A bounded post-commit integrity correction removed stale references/status text and completed closeout. Regulations Phase 0 is now the active next workstream.
 
 **Deferred trigger:** Revisit representation only if real operation demonstrates the full-tree model itself is materially unworkable. Any future authority-model change requires an explicit new decision.
 
