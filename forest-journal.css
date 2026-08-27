@@ -988,6 +988,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 
 .regulations-authority-note {
     max-width: 760px;
+    margin-top: var(--space-4);
     padding: var(--space-3) var(--space-4);
     border-left: 3px solid var(--accent-regulations);
     background: color-mix(in srgb, var(--accent-regulations) 10%, transparent);
