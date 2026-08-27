@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.2.0  
+**Document Revision:** 3.3.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-08-26
@@ -10,13 +10,20 @@
 
 This is a curated project changelog, not a second Working State, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to `WORKING_STATE.md`; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
 
+# 2026-08-26 — Live Working State Continuity Guardrail
+
+- Wave 4 startup exposed that the Google Live Working State had stopped at the Wave 1 checkpoint while repository/Drive state had advanced through Waves 2–3.
+- Hardened `AGENTS.md`, `DEVELOPMENT_WORKFLOW.md`, and `workflow/DOCUMENTATION-AND-CLOSEOUT.md` so Live Working State is an inline operational ledger: material approvals/state transitions require an immediate write plus readback before dependent work may continue.
+- Startup, session-end, and closeout now treat stale/missing/contradictory Live Working State as a blocking continuity defect that must be reconciled from GitHub, Drive Current, repository current-state owners, and current-session facts before progression.
+- Reconciled `WORKING_STATE.md` and `ACTIVE-CHANGE-LEDGER.md` to Wave 3 CLOSED / PASS and the Wave 4 data-lock approval gate. No production source/data changed in this continuity correction.
+
 # 2026-08-26 — Regulations Production Waves 2–3
 
 - **Wave 2** expanded Regulations to Alabama, Arizona, Colorado, Connecticut, Delaware, Florida, Georgia, and Idaho, bringing cumulative coverage to 16 states / 59 StateResource records / 2 active StateNotice records.
 - Wave 2 mobile review replaced the inline/native mobile state-selection experience with the approved compact selector trigger and contained vertical-only wheel popover while preserving the desktop native selector and existing Search behavior.
 - **Wave 3 Review Build 1** added Illinois, Indiana, Iowa, Kentucky, Louisiana, Maine, Maryland, and Massachusetts: 8 new State records, 31 new StateResource records, and 0 new StateNotice records. Cumulative coverage is now **24 states / 90 resources / 2 active notices**.
 - Wave 3 moved the explanatory text beginning “Freshwater Fishing Companion links to official…” below the selector/action controls so the actionable state controls remain above the fold on mobile. The user approved the Wave 3 state set and Review Build 1.
-- Wave 3 source landed in `7e53d1ae83a6e60674cac4b99c202993cc30f8ef` (`Regulations - Phase 1 - Wave 3 - Review 1`) and is present on `main` through merge commit `a6a03b202a5561a05a55a681883eaac5f45dc4a2`. Final Wave 3 closeout remains pending Repository Integrity / GitHub Pages verification.
+- Wave 3 source landed in `7e53d1ae83a6e60674cac4b99c202993cc30f8ef` (`Regulations - Phase 1 - Wave 3 - Review 1`) and is present through merge commit `a6a03b202a5561a05a55a681883eaac5f45dc4a2`; Repository Integrity #79 and GitHub Pages #567 passed, closing Wave 3 PASS.
 - A minor spacing increase above the moved explanatory text is deliberately deferred to Wave 4; it does not reopen the approved Wave 3 build.
 
 # 2026-08-26 — Regulations Production Wave 1 — Closed
