@@ -146,27 +146,50 @@ Record as applicable:
 
 A material off-segment discussion is classified as Build Now, Parking Lot, Reject, or Open and documented in its proper owner. If it does not affect active implementation it may be parked, but enough context must be retained to resume without chat reconstruction.
 
-# Routine Closeout
+# Routine Closeout — Enforced Gates
 
-Closeout is a verification/state-transition operation, not the first time documentation catches up.
+Closeout is a verification/state-transition operation, not the first time documentation catches up. The following gates are mandatory and ordered.
 
-After final approval:
+## Gate A — Documentation Impact / Canonical Owner
 
-1. Verify the Live Working State already records the final approval/current gate and read it back; closeout may not proceed from a stale operational ledger.
+Before commit, produce a finite impact disposition for durable active documentation affected by the change. Every relevant owner must be classified as:
+
+- **UPDATE REQUIRED**;
+- **VERIFIED — NO CHANGE REQUIRED**; or
+- **NOT APPLICABLE**.
+
+The impact set must include current-state owners, roadmap/ledger/history owners when their semantics changed, affected architecture/UI/data-model/maintenance owners, and any durable decision body whose wording would otherwise contradict the implemented state. Silent omission is a failed gate.
+
+## Gate B — Documentation Consistency
+
+Before commit, run `tools/validate_repository_integrity.js`. For documentation/structural work this validator is responsible for mechanically detectable governance defects including required/retired paths, active Markdown relative-link targets, decision-index/body ID integrity, and required governance markers.
+
+When closing a named workstream, also run `tools/validate_workstream_closeout.js` with the workstream aliases and former active path. A failure blocks commit/closeout; do not waive it by prose review.
+
+## Gate C — Review / Commit
+
+1. Verify the Live Working State already records the approval/current gate and read it back.
 2. Freeze the exact approved Drive review state/revision/package identity.
-3. Run one final applicable deterministic validation pass.
-4. Run `tools/validate_workstream_closeout.js` when an active workstream is closing.
-5. Complete the documentation impact disposition matrix.
-6. Commit/push under the applicable authority gate:
-   - documentation-only = standing authority when not part of a user-reviewed package;
-   - production/user-facing = explicit user commit/push authorization.
-7. Verify the GitHub SHA and exact modified/added/deleted-file set once.
-8. Re-fetch/inspect affected files where structural/truncation risk exists and verify applicable repository-integrity CI.
-9. Confirm committed GitHub state matches the approved Drive/review state.
-10. Apply only genuinely post-commit status/resume documentation that could not have been known before commit, then reconcile those minimal updates.
-11. Retain Packages only when they have explicit continuing review/checkpoint/recovery value.
-12. Reconcile `WORKING_STATE.md`, the Active Change Ledger, and Live Working State to open carry-over / next work only, then read back the Live Working State one final time.
-13. Re-run the closeout validator if a workstream was retired.
+3. Run final applicable deterministic validation.
+4. Commit/push under the applicable authority gate: documentation-only uses standing authority when not part of a user-reviewed package; production/user-facing changes require explicit user commit/push authorization.
+5. Verify GitHub SHA and exact modified/added/deleted-file set.
+6. Verify required Repository Integrity / Pages / other applicable CI.
+7. Confirm committed GitHub state matches the approved Drive/review state.
+
+## Gate D — Final Convergence / `CLOSED / PASS`
+
+`CLOSED / PASS` may be recorded only after all of the following are true:
+
+- approved production/source/documentation state is committed;
+- required CI is PASS;
+- the documentation consistency gate passes against the landed repository state;
+- `WORKING_STATE.md`, `ACTIVE-CHANGE-LEDGER.md`, and `ROADMAP.md` do not contradict the landed milestone state;
+- the closed workstream's active path has been retired when applicable;
+- archive/delete/GIT HISTORY ONLY dispositions are complete and verified;
+- only genuinely post-commit state/history updates remain, and those are reconciled;
+- the Live Working State contains the landed SHA, final gate result, and exact next action, and connector readback confirms it.
+
+If any item is false, the work is not closed. Do not start a dependent workstream.
 
 # Artifact Retirement
 

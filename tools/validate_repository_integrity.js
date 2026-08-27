@@ -1584,7 +1584,6 @@ function validateDocumentationGovernance() {
         "docs/decisions/ux-navigation.md",
         "docs/decisions/workflow.md",
         "docs/workflow/PRODUCTION-CHANGES.md",
-        "docs/workflow/REVIEW-AND-STAGING.md",
         "docs/workflow/DOCUMENTATION-AND-CLOSEOUT.md"
     ];
 
@@ -1604,7 +1603,8 @@ function validateDocumentationGovernance() {
         "docs/workflow/STARTUP.md",
         "docs/workflow/DOCUMENTATION.md",
         "docs/workflow/CLOSEOUT.md",
-        "docs/workflow/SESSION-HANDOFF.md"
+        "docs/workflow/SESSION-HANDOFF.md",
+        "docs/workflow/REVIEW-AND-STAGING.md"
     ];
 
     const docs = new Map();
@@ -1711,6 +1711,7 @@ function validateDocumentationGovernance() {
     }
 
     const activeMechanicsFiles = [
+        "README.md",
         "AGENTS.md",
         "docs/PROJECT.md",
         "docs/DECISIONS.md",
@@ -1721,18 +1722,102 @@ function validateDocumentationGovernance() {
     const retiredReferenceNames = retiredDocs.map((relativePath) => relativePath.replace(/^docs\//, ""));
 
     for (const relativePath of activeMechanicsFiles) {
-        const text = relativePath === "AGENTS.md" ? readText(relativePath) : docs.get(relativePath);
+        const text = ["README.md", "AGENTS.md"].includes(relativePath) ? readText(relativePath) : docs.get(relativePath);
         if (text === null || text === undefined) {
             continue;
         }
         for (const retiredReference of retiredReferenceNames) {
-            if (text.includes(retiredReference)) {
+            const matchingLines = text.split(/\r?\n/).filter((line) => line.includes(retiredReference));
+            for (const line of matchingLines) {
+                if (/\b(?:GIT HISTORY ONLY|ARCHIVE|retir(?:e|ed|ement)|delete|deletion|remove|removal|move|moved|former active path|planned repository disposition)\b/i.test(line)) continue;
                 fail(
                     "Documentation governance",
                     `${relativePath}: active mechanics still reference retired documentation path ${retiredReference}`
                 );
             }
         }
+    }
+
+    recordCheck("Active documentation path/reference integrity");
+
+    const activeTextFiles = listTrackedRepositoryFiles().filter((repoPath) =>
+        /\.md$/i.test(repoPath) &&
+        !repoPath.startsWith("archive/") &&
+        fileExists(repoPath)
+    );
+
+    function resolveDocReference(fromPath, reference) {
+        const clean = reference.split(/[?#]/, 1)[0].trim();
+        if (!clean || /^(?:https?:|mailto:|tel:|data:|#)/i.test(clean)) return null;
+        if (clean.startsWith("/")) return clean.slice(1);
+        if (clean.startsWith("docs/") || clean.startsWith("archive/") || clean === "AGENTS.md" || clean === "README.md") {
+            return path.posix.normalize(clean);
+        }
+        return path.posix.normalize(path.posix.join(path.posix.dirname(fromPath), clean));
+    }
+
+    function isExplicitRetirementLine(line) {
+        return /\b(?:GIT HISTORY ONLY|ARCHIVE|retir(?:e|ed|ement)|delete|deletion|remove|removal|move|moved|former active path|planned repository disposition)\b/i.test(line);
+    }
+
+    for (const relativePath of activeTextFiles) {
+        const text = readText(relativePath);
+        if (text === null) continue;
+        const lines = text.split(/\r?\n/);
+        lines.forEach((line, index) => {
+            const references = [];
+            for (const match of line.matchAll(/\]\(([^)]+\.md(?:[?#][^)]*)?)\)/gi)) references.push(match[1]);
+            for (const match of line.matchAll(/`((?:docs\/|archive\/|\.\.?\/)[A-Za-z0-9_.\/-]+\.md)`/g)) references.push(match[1]);
+            const plain = line.match(/^\s*[-*]\s+((?:docs\/|archive\/|\.\.?\/)[A-Za-z0-9_.\/-]+\.md)\s*$/i);
+            if (plain) references.push(plain[1]);
+
+            for (const reference of references) {
+                const resolved = resolveDocReference(relativePath, reference);
+                if (!resolved) continue;
+                if (!fileExists(resolved) && !directoryExists(resolved) && !isExplicitRetirementLine(line)) {
+                    fail("Documentation path", `${relativePath}:${index + 1}: local documentation reference does not resolve: ${reference} -> ${resolved}`);
+                }
+            }
+        });
+    }
+
+    recordCheck("Decision index/body identity integrity");
+    const decisionIndex = docs.get("docs/DECISIONS.md");
+    if (decisionIndex !== undefined) {
+        const indexedIds = [...decisionIndex.matchAll(/\bD\d{3}\b/g)].map((m) => m[0]);
+        const uniqueIndexed = new Set(indexedIds);
+        const bodyFiles = [
+            "docs/decisions/architecture.md",
+            "docs/decisions/data-model.md",
+            "docs/decisions/media.md",
+            "docs/decisions/product.md",
+            "docs/decisions/ux-navigation.md",
+            "docs/decisions/workflow.md"
+        ];
+        const bodyOwners = new Map();
+        for (const bodyPath of bodyFiles) {
+            const body = docs.get(bodyPath);
+            if (body === undefined) continue;
+            const headingIds = [...body.matchAll(/^#\s+(D\d{3})\b/gm)].map((m) => m[1]);
+            for (const id of headingIds) {
+                const owners = bodyOwners.get(id) ?? [];
+                owners.push(bodyPath);
+                bodyOwners.set(id, owners);
+            }
+        }
+        for (const id of uniqueIndexed) {
+            const owners = bodyOwners.get(id) ?? [];
+            if (owners.length !== 1) fail("Decision identity", `${id}: expected exactly one decision body owner; found ${owners.length}${owners.length ? ` (${owners.join(", ")})` : ""}`);
+        }
+        for (const [id, owners] of bodyOwners.entries()) {
+            if (!uniqueIndexed.has(id)) fail("Decision identity", `${id}: decision body exists but is missing from docs/DECISIONS.md`);
+            if (owners.length > 1) fail("Decision identity", `${id}: duplicate decision body owners: ${owners.join(", ")}`);
+        }
+    }
+
+    const foundation = readText("docs/data-model/01-FOUNDATION.md");
+    if (foundation !== null && !foundation.includes("**Document Status:** Approved")) {
+        fail("Documentation governance", "docs/data-model/01-FOUNDATION.md: canonical inherited foundation must have Approved document status");
     }
 
     const staleCurrentStatePatterns = [

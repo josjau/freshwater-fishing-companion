@@ -14,7 +14,7 @@ This document preserves technical research provenance for the canonical Version 
 
 It does not replace production `referenceLinks[]` and does not independently own canonical Knot instructions. Its purpose is to record the evidence used to validate each Knot's tying geometry, accepted applications, line compatibility, limitations, variation decisions, common failure modes, and final-state checks.
 
-Research follows `docs/workstreams/KNOT-RESEARCH-VALIDATION-APPROVAL.md`.
+Research follows `archive/workstreams/knots/KNOT-RESEARCH-VALIDATION-APPROVAL.md`.
 
 Production Package 4 reopened only the Dropper Loop wrap-count presentation and the selected Snell instructional variant. Those two research decisions are reconciled below to the validated production records in `data/knots.js`.
 

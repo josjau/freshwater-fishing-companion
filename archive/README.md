@@ -32,6 +32,7 @@ archive/
     workstreams/
         knots/
         repository-audit/
+        regulations/
         rig/
         ux/
         workflow/

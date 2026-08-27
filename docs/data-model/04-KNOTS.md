@@ -251,7 +251,7 @@ Canonical Knot schema remains separate from those Decision Knowledge and navigat
 - 03A-TECHNIQUES.md
 - 09-RELATIONSHIPS.md
 - ../KNOT_REFERENCE_SOURCES.md
-- ../workstreams/KNOT-RELATIONSHIP-APPROVAL.md
-- ../workstreams/KNOT-RESEARCH-VALIDATION-APPROVAL.md
-- ../workstreams/KNOT-MEDIA-WORKFLOW-APPROVAL.md
-- ../workstreams/KNOT-CANONICAL-CONTENT-LOCK.md
+- ../../archive/workstreams/knots/KNOT-RELATIONSHIP-APPROVAL.md
+- ../../archive/workstreams/knots/KNOT-RESEARCH-VALIDATION-APPROVAL.md
+- ../../archive/workstreams/knots/KNOT-MEDIA-WORKFLOW-APPROVAL.md
+- ../../archive/workstreams/knots/KNOT-CANONICAL-CONTENT-LOCK.md

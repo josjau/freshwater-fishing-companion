@@ -174,10 +174,10 @@ The data/navigation design must not hard-code a 48-state structural ceiling; Ala
 
 The state-first design also creates a clean future personalization point: preferred states can later improve ordering without hiding other states or coupling Regulations to GPS/location privacy decisions prematurely.
 
-**Current implementation status:** Approved / Not Implemented. Current production still links the Dashboard Regulations card directly to Oklahoma. Phase 0 has not yet begun.
+**Implementation history:** D066 was implemented and the 48-state Regulations production milestone closed on 2026-08-27. Current implementation status belongs to `WORKING_STATE.md` / `ROADMAP.md`; this decision preserves the durable product boundary rather than acting as a mutable status owner.
 
-**Future trigger:** begin `REGULATIONS-PHASE-0` to research representative state agency structures, validate the resource taxonomy, settle the State/State Resource model, settle selector/state-page UX, define link freshness/provenance requirements, and establish production waves. The Four-State region should be the first deep sample, supplemented by structurally different states before the nationwide model is locked.
+**Future trigger:** reopen D066 only if the supported-jurisdiction scope, legal-resource ownership boundary, or state-first gateway architecture materially changes. Routine link/resource maintenance follows `EXTERNAL_REFERENCE_MAINTENANCE.md` and does not reopen this decision.
 
-**Canonical owners:** D066 owns the durable product/architecture boundary; `ROADMAP.md` owns milestone order; `PROJECT.md` owns the geographic-scope exception; `ARCHITECTURE.md` owns source/knowledge boundaries; `EXTERNAL_REFERENCE_MAINTENANCE.md` owns ongoing link-maintenance policy; the active Regulations workstream owns Phase 0 planning detail.
+**Canonical owners:** D066 owns the durable product/architecture boundary; `ROADMAP.md` owns milestone order; `PROJECT.md` owns the geographic-scope exception; `ARCHITECTURE.md` owns source/knowledge boundaries; `EXTERNAL_REFERENCE_MAINTENANCE.md` owns ongoing link-maintenance policy; the closed Regulations workstream is retained under `archive/workstreams/regulations/`.
 
 Permanent principle: **normalize navigation to official state resources; do not become the source of changing fishing law.**

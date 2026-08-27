@@ -96,10 +96,9 @@ Final production closed at `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c` (`Regulati
 
 The gateway remains an official-resource navigation surface rather than a project-owned nationwide legal-rule database. State authorities own current legal requirements. Future link/resource changes follow maintenance rules and do not reopen the milestone automatically.
 
-D066 owns the durable geographic/legal-resource boundary. `docs/workstreams/REGULATIONS-PHASE-0.md` is the closed design/evidence/production owner.
+D066 owns the durable geographic/legal-resource boundary. `archive/workstreams/regulations/REGULATIONS-PHASE-0.md` is the retained closed design/evidence/production record.
 
 # 4. What Should I Throw? — Next Milestone
-# 4. What Should I Throw?
 
 Build the primary Decision Knowledge recommendation experience now that Regulations is closed.
 

@@ -100,8 +100,7 @@ Absent an invalidation condition, do not repeat whole-project reconstruction mer
 
 # Procedure Index
 
-- [`workflow/PRODUCTION-CHANGES.md`](workflow/PRODUCTION-CHANGES.md) — production write authorization, preservation, local/live validation, and production commit gate.
-- [`workflow/REVIEW-AND-STAGING.md`](workflow/REVIEW-AND-STAGING.md) — review revisions, packages/deletion manifests, and targeted validation.
+- [`workflow/PRODUCTION-CHANGES.md`](workflow/PRODUCTION-CHANGES.md) — production write authorization, review revisions, packages/deletion manifests, preservation, local/live validation, and production commit gate.
 - [`workflow/DOCUMENTATION-AND-CLOSEOUT.md`](workflow/DOCUMENTATION-AND-CLOSEOUT.md) — durable decision capture, documentation impact reconciliation, session continuity, GitHub verification, and closeout.
 
 # Core Change-Control Rules

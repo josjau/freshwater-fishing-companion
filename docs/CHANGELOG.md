@@ -66,7 +66,7 @@ Commit `af3bffb9995d56f8b9e47236bbadfa481d88cc34` — `Document nationwide Regul
 
 - Approved D066: Regulations becomes a state-first official-resource gateway for the 48 contiguous U.S. states as a deliberate geographic exception to the Four-State curated-content scope.
 - Approved D067: Settings / User Data Architecture must precede material Tackle Reference expansion, My Tackle, and Catch Log so user identity/persistence/retention/migration/backup ownership is settled first.
-- Established `docs/workstreams/REGULATIONS-PHASE-0.md` as the planning owner; no production Regulations source/data is authorized until its completion gate is approved.
+- Established `docs/workstreams/REGULATIONS-PHASE-0.md` as the planning owner; that closed workstream record is now ARCHIVED at `archive/workstreams/regulations/REGULATIONS-PHASE-0.md`.
 
 # 2026-08-25 — Fish Guide Version 1 / Wave 4 — Closed
 

@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.11.0  
+**Document Revision:** 1.12.0  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** Regulations — 48-STATE PRODUCTION CLOSED / PASS; What Should I Throw? — NEXT PRODUCT MILESTONE  
-**Starting GitHub Baseline:** `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c`  
+**Workstream Status:** Documentation Architecture Cleanup — REVIEW READY; What Should I Throw? — NEXT PRODUCT MILESTONE  
+**Starting GitHub Baseline:** `afc6ed4ea084de081de4e18739f485a91e1d55fc`  
 **Last Updated:** 2026-08-27
 
 # Purpose
@@ -29,7 +29,7 @@ The workflow/documentation performance refactor is **CLOSED**.
 - D068 owns the complete Drive working-tree model and normal-project-chat workflow.
 - D062 remains preserved as superseded historical rationale only.
 - `DECISIONS.md` is a compact index with six domain decision-body files under `docs/decisions/`.
-- `DEVELOPMENT_WORKFLOW.md` owns authority/startup/general workflow and routes to three task procedures under `docs/workflow/`.
+- `DEVELOPMENT_WORKFLOW.md` owns authority/startup/general workflow and routes to two task procedures under `docs/workflow/`; review/staging is consolidated into `PRODUCTION-CHANGES.md`.
 - `UI_STANDARD.md` is the single cross-domain UI/navigation/card/detail/search-interaction standard.
 - `WORKING_STATE.md` is the single repository continuation entrypoint; separate Handoff documentation is no longer active.
 - Retired glossary/Lure/Backup placeholder documents were consolidated into surviving data-model owners.
@@ -51,7 +51,7 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 - Home clears transient Regulations query/selection/open-state context; re-entering Regulations from Home starts from the default state.
 - The final changed-file scope from Wave 4 baseline `82e7e6ca22e1a0992113aee92d73e48e7277bc89` is exactly `data/regulations.js` and `view-renderer.js`.
 - Repository Integrity #90 and GitHub Pages #578 passed on the final production SHA.
-- Regulations remains governed by D066, `ARCHITECTURE.md`, `UI_STANDARD.md`, `EXTERNAL_REFERENCE_MAINTENANCE.md`, and the closed `workstreams/REGULATIONS-PHASE-0.md`. Future link changes are maintenance and do not reopen the milestone automatically.
+- Regulations remains governed by D066, `ARCHITECTURE.md`, `UI_STANDARD.md`, and `EXTERNAL_REFERENCE_MAINTENANCE.md`; its closed workstream record is retained under `archive/workstreams/regulations/REGULATIONS-PHASE-0.md`. Future link changes are maintenance and do not reopen the milestone automatically.
 
 **What Should I Throw? is the next product milestone.** D067 continues to require the Settings / User Data Architecture gate after What Should I Throw and before material Tackle Reference / My Tackle / Catch Log expansion.
 
@@ -64,8 +64,8 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 
 # Exact Resume Point
 
-1. Treat Regulations nationwide production as **CLOSED / PASS** at GitHub `main` `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c` (`Regulations - Final Wave`).
-2. Final Regulations production contains **48 states / 180 resources / 2 active notices**; Repository Integrity #90 and GitHub Pages #578 passed.
-3. Do not reopen Regulations during normal continuation. Future resource/link corrections follow the established Regulations maintenance workflow.
-4. The next product milestone is **What Should I Throw?** Start its planning/architecture gate from the current GitHub baseline and current Drive Current tree.
-5. Preserve the Live Working State hard gate and all other named cross-domain carry-forward items.
+1. GitHub `main` baseline for this cleanup is `afc6ed4ea084de081de4e18739f485a91e1d55fc` (`Regulations - Closeout Documentation`). Regulations production remains CLOSED / PASS and is not reopened.
+2. Documentation Architecture Cleanup candidate is REVIEW READY in Drive Current. It repairs stale active-document contradictions/path references, consolidates review/staging procedure into `workflow/PRODUCTION-CHANGES.md`, strengthens repository documentation consistency enforcement, and prepares the closed Regulations workstream for archive disposition.
+3. Planned repository removals/dispositions for local Git review: delete `docs/workflow/REVIEW-AND-STAGING.md` as **GIT HISTORY ONLY**; move `docs/workstreams/REGULATIONS-PHASE-0.md` to `archive/workstreams/regulations/REGULATIONS-PHASE-0.md` as **ARCHIVE**.
+4. Exact next gate: user/local review of the Documentation Architecture Cleanup ZIP and deletion/archive list. No GitHub commit/push is authorized by this review package.
+5. After approval, commit the exact reviewed scope, verify GitHub changed/deleted paths and required CI, run final documentation consistency/closeout validation against landed `main`, update Live Working State with the final SHA, and only then return to What Should I Throw?.

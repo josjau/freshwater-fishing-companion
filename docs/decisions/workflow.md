@@ -174,14 +174,14 @@ Each review cycle maintains starting GitHub SHA, workstream, review revision, pa
 
 Routine safety comes from stable authority, complete Drive working state, bounded ownership, targeted validation, exact package identity, changed/deletion-set comparison, and post-write verification. Full-tree reconstruction is reserved for real drift/invalidation.
 
-Documentation structure is deliberately lean: `DECISIONS.md` indexes six domain decision-body files; `DEVELOPMENT_WORKFLOW.md` owns authority/startup and routes to three task procedures; UI standards consolidate into `UI_STANDARD.md`; redundant continuity/historical/deferred placeholder documents are retired only after no-loss migration.
+Documentation structure is deliberately lean: `DECISIONS.md` indexes six domain decision-body files; `DEVELOPMENT_WORKFLOW.md` owns authority/startup and routes to the production/review procedure and the documentation/closeout procedure; UI standards consolidate into `UI_STANDARD.md`; redundant continuity/historical/deferred placeholder documents are retired only after no-loss migration.
 
 **Reason:** The prior workflow accumulated separate documentation paths, ZIP-as-working-state overhead, repeated reconstruction, broad rereads, and temporary automation. A later baseline+delta attempt also departed from the user's intended complete Drive working-copy model. The complete Drive tree plus lean single-owner documentation is easier to reason about and faster to operate.
 
 **Tradeoff / risk:** Maintaining a complete Drive tree can make initial population/large refreshes more expensive with current connector capabilities. That cost is accepted for simpler authority/review semantics. Drift is controlled through starting-SHA/package/changed/deletion-set checks.
 
-**Current implementation status:** Implemented / Validated / Closed. R1 review exposed documentation over-decomposition; R2 consolidated ownership/pathing and landed at GitHub commit `4e982d84ab6207efacfafe4fa92682046c6240cb`. A bounded post-commit integrity correction removed stale references/status text and completed closeout. Regulations Phase 0 is now the active next workstream.
+**Implementation history:** D068 was implemented and validated during the workflow consolidation that landed at GitHub commit `4e982d84ab6207efacfafe4fa92682046c6240cb`. Current workstream status belongs to `WORKING_STATE.md` / `ROADMAP.md`; this decision records the durable authority model rather than acting as a mutable status owner.
 
 **Deferred trigger:** Revisit representation only if real operation demonstrates the full-tree model itself is materially unworkable. Any future authority-model change requires an explicit new decision.
 
-**Canonical owners:** D068; `DEVELOPMENT_WORKFLOW.md`; `workflow/PRODUCTION-CHANGES.md`; `workflow/REVIEW-AND-STAGING.md`; `workflow/DOCUMENTATION-AND-CLOSEOUT.md`; `AGENTS.md`; `WORKING_STATE.md`. D062 remains historical/superseded.
+**Canonical owners:** D068; `DEVELOPMENT_WORKFLOW.md`; `workflow/PRODUCTION-CHANGES.md`; `workflow/DOCUMENTATION-AND-CLOSEOUT.md`; `AGENTS.md`; `WORKING_STATE.md`. D062 remains historical/superseded.

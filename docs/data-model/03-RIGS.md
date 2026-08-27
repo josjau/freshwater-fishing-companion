@@ -270,6 +270,6 @@ Potential future capabilities include additional regional Rigs, richer interacti
 - 05A-INVENTORY.md
 - 09-RELATIONSHIPS.md
 - ../DECISIONS.md
-- ../workstreams/REPOSITORY-AUDIT-SECTION-5-DECISION.md
-- ../workstreams/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md
-- ../workstreams/KNOT-RELATIONSHIP-APPROVAL.md
+- ../../archive/workstreams/repository-audit/REPOSITORY-AUDIT-SECTION-5-DECISION.md
+- ../../archive/workstreams/repository-audit/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md
+- ../../archive/workstreams/knots/KNOT-RELATIONSHIP-APPROVAL.md

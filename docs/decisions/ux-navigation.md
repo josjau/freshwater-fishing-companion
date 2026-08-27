@@ -55,13 +55,7 @@ Implemented cards remain fully interactive. Feature-preview pages, notification 
 
 External actions must clearly identify the destination and use `↗` to indicate navigation outside the application. Generic labels such as `Browse` or `Learn More` should be avoided when a specific destination can be named.
 
-**Current production:** the Dashboard Regulations CTA still uses:
-
-```text
-Go to ODWC Regulations ↗
-```
-
-**Approved future direction under D066:** when the Regulations gateway is implemented, the Dashboard **Regulations** card becomes internal navigation to the state selector and therefore follows internal-navigation semantics. The official destinations exposed on each state page remain external actions and use `↗` with destination-specific labels.
+Under D066, the Dashboard **Regulations** card uses internal-navigation semantics to open the state selector. Official destinations exposed on each state page remain external actions and use `↗` with destination-specific labels.
 
 External links open outside the application in a new tab/window as supported by the platform. `ⓘ` remains reserved for in-app contextual information.
 # D032 – Dashboard Regression Restoration

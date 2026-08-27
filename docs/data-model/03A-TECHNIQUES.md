@@ -175,4 +175,4 @@ Potential later capabilities include animated demonstrations, video instruction,
 - 05-TACKLE.md
 - 09-RELATIONSHIPS.md
 - ../DECISIONS.md
-- ../workstreams/REPOSITORY-AUDIT-SECTION-5-DECISION.md
+- ../../archive/workstreams/repository-audit/REPOSITORY-AUDIT-SECTION-5-DECISION.md

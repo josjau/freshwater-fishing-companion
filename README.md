@@ -4,4 +4,4 @@ A mobile field guide designed to help new anglers make good decisions on the wat
 
 ## Project handoff / current state
 
-Start with [`docs/WORKING_STATE.md`](docs/WORKING_STATE.md) for the live workstream and exact resume point, then read [`docs/HANDOFF.md`](docs/HANDOFF.md) for the compact formal recovery map and governing-document links.
+Start with [`docs/WORKING_STATE.md`](docs/WORKING_STATE.md) for the current repository state and exact resume point. From there, follow only the governing workflow, decision, and domain documents needed for the requested scope.
