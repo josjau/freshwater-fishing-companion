@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.13.0  
+**Document Revision:** 1.14.0  
 **Document Status:** Approved — Active Repository Continuity Record  
 **Workstream Status:** Documentation Architecture Cleanup — CLOSED / PASS; What Should I Throw? — NEXT PRODUCT MILESTONE  
-**Current GitHub Baseline:** `0ea6420f2ac203281c5bab33b96ab5fcc6409947`  
+**Cleanup Implementation Commit:** `0ea6420f2ac203281c5bab33b96ab5fcc6409947`  
 **Last Updated:** 2026-08-27
 
 # Purpose
@@ -68,4 +68,4 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 2. Local Repository Integrity passed all 11 validation groups before commit; landed Repository Integrity #92 and GitHub Pages #580 both passed.
 3. Final repository dispositions are complete: `docs/workflow/REVIEW-AND-STAGING.md` is removed as **GIT HISTORY ONLY**; the closed Regulations record is retained at `archive/workstreams/regulations/REGULATIONS-PHASE-0.md`.
 4. The documentation consistency and final convergence gates are now active workflow requirements. No production application behavior changed in this cleanup.
-5. Exact next workstream: **What Should I Throw?**. Begin with normal startup from GitHub `main` `0ea6420f2ac203281c5bab33b96ab5fcc6409947`, Live Working State, and only the governing documents relevant to that milestone.
+5. Exact next workstream: **What Should I Throw?**. Begin with normal startup from current GitHub `main`, Live Working State, and only the governing documents relevant to that milestone.
