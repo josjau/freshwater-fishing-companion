@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.12.0  
+**Document Revision:** 1.13.0  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** Documentation Architecture Cleanup — REVIEW READY; What Should I Throw? — NEXT PRODUCT MILESTONE  
-**Starting GitHub Baseline:** `afc6ed4ea084de081de4e18739f485a91e1d55fc`  
+**Workstream Status:** Documentation Architecture Cleanup — CLOSED / PASS; What Should I Throw? — NEXT PRODUCT MILESTONE  
+**Current GitHub Baseline:** `0ea6420f2ac203281c5bab33b96ab5fcc6409947`  
 **Last Updated:** 2026-08-27
 
 # Purpose
@@ -64,8 +64,8 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 
 # Exact Resume Point
 
-1. GitHub `main` baseline for this cleanup is `afc6ed4ea084de081de4e18739f485a91e1d55fc` (`Regulations - Closeout Documentation`). Regulations production remains CLOSED / PASS and is not reopened.
-2. Documentation Architecture Cleanup candidate is REVIEW READY in Drive Current. It repairs stale active-document contradictions/path references, consolidates review/staging procedure into `workflow/PRODUCTION-CHANGES.md`, strengthens repository documentation consistency enforcement, and prepares the closed Regulations workstream for archive disposition.
-3. Planned repository removals/dispositions for local Git review: delete `docs/workflow/REVIEW-AND-STAGING.md` as **GIT HISTORY ONLY**; move `docs/workstreams/REGULATIONS-PHASE-0.md` to `archive/workstreams/regulations/REGULATIONS-PHASE-0.md` as **ARCHIVE**.
-4. Exact next gate: user/local review of the Documentation Architecture Cleanup ZIP and deletion/archive list. No GitHub commit/push is authorized by this review package.
-5. After approval, commit the exact reviewed scope, verify GitHub changed/deleted paths and required CI, run final documentation consistency/closeout validation against landed `main`, update Live Working State with the final SHA, and only then return to What Should I Throw?.
+1. Documentation Architecture Cleanup is **CLOSED / PASS** on GitHub `main` at `0ea6420f2ac203281c5bab33b96ab5fcc6409947` (`Closeout Gates - Enforcement Fix`). Parent baseline was `afc6ed4ea084de081de4e18739f485a91e1d55fc`.
+2. Local Repository Integrity passed all 11 validation groups before commit; landed Repository Integrity #92 and GitHub Pages #580 both passed.
+3. Final repository dispositions are complete: `docs/workflow/REVIEW-AND-STAGING.md` is removed as **GIT HISTORY ONLY**; the closed Regulations record is retained at `archive/workstreams/regulations/REGULATIONS-PHASE-0.md`.
+4. The documentation consistency and final convergence gates are now active workflow requirements. No production application behavior changed in this cleanup.
+5. Exact next workstream: **What Should I Throw?**. Begin with normal startup from GitHub `main` `0ea6420f2ac203281c5bab33b96ab5fcc6409947`, Live Working State, and only the governing documents relevant to that milestone.
