@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 2.0.1  
+**Document Revision:** 2.1.0  
 **Document Status:** Approved  
 **Role:** Compact canonical workflow entrypoint  
 **Decision Baseline:** D014, D038-D041, D055, D068  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-08-26
 
 # Purpose
 
@@ -42,9 +42,30 @@ Before substantive work:
 1. Verify current GitHub `main` SHA.
 2. Read `WORKING_STATE.md`; consult `ACTIVE-CHANGE-LEDGER.md` when open/deferred carry-forward may affect scope.
 3. Verify Drive `Working Source/Current` is the complete working tree and read the Live Working State for active review-cycle identity/resume detail.
-4. Load only the workflow, decision, domain, media, UI, source, or workstream owners material to the requested scope.
-5. Compare the recorded resume point and lineage with actual GitHub/Drive state.
-6. If the authority/lineage checks pass, continue with targeted work. Broaden reconstruction only when an invalidation condition below applies.
+4. Apply the Live Working State hard gate. It must reflect the latest material decision/state transition and be consistent with `WORKING_STATE.md`, applicable `ACTIVE-CHANGE-LEDGER.md` entries, and actual GitHub/Drive lineage. A stale, missing, or contradictory Live Working State blocks normal progression until reconciled.
+5. Load only the workflow, decision, domain, media, UI, source, or workstream owners material to the requested scope.
+6. Compare the recorded resume point and lineage with actual GitHub/Drive state.
+7. If the authority/lineage checks pass, continue with targeted work. Broaden reconstruction only when an invalidation condition below applies.
+
+# Live Working State Hard Gate
+
+The Live Working State is the active operational ledger for the current project-chat/review cycle. It must stay current **during** the work; it is not a deferred closeout artifact.
+
+Update it immediately after any material transition that changes what is approved, implemented, defective, validated, landed, or next. This includes at minimum:
+
+- user approval, rejection, data lock, or scope change that controls the next action;
+- implementation start/completion or an approved uncommitted source/data change;
+- review defect discovery, disposition, or approved correction;
+- validation, browser/mobile review, Repository Integrity, Pages, or other result that changes a gate;
+- review-build approval;
+- commit/push and resulting GitHub SHA;
+- wave/workstream close, open, park, or exact-resume transition.
+
+A checkpoint is complete only after the Live Working State write succeeds **and a readback confirms the intended state is present**. Do not execute a dependent next action until that readback passes.
+
+Keep each checkpoint compact but sufficient to recover the cycle without chat reconstruction: active workstream/wave, GitHub baseline/landed SHA as applicable, Drive Current status, latest material approval/decision, validation/review state, open defects/risks, and exact next action.
+
+If the Live Working State is stale, missing, or contradictory, stop normal progression and perform the smallest authoritative reconciliation needed from GitHub, Drive Current, repository current-state owners, and current-session facts. Do not create another mirror document, external synchronization service, or other process layer to compensate.
 
 # Review-Cycle Identity
 
@@ -69,6 +90,7 @@ Broader baseline reconstruction/reconciliation is required when one or more of t
 
 - GitHub `main` changed unexpectedly relative to the recorded starting SHA;
 - Drive Current is missing, incomplete, or no longer proves the expected full-tree state;
+- the Live Working State is stale, missing, or contradictory relative to the latest material transition or current GitHub/Drive/repository state;
 - review revision/package/hash/changed-file/deletion-set lineage is contradictory or unprovable;
 - unexplained local repository changes appear during a local review cycle;
 - expected files are missing, unexpected files appear, or authority between GitHub/Drive is ambiguous;
@@ -94,7 +116,8 @@ Absent an invalidation condition, do not repeat whole-project reconstruction mer
 8. Use review-cycle identity, changed/deletion sets, package hashes when applicable, and targeted validation instead of routine full-state reconstruction.
 9. Every applicable durable documentation owner receives `UPDATED` or `VERIFIED — NO CHANGE REQUIRED` disposition before commit.
 10. Post-write GitHub verification is mandatory.
-11. Do not begin a dependent build segment until the current segment is finalized or deliberately parked with an exact resume point.
+11. Before any dependent next action, the Live Working State must have been updated for the authorizing material transition and verified by readback.
+12. Do not begin a dependent build segment until the current segment is finalized or deliberately parked with an exact resume point.
 
 # Performance Standard
 
