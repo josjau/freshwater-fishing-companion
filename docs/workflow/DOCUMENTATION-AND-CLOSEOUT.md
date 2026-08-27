@@ -4,7 +4,7 @@
 **Document Status:** Approved  
 **Role:** Durable documentation, impact reconciliation, session continuity, commit verification, and closeout  
 **Decision Baseline:** D038-D041, D055, D068  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-08-26
 
 # Documentation Is Part of the Work
 
@@ -19,6 +19,24 @@ For every material durable decision preserve:
 5. **Canonical owner**.
 
 Architecturally meaningful non-actions and deferrals require the same recoverable context.
+
+# Live Working State — Inline Operational Ledger
+
+The Live Working State is the mandatory operational ledger for the active project-chat/review cycle. It must be updated as material state changes occur; waiting until staging, closeout, or session end is a workflow failure.
+
+Update it after every material transition that changes:
+
+- approval, rejection, data lock, scope, or the next authorized action;
+- implementation status or approved uncommitted Drive state;
+- defect/risk discovery or disposition;
+- validation/review/CI status that opens or closes a gate;
+- review-build approval;
+- commit/push/GitHub SHA;
+- wave/workstream state or exact resume point.
+
+Each update must be followed by connector readback. The dependent next action is blocked until readback confirms the checkpoint. The checkpoint should remain compact and include only what is needed to recover current operation: active workstream/wave, relevant GitHub baseline/landed SHA, Drive Current status, latest material decision/approval, validation/review status, open defects/risks, and exact next action.
+
+If startup or active work finds the Live Working State stale, missing, or contradictory, stop normal progression and reconcile it from authoritative GitHub, Drive Current, repository current-state owners, and current-session facts before continuing. Do not use chat memory as the substitute source and do not create another state document to solve the problem.
 
 # Canonical Documentation Owners
 
@@ -112,7 +130,7 @@ A document may be retired only after every unique active rule/status/decision it
 
 # Session-End Gate
 
-When the user indicates the session is ending, stop normal progression long enough to preserve recoverable state.
+When the user indicates the session is ending, stop normal progression long enough to preserve recoverable state. First verify that the Live Working State already contains every material transition from the session; write any missing checkpoint and read it back before ending.
 
 Record as applicable:
 
@@ -134,20 +152,21 @@ Closeout is a verification/state-transition operation, not the first time docume
 
 After final approval:
 
-1. Freeze the exact approved Drive review state/revision/package identity.
-2. Run one final applicable deterministic validation pass.
-3. Run `tools/validate_workstream_closeout.js` when an active workstream is closing.
-4. Complete the documentation impact disposition matrix.
-5. Commit/push under the applicable authority gate:
+1. Verify the Live Working State already records the final approval/current gate and read it back; closeout may not proceed from a stale operational ledger.
+2. Freeze the exact approved Drive review state/revision/package identity.
+3. Run one final applicable deterministic validation pass.
+4. Run `tools/validate_workstream_closeout.js` when an active workstream is closing.
+5. Complete the documentation impact disposition matrix.
+6. Commit/push under the applicable authority gate:
    - documentation-only = standing authority when not part of a user-reviewed package;
    - production/user-facing = explicit user commit/push authorization.
-6. Verify the GitHub SHA and exact modified/added/deleted-file set once.
-7. Re-fetch/inspect affected files where structural/truncation risk exists and verify applicable repository-integrity CI.
-8. Confirm committed GitHub state matches the approved Drive/review state.
-9. Apply only genuinely post-commit status/resume documentation that could not have been known before commit, then reconcile those minimal updates.
-10. Retain Packages only when they have explicit continuing review/checkpoint/recovery value.
-11. Update `WORKING_STATE.md`, the Active Change Ledger, and Live Working State to open carry-over / next work only.
-12. Re-run the closeout validator if a workstream was retired.
+7. Verify the GitHub SHA and exact modified/added/deleted-file set once.
+8. Re-fetch/inspect affected files where structural/truncation risk exists and verify applicable repository-integrity CI.
+9. Confirm committed GitHub state matches the approved Drive/review state.
+10. Apply only genuinely post-commit status/resume documentation that could not have been known before commit, then reconcile those minimal updates.
+11. Retain Packages only when they have explicit continuing review/checkpoint/recovery value.
+12. Reconcile `WORKING_STATE.md`, the Active Change Ledger, and Live Working State to open carry-over / next work only, then read back the Live Working State one final time.
+13. Re-run the closeout validator if a workstream was retired.
 
 # Artifact Retirement
 
@@ -177,4 +196,4 @@ Display truncation by a tool is not evidence of repository truncation; use targe
 
 # No Unvalidated Transition
 
-Do not begin a dependent build segment while the current one is unfinalized. Resolve it or deliberately park it with explicit status and exact resume point.
+Do not begin a dependent build segment while the current one is unfinalized. Resolve it or deliberately park it with explicit status and exact resume point. Even when the repository state is otherwise valid, a stale/unverified Live Working State blocks the transition until its checkpoint is reconciled and read back.
