@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.10.0  
+**Document Revision:** 1.11.0  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** Regulations Phase 0 — CLOSED / PASS; Production Waves 1–3 — CLOSED / PASS; Production Wave 4 — RESEARCH/DATA-LOCK PROPOSAL PREPARED / PENDING USER APPROVAL  
-**Starting GitHub Baseline:** `aa8228fa00a2e977aba0b2667127c367d7d606df`  
-**Last Updated:** 2026-08-26
+**Workstream Status:** Regulations — 48-STATE PRODUCTION CLOSED / PASS; What Should I Throw? — NEXT PRODUCT MILESTONE  
+**Starting GitHub Baseline:** `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c`  
+**Last Updated:** 2026-08-27
 
 # Purpose
 
@@ -43,22 +43,17 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 
 # Current Product Work
 
-**Regulations — U.S. State Fishing Resource Gateway** remains the current product milestone.
+**Regulations — U.S. State Fishing Resource Gateway is CLOSED / PASS.**
 
-- D066 owns the nationwide resource-gateway/geographic-exception decision.
-- D067 preserves the later User Data architecture sequencing.
-- `workstreams/REGULATIONS-PHASE-0.md` is now **CLOSED / PASS** and owns the completed Phase 0 design/evidence/validation/wave baseline.
-- Phase 0 approved the state-selector/state-page UX, normalized resource model, authority/provenance rules, freshness/maintenance/alerting architecture, representative-state evidence, validation gates, and six-wave 48-state production strategy.
-- **Production Wave 1 — Architecture/UX Pilot R3** is **CLOSED / PASS** for Oklahoma, Kansas, Missouri, Arkansas, California, Minnesota, Pennsylvania, and Texas. Source commit: `7621d6172bed803558b206dbfca8784540346085` (`Regulations - Wave 1 Final`).
-- **Production Wave 2** is **CLOSED / PASS** for Alabama, Arizona, Colorado, Connecticut, Delaware, Florida, Georgia, and Idaho. Cumulative coverage after Wave 2 is 16 states, 59 StateResource records, and 2 active StateNotice records. Wave 2 also established the approved mobile selector interaction: compact selector trigger -> contained vertical-only wheel popover -> Done/Cancel, while desktop retains the native selector.
-- **Production Wave 3 is CLOSED / PASS** for Illinois, Indiana, Iowa, Kentucky, Louisiana, Maine, Maryland, and Massachusetts. It added 8 State records and 31 StateResource records with no new StateNotice records, bringing cumulative coverage to **24 states / 90 resources / 2 active notices**.
-- Wave 3 moved the explanatory text beginning “Freshwater Fishing Companion links to official…” below the selector/action controls so actionable controls remain above the fold on mobile. The user approved the resulting state set and Review Build 1.
-- Wave 3 source landed in commit `7e53d1ae83a6e60674cac4b99c202993cc30f8ef` and is present through merge commit `a6a03b202a5561a05a55a681883eaac5f45dc4a2`; Repository Integrity run #79 and GitHub Pages run #567 both passed. Subsequent closeout documentation advanced `main` to `aa8228fa00a2e977aba0b2667127c367d7d606df`.
-- **Production Wave 4 research/data-lock proposal is prepared and awaiting user approval** for Michigan, Mississippi, Montana, Nebraska, Nevada, New Hampshire, New Jersey, and New Mexico. Proposed scope is 8 State records, 31 StateResource records, and 0 new StateNotice records; if approved, cumulative coverage becomes 32 states / 121 resources / 2 active notices. No Wave 4 production source/data write has occurred.
-- Wave 4 startup exposed a continuity-control defect: the Google Live Working State had stopped at Wave 1 while repository state had advanced through Waves 2–3. The workflow guardrail is now being hardened so Live Working State update + readback is mandatory after material transitions and before dependent progression.
-- **Regulations Search remains retained.** It accepts state name or two-letter abbreviation and continues to provide value as the selector grows.
-- **Wave 4 carry-forward UX adjustment:** add a little more vertical spacing/padding above the moved explanatory text block. Do not reopen Wave 3 solely for this spacing adjustment; include it with Wave 4.
-- **Wave 4 carry-forward navigation-state fix:** Home navigation must clear transient Regulations state, including search text, selected state, and any opened state-page selection. Returning to Regulations after Home should start from the default selector state rather than restoring the prior Regulations session.
+- Final production commit: `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c` (`Regulations - Final Wave`).
+- Nationwide coverage is **48 contiguous states / 180 StateResource records / 2 active StateNotice records**.
+- Search is retained for state name / two-letter abbreviation filtering. Normal typing selects the alphabetical first match; returning from an opened state preserves the prior query and selected state when that state remains in the filtered set.
+- Home clears transient Regulations query/selection/open-state context; re-entering Regulations from Home starts from the default state.
+- The final changed-file scope from Wave 4 baseline `82e7e6ca22e1a0992113aee92d73e48e7277bc89` is exactly `data/regulations.js` and `view-renderer.js`.
+- Repository Integrity #90 and GitHub Pages #578 passed on the final production SHA.
+- Regulations remains governed by D066, `ARCHITECTURE.md`, `UI_STANDARD.md`, `EXTERNAL_REFERENCE_MAINTENANCE.md`, and the closed `workstreams/REGULATIONS-PHASE-0.md`. Future link changes are maintenance and do not reopen the milestone automatically.
+
+**What Should I Throw? is the next product milestone.** D067 continues to require the Settings / User Data Architecture gate after What Should I Throw and before material Tackle Reference / My Tackle / Catch Log expansion.
 
 # Open Cross-Domain Carry-Forward
 
@@ -66,13 +61,11 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 - UX-002: scoped-search helper/example alignment remains pending when affected search source is deliberately reopened.
 - Rig `useCases[]` species-specific wording remains parked in `V1-DESIGN-AUDIT.md` under D056.
 - UX-009 required final Version 1 site-wide design/mobile audit remains open.
-- REG-001 / GATE-014 continue to own the approved nationwide Regulations rollout. Waves 1–3 are CLOSED / PASS; Wave 4 data-lock approval is the next product gate.
 
 # Exact Resume Point
 
-1. Treat Regulations Production Wave 3 as **CLOSED / PASS**. Repository Integrity #79 and GitHub Pages #567 passed for the landed Wave 3 source; current GitHub `main` at this checkpoint is `aa8228fa00a2e977aba0b2667127c367d7d606df`.
-2. The Wave 4 research/data-lock proposal is awaiting explicit user approval: Michigan, Mississippi, Montana, Nebraska, Nevada, New Hampshire, New Jersey, and New Mexico; proposed additions are 8 State records / 31 StateResource records / 0 StateNotice records.
-3. The Live Working State continuity guardrail is approved: every material transition must be written to Live Working State and verified by readback before a dependent next action. Startup/session-end/closeout must block on stale or contradictory Live Working State.
-4. After Wave 4 data-lock approval, checkpoint that approval in Live Working State and verify readback **before** production writing. Then implement the approved Wave 4 data plus the already-approved explanatory-text spacing refinement and REG-002 Home-navigation transient-state reset in Drive Current.
-5. Validate Wave 4 cumulatively against the existing Regulations schema/provenance/freshness rules and affected navigation/rendering paths. Keep Regulations Search retained unless a later deliberate UX review changes that decision.
-6. Preserve Fish Guide Version 1 and all other named cross-domain carry-forward items.
+1. Treat Regulations nationwide production as **CLOSED / PASS** at GitHub `main` `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c` (`Regulations - Final Wave`).
+2. Final Regulations production contains **48 states / 180 resources / 2 active notices**; Repository Integrity #90 and GitHub Pages #578 passed.
+3. Do not reopen Regulations during normal continuation. Future resource/link corrections follow the established Regulations maintenance workflow.
+4. The next product milestone is **What Should I Throw?** Start its planning/architecture gate from the current GitHub baseline and current Drive Current tree.
+5. Preserve the Live Working State hard gate and all other named cross-domain carry-forward items.

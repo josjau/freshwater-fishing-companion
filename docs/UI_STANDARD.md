@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — UI Standard
 
 **Document:** UI_STANDARD.md  
-**Document Revision:** 1.0.0  
+**Document Revision:** 1.1.0  
 **Document Status:** Approved  
 **Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard  
 **Decision Baseline:** D015, D020-D022, D030-D032, D042, D046-D048, D050-D052, D061, D063  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-08-26
 
 # Purpose
 
@@ -246,7 +246,56 @@ Directional/navigation semantics:
 - use native Unicode glyphs rather than CSS-drawn arrows;
 - navigation-arrow glyph weight is `800` for established `←`, `→`, `↗`, and compact-row `›`; wrap glyphs separately so label weight need not change.
 
-Current production Dashboard regulation CTA remains `Go to ODWC Regulations ↗` until D066 is implemented. Under D066, Dashboard **Regulations** becomes internal navigation; official state-resource links remain external `↗` actions.
+Current production Dashboard **Regulations** is internal navigation to the state gateway. Official state-resource destinations remain external `↗` actions.
+
+# Regulations State Selection and State Page
+
+**Current — implemented and validated nationwide.** Regulations uses a state-first internal navigation flow before opening authoritative external resources.
+
+## State selection
+
+- The State selector is the canonical navigation control and exposes all supported states A-Z.
+- Search accepts a state name or 2-letter abbreviation and live-filters/accelerates the State selector rather than creating a separate result-navigation model.
+- Matching states remain alphabetical; normal typing selects the alphabetically first match. Typing alone does not navigate.
+- Returning from an opened state preserves the prior query and selected/opened state when that state remains in the filtered result set; subsequent typing resumes normal first-match behavior.
+- Home clears transient Regulations query, selected state, and opened-state context; re-entering Regulations after Home starts from the default selector state.
+- Desktop uses the native selector; mobile uses the approved compact selector trigger with contained vertical-only wheel popover and Done/Cancel interaction.
+- Search is retained after 48-state review.
+- No automatic GPS/location selection is part of the initial milestone.
+- No persisted preferred-state ordering is implemented before the D067 User Data architecture gate.
+
+## State page
+
+Use this hierarchy:
+
+```text
+← Regulations
+
+STATE NAME
+Fishing Regulations & Resources
+Official resources from Responsible State Agency
+
+[ optional active notice ]
+
+BEFORE YOU FISH
+  dynamic official resource cards
+
+PLAN YOUR TRIP
+  dynamic official resource cards
+```
+
+- State name is the primary heading; `Fishing Regulations & Resources` is secondary.
+- Agency attribution is visible near the top.
+- Current notices are optional and appear only when human-curated/active.
+- Resource cards are dynamic; do not render empty categories or fixed placeholder slots.
+- `Fishing Regulations` appears first and `Licenses & Permits` second where applicable.
+- One multi-purpose official tool should normally be represented once with multiple capabilities rather than duplicated into fake peer cards.
+- PDFs and online/interactive tools may both be shown when materially distinct.
+- Subtle delivery metadata may identify PDF, online regulations, interactive tool/map, fishing report, or license portal.
+- Official destinations use the standard external `↗` semantics; do not add a routine “leaving FCC” confirmation.
+- Primary-card emphasis may be refined during Wave 1, but peer-card treatment must remain consistent with the shared card system and D048.
+
+The nationwide implementation has validated the selector/search relationship, state-page hierarchy, narrow/mobile selector behavior, external-link affordances, and Regulations-specific Back/Home state behavior. Broader site-wide Parent-context implementation remains governed separately by D051/UX-001.
 
 # Mobile-First Requirements
 

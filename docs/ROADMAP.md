@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.5.1  
+**Document Revision:** 0.6.0  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-08-26
 
 # Purpose
 
@@ -46,8 +46,8 @@ The original validated 20-Rig library remains canonical. The additive Four-State
 
 1. **Knots** — completed / validated / closed.
 2. **Fish Guide** — completed / validated / closed; all 30 locked Version 1 Fish, 30 primary-identification media attachments, and the approved 20-pair identification graph are complete.
-3. **Regulations — U.S. State Fishing Resource Gateway**.
-4. **What Should I Throw?**.
+3. **Regulations — U.S. State Fishing Resource Gateway** — completed / validated / closed.
+4. **What Should I Throw?** — next product milestone.
 5. **Settings / User Data Architecture Gate**.
 6. **Tackle Reference / Find Tackle**.
 7. **My Tackle**.
@@ -88,54 +88,20 @@ Fish-to-Lure and advanced lure/color/retrieve/weather/season/clarity/cover/depth
 
 The Fish Guide milestone closed with Production Wave 4 — Sunfish & Crappie after desktop/mobile approval and post-push repository-integrity validation. Future Fish additions or evidence corrections are maintenance/new-scope work and do not reopen the completed Version 1 milestone automatically.
 
-# 3. Regulations — U.S. State Fishing Resource Gateway — Next Milestone
+# 3. Regulations — U.S. State Fishing Resource Gateway — Completed Milestone
 
-Build a state-first in-app gateway that helps anglers reach authoritative fishing regulations and other high-value official state resources without making Freshwater Fishing Companion a nationwide legal-regulation database.
+Regulations is **completed / validated / closed** for the 48 contiguous U.S. states.
 
-Approved initial planning direction:
+Final production closed at `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c` (`Regulations - Final Wave`) with **48 State / 180 StateResource / 2 active StateNotice** records. The internal Dashboard route, A-Z state selector, retained state-name/two-letter-abbreviation Search, state resource pages, authority/provenance model, monthly maintenance workflow, freshness validation, and external-reference maintenance path are production behavior.
 
-- cover the **48 contiguous U.S. states**;
-- keep the Dashboard label **Regulations**;
-- route the Dashboard card into an internal state-selection experience rather than directly to Oklahoma;
-- present an A–Z state selector with lightweight search/filtering as the baseline to evaluate during Phase 0;
-- open a state landing page that organizes useful **official** destinations rather than reproducing the state's legal rules;
-- distinguish higher-priority **Before You Fish** resources from secondary trip-planning/convenience resources;
-- normalize a reusable resource taxonomy while allowing each state to expose only the categories its agency actually provides;
-- store authoritative link/provenance/freshness metadata, not the changing legal values behind those links;
-- keep all states available even after later user preference features can prioritize preferred states;
-- avoid automatic location/GPS behavior and persistent preferred-state storage until the User Data architecture provides a deliberate ownership/privacy model;
-- design the state model without a hard-coded 48-state rendering assumption so Alaska, Hawaii, or other jurisdictions can be added later without structural redesign.
+The gateway remains an official-resource navigation surface rather than a project-owned nationwide legal-rule database. State authorities own current legal requirements. Future link/resource changes follow maintenance rules and do not reopen the milestone automatically.
 
-Candidate resource categories to validate during Phase 0 include:
+D066 owns the durable geographic/legal-resource boundary. `docs/workstreams/REGULATIONS-PHASE-0.md` is the closed design/evidence/production owner.
 
-**Before You Fish**
-
-- Fishing Regulations
-- Licenses & Permits
-- Seasons / Size / Bag-Limit resources
-- Special Regulations / Special Waters
-- Species-Specific Regulations
-- Special Permits / Tags / Stamps
-
-**Plan Your Trip**
-
-- Where to Fish / Public Access
-- Stocking Information
-- Official Fishing Reports / Forecasts
-- Aquatic Invasive Species information
-- Other Official Resources
-
-These categories are an approved starting taxonomy, not a requirement that every state expose an identical agency structure.
-
-The application does **not** own or interpret daily limits, possession limits, minimum lengths, open/closed dates, legal methods, waterbody exceptions, or similar changing legal facts during this milestone. The responsible state authority remains the source of truth.
-
-Phase 0 should validate the model against the Four-State region plus several structurally different states before the nationwide production pattern is locked.
-
-D066 owns the durable rationale and boundary. `docs/workstreams/REGULATIONS-PHASE-0.md` owns the active planning package and exact planning questions.
-
+# 4. What Should I Throw? — Next Milestone
 # 4. What Should I Throw?
 
-Build the primary Decision Knowledge recommendation experience after Regulations.
+Build the primary Decision Knowledge recommendation experience now that Regulations is closed.
 
 The feature should answer:
 

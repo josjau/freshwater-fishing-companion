@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Architecture
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.10.0  
+**Document Revision:** 0.11.0  
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
-**Last Updated:** 2026-08-26
+**Last Updated:** 2026-08-27
 
 # Purpose
 
@@ -139,7 +139,7 @@ Find
 
 Canonical identity signals outrank incidental description text. Hierarchical navigation scopes the eligible search universe before ranking; deeper context must not silently broaden results.
 
-**Current:** `search.js` provides deterministic lightweight normalized matching plus reusable lookup/filter/sort helpers. Regulations state selection uses lightweight normalized state-name/two-letter-abbreviation filtering tied to the state selector; Wave 1 review retained this Search path, with re-evaluation deferred until a larger state set exists.
+**Current:** `search.js` provides deterministic lightweight normalized matching plus reusable lookup/filter/sort helpers. Regulations state selection uses lightweight normalized state-name/two-letter-abbreviation filtering tied to the state selector; Search was retained after nationwide 48-state review.
 
 **Approved / Not Implemented:** heavy fuzzy search, advanced typo tolerance, natural-language intent parsing, sophisticated confidence systems, and global cross-domain search remain deferred until demonstrated need.
 
@@ -221,7 +221,7 @@ Specialized workflows may use separately approved semantics; Reel Setup is the e
 
 # Regulations Architecture
 
-**Current — Wave 1 architecture/UX pilot implemented.** Dashboard **Regulations** is internal navigation to the state resource gateway. The rollout target remains the 48 contiguous U.S. states under D066; Wave 1 implements the first eight states without expanding other curated domains nationwide.
+**Current — nationwide Regulations gateway implemented / closed.** Dashboard **Regulations** is internal navigation to the state resource gateway. The gateway covers the 48 contiguous U.S. states under D066 without expanding other curated domains nationwide. Final production closed at `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c` with 48 states, 180 resources, and 2 active notices.
 
 Regulations is a resource-navigation domain. FCC owns state identity, user-facing resource metadata, taxonomy, authority/provenance metadata, lifecycle status, and verification metadata. The responsible state authority owns the underlying current legal requirements.
 
@@ -278,16 +278,16 @@ The normalized resource model uses two sections (`before-you-fish`, `plan-your-t
 
 Regulations maintenance uses a separate monthly report/alert workflow, 90-day State/StateResource human freshness, 30-day active StateNotice review, and human adjudication of redirects/network failures. Automation may inspect/report and maintain the GitHub review issue, but must never silently mutate Regulations source or legal-resource meaning.
 
-Wave 1 production ownership is now:
+Regulations production ownership is:
 
-- `data/regulations.js` owns `REGULATIONS_DATA_BUILD_INFO`, State, StateResource, and StateNotice runtime records.
-- `view-renderer.js` owns the Regulations selector/Search presentation, state resource-page rendering, notice treatment, consolidated resource sections, and official-agency attribution presentation.
-- `script.js` owns Regulations routing/state-detail transitions.
+- `data/regulations.js` owns `REGULATIONS_DATA_BUILD_INFO`, the 48 State records, 180 StateResource records, and 2 active StateNotice runtime records.
+- `view-renderer.js` owns the Regulations selector/Search presentation, state resource-page rendering, notice treatment, consolidated resource sections, official-agency attribution presentation, and Back restoration of an eligible prior query/selected state.
+- `script.js` owns Regulations routing/state-detail transitions and the Home reset that clears transient Regulations query/selection/open-state context.
 - `tools/validate_repository_integrity.js` owns deterministic Regulations schema, relationship, provenance, capability, status, expiry, and freshness validation.
 - `tools/check_external_references.js --regulations` owns report-only Regulations reachability/redirect inspection without mutating canonical data.
 - `.github/workflows/regulations-maintenance.yml` owns the monthly validation/check/maintenance-issue automation with `contents: read` and `issues: write` only.
 
-These files preserve the completed Phase 0 semantic model, UX hierarchy, provenance rules, validation gates, and six-wave production plan in `workstreams/REGULATIONS-PHASE-0.md`.
+These files preserve the completed Phase 0 semantic model, UX hierarchy, provenance rules, validation gates, and completed nationwide rollout recorded in `workstreams/REGULATIONS-PHASE-0.md`.
 
 # Archive and Documentation Architecture
 

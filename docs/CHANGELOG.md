@@ -1,14 +1,27 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.3.0  
+**Document Revision:** 3.4.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-08-26
+**Last Updated:** 2026-08-27
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to `WORKING_STATE.md`; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-08-27 — Regulations Nationwide Production — Closed
+
+Source commit `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c` — `Regulations - Final Wave`
+
+- Completed the contiguous-U.S. Regulations gateway at **48 states / 180 StateResource records / 2 active StateNotice records**.
+- Final user review refined official regulation, licensing, where-to-fish, stocking, and report/forecast destinations while preserving provenance requirements and avoiding redundant cards.
+- Texas uses the TPWD HTML Fishing Regulations landing page as the primary Regulations destination; North Carolina retains NC Wildlife freshwater licensing rather than the marine-fisheries DEQ license path.
+- Retained state Search after nationwide scaling. Back from an opened state preserves the prior filtered query/selected state when eligible; Home clears transient Regulations query/selection/open-state context.
+- Final production diff from Wave 4 baseline contains exactly `data/regulations.js` and `view-renderer.js`.
+- Repository Integrity #90 and GitHub Pages #578 passed on the final production SHA.
+- Closed REG-001, REG-002, and GATE-014 as terminal Regulations implementation items. The next product milestone is **What Should I Throw?**
+- Reconciled the canonical current-state, active-ledger, roadmap, architecture, UI, workstream, and changelog owners so future startup reads do not report pre-closeout Regulations state.
 
 # 2026-08-26 — Live Working State Continuity Guardrail
 
