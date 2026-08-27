@@ -9,9 +9,10 @@ Before substantive work:
 1. Verify current GitHub `main` SHA.
 2. Read `docs/WORKING_STATE.md`; read `docs/ACTIVE-CHANGE-LEDGER.md` when the requested scope can intersect open carry-forward.
 3. Verify Google Drive `Working Source/Current` is the complete editable repository working tree and read the Live Working State for the active review-cycle identity/resume point.
-4. Read `docs/DEVELOPMENT_WORKFLOW.md` plus only the workflow/decision/domain owners material to the requested scope. When UI/navigation/card/detail/search behavior is in scope, also read `docs/UI_STANDARD.md`.
-5. Compare the recorded resume point with GitHub and Drive state. Do not rely on chat history as authority.
-6. Use broader baseline reconstruction only when the invalidation conditions in `docs/DEVELOPMENT_WORKFLOW.md` apply.
+4. Apply the Live Working State hard gate: it must include the latest material decision/state transition and agree with the repository Working State, applicable Active Change Ledger entries, and actual GitHub/Drive lineage. If it is stale, missing, or contradictory, stop normal progression and reconcile it before substantive or dependent work.
+5. Read `docs/DEVELOPMENT_WORKFLOW.md` plus only the workflow/decision/domain owners material to the requested scope. When UI/navigation/card/detail/search behavior is in scope, also read `docs/UI_STANDARD.md`.
+6. Compare the recorded resume point with GitHub and Drive state. Do not rely on chat history as authority.
+7. Use broader baseline reconstruction only when the invalidation conditions in `docs/DEVELOPMENT_WORKFLOW.md` apply.
 
 ## Authority
 
@@ -34,6 +35,10 @@ Before substantive work:
 
 ## Continuity and closeout
 
+- The Live Working State is an inline operational ledger, not a session-end-only artifact. Update it immediately after every material decision or state transition, then read it back before taking any next action that depends on that transition.
+- Material transitions include user approvals/data locks, implementation start or completion, review defects and their dispositions, validation results that change a gate, review approval, commit/push, CI/Pages results, workstream or wave transitions, and any change to the exact resume point.
+- If the Live Working State is stale, missing, or contradictory, normal progression is blocked. Reconcile it from authoritative GitHub/Drive/current-session facts before continuing; never bridge the gap from chat memory alone.
+- Session end and closeout are not complete until Live Working State readback proves the latest material transition, current validation/approval state, open defects, and exact next action are recorded.
 - Keep `docs/WORKING_STATE.md` limited to active work, unresolved gates, synchronization/validation status, and the exact resume point.
 - Promote durable rules, decisions, completed package results, and closed defects to their canonical governing documents before commit; remove completed history from Working State after reconciliation.
 - Represent every approved uncommitted repository change directly in the complete Drive `Working Source/Current` tree. Local-only files/packages are not cross-session working truth.
