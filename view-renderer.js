@@ -1916,6 +1916,8 @@ function renderRegulationsGatewayView(appMain, config) {
         });
     };
 
+    let isInitialSearchRestore = true;
+
     const updateSearch = () => {
         const query = String(input?.value ?? "").trim().toLocaleLowerCase();
         config.onQueryChange?.(input?.value ?? "");
@@ -1936,18 +1938,26 @@ function renderRegulationsGatewayView(appMain, config) {
                 state.name.toLocaleLowerCase().includes(query) || state.abbreviation.toLocaleLowerCase().includes(query)
             );
 
-        renderOptions(matches, matches[0]?.id ?? null);
+        const restoredStateId = isInitialSearchRestore && matches.some((state) => state.id === config.selectedStateId)
+            ? config.selectedStateId
+            : matches[0]?.id ?? null;
+        renderOptions(matches, restoredStateId);
         if (status) {
+            const selectedState = matches.find((state) => state.id === restoredStateId);
             status.textContent = matches.length === 0
                 ? "No state matched that search."
-                : `${matches.length} ${matches.length === 1 ? "state" : "states"} matched. ${matches[0].name} is selected.`;
+                : `${matches.length} ${matches.length === 1 ? "state" : "states"} matched. ${selectedState?.name ?? matches[0].name} is selected.`;
         }
+        isInitialSearchRestore = false;
     };
 
     if (input) input.value = config.initialQuery ?? "";
     updateSearch();
 
-    input?.addEventListener("input", updateSearch);
+    input?.addEventListener("input", () => {
+        isInitialSearchRestore = false;
+        updateSearch();
+    });
     clearButton?.addEventListener("click", () => {
         input.value = "";
         config.onQueryChange?.("");
