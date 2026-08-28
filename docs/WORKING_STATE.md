@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.15.0  
+**Document Revision:** 1.15.1  
 **Document Status:** Approved — Active Repository Continuity Record  
 **Workstream Status:** What Should I Throw Phase 0 — PLANNING COMPLETE / PRODUCTION DEFERRED; Conditions Production Foundation — NEXT  
 **Cleanup Implementation Commit:** `0ea6420f2ac203281c5bab33b96ab5fcc6409947`  
-**Last Updated:** 2026-08-27
+**Last Updated:** 2026-08-28
 
 # Purpose
 
@@ -52,6 +52,16 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 - The final changed-file scope from Wave 4 baseline `82e7e6ca22e1a0992113aee92d73e48e7277bc89` is exactly `data/regulations.js` and `view-renderer.js`.
 - Repository Integrity #90 and GitHub Pages #578 passed on the final production SHA.
 - Regulations remains governed by D066, `ARCHITECTURE.md`, `UI_STANDARD.md`, and `EXTERNAL_REFERENCE_MAINTENANCE.md`; its closed workstream record is retained under `archive/workstreams/regulations/REGULATIONS-PHASE-0.md`. Future link changes are maintenance and do not reopen the milestone automatically.
+
+### Bounded Regulations Maintenance — Awaiting Human Validation
+
+A user-reported maintenance repair is **OPEN / PENDING HUMAN VALIDATION** for four current `StateResource` records. This maintenance does not reopen the closed Regulations milestone. `data/regulations.js` is unchanged and must remain unchanged until the user confirms every candidate destination opens and behaves correctly in a normal browser.
+
+- `north-carolina-fishing-regulations`: the current `https://www.ncwildlife.gov/fishing/fishing-regulations` destination is reported broken; candidate replacement is `https://www.ncwildlife.gov/hunting/fishing-hunting-trapping-regulations`.
+- `south-carolina-fishing-regulations`: replace the current eRegulations deep link `https://www.eregulations.com/southcarolina/fishing/freshwater-game-fishing-regulations` with the official `https://www.dnr.sc.gov/regulations.html` landing page; the eventual source repair should use direct provenance, clear the obsolete designation URL, and reconcile the title/description/experience metadata.
+- `south-carolina-fishing`: retarget the broad `https://www.dnr.sc.gov/fishing.html` destination to the Fishing Access ArcGIS experience `https://experience.arcgis.com/experience/368c6b8ebc164f21877eda6aa3aa4fcf/page/fishing`; the eventual source repair should present it as **Fishing Access**, use `interactive-map`, and retain officially-designated-external provenance anchored to the SCDNR Freshwater Fishing page.
+- `washington-fish-stocking`: evaluate the current `https://wdfw.wa.gov/fishing/reports/stocking` record for retargeting/generalization to `https://wdfw.wa.gov/fishing/reports`, with **Fishing & Stocking Reports** wording and metadata that represents both stocking and fishing-report content.
+- Gate: after the user validates all candidate destinations, stage one bounded `data/regulations.js` repair, update human-controlled verification metadata as appropriate, run targeted Repository Integrity and external-reference validation, review the exact diff, and complete the separate source commit/CI closeout.
 
 **What Should I Throw Phase 0 planning is COMPLETE / PRODUCTION DEFERRED.** D069 owns the locked product/output/input/prerequisite contract. The cross-domain architecture gate is closed: Conditions, Lure/Bait, Technique, and typed intrinsic Compatibility Relationship boundaries are approved for prerequisite production. The active prerequisite sequence is Conditions → Lure/Bait Reference → Techniques → Settings / User Data Architecture → scoped My Tackle Availability Foundation → What Should I Throw recommendation engine + UX pilot. Full Tackle Reference / Find Tackle, Catch Log, Global Search, and Favorites remain later unless a direct dependency is demonstrated.
 

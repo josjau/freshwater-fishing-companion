@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.8.0  
+**Document Revision:** 1.8.1  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `2f645d9040d43445cabf5e6e043c08a30af72bd6`  
-**Last Updated:** 2026-08-27
+**Reconciliation Baseline:** `f388df7fac62770fe07b79d3ed7470a8e768b045`  
+**Last Updated:** 2026-08-28
 
 # Purpose
 
@@ -58,6 +58,12 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 |---|---|---|---|---|
 | FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw production after prerequisite gates | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish; implement through the next Decision Knowledge milestone rather than duplicating it into Fish. |
 | FISH-011 | DEFERRED / NOT AUTOMATIC IMPLEMENTATION | Deferred Fish candidates outside V1 | Future explicit scope/evidence | Do not treat excluded candidates as unfinished Version 1 Fish work. |
+
+# Regulations Maintenance
+
+| ID | Status | Item | Canonical detail / gate | Next action |
+|---|---|---|---|---|
+| REG-001 | OPEN | North Carolina, South Carolina, and Washington resource defects are documented; four replacement candidates await human validation. | `WORKING_STATE.md`; `EXTERNAL_REFERENCE_MAINTENANCE.md`; records `north-carolina-fishing-regulations`, `south-carolina-fishing-regulations`, `south-carolina-fishing`, and `washington-fish-stocking`. | User validates every candidate destination in a normal browser. Keep `data/regulations.js` unchanged until validation. After confirmation, apply the bounded source/metadata repair, run targeted Repository Integrity and external-reference checks, review the exact diff, and close through a separate source commit/CI cycle. |
 
 # Named Future Architecture / Product Gates
 
