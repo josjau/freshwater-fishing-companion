@@ -4,7 +4,7 @@
 **Document Status:** Approved  
 **Role:** Canonical durable decision bodies for this ownership domain  
 **Migration Baseline:** `af3bffb9995d56f8b9e47236bbadfa481d88cc34`  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-08-27
 
 # Purpose
 
@@ -328,13 +328,13 @@ The User Data gate must deliberately resolve at minimum:
 
 A user-aware architecture does **not** require login. Version 1 may use one local profile/identity if simplest, but persisted My Tackle/Catch Log/Preferences must not implicitly treat a browser storage bucket as the user with no migration/ownership model.
 
-`What Should I Throw?` remains ahead of this gate and must work without My Tackle. Once My Tackle exists, recommendations may optionally use owned inventory as a personalization/filter/ranking signal without making inventory a prerequisite for the core recommendation engine.
+D069 refines the sequencing trigger while preserving this ownership rule. Conditions, Lure/Bait, and Techniques now precede this gate; the Settings / User Data Architecture gate then precedes authoritative My Tackle. A scoped My Tackle Availability Foundation is a prerequisite for What Should I Throw production so the feature can distinguish Best Overall from Best Currently Available without treating transitional readiness state as ownership.
 
 **Reason:** My Tackle and Catch Log are durable user-owned data. Designing them before retention, identity, migration, backup, and ownership are settled would bake feature-specific assumptions into storage and create avoidable migration risk. Moving the gate ahead of Tackle Reference also lets connected-knowledge/ownership UX be designed against a settled User Knowledge boundary.
 
 **Current implementation status:** Approved architecture and roadmap sequencing / Not Implemented. Current readiness persistence remains transitional and is not authoritative ownership.
 
-**Future trigger:** After Regulations and What Should I Throw are closed, open the Settings / User Data Architecture milestone and settle this gate before materially expanding Tackle Reference or implementing authoritative My Tackle/Catch Log persistence.
+**Future trigger:** After Conditions, Lure/Bait, and Techniques production foundations close under D069, open the Settings / User Data Architecture gate. Settle it before authoritative My Tackle; then implement only the scoped My Tackle availability foundation required before What Should I Throw production. Full Tackle Reference expansion and Catch Log remain later roadmap work unless a direct dependency is demonstrated.
 
 **Canonical owners:** D067; `ROADMAP.md`; `ARCHITECTURE.md`; `data-model/01-FOUNDATION.md`; `05-TACKLE.md`; `05A-INVENTORY.md`; `07-USER-DATA.md`.
 

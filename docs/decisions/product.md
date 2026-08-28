@@ -4,7 +4,7 @@
 **Document Status:** Approved  
 **Role:** Canonical durable decision bodies for this ownership domain  
 **Migration Baseline:** `af3bffb9995d56f8b9e47236bbadfa481d88cc34`  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-08-27
 
 # Purpose
 
@@ -181,3 +181,46 @@ The state-first design also creates a clean future personalization point: prefer
 **Canonical owners:** D066 owns the durable product/architecture boundary; `ROADMAP.md` owns milestone order; `PROJECT.md` owns the geographic-scope exception; `ARCHITECTURE.md` owns source/knowledge boundaries; `EXTERNAL_REFERENCE_MAINTENANCE.md` owns ongoing link-maintenance policy; the closed Regulations workstream is retained under `archive/workstreams/regulations/`.
 
 Permanent principle: **normalize navigation to official state resources; do not become the source of changing fishing law.**
+
+# D069 – What Should I Throw Prerequisite Architecture and Phase 0 Handoff
+
+**Decision:** What Should I Throw Phase 0 planning is complete. The feature will eventually answer what the angler should throw now using dual guidance: **Best Overall** is contextually strongest independent of availability, while **Best Currently Available** is the strongest executable recommendation from tackle actually available to the angler. Unavailable strong options remain visible with missing requirements; if one recommendation wins both states, the UI combines the states rather than duplicating the recommendation.
+
+V1 requires a target Fish. Required current-context inputs are access/position and waterbody; observable context includes depth/zone, cover/structure, water clarity, and current where relevant. Season, light/sky, numeric water temperature, and bait preference are optional refiners. Unknown/Not sure is valid input absence and must degrade gracefully rather than block recommendations.
+
+The feature composes canonical knowledge without duplicating it:
+
+- Rig owns physical terminal assembly/configuration and **How to Rig It**.
+- Lure/Bait owns canonical fishing-relevant lure/bait identity presented to Fish.
+- Technique owns reusable presentation/retrieve/cadence/movement/strike guidance and **How to Fish It**.
+- Conditions owns reusable environmental/situational vocabulary.
+- Fish retains intrinsic species facts, including stable habitat/waterbody associations.
+- Recommendation Decision Knowledge owns contextual selection, ranking, rationale, exact context-dependent parameters, and Fish/Condition-specific suitability.
+- My Tackle/User Knowledge owns authoritative persistent ownership once implemented; temporary/current availability must not silently create ownership.
+
+A distinct Lure/Bait Reference domain is approved. Tackle remains the owner of functional fishing equipment and Rig-building components; Lure/Bait owns bait/lure identities such as Stick Worm, Craw, Paddle-tail Swimbait, Spinnerbait, Crankbait, Jerkbait, Inline Spinner, Spoon, Minnow, Nightcrawler, and Cricket. Commercial brand/model/SKU identity is not canonical Lure/Bait Reference Knowledge. Exact recommended size, weight, color/pattern, and presentation remain Recommendation Decision Knowledge; sparse intrinsic subtype attributes may be added only when demonstrated by recommendation, compatibility, or inventory matching.
+
+Conditions V1 uses a flat canonical vocabulary grouped by Waterbody, Access/Position, Depth/Zone, Cover/Structure, Water Clarity, Current, Season, and Light/Sky. `Not sure` is not a Condition entity. Water temperature remains optional numeric context. Fish intrinsic habitat/waterbody facts remain Fish-owned. Existing Rig `conditionTags[]` require explicit migration review; contextual “works well in” semantics move to Recommendation Decision Knowledge rather than being blindly converted into Condition relationships.
+
+Technique V1 owns canonical reusable presentation behaviors rather than equipment setup, broad strategy, or Fish/Condition-specific advice. Reusable instructional attributes may include movement type, cadence, rod action, reel action, ordered instructions, strike cues, common mistakes, and beginner tips where demonstrated. Exact Technique vocabulary and optional fields may be refined during the production pilot without changing the semantic boundary.
+
+Intrinsic compatibility is Reference Knowledge stored once in a typed Compatibility Relationship domain supporting Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique. Records identify relationship type and both canonical participants, use deterministic IDs, and contain lifecycle metadata but no ranking, weighting, confidence, Fish applicability, Condition applicability, or contextual suitability. Reverse navigation is derived. Missing compatibility during staged authoring is not automatically incompatibility until the relevant authored scope is declared complete. Three-way Rig/Lure/Technique combinations are derived from pairwise compatibility unless future evidence proves pairwise modeling insufficient.
+
+**Prerequisite sequence:** What Should I Throw production is deferred until the demonstrated prerequisite path is implemented in this order:
+
+1. Conditions Production Foundation;
+2. Lure/Bait Reference Production Foundation;
+3. Techniques Production Foundation;
+4. Settings / User Data Architecture Gate;
+5. scoped My Tackle Availability Foundation;
+6. What Should I Throw recommendation engine + UX pilot.
+
+Full Tackle Reference / Find Tackle, Catch Log, Global Search, and Favorites are not prerequisites unless later evidence demonstrates a direct dependency. Compatibility relationships are introduced incrementally as their participating domains become real.
+
+D069 refines the roadmap trigger in D067 without changing D067's permanent ownership principle: stable User Knowledge identity/persistence architecture still precedes authoritative My Tackle; it now follows the three approved Reference Knowledge prerequisites and precedes What Should I Throw production rather than following it.
+
+**Phase 0 closeout:** reconcile this decision into the canonical domain documents, close What Should I Throw Phase 0 as **PLANNING COMPLETE / PRODUCTION DEFERRED**, and make Conditions Production Foundation the next workstream. Exact ownership-versus-temporary/current-availability semantics remain for the User Data/My Tackle gate.
+
+**Material-change rule:** implementation/pilot findings may refine labels and optional fields only where the governing domain contract explicitly allows it. A material change to these semantic boundaries or prerequisite order requires explicit reapproval and durable documentation update.
+
+**Canonical owners:** D069; `ROADMAP.md`; `ARCHITECTURE.md`; `data-model/03B-CONDITIONS.md`; `data-model/03C-LURES-BAIT.md`; `data-model/03A-TECHNIQUES.md`; `data-model/09-RELATIONSHIPS.md`; `data-model/07-USER-DATA.md`; `data-model/05A-INVENTORY.md`; active state in `WORKING_STATE.md` / `ACTIVE-CHANGE-LEDGER.md`.

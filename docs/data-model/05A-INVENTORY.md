@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 05A-INVENTORY.md  
-**Document Revision:** 0.3.1  
+**Document Revision:** 0.4.0  
 **Document Status:** Draft  
 **Implementation Status:** Approved / Not Implemented  
-**Decision Baseline:** D028, D056, D067
+**Decision Baseline:** D028, D056, D067, D069
 
 ---
 
@@ -22,7 +22,7 @@ My Tackle represents actual fishing equipment and consumable tackle owned by the
 
 The application currently has lightweight per-Rig local readiness selections. Those selections are transitional availability state, not authoritative persistent ownership records and must not be migrated automatically into My Tackle.
 
-Canonical Tackle remains Reference Knowledge. My Tackle will become the persistent ownership source of truth only after its dedicated schema and workflows are implemented and validated.
+Canonical Tackle and the approved future Lure/Bait domain remain Reference Knowledge. My Tackle will become the persistent ownership source of truth only after its dedicated schema and workflows are implemented and validated.
 
 ---
 
@@ -30,11 +30,15 @@ Canonical Tackle remains Reference Knowledge. My Tackle will become the persiste
 
 Canonical Tackle answers:
 
-> What functional tackle type is this?
+> What functional tackle/equipment type is this?
+
+Canonical Lure/Bait answers:
+
+> What lure or bait identity is presented to the Fish?
 
 My Tackle answers:
 
-> What fishing items do I actually own?
+> What fishing items do I actually own, and what relevant variants do I have?
 
 Under D067, those owned items belong to the applicable stable user/profile identity selected by the User Data Architecture gate. Canonical Tackle remains global application Reference Knowledge rather than being duplicated per user.
 
@@ -48,7 +52,7 @@ The detailed owned-item schema is intentionally open.
 
 Earlier planning identified possible concepts such as:
 
-- canonical Tackle mapping,
+- canonical Tackle and/or canonical Lure/Bait mapping as applicable,
 - user-defined name,
 - brand/model,
 - size or variant,
@@ -92,6 +96,12 @@ The exact field name and cardinality are not approved until the My Tackle schema
 This relationship must follow D056 single-owner semantics and must not duplicate canonical Tackle identity or Rig requirement data into the owned item unnecessarily.
 
 ---
+
+# Ownership vs Current Availability
+
+D069 requires the My Tackle prerequisite to support recommendation availability without collapsing **owned** into **currently available**. Persistent ownership remains authoritative User Knowledge changed only through explicit My Tackle workflows. Temporary/session availability, borrowed tackle, or “with me now” state may be supported, but the exact V1 representation is deliberately deferred to the Settings / User Data + My Tackle gate.
+
+The scoped My Tackle Availability Foundation is complete when the application can authoritatively match the relevant canonical Tackle/Lure/Bait and fishing-relevant variants needed to determine recommendation executability. Full inventory-management breadth is not a prerequisite for What Should I Throw production.
 
 # My Tackle Write Authority
 
@@ -179,14 +189,16 @@ Before My Tackle becomes authoritative, the Settings / User Data Architecture ga
 
 1. stable user/profile identity and owned-item ownership semantics,
 2. owned-item identity and field schema,
-3. canonical Tackle mapping semantics,
+3. canonical Tackle and Lure/Bait mapping semantics as applicable,
 4. durable-versus-consumable lifecycle requirements,
-5. quantity and variant behavior,
+5. quantity and fishing-relevant variant behavior,
 6. explicit Add/Edit/Remove ownership workflows,
-7. transitional readiness-state replacement behavior,
-8. Fishing Setup schema if included in the same milestone,
-9. persistence, retention, validation, migration, backup, and import/export requirements,
-10. User Knowledge rendering and sanitization boundaries.
+7. persistent ownership versus temporary/current availability semantics,
+8. transitional readiness-state replacement behavior,
+9. recommendation executability matching required by D069,
+10. Fishing Setup schema if included in the same milestone,
+11. persistence, retention, validation, migration, backup, and import/export requirements,
+12. User Knowledge rendering and sanitization boundaries.
 
 ---
 

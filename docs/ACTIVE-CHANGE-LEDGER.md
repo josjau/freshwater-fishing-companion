@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.7.0  
+**Document Revision:** 1.8.0  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c`  
+**Reconciliation Baseline:** `2f645d9040d43445cabf5e6e043c08a30af72bd6`  
 **Last Updated:** 2026-08-27
 
 # Purpose
@@ -56,21 +56,21 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish; implement through the next Decision Knowledge milestone rather than duplicating it into Fish. |
+| FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw production after prerequisite gates | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish; implement through the next Decision Knowledge milestone rather than duplicating it into Fish. |
 | FISH-011 | DEFERRED / NOT AUTOMATIC IMPLEMENTATION | Deferred Fish candidates outside V1 | Future explicit scope/evidence | Do not treat excluded candidates as unfinished Version 1 Fish work. |
 
 # Named Future Architecture / Product Gates
 
 | ID | Status | Item | Trigger / owner |
 |---|---|---|---|
-| GATE-001 | DEFERRED TO NAMED GATE | Technique architecture and Rig↔Technique relationship ownership | Technique implementation gate; D003/D024/D056. |
-| GATE-002 | APPROVED / PENDING IMPLEMENTATION | Conditions domain | Revalidate before What Should I Throw. |
-| GATE-003 | DEFERRED TO NAMED GATE | Separate Lures domain | Revalidate at Lure/Tackle/Recommendation architecture gate. |
-| GATE-004 | APPROVED / PENDING IMPLEMENTATION | What Should I Throw | **Current next product milestone** after Regulations closed at `fffe2ef518f13fd5d50e5d45af9d9ead7c11045c`. |
-| GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Roadmap milestone after Settings / User Data Architecture closes under D067. |
-| GATE-006 | REQUIRED | Settings / User Data Architecture | After What Should I Throw and before material Tackle Reference expansion, My Tackle, or Catch Log; must settle user/profile identity, retention, persistence, migration, backup/restore, device transfer, and preference ownership under D067. |
-| GATE-007 | DEFERRED TO NAMED GATE | My Tackle | After User Data gate. |
-| GATE-008 | DEFERRED TO NAMED GATE | Catch Log | After User Data gate / My Tackle. |
+| GATE-001 | APPROVED / PENDING IMPLEMENTATION | Technique domain + intrinsic compatibility participation | D003/D024/D056/D069; implement after Lure/Bait prerequisite foundation. |
+| GATE-002 | REQUIRED | Conditions Production Foundation | **Next prerequisite workstream** after What Should I Throw Phase 0 documentation closeout; D004/D056/D069 + `data-model/03B-CONDITIONS.md`. |
+| GATE-003 | APPROVED / PENDING IMPLEMENTATION | Lure/Bait Reference domain | D069 + `data-model/03C-LURES-BAIT.md`; implement after Conditions. |
+| GATE-004 | BLOCKED | What Should I Throw production | Phase 0 planning complete under D069; resume recommendation engine/UX only after Conditions → Lure/Bait → Techniques → User Data → scoped My Tackle Availability gates. |
+| GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Later roadmap milestone after the recommendation prerequisite path unless a direct dependency is demonstrated. |
+| GATE-006 | REQUIRED | Settings / User Data Architecture | After Techniques and before authoritative My Tackle; settle user/profile identity, retention, persistence, migration, backup/restore, device transfer, preference ownership, and ownership-vs-current-availability semantics under D067/D069. |
+| GATE-007 | REQUIRED | My Tackle Availability Foundation | After User Data gate and before What Should I Throw production; implement only the authoritative ownership/current-availability and recommendation-matching scope required by D069. |
+| GATE-008 | DEFERRED TO NAMED GATE | Catch Log | After the settled User Data/My Tackle foundation and later roadmap progression. |
 | GATE-009 | DEFERRED TO NAMED GATE | Global Search | After major searchable domains are stable. |
 | GATE-010 | PARKED | Favorites final keep/replace/remove decision | Near project completion. |
 | GATE-011 | DEFERRED TO NAMED GATE | Multi-theme support | Settings / User Preferences gate. |

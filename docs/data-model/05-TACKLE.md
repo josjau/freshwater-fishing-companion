@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 05-TACKLE.md  
-**Document Revision:** 0.2.1  
+**Document Revision:** 0.3.0  
 **Document Status:** Approved  
 **Implementation Status:** Validated  
-**Decision Baseline:** D019, D025, D026, D028, D037, D043, D056, D067
+**Decision Baseline:** D019, D025, D026, D028, D037, D043, D056, D067, D069
 
 ---
 
@@ -166,26 +166,24 @@ Repository Audit Section 4 is **implemented / runtime-validated / closed**:
 
 ---
 
-# Deferred Separate Lure Domain Gate
+# Lure/Bait Boundary — Approved / Not Implemented
 
-A separate canonical **Lure** domain is **not currently implemented or approved for implementation**. Some lure-like concepts correctly exist in canonical Tackle today because Tackle supports Rig requirements, recognition, search, and readiness.
+D069 approves a separate canonical **Lure/Bait** Reference domain, governed by `03C-LURES-BAIT.md`.
 
-If future Recommendation/Lure workflows demonstrate that a separate reusable artificial-bait entity is needed, the Lure/Tackle architecture gate must settle before production data is created:
+The semantic boundary is:
 
-1. whether a separate Lure entity provides demonstrated value beyond canonical Tackle;
-2. the exact semantic boundary between Lure and current Tackle;
-3. the canonical Lure field set, with purpose/ownership/validation for each field;
-4. Fish/Rig/Technique/Condition relationship ownership under D056;
-5. ProductDefinition relationships if commercial-product identity enters scope;
-6. My Tackle mapping/ownership behavior;
-7. media attachment requirements beyond the shared `ownerType` + `ownerId` model, if any;
-8. referential-integrity/migration requirements.
+- **Tackle** owns functional fishing equipment and Rig-building components such as hooks, weights, swivels, bobbers, jigheads, leader, and bottom-bouncer hardware.
+- **Lure/Bait** owns canonical lure and bait identities intentionally presented to Fish, such as Stick Worm, Craw, Paddle-tail Swimbait, Spinnerbait, Crankbait, Inline Spinner, Spoon, Minnow, or Nightcrawler.
 
-Candidate concepts such as lure family/type, typical size/weight, common colors, action, beginner guidance, or common mistakes remain **design inputs, not approved production fields**.
+Current production Tackle remains valid until a deliberate Lure/Bait migration is implemented. Existing lure-like Tackle records must not be silently reclassified or duplicated; the production foundation will determine each record's disposition against real Rig/readiness dependencies.
 
-Do not add placeholder relationship arrays such as `targetFishIds[]`, `compatibleRigIds[]`, or `compatibleTechniqueIds[]`. Contextual lure suitability/ranking/rationale may belong to Decision Knowledge rather than intrinsic bidirectional Reference Knowledge.
+Complete-lure terminal setups may still exist as Rigs where the physical connection/setup has distinct semantic ownership. For example, Inline Spinner may be a Lure/Bait identity while Inline Spinner Setup remains a Rig teaching the ready-to-fish terminal configuration.
 
-A manufacturer's commercial product and a reusable lure concept are different semantic entities. ProductDefinition modeling remains deferred until an approved product-specific feature requires it. Actual user-owned lure items belong to My Tackle/User Knowledge, not the canonical Lure/Tackle definition.
+Commercial product identity, manufacturer catalogs, SKU/UPC/retailer modeling, and commercial color-name enumeration remain outside the canonical Lure/Bait V1 domain. User-owned brand/model/variant details belong to My Tackle/User Knowledge when that schema is implemented.
+
+Intrinsic Rig↔Lure/Bait compatibility is stored once under `09-RELATIONSHIPS.md`; contextual Fish/Condition-specific lure selection, exact recommended size/weight/color/pattern, and rationale belong to Recommendation Decision Knowledge.
+
+Do not add inverse `compatibleRigIds[]`, `targetFishIds[]`, or `compatibleTechniqueIds[]` merely for navigation.
 
 # Future / Deferred
 

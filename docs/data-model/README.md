@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Data Model Index
 
 **Document:** data-model/README.md  
-**Document Revision:** 0.4.0  
+**Document Revision:** 0.5.0  
 **Document Status:** Approved  
 **Role:** Canonical data-model ownership map  
-**Decision Baseline:** D037, D056, D067  
-**Last Updated:** 2026-08-25
+**Decision Baseline:** D037, D056, D067, D069  
+**Last Updated:** 2026-08-27
 
 # Purpose
 
@@ -32,20 +32,21 @@ This directory contains governing data-model documents divided by semantic owner
 | `02-FISH.md` | Current Fish schema plus explicitly separated approved/future Fish architecture. |
 | `03-RIGS.md` | Validated canonical Rig schema and ownership boundaries. |
 | `03A-TECHNIQUES.md` | Approved / Not Implemented Technique domain boundary. |
-| `03B-CONDITIONS.md` | Approved / Not Implemented Condition domain boundary. |
+| `03B-CONDITIONS.md` | Approved / Not Implemented Condition V1 vocabulary/schema boundary; next production prerequisite. |
+| `03C-LURES-BAIT.md` | Approved / Not Implemented canonical Lure/Bait Reference domain boundary. |
 | `04-KNOTS.md` | Validated canonical Knot schema/boundaries. |
-| `05-TACKLE.md` | Validated canonical functional Tackle schema plus the deferred separate-Lure architecture gate. |
+| `05-TACKLE.md` | Validated canonical functional Tackle schema plus the approved semantic boundary with Lure/Bait. |
 | `05A-INVENTORY.md` | Approved / Not Implemented My Tackle ownership boundary; detailed owned-item schema unresolved. |
 | `07-USER-DATA.md` | User Knowledge architecture boundary plus required User Data and deferred backup/restore gates. |
-| `09-RELATIONSHIPS.md` | Validated relationships, Decision Knowledge references, derived inverses, D056 ownership, and deferred future relationships. |
+| `09-RELATIONSHIPS.md` | Validated current relationships plus approved typed intrinsic Compatibility Relationship architecture, Decision Knowledge boundaries, and derived inverses. |
 
-The former standalone glossary, speculative Lure model, and deferred Backup model were consolidated into `01-FOUNDATION.md`, `05-TACKLE.md`, and `07-USER-DATA.md` respectively. Their prior revisions remain recoverable in Git history.
+The former speculative Lure placeholder was retired during documentation consolidation, but D069 now establishes a genuinely approved Lure/Bait domain; `03C-LURES-BAIT.md` is therefore the new canonical owner rather than a restoration of the old speculative model. The former glossary and deferred Backup placeholder remain consolidated into `01-FOUNDATION.md` and `07-USER-DATA.md`; prior revisions remain recoverable in Git history.
 
 # Current Implemented Canonical Domains
 
 Current production Reference Knowledge includes Fish, Rigs, Knots, Tackle, and Media. Current Decision Knowledge includes Knot task guidance and Reel & Line Setup guidance.
 
-Technique, Conditions, My Tackle, backup/restore, and a possible separate Lure domain remain explicitly not-yet-implemented/deferred as documented by their surviving owners/gates.
+Technique, Conditions, Lure/Bait, My Tackle, and backup/restore remain not-yet-implemented as documented by their owners/gates. Conditions is the next production prerequisite; Lure/Bait and Techniques follow before User Data/My Tackle availability and What Should I Throw production under D069.
 
 # Deferred Model Policy
 

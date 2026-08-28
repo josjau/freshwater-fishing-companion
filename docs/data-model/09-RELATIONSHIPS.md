@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.5.6  
+**Document Revision:** 0.6.0  
 **Document Status:** Approved  
 **Implementation Status:** Fish Version 1 relationships COMPLETE / VALIDATED / CLOSED — 20 identification pairs; 27 Fish guidance records currently active  
-**Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, FISH-001–FISH-007  
-**Last Updated:** 2026-08-24
+**Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, D069, FISH-001–FISH-007  
+**Last Updated:** 2026-08-27
 
 ---
 
@@ -21,7 +21,7 @@ Relationships use stable identifiers and follow the site's semantic single-owner
 
 ## Layer 1 — Reference Knowledge
 
-Curated facts and reusable fishing concepts, including implemented Fish, Rigs, Knots, Tackle, and Media plus approved future domains such as Techniques, Conditions, and a possible separate Lure domain.
+Curated facts and reusable fishing concepts, including implemented Fish, Rigs, Knots, Tackle, and Media plus approved future domains including Techniques, Conditions, Lure/Bait, and intrinsic Compatibility Relationships.
 
 Fish pairwise field-identification relationships are Reference Knowledge owned by `FISH_IDENTIFICATION_RELATIONSHIPS`. The registry is implemented and expands with each approved Fish production package.
 
@@ -364,36 +364,41 @@ Future recommendation relationships should follow the same ownership test: conte
 
 ---
 
-# Rig ↔ Technique — Deferred
+# Approved Intrinsic Compatibility Relationships — Not Yet Implemented
 
-Rig owns physical assembly and Rig-specific configuration. Technique owns reusable presentation behavior.
+D069 approves one typed Compatibility Relationship domain for intrinsic pairwise compatibility among:
 
-The canonical storage owner for future Rig ↔ Technique compatibility is **not yet approved**. Current production Rigs do not store `techniqueIds[]`, and the future Technique model does not have an approved `compatibleRigIds[]` field.
+- Rig ↔ Lure/Bait,
+- Rig ↔ Technique,
+- Lure/Bait ↔ Technique.
 
-At the Technique architecture gate, determine whether compatibility is:
+Compatibility means the two canonical concepts are legitimately usable together under normal use. It does **not** mean they are best for a Fish/Condition, that the angler owns the required items, or that the combination is executable now.
 
-- an intrinsic Reference Knowledge fact owned by one side, or
-- contextual Decision Knowledge involving Fish, Conditions, or other factors.
+Conceptual V1 record shape:
 
-Do not populate both directions. Rig `assemblySteps[]` remain authoritative for physical construction regardless of the eventual compatibility model.
+```text
+id
+relationshipType
+sourceId
+targetId
+createdVersion
+lastModifiedVersion
+isActive
+```
 
----
+Exact field/literal names may be finalized during implementation, but the semantic contract is locked:
 
-# Other Future Relationships — Deferred
+- deterministic relationship IDs;
+- exactly one stored record per intrinsic pair;
+- reverse navigation derived rather than duplicated;
+- active runtime compatibility requires the relationship and both referenced entities to be active;
+- no `score`, `strength`, `priority`, `rank`, `confidence`, Fish applicability, Condition applicability, or contextual recommendation weighting;
+- missing compatibility during staged authoring is not automatically incompatibility until the applicable authored scope is declared complete;
+- three-way Rig/Lure/Bait/Technique combinations are derived from pairwise compatibility unless future evidence proves pairwise modeling insufficient.
 
-The following relationship families remain unresolved until their respective architecture gates:
+Fish ↔ Technique, Fish ↔ Lure/Bait, and Condition-specific Fish/Rig/Lure/Bait/Technique suitability are contextual Recommendation Decision Knowledge under D069 rather than intrinsic Compatibility Relationship records. Fish intrinsic habitat/waterbody facts remain Fish-owned.
 
-- Fish ↔ Technique,
-- Condition ↔ Fish/Rig/Technique/Lure,
-- separate Lure ↔ Fish/Rig/Technique relationships,
-- Product Definition relationships,
-- My Tackle owned-item mappings beyond the approved ownership boundary.
-
-Fish ↔ Rig curated starting guidance is **not** part of this deferred list; its owner/shape is implemented as `FISH_RIG_GUIDANCE` above.
-
-Search or UI needs do not authorize speculative canonical relationship fields.
-
----
+My Tackle owned-item mappings and current-availability state are User Knowledge and remain separate from Reference compatibility. Search or UI needs do not authorize inverse compatibility arrays on participating entities.
 
 # Search Relationships
 
@@ -442,6 +447,8 @@ For implemented and approved production relationship domains, validate as applic
 - Fish-to-Rig guidance Fish/Rig references resolve and obey optionality/cardinality/priority/reason rules,
 - every production-ready migrated Fish has exactly one active primary-identification Media relationship,
 - ordinary production relationship IDs are not used as forward-planning placeholders.
+
+For the future Compatibility Relationship domain, validation must additionally enforce valid relationship types, deterministic IDs, correct participant entity types, duplicate-pair prevention, active-participant runtime gating, and the absence of contextual recommendation fields. Staged production must record when a compatibility family/scope is complete before absence is treated as authoritative incompatibility.
 
 The current production Rig library contains 21 active Rigs, including Split-Shot Bait Rig.
 
@@ -503,7 +510,7 @@ Relationship validation should verify, where applicable:
 - Fish identification relationships obey deterministic ID/order, pair uniqueness, participant resolution, and distinction coverage,
 - Fish-to-Rig guidance obeys Fish/Rig resolution, one-record-per-Fish, recommendation uniqueness, valid priority/reason, Primary requirement, and current provisional maxima,
 - Fish Media relationships satisfy approved owner/role/readiness rules,
-- deferred domains do not introduce placeholder relationship arrays,
+- approved/not-yet-implemented domains do not introduce placeholder inverse relationship arrays,
 - User Knowledge references do not mutate canonical Reference Knowledge.
 
 ---
@@ -523,6 +530,7 @@ Any future cache remains derived and non-authoritative unless an explicit later 
 - `03-RIGS.md`
 - `03A-TECHNIQUES.md`
 - `03B-CONDITIONS.md`
+- `03C-LURES-BAIT.md`
 - `04-KNOTS.md`
 - `05-TACKLE.md`
 - `05A-INVENTORY.md`

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Architecture
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.11.0  
+**Document Revision:** 0.12.0  
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
 **Last Updated:** 2026-08-27
@@ -122,7 +122,9 @@ The application uses three layers:
 
 Do not blur these layers without an explicit architecture decision.
 
-The Dashboard exposes four foundational connected-knowledge domains: Fish Guide, Knots, Rig Guide, and Tackle. Tackle remains the root domain; **Tackle Reference / Find Tackle** is Reference Knowledge while **My Tackle** is User Knowledge. D063/D067 own the durable boundary and sequencing.
+The Dashboard exposes four foundational connected-knowledge domains: Fish Guide, Knots, Rig Guide, and Tackle. Tackle remains the root domain; **Tackle Reference / Find Tackle** is Reference Knowledge while **My Tackle** is User Knowledge. D063/D067 own that durable boundary.
+
+D069 adds the approved recommendation prerequisite architecture: **Conditions**, **Lure/Bait**, and **Techniques** are distinct Reference Knowledge domains; contextual ranking/rationale and Fish/Condition-specific suitability remain Recommendation Decision Knowledge. A typed Compatibility Relationship domain owns intrinsic Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique compatibility once implemented.
 
 Regulations is a resource-navigation domain, not a new owner of legal facts.
 
@@ -162,7 +164,7 @@ Fish identification media is accuracy-critical and follows `MEDIA_GUIDE.md`.
 - `componentRequirements` owns Rig -> Tackle usage; reverse Tackle `Used In` is derived.
 - `CORE_RIG_IDS` owns Core membership/order.
 - Rig does not own inverse media IDs.
-- Reusable Technique architecture remains deferred until its named gate.
+- Technique is Approved / Not Implemented under D003/D024/D069; reusable presentation behavior belongs to Technique, while intrinsic Rig↔Technique compatibility will be stored once under the typed Compatibility Relationship domain.
 
 ## Knots and reel/line guidance
 
@@ -179,7 +181,21 @@ The Knots milestone is closed and validated.
 
 Persistent owned tackle belongs to future My Tackle/User Knowledge. The current readiness store is transitional only and must not be mistaken for authoritative ownership.
 
-The Settings / User Data Architecture gate must settle stable user/profile identity, persistence, retention, migration, backup/restore, device transfer, and preference ownership before authoritative My Tackle/Catch Log User Knowledge and before material Tackle expansion under D067.
+A separate Lure/Bait Reference domain is Approved / Not Implemented under D069. Tackle owns functional fishing equipment and Rig-building components; Lure/Bait owns canonical lure and bait identities intentionally presented to Fish. Commercial product identity is not required for the initial Lure/Bait architecture.
+
+D069 refines sequencing while preserving D067's ownership invariant: after Conditions, Lure/Bait, and Techniques are implemented, the Settings / User Data Architecture gate must settle stable user/profile identity, persistence, retention, migration, backup/restore, device transfer, preference ownership, and ownership-vs-current-availability semantics before authoritative My Tackle. A scoped My Tackle availability foundation then precedes What Should I Throw production. Full Tackle Reference expansion and Catch Log remain later milestones.
+
+## Approved recommendation prerequisite domains
+
+**Approved / Not Implemented:**
+
+- Conditions owns reusable environmental/situational vocabulary, not recommendation lists or weights.
+- Lure/Bait owns canonical fishing-relevant lure/bait identity, not commercial SKUs or context-specific recommended size/color.
+- Technique owns reusable presentation behavior, not Rig assembly or Fish/Condition-specific selection.
+- Compatibility Relationship owns intrinsic pairwise compatibility for Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique. Each pair is stored once; reverse navigation is derived.
+- Recommendation Decision Knowledge owns contextual selection, ranking, rationale, exact context-specific parameters, and Fish/Condition suitability.
+
+The approved prerequisite sequence is Conditions → Lure/Bait → Techniques → Settings/User Data → scoped My Tackle Availability → What Should I Throw production.
 
 ## Media
 

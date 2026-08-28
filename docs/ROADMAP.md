@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.6.0  
+**Document Revision:** 0.7.0  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-08-26
+**Last Updated:** 2026-08-27
 
 # Purpose
 
@@ -47,13 +47,17 @@ The original validated 20-Rig library remains canonical. The additive Four-State
 1. **Knots** — completed / validated / closed.
 2. **Fish Guide** — completed / validated / closed; all 30 locked Version 1 Fish, 30 primary-identification media attachments, and the approved 20-pair identification graph are complete.
 3. **Regulations — U.S. State Fishing Resource Gateway** — completed / validated / closed.
-4. **What Should I Throw?** — next product milestone.
-5. **Settings / User Data Architecture Gate**.
-6. **Tackle Reference / Find Tackle**.
-7. **My Tackle**.
-8. **Catch Log**.
-9. **Global Search**.
-10. **Favorites final decision**.
+4. **What Should I Throw? Phase 0 Planning** — complete; production deferred behind the approved prerequisites below.
+5. **Conditions Production Foundation**.
+6. **Lure/Bait Reference Production Foundation**.
+7. **Techniques Production Foundation**.
+8. **Settings / User Data Architecture Gate**.
+9. **My Tackle Availability Foundation** — scoped to authoritative ownership/availability and recommendation matching.
+10. **What Should I Throw? Recommendation Engine + UX Pilot**.
+11. **Tackle Reference / Find Tackle** — later unless prerequisite implementation demonstrates a direct dependency.
+12. **Catch Log**.
+13. **Global Search**.
+14. **Favorites final decision**.
 
 Repository Audit Cleanup is a maintenance/governance gate, not a numbered product milestone and does not change this sequence.
 
@@ -98,145 +102,73 @@ The gateway remains an official-resource navigation surface rather than a projec
 
 D066 owns the durable geographic/legal-resource boundary. `archive/workstreams/regulations/REGULATIONS-PHASE-0.md` is the retained closed design/evidence/production record.
 
-# 4. What Should I Throw? — Next Milestone
+# 4. What Should I Throw? Phase 0 Planning — Complete / Production Deferred
 
-Build the primary Decision Knowledge recommendation experience now that Regulations is closed.
-
-The feature should answer:
+Phase 0 established the Decision Knowledge contract for answering:
 
 > What should I throw here and now, and why?
 
-Recommendations select/rank/explain canonical entities rather than duplicate their instructions.
+D069 owns the durable locked direction. The result model provides **Best Overall** guidance independent of inventory and **Best Currently Available** guidance based on what the angler can actually execute. Strong unavailable options remain visible with missing requirements rather than being silently filtered out. If one recommendation wins both states, presentation combines them rather than duplicating the recommendation.
 
-Approved instructional ownership:
+V1 requires a target Fish plus access/position and waterbody context. Observable context includes depth/zone, cover/structure, water clarity, and current where relevant; season, light/sky, numeric water temperature, and bait preference are optional refiners. Unknown values degrade gracefully.
 
-- **How to Rig It** → canonical Rig build instructions/tutorial/reference.
-- **How to Fish It** → canonical Technique presentation/retrieve guidance.
-- Recommendation data owns contextual selection/rationale, not duplicate Rig or Technique prose.
+Recommendation data composes canonical Rig, Lure/Bait, Technique, and contextual parameters/rationale without duplicating their instructions. **How to Rig It** remains Rig-owned; **How to Fish It** remains Technique-owned.
 
-Exact inputs, scoring, explanation model, Technique dependencies, and tutorial coverage are finalized during this milestone.
+Production is intentionally deferred until the prerequisite sequence below is satisfied.
 
-The initial recommendation engine must remain useful without My Tackle. Once authoritative user inventory exists, My Tackle may become an optional personalization/filtering signal rather than a prerequisite for basic recommendations.
+# 5. Conditions Production Foundation
 
-# 5. Settings / User Data Architecture Gate
+Implement the approved flat canonical Condition vocabulary from `data-model/03B-CONDITIONS.md`. V1 groups are Waterbody, Access/Position, Depth/Zone, Cover/Structure, Water Clarity, Current, Season, and Light/Sky. `Not sure` is input absence rather than a Condition entity; water temperature is optional numeric context.
 
-This is an architecture milestone, not merely a Settings-screen build.
+This workstream must explicitly review existing Rig `conditionTags[]`; contextual “works well in” meaning moves to Recommendation Decision Knowledge rather than being mechanically converted into canonical Condition relationships.
 
-It must close **before Tackle Reference / Find Tackle is materially expanded and before persistent My Tackle or Catch Log implementation** so user identity, ownership, retention, and migration assumptions are not invented independently by later features.
+# 6. Lure/Bait Reference Production Foundation
 
-It must resolve at minimum:
+Implement the distinct canonical Lure/Bait Reference domain in `data-model/03C-LURES-BAIT.md`. It owns fishing-relevant lure/bait identities presented to Fish, not commercial products. Tackle continues to own functional equipment and Rig-building components.
 
-- local persistence/storage technology,
-- retention behavior and browser/site-data clearing,
-- stable local user/profile identity and ownership relationships,
-- Version 1 single-user versus future multi-profile boundaries,
-- authentication/account requirements or explicit non-requirement,
-- application-update/schema-migration strategy,
-- backup/export scope and format,
-- restore/import validation and rollback,
-- device-transfer expectations,
-- synchronization/account decision or explicit deferral,
-- device-local versus profile-owned settings,
-- theme architecture/supported themes,
-- preferred-state settings for Regulations and their persistence/ownership behavior,
-- other user preferences and backup/restore behavior.
+Exact context-specific size, weight, color/pattern, and presentation selections remain Recommendation Decision Knowledge. Commercial brand/model/SKU enumeration is outside the canonical V1 domain.
 
-Canonical Tackle remains application-owned Reference Knowledge. Actual owned tackle is User Knowledge and must be associated with the user/profile model selected by this gate. Catch Log and later saved/favorite state must follow the same User Knowledge ownership architecture rather than create separate storage islands.
+# 7. Techniques Production Foundation
 
-Current local-first architecture remains baseline until explicit architecture changes it. A user-aware schema does not require a login system; Version 1 may remain one local profile while preserving clean ownership semantics and a migration path.
+Implement reusable presentation behavior from `data-model/03A-TECHNIQUES.md`. Technique owns reusable movement/cadence/rod/reel action and instructional guidance; Rig owns physical assembly/configuration. Fish/Condition-specific selection and contextual adjustments remain Recommendation Decision Knowledge.
 
-D067 owns the durable rationale for moving this gate ahead of Tackle Reference / Find Tackle.
+Intrinsic Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique compatibility is stored once under the typed Compatibility Relationship architecture in `data-model/09-RELATIONSHIPS.md`; reverse navigation is derived.
 
-# 6. Tackle Reference / Find Tackle
+# 8. Settings / User Data Architecture Gate
 
-Build a lightweight canonical Tackle discovery/reference experience after the User Data Architecture gate.
+This gate follows the three Reference Knowledge prerequisites and must close before authoritative My Tackle. It resolves stable user/profile identity, persistence, retention, migration, backup/restore, device transfer, preference ownership, and the boundary between persistent ownership and temporary/current availability.
 
-This is Reference Knowledge, distinct from My Tackle ownership. The sequencing does not make canonical Tackle user-specific; it ensures that ownership context and future My Tackle relationships are designed against an already-settled User Knowledge architecture.
+D067 remains the durable User Knowledge ownership rule; D069 refines its sequencing trigger. A user-aware architecture does not inherently require login/authentication.
 
-Search should support canonical identity fields such as:
+# 9. My Tackle Availability Foundation
 
-- name,
-- approved aliases,
-- beginner/common terminology,
-- category,
-- deliberate search keywords.
+Implement only the User Knowledge foundation required to make ownership and recommendation availability authoritative. The initial goal is to answer which canonical Tackle/Lure/Bait items the angler owns and which relevant variants are available for the current recommendation workflow.
 
-A Tackle result should progressively expose pertinent connected knowledge where available:
+Persistent ownership and temporary/current availability must remain semantically distinguishable. The exact V1 representation is settled at the User Data/My Tackle gate; temporary availability must never silently create ownership. Full inventory-management breadth is not a prerequisite.
 
-- definition/recognition,
-- common variants,
-- related Tackle,
-- derived `Used In` Rigs,
-- compatible Fish/Conditions/Techniques when canonical relationships exist,
-- later My Tackle ownership context.
+# 10. What Should I Throw? Recommendation Engine + UX Pilot
 
-All features should link to the same canonical Tackle identity/detail experience rather than create competing definitions.
+Resume recommendation production only after the required prerequisite gates above are satisfied. The pilot implements the locked Best Overall / Best Currently Available output, compact V1 input flow, contextual Recommendation Decision Knowledge, and explanation model against real canonical Conditions, Lure/Bait, Techniques, compatibility, and availability data.
 
-# 7. My Tackle
+Material changes to the locked Phase 0 semantic boundaries require explicit reapproval; minor pilot vocabulary/optional-field refinements may proceed where D069 allows them.
 
-Build after the Settings/User Data gate and the Tackle Reference milestone.
+# 11. Tackle Reference / Find Tackle
 
-Approved principles:
+Build the broader canonical Tackle discovery/reference experience after the prerequisite path unless a direct dependency is demonstrated earlier. Canonical Tackle remains Reference Knowledge distinct from My Tackle ownership and from the separate Lure/Bait domain.
 
-- canonical Tackle defines functional type,
-- My Tackle defines actual owned items associated with the applicable user/profile,
-- My Tackle becomes the only persistent ownership source of truth,
-- Rig Readiness reads My Tackle,
-- temporary availability never silently creates ownership,
-- persistent ownership changes only through explicit My Tackle workflows,
-- readiness answers buildability first; optimization comes later.
+Search and connected-knowledge behavior continue to follow the established relevance-first and single-owner relationship rules.
 
-Detailed owned-item schema remains deferred to the My Tackle design segment after the User Data gate has established persistence and ownership foundations.
+# 12. Catch Log
 
-# 8. Catch Log
+Build after the settled User Knowledge/My Tackle foundation. Catch Log design must review user/profile ownership, canonical Fish/Rig/Lure/Bait/Technique references, date/time and measurements, location/privacy, notes, media, backup/restore, and migration/versioning. Candidate fields remain unapproved until that segment.
 
-Build after My Tackle on the settled User Knowledge persistence/identity architecture.
+# 13. Global Search
 
-Catch Log design must review:
+Defer until major searchable domains and canonical entity models are stable. Build on relevance-first/connected-knowledge architecture rather than an undifferentiated cross-domain dump.
 
-- user/profile ownership,
-- Fish/Rig/Lure/Technique references,
-- optional My Tackle/Fishing Setup relationships,
-- date/time and measurements,
-- location/privacy model,
-- notes,
-- photo handling/storage implications,
-- backup/restore behavior,
-- migration/versioning requirements.
+# 14. Favorites Final Decision
 
-Candidate fields remain design inputs until explicitly approved; a historical Specification `shall` does not pre-lock the location schema.
-
-# 9. Global Search
-
-Defer until major searchable domains and canonical entity models are established.
-
-Build on relevance-first/connected-knowledge architecture rather than an undifferentiated cross-domain dump.
-
-Potential searchable domains include:
-
-- Fish,
-- Rigs,
-- Knots,
-- canonical Tackle,
-- Lures,
-- Techniques,
-- recommendation entry points where appropriate.
-
-Grouping, cross-entity ranking, ambiguity handling, and Dashboard presentation belong to this milestone.
-
-# 10. Favorites Final Decision
-
-Favorites remains parked until near project completion.
-
-Evaluate actual workflow value after Search, history/recent behavior, My Tackle, Catch Log, connected knowledge, and recommendations exist.
-
-Possible outcomes:
-
-- keep generic Favorites,
-- replace with narrower saved concepts,
-- remove it if other workflows make it redundant.
-
-Do not build Favorites solely because a placeholder exists.
+Favorites remains parked until near project completion. Evaluate actual workflow value after Search, history/recent behavior, My Tackle, Catch Log, connected knowledge, and recommendations exist. Keep, narrow, replace, or remove based on demonstrated value rather than placeholder existence.
 
 # Regulations Product Boundary
 

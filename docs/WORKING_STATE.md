@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.13.0  
+**Document Revision:** 1.15.0  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** Documentation Architecture Cleanup — CLOSED / PASS; What Should I Throw? — NEXT PRODUCT MILESTONE  
-**Current GitHub Baseline:** `0ea6420f2ac203281c5bab33b96ab5fcc6409947`  
+**Workstream Status:** What Should I Throw Phase 0 — PLANNING COMPLETE / PRODUCTION DEFERRED; Conditions Production Foundation — NEXT  
+**Cleanup Implementation Commit:** `0ea6420f2ac203281c5bab33b96ab5fcc6409947`  
 **Last Updated:** 2026-08-27
 
 # Purpose
@@ -53,7 +53,7 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 - Repository Integrity #90 and GitHub Pages #578 passed on the final production SHA.
 - Regulations remains governed by D066, `ARCHITECTURE.md`, `UI_STANDARD.md`, and `EXTERNAL_REFERENCE_MAINTENANCE.md`; its closed workstream record is retained under `archive/workstreams/regulations/REGULATIONS-PHASE-0.md`. Future link changes are maintenance and do not reopen the milestone automatically.
 
-**What Should I Throw? is the next product milestone.** D067 continues to require the Settings / User Data Architecture gate after What Should I Throw and before material Tackle Reference / My Tackle / Catch Log expansion.
+**What Should I Throw Phase 0 planning is COMPLETE / PRODUCTION DEFERRED.** D069 owns the locked product/output/input/prerequisite contract. The cross-domain architecture gate is closed: Conditions, Lure/Bait, Technique, and typed intrinsic Compatibility Relationship boundaries are approved for prerequisite production. The active prerequisite sequence is Conditions → Lure/Bait Reference → Techniques → Settings / User Data Architecture → scoped My Tackle Availability Foundation → What Should I Throw recommendation engine + UX pilot. Full Tackle Reference / Find Tackle, Catch Log, Global Search, and Favorites remain later unless a direct dependency is demonstrated.
 
 # Open Cross-Domain Carry-Forward
 
@@ -64,8 +64,8 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 
 # Exact Resume Point
 
-1. Documentation Architecture Cleanup is **CLOSED / PASS** on GitHub `main` at `0ea6420f2ac203281c5bab33b96ab5fcc6409947` (`Closeout Gates - Enforcement Fix`). Parent baseline was `afc6ed4ea084de081de4e18739f485a91e1d55fc`.
-2. Local Repository Integrity passed all 11 validation groups before commit; landed Repository Integrity #92 and GitHub Pages #580 both passed.
-3. Final repository dispositions are complete: `docs/workflow/REVIEW-AND-STAGING.md` is removed as **GIT HISTORY ONLY**; the closed Regulations record is retained at `archive/workstreams/regulations/REGULATIONS-PHASE-0.md`.
-4. The documentation consistency and final convergence gates are now active workflow requirements. No production application behavior changed in this cleanup.
-5. Exact next workstream: **What Should I Throw?**. Begin with normal startup from GitHub `main` `0ea6420f2ac203281c5bab33b96ab5fcc6409947`, Live Working State, and only the governing documents relevant to that milestone.
+1. GitHub `main` remains the committed authority at `2f645d9040d43445cabf5e6e043c08a30af72bd6` (`Close documentation convergence state`) while this bounded What Should I Throw Phase 0 documentation reconciliation is staged in Drive Working Source/Current.
+2. What Should I Throw Phase 0 Decisions 1–10 are LOCKED and reconciled into the candidate canonical documentation set. D069 is the durable product/architecture decision; `03B-CONDITIONS.md`, new `03C-LURES-BAIT.md`, `03A-TECHNIQUES.md`, and `09-RELATIONSHIPS.md` own the prerequisite domain contracts.
+3. What Should I Throw Phase 0 is **PLANNING COMPLETE / PRODUCTION DEFERRED**. No recommendation-engine production source/data implementation is authorized by this closeout.
+4. The documentation-only closeout candidate must be reviewed/committed through the normal Drive Current → local Git review/validation → GitHub path. Do not use multiple connector commits or manual Git-object workarounds. After commit, verify Repository Integrity and GitHub Pages as applicable, then update Live Working State with the landed SHA.
+5. Exact next product workstream after that documentation closeout is **Conditions Production Foundation**. Start from `docs/workstreams/CONDITIONS-PRODUCTION.md`, `docs/data-model/03B-CONDITIONS.md`, `docs/data-model/09-RELATIONSHIPS.md`, current Rigs, and the current Live Working State. First production task: finalize the bounded Conditions implementation contract and explicitly disposition existing Rig `conditionTags[]` without blind migration.

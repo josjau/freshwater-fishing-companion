@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 07-USER-DATA.md  
-**Document Revision:** 0.4.0  
+**Document Revision:** 0.5.0  
 **Document Status:** Draft  
 **Implementation Status:** Mixed — transitional local state exists; authoritative User Knowledge schemas not implemented  
-**Decision Baseline:** D028, D029, D056, D067
+**Decision Baseline:** D028, D029, D056, D067, D069
 
 ---
 
@@ -57,6 +57,12 @@ These domain names do **not** approve the earlier candidate field lists as produ
 
 ---
 
+# Approved Sequencing Refinement
+
+D069 refines the roadmap trigger in D067 without changing D067's ownership principle. The shared User Data Architecture gate now follows Conditions, Lure/Bait, and Techniques and precedes authoritative My Tackle. A scoped My Tackle Availability Foundation then precedes What Should I Throw production. Full Tackle Reference expansion and Catch Log remain later work unless a direct dependency is demonstrated.
+
+The gate must explicitly settle persistent ownership versus temporary/current availability semantics so Recommendation can determine executability without converting borrowed/session state into ownership.
+
 # User/Profile Identity — Required Architecture, Schema Unresolved
 
 D067 requires the Settings / User Data Architecture gate to establish a stable owner/context for persistent User Knowledge before My Tackle or Catch Log becomes authoritative.
@@ -91,7 +97,7 @@ The exact supported entity types, persistence shape, ordering behavior, and life
 
 My Tackle is User Knowledge containing actual owned fishing items. Its detailed owned-item schema is governed by `05A-INVENTORY.md` and remains unresolved.
 
-Once authoritative, persistent ownership may only be changed through explicit My Tackle ownership-management workflows. Rig Readiness, Search, Recommendations, borrowed tackle, prior readiness selections, and inferred usage may not silently create or modify ownership.
+Once authoritative, persistent ownership may only be changed through explicit My Tackle ownership-management workflows. Rig Readiness, Search, Recommendations, borrowed tackle, temporary/current availability, prior readiness selections, and inferred usage may not silently create or modify ownership. The User Data/My Tackle gate will decide how temporary/current availability is represented separately from ownership for D069 recommendation matching.
 
 ---
 

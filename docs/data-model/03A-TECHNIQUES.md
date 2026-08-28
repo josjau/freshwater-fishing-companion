@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** 03A-TECHNIQUES.md  
-**Document Revision:** 0.2.0  
-**Document Status:** Draft  
+**Document Revision:** 0.3.0  
+**Document Status:** Approved  
 **Implementation Status:** Approved / Not Implemented  
-**Decision Baseline:** D003, D024, D056
+**Decision Baseline:** D003, D024, D056, D069
 
 ---
 
@@ -14,7 +14,7 @@ This document defines the approved architectural boundary for the future canonic
 
 A Technique describes **how** a lure, Rig, or other compatible setup is presented to fish. Technique is Reference Knowledge and owns reusable presentation behavior rather than physical assembly.
 
-No canonical Technique production dataset is implemented on current `main`. Accordingly, this document does **not** approve a production Technique field schema beyond the Foundation entity standard.
+No canonical Technique production dataset is implemented on current `main`. D069 now approves the V1 semantic contract and bounded optional instructional concepts below; exact vocabulary and optional field selection remain production-pilot refinements rather than implemented schema.
 
 ---
 
@@ -24,7 +24,7 @@ No canonical Technique production dataset is implemented on current `main`. Acco
 
 The Technique domain is approved by D003. D024 assigns reusable presentation behavior to Technique and physical assembly/configuration to Rig. D056 requires every future Technique fact and relationship to have one semantic owner.
 
-Current production Rigs do not store `techniqueIds[]`, and no `Technique.compatibleRigIds[]` relationship is approved. Repository Audit Section 5 removed the universally empty Rig-side placeholder rather than promoting an unresolved relationship into production.
+Current production Rigs do not store `techniqueIds[]`, and Technique will not gain inverse compatibility arrays merely for navigation. D069 assigns intrinsic Rig↔Technique and Lure/Bait↔Technique compatibility to the external typed Compatibility Relationship domain; Fish/Condition-specific suitability remains Recommendation Decision Knowledge.
 
 ---
 
@@ -64,45 +64,33 @@ Additional fields require approval at the Technique architecture gate and must d
 
 ---
 
-# Candidate Presentation Concepts — Not Yet Schema
+# Approved V1 Instructional Contract — Not Yet Implemented Schema
 
-Earlier planning identified several useful presentation concepts. They remain design inputs, **not approved production fields**:
+Technique records inherit the Foundation fields and may add only demonstrated reusable instructional attributes such as:
 
-- learning difficulty
-- movement type
-- cadence
-- rod action
-- reel action
-- beginner tips
-- common mistakes
+- movement type,
+- cadence,
+- rod action,
+- reel action,
+- ordered presentation instructions,
+- strike cues,
+- common mistakes,
+- beginner tips.
 
-The architecture gate may retain, rename, combine, normalize, or reject these concepts based on demonstrated feature requirements. Production records must not be created with placeholder fields merely because a concept appears in this Draft.
+Not every Technique requires every optional field. Exact field names and canonical Technique vocabulary may be refined during the production pilot without reopening the semantic boundary. No category hierarchy is required for V1 unless production/search evidence demonstrates a concrete need.
 
----
+Context-specific adjustments such as “slow the cadence in cold water” belong to Recommendation Decision Knowledge; the reusable Technique owns how the behavior is generally performed.
 
-# Relationship Ownership — Deferred
+# Relationship Ownership — Approved
 
-The following relationships are intentionally unresolved until Technique implementation:
+Intrinsic compatibility is stored once outside Technique under the typed Compatibility Relationship architecture in `09-RELATIONSHIPS.md`:
 
-- Rig ↔ Technique compatibility
-- Fish ↔ Technique applicability
-- Condition ↔ Technique applicability
+- Rig ↔ Technique,
+- Lure/Bait ↔ Technique.
 
-Earlier candidate fields such as:
+Technique does not store `compatibleRigIds[]`, `compatibleLureIds[]`, `targetFishIds[]`, or `recommendedConditionIds[]` as inverse/contextual convenience arrays. Reverse navigation is derived.
 
-```text
-compatibleRigIds[]
-targetFishIds[]
-recommendedConditionIds[]
-```
-
-are **not approved schema fields**.
-
-When the Technique architecture gate opens, each relationship must be classified under D056. A simple intrinsic compatibility fact may belong to one Reference Knowledge owner. A contextual answer such as which Technique should be used with a Rig for particular Fish or Conditions may instead belong to Decision Knowledge.
-
-Only one authoritative semantic owner may store a given relationship. Reverse navigation must normally be derived.
-
----
+Fish/Condition-specific Technique selection, ranking, rationale, and contextual cadence/presentation adjustments belong to Recommendation Decision Knowledge.
 
 # Media Ownership
 
@@ -145,20 +133,17 @@ Commercial-product recommendations remain outside Technique unless a later appro
 
 # Implementation Gate
 
-Before canonical Technique production data is created, the Technique architecture gate must settle at least:
+Before Technique production data is activated, the Technique production foundation must settle and validate:
 
-1. the canonical Technique field set,
-2. Rig ↔ Technique relationship ownership,
-3. Fish ↔ Technique relationship ownership,
-4. Condition ↔ Technique relationship ownership,
-5. which relationships are Reference Knowledge versus Decision Knowledge,
-6. Media attachment requirements beyond the existing owner model, if any,
-7. referential-integrity validation,
-8. search/index fields without duplicating canonical relationship knowledge.
+1. the exact canonical Technique vocabulary;
+2. which optional instructional fields are demonstrated by the production set;
+3. Foundation/lifecycle validation;
+4. Rig↔Technique and Lure/Bait↔Technique compatibility records needed for the authored scope;
+5. referential integrity and staged-completeness behavior under `09-RELATIONSHIPS.md`;
+6. Media attachment requirements beyond the existing owner model, if any;
+7. search/index fields without duplicating canonical relationship knowledge.
 
-No empty future relationship arrays or speculative fields should be pre-populated as placeholders.
-
----
+No empty future relationship arrays or contextual recommendation fields should be pre-populated as placeholders.
 
 # Future Enhancements
 
