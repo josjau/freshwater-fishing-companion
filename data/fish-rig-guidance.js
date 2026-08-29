@@ -24,7 +24,8 @@ const FISH_RIG_GUIDANCE = Object.freeze([
                 reason: "A Texas-rigged soft plastic can be worked through grass, brush, timber, and other shallow cover with reduced snagging."
             },
             {
-                rigId: "inline-spinner-setup",
+                rigId: "direct-tie-lure-setup",
+                lureBaitId: "inline-spinner",
                 priority: "Alternative",
                 reason: "An inline spinner gives a simple moving presentation for covering pond edges, sparse cover, and open pockets when Largemouth Bass are actively feeding."
             }
@@ -73,7 +74,8 @@ const FISH_RIG_GUIDANCE = Object.freeze([
                 reason: "A jighead and small baitfish-shaped soft plastic can be cast or worked vertically through schooling fish in current and open water."
             },
             {
-                rigId: "inline-spinner-setup",
+                rigId: "direct-tie-lure-setup",
+                lureBaitId: "inline-spinner",
                 priority: "Primary",
                 reason: "An inline spinner provides a compact moving presentation for covering water and reaching actively feeding schools."
             },
@@ -382,7 +384,8 @@ const FISH_RIG_GUIDANCE = Object.freeze([
                 reason: "A small worm or insect bait under a fixed bobber is an easy presentation for Longear Sunfish in pools, edges, and slower pockets."
             },
             {
-                rigId: "inline-spinner-setup",
+                rigId: "direct-tie-lure-setup",
+                lureBaitId: "inline-spinner",
                 priority: "Alternative",
                 reason: "A small inline spinner is an effective moving option for covering clear creek pools and rocky or weedy edges."
             }

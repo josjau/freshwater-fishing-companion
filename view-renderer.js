@@ -668,8 +668,8 @@ function renderFishDetail(appMain, detailConfig) {
                 <strong>${title}</strong>
                 <div class="fish-rig-link-list">
                     ${records.map((item) => `
-                        <button class="internal-knowledge-link fish-rig-link" type="button" data-fish-rig-id="${item.rig.id}">
-                            ${item.rig.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
+                        <button class="internal-knowledge-link fish-rig-link" type="button" data-fish-rig-id="${item.rig.id}" ${item.lureBaitId ? `data-fish-lure-bait-id="${item.lureBaitId}"` : ""}>
+                            ${item.rig.name}${item.lureBaitId ? ` — ${getLureBaitRecord(item.lureBaitId)?.name ?? item.lureBaitId}` : ""} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
                         </button>
                     `).join("")}
                 </div>
@@ -760,7 +760,7 @@ function renderFishDetail(appMain, detailConfig) {
         button.addEventListener("click", () => detailConfig.onRelationshipSelect?.(button.dataset.fishRelationshipId));
     });
     appMain.querySelectorAll("[data-fish-rig-id]").forEach((button) => {
-        button.addEventListener("click", () => detailConfig.onRigSelect?.(button.dataset.fishRigId));
+        button.addEventListener("click", () => detailConfig.onRigSelect?.(button.dataset.fishRigId, button.dataset.fishLureBaitId ?? null));
     });
 }
 
@@ -1316,29 +1316,225 @@ function getTackleRecord(tackleId) {
     return record?.isActive === true ? record : null;
 }
 
+function getLureBaitRecord(lureBaitId) {
+    if (!lureBaitId || typeof LURE_BAIT_DATA === "undefined") return null;
+    const record = findRecordById(LURE_BAIT_DATA, lureBaitId);
+    return record?.isActive === true ? record : null;
+}
+
 function getRelatedRigRecords(tackleId) {
     if (!tackleId || typeof RIG_DATA === "undefined") return [];
 
-    return RIG_DATA.filter((rig) =>
-        rig.isActive === true &&
-        Array.isArray(rig.componentRequirements) &&
-        rig.componentRequirements.some((requirement) => requirement.tackleId === tackleId)
-    );
+    return RIG_DATA.filter((rig) => {
+        if (rig.isActive !== true) return false;
+        const baseMatch = Array.isArray(rig.componentRequirements) &&
+            rig.componentRequirements.some((requirement) => requirement.tackleId === tackleId);
+        const configurationMatch = Array.isArray(rig.configurations) &&
+            rig.configurations.some((configuration) =>
+                Array.isArray(configuration.componentRequirements) &&
+                configuration.componentRequirements.some((requirement) => requirement.tackleId === tackleId)
+            );
+        return baseMatch || configurationMatch;
+    });
+}
+
+function getOwnedReferenceMedia(ownerType, ownerId) {
+    if (!ownerType || !ownerId || typeof MEDIA_DATA === "undefined") return null;
+    return MEDIA_DATA.find((media) =>
+        media.ownerType === ownerType &&
+        media.ownerId === ownerId &&
+        media.type === "image" &&
+        media.isActive === true
+    ) ?? null;
 }
 
 function getReferenceMedia(referenceRecord) {
-    if (!referenceRecord?.id || typeof MEDIA_DATA === "undefined") return null;
-    return MEDIA_DATA.find((media) =>
-        media.ownerType === "tackle" &&
-        media.ownerId === referenceRecord.id &&
-        media.isActive === true
-    ) ?? null;
+    return getOwnedReferenceMedia("tackle", referenceRecord?.id);
+}
+
+function getLureBaitReferenceMedia(lureBaitId) {
+    return getOwnedReferenceMedia("lure-bait", lureBaitId);
 }
 
 function buildReferenceImageMarkup(referenceRecord, className, loading = "lazy") {
     const media = getReferenceMedia(referenceRecord);
     if (!media) return "";
     return `<img class="${className}" src="${media.file}" alt="${media.alt}" loading="${loading}" decoding="async">`;
+}
+
+function buildLureBaitReferenceImageMarkup(lureBaitId, className = "reference-popover__image", loading = "eager") {
+    const media = getLureBaitReferenceMedia(lureBaitId);
+    if (!media) return "";
+    return `<img class="${className}" src="${media.file}" alt="${media.alt}" loading="${loading}" decoding="async">`;
+}
+
+function formatLureBaitPresentationType(presentationType) {
+    return presentationType === "natural-bait" ? "Natural Bait" : "Artificial Lure";
+}
+
+function formatLureBaitCategory(category) {
+    return String(category ?? "")
+        .split("-")
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+}
+
+function getConditionRecord(conditionId) {
+    if (!conditionId || typeof CONDITION_DATA === "undefined") return null;
+    const record = findRecordById(CONDITION_DATA, conditionId);
+    return record?.isActive === true ? record : null;
+}
+
+function formatConditionCategory(category) {
+    const labels = {
+        "waterbody": "Waterbody",
+        "access-position": "Access / Position",
+        "depth-zone": "Depth / Zone",
+        "cover-structure": "Cover / Structure",
+        "water-clarity": "Water Clarity",
+        "current": "Current",
+        "season": "Season",
+        "light-sky": "Light / Sky"
+    };
+    return labels[category] || category;
+}
+
+function renderConditionPopover(conditionId, triggerElement) {
+    if (typeof CONDITION_DATA === "undefined") {
+        console.error("Condition reference data is not available.");
+        return;
+    }
+
+    const condition = getConditionRecord(conditionId);
+    if (!condition) {
+        console.warn(`Condition record was not found: ${conditionId}`);
+        return;
+    }
+
+    document.querySelector("[data-reference-popover]")?.remove();
+    document.querySelector("[data-condition-popover]")?.remove();
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "reference-popover";
+    dialog.dataset.conditionPopover = "";
+    dialog.setAttribute("aria-labelledby", "condition-popover-title");
+    dialog.innerHTML = `
+        <div class="reference-popover__shell">
+            <header class="reference-popover__header">
+                <div class="reference-popover__header-main">
+                    <p class="reference-popover__eyebrow">${formatConditionCategory(condition.category)}</p>
+                    <h2 id="condition-popover-title">${condition.name}</h2>
+                </div>
+                <button class="reference-popover__close" type="button" data-condition-close aria-label="Close ${condition.name} information">&times;</button>
+            </header>
+            <div class="reference-popover__body">
+                <p class="reference-popover__summary">${condition.summary}</p>
+            </div>
+        </div>
+    `;
+
+    const closeDialog = () => {
+        if (dialog.open) dialog.close();
+    };
+
+    dialog.querySelector("[data-condition-close]")?.addEventListener("click", closeDialog);
+    dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeDialog();
+    });
+    dialog.addEventListener("close", () => {
+        dialog.remove();
+        triggerElement?.focus();
+    });
+
+    document.body.append(dialog);
+    dialog.showModal();
+}
+
+function initializeConditionLinks(appMain) {
+    appMain.querySelectorAll("[data-condition-id]").forEach((conditionLink) => {
+        conditionLink.addEventListener("click", () => {
+            renderConditionPopover(conditionLink.dataset.conditionId, conditionLink);
+        });
+    });
+}
+
+function renderLureBaitReferencePopover(lureBaitId, triggerElement, requirement = null) {
+    const lureBaitRecord = getLureBaitRecord(lureBaitId);
+    if (!lureBaitRecord) {
+        console.warn(`Canonical Lure/Bait record was not found: ${lureBaitId}`);
+        return;
+    }
+
+    document.querySelector("[data-reference-popover]")?.remove();
+    document.querySelector("[data-condition-popover]")?.remove();
+    document.querySelector("[data-lure-bait-popover]")?.remove();
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "reference-popover";
+    dialog.dataset.lureBaitPopover = "";
+    dialog.setAttribute("aria-labelledby", "lure-bait-popover-title");
+
+    const mediaMarkup = buildLureBaitReferenceImageMarkup(lureBaitId);
+    const requirementMarkup = requirement?.notes ? `
+        <section class="reference-popover__section">
+            <h3>For This Rig</h3>
+            <p>${requirement.notes}</p>
+        </section>
+    ` : "";
+
+    dialog.innerHTML = `
+        <div class="reference-popover__shell">
+            <header class="reference-popover__header">
+                <div class="reference-popover__header-main">
+                    <p class="reference-popover__eyebrow">Lure / Bait</p>
+                    <h2 id="lure-bait-popover-title">${lureBaitRecord.name}</h2>
+                </div>
+                <button class="reference-popover__close" type="button" data-lure-bait-close aria-label="Close ${lureBaitRecord.name} information">&times;</button>
+            </header>
+            ${mediaMarkup}
+            <div class="reference-popover__body">
+                <p class="reference-popover__summary">${lureBaitRecord.summary}</p>
+                <section class="reference-popover__section">
+                    <h3>Type</h3>
+                    <p>${formatLureBaitPresentationType(lureBaitRecord.presentationType)}</p>
+                </section>
+                <section class="reference-popover__section">
+                    <h3>Category</h3>
+                    <p>${formatLureBaitCategory(lureBaitRecord.category)}</p>
+                </section>
+                ${requirementMarkup}
+            </div>
+        </div>
+    `;
+
+    const closeDialog = () => {
+        if (dialog.open) dialog.close();
+    };
+
+    dialog.querySelector("[data-lure-bait-close]")?.addEventListener("click", closeDialog);
+    dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeDialog();
+    });
+    dialog.addEventListener("close", () => {
+        dialog.remove();
+        triggerElement?.focus();
+    });
+
+    document.body.append(dialog);
+    dialog.showModal();
+}
+
+function initializeLureBaitReferenceLinks(appMain, lureBaitRequirements = []) {
+    const requirementsById = new Map(
+        lureBaitRequirements.map((requirement) => [requirement.lureBaitId, requirement])
+    );
+    appMain.querySelectorAll("[data-lure-bait-reference-id]").forEach((referenceLink) => {
+        referenceLink.addEventListener("click", () => {
+            const lureBaitId = referenceLink.dataset.lureBaitReferenceId;
+            renderLureBaitReferencePopover(lureBaitId, referenceLink, requirementsById.get(lureBaitId));
+        });
+    });
 }
 
 function renderReferencePopover(referenceId, triggerElement, options = {}) {
@@ -1565,6 +1761,27 @@ function buildTagList(items) {
     return `<ul class="tag-list">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 }
 
+const RIG_CONDITION_REFERENCE_IDS = Object.freeze({
+    "Clear Water": "water-clarity-clear",
+    "Deep Water": "deep",
+    "Docks": "cover-dock-man-made",
+    "Light Current": "current-light",
+    "Open Water": "open-water",
+    "Rock": "rock",
+    "Shallow Water": "shallow",
+    "Stained Water": "water-clarity-stained",
+    "Vegetation": "vegetation"
+});
+
+function buildConditionTagList(items) {
+    if (!Array.isArray(items) || items.length === 0) return "";
+    return `<ul class="tag-list tag-list--conditions">${items.map((item) => {
+        const conditionId = RIG_CONDITION_REFERENCE_IDS[item];
+        if (!conditionId) return `<li>${item}</li>`;
+        return `<li><button class="condition-tag-button" type="button" data-condition-id="${conditionId}" aria-label="Learn about ${item}">${item}</button></li>`;
+    }).join("")}</ul>`;
+}
+
 function renderInstructionDetail(appMain, detailConfig) {
     if (!appMain || !detailConfig?.record) {
         console.error("A valid instructional detail record is required.");
@@ -1573,12 +1790,46 @@ function renderInstructionDetail(appMain, detailConfig) {
 
     const record = detailConfig.record;
     const selections = detailConfig.selections ?? {};
+    const configurations = Array.isArray(record.configurations) ? record.configurations : [];
+    const selectedConfiguration = configurations.length > 0
+        ? configurations.find((configuration) => configuration.id === detailConfig.selectedConfigurationId) ?? configurations[0]
+        : null;
+    const effectiveRecord = selectedConfiguration
+        ? {
+            ...record,
+            referenceLinks: selectedConfiguration.referenceLinks,
+            componentRequirements: selectedConfiguration.componentRequirements,
+            lureBaitRequirements: selectedConfiguration.lureBaitRequirements,
+            knotApplications: selectedConfiguration.knotApplications,
+            assemblySteps: selectedConfiguration.assemblySteps,
+            setupNotes: selectedConfiguration.setupNotes,
+            commonMistakes: selectedConfiguration.commonMistakes,
+            tutorialVideo: selectedConfiguration.tutorialVideo ?? null
+        }
+        : record;
+    const componentRequirements = Array.isArray(effectiveRecord.componentRequirements) ? effectiveRecord.componentRequirements : [];
+    const lureBaitRequirements = Array.isArray(effectiveRecord.lureBaitRequirements) ? effectiveRecord.lureBaitRequirements : [];
     const isCoreRig = isCoreRigRecord(record);
-    const componentsMarkup = record.componentRequirements.map((component) => {
+    const configurationMarkup = configurations.length > 0 ? `
+        <section class="detail-section rig-configuration-section">
+            <div class="rig-configuration-control">
+                <label class="rig-configuration-control__label" for="rig-configuration-select">Setup Type / Lure Type</label>
+                <div class="rig-configuration-control__select-shell">
+                    <select class="rig-configuration-control__select" id="rig-configuration-select" data-rig-configuration-select>
+                        ${configurations.map((configuration) => `
+                            <option value="${configuration.id}" ${configuration.id === selectedConfiguration?.id ? "selected" : ""}>${configuration.name}</option>
+                        `).join("")}
+                    </select>
+                    <span class="rig-configuration-control__chevron" aria-hidden="true">⌄</span>
+                </div>
+            </div>
+        </section>
+    ` : "";
+    const componentsMarkup = componentRequirements.map((component) => {
         const tackleRecord = getTackleRecord(component.tackleId);
         const componentName = tackleRecord?.name ?? component.tackleId;
         const isOwned = selections[component.tackleId] === true;
-        const checkboxId = `rig-component-owned-${record.id}-${component.tackleId}`;
+        const checkboxId = `rig-component-owned-${record.id}-${selectedConfiguration?.id ?? "base"}-${component.tackleId}`;
 
         if (!tackleRecord) {
             console.warn(`Canonical Tackle record was not found: ${component.tackleId}`);
@@ -1593,6 +1844,7 @@ function renderInstructionDetail(appMain, detailConfig) {
                             class="rig-component-owned__checkbox"
                             type="checkbox"
                             data-component-owned-id="${component.tackleId}"
+                            data-readiness-selection-id="${component.tackleId}"
                             ${isOwned ? "checked" : ""}
                         >
                         <span class="rig-component-owned__name">${componentName}</span>
@@ -1603,12 +1855,48 @@ function renderInstructionDetail(appMain, detailConfig) {
                         data-reference-id="${component.tackleId}"
                         aria-label="Identification help for ${componentName}"
                     ><span aria-hidden="true">&#9432;</span></button>
-                    ${
-                        component.required
-                            ? '<span class="rig-component-item__required">Required</span>'
-                            : '<span class="detail-list__optional">Optional</span>'
-                    }
+                    ${component.required
+                        ? '<span class="rig-component-item__required">Required tackle</span>'
+                        : '<span class="detail-list__optional">Optional tackle</span>'}
                 </div>
+                ${component.notes ? `<p>${component.notes}</p>` : ""}
+            </li>
+        `;
+    }).join("");
+    const lureBaitMarkup = lureBaitRequirements.map((requirement) => {
+        const lureBaitRecord = getLureBaitRecord(requirement.lureBaitId);
+        const displayName = lureBaitRecord?.name ?? requirement.lureBaitId;
+        const selectionId = `lure-bait:${requirement.lureBaitId}`;
+        const isAvailable = selections[selectionId] === true;
+        const checkboxId = `rig-lure-bait-owned-${record.id}-${selectedConfiguration?.id ?? "base"}-${requirement.lureBaitId}`;
+        if (!lureBaitRecord) {
+            console.warn(`Canonical Lure/Bait record was not found: ${requirement.lureBaitId}`);
+        }
+        return `
+            <li class="rig-component-item" data-lure-bait-requirement="${requirement.lureBaitId}">
+                <div class="rig-component-item__row">
+                    <label class="rig-component-owned" for="${checkboxId}">
+                        <input
+                            id="${checkboxId}"
+                            class="rig-component-owned__checkbox"
+                            type="checkbox"
+                            data-lure-bait-owned-id="${requirement.lureBaitId}"
+                            data-readiness-selection-id="${selectionId}"
+                            ${isAvailable ? "checked" : ""}
+                        >
+                        <span class="rig-component-owned__name">${displayName}</span>
+                    </label>
+                    <button
+                        class="reference-info-button"
+                        type="button"
+                        data-lure-bait-reference-id="${requirement.lureBaitId}"
+                        aria-label="Identification help for ${displayName}"
+                    ><span aria-hidden="true">&#9432;</span></button>
+                    ${requirement.required
+                        ? '<span class="rig-component-item__required">Required lure/bait</span>'
+                        : '<span class="detail-list__optional">Optional lure/bait</span>'}
+                </div>
+                ${requirement.notes ? `<p>${requirement.notes}</p>` : ""}
             </li>
         `;
     }).join("");
@@ -1622,87 +1910,91 @@ function renderInstructionDetail(appMain, detailConfig) {
                 <h2 id="rig-detail-title">${record.name}</h2>
                 <p>${record.summary}</p>
             </header>
+            ${configurationMarkup}
             <section class="detail-section rig-at-a-glance">
                 <div class="rig-at-a-glance__group"><h3>Best For</h3>${buildTagList(record.useCases)}</div>
-                <div class="rig-at-a-glance__group"><h3>Good Conditions</h3>${buildTagList(record.conditionTags)}</div>
+                <div class="rig-at-a-glance__group"><h3>Good Conditions</h3>${buildConditionTagList(record.conditionTags)}</div>
             </section>
             <section class="detail-section rig-requirements-section">
                 <div class="rig-requirements-section__header">
                     <div>
                         <h3>What You Need</h3>
-                        <p>Check each item you have. Select <span class="reference-link__icon" aria-hidden="true">&#9432;</span> for identification help.</p>
+                        <p>Check physical tackle you have. Lure/Bait requirements are shown separately and are not yet persistent My Tackle ownership.</p>
                     </div>
                     <div class="readiness-status" data-readiness-status aria-live="polite"></div>
                 </div>
-                <ul class="rig-component-list">${componentsMarkup}</ul>
+                <ul class="rig-component-list">${lureBaitMarkup}${componentsMarkup}</ul>
             </section>
             <section class="detail-section detail-section--build">
                 <h3>How to Build It</h3>
-                <ol class="detail-steps">${record.assemblySteps.map((step) => `<li>${step}</li>`).join("")}</ol>
+                <ol class="detail-steps">${effectiveRecord.assemblySteps.map((step) => `<li>${step}</li>`).join("")}</ol>
             </section>
-            ${buildRigTutorial(record)}
-            ${record.tutorialVideo ? "" : buildRigReferenceLinks(record)}
-            ${buildRigKnotApplications(record)}
-            <section class="detail-section detail-section--supporting"><h3>Setup Notes</h3><ul class="detail-list">${record.setupNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
-            <section class="detail-section detail-section--supporting"><h3>Common Mistakes</h3><ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul></section>
+            ${buildRigTutorial(effectiveRecord)}
+            ${effectiveRecord.tutorialVideo ? "" : buildRigReferenceLinks(effectiveRecord)}
+            ${buildRigKnotApplications(effectiveRecord)}
+            <section class="detail-section detail-section--supporting"><h3>Setup Notes</h3><ul class="detail-list">${effectiveRecord.setupNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
+            <section class="detail-section detail-section--supporting"><h3>Common Mistakes</h3><ul class="detail-list">${effectiveRecord.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul></section>
             <section class="detail-section detail-section--supporting detail-section--safety"><h3>Safety</h3><ul class="detail-list">${record.safetyNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
         </article>
     `;
 
     const updateReadinessStatus = () => {
-        const checkboxes = Array.from(
-            appMain.querySelectorAll("[data-component-owned-id]")
-        );
-        const missingRequired = record.componentRequirements.filter(
-            (component) => {
-                if (!component.required) return false;
-                return !checkboxes.find(
-                    (checkbox) =>
-                        checkbox.dataset.componentOwnedId === component.tackleId
-                )?.checked;
-            }
-        );
+        const checkboxes = Array.from(appMain.querySelectorAll("[data-readiness-selection-id]"));
+        const isChecked = (selectionId) =>
+            checkboxes.find((checkbox) => checkbox.dataset.readinessSelectionId === selectionId)?.checked === true;
+
+        const missingRequired = [
+            ...componentRequirements
+                .filter((component) => component.required && !isChecked(component.tackleId))
+                .map((component) => getTackleRecord(component.tackleId)?.name ?? component.tackleId),
+            ...lureBaitRequirements
+                .filter((requirement) => requirement.required && !isChecked(`lure-bait:${requirement.lureBaitId}`))
+                .map((requirement) => getLureBaitRecord(requirement.lureBaitId)?.name ?? requirement.lureBaitId)
+        ];
         const status = appMain.querySelector("[data-readiness-status]");
         if (!status) return;
 
         if (missingRequired.length === 0) {
             status.className = "readiness-status readiness-status--ready";
-            status.innerHTML = `
-                <strong>Ready to Fish</strong>
-                <span>All required tackle is marked available.</span>
-            `;
+            status.innerHTML = lureBaitRequirements.some((item) => item.required)
+                ? `<strong>Tackle Ready</strong><span>All required tackle and lure/bait items are marked available.</span>`
+                : `<strong>Ready to Fish</strong><span>All required tackle is marked available.</span>`;
             return;
         }
 
         status.className = "readiness-status readiness-status--missing";
         status.innerHTML = `
             <strong>Missing ${missingRequired.length}</strong>
-            <span>${missingRequired.map((item) => getTackleRecord(item.tackleId)?.name ?? item.tackleId).join(", ")}</span>
+            <span>${missingRequired.join(", ")}</span>
         `;
     };
 
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
-    appMain.querySelectorAll("[data-rig-knot-id]").forEach((button) => {
-        button.addEventListener("click", () => {
-            detailConfig.onKnotSelect?.(button.dataset.rigKnotId);
+    appMain.querySelector("[data-rig-configuration-select]")?.addEventListener("change", (event) => {
+        const nextConfigurationId = event.currentTarget.value;
+        detailConfig.onConfigurationChange?.(nextConfigurationId);
+        renderInstructionDetail(appMain, {
+            ...detailConfig,
+            selectedConfigurationId: nextConfigurationId
         });
     });
-    appMain.querySelectorAll("[data-component-owned-id]").forEach((checkbox) => {
+    appMain.querySelectorAll("[data-rig-knot-id]").forEach((button) => {
+        button.addEventListener("click", () => detailConfig.onKnotSelect?.(button.dataset.rigKnotId));
+    });
+    appMain.querySelectorAll("[data-readiness-selection-id]").forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
-            detailConfig.onReadinessChange?.(
-                checkbox.dataset.componentOwnedId,
-                checkbox.checked
-            );
+            detailConfig.onReadinessChange?.(checkbox.dataset.readinessSelectionId, checkbox.checked);
             updateReadinessStatus();
         });
     });
 
     initializeReferenceLinks(appMain, { onRigSelect: detailConfig.onRigSelect, currentRigId: record.id });
+    initializeLureBaitReferenceLinks(appMain, lureBaitRequirements);
+    initializeConditionLinks(appMain);
     initializeRigTutorial(appMain);
     initializeHomeNavigation(appMain);
     updateReadinessStatus();
 }
-
 
 function getRegulationsResourceActionLabel(resource) {
     const capabilities = new Set(Array.isArray(resource?.capabilities) ? resource.capabilities : []);

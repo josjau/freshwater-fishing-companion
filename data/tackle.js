@@ -418,11 +418,34 @@ const TACKLE_DATA = Object.freeze([
         createdVersion: "0.4.0",
         lastModifiedVersion: "0.4.0",
         isActive: true
+    },
+    {
+        id: "weighted-swimbait-hook",
+        name: "Weighted Swimbait Hook",
+        aliases: ["Weighted EWG Swimbait Hook", "Belly-Weighted Swimbait Hook"],
+        category: "Hooks",
+        summary: "A wide-gap swimbait hook with weight built onto the hook shank or belly area.",
+        purpose: "Adds hook and controlled weight in one component while allowing a paddle-tail swimbait to keep a streamlined profile.",
+        recognitionNotes: ["Wide-gap hook sized for soft-plastic swimbaits", "Weight fixed or built onto the lower hook shank", "Often includes a screw-lock, pin, or keeper at the eye"],
+        commonVariants: ["Fixed belly weight", "Sliding belly weight", "Spring-lock keeper"],
+        relatedTackleIds: ["soft-plastic", "offset-worm-hook"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "tube-jighead",
+        name: "Tube Jighead",
+        aliases: ["Internal Tube Jig", "Tube Head"],
+        category: "Jigheads",
+        summary: "A weighted hook shaped to fit inside the hollow body of a tube lure with the line tie exposed through the plastic.",
+        purpose: "Weights and hooks a tube while preserving the tube's compact profile and characteristic fall or bottom-contact presentation.",
+        recognitionNotes: ["Compact weighted head sized to slide inside a hollow tube", "Hook extends from the internal head through the tube body", "Line-tie eye is pushed through or exposed at the front of the tube"],
+        commonVariants: ["Round internal head", "60-degree line tie", "90-degree line tie"],
+        relatedTackleIds: ["jighead", "soft-plastic"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
     }
-]);
 
-console.info(
-    `[Loaded] ${TACKLE_DATA_BUILD_INFO.file} | ` +
-    `${TACKLE_DATA_BUILD_INFO.milestone} | ` +
-    `${TACKLE_DATA.length} records`
-);
+]);

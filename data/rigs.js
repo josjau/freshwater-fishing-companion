@@ -14,12 +14,12 @@ const RIG_DATA_BUILD_INFO = Object.freeze({
 });
 
 const CORE_RIG_IDS = Object.freeze([
-    "fixed-bobber-rig",
     "basic-bottom-rig",
+    "direct-tie-lure-setup",
+    "fixed-bobber-rig",
     "jighead-soft-plastic",
-    "inline-spinner-setup",
-    "texas-rig",
-    "slip-bobber-rig"
+    "slip-bobber-rig",
+    "texas-rig"
 ]);
 
 const RIG_DATA = Object.freeze([
@@ -544,17 +544,17 @@ const RIG_DATA = Object.freeze([
         variationIds: ["ned-rig"],
     },
     {
-        id: "inline-spinner-setup",
-        name: "Inline Spinner Setup",
-        summary: "A ready-to-fish cast-and-retrieve setup built around a compact lure whose blade spins around a central shaft.",
+        id: "direct-tie-lure-setup",
+        name: "Direct-Tie Lure Setup",
+        summary: "A simple terminal setup for complete lures that connect directly to the main line or leader without a separate assembled terminal rig.",
         createdVersion: "0.2.8",
-        lastModifiedVersion: "0.5.0",
+        lastModifiedVersion: "0.6.0",
         isActive: true,
         difficulty: "Beginner",
         useCases: [
-            "Covering water and locating active fish",
-            "Fishing for panfish, white bass, trout, and smallmouth bass",
-            "Learning a simple cast-and-retrieve presentation"
+            "Learning simple cast-and-retrieve lure fishing",
+            "Using complete lures that need only a direct terminal connection",
+            "Switching among lure types without creating separate top-level Rig families"
         ],
         conditionTags: [
             "Open Water",
@@ -563,53 +563,182 @@ const RIG_DATA = Object.freeze([
             "Clear Water",
             "Stained Water"
         ],
-        referenceLinks: [
-            {
-                label: "Mepps — Aglia Spinner Rigging and Tips",
-                url: "https://www.mepps.com/mepps-tactics/article/mepps-aglia-spinners/411"
-            }
-        ],
-        componentRequirements: [
-            {
-                tackleId: "inline-spinner",
-                quantity: 1,
-                required: true,
-                notes: "Choose a size that matches the target fish, line, and depth you need to reach."
-            }
-        ],
-        knotApplications: [
-            {
-                label: "Main line or leader to spinner",
-                connectionType: "terminal-attachment",
-                recommendedKnotIds: [
-                    "improved-clinch-knot",
-                    "palomar-knot",
-                    "uni-knot"
-                ],
-                notes: null
-            }
-        ],
-        assemblySteps: [
-            "Inspect the line-tie eye, blade, shaft, body, and hook for damage or tangles.",
-            "Tie the main line or leader directly to the spinner's line-tie eye.",
-            "Trim the tag end and pull firmly on the knot to confirm that it is secure.",
-            "Confirm that the blade rotates freely and that the hook is not caught on the blade, body, or dressing."
-        ],
-        setupNotes: [
-            "A direct line connection is the standard setup; add a leader only when toothy fish or abrasion makes one necessary.",
-            "Use the smallest spinner that casts well and reaches the intended depth."
-        ],
-        commonMistakes: [
-            "Adding an oversized snap or swivel that changes the lure's action.",
-            "Fishing with a bent shaft or damaged blade that cannot rotate freely.",
-            "Choosing a lure that is too large for the target fish or available forage.",
-            "Casting the exposed hook directly into heavy cover where it is likely to snag."
-        ],
+        referenceLinks: [],
+        componentRequirements: [],
+        lureBaitRequirements: [],
+        knotApplications: [],
+        assemblySteps: [],
+        setupNotes: [],
+        commonMistakes: [],
         safetyNotes: [
-            "Keep the exposed hook secured until you are ready to cast.",
-            "Check the casting area carefully because the compact weighted lure can travel quickly."
+            "Keep exposed hooks secured until you are ready to cast.",
+            "Check the casting area carefully before casting a weighted or multi-hook lure."
         ],
         variationIds: [],
+        configurations: [
+            {
+                id: "inline-spinner",
+                name: "Inline Spinner",
+                lureBaitId: "inline-spinner",
+                referenceLinks: [
+                    {
+                        label: "Mepps — Aglia Spinner Rigging and Tips",
+                        url: "https://www.mepps.com/mepps-tactics/article/mepps-aglia-spinners/411"
+                    }
+                ],
+                tutorialVideo: null,
+                componentRequirements: [],
+                lureBaitRequirements: [
+                    {
+                        lureBaitId: "inline-spinner",
+                        quantity: 1,
+                        required: true,
+                        notes: "Choose a size that matches the target fish, line, and depth you need to reach."
+                    }
+                ],
+                knotApplications: [
+                    {
+                        label: "Main line or leader to inline spinner",
+                        connectionType: "terminal-attachment",
+                        recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"],
+                        notes: null
+                    }
+                ],
+                assemblySteps: [
+                    "Inspect the line-tie eye, blade, shaft, body, and hook for damage or tangles.",
+                    "Find the small metal line-tie eye at the very front/top of the spinner shaft, opposite the hook and above the blade/body. This is the only place the line attaches.",
+                    "Tie the main line or leader directly to that line-tie eye; do not tie to the blade, blade hanger, shaft, body, or hook.",
+                    "Trim the tag end, pull firmly on the knot, and confirm that the blade rotates freely without catching the line or hook."
+                ],
+                setupNotes: [
+                    "A direct line connection is the standard setup; add a leader only when toothy fish or abrasion makes one necessary.",
+                    "Use the smallest spinner that casts well and reaches the intended depth."
+                ],
+                commonMistakes: [
+                    "Adding oversized terminal hardware that changes the lure's action.",
+                    "Fishing with a bent shaft or damaged blade that cannot rotate freely.",
+                    "Choosing a lure that is too large for the intended presentation.",
+                    "Casting the exposed hook directly into heavy cover where it is likely to snag."
+                ]
+            },
+            {
+                id: "spinnerbait",
+                name: "Spinnerbait",
+                lureBaitId: "spinnerbait",
+                referenceLinks: [],
+                tutorialVideo: {
+                    platform: "youtube",
+                    title: "How to Tie and Rig a Spinnerbait for Bass Fishing",
+                    creator: "Anglers",
+                    videoId: "0Or166Uo8VU",
+                    externalUrl: "https://www.youtube.com/watch?v=0Or166Uo8VU"
+                },
+                componentRequirements: [],
+                lureBaitRequirements: [
+                    { lureBaitId: "spinnerbait", quantity: 1, required: true, notes: "Use a complete spinnerbait with an intact line-tie, wire frame, blades, skirt, and hook." }
+                ],
+                knotApplications: [
+                    { label: "Main line or leader to spinnerbait", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], notes: null }
+                ],
+                assemblySteps: [
+                    "Inspect the spinnerbait wire, line-tie, blades, skirt, and hook for damage or tangles.",
+                    "Find the line-tie at the bend where the upper blade arm and lower head/hook arm meet. On an open-frame spinnerbait this is the small R-shaped bend; on a closed-eye model it is the metal eye at that same junction.",
+                    "Tie the main line or leader directly to that R-bend or closed eye. Do not tie to a blade swivel, the upper wire arm, the hook, or the weighted head.",
+                    "Trim the tag end, pull firmly on the knot, and confirm that the blades rotate freely and the skirt and hook are unobstructed."
+                ],
+                setupNotes: ["Keep the connection centered at the intended line-tie point so the lure tracks correctly."],
+                commonMistakes: ["Tying onto the wrong part of the wire frame.", "Fishing a bent wire frame that no longer tracks correctly."]
+            },
+            {
+                id: "crankbait",
+                name: "Crankbait",
+                lureBaitId: "crankbait",
+                referenceLinks: [],
+                tutorialVideo: {
+                    platform: "youtube",
+                    title: "Fishing Lures & Baits: How to Rig a Crankbait",
+                    creator: "trails",
+                    videoId: "-kHoA2RJX1M",
+                    externalUrl: "https://www.youtube.com/watch?v=-kHoA2RJX1M"
+                },
+                componentRequirements: [
+                    { tackleId: "split-ring", quantity: 1, required: false, notes: "Use the lure's existing line-tie or an appropriate split ring when the lure is designed for one." }
+                ],
+                lureBaitRequirements: [
+                    { lureBaitId: "crankbait", quantity: 1, required: true, notes: "Use a complete crankbait with secure hooks and an undamaged line-tie or bill." }
+                ],
+                knotApplications: [
+                    { label: "Main line or leader to crankbait line-tie or split ring", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], notes: null }
+                ],
+                assemblySteps: [
+                    "Inspect the crankbait body, diving bill when present, nose line-tie, factory split ring if present, and hooks.",
+                    "Find the small metal line-tie eye at the lure's nose or on the front of the diving bill. Do not confuse it with the hook hangers underneath the body.",
+                    "If the lure came with a split ring on that line-tie, leave it in place and tie to the split ring. If no split ring is intended, tie directly to the metal line-tie eye.",
+                    "Trim the tag end, test the knot firmly, and confirm the hooks and diving bill are unobstructed."
+                ],
+                setupNotes: ["Do not add extra terminal hardware merely for convenience when it changes the lure's balance or action."],
+                commonMistakes: ["Tying to a hook hanger instead of the line-tie.", "Using damaged or oversized attachment hardware."]
+            },
+            {
+                id: "jerkbait",
+                name: "Jerkbait",
+                lureBaitId: "jerkbait",
+                referenceLinks: [
+                    {
+                        label: "Rapala — X-Rap Jerkbait Reference",
+                        url: "https://www.rapala.com/us_en/x-rap/"
+                    }
+                ],
+                tutorialVideo: null,
+                componentRequirements: [
+                    { tackleId: "split-ring", quantity: 1, required: false, notes: "Use the lure's existing split ring only when it is part of the intended line-tie configuration." }
+                ],
+                lureBaitRequirements: [
+                    { lureBaitId: "jerkbait", quantity: 1, required: true, notes: "Use a complete jerkbait with an intact line-tie and secure hooks." }
+                ],
+                knotApplications: [
+                    { label: "Main line or leader to jerkbait line-tie or split ring", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], notes: null }
+                ],
+                assemblySteps: [
+                    "Inspect the jerkbait body, front line-tie, factory split ring if present, diving lip when present, and hooks.",
+                    "Find the small metal line-tie eye at the very front of the lure, usually at the nose or just ahead of the diving lip. The hook hangers under the body are not line-ties.",
+                    "If a factory split ring is installed on the front line-tie, tie to that ring; otherwise tie directly to the front metal eye. Do not add extra hardware unless the lure is designed for it.",
+                    "Trim the tag end, test the knot firmly, and confirm the hooks move freely without fouling the line."
+                ],
+                setupNotes: ["Keep added hardware minimal because extra weight can change how a suspending or slowly floating lure behaves."],
+                commonMistakes: ["Adding unnecessary hardware that changes suspension or balance.", "Using a damaged line-tie or fouled hook configuration."]
+            },
+            {
+                id: "spoon",
+                name: "Spoon",
+                lureBaitId: "spoon",
+                referenceLinks: [
+                    {
+                        label: "Mepps — Syclops Spoon Rigging and Tips",
+                        url: "https://www.mepps.com/mepps-tactics/article/syclops-spoon/460"
+                    }
+                ],
+                tutorialVideo: null,
+                componentRequirements: [
+                    { tackleId: "split-ring", quantity: 1, required: false, notes: "Use a split ring only when the spoon is designed to use one at the line-tie." },
+                    { tackleId: "barrel-swivel", quantity: 1, required: false, notes: "An upstream swivel may be useful when a rotating spoon produces persistent line twist." }
+                ],
+                lureBaitRequirements: [
+                    { lureBaitId: "spoon", quantity: 1, required: true, notes: "Use a complete spoon with an intact line-tie and secure hook." }
+                ],
+                knotApplications: [
+                    { label: "Main line or leader to spoon or optional swivel", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], notes: "If an anti-twist swivel is used, tie the line to the swivel and connect the spoon according to that hardware's intended attachment." }
+                ],
+                assemblySteps: [
+                    "Inspect the spoon, the line-tie end, any factory split ring, and the hook end.",
+                    "Identify the line-tie at the end opposite the hook. Tie to the factory split ring if one is installed there; otherwise tie directly through the spoon's front line-tie hole or eye.",
+                    "If repeated rotation causes line twist, place a barrel swivel upstream: tie the main line to one swivel eye, then use a short leader from the other swivel eye to the spoon's normal line-tie. Do not stack a swivel directly onto the spoon unless that is the intended hardware arrangement.",
+                    "Trim all tag ends, test each knot firmly, and confirm the spoon and hook move freely."
+                ],
+                setupNotes: ["Use only the attachment hardware needed for the spoon's design and line-twist control."],
+                commonMistakes: ["Adding excessive hardware that restricts the spoon's movement.", "Ignoring severe line twist during repeated retrieves."]
+            }
+        ]
     },
     {
         id: "wacky-rig",
@@ -2146,7 +2275,93 @@ const RIG_DATA = Object.freeze([
             "Keep the baited hook controlled while adjusting weights and before casting."
         ],
         variationIds: [],
-    }
+    },
+    {
+        id: "weighted-swimbait-hook-rig",
+        name: "Weighted Swimbait Hook Rig",
+        summary: "A paddle-tail swimbait rig built on a weighted wide-gap hook so the bait can swim with a streamlined, weed-resistant profile.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        difficulty: "Beginner+",
+        useCases: ["Swimming a paddle-tail through open water or light cover", "Adding controlled depth without a separate sinker", "Keeping a soft-plastic swimbait compact and streamlined"],
+        conditionTags: ["Open Water", "Light Cover", "Vegetation", "Shallow Water", "Deep Water"],
+        referenceLinks: [
+            { label: "Mustad — Power Lock Plus Spring Keeper Hook - Weighted", url: "https://mustad-fishing.com/us/products/91768sw" }
+        ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How to rig the Power Lock Plus Hook for Swimbaits",
+            creator: "Mustad Fishing",
+            videoId: "32Fw4vimHWQ",
+            externalUrl: "https://www.youtube.com/watch?v=32Fw4vimHWQ"
+        },
+        componentRequirements: [
+            { tackleId: "weighted-swimbait-hook", quantity: 1, required: true, notes: "Match hook gap and weight to the swimbait body and the depth you need to reach." }
+        ],
+        lureBaitRequirements: [
+            { lureBaitId: "paddle-tail-swimbait", quantity: 1, required: true, notes: "Choose a paddle-tail body that fits the hook without crowding the gap or bending the bait." }
+        ],
+        knotApplications: [
+            { label: "Main line or leader to weighted swimbait hook", connectionType: "terminal-attachment", recommendedKnotIds: ["palomar-knot", "improved-clinch-knot", "uni-knot"], notes: null }
+        ],
+        assemblySteps: [
+            "Match the paddle-tail swimbait to a weighted swimbait hook whose gap remains open enough for a hookset.",
+            "Attach the bait's nose to the hook's keeper or screw-lock when present.",
+            "Measure where the hook point should exit the swimbait so the body will lie straight.",
+            "Pass the hook point through the body at that location and seat the bait straight on the hook.",
+            "Skin-hook or lightly bury the point when a weed-resistant setup is needed, without deeply covering the point.",
+            "Find the metal hook eye at the very front of the weighted swimbait hook, beside the screw-lock or keeper. Tie the main line or leader to that hook eye—not to the screw-lock, keeper, belly weight, or hook bend—and confirm the bait hangs straight before fishing."
+        ],
+        setupNotes: ["A straight-rigged swimbait tracks more naturally and lets the paddle tail work freely.", "Use the lightest integrated weight that reaches the intended depth while preserving the desired swimming action."],
+        commonMistakes: ["Using a hook too small for the swimbait body and blocking the hook gap.", "Rigging the bait crooked so it rolls instead of tracking straight.", "Burying the hook point so deeply that it cannot clear the plastic on a strike."],
+        safetyNotes: ["Keep the hook point controlled while threading and measuring the soft plastic.", "Check behind you before casting a weighted lure."],
+        variationIds: ["jighead-soft-plastic"]
+    },
+    {
+        id: "tube-jig-rig",
+        name: "Tube Jig Rig",
+        summary: "A tube lure rig built with a jighead inserted inside the hollow body so the weighted head stays hidden and the hook exits through the plastic.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        difficulty: "Beginner+",
+        useCases: ["Fishing a tube near rock or bottom structure", "Jigging or dragging a compact soft-plastic profile", "Presenting a tube with an internal weighted hook"],
+        conditionTags: ["Rock", "Open Water", "Deep Water", "Current", "Clear Water", "Stained Water"],
+        referenceLinks: [
+            { label: "Mustad / TUF-LINE — Take 'Em With Tubes", url: "https://mustad-fishing.com/tuf-line/us/article/take-em-with-tubes" },
+            { label: "Tackle Warehouse — Tube Jig Heads", url: "https://www.tacklewarehouse.com/catpage-TUBEJIGS.html" }
+        ],
+        tutorialVideo: {
+            platform: "youtube",
+            title: "How to rig a tube jig",
+            creator: "Dave Mercer",
+            videoId: "sHUJxiW7Ags",
+            externalUrl: "https://www.youtube.com/watch?v=sHUJxiW7Ags"
+        },
+        componentRequirements: [
+            { tackleId: "tube-jighead", quantity: 1, required: true, notes: "Use an internal tube head that fits the hollow body without splitting or distorting it." }
+        ],
+        lureBaitRequirements: [
+            { lureBaitId: "tube", quantity: 1, required: true, notes: "Use a hollow tube body sized to the jighead and hook." }
+        ],
+        knotApplications: [
+            { label: "Main line or leader to tube jighead", connectionType: "terminal-attachment", recommendedKnotIds: ["palomar-knot", "improved-clinch-knot", "uni-knot"], notes: null }
+        ],
+        assemblySteps: [
+            "Choose a tube jighead that will slide into the hollow tube body without tearing it.",
+            "Insert the weighted head into the open rear of the tube and work it forward inside the body.",
+            "Push the jighead's line-tie eye through the tube wall at the natural front position without making an oversized hole.",
+            "Guide the hook point out through the tube so the body remains straight and the hook gap stays clear.",
+            "After the jighead is seated inside the tube, locate the small metal line-tie eye protruding through the front/top of the tube body. Tie the main line or leader to that exposed eye—not to the hook bend or the lead head hidden inside the tube—and test the knot firmly.",
+            "Confirm that the tube is seated straight and the tentacles are free to move."
+        ],
+        setupNotes: ["Internal tube heads preserve the compact tube profile and can create a gliding or spiraling fall depending on the head and presentation.", "Increase jighead weight only as needed to maintain the intended depth or bottom contact."],
+        commonMistakes: ["Using a jighead too large for the tube cavity and splitting the bait.", "Pushing the line-tie through an oversized hole that lets the head shift inside the tube.", "Rigging the tube crooked so it falls or tracks unnaturally."],
+        safetyNotes: ["Keep fingers clear of the hook point while pushing the jighead through the tube body.", "Check behind you before casting a weighted jig."],
+        variationIds: ["jighead-soft-plastic"]
+    },
+
 ]);
 
 console.info(

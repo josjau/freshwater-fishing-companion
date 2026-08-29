@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.8.1  
+**Document Revision:** 1.10.6  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `f388df7fac62770fe07b79d3ed7470a8e768b045`  
+**Reconciliation Baseline:** `301acd22cc016a1a94d87504bcc785fcada7506c`  
 **Last Updated:** 2026-08-28
 
 # Purpose
@@ -63,18 +63,17 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| REG-001 | OPEN | North Carolina, South Carolina, and Washington resource defects are documented; four replacement candidates await human validation. | `WORKING_STATE.md`; `EXTERNAL_REFERENCE_MAINTENANCE.md`; records `north-carolina-fishing-regulations`, `south-carolina-fishing-regulations`, `south-carolina-fishing`, and `washington-fish-stocking`. | User validates every candidate destination in a normal browser. Keep `data/regulations.js` unchanged until validation. After confirmation, apply the bounded source/metadata repair, run targeted Repository Integrity and external-reference checks, review the exact diff, and close through a separate source commit/CI cycle. |
 
 # Named Future Architecture / Product Gates
 
 | ID | Status | Item | Trigger / owner |
 |---|---|---|---|
-| GATE-001 | APPROVED / PENDING IMPLEMENTATION | Technique domain + intrinsic compatibility participation | D003/D024/D056/D069; implement after Lure/Bait prerequisite foundation. |
-| GATE-002 | REQUIRED | Conditions Production Foundation | **Next prerequisite workstream** after What Should I Throw Phase 0 documentation closeout; D004/D056/D069 + `data-model/03B-CONDITIONS.md`. |
-| GATE-003 | APPROVED / PENDING IMPLEMENTATION | Lure/Bait Reference domain | D069 + `data-model/03C-LURES-BAIT.md`; implement after Conditions. |
-| GATE-004 | BLOCKED | What Should I Throw production | Phase 0 planning complete under D069; resume recommendation engine/UX only after Conditions → Lure/Bait → Techniques → User Data → scoped My Tackle Availability gates. |
+| GATE-001 | BLOCKED — B RUNTIME RE-REVIEW PENDING | Technique domain + intrinsic compatibility participation | The 2026-08-28 Subphase B browser review failed. The bounded repair is now staged and targeted static/data checks pass. Do not begin C until the repaired runtime re-review passes. YouTube playback must be validated from a served/GitHub environment because local-file playback also fails for existing committed tutorials. After PASS, implement RP-C1–RP-C4. Canonical owners: D003/D024/D056/D069 + `data-model/03A-TECHNIQUES.md` / `09-RELATIONSHIPS.md`. |
+| GATE-002 | REQUIRED / BLOCKED ON B RUNTIME RE-REVIEW | Recommendation Prerequisites Foundation | Production is active. Subphase A data/static checks remain targeted PASS but Good Conditions runtime presentation failed. Subphase B repair is staged in Drive Current and targeted data/static validation passes; the second browser/runtime review is now the active gate. Subphase C remains blocked until repaired browser review passes. Full Repository Integrity/final combined review/commit/CI remain pending. Umbrella owner: `workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md` + D069. |
+| GATE-003 | BLOCKED — REPAIR STAGED / RUNTIME RE-REVIEW PENDING | Lure/Bait Reference domain | The 2026-08-28 browser review failed; those bounded repairs are now staged in Drive Current and targeted static/data checks pass: required Lure/Bait uses the established checkbox/Missing-count/`ⓘ` component grammar; primary lure media moved into the popover; Paddle-tail Swimbait and Tube recognition Media added; tie locations expanded; Direct-Tie selector refined; Core cards alphabetized; Good Conditions contextual controls repaired. Local YouTube errors are not yet a source defect because existing committed tutorials fail from the local copy but load from GitHub; revalidate on a served build. Jerkbait/Spoon tutorial selection remains open while the user researches videos. Fish→Direct-Tie Inline Spinner navigation passed and must be preserved. Full Repository Integrity/final combined closeout remains pending. |
+| GATE-004 | BLOCKED | What Should I Throw production | Phase 0 planning complete under D069; resume recommendation engine/UX only after Recommendation Prerequisites Foundation (Conditions → Lure/Bait → Techniques/Compatibility) → User Data → scoped My Tackle Availability gates. |
 | GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Later roadmap milestone after the recommendation prerequisite path unless a direct dependency is demonstrated. |
-| GATE-006 | REQUIRED | Settings / User Data Architecture | After Techniques and before authoritative My Tackle; settle user/profile identity, retention, persistence, migration, backup/restore, device transfer, preference ownership, and ownership-vs-current-availability semantics under D067/D069. |
+| GATE-006 | REQUIRED | Settings / User Data Architecture | After Recommendation Prerequisites Foundation and before authoritative My Tackle; settle user/profile identity, retention, persistence, migration, backup/restore, device transfer, preference ownership, and ownership-vs-current-availability semantics under D067/D069. |
 | GATE-007 | REQUIRED | My Tackle Availability Foundation | After User Data gate and before What Should I Throw production; implement only the authoritative ownership/current-availability and recommendation-matching scope required by D069. |
 | GATE-008 | DEFERRED TO NAMED GATE | Catch Log | After the settled User Data/My Tackle foundation and later roadmap progression. |
 | GATE-009 | DEFERRED TO NAMED GATE | Global Search | After major searchable domains are stable. |
@@ -109,3 +108,9 @@ These items are not current blockers and must not be promoted merely because the
 6. Historical PASS/CLOSED records do not override later approved architecture.
 7. Live Working State may record active-cycle detail first, but durable checkpointing must reconcile material non-closed items here and durable truth into the correct canonical owner.
 8. Before every commit, every durable repository documentation file receives an explicit UPDATED or VERIFIED — NO CHANGE REQUIRED disposition; no applicable document may be silently skipped.
+
+# Recommendation Prerequisites — Active Runtime Repair
+
+| ID | Status | Item | Canonical detail / gate | Next action |
+|---|---|---|---|---|
+| RP-B-RUNTIME-001 | BLOCKED / REPAIR STAGED — RE-REVIEW REQUIRED | Subphase B user runtime review defects | `workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md`, `data-model/03-RIGS.md`, `03C-LURES-BAIT.md`, `03B-CONDITIONS.md` | Bounded repair staged 2026-08-29; targeted static/data validation PASS. Run the second browser review and do not start C before runtime PASS. |

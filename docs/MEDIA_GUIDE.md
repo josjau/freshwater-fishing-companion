@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.11  
+**Document Revision:** 1.0.12  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-24
+**Last Updated:** 2026-08-28
 
 # Purpose
 
@@ -423,7 +423,7 @@ An external Media record does not imply local redistribution permission. Rights 
 
 Use the media type that best supports recognition and use.
 
-Use verified photography when exact profile or coloration matters.
+Use verified photography when exact profile or coloration matters. For canonical general lure-category recognition, an original FCC reference asset is appropriate when a reusable real photograph is unavailable, commercially branded, visually inconsistent, or less useful for beginner recognition.
 
 Use original diagrams/illustrations for:
 
@@ -432,6 +432,22 @@ Use original diagrams/illustrations for:
 - Retrieve concepts
 - Action
 - General lure categories
+
+## Lure/Bait Recognition Asset Standard
+
+When a canonical Lure/Bait identity needs a production recognition image rather than an instructional diagram:
+
+- anchor the object geometry to verified real-world photographs, manufacturer references, or authoritative technical references;
+- depict a generic category example rather than reproducing an exact branded commercial product;
+- omit commercial logos, model names, packaging, and promotional styling;
+- prefer one clear, recognizable object at useful mobile scale;
+- use realistic or semi-photorealistic catalog-reference treatment rather than icon, cartoon, or flat-vector treatment;
+- ship as optimized 640 × 440 RGB WebP on exact `#f4f0e8`, matching the canonical reference-media surface;
+- do not bake in labels, callouts, captions, borders, or instructional text;
+- do not bake in artificial cast shadows;
+- validate the finished asset at full size and at the actual in-app recognition size before approval.
+
+A previously approved generic FCC asset may be reused under a second Media attachment when the same artwork truthfully serves another canonical semantic owner, provided the distinct `ownerType` + `ownerId` attachments remain explicit.
 
 Do not present a generated photorealistic lure as an exact commercial product unless clearly identified as illustrative.
 

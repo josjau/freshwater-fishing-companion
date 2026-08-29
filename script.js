@@ -157,6 +157,7 @@ let fishBrowseState = { query: "", scrollY: 0 };
 let fishComparisonCatalogScrollY = 0;
 let selectedRigId = null;
 let selectedRigCollectionKey = "all";
+let selectedRigConfigurationId = null;
 let selectedKnotId = null;
 let selectedKnotBrowseKey = "all";
 let selectedKnotTaskId = null;
@@ -678,7 +679,7 @@ function openFishDetailFromComparison(fishId) {
     showView(ROUTES.FISH_DETAIL);
 }
 
-function openRigDetailFromFish(rigId) {
+function openRigDetailFromFish(rigId, lureBaitId = null) {
     const fish = findRecordById(getActiveFish(), selectedFishId);
     const rig = findRecordById(RIG_DATA, rigId);
     if (!fish || !rig || rig.isActive !== true) {
@@ -693,6 +694,7 @@ function openRigDetailFromFish(rigId) {
     });
     selectedRigId = rig.id;
     selectedRigCollectionKey = "all";
+    selectedRigConfigurationId = lureBaitId;
     showView(ROUTES.RIG_DETAIL);
 }
 
@@ -711,7 +713,7 @@ function renderRigGuideView(appMain) {
             { id: "browse-all-rigs", title: "All Rigs", description: "Browse every Rig in the guide.", isAvailable: true },
             { id: "browse-core-rigs", title: "Core Rigs", description: "Six curated setups that form a broadly useful fishing toolkit.", isAvailable: true },
             { id: "browse-beginner-rigs", title: "Beginner", description: "Seven simple rigs with forgiving assembly and broad usefulness.", isAvailable: true },
-            { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Three approachable rigs that require a little more setup precision.", isAvailable: true },
+            { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Five approachable rigs that require a little more setup precision.", isAvailable: true },
             { id: "browse-intermediate-rigs", title: "Intermediate", description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup.", isAvailable: true },
             { id: "browse-intermediate-plus-rigs", title: "Intermediate+", description: "Four specialized finesse and multi-component setups with more precise weight placement and rig orientation.", isAvailable: true },
             { id: "browse-advanced-rigs", title: "Advanced", description: "Two purpose-built rigs for specialized terminal topology and demanding heavy-cover fishing.", isAvailable: true },
@@ -743,12 +745,21 @@ function renderRigSearchResultCard(rig) {
     `;
 }
 
+function getRigSearchRecord(rig) {
+    return {
+        ...rig,
+        configurationNames: Array.isArray(rig.configurations)
+            ? rig.configurations.map((configuration) => configuration.name)
+            : []
+    };
+}
+
 function updateRigGuideSearchResults(appMain, query) {
-    const activeRigs = RIG_DATA.filter((rig) => rig.isActive);
+    const activeRigs = RIG_DATA.filter((rig) => rig.isActive).map(getRigSearchRecord);
     const matches = searchRecords(
         activeRigs,
         query,
-        ["name", "difficulty", "useCases", "conditionTags"]
+        ["name", "difficulty", "useCases", "conditionTags", "configurationNames"]
     );
 
     renderSearchResults(appMain, matches, {
@@ -794,9 +805,9 @@ function getRigCollectionConfig() {
 
 function getRigsForCollection(activeRigs) {
     if (selectedRigCollectionKey === "core") {
-        return CORE_RIG_IDS
-            .map((rigId) => findRecordById(activeRigs, rigId))
-            .filter(Boolean);
+        return sortRecordsAlphabetically(
+            activeRigs.filter((rig) => CORE_RIG_IDS.includes(rig.id))
+        );
     }
 
     if (selectedRigCollectionKey === "beginner") {
@@ -827,12 +838,6 @@ function getRigsForCollection(activeRigs) {
 }
 
 function sortRigCollection(records) {
-    if (selectedRigCollectionKey === "core") {
-        return [...records].sort(
-            (first, second) => getCoreRigOrder(first.id) - getCoreRigOrder(second.id)
-        );
-    }
-
     return sortRecordsAlphabetically(records);
 }
 
@@ -840,6 +845,7 @@ function openRigDetail(rigId, collectionKey = selectedRigCollectionKey) {
     clearDetailNavigationStack();
     selectedRigId = rigId;
     selectedRigCollectionKey = collectionKey;
+    selectedRigConfigurationId = null;
     showView(ROUTES.RIG_DETAIL);
 }
 
@@ -864,6 +870,7 @@ function openRigDetailFromKnot(rigId) {
 
     selectedRigId = rigId;
     selectedRigCollectionKey = "all";
+    selectedRigConfigurationId = null;
     showView(ROUTES.RIG_DETAIL);
 }
 
@@ -888,6 +895,7 @@ function openRigDetailFromComponentReference(rigId) {
 
     selectedRigId = nextRig.id;
     selectedRigCollectionKey = "all";
+    selectedRigConfigurationId = null;
     showView(ROUTES.RIG_DETAIL);
 }
 
@@ -930,11 +938,11 @@ function renderRigBrowseView(appMain) {
 
 function updateRigBrowseResults(appMain, query) {
     const activeRigs = RIG_DATA.filter((rig) => rig.isActive);
-    const collectionRigs = getRigsForCollection(activeRigs);
+    const collectionRigs = getRigsForCollection(activeRigs).map(getRigSearchRecord);
     const matches = searchRecords(
         collectionRigs,
         query,
-        ["name", "difficulty", "useCases", "conditionTags"]
+        ["name", "difficulty", "useCases", "conditionTags", "configurationNames"]
     );
     const resultRecords = normalizeSearchText(query)
         ? matches
@@ -966,13 +974,15 @@ function renderRigDetailView(appMain) {
             ? returnContext.label
             : (fromGuideSearch ? "Rig Guide" : collection.title),
         selections: getRigReadinessSelections(rig.id),
+        selectedConfigurationId: selectedRigConfigurationId,
+        onConfigurationChange: (configurationId) => { selectedRigConfigurationId = configurationId; },
         onParent: hasConnectedReturn
             ? returnToDetailNavigationContext
             : () => showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE),
         onKnotSelect: openKnotDetailFromRig,
         onRigSelect: openRigDetailFromComponentReference,
-        onReadinessChange: (tackleId, isOwned) =>
-            updateRigReadinessSelection(rig.id, tackleId, isOwned)
+        onReadinessChange: (selectionId, isOwned) =>
+            updateRigReadinessSelection(rig.id, selectionId, isOwned)
     });
 }
 
@@ -1002,10 +1012,10 @@ function getRigReadinessSelections(rigId) {
     return rigState && typeof rigState === "object" ? rigState : {};
 }
 
-function updateRigReadinessSelection(rigId, tackleId, isOwned) {
+function updateRigReadinessSelection(rigId, selectionId, isOwned) {
     const state = getReadinessState();
     const rigState = state[rigId] && typeof state[rigId] === "object" ? state[rigId] : {};
-    rigState[tackleId] = isOwned;
+    rigState[selectionId] = isOwned;
     state[rigId] = rigState;
     saveReadinessState(state);
 }

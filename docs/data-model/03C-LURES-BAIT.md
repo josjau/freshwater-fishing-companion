@@ -1,16 +1,16 @@
 # Freshwater Fishing Companion
 
 **Document:** 03C-LURES-BAIT.md  
-**Document Revision:** 0.1.0  
+**Document Revision:** 0.2.5  
 **Document Status:** Approved  
-**Implementation Status:** Approved / Not Implemented  
+**Implementation Status:** Drive Current Staged / repair targeted data+static PASS / runtime Lure/Bait re-review pending / Combined Closeout Pending  
 **Decision Baseline:** D043, D056, D069
 
 ---
 
 # Purpose
 
-This document defines the approved canonical Lure/Bait Reference Knowledge boundary required by What Should I Throw and future My Tackle matching. No canonical Lure/Bait production dataset exists on current `main`.
+This document defines the approved canonical Lure/Bait Reference Knowledge boundary required by What Should I Throw and future My Tackle matching. No canonical Lure/Bait production dataset is committed on current `main`; Drive Working Source/Current now contains the staged V1 implementation in `data/lure-bait.js`.
 
 Lure/Bait describes the fishing-relevant lure or bait identity intentionally presented to Fish. It is distinct from functional Tackle components, Rig assembly, reusable Technique behavior, contextual Recommendation selection, and commercial product identity.
 
@@ -25,13 +25,29 @@ Lure/Bait describes the fishing-relevant lure or bait identity intentionally pre
 - **Recommendation Decision Knowledge** owns Fish/Condition-specific selection, ranking, rationale, exact recommended size/weight/color/pattern, and contextual presentation adjustments.
 - **My Tackle/User Knowledge** owns actual user possessions and fishing-relevant variants once implemented.
 
-A complete lure may therefore have both a Lure/Bait identity and a Rig setup when the identity and physical connection/setup have distinct meanings. Inline Spinner and Inline Spinner Setup are the canonical edge-case pattern.
+A complete lure may therefore have both a Lure/Bait identity and a Rig setup when the identity and physical connection/setup have distinct meanings. Inline Spinner and the Inline Spinner configuration of Direct-Tie Lure Setup are the implemented edge-case pattern.
 
 ---
 
 # Canonical Identity
 
-V1 canonical entities are fishing-relevant lure/bait types rather than brands, models, SKUs, or exhaustive commercial variants. Examples include Stick Worm, Craw, Creature Bait, Paddle-tail Swimbait, Tube, Spinnerbait, Crankbait, Jerkbait, Inline Spinner, Spoon, Minnow, Nightcrawler, and Cricket.
+RP-B1 through RP-B2D and B-01 through B-13 lock the V1 canonical identities to exactly:
+
+1. `stick-worm` — Stick Worm
+2. `craw` — Craw
+3. `creature-bait` — Creature Bait
+4. `paddle-tail-swimbait` — Paddle-tail Swimbait
+5. `tube` — Tube
+6. `spinnerbait` — Spinnerbait
+7. `crankbait` — Crankbait
+8. `jerkbait` — Jerkbait
+9. `inline-spinner` — Inline Spinner
+10. `spoon` — Spoon
+11. `minnow` — Minnow
+12. `nightcrawler` — Nightcrawler
+13. `cricket` — Cricket
+
+No additional identity enters this production pass without reopening the bounded dependency gate.
 
 Each record distinguishes at minimum:
 
@@ -56,19 +72,22 @@ lastModifiedVersion
 isActive
 ```
 
-The production pilot may add demonstrated reusable fields such as:
+The locked V1 record contract is:
 
 ```text
-aliases[]
+id
+name
+summary
+createdVersion
+lastModifiedVersion
+isActive
 presentationType
 category
-profile
-sizeRange?
-weightRange?
-actionCharacteristics[]?
+profile?
+aliases[]?
 ```
 
-Not every optional field applies to every lure/bait. Sparse subtype-specific attributes are preferred over a universal all-lure schema. Size/weight ranges belong here only when evidence demonstrates they are genuinely reusable intrinsic/reference information; exact context-specific recommendations remain Decision Knowledge.
+`presentationType` and broad functional `category` are required. `profile` and aliases are used only when meaningful. Sparse subtype-specific intrinsic fields may be added only when the authored record demonstrates reusable reference value. Do not add universal `sizeRange`, `weightRange`, or `actionCharacteristics[]` fields in V1. Exact context-specific size, weight, color/pattern, action, and presentation remain Recommendation Decision Knowledge.
 
 Natural bait records must not be forced to carry meaningless artificial-lure fields.
 
@@ -76,7 +95,7 @@ Natural bait records must not be forced to carry meaningless artificial-lure fie
 
 # Color / Pattern
 
-Do not enumerate manufacturer/commercial color names as canonical Lure/Bait data. A normalized fishing-semantic color/pattern vocabulary may be introduced when demonstrated by recommendation and My Tackle matching. Exact vocabulary remains a production-pilot subdecision under D069.
+Do not enumerate manufacturer/commercial color names as canonical Lure/Bait data. No normalized color/pattern vocabulary is introduced in Subphase B. A future normalized vocabulary requires a demonstrated Recommendation/My Tackle need and a separate approved gate.
 
 Recommendation owns “use this color/pattern here.” My Tackle may retain the user's exact commercial/free-text variant while also mapping to any approved normalized vocabulary.
 
@@ -111,28 +130,24 @@ Persistent ownership and temporary/current availability must remain distinct.
 
 # Media Ownership
 
-Lure/Bait does not own inverse media-ID arrays. If media is implemented, attachment follows the shared Media ownership model:
+Lure/Bait does not own inverse media-ID arrays. Production recognition Media now follows the shared Media ownership model:
 
 ```text
 ownerType: "lure-bait"
 ownerId: canonical Lure/Bait ID
 ```
 
-Exact `ownerType` literal may be finalized with implementation, but Media remains the canonical attachment owner.
+Media remains the canonical attachment owner. Subphase B implements recognition Media for the five Direct-Tie Lure/Bait identities plus the Paddle-tail Swimbait and Tube identities required by the two new Rigs. Spinnerbait, Crankbait, Jerkbait, and Spoon use approved original generic FCC recognition assets; Inline Spinner reuses the previously approved FCC artwork under a separate `ownerType: "lure-bait"` attachment while preserving the existing legacy Tackle attachment.
+
+These recognition assets identify the generic lure category, not an exact commercial product. They follow the approved Lure Media production treatment in `MEDIA_GUIDE.md`: single-object, unbranded, reference-grounded imagery on the canonical `#f4f0e8` reference surface.
 
 ---
 
-# Production Gate
+# Production Checkpoint — STAGED / TARGETED PASS
 
-Before Lure/Bait production activation:
+Drive Current implements the locked 13-identity vocabulary with Foundation fields plus `presentationType` and `category`; no color/pattern normalization or commercial product identity was introduced. Subphase B also stages the approved Direct-Tie Lure Setup configuration model, Weighted Swimbait Hook and Tube Jig dependencies, configured Inline Spinner Fish-guidance migration, and Direct-Tie Lure/Bait recognition Media. Targeted data/static validation passes identity count/order, lifecycle/shape, Rig/Tackle/Lure-Bait references, the exact three configured Fish-guidance migrations, production load order, renderer/search wiring, and complete recognition-media coverage for all seven Rig-facing Lure/Bait identities in this subphase.
 
-1. finalize the canonical V1 entity vocabulary against real Rig/Recommendation needs;
-2. finalize only demonstrated optional intrinsic fields;
-3. deliberately disposition current lure-like Tackle records without duplicate canonical ownership;
-4. implement Rig↔Lure/Bait compatibility for the authored scope;
-5. define any normalized color/pattern vocabulary only if recommendation/My Tackle matching requires it;
-6. validate IDs, lifecycle, references, compatibility, and staged completeness;
-7. preserve the commercial-product and contextual-Recommendation boundaries above.
+The canonical typed Rig↔Lure/Bait Compatibility relationships remain owned by Subphase C under `09-RELATIONSHIPS.md`; Subphase B locks and prepares their authored candidates but does not create a parallel relationship registry. The 2026-08-28 browser review failed the Lure/Bait availability/media presentation layer; the bounded repair is now staged and targeted static/data validation passes, but the second runtime review is still required before B may pass. Full Repository Integrity, final approval, commit/push, and CI remain pending at the combined Recommendation Prerequisites Foundation closeout boundary.
 
 ---
 
@@ -148,3 +163,63 @@ Before Lure/Bait production activation:
 - `09-RELATIONSHIPS.md`
 - `../ARCHITECTURE.md`
 - `../DECISIONS.md`
+
+
+# RP-B1 — Cross-Domain Semantic Roles — LOCKED
+
+Rig, Tackle, and Lure/Bait may intentionally represent related fishing concepts when each owns a distinct semantic role.
+
+- **Rig** owns generic ready-to-fish assembly/configuration and component order.
+- **Tackle** owns reusable physical component requirements.
+- **Lure/Bait** owns the fishing identity presented to the Fish.
+- **Recommendation Decision Knowledge** resolves those generic identities into context-specific choices and exact build parameters.
+
+Context-specific builds such as **Texas Rig for Bass in Shallow Water** are recommendation outputs/configurations, not new canonical Rig entities. They may select exact Lure/Bait identities and exact component parameters while following the canonical Rig build order.
+
+Existing overlapping records such as `bait`, `soft-plastic`, and `inline-spinner` are therefore not presumed duplicate or migration debt merely because a corresponding Lure/Bait identity exists. Each remains valid when it owns an independent semantic role. Future lure-like Rigs such as crankbait or swimbait setups may likewise coexist with Crankbait or Swimbait Lure/Bait identities when the Rig teaches the generic setup and the Lure/Bait record owns the presented fishing identity.
+
+The single-owner rule is violated only when two records attempt to own the same semantic fact for the same purpose.
+
+
+# RP-B2A — Technique Dependency Rule — LOCKED
+
+Lure/Bait scope planning must account for the Technique knowledge required by the Rigs and lure/bait identities introduced in the same dependency-complete foundation. Rig Detail presents **Best For / Good Conditions / Techniques**, with Technique links backed by canonical Rig↔Technique intrinsic Compatibility.
+
+A Technique is not added merely because it is mechanically possible with a Rig. Compatibility requires that it be genuinely usable within the Rig's normal intended use envelope. Recommendation Decision Knowledge later determines which eligible Technique is appropriate for a particular Fish and Conditions context.
+
+# RP-B2B — Dependency-Complete Expansion Rule — LOCKED
+
+A candidate Lure/Bait is not approved for Version 1 in isolation. Before it enters the canonical vocabulary, evaluate the complete usable knowledge path across Lure/Bait, Rig, Tackle, Technique, intrinsic Compatibility, and affected Fish↔Rig recommendations.
+
+- A new Lure/Bait does not automatically require a new Rig. Create a Rig only when meaningful setup/assembly knowledge is required and no existing Rig adequately teaches it.
+- Any new Rig must be dependency-complete: all required canonical Tackle components must already exist or be added in the same approved scope.
+- Any new Rig must receive the genuinely viable Technique set governed by RP-B2A; mechanical possibility alone is insufficient.
+- Any new Lure/Bait must receive all applicable intrinsic Compatibility coverage required for the authored scope so the canonical identity does not become a dangling knowledge node.
+- Adding a new Rig triggers bounded re-evaluation only of Fish whose recommendation set could plausibly be affected by that Rig. It does not automatically reopen all 30 Fish.
+- Existing Primary/Alternative Fish↔Rig recommendations remain unchanged unless the expanded Rig candidate set provides evidence that another Rig is a better fit.
+- The dependency sweep is completed before the final Lure/Bait vocabulary is locked.
+
+
+# Final Subphase B Dependency Lock — B-01 through B-13
+
+- Paddle-tail Swimbait adds Weighted Swimbait Hook Rig + Weighted Swimbait Hook Tackle.
+- Tube adds Tube Jig Rig + Tube Jighead Tackle.
+- Spinnerbait, Crankbait, Jerkbait, Inline Spinner, and Spoon use approved configurations of Direct-Tie Lure Setup; legacy Inline Spinner Setup migrates to that Rig family.
+- Minnow and Nightcrawler are compatible with Fixed Bobber, Slip Bobber, Basic Bottom, Live-Bait Slip-Sinker, Three-Way, Bottom-Bouncer / Spinner, and Split-Shot Bait Rigs.
+- Cricket is compatible with Fixed Bobber, Slip Bobber, Basic Bottom, and Split-Shot Bait Rigs.
+- Generic `bait` / `soft-plastic` Tackle remain physical component concepts; Lure/Bait owns the specific presented identity.
+- Existing Inline Spinner Fish guidance migrates to Direct-Tie Lure Setup + Inline Spinner without priority/rationale changes; new Rig/configuration compatibility does not inherit Fish guidance automatically.
+
+# Runtime Lure/Bait Presentation Defect — 2026-08-28
+
+The staged Lure/Bait identities remain valid. Their first Rig-page runtime presentation failed usability review, and the 2026-08-29 bounded repair now applies the established component-card/readiness/popover grammar. Direct-Tie recognition Media remains valid; Paddle-tail Swimbait and Tube now have user-approved Lure/Bait recognition Media attached in Drive Current.
+
+For Lure/Bait requirements used by a Rig:
+
+- render the canonical identity using the same required component-card layout as unaffected Rigs: checkbox, unchecked item counted as Missing, and status transition only when all required items are checked;
+- expose a clickable `ⓘ` that opens the canonical `ownerType: "lure-bait"` recognition Media plus useful reference details in the shared contextual popover pattern;
+- use that popover as the recognition-image surface rather than a large full-width image on the Rig page;
+- keep persistent My Tackle ownership out of this transitional control—the checkbox represents current local availability only until the User Data/My Tackle gate supplies the authoritative persistent source;
+- preserve canonical Lure/Bait/Tackle semantic separation.
+
+Paddle-tail Swimbait and Tube now have canonical recognition Media and expose it through this same recognition-help path on their new Rigs. The five Direct-Tie Lure/Bait configurations use the same component-card/popover pattern with their existing recognition Media. Runtime PASS is required before B closes.

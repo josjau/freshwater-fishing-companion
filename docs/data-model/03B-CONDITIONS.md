@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03B-CONDITIONS.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.4.3  
 **Document Status:** Approved  
-**Implementation Status:** Approved / Not Implemented  
+**Implementation Status:** Drive Current Staged / data+static targeted PASS / Good Conditions repair staged / runtime re-review pending / Combined Closeout Pending  
 **Decision Baseline:** D004, D056, D069
 
 ---
@@ -14,17 +14,19 @@ This document defines the approved architectural boundary for the future canonic
 
 Conditions describe reusable environmental, seasonal, habitat, water, weather, time, and situational factors that may influence fishing decisions.
 
-No canonical Condition production dataset is implemented on current `main`. D069 now approves the V1 grouped vocabulary and minimal schema contract below; exact labels may be refined during the production pilot while preserving the approved groups and ownership boundaries.
+No canonical Condition production dataset is committed on current `main`. The approved V1 implementation is staged in Drive Working Source/Current. D069 and RP-A1 through RP-A4 lock the V1 vocabulary, minimal schema, transitional Rig-tag disposition, runtime/validation contract, and user-facing presentation contract below.
 
 ---
 
 # Current Status
 
-**Approved / Not Implemented.**
+**Drive Current Staged / Targeted Validation PASS / Combined Closeout Pending.**
 
 D004 approves Conditions as shared canonical Reference Knowledge. D056 requires every future Condition fact and relationship to have one semantic owner and prohibits inverse or convenience duplication.
 
-Current production uses condition-like text metadata in some existing domains, including Rig `conditionTags[]` and Fish habitat/waterbody fields. Those fields remain owned by their current domains until a later approved migration explicitly replaces or maps them. The existence of the future Condition domain does not silently convert current text fields into Condition IDs.
+Current production uses condition-like text metadata in some existing domains, including Rig `conditionTags[]` and Fish habitat/waterbody fields. Those fields remain owned by their current domains until an explicitly approved migration replaces or maps them. The existence of the Condition domain does not silently convert current text fields into Condition IDs.
+
+**RP-A1 is locked:** Rig `conditionTags[]` is frozen as transitional legacy metadata. Existing values remain temporarily to preserve current Rig Search and Rig Detail **Good Conditions** behavior, but no new values may be authored. No `conditionIds[]` field and no Rig↔Condition relationship will be created. Contextual Rig suitability migrates later to Recommendation Decision Knowledge, after which the legacy field and its dependent behavior may be removed through an explicit validated migration.
 
 ---
 
@@ -42,7 +44,7 @@ Decision Knowledge may combine Conditions with Fish, Rigs, Techniques, inventory
 
 # Foundation Fields
 
-When Condition production data is implemented, every canonical Condition will inherit the Foundation entity standard:
+The staged Condition production data uses the Foundation entity standard:
 
 ```text
 id
@@ -70,7 +72,7 @@ Conditions V1 uses a flat canonical vocabulary grouped by:
 - **Season:** Spring, Summer, Fall, Winter.
 - **Light / Sky:** Bright / Sunny, Overcast, Low Light, Night.
 
-Exact user-facing labels may be refined during the pilot without reopening the architecture if the groups and ownership boundaries remain unchanged. No parent hierarchy is required for V1 unless implementation evidence demonstrates a concrete need.
+The 33-record V1 vocabulary above is locked for this production pass. No parent hierarchy is required in V1.
 
 Every canonical Condition inherits Foundation fields plus `category`:
 
@@ -84,13 +86,57 @@ lastModifiedVersion
 isActive
 ```
 
-Do not add recommendation weights or Fish/Rig/Lure/Technique suitability arrays to Condition records. `sortOrder` is added only if presentation evidence demonstrates a real need.
+Do not add recommendation weights, Fish/Rig/Lure/Technique suitability arrays, hierarchy fields, or `sortOrder` to V1 Condition records.
 
 `Not sure` is input-state absence, not a canonical Condition. Water temperature is optional numeric recommendation context rather than a V1 Condition band.
 
 Initial input cardinality is: exactly one Waterbody and Access/Position; zero-or-one Depth/Zone, Water Clarity, Current, Season, and Light/Sky; zero-to-two Cover/Structure values; optional numeric water temperature.
 
 Wind, precipitation, barometric pressure, fronts, air temperature, and Fishing Pressure are intentionally omitted from V1 until demonstrated recommendation value justifies them.
+
+
+## RP-A2 — Production Contract — LOCKED
+
+The Conditions production contract is locked for V1:
+
+- canonical source file: `data/conditions.js`;
+- canonical registry: `CONDITION_DATA`;
+- record shape: Foundation fields plus `category` only;
+- no `sortOrder`;
+- no hierarchy;
+- no recommendation/suitability fields;
+- category literals are machine-stable lowercase kebab-case: `waterbody`, `access-position`, `depth-zone`, `cover-structure`, `water-clarity`, `current`, `season`, `light-sky`;
+- the approved V1 vocabulary contains 33 canonical Condition records;
+- Condition IDs use lowercase kebab-case and are systematically category-qualified where ambiguity exists (for example `water-clarity-clear`, `current-light`) while remaining concise where globally unambiguous (for example `pond`, `bank`, `shallow`, `spring`).
+
+This hybrid ID convention is the canonical V1 rule: qualify when semantic ambiguity is plausible; do not mechanically prefix every ID with the category.
+
+## RP-A3 — Implementation / Load / Validation Contract — LOCKED
+
+The Conditions implementation contract is locked for V1:
+
+- `data/conditions.js` is loaded through the normal `index.html` production script graph;
+- `CONDITION_DATA` is available as canonical Reference Knowledge without creating a standalone Conditions UI;
+- no Conditions Dashboard card, route, browse/detail page, search surface, renderer, or navigation entry is introduced in this subphase;
+- Repository Integrity validates the exact approved 33-record set, Foundation + `category`, unique/expected IDs, eight approved category literals and membership, lifecycle fields, and absence of unauthorized fields;
+- validator logic rejects `sortOrder`, relationship arrays, recommendation weights, suitability/ranking fields, unexpected Condition IDs, and unexpected categories;
+- RP-A1 is enforced mechanically by restricting existing Rig `conditionTags[]` values to the frozen current 17-value legacy vocabulary without requiring every legacy value to remain present forever;
+- no runtime legacy-tag-to-Condition mapping table is created;
+- Rig Search and **Good Conditions** remain on the transitional legacy field until Recommendation Decision Knowledge provides the replacement semantic owner.
+
+## RP-A4 — Condition User-Knowledge Presentation — LOCKED
+
+Conditions are user-facing contextual Reference Knowledge without requiring a standalone Conditions destination. The V1 presentation contract is:
+
+- Conditions do not receive Dashboard cards, category tiles, browse pages, or individual detail routes solely to expose their definitions;
+- when a Condition appears on an appropriate user-facing Rig, Recommendation, or other knowledge surface, it may open a lightweight informational popover using the established contextual-reference interaction pattern;
+- `CONDITION_DATA` is the single canonical source for Condition identity and explanatory text; referencing domains must not duplicate Condition definitions or popover copy;
+- references resolve by canonical Condition ID into `CONDITION_DATA`, then through one shared Condition-popover renderer;
+- the Foundation `summary` field is the initial popover content source; no additional `description`, `details`, or popover-specific field is added unless the authored 33-record set demonstrates that `summary` is insufficient;
+- the popover explains the Condition itself only and must not own Fish, Rig, Lure/Bait, or Technique suitability, ranking, or recommendation advice;
+- Condition references need not be interactive everywhere; enable the popover only where it improves understanding without creating UI clutter.
+
+This makes Conditions part of User Knowledge while preserving their compact contextual role and keeping Recommendation Decision Knowledge as the owner of what to use under those Conditions.
 
 # Current Domain Boundaries
 
@@ -100,7 +146,7 @@ Examples:
 
 - Fish `habitatTags[]` describes stable species habitat associations owned by Fish.
 - Fish `waterbodyTypes[]` describes typical species waterbody associations owned by Fish.
-- Rig `conditionTags[]` is a validated current field but must receive explicit disposition during Conditions production. Contextual “works well in” semantics move to Recommendation Decision Knowledge; do not mechanically convert old free-text tags into Rig↔Condition relationships.
+- Rig `conditionTags[]` is a validated transitional field frozen under RP-A1. Existing values remain temporarily for current search/presentation compatibility; no new vocabulary may be added. Contextual “works well in” semantics move to Recommendation Decision Knowledge, and no Rig↔Condition relationship or `conditionIds[]` migration is permitted.
 - Reel and Knot guidance may use situational context inside their own Decision Knowledge registries.
 
 The Conditions production workstream may normalize approved Condition vocabulary while preserving these ownership boundaries; no matching label by itself authorizes a new cross-domain relationship.
@@ -133,17 +179,19 @@ Any media-specific role or ordering semantics belong to Media or an explicitly j
 
 ---
 
-# Implementation Gate
+# Implementation Checkpoint — STAGED / TARGETED PASS
 
 The Conditions Production Foundation must:
 
-1. finalize exact production labels/IDs and the file/runtime shape within the approved groups;
+1. implement `data/conditions.js` / `CONDITION_DATA` with the locked 33-record vocabulary and eight category literals;
 2. implement and validate the minimal Foundation + `category` schema;
-3. author the bounded V1 canonical Condition set;
-4. explicitly review every existing Rig `conditionTags[]` value and classify it as retained intrinsic Rig fact, mapped for a legitimate non-suitability purpose, migrated to Recommendation Decision Knowledge, or retired;
-5. avoid blind string-to-ID migration and avoid adding contextual Condition relationship arrays to Reference entities;
-6. add referential/schema validation proportional to the implemented source;
-7. validate any UI/search exposure without creating duplicate relationship ownership.
+3. preserve RP-A1: freeze existing Rig `conditionTags[]`, add no new values, create no Rig↔Condition relationship or `conditionIds[]`, and carry contextual suitability forward for later Recommendation Decision Knowledge migration;
+4. avoid blind string-to-ID migration and contextual Condition relationship arrays on Reference entities;
+5. implement the locked RP-A3 normal script loading and exact deterministic validator contract;
+6. preserve RP-A4: one shared lightweight Condition popover backed by `CONDITION_DATA` / `summary`, with no standalone Conditions route/browse/search surface and no recommendation advice;
+7. validate that existing Rig Search / **Good Conditions** behavior remains unchanged until its later semantic replacement is implemented.
+
+The staged Drive Current implementation satisfies the bounded Subphase A data/schema/static contract and targeted checks. The 2026-08-28 browser review demonstrated that RP-A4 Good Conditions presentation was not functioning; the 2026-08-29 repair now renders supported frozen legacy tags as contextual controls that open the shared canonical Condition popover. This bridge is presentation-only and does not create Rig `conditionIds[]`, a Rig↔Condition relationship, or a permanent semantic migration. Runtime revalidation is still required before the Conditions user-facing checkpoint can pass. Final Repository Integrity, final approval, commit/push, and CI remain pending at the combined Recommendation Prerequisites Foundation closeout boundary.
 
 # Future Enhancements
 
@@ -160,3 +208,17 @@ Potential later capabilities include live weather integration, automatic seasona
 - 05-TACKLE.md
 - 09-RELATIONSHIPS.md
 - ../DECISIONS.md
+
+# Runtime Presentation Defect — 2026-08-28
+
+The first user browser review found **no working Good Conditions popover** on Rig Detail. Static wiring checks therefore do not satisfy RP-A4 runtime acceptance.
+
+Required repair remains bounded by the locked Conditions contract:
+
+- existing Rig **Good Conditions** values remain the frozen legacy `conditionTags[]` vocabulary;
+- clicking/tapping a displayed Good Condition must open the shared lightweight contextual Condition popover and show the canonical explanation from `CONDITION_DATA` / `summary`;
+- no standalone Conditions route, browse page, Dashboard card, or search surface is introduced;
+- no Rig `conditionIds[]`, Rig↔Condition relationship, or permanent legacy-string mapping architecture is introduced merely to fix presentation;
+- keyboard/focus and narrow/mobile interaction must be verified in the repaired browser review.
+
+Subphase A data/schema remains targeted PASS. The RP-A4 repair is staged, but the user-facing presentation checkpoint remains **RUNTIME RE-REVIEW REQUIRED** until browser validation passes.

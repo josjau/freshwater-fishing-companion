@@ -480,6 +480,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         "rigRecommendations"
     ];
     const recommendationFields = ["rigId", "priority", "reason"];
+    const configuredRecommendationFields = ["rigId", "lureBaitId", "priority", "reason"];
     const habitatValues = new Set([
         "Grass",
         "Timber",
@@ -676,7 +677,10 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
                 fail("Fish-to-Rig guidance", `${record.fishId}: recommendation is not an object`);
                 continue;
             }
-            validateExactFieldOrder(recommendation, recommendationFields, `Fish-to-Rig guidance ${record.fishId}`);
+            const recommendationShape = Object.prototype.hasOwnProperty.call(recommendation, "lureBaitId")
+                ? configuredRecommendationFields
+                : recommendationFields;
+            validateExactFieldOrder(recommendation, recommendationShape, `Fish-to-Rig guidance ${record.fishId}`);
             if (!guidancePriorities.has(recommendation.priority)) {
                 fail("Fish-to-Rig guidance", `${record.fishId}: invalid priority ${JSON.stringify(recommendation.priority)}`);
             }
@@ -950,6 +954,228 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
     }
 }
 
+function validateConditionsData(conditions, rigs) {
+    const expectedByCategory = new Map([
+        ["waterbody", ["pond", "lake", "reservoir", "river", "creek-stream"]],
+        ["access-position", ["bank", "access-dock", "boat", "kayak"]],
+        ["depth-zone", ["shallow", "mid-depth", "deep"]],
+        ["cover-structure", ["open-water", "vegetation", "wood-brush", "rock", "cover-dock-man-made", "drop-off-channel-deep-structure"]],
+        ["water-clarity", ["water-clarity-clear", "water-clarity-stained", "water-clarity-muddy"]],
+        ["current", ["current-none", "current-light", "current-moderate", "current-strong"]],
+        ["season", ["spring", "summer", "fall", "winter"]],
+        ["light-sky", ["bright-sunny", "overcast", "low-light", "night"]]
+    ]);
+    const expectedIds = new Set([...expectedByCategory.values()].flat());
+    const expectedFields = ["id", "name", "category", "summary", "createdVersion", "lastModifiedVersion", "isActive"];
+
+    if (conditions.length !== 33) {
+        fail("Condition registry", `expected exactly 33 records; found ${conditions.length}`);
+    }
+
+    const seenByCategory = new Map([...expectedByCategory.keys()].map((category) => [category, new Set()]));
+    for (const condition of conditions) {
+        if (!isPlainObject(condition)) continue;
+        validateExactFieldOrder(condition, expectedFields, "Condition registry");
+        if (!expectedIds.has(condition.id)) {
+            fail("Condition registry", `${condition.id || "<unknown>"}: unexpected Condition ID`);
+        }
+        if (!expectedByCategory.has(condition.category)) {
+            fail("Condition registry", `${condition.id || "<unknown>"}: unexpected category ${JSON.stringify(condition.category)}`);
+            continue;
+        }
+        seenByCategory.get(condition.category).add(condition.id);
+    }
+
+    for (const [category, expectedCategoryIds] of expectedByCategory.entries()) {
+        const actual = seenByCategory.get(category);
+        const missing = expectedCategoryIds.filter((id) => !actual.has(id));
+        const extras = [...actual].filter((id) => !expectedCategoryIds.includes(id));
+        if (missing.length > 0) {
+            fail("Condition category membership", `${category}: missing ${missing.join(", ")}`);
+        }
+        if (extras.length > 0) {
+            fail("Condition category membership", `${category}: unexpected ${extras.join(", ")}`);
+        }
+    }
+
+    const frozenLegacyConditionTags = new Set([
+        "Bottom Fishing",
+        "Clear Water",
+        "Current",
+        "Deep Water",
+        "Docks",
+        "Heavy Cover",
+        "Light Cover",
+        "Light Current",
+        "Open Water",
+        "Rock",
+        "Shallow Water",
+        "Sparse Cover",
+        "Stained Water",
+        "Suspended Fish",
+        "Trolling",
+        "Vegetation",
+        "Wind"
+    ]);
+
+    for (const rig of rigs) {
+        if (!isPlainObject(rig)) continue;
+        if (Object.prototype.hasOwnProperty.call(rig, "conditionIds")) {
+            fail("Rig Condition migration", `${rig.id}: conditionIds is forbidden by RP-A1`);
+        }
+        const tags = requireArray(rig.conditionTags, `Rig ${rig.id} conditionTags`);
+        for (const tag of tags) {
+            if (!frozenLegacyConditionTags.has(tag)) {
+                fail("Rig legacy conditionTags", `${rig.id}: unapproved frozen legacy value ${JSON.stringify(tag)}`);
+            }
+        }
+    }
+}
+
+
+function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, knots) {
+    const expectedLureBait = [
+        ["stick-worm", "artificial", "soft-plastic"],
+        ["craw", "artificial", "soft-plastic"],
+        ["creature-bait", "artificial", "soft-plastic"],
+        ["paddle-tail-swimbait", "artificial", "soft-plastic"],
+        ["tube", "artificial", "soft-plastic"],
+        ["spinnerbait", "artificial", "wire-bait"],
+        ["crankbait", "artificial", "hard-bait"],
+        ["jerkbait", "artificial", "hard-bait"],
+        ["inline-spinner", "artificial", "metal-lure"],
+        ["spoon", "artificial", "metal-lure"],
+        ["minnow", "natural-bait", "baitfish"],
+        ["nightcrawler", "natural-bait", "worm"],
+        ["cricket", "natural-bait", "insect"]
+    ];
+    const expectedFields = ["id", "name", "summary", "createdVersion", "lastModifiedVersion", "isActive", "presentationType", "category"];
+    if (lureBait.length !== expectedLureBait.length) {
+        fail("Lure/Bait registry", `expected exactly ${expectedLureBait.length} records; found ${lureBait.length}`);
+    }
+    const lureById = indexById(lureBait);
+    for (const [id, presentationType, category] of expectedLureBait) {
+        const record = lureById.get(id);
+        if (!record) {
+            fail("Lure/Bait registry", `missing approved V1 identity ${id}`);
+            continue;
+        }
+        validateExactFieldOrder(record, expectedFields, "Lure/Bait registry");
+        if (record.presentationType !== presentationType) fail("Lure/Bait registry", `${id}: expected presentationType ${presentationType}`);
+        if (record.category !== category) fail("Lure/Bait registry", `${id}: expected category ${category}`);
+        if (record.isActive !== true) fail("Lure/Bait registry", `${id}: V1 identity must be active`);
+    }
+    const unexpectedLureIds = lureBait.map((item) => item?.id).filter((id) => !expectedLureBait.some(([expectedId]) => expectedId === id));
+    if (unexpectedLureIds.length > 0) fail("Lure/Bait registry", `unexpected V1 identities: ${unexpectedLureIds.join(", ")}`);
+
+    const tackleById = indexById(tackle);
+    for (const id of ["weighted-swimbait-hook", "tube-jighead"]) {
+        if (tackleById.get(id)?.isActive !== true) fail("Lure/Bait Tackle dependencies", `missing active Tackle ${id}`);
+    }
+    if (tackle.length !== 31) fail("Lure/Bait Tackle dependencies", `expected 31 Tackle records after two approved additions; found ${tackle.length}`);
+
+    const rigById = indexById(rigs);
+    if (rigs.length !== 23) fail("Lure/Bait Rig dependencies", `expected 23 Rig records after Subphase B additions; found ${rigs.length}`);
+    if (rigById.has("inline-spinner-setup")) fail("Direct-Tie Rig migration", "legacy inline-spinner-setup must be migrated");
+    for (const id of ["direct-tie-lure-setup", "weighted-swimbait-hook-rig", "tube-jig-rig"]) {
+        if (rigById.get(id)?.isActive !== true) fail("Lure/Bait Rig dependencies", `missing active Rig ${id}`);
+    }
+
+    const knotById = indexById(knots);
+    const validateTackleRequirements = (requirements, label) => {
+        for (const requirement of requireArray(requirements, `${label} componentRequirements`)) {
+            if (!isPlainObject(requirement) || typeof requirement.tackleId !== "string") {
+                fail("Rig → Tackle", `${label}: invalid component requirement`);
+                continue;
+            }
+            if (tackleById.get(requirement.tackleId)?.isActive !== true) fail("Rig → Tackle", `${label}: unresolved/inactive Tackle ${requirement.tackleId}`);
+        }
+    };
+    const validateLureRequirements = (requirements, label) => {
+        for (const requirement of requireArray(requirements, `${label} lureBaitRequirements`)) {
+            if (!isPlainObject(requirement) || typeof requirement.lureBaitId !== "string") {
+                fail("Rig → Lure/Bait requirement", `${label}: invalid Lure/Bait requirement`);
+                continue;
+            }
+            if (lureById.get(requirement.lureBaitId)?.isActive !== true) fail("Rig → Lure/Bait requirement", `${label}: unresolved/inactive Lure/Bait ${requirement.lureBaitId}`);
+        }
+    };
+    const validateKnotApplications = (applications, label) => {
+        for (const application of requireArray(applications, `${label} knotApplications`)) {
+            for (const knotId of requireArray(application?.recommendedKnotIds, `${label} recommendedKnotIds`)) {
+                if (knotById.get(knotId)?.isActive !== true) fail("Rig → Knot", `${label}: unresolved/inactive Knot ${knotId}`);
+            }
+        }
+    };
+
+    for (const rig of rigs) {
+        if (!isPlainObject(rig)) continue;
+        if (Object.prototype.hasOwnProperty.call(rig, "lureBaitRequirements")) validateLureRequirements(rig.lureBaitRequirements, `Rig ${rig.id}`);
+        if (!Object.prototype.hasOwnProperty.call(rig, "configurations")) continue;
+        if (rig.id !== "direct-tie-lure-setup") fail("Rig configuration ownership", `${rig.id}: configurations are not approved in Subphase B`);
+        const configs = requireArray(rig.configurations, `Rig ${rig.id} configurations`);
+        const expectedConfigIds = ["inline-spinner", "spinnerbait", "crankbait", "jerkbait", "spoon"];
+        const actualConfigIds = configs.map((item) => item?.id);
+        if (JSON.stringify(actualConfigIds) !== JSON.stringify(expectedConfigIds)) fail("Direct-Tie Rig migration", `configuration order/IDs must be ${expectedConfigIds.join(", ")}; found ${actualConfigIds.join(", ")}`);
+        const expectedTutorialVideoIds = {
+            "spinnerbait": "0Or166Uo8VU",
+            "crankbait": "-kHoA2RJX1M"
+        };
+        const fallbackOnlyIds = new Set(["inline-spinner", "jerkbait", "spoon"]);
+        const validateTutorialVideo = (tutorial, label, expectedVideoId = null) => {
+            if (!isPlainObject(tutorial)) {
+                fail("Rig tutorial coverage", `${label}: tutorialVideo must be an object`);
+                return;
+            }
+            const tutorialFields = ["platform", "title", "creator", "videoId", "externalUrl"];
+            validateExactFieldOrder(tutorial, tutorialFields, `${label} tutorialVideo`);
+            if (tutorial.platform !== "youtube") fail("Rig tutorial coverage", `${label}: tutorial platform must be youtube`);
+            for (const field of ["title", "creator", "videoId", "externalUrl"]) {
+                if (typeof tutorial[field] !== "string" || tutorial[field].trim() === "") fail("Rig tutorial coverage", `${label}: ${field} must be non-empty text`);
+            }
+            if (expectedVideoId && tutorial.videoId !== expectedVideoId) fail("Rig tutorial coverage", `${label}: expected approved videoId ${expectedVideoId}; found ${tutorial.videoId}`);
+            if (typeof tutorial.externalUrl === "string" && !tutorial.externalUrl.includes(tutorial.videoId)) fail("Rig tutorial coverage", `${label}: externalUrl must identify the approved videoId`);
+        };
+        for (const config of configs) {
+            const configFields = ["id", "name", "lureBaitId", "referenceLinks", "tutorialVideo", "componentRequirements", "lureBaitRequirements", "knotApplications", "assemblySteps", "setupNotes", "commonMistakes"];
+            validateExactFieldOrder(config, configFields, `Direct-Tie configuration ${config?.id}`);
+            if (config.lureBaitId !== config.id || lureById.get(config.lureBaitId)?.isActive !== true) fail("Direct-Tie Rig migration", `${config?.id}: configuration must resolve its matching active Lure/Bait identity`);
+            validateTackleRequirements(config.componentRequirements, `Direct-Tie ${config.id}`);
+            validateLureRequirements(config.lureBaitRequirements, `Direct-Tie ${config.id}`);
+            validateKnotApplications(config.knotApplications, `Direct-Tie ${config.id}`);
+            for (const field of ["assemblySteps", "setupNotes", "commonMistakes"]) validateTextArray(config[field], `Direct-Tie ${config.id} ${field}`);
+            if (Object.prototype.hasOwnProperty.call(expectedTutorialVideoIds, config.id)) {
+                validateTutorialVideo(config.tutorialVideo, `Direct-Tie ${config.id}`, expectedTutorialVideoIds[config.id]);
+            } else if (fallbackOnlyIds.has(config.id)) {
+                if (config.tutorialVideo !== null) fail("Rig tutorial coverage", `Direct-Tie ${config.id}: fallback-only configuration must keep tutorialVideo null`);
+                if (!Array.isArray(config.referenceLinks) || config.referenceLinks.length === 0) fail("Rig tutorial coverage", `Direct-Tie ${config.id}: fallback-only configuration requires at least one verified reference`);
+            }
+        }
+        validateTutorialVideo(rigById.get("weighted-swimbait-hook-rig")?.tutorialVideo, "Weighted Swimbait Hook Rig", "32Fw4vimHWQ");
+        validateTutorialVideo(rigById.get("tube-jig-rig")?.tutorialVideo, "Tube Jig Rig", "sHUJxiW7Ags");
+    }
+
+    const configuredGuidance = [];
+    for (const guidance of fishGuidance) {
+        for (const recommendation of requireArray(guidance?.rigRecommendations, `Fish guidance ${guidance?.fishId}`)) {
+            if (!Object.prototype.hasOwnProperty.call(recommendation, "lureBaitId")) continue;
+            configuredGuidance.push([guidance.fishId, recommendation.rigId, recommendation.lureBaitId]);
+            if (lureById.get(recommendation.lureBaitId)?.isActive !== true) fail("Configured Fish guidance", `${guidance.fishId}: unresolved Lure/Bait ${recommendation.lureBaitId}`);
+            const rig = rigById.get(recommendation.rigId);
+            const configurationIds = new Set(Array.isArray(rig?.configurations) ? rig.configurations.map((item) => item.lureBaitId) : []);
+            if (!configurationIds.has(recommendation.lureBaitId)) fail("Configured Fish guidance", `${guidance.fishId}: ${recommendation.rigId} does not expose ${recommendation.lureBaitId} configuration`);
+        }
+    }
+    const expectedGuidance = [
+        ["largemouth-bass", "direct-tie-lure-setup", "inline-spinner"],
+        ["white-bass", "direct-tie-lure-setup", "inline-spinner"],
+        ["longear-sunfish", "direct-tie-lure-setup", "inline-spinner"]
+    ];
+    if (JSON.stringify(configuredGuidance) !== JSON.stringify(expectedGuidance)) {
+        fail("Configured Fish guidance", `expected only locked Inline Spinner migrations; found ${JSON.stringify(configuredGuidance)}`);
+    }
+}
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
@@ -961,6 +1187,8 @@ function validateCanonicalData() {
     );
     const fishRigGuidanceBindings = loadBindings("data/fish-rig-guidance.js", ["FISH_RIG_GUIDANCE"]);
     const rigBindings = loadBindings("data/rigs.js", ["RIG_DATA", "CORE_RIG_IDS"]);
+    const conditionBindings = loadBindings("data/conditions.js", ["CONDITION_DATA"]);
+    const lureBaitBindings = loadBindings("data/lure-bait.js", ["LURE_BAIT_DATA"]);
     const knotBindings = loadBindings("data/knots.js", ["KNOT_DATA", "CORE_KNOT_IDS"]);
     const tackleBindings = loadBindings("data/tackle.js", ["TACKLE_DATA"]);
     const guidanceBindings = loadBindings("data/knot-guidance.js", ["KNOT_TASK_DEFINITIONS"]);
@@ -980,6 +1208,8 @@ function validateCanonicalData() {
         "Fish-to-Rig guidance"
     );
     const rigs = requireArray(rigBindings.RIG_DATA, "Rig registry");
+    const conditions = requireArray(conditionBindings.CONDITION_DATA, "Condition registry");
+    const lureBait = requireArray(lureBaitBindings.LURE_BAIT_DATA, "Lure/Bait registry");
     const knots = requireArray(knotBindings.KNOT_DATA, "Knot registry");
     const tackle = requireArray(tackleBindings.TACKLE_DATA, "Tackle registry");
     const knotTasks = requireArray(guidanceBindings.KNOT_TASK_DEFINITIONS, "Knot task guidance");
@@ -989,6 +1219,8 @@ function validateCanonicalData() {
 
     validateCanonicalRecords(fish, "Fish registry");
     validateCanonicalRecords(rigs, "Rig registry");
+    validateCanonicalRecords(conditions, "Condition registry");
+    validateCanonicalRecords(lureBait, "Lure/Bait registry");
     validateCanonicalRecords(knots, "Knot registry");
     validateCanonicalRecords(tackle, "Tackle registry");
 
@@ -996,11 +1228,13 @@ function validateCanonicalData() {
     validateCoreRegistry(knotBindings.CORE_KNOT_IDS, knots, "Core Knot registry");
     validateFishProductionData(fish, categories, fishIdentification, fishRigGuidance, rigs, legacyCategoryMap);
     validateRegulationsData(regulationsBindings.REGULATIONS_DATA_BUILD_INFO, states, stateResources, stateNotices);
+    validateConditionsData(conditions, rigs);
+    validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishRigGuidance, knots);
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
         rigs,
-        ["imageIds", "mediaIds", "techniqueIds", "targetFishIds", "isCore", "coreOrder"],
+        ["imageIds", "mediaIds", "techniqueIds", "targetFishIds", "conditionIds", "isCore", "coreOrder"],
         "Rig ownership"
     );
     validateNoForbiddenFields(tackle, ["mediaIds", "rigIds"], "Tackle ownership");
@@ -1216,6 +1450,8 @@ function validateCanonicalData() {
         fishIdentification,
         fishRigGuidance,
         rigs,
+        conditions,
+        lureBait,
         knots,
         tackle,
         states,
@@ -1382,12 +1618,25 @@ function validateMedia(canonicalData) {
         "fish-identification": indexById(canonicalData.fishIdentification),
         rig: indexById(canonicalData.rigs),
         knot: indexById(canonicalData.knots),
-        tackle: indexById(canonicalData.tackle)
+        tackle: indexById(canonicalData.tackle),
+        "lure-bait": indexById(canonicalData.lureBait)
     };
 
     const referencedLocalFiles = new Set();
     const activeFishPrimaryCounts = new Map(
         canonicalData.fish.map((record) => [record.id, 0])
+    );
+    const activeTackleRecognitionCounts = new Map(
+        canonicalData.tackle.map((record) => [record.id, 0])
+    );
+    const requiredLureBaitRecognitionIds = new Set([
+        "inline-spinner", "spinnerbait", "crankbait", "jerkbait", "spoon",
+        "paddle-tail-swimbait", "tube"
+    ]);
+    const activeRequiredLureMediaCounts = new Map(
+        canonicalData.lureBait
+            .filter((record) => requiredLureBaitRecognitionIds.has(record.id))
+            .map((record) => [record.id, 0])
     );
 
     function validateFishLicense(item) {
@@ -1498,6 +1747,17 @@ function validateMedia(canonicalData) {
             }
             validateFishLicense(item);
         }
+
+        if (item.ownerType === "tackle" && item.isActive === true && item.type === "image") {
+            if (!localFile || !localFile.startsWith("images/tackle/")) fail("Tackle media readiness", `${item.id}: Tackle recognition image must be local under images/tackle/`);
+            if (typeof item.alt !== "string" || item.alt.trim() === "") fail("Tackle media readiness", `${item.id}: recognition alt text must be non-empty`);
+            if (activeTackleRecognitionCounts.has(item.ownerId)) activeTackleRecognitionCounts.set(item.ownerId, activeTackleRecognitionCounts.get(item.ownerId) + 1);
+        }
+
+        if (item.ownerType === "lure-bait" && item.isActive === true && item.type === "image") {
+            if (typeof item.alt !== "string" || item.alt.trim() === "") fail("Lure/Bait media readiness", `${item.id}: recognition alt text must be non-empty`);
+            if (activeRequiredLureMediaCounts.has(item.ownerId)) activeRequiredLureMediaCounts.set(item.ownerId, activeRequiredLureMediaCounts.get(item.ownerId) + 1);
+        }
     }
 
     for (const fish of canonicalData.fish) {
@@ -1506,6 +1766,17 @@ function validateMedia(canonicalData) {
         if (count !== 1) {
             fail("Fish media readiness", `${fish.id}: active Fish must have exactly one active primary-identification Media; found ${count}`);
         }
+    }
+
+    for (const tackleRecord of canonicalData.tackle) {
+        if (!isPlainObject(tackleRecord) || tackleRecord.isActive !== true) continue;
+        const count = activeTackleRecognitionCounts.get(tackleRecord.id) ?? 0;
+        if (count !== 1) fail("Tackle media readiness", `${tackleRecord.id}: active Tackle must have exactly one active recognition image; found ${count}`);
+    }
+
+    for (const lureBaitId of requiredLureBaitRecognitionIds) {
+        const count = activeRequiredLureMediaCounts.get(lureBaitId) ?? 0;
+        if (count !== 1) fail("Lure/Bait media readiness", `${lureBaitId}: required Rig-facing Lure/Bait must have exactly one active recognition image; found ${count}`);
     }
 
     const allowlistedImageFiles = new Set(["images/rigs/.gitkeep"]);

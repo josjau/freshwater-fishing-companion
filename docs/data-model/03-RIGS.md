@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.3.2  
+**Document Revision:** 0.4.5  
 **Document Status:** Approved  
-**Implementation Status:** Validated — 21 active canonical Rigs  
+**Implementation Status:** GitHub main validated — 21 Rigs / Drive Current staged — 23 Rigs / Subphase B repair staged + targeted PASS / runtime re-review pending  
 **Decision Baseline:** D024, D025, D026, D027, D028, D042-D049, D056, D057, D065
 
 ---
@@ -12,7 +12,7 @@
 
 This document defines the current canonical Rig entity for Freshwater Fishing Companion.
 
-A Rig represents a complete ready-to-fish terminal setup. Rig owns physical assembly, component requirements, real tied-connection context, and Rig-specific configuration. Reusable presentation behavior belongs to the future Technique domain when it generalizes across setups.
+A Rig represents a complete ready-to-fish terminal setup. Rig owns physical assembly, component requirements, real tied-connection context, and Rig-specific configuration. Reusable presentation behavior belongs to the approved Technique domain when it generalizes across setups.
 
 ---
 
@@ -41,6 +41,15 @@ imageIds[]
 
 Those fields must not be described as current Rig schema.
 
+The staged Subphase B Drive Current candidate adds two bounded optional structures without changing Rig ownership:
+
+```text
+lureBaitRequirements[]   # specific canonical Lure/Bait required by a Rig when applicable
+configurations[]         # only when one Rig family has materially shared terminal architecture with lure-specific setup variants
+```
+
+`Direct-Tie Lure Setup` uses `configurations[]`; its configuration records own the applicable Lure/Bait requirement, Tackle requirements, knot applications, assembly steps, setup notes, mistakes, configuration-specific references, and optional configuration-specific `tutorialVideo`. Weighted Swimbait Hook Rig and Tube Jig Rig use top-level `lureBaitRequirements[]` and top-level `tutorialVideo`. These fields express physical/setup requirements only; contextual recommendation suitability remains outside Rig.
+
 ---
 
 # Field Definitions
@@ -62,7 +71,9 @@ Core is not a difficulty value. Core membership is owned separately by `CORE_RIG
 
 ## conditionTags[]
 
-Current Rig-owned text metadata describing conditions where the Rig performs well. This remains part of the validated production schema until any future Condition-domain migration is explicitly approved and implemented.
+Current transitional Rig-owned text metadata describing conditions where the Rig performs well. RP-A1 locks this field as **frozen legacy metadata** during Recommendation Prerequisites Foundation Subphase A. Existing values remain temporarily because current Rig Search and the Rig Detail **Good Conditions** presentation still consume them, but no new `conditionTags[]` vocabulary may be introduced.
+
+RP-A1 explicitly prohibits converting these strings into `conditionIds[]` or creating a Rig↔Condition relationship. Contextual “works well in” suitability belongs to future Recommendation Decision Knowledge. The field is removed only after the replacement Recommendation owner and dependent search/presentation behavior are implemented and validated.
 
 ## componentRequirements[]
 
@@ -119,6 +130,8 @@ References existing related canonical Rigs. Empty arrays are valid when no appro
 ## tutorialVideo
 
 Optional verified third-party tutorial metadata for an officially permitted external/embed workflow. It does not authorize downloading, rehosting, editing, or extracting third-party video content.
+
+A top-level Rig may own one tutorial when the build is uniform. `Direct-Tie Lure Setup` may instead place `tutorialVideo` on an individual configuration because Spinnerbait, Crankbait, Inline Spinner, Jerkbait, and Spoon do not share one universal build-first tutorial. When no suitable build-first tutorial exists, the configuration uses trustworthy `referenceLinks[]` fallback coverage rather than a weak or mismatched video. Runtime must preserve an external-source fallback for embedded tutorials.
 
 ---
 
@@ -199,13 +212,13 @@ The Rig Guide exposes All Rigs, Core Rigs, and each implemented difficulty tier.
 
 # Current Canonical Rig Library
 
-The current production library contains 21 active Rigs:
+Current GitHub `main` contains 21 active Rigs. Drive Working Source/Current stages the approved Subphase B expansion/conversion as 23 active Rigs:
 
 1. Fixed Bobber Rig
 2. Basic Bottom Rig
 3. Jighead + Soft Plastic
 4. Slip Bobber Rig
-5. Inline Spinner Setup
+5. Direct-Tie Lure Setup
 6. Texas Rig
 7. Weightless Soft-Plastic Rig
 8. Wacky Rig
@@ -222,8 +235,10 @@ The current production library contains 21 active Rigs:
 19. Double-Jig Crappie Rig
 20. Bottom-Bouncer / Spinner Rig
 21. Split-Shot Bait Rig
+22. Weighted Swimbait Hook Rig
+23. Tube Jig Rig
 
-The original 20-Rig library remains validated and canonical. The completed Four-State adequacy audit added Split-Shot Bait Rig as an additive Beginner Rig without removing or reclassifying any existing Rig.
+The original 20-Rig library and the Four-State Split-Shot Bait addition remain the committed GitHub baseline. In Drive Current, Subphase B generalizes Inline Spinner Setup into Direct-Tie Lure Setup without adding a net top-level Rig for that conversion, then adds Weighted Swimbait Hook Rig and Tube Jig Rig.
 
 Carolina Rig and the later difficulty tiers are implemented production entities, not unresolved near-term expansion placeholders.
 
@@ -233,9 +248,9 @@ Carolina Rig and the later difficulty tiers are implemented production entities,
 
 Rig owns physical component sequence, connections, orientation, setup measurements, optional/required configuration, assembly mistakes, and setup-specific guidance.
 
-Future Technique owns reusable presentation behavior such as retrieve cadence, rod/reel movement, dragging, hopping, swimming, twitching, pausing, strike detection, and similar instruction when it generalizes across compatible setups.
+Technique owns reusable presentation behavior such as retrieve cadence, rod/reel movement, dragging, hopping, swimming, twitching, pausing, strike detection, and similar instruction when it generalizes across compatible setups.
 
-This content boundary does not decide future Rig ↔ Technique relationship storage. That relationship remains deferred under D056.
+D069 and RP-C4 now assign intrinsic Rig↔Technique compatibility to the typed Compatibility Relationship domain in `09-RELATIONSHIPS.md`; Rig does not store inverse Technique IDs.
 
 ---
 
@@ -273,3 +288,52 @@ Potential future capabilities include additional regional Rigs, richer interacti
 - ../../archive/workstreams/repository-audit/REPOSITORY-AUDIT-SECTION-5-DECISION.md
 - ../../archive/workstreams/repository-audit/REPOSITORY-AUDIT-SECTION-5-CLOSEOUT.md
 - ../../archive/workstreams/knots/KNOT-RELATIONSHIP-APPROVAL.md
+
+# RP-B2A — Rig Use-Envelope and Technique Presentation — LOCKED
+
+Rig Detail presents **Best For**, **Good Conditions**, and **Techniques** as a unified use-guidance section.
+
+A Rig↔Technique Compatibility relationship is authored only when the Technique is genuinely usable within the Rig's normal intended use envelope, not merely mechanically possible. The Rig page shows the broadly eligible Technique set for that Rig; it does not decide which Technique is best for a particular Fish/Condition context.
+
+Technique entries are canonical User Knowledge links and navigate to the corresponding Technique knowledge. Rig owns generic setup/assembly. Technique owns reusable presentation, retrieve, cadence, and movement instruction. Recommendation Decision Knowledge later intersects Fish, Conditions, Rig, Lure/Bait, and compatible Techniques to determine the contextually viable/recommended Technique subset.
+
+Intrinsic Compatibility therefore establishes the **eligible Technique set**; Recommendation Decision Knowledge establishes the **contextually viable/recommended subset**.
+
+# RP-B2B — New-Rig Dependency and Guidance Re-evaluation Rule — LOCKED
+
+During Recommendation Prerequisites Foundation planning, a new Lure/Bait identity may justify a new Rig only when meaningful setup/assembly knowledge is required and no existing Rig adequately teaches it. Any approved new Rig must be dependency-complete: all required canonical Tackle components must exist, applicable Technique coverage must be authored under RP-B2A, and applicable intrinsic Compatibility relationships must be included for the approved scope.
+
+Adding a new Rig changes the recommendation candidate set and therefore triggers a bounded re-evaluation of only those Fish whose existing Fish-to-Rig guidance could plausibly benefit from that Rig. The full 30-Fish guidance set is not reopened automatically, and existing recommendations are changed only when the bounded review demonstrates a better fit.
+
+
+# Recommendation Prerequisites Rig Changes — STAGED / TARGETED PASS
+
+The completed planning gate authorized these bounded production changes, now staged in Drive Current:
+
+- generalize current **Inline Spinner Setup** into the **Direct-Tie Lure Setup** Rig family; Inline Spinner, Spinnerbait, Crankbait, Jerkbait, and Spoon are lure-specific configurations when the terminal architecture remains direct-tie;
+- add **Weighted Swimbait Hook Rig** for Paddle-tail Swimbait;
+- add **Tube Jig Rig** for Tube;
+- support lure-specific Rig configurations that may switch required Lure/Bait, component/media visualization, attachment point, assembly instructions, setup notes, and mistakes without creating separate top-level Rigs when terminal architecture is materially the same;
+- support Lure/Bait requirements in Rig rendering in addition to true Tackle component requirements;
+- preserve Fish guidance semantics under RP-B2D: legacy inline-spinner guidance migrates to Direct-Tie Lure Setup + Inline Spinner without priority/rationale changes, and new compatible configurations do not inherit Fish guidance automatically.
+
+The staged candidate contains 23 active Rigs and preserves the six Core Rig slots by replacing the legacy Inline Spinner Setup Core identity with Direct-Tie Lure Setup. The Direct-Tie family exposes five lure-specific configurations: Inline Spinner, Spinnerbait, Crankbait, Jerkbait, and Spoon. Weighted Swimbait Hook Rig requires canonical Paddle-tail Swimbait plus Weighted Swimbait Hook; Tube Jig Rig requires canonical Tube plus Tube Jighead.
+
+Subphase B source/data completeness remains staged and targeted static/data validation is PASS. The bounded 2026-08-29 repair now implements the Lure/Bait component-card/popover presentation, adds Paddle-tail Swimbait and Tube recognition Media, expands beginner tie-location instruction, refines selector styling, alphabetizes Core Rig cards, and repairs supported Good Conditions contextual controls. Local-file YouTube errors do not by themselves invalidate the selected tutorials because existing committed Rig tutorials fail locally but load from the GitHub-served application; playback must be revalidated from a served/GitHub environment. Jerkbait and Spoon tutorial selection remains open while the user researches suitable tying/setup videos. Full Repository Integrity/final combined closeout remain pending; Subphase C is blocked until the repaired runtime revalidation checkpoint passes.
+
+# Subphase B Runtime Review Defects — 2026-08-28
+
+The staged 23-Rig candidate did **not** pass user runtime review. The following requirements are now part of the bounded repair gate:
+
+- Required Lure/Bait in **What You Need** must use the same established component-card grammar as unaffected Rigs: checkbox, unchecked required item included in the Missing count, and clickable `ⓘ` detail/recognition help. This extends the existing Rig availability check; it does not introduce a separate readiness model.
+- The Lure/Bait `ⓘ` popover is the primary recognition surface and should contain the reference image plus useful item details, analogous to existing Tackle component popovers such as Bobber Stop / Clip-on Bobber.
+- Remove the oversized full-width primary-lure image from the Rig page; recognition imagery belongs inside the contextual component popover.
+- Direct-Tie configuration switching must retain the five locked configurations but the Setup Type / Lure Type control requires visual refinement within the FCC control grammar.
+- Direct-Tie tie instructions must identify the exact attachment location for a new angler (for example R-bend/line-tie eye, lure eye/split ring, or other intended tie point) and state the disposition of optional hardware.
+- Weighted Swimbait Hook Rig and Tube Jig Rig require the same beginner-specific attachment guidance. Their required Lure/Bait cards must use the established checkbox/Missing-count/`ⓘ` component grammar; Paddle-tail Swimbait and Tube now use approved canonical Lure/Bait recognition Media added by the repair.
+- Tutorial playback must be validated from a served/GitHub environment. Error 153/15 occurred from the local file copy, but existing committed Rig tutorials fail the same local test while loading correctly from the GitHub-served application; therefore local-file failure alone does not invalidate the selected tutorial/video.
+- Jerkbait and Spoon tutorial selection remains open while the user researches suitable tying/setup videos. Do not lock the previously supplied candidates yet, and do not treat manufacturer/reference pages as the final tutorial presentation.
+- Core Rig cards must be alphabetized, consistent with the other Rig card groups. Core is not a special teaching-order exception.
+- Fish-to-Rig configured guidance opening Direct-Tie with Inline Spinner selected passed runtime review and must be preserved.
+
+The repairs are staged; Subphase C remains blocked until the second browser review passes.

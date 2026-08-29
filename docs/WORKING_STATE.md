@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.15.1  
+**Document Revision:** 1.17.9  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** What Should I Throw Phase 0 — PLANNING COMPLETE / PRODUCTION DEFERRED; Conditions Production Foundation — NEXT  
+**Workstream Status:** What Should I Throw Phase 0 — PLANNING COMPLETE / PRODUCTION DEFERRED; Recommendation Prerequisites Foundation — PRODUCTION ACTIVE / SUBPHASE B REPAIR STAGED / TARGETED PASS / RUNTIME RE-REVIEW PENDING / TECHNIQUES-COMPATIBILITY BLOCKED  
 **Cleanup Implementation Commit:** `0ea6420f2ac203281c5bab33b96ab5fcc6409947`  
-**Last Updated:** 2026-08-28
+**Last Updated:** 2026-08-29
 
 # Purpose
 
@@ -53,17 +53,13 @@ Fish Guide Version 1 remains **PASS / FINALIZED / CLOSED** with 30 active Fish, 
 - Repository Integrity #90 and GitHub Pages #578 passed on the final production SHA.
 - Regulations remains governed by D066, `ARCHITECTURE.md`, `UI_STANDARD.md`, and `EXTERNAL_REFERENCE_MAINTENANCE.md`; its closed workstream record is retained under `archive/workstreams/regulations/REGULATIONS-PHASE-0.md`. Future link changes are maintenance and do not reopen the milestone automatically.
 
-### Bounded Regulations Maintenance — Awaiting Human Validation
+### Bounded Regulations Maintenance Repair — CLOSED / PASS
 
-A user-reported maintenance repair is **OPEN / PENDING HUMAN VALIDATION** for four current `StateResource` records. This maintenance does not reopen the closed Regulations milestone. `data/regulations.js` is unchanged and must remain unchanged until the user confirms every candidate destination opens and behaves correctly in a normal browser.
+The four approved Regulations maintenance link corrections are implemented on GitHub `main` in commit `d53caf84c5f22f00aef92f2c6cd21557c4c57ce1` (`Correct Regulations maintenance links`). The commit changed only `data/regulations.js` (15 additions / 15 deletions); committed blob `e7042e915bde6c0e991c21178d1f95572141bc2c`. Repository Integrity #99 and GitHub Pages #587 passed. This maintenance repair does not reopen the closed Regulations milestone.
 
-- `north-carolina-fishing-regulations`: the current `https://www.ncwildlife.gov/fishing/fishing-regulations` destination is reported broken; candidate replacement is `https://www.ncwildlife.gov/hunting/fishing-hunting-trapping-regulations`.
-- `south-carolina-fishing-regulations`: replace the current eRegulations deep link `https://www.eregulations.com/southcarolina/fishing/freshwater-game-fishing-regulations` with the official `https://www.dnr.sc.gov/regulations.html` landing page; the eventual source repair should use direct provenance, clear the obsolete designation URL, and reconcile the title/description/experience metadata.
-- `south-carolina-fishing`: retarget the broad `https://www.dnr.sc.gov/fishing.html` destination to the Fishing Access ArcGIS experience `https://experience.arcgis.com/experience/368c6b8ebc164f21877eda6aa3aa4fcf/page/fishing`; the eventual source repair should present it as **Fishing Access**, use `interactive-map`, and retain officially-designated-external provenance anchored to the SCDNR Freshwater Fishing page.
-- `washington-fish-stocking`: evaluate the current `https://wdfw.wa.gov/fishing/reports/stocking` record for retargeting/generalization to `https://wdfw.wa.gov/fishing/reports`, with **Fishing & Stocking Reports** wording and metadata that represents both stocking and fishing-report content.
-- Gate: after the user validates all candidate destinations, stage one bounded `data/regulations.js` repair, update human-controlled verification metadata as appropriate, run targeted Repository Integrity and external-reference validation, review the exact diff, and complete the separate source commit/CI closeout.
+**What Should I Throw Phase 0 planning is COMPLETE / PRODUCTION DEFERRED.** D069 owns the locked product/output/input/prerequisite contract. Conditions, Lure/Bait, Technique, and typed intrinsic Compatibility Relationship boundaries remain distinct approved domains, but their production work is now grouped into one active **Recommendation Prerequisites Foundation** workstream with gated subphases in the preserved order Conditions → Lure/Bait Reference → Techniques/Compatibility. Settings / User Data Architecture, scoped My Tackle Availability Foundation, and What Should I Throw recommendation production remain subsequent separate milestones. Full Tackle Reference / Find Tackle, Catch Log, Global Search, and Favorites remain later unless a direct dependency is demonstrated.
 
-**What Should I Throw Phase 0 planning is COMPLETE / PRODUCTION DEFERRED.** D069 owns the locked product/output/input/prerequisite contract. The cross-domain architecture gate is closed: Conditions, Lure/Bait, Technique, and typed intrinsic Compatibility Relationship boundaries are approved for prerequisite production. The active prerequisite sequence is Conditions → Lure/Bait Reference → Techniques → Settings / User Data Architecture → scoped My Tackle Availability Foundation → What Should I Throw recommendation engine + UX pilot. Full Tackle Reference / Find Tackle, Catch Log, Global Search, and Favorites remain later unless a direct dependency is demonstrated.
+Recommendation Prerequisites Foundation production is **ACTIVE**. Planning remains COMPLETE / DOCUMENTATION-CLOSED with RP-A1–RP-A4, RP-B1, RP-B2A–RP-B2D, B-01–B-13, and RP-C1–RP-C4 LOCKED. **Subphase A — Conditions remains data/schema/static targeted PASS.** The previously failed Good Conditions runtime presentation has now been repaired in Drive Current with supported legacy tags rendered as contextual Condition-reference controls backed by canonical `CONDITION_DATA`; this is a presentation bridge only and does not add Rig `conditionIds[]` or a Rig↔Condition relationship. **Subphase B repair is now STAGED in Drive Current with targeted data/static validation PASS and runtime re-review pending.** The repair restores the existing component-card grammar for required Lure/Bait (checkbox, Missing count, `ⓘ` recognition/detail popover), removes the oversized primary-lure page image, adds approved Paddle-tail Swimbait and Tube recognition Media, expands beginner tie-point instructions, refines the Direct-Tie selector, and alphabetizes Core Rig cards. Fish guidance opening Direct-Tie with Inline Spinner selected must remain unchanged. Local-file YouTube failures are still treated as an environment limitation; tutorial playback must be revalidated from a served/GitHub environment. Jerkbait and Spoon tutorial selection remains open while the user researches suitable tying/setup videos. **Subphase C Techniques/Compatibility remains BLOCKED until the second browser review passes.**
 
 # Open Cross-Domain Carry-Forward
 
@@ -74,8 +70,46 @@ A user-reported maintenance repair is **OPEN / PENDING HUMAN VALIDATION** for fo
 
 # Exact Resume Point
 
-1. GitHub `main` is authoritative at `0079e663044007beb23409bb1b16b50ed44925fc` after the What Should I Throw Phase 0 documentation closeout merge. The user-authored closeout commit is `fd7d3cdd195611164bab371b5aa895467561133c` (`WSIT Decision Closeout`).
-2. What Should I Throw Phase 0 Decisions 1–10 are LOCKED and landed in canonical repository documentation. D069 is the durable product/architecture decision; `03B-CONDITIONS.md`, `03C-LURES-BAIT.md`, `03A-TECHNIQUES.md`, and `09-RELATIONSHIPS.md` own the prerequisite domain contracts.
-3. What Should I Throw Phase 0 is **PLANNING COMPLETE / PRODUCTION DEFERRED**. No recommendation-engine production source/data implementation is authorized by this closeout.
-4. Documentation closeout is complete. Local Repository Integrity passed with 11 validation groups and no repository content modified. GitHub Repository Integrity run #95 PASS and GitHub Pages run #583 PASS on `0079e663044007beb23409bb1b16b50ed44925fc`. No production application/data/media/config files were changed by this closeout.
-5. Exact next product workstream is **Conditions Production Foundation**. Start from `docs/workstreams/CONDITIONS-PRODUCTION.md`, `docs/data-model/03B-CONDITIONS.md`, `docs/data-model/09-RELATIONSHIPS.md`, current Rigs, and the current Live Working State. First production task: finalize the bounded Conditions implementation contract and explicitly disposition existing Rig `conditionTags[]` without blind migration.
+1. GitHub `main` is authoritative at `301acd22cc016a1a94d87504bcc785fcada7506c` (`Delete SHA256SUMS.txt`). This housekeeping commit removes only the transient root `SHA256SUMS.txt`; Drive Working Source/Current already has no matching file, so the editable working tree remains aligned.
+2. What Should I Throw Phase 0 is **PLANNING COMPLETE / PRODUCTION DEFERRED / CLOSED-PASS** under D069.
+3. Recommendation Prerequisites Foundation planning is **COMPLETE / DOCUMENTATION-CLOSED**. RP-A1–RP-A4, RP-B1, RP-B2A–RP-B2D, B-01–B-13, and RP-C1–RP-C4 remain locked and reconciled into their canonical Drive Current owners.
+4. **Subphase A — Conditions:** implementation is staged in Drive Current and targeted validation is **PASS**. The bounded checks confirm the exact 33-record/8-category registry, exact field shape/lifecycle, frozen 17-value Rig legacy-tag vocabulary, no Rig `conditionIds[]`, valid production script order, JS syntax, and static shared-popover wiring. Full Repository Integrity and final combined review/commit/CI remain pending at the Foundation closeout boundary.
+5. **Subphase B checkpoint:** the bounded repair is staged in Drive Current and targeted static/data checks PASS for exact 13 Lure/Bait / 31 Tackle / 23 Rig counts, 7/7 required Rig-facing Lure/Bait recognition Media records, the two new 640×440 approved assets, alphabetized Core IDs, repaired Lure/Bait readiness/popover wiring, expanded tie-point instructions, and Good Conditions contextual controls. Browser/runtime acceptance is still pending.
+6. **Documentation checkpoint:** the repair implementation state is reconciled into `WORKING_STATE.md`, `ACTIVE-CHANGE-LEDGER.md`, `workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md`, `data-model/03-RIGS.md`, `03C-LURES-BAIT.md`, and `03B-CONDITIONS.md`. The next review ZIP must contain Git-bound repository files only.
+7. **Exact resume:** issue the clean Git-bound repaired Subphase B review overlay and perform the second browser review. Review the Lure/Bait component-card/readiness/popovers, Paddle-tail/Tube media, tie instructions, selector styling, alphabetized Core cards, Good Conditions popovers, preserved Fish→Direct-Tie Inline Spinner navigation, and tutorial playback from a served/GitHub environment. **Do not begin Subphase C** until this runtime checkpoint passes. No commit/push is authorized.
+
+# Subphase B Runtime Review — 2026-08-28 — FAIL
+
+User browser review of the staged A+B overlay found material runtime/UX defects. This remains a **blocking product/source review failure**, with one important environment distinction: YouTube embed errors observed only from the local file copy are not yet classified as production tutorial defects because existing committed Rig tutorials show the same local failure while loading correctly from the GitHub-served application.
+
+## Corrected recorded defects / required repairs
+
+1. **Lure/Bait requirement card formatting is wrong.** This is not a new readiness model. The existing Rig behavior is the model: each required component has a checkbox, unchecked required components contribute to the Missing count, and the status changes to Tackle Ready only when every required item is checked. Required Lure/Bait must participate in that same transitional component-availability check.
+2. **Primary Lure/Bait recognition and details belong in the component popover.** The Lure/Bait requirement card needs a clickable `ⓘ`, matching unaffected Rig components such as Bobber Stop / Clip-on Bobber. The popover should contain the approved recognition image plus useful component/reference details.
+3. **Remove the oversized primary-lure image from the Rig page.** The full-width Inline Spinner/Crankbait-style image is the wrong presentation. That image belongs inside the Lure/Bait `ⓘ` popover described above; these are one combined UI defect, not separate image and popover features.
+4. **At review time, Paddle-tail Swimbait had no recognition Media.** This finding required a canonical Lure/Bait reference image/Media attachment for Weighted Swimbait Hook Rig; the 2026-08-29 repair now supplies the approved asset.
+5. **At review time, Tube had no recognition Media.** This finding required a canonical Lure/Bait reference image/Media attachment for Tube Jig Rig; the 2026-08-29 repair now supplies the approved asset.
+6. **Tie instructions need beginner-specific attachment detail.** For Direct-Tie and the two new Rigs, identify exactly where line/leader attaches and how the angler recognizes that point: R-bend/line-tie eye, lure eye or retained split ring, hook eye, exposed tube-jig eye, etc. State optional-hardware disposition explicitly.
+7. **Setup Type / Lure Type selector needs visual refinement.** Keep the five locked Direct-Tie configurations and keyboard accessibility, but restyle the selector to fit the established FCC Rig UI rather than the raw/native-looking control.
+8. **Core Rig cards must be alphabetized.** Core is not a special teaching-order exception. Render the six Core Rig cards alphabetically, consistent with the other Rig card groups.
+9. **Good Conditions contextual help is missing at runtime.** Each supported Good Conditions tag must open the shared lightweight Condition detail popover backed by canonical `CONDITION_DATA`; retain RP-A4 boundaries (no Conditions route and no Rig↔Condition relationship).
+10. **Fish → configured lure navigation passed.** Preserve Fish guidance opening Direct-Tie with Inline Spinner already selected.
+11. **YouTube local-file failures require served-environment revalidation, not immediate video replacement.** Spinnerbait/Crankbait/Weighted Swimbait Hook/Tube tutorial errors 153/15 were seen from the local file copy. Existing committed Rig videos also fail locally but load from the GitHub-served site. Do not classify those selected videos as defective solely from local playback; validate all tutorial embeds on a served/GitHub build during the next runtime pass.
+12. **Jerkbait and Spoon tutorial selection remains open.** The user will continue looking for tying/setup videos. Do not lock the previously mentioned candidates or silently fall back to manufacturer/reference pages as the final tutorial presentation.
+
+## Repair implementation checkpoint — 2026-08-29
+
+The bounded repair is now **STAGED / TARGETED STATIC+DATA PASS / RUNTIME RE-REVIEW PENDING**.
+
+- Lure/Bait requirements now use the existing Rig component-card availability grammar: checkbox, Missing-count participation, and clickable `ⓘ` recognition/detail popover.
+- The oversized full-width primary-lure image has been removed from Rig Detail; recognition imagery is shown in the popover.
+- User-approved Paddle-tail Swimbait and Tube recognition assets are attached as canonical `ownerType: "lure-bait"` Media.
+- Direct-Tie and the two new Rigs now identify exact beginner tie points and optional-hardware disposition more explicitly.
+- The Setup Type / Lure Type selector is restyled within the FCC control grammar while retaining the five locked configurations and native keyboard behavior.
+- Core Rig cards are alphabetized.
+- Supported frozen Good Conditions tags now expose canonical Condition explanations through the shared popover; no Conditions route, Rig `conditionIds[]`, or Rig↔Condition relationship was added.
+- Fish→Direct-Tie Inline Spinner behavior remains a preserve/pass target.
+- Tutorial playback remains a served/GitHub-environment acceptance check; local `file://` failures are not accepted as video-source failures.
+- Jerkbait and Spoon tutorial selection remains open.
+
+**Gate:** Subphase C remains BLOCKED until the repaired browser/runtime review passes. No commit/push is authorized.
