@@ -1,1 +1,0 @@
-9ad018d4644573babcedafd6d2265a1eca355e32a5f9f18525d86d0e4a4b459e  data/regulations.js
