@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.18.0  
+**Document Revision:** 1.18.1  
 **Document Status:** Approved — Active Repository Continuity Record  
 **Workstream Status:** Settings / User Data Architecture — ACTIVE / PLANNING  
 **Last Updated:** 2026-08-30
@@ -12,11 +12,11 @@ This file is the single compact repository current-state and exact-resume entryp
 
 # Authority / Current Baseline
 
-- GitHub `main` is authoritative at `584f97caa4874075f745834145813ac9bdcf78b3` (`Close Recommendation Prerequisites Foundation`), parent `cdf8f408011c5137d0351cec9f350d0a6eee66c2`.
-- The final Recommendation Prerequisites Foundation source/runtime commit is `cdf8f408011c5137d0351cec9f350d0a6eee66c2` (`Techniques to Rig - Final`).
-- Repository Integrity #106 and GitHub Pages #594 passed on the documentation-closeout SHA.
-- Google Drive `Working Source/Current` remains the complete editable working tree for approved uncommitted changes.
-- The current Drive cycle is documentation-only reconciliation; no product source/data/media/configuration change is authorized by this cleanup.
+- GitHub `main` is authoritative at `8621feb0cea929a0ce8e7de539545f6b55265ee0` (`Documentation Cleanup - Lure/Bait`), parent `584f97caa4874075f745834145813ac9bdcf78b3`.
+- The cleanup commit contains the approved documentation reconciliation plus removal of obsolete root `REVIEW-MANIFEST.txt`; it does not reopen product source/data/media/configuration scope.
+- Local Repository Integrity on that cleanup reported one documentation-governance defect only: this file used `# Exact Resume` instead of the required `# Exact Resume Point` lifecycle marker.
+- The final Recommendation Prerequisites Foundation source/runtime commit remains `cdf8f408011c5137d0351cec9f350d0a6eee66c2` (`Techniques to Rig - Final`). Repository Integrity #106 and GitHub Pages #594 passed on the Foundation documentation-closeout SHA.
+- Google Drive `Working Source/Current` remains the complete editable working tree for approved uncommitted changes; this file is the bounded corrective candidate for the reported validator defect.
 
 # Current Product State
 
@@ -53,10 +53,11 @@ No production User Data/My Tackle implementation is authorized until this archit
 
 # Documentation Execution Gate
 
-The documentation consistency cleanup that opened this cycle must converge the active canonical owners and compact the Live Working State before normal product planning resumes. A stale or contradictory current-state owner blocks progression. Repository Integrity remains a pre-commit requirement for this structural/documentation reconciliation.
+The documentation consistency cleanup has landed on GitHub `main`, but normal product planning remains blocked until the single reported lifecycle-marker defect is repaired and Repository Integrity passes on the corrected local repository. This repair is limited to `docs/WORKING_STATE.md`; do not reopen the completed cleanup or product source/data/media/configuration scope.
 
-# Exact Resume
+# Exact Resume Point
 
-1. Complete and read back the bounded documentation reconciliation in Drive Current, including the compact Live Working State.
-2. Run the required documentation/repository consistency validation and reconcile any validator findings before commit.
-3. Once the documentation gate is PASS, resume **UD-2 — Identity + Sync Model**: settle authentication/account-linking and synchronization-service boundaries before selecting the authoritative local persistence technology.
+1. Apply this corrected `docs/WORKING_STATE.md` over the local repository at GitHub baseline `8621feb0cea929a0ce8e7de539545f6b55265ee0`.
+2. Run Repository Integrity once. If it fails, stop and reconcile only the reported defect(s).
+3. If Repository Integrity passes, commit/push only this one-file documentation-governance repair, verify the resulting GitHub commit scope plus required Repository Integrity CI and GitHub Pages, and update the compact Live Working State.
+4. After those gates pass, resume **UD-2 — Identity + Sync Model**: settle authentication/account-linking and synchronization-service boundaries before selecting the authoritative local persistence technology.
