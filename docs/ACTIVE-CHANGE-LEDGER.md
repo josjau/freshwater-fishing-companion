@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.9  
+**Document Revision:** 1.10.10  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** `38a974ce00560ac575ef0ebb9b706510d549b43c`  
@@ -131,3 +131,8 @@ Second browser review accepted the refined Direct-Tie selector and reported Inli
 - served GitHub playback confirms the current Weighted Swimbait Hook and Tube Jig embeds load;
 - **Tube Jig tutorial content is REPAIRED** with *How to use a tube jig* by Arcasting (`FqlK7rqk5E4`), selected by the user as the preferred generic physical-rigging tutorial;
 - preserve passing Direct-Tie/Fish navigation and accepted Rig presentations.
+
+
+## Recommendation Prerequisites — Third Runtime Repair
+
+**Status:** STAGED / TARGETED PASS / RUNTIME RE-REVIEW PENDING. Fish reference chips are now fully live without falsely promoting Fish-owned `Cold Water`, generic `Current`, or `Mud` into Conditions; Rig Good Conditions suppresses non-Condition legacy tags at presentation; chip spacing and Best For wording are compacted; Jerkbait tutorial remains intentionally absent; Spoon tutorial is `pLsX7nhM1qk`; Tube Jig tutorial is `EibSWhI6nbM`. Subphase C remains blocked pending browser acceptance.

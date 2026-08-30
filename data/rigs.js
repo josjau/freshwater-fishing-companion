@@ -552,9 +552,9 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner",
         useCases: [
-            "Learning simple cast-and-retrieve lure fishing",
-            "Using complete lures that need only a direct terminal connection",
-            "Switching among lure types without creating separate top-level Rig families"
+            "Simple lure fishing",
+            "Direct terminal tie",
+            "Quick lure changes"
         ],
         conditionTags: [
             "Open Water",
@@ -587,7 +587,7 @@ const RIG_DATA = Object.freeze([
                     }
                 ],
                 tutorialVideo: null,
-                useCases: ["Easy cast-and-retrieve", "Covering shallow open water", "Fishing gentle current"],
+                useCases: ["Cast and retrieve", "Shallow open water", "Gentle current"],
                 conditionTags: ["Open Water", "Light Current", "Shallow Water", "Clear Water", "Stained Water"],
                 componentRequirements: [],
                 lureBaitRequirements: [
@@ -635,7 +635,7 @@ const RIG_DATA = Object.freeze([
                     videoId: "0Or166Uo8VU",
                     externalUrl: "https://www.youtube.com/watch?v=0Or166Uo8VU"
                 },
-                useCases: ["Shallow cover", "Grass and dock edges", "Stained or muddy water"],
+                useCases: ["Shallow cover", "Grass and docks", "Dirty water"],
                 conditionTags: ["Light Cover", "Heavy Cover", "Vegetation", "Docks", "Shallow Water", "Stained Water"],
                 componentRequirements: [],
                 lureBaitRequirements: [
@@ -665,7 +665,7 @@ const RIG_DATA = Object.freeze([
                     videoId: "-kHoA2RJX1M",
                     externalUrl: "https://www.youtube.com/watch?v=-kHoA2RJX1M"
                 },
-                useCases: ["Covering water quickly", "Contacting rock and hard structure", "Depth-controlled retrieves"],
+                useCases: ["Covering water", "Rock and structure", "Depth control"],
                 conditionTags: ["Open Water", "Rock", "Shallow Water", "Deep Water", "Clear Water", "Stained Water"],
                 componentRequirements: [
                     { tackleId: "split-ring", quantity: 1, required: false, notes: "Use the lure's existing line-tie or an appropriate split ring when the lure is designed for one." }
@@ -696,7 +696,7 @@ const RIG_DATA = Object.freeze([
                     }
                 ],
                 tutorialVideo: null,
-                useCases: ["Suspended fish", "Open-water baitfish", "Pause-and-twitch presentations"],
+                useCases: ["Suspended fish", "Open-water baitfish", "Pause and twitch"],
                 conditionTags: ["Open Water", "Shallow Water", "Deep Water", "Clear Water", "Stained Water", "Suspended Fish"],
                 componentRequirements: [
                     { tackleId: "split-ring", quantity: 1, required: false, notes: "Use the lure's existing split ring only when it is part of the intended line-tie configuration." }
@@ -726,8 +726,14 @@ const RIG_DATA = Object.freeze([
                         url: "https://www.mepps.com/mepps-tactics/article/syclops-spoon/460"
                     }
                 ],
-                tutorialVideo: null,
-                useCases: ["Open-water casting", "Deep or vertical presentations", "Fluttering fall presentations"],
+                tutorialVideo: {
+                    platform: "youtube",
+                    title: "You're Doing It Wrong: How to Rig a Spoon Lure for Beginners",
+                    creator: "Anglers",
+                    videoId: "pLsX7nhM1qk",
+                    externalUrl: "https://www.youtube.com/watch?v=pLsX7nhM1qk&t=63s"
+                },
+                useCases: ["Open-water casting", "Deep or vertical", "Fluttering fall"],
                 conditionTags: ["Open Water", "Deep Water", "Vegetation", "Light Current", "Clear Water", "Stained Water"],
                 componentRequirements: [
                     { tackleId: "split-ring", quantity: 1, required: false, notes: "Use a split ring only when the spoon is designed to use one at the line-tie." },
@@ -2294,7 +2300,7 @@ const RIG_DATA = Object.freeze([
         lastModifiedVersion: "0.6.0",
         isActive: true,
         difficulty: "Beginner+",
-        useCases: ["Weed-resistant swimming", "Open water and light cover", "Controlled-depth retrieves"],
+        useCases: ["Weedless swimming", "Open water and cover", "Depth control"],
         conditionTags: ["Open Water", "Light Cover", "Vegetation", "Shallow Water", "Deep Water"],
         referenceLinks: [
             { label: "Mustad — Power Lock Plus Spring Keeper Hook - Weighted", url: "https://mustad-fishing.com/us/products/91768sw" }
@@ -2336,7 +2342,7 @@ const RIG_DATA = Object.freeze([
         lastModifiedVersion: "0.6.0",
         isActive: true,
         difficulty: "Beginner+",
-        useCases: ["Rocky bottoms", "Dragging or hopping", "Compact finesse presentations"],
+        useCases: ["Rocky bottoms", "Dragging or hopping", "Finesse presentation"],
         conditionTags: ["Rock", "Open Water", "Deep Water", "Light Current", "Clear Water", "Stained Water"],
         referenceLinks: [
             { label: "Mustad / TUF-LINE — Take 'Em With Tubes", url: "https://mustad-fishing.com/tuf-line/us/article/take-em-with-tubes" },
@@ -2344,10 +2350,10 @@ const RIG_DATA = Object.freeze([
         ],
         tutorialVideo: {
             platform: "youtube",
-            title: "How to use a tube jig",
-            creator: "Arcasting",
-            videoId: "FqlK7rqk5E4",
-            externalUrl: "https://www.youtube.com/watch?v=FqlK7rqk5E4"
+            title: "How To Rig A Tube Bait The Right Way",
+            creator: "BassResource - The Ultimate Bass Fishing Resource",
+            videoId: "EibSWhI6nbM",
+            externalUrl: "https://www.youtube.com/watch?v=EibSWhI6nbM"
         },
         componentRequirements: [
             { tackleId: "tube-jighead", quantity: 1, required: true, notes: "Use an internal tube head that fits the hollow body without splitting or distorting it." }

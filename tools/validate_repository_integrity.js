@@ -1119,9 +1119,10 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
         if (JSON.stringify(actualConfigIds) !== JSON.stringify(expectedConfigIds)) fail("Direct-Tie Rig migration", `configuration order/IDs must be ${expectedConfigIds.join(", ")}; found ${actualConfigIds.join(", ")}`);
         const expectedTutorialVideoIds = {
             "spinnerbait": "0Or166Uo8VU",
-            "crankbait": "-kHoA2RJX1M"
+            "crankbait": "-kHoA2RJX1M",
+            "spoon": "pLsX7nhM1qk"
         };
-        const fallbackOnlyIds = new Set(["inline-spinner", "jerkbait", "spoon"]);
+        const fallbackOnlyIds = new Set(["inline-spinner", "jerkbait"]);
         const validateTutorialVideo = (tutorial, label, expectedVideoId = null) => {
             if (!isPlainObject(tutorial)) {
                 fail("Rig tutorial coverage", `${label}: tutorialVideo must be an object`);
@@ -1152,7 +1153,7 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
             }
         }
         validateTutorialVideo(rigById.get("weighted-swimbait-hook-rig")?.tutorialVideo, "Weighted Swimbait Hook Rig", "32Fw4vimHWQ");
-        validateTutorialVideo(rigById.get("tube-jig-rig")?.tutorialVideo, "Tube Jig Rig", "FqlK7rqk5E4");
+        validateTutorialVideo(rigById.get("tube-jig-rig")?.tutorialVideo, "Tube Jig Rig", "EibSWhI6nbM");
     }
 
     const configuredGuidance = [];

@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.17.12  
+**Document Revision:** 1.17.13  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** What Should I Throw Phase 0 — PLANNING COMPLETE / PRODUCTION DEFERRED; Recommendation Prerequisites Foundation — PRODUCTION ACTIVE / SUBPHASE B BOUNDED FOLLOW-UP REPAIR STAGED / TARGETED PASS / RUNTIME RE-REVIEW PENDING / TECHNIQUES-COMPATIBILITY BLOCKED  
+**Workstream Status:** What Should I Throw Phase 0 — PLANNING COMPLETE / PRODUCTION DEFERRED; Recommendation Prerequisites Foundation — PRODUCTION ACTIVE / SUBPHASE B THIRD RUNTIME REPAIR STAGED / TARGETED PASS / RUNTIME RE-REVIEW PENDING / TECHNIQUES-COMPATIBILITY BLOCKED  
 **Cleanup Implementation Commit:** `0ea6420f2ac203281c5bab33b96ab5fcc6409947`  
 **Last Updated:** 2026-08-29
 
@@ -114,3 +114,7 @@ The bounded repair is now **STAGED / TARGETED STATIC+DATA PASS / RUNTIME RE-REVI
 - Jerkbait and Spoon tutorial selection remains open.
 
 **Gate:** Subphase C remains BLOCKED until the repaired browser/runtime review passes. No commit/push is authorized.
+
+# Subphase B Third Runtime Repair — 2026-08-29
+
+Third browser review accepted Condition popover centering and scroll containment but found inconsistent Fish chip affordance/padding, overly long Best For chips, and tutorial-media issues. The bounded repair is staged and targeted PASS. All 16 current Fish Common Habitat/Common Waters labels now have a live reference path: 13 use canonical Condition popovers and Fish-owned `Cold Water`, `Current`, and `Mud` use explicit Fish Habitat explanations because converting them into Conditions would violate semantics. Rig Good Conditions now renders only labels with canonical Condition mappings while preserving frozen legacy `conditionTags[]` in source. Condition/Fish chips use the compact 32px / 3px 9px control treatment. Direct-Tie plus the two new Rig Best For values are shortened. Jerkbait remains without an embedded tutorial pending an approved hard-jerkbait video. Spoon uses `pLsX7nhM1qk` (*You're Doing It Wrong: How to Rig a Spoon Lure for Beginners* — Anglers). Tube Jig uses `EibSWhI6nbM` (*How To Rig A Tube Bait The Right Way* — BassResource - The Ultimate Bass Fishing Resource) because the previous Arcasting embed blocks playback on other sites. JavaScript syntax and targeted Fish-label/tutorial/mapping checks pass. Runtime re-review remains required before Subphase C.

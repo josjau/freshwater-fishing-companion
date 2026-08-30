@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 03B-CONDITIONS.md  
-**Document Revision:** 0.4.5  
+**Document Revision:** 0.4.6  
 **Document Status:** Approved  
 **Implementation Status:** GitHub review baseline committed / 35-record pilot refinement + cross-Rig/Fish presentation repair staged / targeted PASS / runtime re-review pending / Combined Closeout Pending  
 **Decision Baseline:** D004, D056, D069
@@ -258,3 +258,8 @@ Both remain flat Cover / Structure records. No hierarchy, recommendation weight,
 Presentation mapping is deliberately semantic rather than string-only. Fish labels such as Grass→Vegetation, Brush/Timber→Wood / Brush, Channel→Drop-off / Channel / Deep Structure, Shallow Water→Shallow, Deep Water→Deep, and the direct waterbody equivalents may open the shared Condition reference. `Cold Water`, generic `Current`, and `Mud` remain plain because mapping them to the current vocabulary would change meaning or invent specificity.
 
 The shared Condition/reference popover is also staged to center in the viewport, contain its own scrolling, lock the underlying page while open, and restore the prior page scroll position on close. Targeted syntax/data/static validation passes; browser re-review remains required.
+
+
+# Third Runtime Presentation Reconciliation — 2026-08-29
+
+The user rejected mixed live/dead Condition-looking chips. The repair preserves semantic ownership rather than expanding Conditions incorrectly. Fish labels with canonical equivalents use the Condition popover. `Cold Water`, generic `Current`, and `Mud` are explicitly not promoted into Conditions: water temperature remains numeric context; current Conditions are strength-specific; Fish `Mud` describes substrate and is not Muddy water clarity. Those three Fish-owned labels instead receive Fish Habitat explanations so every Fish chip remains live. Rig Good Conditions renders only labels with canonical Condition mappings; legacy technique/state tags remain frozen in `conditionTags[]` but no longer masquerade as Conditions. Shared chip spacing is normalized to the compact existing Rig-link geometry.

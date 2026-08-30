@@ -763,6 +763,7 @@ function renderFishDetail(appMain, detailConfig) {
         button.addEventListener("click", () => detailConfig.onRigSelect?.(button.dataset.fishRigId, button.dataset.fishLureBaitId ?? null));
     });
     initializeConditionLinks(appMain);
+    initializeFishHabitatReferenceLinks(appMain);
 }
 
 function renderFishComparisonCatalog(appMain, config) {
@@ -1480,6 +1481,60 @@ function initializeConditionLinks(appMain) {
     });
 }
 
+function renderFishHabitatReferencePopover(label, triggerElement) {
+    const detail = FISH_INTRINSIC_REFERENCE_DETAILS[label];
+    if (!detail) return;
+
+    document.querySelector("[data-reference-popover]")?.remove();
+    document.querySelector("[data-condition-popover]")?.remove();
+    document.querySelector("[data-fish-habitat-popover]")?.remove();
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "reference-popover";
+    dialog.dataset.fishHabitatPopover = "";
+    dialog.setAttribute("aria-labelledby", "fish-habitat-popover-title");
+    dialog.innerHTML = `
+        <div class="reference-popover__shell">
+            <header class="reference-popover__header">
+                <div class="reference-popover__header-main">
+                    <p class="reference-popover__eyebrow">Fish Habitat</p>
+                    <h2 id="fish-habitat-popover-title">${label}</h2>
+                </div>
+                <button class="reference-popover__close" type="button" data-fish-habitat-close aria-label="Close ${label} information">&times;</button>
+            </header>
+            <div class="reference-popover__body">
+                <p class="reference-popover__summary">${detail}</p>
+            </div>
+        </div>
+    `;
+
+    const closeDialog = () => {
+        if (dialog.open) dialog.close();
+    };
+
+    dialog.querySelector("[data-fish-habitat-close]")?.addEventListener("click", closeDialog);
+    dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeDialog();
+    });
+    dialog.addEventListener("close", () => {
+        dialog.remove();
+        unlockReferencePopoverBackground();
+        triggerElement?.focus();
+    });
+
+    document.body.append(dialog);
+    lockReferencePopoverBackground();
+    dialog.showModal();
+}
+
+function initializeFishHabitatReferenceLinks(appMain) {
+    appMain.querySelectorAll("[data-fish-habitat-reference]").forEach((referenceLink) => {
+        referenceLink.addEventListener("click", () => {
+            renderFishHabitatReferencePopover(referenceLink.dataset.fishHabitatReference, referenceLink);
+        });
+    });
+}
+
 function renderLureBaitReferencePopover(lureBaitId, triggerElement, requirement = null) {
     const lureBaitRecord = getLureBaitRecord(lureBaitId);
     if (!lureBaitRecord) {
@@ -1817,11 +1872,18 @@ const FISH_CONDITION_REFERENCE_IDS = Object.freeze({
     "Creek": "creek-stream"
 });
 
+const FISH_INTRINSIC_REFERENCE_DETAILS = Object.freeze({
+    "Cold Water": "A broad Fish habitat label for species commonly associated with cooler water. FCC keeps actual water temperature as numeric fishing context rather than defining a Cold Water Condition band.",
+    "Current": "A broad Fish habitat label for species commonly associated with moving water. FCC Conditions describe current by strength—Light, Moderate, or Strong—rather than treating generic Current as a single condition.",
+    "Mud": "A Fish habitat label for soft or muddy bottom areas. It is not the same as the Muddy water-clarity Condition, which describes suspended sediment in the water."
+});
+
 function buildMappedConditionTagList(items, referenceIds) {
     if (!Array.isArray(items) || items.length === 0) return "";
-    return `<ul class="tag-list tag-list--conditions">${items.map((item) => {
+    const mappedItems = items.filter((item) => referenceIds[item]);
+    if (mappedItems.length === 0) return "";
+    return `<ul class="tag-list tag-list--conditions">${mappedItems.map((item) => {
         const conditionId = referenceIds[item];
-        if (!conditionId) return `<li>${item}</li>`;
         return `<li><button class="condition-tag-button" type="button" data-condition-id="${conditionId}" aria-label="Learn about ${item}">${item}</button></li>`;
     }).join("")}</ul>`;
 }
@@ -1831,7 +1893,17 @@ function buildConditionTagList(items) {
 }
 
 function buildFishConditionTagList(items) {
-    return buildMappedConditionTagList(items, FISH_CONDITION_REFERENCE_IDS);
+    if (!Array.isArray(items) || items.length === 0) return "";
+    return `<ul class="tag-list tag-list--conditions">${items.map((item) => {
+        const conditionId = FISH_CONDITION_REFERENCE_IDS[item];
+        if (conditionId) {
+            return `<li><button class="condition-tag-button" type="button" data-condition-id="${conditionId}" aria-label="Learn about ${item}">${item}</button></li>`;
+        }
+        if (FISH_INTRINSIC_REFERENCE_DETAILS[item]) {
+            return `<li><button class="condition-tag-button" type="button" data-fish-habitat-reference="${item}" aria-label="Learn about ${item}">${item}</button></li>`;
+        }
+        return `<li>${item}</li>`;
+    }).join("")}</ul>`;
 }
 
 function renderInstructionDetail(appMain, detailConfig) {

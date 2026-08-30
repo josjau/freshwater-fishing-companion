@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.4.8  
+**Document Revision:** 0.4.9  
 **Document Status:** Approved — Production Baseline + Fish Production Contract  
 **Implementation Status:** Version 1 production migration COMPLETE / VALIDATED / CLOSED — 30 active Fish on the approved production schema  
 **Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056–D061, FISH-001–FISH-007  
@@ -575,3 +575,8 @@ Approved presentation mappings include Grass→Vegetation; Brush/Timber→Wood /
 `Cold Water`, generic `Current`, and `Mud` deliberately remain plain Fish labels. Water temperature is not a categorical V1 Condition, generic Current lacks the required intensity, and Mud may describe substrate rather than water clarity. No Fish label is mechanically converted merely because wording is similar. No Fish `conditionIds[]` or Fish↔Condition relationship is introduced.
 
 Targeted static validation confirms the shared popover wiring; browser re-review remains part of the active Foundation gate.
+
+
+# Fish Habitat Reference Presentation — Third Runtime Repair
+
+All 16 currently displayed Fish `habitatTags[]` / `waterbodyTypes[]` labels now have a live reference action. Thirteen semantically equivalent labels open canonical Condition help. The three Fish-owned terms `Cold Water`, `Current`, and `Mud` open clearly labeled Fish Habitat explanations instead of being forced into incompatible Condition meanings. This is presentation-only; Fish facts and schema remain unchanged and no Fish↔Condition relationship is created. Chip geometry is normalized to the same compact treatment used by existing Rig links.

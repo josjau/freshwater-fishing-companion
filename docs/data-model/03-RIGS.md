@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.4.8  
+**Document Revision:** 0.4.9  
 **Document Status:** Approved  
-**Implementation Status:** GitHub `38a974ce` review baseline — 23 Rigs / second runtime review PARTIAL PASS / bounded follow-up staged + targeted PASS / runtime re-review pending  
+**Implementation Status:** GitHub `38a974ce` review baseline — 23 Rigs / third runtime repair staged + targeted PASS / runtime re-review pending  
 **Decision Baseline:** D024, D025, D026, D027, D028, D042-D049, D056, D057, D065
 
 ---
@@ -356,3 +356,8 @@ Direct-Tie Lure Setup retains one canonical Rig with five lure-specific configur
 The five Direct-Tie configurations now have distinct concise Best For and Good Conditions sets. Weighted Swimbait Hook Rig and Tube Jig Rig were re-evaluated against the existing difficulty tiers and remain **Beginner+**. Tube Jig's generic `Current` presentation label is narrowed to **Light Current**.
 
 Shared reference popovers are staged to lock background scrolling, contain internal wheel/touch scrolling, center in the viewport, and restore the prior page position on close. Served GitHub review confirms the tutorial embed path works. The **Tube Jig** tutorial is now *How to use a tube jig* by Arcasting (`FqlK7rqk5E4`), selected by the user as the preferred generic physical internal-jighead rigging tutorial.
+
+
+# Third Runtime Repair — Best For / Conditions / Tutorials
+
+Rig Detail Best For chips are intentionally short phrase labels rather than sentence-length descriptions. Direct-Tie configuration use cases and the two new Rigs have been tightened accordingly. Good Conditions presentation only exposes legacy `conditionTags[]` values that resolve to canonical Condition reference knowledge; non-Condition legacy values remain in the frozen transitional source but are not rendered as misleading Condition chips. Jerkbait remains `tutorialVideo: null` until an approved hard-jerkbait setup video is available. Spoon now uses Anglers `pLsX7nhM1qk`; Tube Jig now uses BassResource `EibSWhI6nbM`.

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Recommendation Prerequisites Foundation
 
 **Document:** workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md  
-**Document Status:** Approved — Production Active / Bounded Follow-up Repair Staged + Targeted PASS / Runtime Re-review Pending / Subphase C Blocked  
+**Document Status:** Approved — Production Active / Third Runtime Repair Staged + Targeted PASS / Runtime Re-review Pending / Subphase C Blocked  
 **GitHub Baseline:** `38a974ce00560ac575ef0ebb9b706510d549b43c` (`Conditions - Lure/Bait Review`)  
 **Decision Baseline:** D003, D004, D024, D056, D069  
 **Planning Locks:** RP-A1–RP-A4, RP-B1, RP-B2A–RP-B2D, B-01–B-13, RP-C1–RP-C4  
@@ -275,3 +275,8 @@ The resulting bounded follow-up is now staged and targeted PASS:
 8. **Tube Jig tutorial content:** REPAIRED. The user selected *How to use a tube jig* by Arcasting (`FqlK7rqk5E4`) as the preferred generic physical-rigging tutorial.
 
 **Gate:** Subphase C remains BLOCKED until this staged follow-up passes browser review.
+
+
+# Third Runtime Repair Checkpoint — 2026-08-29
+
+The third review accepts Condition popover placement and scroll behavior. The remaining bounded UX/content repair is staged: every current Fish habitat/water chip has a live explanation; canonical equivalents use Conditions while Fish-only `Cold Water`, generic `Current`, and `Mud` use Fish Habitat explanations so the locked Condition semantics are not distorted. Rig Good Conditions presents canonical Condition references only. Shared chip geometry is normalized to the compact existing Rig-link treatment. Best For values are shortened to high-signal phrases. Jerkbait has no embedded tutorial until a suitable hard-bait video is approved. Spoon tutorial is Anglers `pLsX7nhM1qk`; Tube Jig tutorial is BassResource `EibSWhI6nbM`. Targeted checks pass; runtime re-review remains the gate to Subphase C.

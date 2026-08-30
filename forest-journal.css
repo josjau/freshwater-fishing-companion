@@ -478,14 +478,18 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
     pointer-events: none;
 }
 
-.tag-list--conditions li:has(.condition-tag-button) { padding: 0; overflow: hidden; }
+.tag-list--conditions li { padding: 0; overflow: hidden; }
 .condition-tag-button {
-    min-height: 34px;
-    padding: 4px 8px;
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    padding: 3px 9px;
     border: 0;
     background: transparent;
     color: inherit;
     font: inherit;
+    font-size: .86rem;
+    line-height: 1.2;
     cursor: pointer;
 }
 .condition-tag-button:hover {
@@ -934,7 +938,7 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .fish-similar-link__action { color: var(--accent-fish); font-size: .86rem; font-weight: 800; }
 
 .fish-at-a-glance .tag-list { gap: var(--space-1) var(--space-2); }
-.fish-at-a-glance .tag-list li { padding: 4px 8px; font-size: .86rem; }
+.fish-at-a-glance .tag-list li { padding: 0; font-size: .86rem; }
 
 .fish-rig-section { border-color: var(--border); }
 .fish-rig-application-list { display: grid; gap: var(--space-4); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
