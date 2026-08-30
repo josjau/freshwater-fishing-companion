@@ -587,6 +587,8 @@ const RIG_DATA = Object.freeze([
                     }
                 ],
                 tutorialVideo: null,
+                useCases: ["Easy cast-and-retrieve", "Covering shallow open water", "Fishing gentle current"],
+                conditionTags: ["Open Water", "Light Current", "Shallow Water", "Clear Water", "Stained Water"],
                 componentRequirements: [],
                 lureBaitRequirements: [
                     {
@@ -633,6 +635,8 @@ const RIG_DATA = Object.freeze([
                     videoId: "0Or166Uo8VU",
                     externalUrl: "https://www.youtube.com/watch?v=0Or166Uo8VU"
                 },
+                useCases: ["Shallow cover", "Grass and dock edges", "Stained or muddy water"],
+                conditionTags: ["Light Cover", "Heavy Cover", "Vegetation", "Docks", "Shallow Water", "Stained Water"],
                 componentRequirements: [],
                 lureBaitRequirements: [
                     { lureBaitId: "spinnerbait", quantity: 1, required: true, notes: "Use a complete spinnerbait with an intact line-tie, wire frame, blades, skirt, and hook." }
@@ -661,6 +665,8 @@ const RIG_DATA = Object.freeze([
                     videoId: "-kHoA2RJX1M",
                     externalUrl: "https://www.youtube.com/watch?v=-kHoA2RJX1M"
                 },
+                useCases: ["Covering water quickly", "Contacting rock and hard structure", "Depth-controlled retrieves"],
+                conditionTags: ["Open Water", "Rock", "Shallow Water", "Deep Water", "Clear Water", "Stained Water"],
                 componentRequirements: [
                     { tackleId: "split-ring", quantity: 1, required: false, notes: "Use the lure's existing line-tie or an appropriate split ring when the lure is designed for one." }
                 ],
@@ -690,6 +696,8 @@ const RIG_DATA = Object.freeze([
                     }
                 ],
                 tutorialVideo: null,
+                useCases: ["Suspended fish", "Open-water baitfish", "Pause-and-twitch presentations"],
+                conditionTags: ["Open Water", "Shallow Water", "Deep Water", "Clear Water", "Stained Water", "Suspended Fish"],
                 componentRequirements: [
                     { tackleId: "split-ring", quantity: 1, required: false, notes: "Use the lure's existing split ring only when it is part of the intended line-tie configuration." }
                 ],
@@ -719,6 +727,8 @@ const RIG_DATA = Object.freeze([
                     }
                 ],
                 tutorialVideo: null,
+                useCases: ["Open-water casting", "Deep or vertical presentations", "Fluttering fall presentations"],
+                conditionTags: ["Open Water", "Deep Water", "Vegetation", "Light Current", "Clear Water", "Stained Water"],
                 componentRequirements: [
                     { tackleId: "split-ring", quantity: 1, required: false, notes: "Use a split ring only when the spoon is designed to use one at the line-tie." },
                     { tackleId: "barrel-swivel", quantity: 1, required: false, notes: "An upstream swivel may be useful when a rotating spoon produces persistent line twist." }
@@ -2284,7 +2294,7 @@ const RIG_DATA = Object.freeze([
         lastModifiedVersion: "0.6.0",
         isActive: true,
         difficulty: "Beginner+",
-        useCases: ["Swimming a paddle-tail through open water or light cover", "Adding controlled depth without a separate sinker", "Keeping a soft-plastic swimbait compact and streamlined"],
+        useCases: ["Weed-resistant swimming", "Open water and light cover", "Controlled-depth retrieves"],
         conditionTags: ["Open Water", "Light Cover", "Vegetation", "Shallow Water", "Deep Water"],
         referenceLinks: [
             { label: "Mustad — Power Lock Plus Spring Keeper Hook - Weighted", url: "https://mustad-fishing.com/us/products/91768sw" }
@@ -2326,18 +2336,18 @@ const RIG_DATA = Object.freeze([
         lastModifiedVersion: "0.6.0",
         isActive: true,
         difficulty: "Beginner+",
-        useCases: ["Fishing a tube near rock or bottom structure", "Jigging or dragging a compact soft-plastic profile", "Presenting a tube with an internal weighted hook"],
-        conditionTags: ["Rock", "Open Water", "Deep Water", "Current", "Clear Water", "Stained Water"],
+        useCases: ["Rocky bottoms", "Dragging or hopping", "Compact finesse presentations"],
+        conditionTags: ["Rock", "Open Water", "Deep Water", "Light Current", "Clear Water", "Stained Water"],
         referenceLinks: [
             { label: "Mustad / TUF-LINE — Take 'Em With Tubes", url: "https://mustad-fishing.com/tuf-line/us/article/take-em-with-tubes" },
             { label: "Tackle Warehouse — Tube Jig Heads", url: "https://www.tacklewarehouse.com/catpage-TUBEJIGS.html" }
         ],
         tutorialVideo: {
             platform: "youtube",
-            title: "How to rig a tube jig",
-            creator: "Dave Mercer",
-            videoId: "sHUJxiW7Ags",
-            externalUrl: "https://www.youtube.com/watch?v=sHUJxiW7Ags"
+            title: "How to use a tube jig",
+            creator: "Arcasting",
+            videoId: "FqlK7rqk5E4",
+            externalUrl: "https://www.youtube.com/watch?v=FqlK7rqk5E4"
         },
         componentRequirements: [
             { tackleId: "tube-jighead", quantity: 1, required: true, notes: "Use an internal tube head that fits the hollow body without splitting or distorting it." }

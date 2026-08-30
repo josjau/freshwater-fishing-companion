@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.4.6  
+**Document Revision:** 0.4.8  
 **Document Status:** Approved — Production Baseline + Fish Production Contract  
 **Implementation Status:** Version 1 production migration COMPLETE / VALIDATED / CLOSED — 30 active Fish on the approved production schema  
 **Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056–D061, FISH-001–FISH-007  
-**Last Updated:** 2026-08-24
+**Last Updated:** 2026-08-29
 
 ---
 
@@ -552,3 +552,26 @@ The Version 1 Fish production migration is complete. Future Fish additions are n
 - `../FISH_REFERENCE_SOURCES.md`
 - `../../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0.md`
 - `../../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
+
+# Conditions Reference Presentation Carry-Forward — 2026-08-29
+
+Fish Version 1 remains CLOSED; this does not reopen Fish production data. Recommendation Prerequisites Foundation runtime review identified a bounded cross-domain presentation/reconciliation requirement:
+
+- when Fish UI presents a label that corresponds to canonical Condition knowledge, the label should support the same lightweight Condition detail popover used by Rig Good Conditions;
+- before wiring those controls broadly, reconcile Fish `habitatTags[]`, `waterbodyTypes[]`, and any other Condition-like display labels against canonical `CONDITION_DATA`;
+- preserve Fish semantic ownership: habitat and waterbody facts remain Fish-owned intrinsic facts, and a matching Condition label does not create a Fish↔Condition recommendation or compatibility relationship;
+- unsupported/ambiguous labels must be explicitly dispositioned rather than silently mapped;
+- runtime validation should ensure every Fish Condition-reference control resolves to an active canonical Condition record.
+
+This carry-forward is owned by the active Recommendation Prerequisites Foundation and is blocking its Conditions runtime checkpoint, not the closed Fish Guide Version 1 milestone.
+
+
+# Conditions Reference Presentation — 2026-08-29/30
+
+Fish Guide Version 1 remains **CLOSED**. This Foundation integration does not change Fish facts, schema ownership, or recommendation semantics. It only allows existing `habitatTags[]` and `waterbodyTypes[]` labels to open the shared Condition reference when a genuine canonical equivalent exists.
+
+Approved presentation mappings include Grass→Vegetation; Brush/Timber→Wood / Brush; Channel→Drop-off / Channel / Deep Structure; Shallow Water→Shallow; Deep Water→Deep; Open Water→Open Water; Rock→Rock; Pond/Lake/Reservoir/River direct; and Creek→Creek / Stream.
+
+`Cold Water`, generic `Current`, and `Mud` deliberately remain plain Fish labels. Water temperature is not a categorical V1 Condition, generic Current lacks the required intensity, and Mud may describe substrate rather than water clarity. No Fish label is mechanically converted merely because wording is similar. No Fish `conditionIds[]` or Fish↔Condition relationship is introduced.
+
+Targeted static validation confirms the shared popover wiring; browser re-review remains part of the active Foundation gate.

@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03B-CONDITIONS.md  
-**Document Revision:** 0.4.3  
+**Document Revision:** 0.4.5  
 **Document Status:** Approved  
-**Implementation Status:** Drive Current Staged / data+static targeted PASS / Good Conditions repair staged / runtime re-review pending / Combined Closeout Pending  
+**Implementation Status:** GitHub review baseline committed / 35-record pilot refinement + cross-Rig/Fish presentation repair staged / targeted PASS / runtime re-review pending / Combined Closeout Pending  
 **Decision Baseline:** D004, D056, D069
 
 ---
@@ -72,7 +72,7 @@ Conditions V1 uses a flat canonical vocabulary grouped by:
 - **Season:** Spring, Summer, Fall, Winter.
 - **Light / Sky:** Bright / Sunny, Overcast, Low Light, Night.
 
-The 33-record V1 vocabulary above is locked for this production pass. No parent hierarchy is required in V1.
+The 35-record V1 vocabulary above is locked for this production pass. No parent hierarchy is required in V1.
 
 Every canonical Condition inherits Foundation fields plus `category`:
 
@@ -106,7 +106,7 @@ The Conditions production contract is locked for V1:
 - no hierarchy;
 - no recommendation/suitability fields;
 - category literals are machine-stable lowercase kebab-case: `waterbody`, `access-position`, `depth-zone`, `cover-structure`, `water-clarity`, `current`, `season`, `light-sky`;
-- the approved V1 vocabulary contains 33 canonical Condition records;
+- the current pilot vocabulary contains 35 canonical Condition records;
 - Condition IDs use lowercase kebab-case and are systematically category-qualified where ambiguity exists (for example `water-clarity-clear`, `current-light`) while remaining concise where globally unambiguous (for example `pond`, `bank`, `shallow`, `spring`).
 
 This hybrid ID convention is the canonical V1 rule: qualify when semantic ambiguity is plausible; do not mechanically prefix every ID with the category.
@@ -118,7 +118,7 @@ The Conditions implementation contract is locked for V1:
 - `data/conditions.js` is loaded through the normal `index.html` production script graph;
 - `CONDITION_DATA` is available as canonical Reference Knowledge without creating a standalone Conditions UI;
 - no Conditions Dashboard card, route, browse/detail page, search surface, renderer, or navigation entry is introduced in this subphase;
-- Repository Integrity validates the exact approved 33-record set, Foundation + `category`, unique/expected IDs, eight approved category literals and membership, lifecycle fields, and absence of unauthorized fields;
+- Repository Integrity validates the exact approved 35-record set, Foundation + `category`, unique/expected IDs, eight approved category literals and membership, lifecycle fields, and absence of unauthorized fields;
 - validator logic rejects `sortOrder`, relationship arrays, recommendation weights, suitability/ranking fields, unexpected Condition IDs, and unexpected categories;
 - RP-A1 is enforced mechanically by restricting existing Rig `conditionTags[]` values to the frozen current 17-value legacy vocabulary without requiring every legacy value to remain present forever;
 - no runtime legacy-tag-to-Condition mapping table is created;
@@ -132,7 +132,7 @@ Conditions are user-facing contextual Reference Knowledge without requiring a st
 - when a Condition appears on an appropriate user-facing Rig, Recommendation, or other knowledge surface, it may open a lightweight informational popover using the established contextual-reference interaction pattern;
 - `CONDITION_DATA` is the single canonical source for Condition identity and explanatory text; referencing domains must not duplicate Condition definitions or popover copy;
 - references resolve by canonical Condition ID into `CONDITION_DATA`, then through one shared Condition-popover renderer;
-- the Foundation `summary` field is the initial popover content source; no additional `description`, `details`, or popover-specific field is added unless the authored 33-record set demonstrates that `summary` is insufficient;
+- the Foundation `summary` field is the initial popover content source; no additional `description`, `details`, or popover-specific field is added unless the authored 35-record set demonstrates that `summary` is insufficient;
 - the popover explains the Condition itself only and must not own Fish, Rig, Lure/Bait, or Technique suitability, ranking, or recommendation advice;
 - Condition references need not be interactive everywhere; enable the popover only where it improves understanding without creating UI clutter.
 
@@ -183,7 +183,7 @@ Any media-specific role or ordering semantics belong to Media or an explicitly j
 
 The Conditions Production Foundation must:
 
-1. implement `data/conditions.js` / `CONDITION_DATA` with the locked 33-record vocabulary and eight category literals;
+1. implement `data/conditions.js` / `CONDITION_DATA` with the locked 35-record vocabulary and eight category literals;
 2. implement and validate the minimal Foundation + `category` schema;
 3. preserve RP-A1: freeze existing Rig `conditionTags[]`, add no new values, create no Rig↔Condition relationship or `conditionIds[]`, and carry contextual suitability forward for later Recommendation Decision Knowledge migration;
 4. avoid blind string-to-ID migration and contextual Condition relationship arrays on Reference entities;
@@ -222,3 +222,39 @@ Required repair remains bounded by the locked Conditions contract:
 - keyboard/focus and narrow/mobile interaction must be verified in the repaired browser review.
 
 Subphase A data/schema remains targeted PASS. The RP-A4 repair is staged, but the user-facing presentation checkpoint remains **RUNTIME RE-REVIEW REQUIRED** until browser validation passes.
+
+
+# Second Runtime Review / Reconciliation Gate — 2026-08-29
+
+The second browser review confirmed that Condition contextual help is still not complete enough for acceptance. New findings supersede the narrower first-review presentation defect:
+
+- the Condition popover can render too low on the page; its presentation should anchor to a stable top/middle viewport location rather than depend on the source element's page depth;
+- **Light Cover** currently has no working popover;
+- Direct-Tie configuration Good Conditions require semantic validation per lure rather than assuming one repeated condition set is correct;
+- Fish should receive the same lightweight Condition-reference popover where a displayed label corresponds to canonical Condition knowledge;
+- a bounded reconciliation is required between canonical `CONDITION_DATA` and Condition-like labels currently present in both Rigs and Fish.
+
+Reconciliation rules:
+
+1. inventory current Rig `conditionTags[]` and Fish habitat/waterbody-facing labels used for contextual display;
+2. compare them to the exact 35 canonical Condition records and categories;
+3. identify exact canonical matches, legitimate presentation aliases/mappings, legacy-only labels, and labels with no valid canonical Condition;
+4. correct runtime labels/mappings only after semantic review;
+5. do **not** create Rig↔Condition or Fish↔Condition recommendation relationships from label similarity; Fish-owned habitat/waterbody facts and transitional Rig tags retain their existing owners;
+6. validator coverage should ensure every interactive Condition-reference control resolves to an active canonical Condition record.
+
+Subphase A remains data/schema targeted PASS, but the Conditions runtime/reference checkpoint is **OPEN / BLOCKING** until this reconciliation and browser re-review pass.
+
+
+# 2026-08-29/30 Pilot Vocabulary + Presentation Reconciliation
+
+The second runtime review demonstrated two missing reusable Cover / Structure labels and several presentation mismatches. Under the already-approved pilot-refinement allowance, the canonical registry expands from 33 to **35** Conditions by adding:
+
+- `light-cover` — **Light Cover**
+- `heavy-cover` — **Heavy Cover**
+
+Both remain flat Cover / Structure records. No hierarchy, recommendation weight, Rig `conditionIds[]`, Fish `conditionIds[]`, Rig↔Condition relationship, or Fish↔Condition relationship is introduced. `Sparse Cover` may resolve presentation help to Light Cover rather than creating another near-duplicate Condition.
+
+Presentation mapping is deliberately semantic rather than string-only. Fish labels such as Grass→Vegetation, Brush/Timber→Wood / Brush, Channel→Drop-off / Channel / Deep Structure, Shallow Water→Shallow, Deep Water→Deep, and the direct waterbody equivalents may open the shared Condition reference. `Cold Water`, generic `Current`, and `Mud` remain plain because mapping them to the current vocabulary would change meaning or invent specificity.
+
+The shared Condition/reference popover is also staged to center in the viewport, contain its own scrolling, lock the underlying page while open, and restore the prior page scroll position on close. Targeted syntax/data/static validation passes; browser re-review remains required.

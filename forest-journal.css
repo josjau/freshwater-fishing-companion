@@ -397,7 +397,8 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .reference-link__icon { color: var(--accent); }
 .reference-popover { width: min(calc(100% - 32px), 680px); max-height: min(86vh, 820px); margin: auto; padding: 0; overflow: hidden; border: 1px solid var(--border-strong); border-radius: var(--radius-large); background: var(--surface-elevated); box-shadow: 0 24px 70px rgba(0,0,0,.45); color: var(--text); }
 .reference-popover::backdrop { background: rgba(12,16,12,.72); backdrop-filter: blur(2px); }
-.reference-popover__shell { max-height: min(86vh, 820px); overflow-y: auto; }
+.reference-popover__shell { max-height: min(86vh, 820px); overflow-y: auto; overscroll-behavior: contain; }
+body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden; }
 .reference-popover__header { position: sticky; z-index: 2; top: 0; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3); padding: var(--space-4); border-bottom: 1px solid var(--border); background: var(--surface-elevated); }
 .reference-popover__header-main { min-width: 0; }
 .reference-popover__header h2 { margin-bottom: 0; font-size: 1.3rem; }
@@ -678,8 +679,8 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 
 @media (max-width: 639px) {
     .rig-configuration-control { grid-template-columns: 1fr; }
-    .reference-popover { width: 100%; max-width: none; max-height: 88vh; margin: auto 0 0; border-right: 0; border-bottom: 0; border-left: 0; border-radius: var(--radius-large) var(--radius-large) 0 0; }
-    .reference-popover__shell { max-height: 88vh; }
+    .reference-popover { width: calc(100% - 24px); max-width: 680px; max-height: 84vh; margin: auto; border: 1px solid var(--border-strong); border-radius: var(--radius-large); }
+    .reference-popover__shell { max-height: 84vh; }
 }
 
 @media (min-width: 640px) {

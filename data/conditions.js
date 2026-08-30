@@ -126,6 +126,24 @@ const CONDITION_DATA = Object.freeze([
         isActive: true
     },
     {
+        id: "light-cover",
+        name: "Light Cover",
+        category: "cover-structure",
+        summary: "Scattered or moderately open cover that gives fish concealment while still leaving room to work a lure through or around it.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "heavy-cover",
+        name: "Heavy Cover",
+        category: "cover-structure",
+        summary: "Dense vegetation, wood, brush, or other obstruction where lure movement is restricted and snag risk is high.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
         id: "vegetation",
         name: "Vegetation",
         category: "cover-structure",

@@ -746,8 +746,8 @@ function renderFishDetail(appMain, detailConfig) {
                 </ul>
             </section>
             <section class="detail-section rig-at-a-glance fish-at-a-glance">
-                <div class="rig-at-a-glance__group"><h3>Common Habitat</h3>${buildTagList(record.habitatTags)}</div>
-                <div class="rig-at-a-glance__group"><h3>Common Waters</h3>${buildTagList(record.waterbodyTypes)}</div>
+                <div class="rig-at-a-glance__group"><h3>Common Habitat</h3>${buildFishConditionTagList(record.habitatTags)}</div>
+                <div class="rig-at-a-glance__group"><h3>Common Waters</h3>${buildFishConditionTagList(record.waterbodyTypes)}</div>
             </section>
             ${specializedTargetingMarkup}
             ${rigMarkup}
@@ -762,6 +762,7 @@ function renderFishDetail(appMain, detailConfig) {
     appMain.querySelectorAll("[data-fish-rig-id]").forEach((button) => {
         button.addEventListener("click", () => detailConfig.onRigSelect?.(button.dataset.fishRigId, button.dataset.fishLureBaitId ?? null));
     });
+    initializeConditionLinks(appMain);
 }
 
 function renderFishComparisonCatalog(appMain, config) {
@@ -1400,6 +1401,24 @@ function formatConditionCategory(category) {
     return labels[category] || category;
 }
 
+let referencePopoverScrollY = null;
+
+function lockReferencePopoverBackground() {
+    if (document.body.classList.contains("reference-popover-open")) return;
+    referencePopoverScrollY = window.scrollY;
+    document.body.style.top = `-${referencePopoverScrollY}px`;
+    document.body.classList.add("reference-popover-open");
+}
+
+function unlockReferencePopoverBackground() {
+    if (!document.body.classList.contains("reference-popover-open")) return;
+    const restoreY = referencePopoverScrollY ?? 0;
+    document.body.classList.remove("reference-popover-open");
+    document.body.style.top = "";
+    referencePopoverScrollY = null;
+    window.scrollTo(0, restoreY);
+}
+
 function renderConditionPopover(conditionId, triggerElement) {
     if (typeof CONDITION_DATA === "undefined") {
         console.error("Condition reference data is not available.");
@@ -1444,10 +1463,12 @@ function renderConditionPopover(conditionId, triggerElement) {
     });
     dialog.addEventListener("close", () => {
         dialog.remove();
+        unlockReferencePopoverBackground();
         triggerElement?.focus();
     });
 
     document.body.append(dialog);
+    lockReferencePopoverBackground();
     dialog.showModal();
 }
 
@@ -1518,10 +1539,12 @@ function renderLureBaitReferencePopover(lureBaitId, triggerElement, requirement 
     });
     dialog.addEventListener("close", () => {
         dialog.remove();
+        unlockReferencePopoverBackground();
         triggerElement?.focus();
     });
 
     document.body.append(dialog);
+    lockReferencePopoverBackground();
     dialog.showModal();
 }
 
@@ -1678,11 +1701,13 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
     });
     dialog.addEventListener("close", () => {
         dialog.remove();
+        unlockReferencePopoverBackground();
         if (!isNavigatingAway) triggerElement?.focus();
     });
 
     document.body.append(dialog);
     renderReferenceContent(referenceId, false);
+    lockReferencePopoverBackground();
     dialog.showModal();
 }
 
@@ -1765,6 +1790,9 @@ const RIG_CONDITION_REFERENCE_IDS = Object.freeze({
     "Clear Water": "water-clarity-clear",
     "Deep Water": "deep",
     "Docks": "cover-dock-man-made",
+    "Heavy Cover": "heavy-cover",
+    "Light Cover": "light-cover",
+    "Sparse Cover": "light-cover",
     "Light Current": "current-light",
     "Open Water": "open-water",
     "Rock": "rock",
@@ -1773,13 +1801,37 @@ const RIG_CONDITION_REFERENCE_IDS = Object.freeze({
     "Vegetation": "vegetation"
 });
 
-function buildConditionTagList(items) {
+const FISH_CONDITION_REFERENCE_IDS = Object.freeze({
+    "Brush": "wood-brush",
+    "Channel": "drop-off-channel-deep-structure",
+    "Deep Water": "deep",
+    "Grass": "vegetation",
+    "Open Water": "open-water",
+    "Rock": "rock",
+    "Shallow Water": "shallow",
+    "Timber": "wood-brush",
+    "Pond": "pond",
+    "Lake": "lake",
+    "Reservoir": "reservoir",
+    "River": "river",
+    "Creek": "creek-stream"
+});
+
+function buildMappedConditionTagList(items, referenceIds) {
     if (!Array.isArray(items) || items.length === 0) return "";
     return `<ul class="tag-list tag-list--conditions">${items.map((item) => {
-        const conditionId = RIG_CONDITION_REFERENCE_IDS[item];
+        const conditionId = referenceIds[item];
         if (!conditionId) return `<li>${item}</li>`;
         return `<li><button class="condition-tag-button" type="button" data-condition-id="${conditionId}" aria-label="Learn about ${item}">${item}</button></li>`;
     }).join("")}</ul>`;
+}
+
+function buildConditionTagList(items) {
+    return buildMappedConditionTagList(items, RIG_CONDITION_REFERENCE_IDS);
+}
+
+function buildFishConditionTagList(items) {
+    return buildMappedConditionTagList(items, FISH_CONDITION_REFERENCE_IDS);
 }
 
 function renderInstructionDetail(appMain, detailConfig) {
@@ -1797,6 +1849,8 @@ function renderInstructionDetail(appMain, detailConfig) {
     const effectiveRecord = selectedConfiguration
         ? {
             ...record,
+            useCases: selectedConfiguration.useCases ?? record.useCases,
+            conditionTags: selectedConfiguration.conditionTags ?? record.conditionTags,
             referenceLinks: selectedConfiguration.referenceLinks,
             componentRequirements: selectedConfiguration.componentRequirements,
             lureBaitRequirements: selectedConfiguration.lureBaitRequirements,

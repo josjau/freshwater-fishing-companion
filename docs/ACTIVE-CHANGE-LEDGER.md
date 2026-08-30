@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.6  
+**Document Revision:** 1.10.9  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `301acd22cc016a1a94d87504bcc785fcada7506c`  
-**Last Updated:** 2026-08-28
+**Reconciliation Baseline:** `38a974ce00560ac575ef0ebb9b706510d549b43c`  
+**Last Updated:** 2026-08-29
 
 # Purpose
 
@@ -68,9 +68,9 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 
 | ID | Status | Item | Trigger / owner |
 |---|---|---|---|
-| GATE-001 | BLOCKED — B RUNTIME RE-REVIEW PENDING | Technique domain + intrinsic compatibility participation | The 2026-08-28 Subphase B browser review failed. The bounded repair is now staged and targeted static/data checks pass. Do not begin C until the repaired runtime re-review passes. YouTube playback must be validated from a served/GitHub environment because local-file playback also fails for existing committed tutorials. After PASS, implement RP-C1–RP-C4. Canonical owners: D003/D024/D056/D069 + `data-model/03A-TECHNIQUES.md` / `09-RELATIONSHIPS.md`. |
-| GATE-002 | REQUIRED / BLOCKED ON B RUNTIME RE-REVIEW | Recommendation Prerequisites Foundation | Production is active. Subphase A data/static checks remain targeted PASS but Good Conditions runtime presentation failed. Subphase B repair is staged in Drive Current and targeted data/static validation passes; the second browser/runtime review is now the active gate. Subphase C remains blocked until repaired browser review passes. Full Repository Integrity/final combined review/commit/CI remain pending. Umbrella owner: `workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md` + D069. |
-| GATE-003 | BLOCKED — REPAIR STAGED / RUNTIME RE-REVIEW PENDING | Lure/Bait Reference domain | The 2026-08-28 browser review failed; those bounded repairs are now staged in Drive Current and targeted static/data checks pass: required Lure/Bait uses the established checkbox/Missing-count/`ⓘ` component grammar; primary lure media moved into the popover; Paddle-tail Swimbait and Tube recognition Media added; tie locations expanded; Direct-Tie selector refined; Core cards alphabetized; Good Conditions contextual controls repaired. Local YouTube errors are not yet a source defect because existing committed tutorials fail from the local copy but load from GitHub; revalidate on a served build. Jerkbait/Spoon tutorial selection remains open while the user researches videos. Fish→Direct-Tie Inline Spinner navigation passed and must be preserved. Full Repository Integrity/final combined closeout remains pending. |
+| GATE-001 | BLOCKED — B FOLLOW-UP REPAIR / RUNTIME RE-REVIEW PENDING | Technique domain + intrinsic compatibility participation | The second B browser review is PARTIAL PASS. Conditions/Direct-Tie/Fish/popover follow-up repair is staged and targeted PASS; served tutorial playback mechanism is confirmed. Tube Jig tutorial replacement is implemented using the user-preferred Arcasting video `FqlK7rqk5E4`. Do not begin C until the repaired runtime re-review passes. After PASS, implement RP-C1–RP-C4. Canonical owners: D003/D024/D056/D069 + `data-model/03A-TECHNIQUES.md` / `09-RELATIONSHIPS.md`. |
+| GATE-002 | REQUIRED / BLOCKED ON B RUNTIME RE-REVIEW | Recommendation Prerequisites Foundation | Production is active on committed baseline `38a974ce`. The follow-up Conditions pilot now stages 35 canonical records, Direct-Tie configuration-specific Best For/Good Conditions, Fish Condition reference presentation, Light/Heavy Cover support, validated Beginner+ placement for the two new Rigs, and shared popover scroll containment/centering. Targeted checks pass. Tube Jig tutorial replacement is complete; browser re-review remains before C. Full Repository Integrity/final combined closeout remain pending. Umbrella owner: `workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md` + D069. |
+| GATE-003 | BLOCKED — FOLLOW-UP REPAIR STAGED / RUNTIME RE-REVIEW PENDING | Lure/Bait Reference domain | The second browser review accepted the repaired Lure/Bait component UI and all seven affected Rig presentations. Follow-up staging now differentiates Direct-Tie Best For/Good Conditions per lure and repairs shared popover behavior. Served GitHub playback confirms embeds work; the Tube Jig tutorial content defect is repaired with the user-preferred Arcasting physical-rigging tutorial (`FqlK7rqk5E4`). Fish→Direct-Tie Inline Spinner remains a preserve target. Full Repository Integrity/final combined closeout remains pending. |
 | GATE-004 | BLOCKED | What Should I Throw production | Phase 0 planning complete under D069; resume recommendation engine/UX only after Recommendation Prerequisites Foundation (Conditions → Lure/Bait → Techniques/Compatibility) → User Data → scoped My Tackle Availability gates. |
 | GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Later roadmap milestone after the recommendation prerequisite path unless a direct dependency is demonstrated. |
 | GATE-006 | REQUIRED | Settings / User Data Architecture | After Recommendation Prerequisites Foundation and before authoritative My Tackle; settle user/profile identity, retention, persistence, migration, backup/restore, device transfer, preference ownership, and ownership-vs-current-availability semantics under D067/D069. |
@@ -114,3 +114,20 @@ These items are not current blockers and must not be promoted merely because the
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
 | RP-B-RUNTIME-001 | BLOCKED / REPAIR STAGED — RE-REVIEW REQUIRED | Subphase B user runtime review defects | `workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md`, `data-model/03-RIGS.md`, `03C-LURES-BAIT.md`, `03B-CONDITIONS.md` | Bounded repair staged 2026-08-29; targeted static/data validation PASS. Run the second browser review and do not start C before runtime PASS. |
+
+
+## Recommendation Prerequisites Foundation — Second Runtime Review Carry-Forward (2026-08-29)
+
+Status: **OPEN / BLOCKING SUBPHASE C**.
+
+Second browser review accepted the refined Direct-Tie selector and reported Inline Spinner, Spinnerbait, Crankbait, Jerkbait, Spoon, Weighted Swimbait Hook Rig, and Tube Jig Rig as looking good. The bounded follow-up repair is now **STAGED / TARGETED PASS**:
+
+- Rig **Best For** labels are tightened for Direct-Tie configurations and the two new Rigs;
+- Direct-Tie Good Conditions are configuration-specific rather than repeated;
+- canonical Light Cover and Heavy Cover were added within the approved Cover / Structure category, bringing Conditions to 35 records;
+- supported Fish habitat/waterbody labels now open the shared Condition reference without creating Fish↔Condition relationships; ambiguous/non-equivalent Fish labels remain plain;
+- Condition/reference popovers now center in the viewport, contain their own scrolling, lock the underlying page, and restore the prior page position on close;
+- Weighted Swimbait Hook Rig and Tube Jig Rig were validated and remain **Beginner+**;
+- served GitHub playback confirms the current Weighted Swimbait Hook and Tube Jig embeds load;
+- **Tube Jig tutorial content is REPAIRED** with *How to use a tube jig* by Arcasting (`FqlK7rqk5E4`), selected by the user as the preferred generic physical-rigging tutorial;
+- preserve passing Direct-Tie/Fish navigation and accepted Rig presentations.

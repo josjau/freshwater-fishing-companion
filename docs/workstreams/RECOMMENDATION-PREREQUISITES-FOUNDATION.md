@@ -1,8 +1,8 @@
 # Freshwater Fishing Companion — Recommendation Prerequisites Foundation
 
 **Document:** workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md  
-**Document Status:** Approved — Production Active / A Repair Staged / B Repair Staged + Targeted PASS / Runtime Re-review Pending / Subphase C Blocked  
-**GitHub Baseline:** `301acd22cc016a1a94d87504bcc785fcada7506c` (`Delete SHA256SUMS.txt`; housekeeping only)  
+**Document Status:** Approved — Production Active / Bounded Follow-up Repair Staged + Targeted PASS / Runtime Re-review Pending / Subphase C Blocked  
+**GitHub Baseline:** `38a974ce00560ac575ef0ebb9b706510d549b43c` (`Conditions - Lure/Bait Review`)  
 **Decision Baseline:** D003, D004, D024, D056, D069  
 **Planning Locks:** RP-A1–RP-A4, RP-B1, RP-B2A–RP-B2D, B-01–B-13, RP-C1–RP-C4  
 **Created:** 2026-08-27  
@@ -31,7 +31,7 @@ RP-A1 through RP-A4 are locked.
 - Production source: `data/conditions.js` / `CONDITION_DATA`.
 - Schema: Foundation fields plus `category` only.
 - Categories: `waterbody`, `access-position`, `depth-zone`, `cover-structure`, `water-clarity`, `current`, `season`, `light-sky`.
-- V1 scope: 33 canonical Conditions using lowercase kebab-case IDs; category-qualified IDs are used where ambiguity requires them.
+- Current pilot scope: 35 canonical Conditions using lowercase kebab-case IDs; category-qualified IDs are used where ambiguity requires them. The approved pilot refinement adds Light Cover and Heavy Cover under Cover / Structure without changing the flat model or category set.
 - No hierarchy, `sortOrder`, recommendation weights, suitability arrays, or cross-domain recommendation fields.
 - Existing Rig `conditionTags[]` is frozen to the current 17-value legacy vocabulary and temporarily retained for current Rig Search / Good Conditions behavior.
 - No Rig `conditionIds[]`, Rig↔Condition relationship, or runtime legacy-tag mapping is created.
@@ -39,7 +39,7 @@ RP-A1 through RP-A4 are locked.
 - No standalone Conditions dashboard card, route, browse/detail page, or search surface.
 - User-facing Condition explanation uses one shared lightweight contextual popover resolved from canonical `CONDITION_DATA`; Foundation `summary` supplies initial copy and must not contain recommendation advice.
 
-**Checkpoint:** Drive Current now contains the approved 33-record implementation, normal script loading, frozen legacy-tag enforcement, deterministic validator coverage, and shared Condition popover infrastructure. Targeted validation is PASS. Full Repository Integrity and final combined review/commit/CI remain pending and are intentionally deferred to the bounded Foundation closeout unless a real integration blocker requires an earlier gate.
+**Checkpoint:** GitHub `38a974ce` contains the initial Conditions/Lure-Bait review baseline. Drive Current stages the approved pilot refinement to 35 Conditions by adding Light Cover and Heavy Cover under Cover / Structure, plus presentation-only Fish/Rig mappings and shared popover containment/placement repair. Targeted syntax/data/static validation is PASS. Full Repository Integrity and final combined review/commit/CI remain pending.
 
 # Subphase B — Lure/Bait Reference — REPAIR STAGED / TARGETED DATA + STATIC PASS / RUNTIME RE-REVIEW PENDING
 
@@ -105,7 +105,7 @@ Semantic rule: **Rig tells how assembled → Tackle identifies required physical
 - **B-12 Nightcrawler:** intrinsic compatibility with Fixed Bobber Rig, Slip Bobber Rig, Basic Bottom Rig, Live-Bait Slip-Sinker Rig, Three-Way Rig, Bottom-Bouncer / Spinner Rig, and Split-Shot Bait Rig.
 - **B-13 Cricket:** intrinsic compatibility with Fixed Bobber Rig, Slip Bobber Rig, Basic Bottom Rig, and Split-Shot Bait Rig only.
 
-**Checkpoint:** Drive Current now stages the repaired Subphase B candidate. Targeted static/data checks PASS for exact 13 Lure/Bait / 31 Tackle / 23 Rig counts, 31/31 Tackle recognition coverage, and 7/7 required Rig-facing Lure/Bait recognition-media records. Required Lure/Bait uses the existing checkbox/Missing-count/`ⓘ` component grammar; recognition imagery is contained in the contextual popover rather than a full-width Rig image; user-approved Paddle-tail Swimbait and Tube recognition Media are added; beginner tie-point instructions are expanded; the Direct-Tie selector is visually refined; and Core Rig cards are alphabetized. The Good Conditions runtime repair exposes supported frozen legacy tags as presentation-only controls that open canonical `CONDITION_DATA` popovers without creating `conditionIds[]` or Rig↔Condition relationships. Local YouTube playback remains outside acceptance; tutorial playback must be revalidated from a served/GitHub build. Jerkbait and Spoon tutorial selection remains open. Fish→Direct-Tie Inline Spinner navigation must be preserved. Typed Compatibility remains deferred to Subphase C, which is blocked until the second browser checkpoint passes.
+**Checkpoint:** The initial repaired B candidate is committed on GitHub `38a974ce`; the second runtime review is PARTIAL PASS. Drive Current now stages the bounded follow-up: Direct-Tie configurations own concise configuration-specific Best For/Good Conditions presentation values, Light/Heavy Cover canonical reference support is present, supported Fish labels open shared Condition references, Weighted Swimbait Hook Rig and Tube Jig Rig remain Beginner+, and shared reference popovers lock the background page and center/scroll independently. Targeted syntax/data/static checks PASS. Served GitHub playback confirms the embed path works. The Tube Jig tutorial is now replaced with the user-preferred generic physical-rigging tutorial *How to use a tube jig* by Arcasting (`FqlK7rqk5E4`). Fish→Direct-Tie Inline Spinner navigation remains a preserve target. Typed Compatibility remains deferred to Subphase C, which is blocked until the next browser checkpoint passes.
 
 # Subphase C — Techniques / Compatibility — LOCKED / BLOCKED PENDING B RUNTIME REVIEW
 
@@ -257,3 +257,21 @@ The first user browser review of the staged A+B candidate is **FAIL**. This bloc
 ## Revalidation gate
 
 After repair: run targeted data/static validation, verify alphabetized Core ordering and established component/readiness behavior deterministically, then repeat user browser checks for all five Direct-Tie configurations, both new Rigs, served-environment tutorial behavior, Lure/Bait/Tackle popovers, Fish configured-link navigation, Good Conditions popovers, and narrow/mobile/keyboard/focus behavior. C remains blocked until PASS.
+
+
+# Second Runtime Review — 2026-08-29 — PARTIAL PASS / FOLLOW-UP REPAIR STAGED
+
+Accepted: refined Direct-Tie selector; Inline Spinner, Spinnerbait, Crankbait, Jerkbait, Spoon, Weighted Swimbait Hook Rig, and Tube Jig Rig presentations; Fish→configured Inline Spinner navigation.
+
+The resulting bounded follow-up is now staged and targeted PASS:
+
+1. **Best For:** Direct-Tie configuration and new-Rig copy is concise/high-signal.
+2. **Good Conditions:** each Direct-Tie lure has its own validated presentation set rather than inheriting one repeated list.
+3. **Conditions vocabulary:** pilot scope expands from 33 to **35** records by adding Light Cover and Heavy Cover under Cover / Structure. This does not change the flat model/category set or create suitability relationships.
+4. **Fish references:** genuine Fish habitat/waterbody equivalents open the shared Condition popover; Cold Water, generic Current, and Mud remain plain because no safe canonical equivalence exists.
+5. **Popover behavior:** shared Condition/Tackle/Lure-Bait reference popovers center in the viewport, contain wheel/touch scrolling, lock background-page scrolling, and restore the prior page position on close.
+6. **Difficulty:** Weighted Swimbait Hook Rig and Tube Jig Rig remain Beginner+ after validation.
+7. **Tutorial playback:** served GitHub playback confirms current Weighted Swimbait Hook and Tube Jig videos load; local `file://` errors were environmental.
+8. **Tube Jig tutorial content:** REPAIRED. The user selected *How to use a tube jig* by Arcasting (`FqlK7rqk5E4`) as the preferred generic physical-rigging tutorial.
+
+**Gate:** Subphase C remains BLOCKED until this staged follow-up passes browser review.

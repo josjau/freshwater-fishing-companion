@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.4.5  
+**Document Revision:** 0.4.8  
 **Document Status:** Approved  
-**Implementation Status:** GitHub main validated — 21 Rigs / Drive Current staged — 23 Rigs / Subphase B repair staged + targeted PASS / runtime re-review pending  
+**Implementation Status:** GitHub `38a974ce` review baseline — 23 Rigs / second runtime review PARTIAL PASS / bounded follow-up staged + targeted PASS / runtime re-review pending  
 **Decision Baseline:** D024, D025, D026, D027, D028, D042-D049, D056, D057, D065
 
 ---
@@ -337,3 +337,22 @@ The staged 23-Rig candidate did **not** pass user runtime review. The following 
 - Fish-to-Rig configured guidance opening Direct-Tie with Inline Spinner selected passed runtime review and must be preserved.
 
 The repairs are staged; Subphase C remains blocked until the second browser review passes.
+
+
+# Second Runtime Review Requirements — 2026-08-29
+
+- Direct-Tie selector refinement is accepted.
+- Inline Spinner, Spinnerbait, Crankbait, Jerkbait, Spoon, Weighted Swimbait Hook Rig, and Tube Jig Rig were reported as looking good in the second review; preserve these accepted presentations while making the bounded remaining repairs.
+- Review all Rig **Best For** values for concise, differentiated descriptors. Best For should communicate the main use case quickly; avoid verbose sentence fragments and near-duplicate phrasing.
+- Direct-Tie Good Conditions must be validated per lure configuration. The five configurations may share Conditions only where the fishing use genuinely overlaps; no implementation-level copy-forward assumption is allowed.
+- Validate `difficulty` / Difficulty-group placement for Weighted Swimbait Hook Rig, Tube Jig Rig, Direct-Tie Lure Setup, and any other Rig materially changed by this subphase against the established category criteria before next acceptance.
+- Condition contextual help is a shared reference interaction; fixes to placement/coverage must not alter the locked boundary that Rig `conditionTags[]` remains transitional and does not become a Rig↔Condition relationship.
+
+
+# 2026-08-29/30 Subphase B Follow-up
+
+Direct-Tie Lure Setup retains one canonical Rig with five lure-specific configurations. For user-facing Rig Detail, each configuration may additionally own **presentation-only** `useCases[]` (Best For) and `conditionTags[]` (Good Conditions) so the page does not falsely repeat one shared use envelope across materially different lures. These fields do not create recommendation ranking or Rig↔Condition relationships; they remain transitional Rig presentation data under the existing RP-B2C configuration boundary.
+
+The five Direct-Tie configurations now have distinct concise Best For and Good Conditions sets. Weighted Swimbait Hook Rig and Tube Jig Rig were re-evaluated against the existing difficulty tiers and remain **Beginner+**. Tube Jig's generic `Current` presentation label is narrowed to **Light Current**.
+
+Shared reference popovers are staged to lock background scrolling, contain internal wheel/touch scrolling, center in the viewport, and restore the prior page position on close. Served GitHub review confirms the tutorial embed path works. The **Tube Jig** tutorial is now *How to use a tube jig* by Arcasting (`FqlK7rqk5E4`), selected by the user as the preferred generic physical internal-jighead rigging tutorial.

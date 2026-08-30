@@ -959,7 +959,7 @@ function validateConditionsData(conditions, rigs) {
         ["waterbody", ["pond", "lake", "reservoir", "river", "creek-stream"]],
         ["access-position", ["bank", "access-dock", "boat", "kayak"]],
         ["depth-zone", ["shallow", "mid-depth", "deep"]],
-        ["cover-structure", ["open-water", "vegetation", "wood-brush", "rock", "cover-dock-man-made", "drop-off-channel-deep-structure"]],
+        ["cover-structure", ["open-water", "light-cover", "heavy-cover", "vegetation", "wood-brush", "rock", "cover-dock-man-made", "drop-off-channel-deep-structure"]],
         ["water-clarity", ["water-clarity-clear", "water-clarity-stained", "water-clarity-muddy"]],
         ["current", ["current-none", "current-light", "current-moderate", "current-strong"]],
         ["season", ["spring", "summer", "fall", "winter"]],
@@ -968,8 +968,8 @@ function validateConditionsData(conditions, rigs) {
     const expectedIds = new Set([...expectedByCategory.values()].flat());
     const expectedFields = ["id", "name", "category", "summary", "createdVersion", "lastModifiedVersion", "isActive"];
 
-    if (conditions.length !== 33) {
-        fail("Condition registry", `expected exactly 33 records; found ${conditions.length}`);
+    if (conditions.length !== 35) {
+        fail("Condition registry", `expected exactly 35 records; found ${conditions.length}`);
     }
 
     const seenByCategory = new Map([...expectedByCategory.keys()].map((category) => [category, new Set()]));
@@ -1137,13 +1137,13 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
             if (typeof tutorial.externalUrl === "string" && !tutorial.externalUrl.includes(tutorial.videoId)) fail("Rig tutorial coverage", `${label}: externalUrl must identify the approved videoId`);
         };
         for (const config of configs) {
-            const configFields = ["id", "name", "lureBaitId", "referenceLinks", "tutorialVideo", "componentRequirements", "lureBaitRequirements", "knotApplications", "assemblySteps", "setupNotes", "commonMistakes"];
+            const configFields = ["id", "name", "lureBaitId", "referenceLinks", "tutorialVideo", "useCases", "conditionTags", "componentRequirements", "lureBaitRequirements", "knotApplications", "assemblySteps", "setupNotes", "commonMistakes"];
             validateExactFieldOrder(config, configFields, `Direct-Tie configuration ${config?.id}`);
             if (config.lureBaitId !== config.id || lureById.get(config.lureBaitId)?.isActive !== true) fail("Direct-Tie Rig migration", `${config?.id}: configuration must resolve its matching active Lure/Bait identity`);
             validateTackleRequirements(config.componentRequirements, `Direct-Tie ${config.id}`);
             validateLureRequirements(config.lureBaitRequirements, `Direct-Tie ${config.id}`);
             validateKnotApplications(config.knotApplications, `Direct-Tie ${config.id}`);
-            for (const field of ["assemblySteps", "setupNotes", "commonMistakes"]) validateTextArray(config[field], `Direct-Tie ${config.id} ${field}`);
+            for (const field of ["useCases", "conditionTags", "assemblySteps", "setupNotes", "commonMistakes"]) validateTextArray(config[field], `Direct-Tie ${config.id} ${field}`);
             if (Object.prototype.hasOwnProperty.call(expectedTutorialVideoIds, config.id)) {
                 validateTutorialVideo(config.tutorialVideo, `Direct-Tie ${config.id}`, expectedTutorialVideoIds[config.id]);
             } else if (fallbackOnlyIds.has(config.id)) {
@@ -1152,7 +1152,7 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
             }
         }
         validateTutorialVideo(rigById.get("weighted-swimbait-hook-rig")?.tutorialVideo, "Weighted Swimbait Hook Rig", "32Fw4vimHWQ");
-        validateTutorialVideo(rigById.get("tube-jig-rig")?.tutorialVideo, "Tube Jig Rig", "sHUJxiW7Ags");
+        validateTutorialVideo(rigById.get("tube-jig-rig")?.tutorialVideo, "Tube Jig Rig", "FqlK7rqk5E4");
     }
 
     const configuredGuidance = [];
