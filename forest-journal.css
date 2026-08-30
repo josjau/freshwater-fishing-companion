@@ -334,7 +334,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     border-top: 1px solid var(--border);
 }
 .detail-view--rig-compact .tag-list { gap: var(--space-1) var(--space-2); }
-.detail-view--rig-compact .tag-list li { padding: 4px 8px; font-size: .86rem; }
+.detail-view--rig-compact .tag-list li { display: inline-flex; min-height: 32px; align-items: center; padding: 3px 8px; font-size: .86rem; }
 .detail-view--rig-compact .detail-list li,
 .detail-view--rig-compact .detail-steps li { margin-bottom: var(--space-2); }
 .detail-view--rig-compact .detail-section--supporting { padding-block: var(--space-3); }
@@ -478,12 +478,18 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
     pointer-events: none;
 }
 
-.tag-list--conditions li { padding: 0; overflow: hidden; }
+.tag-list--conditions li {
+    padding: 0;
+    overflow: hidden;
+    border-color: color-mix(in srgb, var(--accent) 58%, var(--border));
+    background: var(--accent-soft);
+    color: var(--text);
+}
 .condition-tag-button {
     display: inline-flex;
     min-height: 32px;
     align-items: center;
-    padding: 3px 9px;
+    padding: 3px 8px;
     border: 0;
     background: transparent;
     color: inherit;
