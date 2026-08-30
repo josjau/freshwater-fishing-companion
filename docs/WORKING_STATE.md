@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.17.18  
+**Document Revision:** 1.17.19  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** What Should I Throw Phase 0 — PLANNING COMPLETE / PRODUCTION DEFERRED; Recommendation Prerequisites Foundation — PRODUCTION ACTIVE / SUBPHASE C IMPLEMENTED / USER RUNTIME PASS / PRE-COMMIT VALIDATION PENDING  
+**Workstream Status:** What Should I Throw Phase 0 — PLANNING COMPLETE / PRODUCTION DEFERRED; Recommendation Prerequisites Foundation — CLOSED / PASS; Settings / User Data Architecture — NEXT  
 **Cleanup Implementation Commit:** `0ea6420f2ac203281c5bab33b96ab5fcc6409947`  
 **Last Updated:** 2026-08-30
 
@@ -59,7 +59,7 @@ The four approved Regulations maintenance link corrections are implemented on Gi
 
 **What Should I Throw Phase 0 planning is COMPLETE / PRODUCTION DEFERRED.** D069 owns the locked product/output/input/prerequisite contract. Conditions, Lure/Bait, Technique, and typed intrinsic Compatibility Relationship boundaries remain distinct approved domains, but their production work is now grouped into one active **Recommendation Prerequisites Foundation** workstream with gated subphases in the preserved order Conditions → Lure/Bait Reference → Techniques/Compatibility. Settings / User Data Architecture, scoped My Tackle Availability Foundation, and What Should I Throw recommendation production remain subsequent separate milestones. Full Tackle Reference / Find Tackle, Catch Log, Global Search, and Favorites remain later unless a direct dependency is demonstrated.
 
-Recommendation Prerequisites Foundation production is **ACTIVE** on GitHub main `3b5e77f0772b306977edb0252d5f9004069318f7` (`Lure/Bait UX fixes`). Subphase B is **PASS / committed / CI-PASS** with Repository Integrity #104 and GitHub Pages #592 passing. Subphase C planning/build closeout, implementation, targeted validation, and representative runtime/browser review are **PASS**. Drive Current contains the exact 16-Technique production dataset and exactly 177 Compatibility relationships (54 Rig↔Lure/Bait, 69 Rig↔Technique, 54 Lure/Bait↔Technique), plus the approved Direct-Tie configuration-aware Technique intersection repair. The remaining pre-commit gates are full local Repository Integrity and exact changed-file diff/scope review. The separate Version 1 Design Audit carries the cross-Rig **Knots You'll Tie** attachment/application consistency item, the site-wide knowledge-card element standardization pass, and the non-blocking Technique-chip layout refinement.
+Recommendation Prerequisites Foundation is **CLOSED / PASS** on GitHub main `cdf8f408011c5137d0351cec9f350d0a6eee66c2` (`Techniques to Rig - Final`). Conditions, Lure/Bait Reference, and Techniques/Compatibility are complete for the approved Foundation scope. Subphase C landed the exact 16-Technique production dataset and exactly 177 Compatibility relationships (54 Rig↔Lure/Bait, 69 Rig↔Technique, 54 Lure/Bait↔Technique), including the approved Direct-Tie configuration-aware Technique intersection. Local Repository Integrity passed on the final 12-file closeout state; committed scope matched exactly; Repository Integrity #105 and GitHub Pages #593 passed. The separate Version 1 Design Audit retains the cross-Rig **Knots You'll Tie** attachment/application consistency item, the site-wide knowledge-card element standardization pass, and the non-blocking Technique-chip layout refinement.
 
 # Open Cross-Domain Carry-Forward
 
@@ -70,13 +70,12 @@ Recommendation Prerequisites Foundation production is **ACTIVE** on GitHub main 
 
 # Exact Resume Point
 
-1. GitHub `main` is authoritative at `3b5e77f0772b306977edb0252d5f9004069318f7` (`Lure/Bait UX fixes`), parent `577fdb0f9b86990ede1258ae526de59d663cbf82`. Repository Integrity #104 and GitHub Pages #592 passed.
-2. What Should I Throw Phase 0 is **PLANNING COMPLETE / PRODUCTION DEFERRED / CLOSED-PASS** under D069.
-3. Recommendation Prerequisites Foundation Subphase A and Subphase B are complete for their approved current scope; Subphase B is committed/CI-PASS.
-4. Subphase C C1–C3 planning, planning-to-build documentation closeout, implementation, targeted validation, and representative browser review are **PASS**.
-5. `03A-TECHNIQUES.md` owns the exact 16-Technique production content. `09-RELATIONSHIPS.md` owns the exact 54 Rig↔Lure/Bait, 69 Rig↔Technique, and 54 Lure/Bait↔Technique scopes, for exactly 177 Compatibility relationships.
-6. The approved source/runtime implementation scope is exactly: new `data/techniques.js`, new `data/compatibility.js`, plus `index.html`, `view-renderer.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`. Direct-Tie display now intersects its Rig↔Technique set with the selected Lure/Bait↔Technique set; the relationship registry itself remains unchanged.
-7. **Exact resume:** run full local Repository Integrity and exact local changed-file diff/scope review against GitHub baseline `3b5e77f0772b306977edb0252d5f9004069318f7`. Do not commit/push until both gates PASS.
+1. GitHub `main` is authoritative at `cdf8f408011c5137d0351cec9f350d0a6eee66c2` (`Techniques to Rig - Final`), parent `3b5e77f0772b306977edb0252d5f9004069318f7`. Repository Integrity #105 and GitHub Pages #593 passed.
+2. What Should I Throw Phase 0 remains **PLANNING COMPLETE / PRODUCTION DEFERRED / CLOSED-PASS** under D069.
+3. Recommendation Prerequisites Foundation is **CLOSED / PASS**. Conditions, Lure/Bait Reference, and Techniques/Compatibility are implemented, reviewed, committed, and CI-PASS.
+4. Technique production remains exactly 16 records. Compatibility remains exactly 177 relationships: 54 Rig↔Lure/Bait, 69 Rig↔Technique, and 54 Lure/Bait↔Technique. Direct-Tie displays the valid per-configuration Technique intersection without changing the canonical Rig-level union.
+5. The Version 1 Design Audit retains the non-blocking Technique-chip formatting/layout refinement plus the broader knowledge-card standardization and Knots You'll Tie consistency items.
+6. **Exact resume:** begin the **Settings / User Data Architecture** gate under D067/D069. Do not reopen Recommendation Prerequisites Foundation unless a regression or new approved dependency requires it.
 
 # Subphase B Runtime Review — 2026-08-28 — FAIL
 
