@@ -1,15 +1,15 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 2.1.0  
+**Document Revision:** 2.3.0  
 **Document Status:** Approved  
 **Role:** Compact canonical workflow entrypoint  
 **Decision Baseline:** D014, D038-D041, D055, D068  
-**Last Updated:** 2026-08-26
+**Last Updated:** 2026-08-30
 
 # Purpose
 
-This file is the canonical entrypoint for Freshwater Fishing Companion workflow rules. It owns authority, startup/preflight, review-cycle identity, invalidation rules, and universal change control. Detailed task procedures live in the three files under `docs/workflow/`.
+This file is the canonical entrypoint for Freshwater Fishing Companion workflow rules. It owns authority, startup/preflight, review-cycle identity, invalidation rules, and universal change control. Detailed task procedures live in the two files under `docs/workflow/`.
 
 # Supported Execution Environment
 
@@ -65,6 +65,8 @@ A checkpoint is complete only after the Live Working State write succeeds **and 
 
 Keep each checkpoint compact but sufficient to recover the cycle without chat reconstruction: active workstream/wave, GitHub baseline/landed SHA as applicable, Drive Current status, latest material approval/decision, validation/review state, open defects/risks, and exact next action.
 
+The Live Working State is a **current-state manifest, not an append-only event log**. Each material update must replace or compact superseded operational detail after durable facts are reconciled to their canonical owners. Do not preserve numbered historical checkpoint chains in Live Working State merely because they once controlled execution; landed history belongs in `CHANGELOG.md`/Git history, durable reasoning in decision/domain/workstream owners, and closed execution evidence in the applicable closed workstream/archive.
+
 If the Live Working State is stale, missing, or contradictory, stop normal progression and perform the smallest authoritative reconciliation needed from GitHub, Drive Current, repository current-state owners, and current-session facts. Do not create another mirror document, external synchronization service, or other process layer to compensate.
 
 # Review-Cycle Identity
@@ -97,6 +99,22 @@ Broader baseline reconstruction/reconciliation is required when one or more of t
 - validation exposes structural corruption, stale ownership/pathing, or a scope expansion that invalidates prior checks.
 
 Absent an invalidation condition, do not repeat whole-project reconstruction merely as routine process.
+
+# Planning-to-Build Hard Gate
+
+When a planning phase or planning subphase is declared complete, **production/build implementation is blocked until planning documentation closeout passes**. Live Working State capture alone is not sufficient.
+
+Before the build phase may start:
+
+1. reconcile every locked planning decision, vocabulary, authored scope, schema/relationship contract, status, and exact resume point into all applicable canonical repository documentation owners in Drive Working Source/Current;
+2. remove or correct superseded planning language;
+3. update the active workstream, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md` as applicable;
+4. give every applicable durable owner an `UPDATED` or `VERIFIED — NO CHANGE REQUIRED` disposition;
+5. run targeted documentation consistency/structural-readability validation and reconcile repository validators when the documentation change affects validator expectations;
+6. verify the bounded changed-file scope and read back the resulting Drive Current files;
+7. update and read back Live Working State with documentation-closeout PASS and the first authorized build action.
+
+Only then may production implementation begin.
 
 # Procedure Index
 

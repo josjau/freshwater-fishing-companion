@@ -166,7 +166,7 @@ Freshwater Fishing Companion stores the **resource directory**, not the changing
 
 Regulatory/legal links must resolve to the responsible state authority or another clearly authoritative official government destination. The application does not provide its own legal interpretation. It may explain what a link is for, but the linked authority owns the actual rule.
 
-No automatic GPS/location detection or persistent preferred-state selection is part of this milestone. State selection is manual. After D067's User Data architecture exists, a later preference may identify preferred states and prioritize them in the selector while preserving access to the full supported list.
+No automatic GPS/location detection or persistent preferred-state selection is part of this milestone. State selection is manual. After D067's User Data architecture is implemented, a later preference may identify preferred states and prioritize them in the selector while preserving access to the full supported list.
 
 The data/navigation design must not hard-code a 48-state structural ceiling; Alaska, Hawaii, territories, or other jurisdictions may be evaluated later as additive content without requiring a model rewrite.
 
@@ -206,7 +206,7 @@ Technique V1 owns canonical reusable presentation behaviors rather than equipmen
 
 Intrinsic compatibility is Reference Knowledge stored once in a typed Compatibility Relationship domain supporting Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique. Records identify relationship type and both canonical participants, use deterministic IDs, and contain lifecycle metadata but no ranking, weighting, confidence, Fish applicability, Condition applicability, or contextual suitability. Reverse navigation is derived. Missing compatibility during staged authoring is not automatically incompatibility until the relevant authored scope is declared complete. Three-way Rig/Lure/Technique combinations are derived from pairwise compatibility unless future evidence proves pairwise modeling insufficient.
 
-**Prerequisite sequence:** What Should I Throw production is deferred until the demonstrated prerequisite path is implemented in this order:
+**Prerequisite sequence:** The approved dependency order remains:
 
 1. Conditions Production Foundation;
 2. Lure/Bait Reference Production Foundation;
@@ -215,11 +215,13 @@ Intrinsic compatibility is Reference Knowledge stored once in a typed Compatibil
 5. scoped My Tackle Availability Foundation;
 6. What Should I Throw recommendation engine + UX pilot.
 
-Full Tackle Reference / Find Tackle, Catch Log, Global Search, and Favorites are not prerequisites unless later evidence demonstrates a direct dependency. Compatibility relationships are introduced incrementally as their participating domains become real.
+Steps 1-3 are **IMPLEMENTED / VALIDATED / CLOSED** through the completed Recommendation Prerequisites Foundation. Step 4, **Settings / User Data Architecture**, is the active gate. Steps 5-6 remain blocked until their predecessor gates close. Full Tackle Reference / Find Tackle, Catch Log, Global Search, and Favorites are not prerequisites unless later evidence demonstrates a direct dependency.
 
-D069 refines the roadmap trigger in D067 without changing D067's permanent ownership principle: stable User Knowledge identity/persistence architecture still precedes authoritative My Tackle; it now follows the three approved Reference Knowledge prerequisites and precedes What Should I Throw production rather than following it.
+D069 refines the roadmap trigger in D067 without changing D067's permanent ownership principle: stable User Knowledge identity/persistence architecture precedes authoritative My Tackle, follows the completed Reference Knowledge prerequisites, and precedes What Should I Throw production.
 
-**Phase 0 closeout:** reconcile this decision into the canonical domain documents, close What Should I Throw Phase 0 as **PLANNING COMPLETE / PRODUCTION DEFERRED**, and make Conditions Production Foundation the next workstream. Exact ownership-versus-temporary/current-availability semantics remain for the User Data/My Tackle gate.
+**Phase 0 handoff history:** What Should I Throw Phase 0 closed as **PLANNING COMPLETE / PRODUCTION DEFERRED** and handed off first to Conditions Production Foundation. That handoff and the complete Conditions → Lure/Bait → Techniques prerequisite sequence are now complete. Exact ownership-versus-temporary/current-availability semantics remain for the active User Data/My Tackle gates.
+
+**Current implementation status:** Steps 1-3 are complete on current production. The Settings / User Data Architecture gate is active under D067; UD-1 (persistent cross-device profile identity with record-oriented synchronization and refinement allowance) is locked, while the detailed identity/linking, synchronization-service, persistence, conflict, and lifecycle decisions remain under the active User Data workstream.
 
 **Material-change rule:** implementation/pilot findings may refine labels and optional fields only where the governing domain contract explicitly allows it. A material change to these semantic boundaries or prerequisite order requires explicit reapproval and durable documentation update.
 

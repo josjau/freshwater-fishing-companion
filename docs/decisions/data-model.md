@@ -17,19 +17,17 @@ The data model is divided into focused documents instead of one large specificat
 
 Fishing Techniques are independent canonical Reference Knowledge entities that own reusable presentation behavior. A Technique may apply to multiple Rigs or other compatible fishing setups.
 
-Technique identity does not determine which side owns a future Rig↔Technique compatibility relationship. The canonical storage owner and structure of that relationship remain deliberately deferred until the Technique architecture gate and must be resolved under D056.
+Rig continues to own physical assembly/configuration. Technique owns reusable retrieve/cadence, rod/reel movement, presentation steps, strike cues, common mistakes, and beginner guidance when reusable across compatible setups.
 
-Rig continues to own physical assembly/configuration. Technique owns reusable retrieve/cadence, rod/reel movement, and presentation/strike guidance.
-
-If future compatibility is a simple intrinsic applicability fact, it receives one semantic Reference Knowledge owner. If the relationship instead answers which Technique should be used with a Rig under particular Fish/Condition context, a Decision Knowledge relationship may be the more accurate owner.
+D069 resolved intrinsic Technique compatibility ownership: Rig↔Technique and Lure/Bait↔Technique pairs are stored once in the typed Compatibility Relationship domain rather than on Rig or Technique records. Fish/Condition-specific Technique selection, ranking, rationale, and contextual adjustments remain Recommendation Decision Knowledge.
 
 Do not mirror the same semantic relationship in both `Rig.techniqueIds[]` and `Technique.compatibleRigIds[]`.
 
-**Current implementation status:** Technique remains a valid future domain; no canonical production Technique dataset or Rig↔Technique runtime relationship is implemented.
+**Current implementation status:** Implemented and validated. `data/techniques.js` contains 16 active canonical Technique records. `data/compatibility.js` contains the approved intrinsic Rig↔Technique and Lure/Bait↔Technique relationships as part of the exact 177-record Compatibility set.
 
-**Future trigger:** resolve relationship ownership when the Technique architecture gate opens and concrete feature requirements exist.
+**Future trigger:** Revisit only if a demonstrated use case requires a new Technique, a materially different relationship family, or a relationship that cannot be represented truthfully by the current pairwise intrinsic Compatibility model.
 
-**Canonical owners:** D003/D024/D056 are indexed by `DECISIONS.md`; their full decision bodies are owned by `decisions/data-model.md`, with the Technique/relationship data-model documents owning domain procedure/shape.
+**Canonical owners:** D003/D024/D056/D069 are indexed by `DECISIONS.md`; `data-model/03A-TECHNIQUES.md` owns the Technique contract and `data-model/09-RELATIONSHIPS.md` owns Compatibility semantics.
 # D004 – Canonical Conditions
 
 Environmental and situational conditions are canonical shared entities.
@@ -69,7 +67,7 @@ Shared presentation instructions should live in Technique rather than being dupl
 
 A practical ownership test is: if an instruction still makes sense with a different compatible Rig, it probably belongs to Technique; if it depends on the physical configuration of this Rig, it belongs to the Rig.
 
-This content boundary does not decide the canonical owner of future Rig↔Technique compatibility; D003/D056 defer that relationship to the Technique architecture gate.
+This content boundary does not place compatibility on either participating entity. Under D069, intrinsic Rig↔Technique compatibility is owned by the typed Compatibility Relationship domain; contextual Technique selection remains Recommendation Decision Knowledge.
 # D025 – Single-Owner Rig-to-Tackle Relationships
 
 Rig `componentRequirements` is the authoritative source for Rig-to-Tackle usage relationships.
@@ -136,6 +134,7 @@ README.md
 03-RIGS.md
 03A-TECHNIQUES.md
 03B-CONDITIONS.md
+03C-LURES-BAIT.md
 04-KNOTS.md
 05-TACKLE.md
 05A-INVENTORY.md
@@ -144,7 +143,7 @@ README.md
 ```
 
 - Foundational terminology is owned by `01-FOUNDATION.md`; a separate glossary file is unnecessary.
-- The possible separate Lure domain remains deferred; its architecture gate/boundary is owned by `05-TACKLE.md` until a separate domain is actually approved.
+- `03C-LURES-BAIT.md` is the approved and implemented canonical Lure/Bait Reference owner established by D069; it is distinct from functional Tackle.
 - Backup/restore remains part of the User Data architecture gate and is owned by `07-USER-DATA.md` until implementation demonstrates a need for a separate detailed contract.
 - Canonical Tackle and My Tackle/Inventory remain separate semantic domains.
 - A dedicated Recommendation model is deferred until its schema is mature.
@@ -201,7 +200,7 @@ Section 5 applied D056 to Rig cleanup and is **PASS / VALIDATED / PRODUCTION IMP
 - `variationIds[]` remains because it owns real Rig-to-Rig relationships,
 - no speculative `targetFishIds[]` was added during cleanup.
 
-Rig↔Technique compatibility ownership remains deliberately unresolved. When Technique implementation begins, choose one semantic owner for simple compatibility or a Decision Knowledge relationship when contextual recommendation semantics are more accurate. Do not populate both Rig and Technique inverse arrays for the same fact.
+D069 resolved the previously deferred prerequisite compatibility families. Intrinsic Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique relationships are stored once in the typed Compatibility Relationship domain and are implemented in `data/compatibility.js`; contextual Fish/Condition suitability remains Recommendation Decision Knowledge. Participating entity records do not receive inverse compatibility arrays.
 
 **Future trigger:** Every new field, relationship, inverse navigation path, cache/index, search metadata proposal, and schema refactor must apply this ownership test during design. Existing domains are reconciled when audited or actively modified. Any exception requires a deliberate documented architecture decision explaining why one canonical owner is insufficient.
 
@@ -307,35 +306,37 @@ If the product later needs both hook+bait and jig terminal choices in one Rig ex
 **Canonical owners:** D065 and `data-model/03-RIGS.md` own the durable boundary. `ACTIVE-CHANGE-LEDGER.md` keeps GATE-013 visible until a future explicit gate resolves it.
 # D067 – User-Aware User Knowledge Architecture Before Tackle Expansion
 
-**Decision:** The **Settings / User Data Architecture Gate** moves ahead of **Tackle Reference / Find Tackle** in the canonical roadmap. The gate must settle persistence/ownership foundations before Tackle is materially expanded and before My Tackle or Catch Log becomes authoritative.
+**Decision:** The **Settings / User Data Architecture Gate** precedes authoritative My Tackle, Catch Log, and material Tackle Reference expansion. The gate must settle persistence/ownership foundations before durable User Knowledge features become authoritative.
 
-Canonical Tackle remains application-owned **Reference Knowledge** and is not duplicated per user. Actual owned tackle belongs to **My Tackle User Knowledge** associated with the user/profile model selected by the User Data gate. Catch Log, Preferences, future saved/favorite state, and other persistent User Knowledge use the same ownership foundation rather than independent storage islands.
+Canonical Tackle remains application-owned **Reference Knowledge** and is not duplicated per user. Actual owned tackle belongs to **My Tackle User Knowledge** associated with the persistent user/profile model. Catch Log, Preferences, future saved/favorite state, and other persistent User Knowledge use the same ownership foundation rather than independent storage islands.
 
-The User Data gate must deliberately resolve at minimum:
+The gate must deliberately resolve at minimum:
 
-- storage technology/local-first persistence behavior;
+- stable user/profile identity and account/device-linking behavior;
+- synchronization-service boundary and offline reconciliation;
+- local persistence/storage technology;
 - retention behavior, including browser/site-data clearing;
-- stable user/profile identity for persisted User Knowledge;
-- Version 1 single-local-user versus future multi-profile boundaries;
-- whether authentication/accounts are required or explicitly deferred;
-- schema versioning/migration;
-- backup/export and restore/import behavior;
+- schema versioning and migration;
+- backup/export and restore/import;
 - device-transfer expectations;
-- optional future synchronization boundaries;
+- conflict-resolution and deletion/tombstone semantics where synchronization requires them;
 - device-local versus profile-owned settings;
 - preference ownership, including future preferred states for Regulations;
-- theme/preferences persistence where applicable.
+- theme/preferences persistence where applicable;
+- persistent ownership versus temporary/current availability.
 
-A user-aware architecture does **not** require login. Version 1 may use one local profile/identity if simplest, but persisted My Tackle/Catch Log/Preferences must not implicitly treat a browser storage bucket as the user with no migration/ownership model.
+**UD-1 refinement — LOCKED 2026-08-30, refinement allowed:** FCC targets one persistent user identity/profile that may span multiple devices. Each device may maintain a local offline-capable copy of supported User Knowledge, while durable profile-owned records synchronize through a shared profile-scoped service when connectivity is available. Devices are replicas of the same semantic profile rather than independent users. Cross-device synchronization requires secure authentication or an equivalent approved account/device-linking mechanism. Synchronization is record-oriented rather than whole-profile replacement. Manual export/restore remains backup, portability, and disaster recovery rather than routine multi-device synchronization. Multi-profile/family sharing remains deferred.
 
-D069 refines the sequencing trigger while preserving this ownership rule. Conditions, Lure/Bait, and Techniques now precede this gate; the Settings / User Data Architecture gate then precedes authoritative My Tackle. A scoped My Tackle Availability Foundation is a prerequisite for What Should I Throw production so the feature can distinguish Best Overall from Best Currently Available without treating transitional readiness state as ownership.
+UD-1 may be refined if later persistence, conflict-resolution, privacy, security, or implementation findings demonstrate a better boundary without silently changing the approved cross-device product goal. The exact authentication/account-linking mechanism, synchronization service, persistence technology, conflict rules, and detailed profile schema remain unresolved for UD-2 and subsequent gate decisions.
 
-**Reason:** My Tackle and Catch Log are durable user-owned data. Designing them before retention, identity, migration, backup, and ownership are settled would bake feature-specific assumptions into storage and create avoidable migration risk. Moving the gate ahead of Tackle Reference also lets connected-knowledge/ownership UX be designed against a settled User Knowledge boundary.
+D069 refines sequencing while preserving this ownership rule. Conditions, Lure/Bait, and Techniques/Compatibility are now implemented and closed; the Settings / User Data Architecture gate is active and must close before authoritative My Tackle. A scoped My Tackle Availability Foundation remains a prerequisite for What Should I Throw production so the feature can distinguish Best Overall from Best Currently Available without treating transitional readiness state as ownership.
 
-**Current implementation status:** Approved architecture and roadmap sequencing / Not Implemented. Current readiness persistence remains transitional and is not authoritative ownership.
+**Reason:** My Tackle and Catch Log are durable user-owned data. A purely local browser-bucket design makes multi-device use cumbersome and makes divergent inventories difficult to reconcile; whole-profile backup/restore is insufficient once multiple devices can make legitimate edits. Defining synchronized profile ownership before feature-specific schemas prevents incompatible storage islands and avoids baking one-device assumptions into durable User Knowledge.
 
-**Future trigger:** After Conditions, Lure/Bait, and Techniques production foundations close under D069, open the Settings / User Data Architecture gate. Settle it before authoritative My Tackle; then implement only the scoped My Tackle availability foundation required before What Should I Throw production. Full Tackle Reference expansion and Catch Log remain later roadmap work unless a direct dependency is demonstrated.
+**Current implementation status:** Architecture gate ACTIVE / production User Data not implemented. UD-1 is locked with refinement allowed. Current Rig-readiness persistence remains transitional local availability state and is not authoritative ownership or the final synchronization model.
 
-**Canonical owners:** D067; `ROADMAP.md`; `ARCHITECTURE.md`; `data-model/01-FOUNDATION.md`; `05-TACKLE.md`; `05A-INVENTORY.md`; `07-USER-DATA.md`.
+**Next decision:** UD-2 — Identity + Sync Model. Settle secure identity/account linking and synchronization-service boundaries before locking authoritative local persistence technology.
 
-Permanent principle: **define who owns persistent User Knowledge and how it survives before building durable ownership/history features.**
+**Canonical owners:** D067; `ROADMAP.md`; `ARCHITECTURE.md`; `data-model/01-FOUNDATION.md`; `05-TACKLE.md`; `05A-INVENTORY.md`; `07-USER-DATA.md`; `workstreams/SETTINGS-USER-DATA-ARCHITECTURE.md`.
+
+Permanent principle: **define who owns persistent User Knowledge, how the same user is recognized across devices, and how durable records survive/synchronize before building authoritative ownership/history features.**

@@ -102,7 +102,7 @@ The former standalone data-model glossary is consolidated here so foundational a
 
 ## User/Profile Identity
 
-The stable owner/context to which persistent User Knowledge belongs. The exact Version 1 representation remains unresolved until the Settings / User Data Architecture gate. A user-aware model does not require authentication or multiple profiles; it prevents a browser/device storage bucket from becoming an undocumented implicit identity.
+The stable semantic owner/context to which persistent User Knowledge belongs. **UD-1 is locked with refinement allowed:** one persistent FCC user profile may span multiple devices; each device may hold a local offline-capable replica while supported durable User Knowledge synchronizes through a shared profile-scoped service. A browser/device storage bucket is therefore a storage location, not the user identity. Cross-device synchronization requires secure authentication or an equivalent approved account/device-linking mechanism. Multi-profile/family sharing is deferred; the exact identity provider, sync service, persistence technology, and conflict model remain unresolved under the active Settings / User Data Architecture gate.
 
 ## Canonical Entity
 

@@ -1,14 +1,32 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.4.0  
+**Document Revision:** 3.5.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-08-27
+**Last Updated:** 2026-08-30
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to `WORKING_STATE.md`; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-08-30 — Recommendation Prerequisites Foundation — Closed
+
+Source/runtime commit `cdf8f408011c5137d0351cec9f350d0a6eee66c2` — `Techniques to Rig - Final`  
+Documentation closeout `584f97caa4874075f745834145813ac9bdcf78b3` — `Close Recommendation Prerequisites Foundation`
+
+- Closed the combined Recommendation Prerequisites Foundation after Conditions, Lure/Bait Reference, and Techniques/Compatibility passed implementation, runtime review, Repository Integrity, commit-scope verification, and GitHub CI/Pages.
+- Current production includes 35 canonical Conditions, 13 canonical Lure/Bait identities, 16 canonical Techniques, and exactly 177 intrinsic Compatibility relationships: 54 Rig↔Lure/Bait, 69 Rig↔Technique, and 54 Lure/Bait↔Technique.
+- Preserved Reference/Decision/User Knowledge ownership boundaries; current Rig readiness remains transitional availability rather than My Tackle ownership.
+- Repository Integrity #106 and GitHub Pages #594 passed on the final documentation-closeout SHA.
+- The next product gate is Settings / User Data Architecture under D067/D069; What Should I Throw production remains deferred behind that gate and the scoped My Tackle Availability Foundation.
+
+# 2026-08-30 — Documentation Current-State Enforcement Repair
+
+- Reconciled active documentation after the Foundation closeout so current-state, architecture, roadmap, data-model, relationship, and active-ledger owners no longer report superseded Foundation staging/blocking states.
+- Re-established Live Working State as a compact current operational manifest rather than an append-only checkpoint history; superseded execution history remains in workstream/Changelog/Git evidence.
+- Hardened workflow wording so canonical-owner reconciliation plus Live Working State compaction/readback are enforced as execution gates rather than optional closeout hygiene.
+- Opened `workstreams/SETTINGS-USER-DATA-ARCHITECTURE.md` as the active planning owner and moved the locked UD-1 synced-profile architecture into the proper User Data/decision/current-state owners.
 
 # 2026-08-27 — Regulations Nationwide Production — Closed
 

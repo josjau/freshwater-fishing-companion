@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Data Model Index
 
 **Document:** data-model/README.md  
-**Document Revision:** 0.5.0  
+**Document Revision:** 0.7.0  
 **Document Status:** Approved  
 **Role:** Canonical data-model ownership map  
 **Decision Baseline:** D037, D056, D067, D069  
-**Last Updated:** 2026-08-27
+**Last Updated:** 2026-08-30
 
 # Purpose
 
@@ -31,22 +31,22 @@ This directory contains governing data-model documents divided by semantic owner
 | `01-FOUNDATION.md` | Foundational entity/field/ownership/search/recommendation/trust rules plus canonical architecture terminology. |
 | `02-FISH.md` | Current Fish schema plus explicitly separated approved/future Fish architecture. |
 | `03-RIGS.md` | Validated canonical Rig schema and ownership boundaries. |
-| `03A-TECHNIQUES.md` | Approved / Not Implemented Technique domain boundary. |
-| `03B-CONDITIONS.md` | Approved / Not Implemented Condition V1 vocabulary/schema boundary; next production prerequisite. |
-| `03C-LURES-BAIT.md` | Approved / Not Implemented canonical Lure/Bait Reference domain boundary. |
+| `03A-TECHNIQUES.md` | Implemented canonical Technique domain; 16 active V1 records. |
+| `03B-CONDITIONS.md` | Implemented canonical Condition domain; 35 active V1 records across eight groups. |
+| `03C-LURES-BAIT.md` | Implemented canonical Lure/Bait Reference domain; 13 active V1 identities. |
 | `04-KNOTS.md` | Validated canonical Knot schema/boundaries. |
 | `05-TACKLE.md` | Validated canonical functional Tackle schema plus the approved semantic boundary with Lure/Bait. |
 | `05A-INVENTORY.md` | Approved / Not Implemented My Tackle ownership boundary; detailed owned-item schema unresolved. |
-| `07-USER-DATA.md` | User Knowledge architecture boundary plus required User Data and deferred backup/restore gates. |
-| `09-RELATIONSHIPS.md` | Validated current relationships plus approved typed intrinsic Compatibility Relationship architecture, Decision Knowledge boundaries, and derived inverses. |
+| `07-USER-DATA.md` | Active User Knowledge architecture owner; UD-1 synced-profile identity is locked with refinement allowed, while persistence/sync implementation details remain unresolved. |
+| `09-RELATIONSHIPS.md` | Validated current relationships including 177 implemented typed intrinsic Compatibility relationships, Decision Knowledge boundaries, and derived inverses. |
 
 The former speculative Lure placeholder was retired during documentation consolidation, but D069 now establishes a genuinely approved Lure/Bait domain; `03C-LURES-BAIT.md` is therefore the new canonical owner rather than a restoration of the old speculative model. The former glossary and deferred Backup placeholder remain consolidated into `01-FOUNDATION.md` and `07-USER-DATA.md`; prior revisions remain recoverable in Git history.
 
 # Current Implemented Canonical Domains
 
-Current production Reference Knowledge includes Fish, Rigs, Knots, Tackle, and Media. Current Decision Knowledge includes Knot task guidance and Reel & Line Setup guidance.
+Current production Reference Knowledge includes Fish, Rigs, Knots, Tackle, Media, Conditions, Lure/Bait, and Techniques. Intrinsic Compatibility relationships are implemented as their own typed Reference Knowledge relationship registry. Current Decision Knowledge includes Knot task guidance, Reel & Line Setup guidance, and Fish-to-Rig guidance.
 
-Technique, Conditions, Lure/Bait, My Tackle, and backup/restore remain not-yet-implemented as documented by their owners/gates. Conditions is the next production prerequisite; Lure/Bait and Techniques follow before User Data/My Tackle availability and What Should I Throw production under D069.
+Authoritative My Tackle and general User Data persistence remain not-yet-implemented. The Settings / User Data Architecture gate is active; UD-1 establishes the persistent synced-profile direction while UD-2 and later decisions must settle the concrete identity/sync/persistence foundation before My Tackle becomes authoritative. What Should I Throw production remains behind User Data and scoped My Tackle Availability.
 
 # Deferred Model Policy
 

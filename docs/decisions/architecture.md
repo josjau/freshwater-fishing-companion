@@ -28,7 +28,7 @@ A broader theme-tree/shared CSS restructuring was discussed and deliberately def
 
 **Current implementation status:** Forest Journal only. No user-facing theme selector or multi-theme runtime behavior is implemented.
 
-**Future trigger:** reopen the final theme architecture during the Settings / User Preferences architecture gate, when user preference ownership/persistence and a sufficiently stable application structure can be designed together.
+**Future trigger:** settle final theme architecture within the active Settings / User Data Architecture gate when preference ownership/persistence is reached and the application structure is sufficiently stable to evaluate supported-theme scope.
 
 At that gate, shared base/layout/component behavior should be centralized once where practical, and individual production theme files should primarily own theme-specific design tokens and intentional overrides rather than duplicate complete application structure. Forest Journal remains the reference implementation for future parity requirements.
 

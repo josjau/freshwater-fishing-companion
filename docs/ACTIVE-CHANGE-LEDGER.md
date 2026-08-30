@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.15  
+**Document Revision:** 1.10.16  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `cdf8f408011c5137d0351cec9f350d0a6eee66c2`  
+**Reconciliation Baseline:** `584f97caa4874075f745834145813ac9bdcf78b3`  
 **Last Updated:** 2026-08-30
 
 # Purpose
@@ -13,7 +13,7 @@ This ledger keeps every material non-closed project item visible until it receiv
 
 It does not duplicate full design reasoning. Each entry identifies the current status, the controlling detailed owner/gate, and the required next action.
 
-GitHub `main` owns committed formal state. Google Drive `Working Source/Current` owns all approved uncommitted repository changes against its recorded GitHub baseline; `WORKING_STATE.md` owns compact live workstream/resume context. The former large Google Working State is retired as source authority.
+GitHub `main` owns committed formal state. Google Drive `Working Source/Current` owns all approved uncommitted repository changes against its recorded GitHub baseline; `WORKING_STATE.md` owns compact repository workstream/resume context. The Live Working State is a compact operational manifest, not a source-authority mirror or historical journal.
 
 # Status Vocabulary
 
@@ -68,15 +68,14 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 
 | ID | Status | Item | Trigger / owner |
 |---|---|---|---|
-| GATE-003 | CLOSED / PASS | Lure/Bait Reference domain | Subphase B is complete, committed on GitHub `3b5e77f…`, and Repository Integrity #104 / Pages #592 PASS. Preserve accepted Direct-Tie, Fish→Inline Spinner, knowledge-reference, and tutorial behavior while Subphase C is implemented. |
-| GATE-004 | BLOCKED | What Should I Throw production | Phase 0 planning complete under D069; resume recommendation engine/UX only after Recommendation Prerequisites Foundation (Conditions → Lure/Bait → Techniques/Compatibility) → User Data → scoped My Tackle Availability gates. |
+| GATE-004 | BLOCKED | What Should I Throw production | Recommendation Prerequisites Foundation is CLOSED / PASS. Resume recommendation engine/UX only after GATE-006 Settings/User Data Architecture and GATE-007 scoped My Tackle Availability Foundation close. |
 | GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Later roadmap milestone after the recommendation prerequisite path unless a direct dependency is demonstrated. |
-| GATE-006 | REQUIRED | Settings / User Data Architecture | After Recommendation Prerequisites Foundation and before authoritative My Tackle; settle user/profile identity, retention, persistence, migration, backup/restore, device transfer, preference ownership, and ownership-vs-current-availability semantics under D067/D069. |
+| GATE-006 | ACTIVE / REQUIRED | Settings / User Data Architecture | D067/D069. UD-1 is locked with refinement allowed: one persistent profile may span devices through local offline-capable replicas plus profile-scoped record-level synchronization; secure authentication or equivalent account/device linking is required for cross-device sync. Next: UD-2 Identity + Sync Model, then persistence, retention, migration, backup/restore, preference ownership, and ownership-vs-current-availability. |
 | GATE-007 | REQUIRED | My Tackle Availability Foundation | After User Data gate and before What Should I Throw production; implement only the authoritative ownership/current-availability and recommendation-matching scope required by D069. |
 | GATE-008 | DEFERRED TO NAMED GATE | Catch Log | After the settled User Data/My Tackle foundation and later roadmap progression. |
 | GATE-009 | DEFERRED TO NAMED GATE | Global Search | After major searchable domains are stable. |
 | GATE-010 | PARKED | Favorites final keep/replace/remove decision | Near project completion. |
-| GATE-011 | DEFERRED TO NAMED GATE | Multi-theme support | Settings / User Preferences gate. |
+| GATE-011 | DEFERRED WITHIN ACTIVE GATE | Multi-theme support | Settings / User Data Architecture; settle theme selection/persistence when preference ownership is reached. |
 | GATE-012 | REQUIRED | Repository Disaster Recovery / Reconstruction | D064; implement and validate before major Version 1 release or before irreplaceable User Knowledge enters scope, whichever comes first. Not a current Fish blocker. |
 | GATE-013 | DEFERRED TO NAMED GATE | Reusable Rig alternate-terminal configuration modeling | D065 + `data-model/03-RIGS.md`; revisit when a user workflow requires mutually exclusive component/assembly/readiness branches within one Rig or another Rig demonstrates the same reusable need. |
 
@@ -89,7 +88,7 @@ These items are not current blockers and must not be promoted merely because the
 - PARK-003 — Project-owned Knot diagrams/controlled animations as a quality improvement.
 - PARK-004 — Heavy fuzzy Search, advanced typo tolerance, natural-language intent parsing.
 - PARK-005 — Commercial ProductDefinition architecture, exhaustive manufacturer/product catalogs, SKU/UPC/retailer modeling, advanced size/style-aware readiness.
-- PARK-006 — Cloud synchronization unless approved at User Data gate; automatic cloud backup providers.
+- PARK-006 — Automatic cloud-backup provider/service integration beyond the approved profile synchronization boundary; revisit only if recovery value justifies separate provider/privacy/maintenance scope.
 - PARK-007 — AI fish identification, actual-size lure calibration, container hierarchy, trip planning, smart packing, online pricing, live weather, live regulation updates, family sharing, achievements.
 - PARK-008 — Advanced Knots placeholder does not authorize a new canonical Advanced Knot build.
 - PARK-009 — Optional barcode scanning.

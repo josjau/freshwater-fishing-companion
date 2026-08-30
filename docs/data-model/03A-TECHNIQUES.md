@@ -1,30 +1,30 @@
 # Freshwater Fishing Companion
 
 **Document:** 03A-TECHNIQUES.md  
-**Document Revision:** 0.5.0  
+**Document Revision:** 0.6.0  
 **Document Status:** Approved  
-**Implementation Status:** Planning Closed / Production Authorized / Not Yet Implemented  
+**Implementation Status:** IMPLEMENTED / VALIDATED / CLOSED — 16 active Technique records; 69 Rig↔Technique + 54 Lure/Bait↔Technique Compatibility relationships active  
 **Decision Baseline:** D003, D024, D056, D069
 
 ---
 
 # Purpose
 
-This document defines the approved architectural boundary for the future canonical Technique domain in Freshwater Fishing Companion.
+This document defines the implemented canonical Technique domain in Freshwater Fishing Companion.
 
 A Technique describes **how** a lure, Rig, or other compatible setup is presented to fish. Technique is Reference Knowledge and owns reusable presentation behavior rather than physical assembly.
 
-No canonical Technique production dataset is implemented on current `main`. D069 plus RP-C1 through RP-C4 lock the V1 vocabulary, schema boundary, authored Compatibility scope, and production validation contract below.
+Current `main` implements the locked V1 Technique vocabulary in `data/techniques.js` / `TECHNIQUE_DATA` and the authored intrinsic Compatibility scope in `data/compatibility.js`. D069 plus RP-C1 through RP-C4 remain the governing V1 vocabulary, schema, relationship, and validation contract.
 
 ---
 
 # Current Status
 
-**Approved / Not Implemented.**
+**Implemented / Validated / Closed.**
 
-The Technique domain is approved by D003. D024 assigns reusable presentation behavior to Technique and physical assembly/configuration to Rig. D056 requires every future Technique fact and relationship to have one semantic owner.
+The Technique domain is implemented under D003. D024 assigns reusable presentation behavior to Technique and physical assembly/configuration to Rig. D056 assigns each Technique fact/relationship one semantic owner.
 
-Current production Rigs do not store `techniqueIds[]`, and Technique will not gain inverse compatibility arrays merely for navigation. D069 assigns intrinsic Rig↔Technique and Lure/Bait↔Technique compatibility to the external typed Compatibility Relationship domain; Fish/Condition-specific suitability remains Recommendation Decision Knowledge.
+Current production Rigs do not store `techniqueIds[]`, and Technique has no inverse compatibility arrays merely for navigation. D069 assigns intrinsic Rig↔Technique and Lure/Bait↔Technique compatibility to the external typed Compatibility Relationship domain; Fish/Condition-specific suitability remains Recommendation Decision Knowledge.
 
 ---
 
@@ -49,7 +49,7 @@ The same semantic relationship must not be stored in both directions merely for 
 
 # Foundation Fields
 
-When Technique production data is implemented, every canonical Technique will inherit the Foundation entity standard:
+Every canonical Technique inherits the Foundation entity standard:
 
 ```text
 id
@@ -83,7 +83,7 @@ Fish/Condition-specific Technique selection, ranking, rationale, and contextual 
 
 # Media Ownership
 
-Technique media must follow the shared D056 Media ownership model when the domain is implemented.
+Technique media follows the shared D056 Media ownership model when/if Technique-specific Media is added.
 
 Technique records must not own inverse `imageIds[]` solely to locate Media. Canonical attachment belongs to Media through:
 
@@ -508,7 +508,7 @@ Potential later capabilities include animated demonstrations, video instruction,
 
 Technique participates in Rig Detail as part of the unified **Best For / Good Conditions / Techniques** use-guidance section.
 
-A Rig↔Technique Compatibility relationship is authored only when the Technique is genuinely usable within the Rig's normal intended use envelope, not merely mechanically possible. Compatible Technique entries are first-class User Knowledge links that open the canonical Technique knowledge surface.
+A Rig↔Technique Compatibility relationship is authored only when the Technique is genuinely usable within the Rig's normal intended use envelope, not merely mechanically possible. Compatible Technique entries are first-class Reference Knowledge links that open the canonical Technique knowledge surface.
 
 Rig owns generic setup/assembly. Technique owns reusable presentation, retrieve, cadence, and movement instruction. Recommendation Decision Knowledge later combines Fish, Conditions, Rig, Lure/Bait, and the intrinsically compatible Technique set to determine which Technique(s) are contextually viable or recommended.
 

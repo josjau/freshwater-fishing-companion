@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 07-USER-DATA.md  
-**Document Revision:** 0.5.0  
+**Document Revision:** 0.6.0  
 **Document Status:** Draft  
 **Implementation Status:** Mixed — transitional local state exists; authoritative User Knowledge schemas not implemented  
 **Decision Baseline:** D028, D029, D056, D067, D069
@@ -63,13 +63,24 @@ D069 refines the roadmap trigger in D067 without changing D067's ownership princ
 
 The gate must explicitly settle persistent ownership versus temporary/current availability semantics so Recommendation can determine executability without converting borrowed/session state into ownership.
 
-# User/Profile Identity — Required Architecture, Schema Unresolved
+# User/Profile Identity — UD-1 LOCKED / Refinement Allowed
 
 D067 requires the Settings / User Data Architecture gate to establish a stable owner/context for persistent User Knowledge before My Tackle or Catch Log becomes authoritative.
 
-Version 1 may remain a single local user/profile and does not require authentication. The requirement is semantic ownership and migration clarity: persistent records must not implicitly treat "whatever is in this browser storage bucket" as the user with no stable ownership model.
+UD-1 establishes the current Version 1 architecture baseline:
 
-Earlier planning identified possible profile concepts such as display name, experience level, measurement preference, and preferred region. Those remain design inputs, not approved fields. The gate must distinguish the minimal stable identity needed to own User Knowledge from optional profile attributes that require separate feature justification.
+- one persistent FCC user identity/profile may span multiple devices;
+- each device may maintain a local offline-capable copy of supported User Knowledge;
+- supported durable User Knowledge synchronizes through a shared profile-scoped service when connectivity is available;
+- devices are replicas of the same semantic profile rather than independent profiles;
+- cross-device synchronization requires secure authentication or an equivalent approved account/device-linking mechanism;
+- synchronization is record-oriented rather than whole-profile replacement so independent changes can be reconciled;
+- manual export/restore is backup, portability, and disaster recovery rather than the normal multi-device synchronization workflow;
+- multi-profile/family sharing remains deferred.
+
+UD-1 may be refined if later persistence, conflict-resolution, privacy, security, or implementation findings demonstrate a better boundary without silently changing the approved cross-device product goal.
+
+The exact authentication/account-linking mechanism, synchronization service, local persistence technology, conflict-resolution rules, and detailed profile schema remain unresolved for UD-2 and subsequent architecture decisions. Earlier candidate profile attributes such as display name, experience level, measurement preference, and preferred region remain design inputs, not approved fields.
 
 ---
 
@@ -79,7 +90,7 @@ Preferences may eventually control application behavior such as display or workf
 
 No production Preferences schema is approved here. Candidate examples from earlier drafts must not be treated as committed fields.
 
-Under D066/D067, preferred Regulations states are an approved future preference concept to evaluate after the User Data architecture exists. The preferred behavior is prioritization/pinning while preserving access to the complete supported state list; no field name or persistence shape is approved yet.
+Under D066/D067, preferred Regulations states are an approved future preference concept to evaluate within the active User Data architecture gate when preference ownership is reached. The preferred behavior is prioritization/pinning while preserving access to the complete supported state list; no field name or persistence shape is approved yet.
 
 Preferences may never modify canonical Reference Knowledge.
 
@@ -152,7 +163,7 @@ JSON is a plausible portable/inspectable format but is **not** an approved Versi
 
 Any future restore should be transactional from the user's perspective and must not leave partially replaced User Knowledge after failed validation/migration/restore.
 
-Cloud storage/accounts are not assumed dependencies. Optional providers require separate explicit value/privacy/maintenance approval.
+Profile synchronization is now an approved product requirement under UD-1, but no specific cloud/account provider is approved. Automatic cloud **backup** providers remain a separate optional recovery feature and require their own value/privacy/maintenance approval; they must not be conflated with the synchronization service required for the synced profile.
 
 # Data Ownership
 
@@ -202,7 +213,7 @@ Before material Tackle expansion and before each persistent User Knowledge domai
 6. retention behavior, including browser/site-data clearing,
 7. migration/versioning requirements,
 8. backup/export/import/restore requirements,
-9. device-transfer expectations and optional synchronization boundaries,
+9. device-transfer expectations, synchronization behavior, conflict semantics, and offline reconciliation,
 10. rendering and sanitization boundaries,
 11. deletion and lifecycle behavior.
 
@@ -212,7 +223,7 @@ Do not create a universal user-data schema containing speculative fields merely 
 
 # Future Enhancements
 
-Potential later capabilities include multiple profiles, cloud synchronization, shared accounts, achievement/statistics features, and richer User Knowledge. Each requires separate approval and must build on implemented authoritative schemas.
+Potential later capabilities include multiple profiles, family/shared-profile behavior, achievement/statistics features, richer User Knowledge, and optional automatic cloud-backup provider integrations. These remain separate future approvals and must build on implemented authoritative schemas. Cross-device synchronization for the single persistent profile is no longer a generic future enhancement; it is part of the locked UD-1 baseline.
 
 ---
 

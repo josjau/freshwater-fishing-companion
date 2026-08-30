@@ -40,7 +40,7 @@ My Tackle answers:
 
 > What fishing items do I actually own, and what relevant variants do I have?
 
-Under D067, those owned items belong to the applicable stable user/profile identity selected by the User Data Architecture gate. Canonical Tackle remains global application Reference Knowledge rather than being duplicated per user.
+Under D067/UD-1, those owned items belong to the persistent user/profile identity that may span multiple devices. Canonical Tackle remains global application Reference Knowledge rather than being duplicated per user. The exact My Tackle owned-item schema, sync behavior per record, and ownership-vs-current-availability representation remain unresolved until the User Data/My Tackle gates close.
 
 A commercial Product Definition layer is not required for My Tackle MVP or basic Rig readiness. Product Definition remains deferred until an approved product-specific feature demonstrates a need.
 

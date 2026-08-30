@@ -4,7 +4,7 @@
 **Document Status:** Approved  
 **Role:** Durable documentation, impact reconciliation, session continuity, commit verification, and closeout  
 **Decision Baseline:** D038-D041, D055, D068  
-**Last Updated:** 2026-08-26
+**Last Updated:** 2026-08-28
 
 # Documentation Is Part of the Work
 
@@ -36,6 +36,8 @@ Update it after every material transition that changes:
 
 Each update must be followed by connector readback. The dependent next action is blocked until readback confirms the checkpoint. The checkpoint should remain compact and include only what is needed to recover current operation: active workstream/wave, relevant GitHub baseline/landed SHA, Drive Current status, latest material decision/approval, validation/review status, open defects/risks, and exact next action.
 
+Live Working State is **replacement-oriented current state**, not cumulative history. When a checkpoint is superseded, remove or compact it after any durable fact has been reconciled into its canonical repository owner. Numbered append-only checkpoint chains are prohibited because they create contradictory active states and make stale text discoverable as if it were current. Historical execution evidence belongs in the applicable workstream/archive, landed history in `CHANGELOG.md`/Git history, and durable architecture in decisions/data-model owners.
+
 If startup or active work finds the Live Working State stale, missing, or contradictory, stop normal progression and reconcile it from authoritative GitHub, Drive Current, repository current-state owners, and current-session facts before continuing. Do not use chat memory as the substitute source and do not create another state document to solve the problem.
 
 # Canonical Documentation Owners
@@ -45,7 +47,7 @@ If startup or active work finds the Live Working State stale, missing, or contra
 - product order/future gates → `ROADMAP.md`;
 - durable decision index → `DECISIONS.md`;
 - durable decision bodies → `decisions/*.md`;
-- workflow → `DEVELOPMENT_WORKFLOW.md` and the three files under `workflow/`;
+- workflow → `DEVELOPMENT_WORKFLOW.md` and the two files under `workflow/`;
 - UI/interaction standards → `UI_STANDARD.md`;
 - coding/document conventions → `STYLE_GUIDE.md`;
 - domain schemas/relationships → applicable `data-model/*.md`;
@@ -127,6 +129,23 @@ For an existing documentation file:
 - never infer that a previously proposed version was implemented.
 
 A document may be retired only after every unique active rule/status/decision it owns is either proven historical-only or migrated to a surviving canonical owner. Git history is sufficient for ordinary retired revisions; use `archive/` only when the old file has independent audit/provenance/reconstruction value.
+
+# Planning Phase Closeout — Mandatory Build Gate
+
+A planning phase is not complete for execution purposes merely because decisions are approved or captured in Live Working State. Before any dependent production/build phase starts, run a complete planning documentation closeout.
+
+Required sequence:
+
+1. identify every canonical owner affected by the locked plan;
+2. reconcile the final approved vocabulary, authored scopes, schema/relationship contracts, dependency decisions, statuses, and exact resume point into those owners in Drive Current;
+3. remove superseded/open-planning language that would contradict the locked plan;
+4. update the active workstream, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md` as applicable;
+5. complete the documentation impact disposition matrix (`UPDATED`, `VERIFIED — NO CHANGE REQUIRED`, or `NOT APPLICABLE`);
+6. run targeted consistency and structural-readability validation and reconcile repository validators if the documentation changes alter mechanically enforced expectations;
+7. verify the bounded changed-file scope and connector-read back the changed Drive Current owners;
+8. only after those checks pass, record planning documentation closeout PASS in Live Working State and authorize the first build action.
+
+If any applicable canonical owner is stale, planning closeout fails and the build remains blocked.
 
 # Session-End Gate
 

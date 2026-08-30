@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 05-TACKLE.md  
-**Document Revision:** 0.4.2  
+**Document Revision:** 0.5.0  
 **Document Status:** Approved  
-**Implementation Status:** GitHub main validated — 29 / Drive Current staged — 31 / Subphase B targeted PASS  
+**Implementation Status:** IMPLEMENTED / VALIDATED CURRENT — 31 active canonical Tackle concepts with recognition-media coverage  
 **Decision Baseline:** D019, D025, D026, D028, D037, D043, D056, D067, D069
 
 ---
@@ -154,7 +154,7 @@ A future Product Definition may describe an exact commercial product if an appro
 
 `data/tackle.js` owns the production canonical Tackle records and stable IDs.
 
-Current `main` contains 29 active canonical Tackle concepts. Drive Working Source/Current stages 31 active concepts by adding the approved **Weighted Swimbait Hook** and **Tube Jighead** records. Subphase B now also stages approved recognition Media for both new concepts, bringing active Tackle recognition-media coverage to 31/31. Weighted Swimbait Hook geometry is anchored to the approved Mustad Power Lock Plus reference; the selected Tube Jighead production asset is the second reviewed variant and is anchored to the user-supplied Tackle Warehouse Tube Jig Heads category plus supporting manufacturer geometry references.
+Current `main` contains 31 active canonical Tackle concepts. The completed Recommendation Prerequisites Foundation added **Weighted Swimbait Hook** and **Tube Jighead** plus approved recognition Media for both concepts, bringing active Tackle recognition-media coverage to 31/31. Weighted Swimbait Hook geometry is anchored to the approved Mustad Power Lock Plus reference; the selected Tube Jighead production asset is anchored to the reviewed Tackle Warehouse Tube Jig Heads category plus supporting manufacturer geometry references.
 
 Repository Audit Section 4 is **implemented / runtime-validated / closed**:
 
@@ -166,7 +166,7 @@ Repository Audit Section 4 is **implemented / runtime-validated / closed**:
 
 ---
 
-# Lure/Bait Boundary — Staged in Drive Current
+# Lure/Bait Boundary — Implemented
 
 D069 approves a separate canonical **Lure/Bait** Reference domain, governed by `03C-LURES-BAIT.md`.
 
@@ -175,9 +175,9 @@ The semantic boundary is:
 - **Tackle** owns functional fishing equipment and Rig-building components such as hooks, weights, swivels, bobbers, jigheads, leader, and bottom-bouncer hardware.
 - **Lure/Bait** owns canonical lure and bait identities intentionally presented to Fish, such as Stick Worm, Craw, Paddle-tail Swimbait, Spinnerbait, Crankbait, Inline Spinner, Spoon, Minnow, or Nightcrawler.
 
-The deliberate Lure/Bait foundation is now staged in Drive Current. Existing lure-like Tackle records are not silently deleted or renamed merely because a corresponding Lure/Bait identity exists; the Direct-Tie configuration model references canonical Lure/Bait identities for presented lures while preserving existing Tackle records unless a distinct approved component disposition requires change.
+The Lure/Bait foundation is implemented on current `main`. Existing lure-like Tackle records are not silently deleted or renamed merely because a corresponding Lure/Bait identity exists; the Direct-Tie configuration model references canonical Lure/Bait identities for presented lures while preserving existing Tackle records unless a distinct approved component disposition requires change.
 
-Complete-lure terminal setups may still exist as Rigs where physical connection/setup has distinct semantic ownership. Under the staged prerequisite implementation, legacy Inline Spinner Setup is generalized to Direct-Tie Lure Setup while Inline Spinner is a canonical Lure/Bait identity.
+Complete-lure terminal setups may still exist as Rigs where physical connection/setup has distinct semantic ownership. Under the implemented prerequisite architecture, legacy Inline Spinner Setup is generalized to Direct-Tie Lure Setup while Inline Spinner is a canonical Lure/Bait identity.
 
 Commercial product identity, manufacturer catalogs, SKU/UPC/retailer modeling, and commercial color-name enumeration remain outside the canonical Lure/Bait V1 domain. User-owned brand/model/variant details belong to My Tackle/User Knowledge when that schema is implemented.
 
@@ -208,8 +208,8 @@ Deferred until demonstrated by approved features:
 - `../ARCHITECTURE.md`
 - `../DECISIONS.md`
 
-# Recommendation Prerequisites Tackle Changes — STAGED / TARGETED PASS
+# Recommendation Prerequisites Tackle Changes — COMPLETE / VALIDATED
 
-Subphase B adds exactly two new physical Tackle concepts required by approved new Rigs: **Weighted Swimbait Hook** and **Tube Jighead**. Existing `bait` and `soft-plastic` concepts remain valid generic physical component requirements. Existing Split Ring and Barrel Swivel concepts may be optional components in approved Direct-Tie configurations where appropriate. No snap/snap-swivel concept is added solely for Inline Spinner quick-change use.
+The completed Foundation added exactly two physical Tackle concepts required by the approved new Rigs: **Weighted Swimbait Hook** and **Tube Jighead**. Existing `bait` and `soft-plastic` concepts remain valid generic physical component requirements. Existing Split Ring and Barrel Swivel concepts may be optional components in approved Direct-Tie configurations where appropriate. No snap/snap-swivel concept was added solely for Inline Spinner quick-change use.
 
-These two additions and their recognition Media are staged in Drive Current, bringing the working candidate to 31 active canonical Tackle concepts while current GitHub `main` remains at 29. Targeted reference/shape/media validation is PASS, including 31/31 active Tackle recognition-media coverage. Browser review must confirm both new contextual Tackle popovers display the approved images correctly before Subphase B can advance. Final Repository Integrity, combined review, commit/push, and CI remain pending.
+Both additions and their recognition Media are production behavior on current `main`, bringing the canonical library to 31 active Tackle concepts with 31/31 active recognition-media coverage. Runtime popover/media review and Repository Integrity passed before Foundation closeout; detailed review chronology belongs in the closed Foundation workstream and Git history.

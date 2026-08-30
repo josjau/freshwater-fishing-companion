@@ -1,16 +1,16 @@
 # Freshwater Fishing Companion
 
 **Document:** 03C-LURES-BAIT.md  
-**Document Revision:** 0.2.5  
+**Document Revision:** 0.3.0  
 **Document Status:** Approved  
-**Implementation Status:** Drive Current Staged / repair targeted data+static PASS / runtime Lure/Bait re-review pending / Combined Closeout Pending  
+**Implementation Status:** IMPLEMENTED / VALIDATED / CLOSED — 13 active Lure/Bait identities  
 **Decision Baseline:** D043, D056, D069
 
 ---
 
 # Purpose
 
-This document defines the approved canonical Lure/Bait Reference Knowledge boundary required by What Should I Throw and future My Tackle matching. No canonical Lure/Bait production dataset is committed on current `main`; Drive Working Source/Current now contains the staged V1 implementation in `data/lure-bait.js`.
+This document defines the implemented canonical Lure/Bait Reference Knowledge boundary required by What Should I Throw and future My Tackle matching. Current `main` implements the locked V1 domain in `data/lure-bait.js` / `LURE_BAIT_DATA`.
 
 Lure/Bait describes the fishing-relevant lure or bait identity intentionally presented to Fish. It is distinct from functional Tackle components, Rig assembly, reusable Technique behavior, contextual Recommendation selection, and commercial product identity.
 
@@ -137,17 +137,17 @@ ownerType: "lure-bait"
 ownerId: canonical Lure/Bait ID
 ```
 
-Media remains the canonical attachment owner. Subphase B implements recognition Media for the five Direct-Tie Lure/Bait identities plus the Paddle-tail Swimbait and Tube identities required by the two new Rigs. Spinnerbait, Crankbait, Jerkbait, and Spoon use approved original generic FCC recognition assets; Inline Spinner reuses the previously approved FCC artwork under a separate `ownerType: "lure-bait"` attachment while preserving the existing legacy Tackle attachment.
+Media remains the canonical attachment owner. Production implements recognition Media for the five Direct-Tie Lure/Bait identities plus the Paddle-tail Swimbait and Tube identities required by the two new Rigs. Spinnerbait, Crankbait, Jerkbait, and Spoon use approved original generic FCC recognition assets; Inline Spinner reuses the previously approved FCC artwork under a separate `ownerType: "lure-bait"` attachment while preserving the existing legacy Tackle attachment.
 
 These recognition assets identify the generic lure category, not an exact commercial product. They follow the approved Lure Media production treatment in `MEDIA_GUIDE.md`: single-object, unbranded, reference-grounded imagery on the canonical `#f4f0e8` reference surface.
 
 ---
 
-# Production Checkpoint — STAGED / TARGETED PASS
+# Production Implementation Status — COMPLETE / VALIDATED / CLOSED
 
-Drive Current implements the locked 13-identity vocabulary with Foundation fields plus `presentationType` and `category`; no color/pattern normalization or commercial product identity was introduced. Subphase B also stages the approved Direct-Tie Lure Setup configuration model, Weighted Swimbait Hook and Tube Jig dependencies, configured Inline Spinner Fish-guidance migration, and Direct-Tie Lure/Bait recognition Media. Targeted data/static validation passes identity count/order, lifecycle/shape, Rig/Tackle/Lure-Bait references, the exact three configured Fish-guidance migrations, production load order, renderer/search wiring, and complete recognition-media coverage for all seven Rig-facing Lure/Bait identities in this subphase.
+Current production implements the locked 13-identity vocabulary with Foundation fields plus `presentationType` and `category`; no color/pattern normalization or commercial product identity was introduced. The accepted Foundation implementation also includes the Direct-Tie Lure Setup configuration model, Weighted Swimbait Hook and Tube Jig dependencies, configured Inline Spinner Fish-guidance migration, and canonical recognition Media for the Rig-facing Lure/Bait identities.
 
-The canonical typed Rig↔Lure/Bait Compatibility relationships remain owned by Subphase C under `09-RELATIONSHIPS.md`; Subphase B locks and prepares their authored candidates but does not create a parallel relationship registry. The 2026-08-28 browser review failed the Lure/Bait availability/media presentation layer; the bounded repair is now staged and targeted static/data validation passes, but the second runtime review is still required before B may pass. Full Repository Integrity, final approval, commit/push, and CI remain pending at the combined Recommendation Prerequisites Foundation closeout boundary.
+The typed Rig↔Lure/Bait Compatibility relationships are implemented in `data/compatibility.js` under the canonical relationship contract in `09-RELATIONSHIPS.md`; Lure/Bait does not maintain a parallel or inverse compatibility registry. Runtime availability/media presentation defects discovered during Subphase B were repaired and accepted before Foundation closeout. Detailed review chronology remains in the closed Foundation workstream and Git history.
 
 ---
 
@@ -209,17 +209,3 @@ A candidate Lure/Bait is not approved for Version 1 in isolation. Before it ente
 - Cricket is compatible with Fixed Bobber, Slip Bobber, Basic Bottom, and Split-Shot Bait Rigs.
 - Generic `bait` / `soft-plastic` Tackle remain physical component concepts; Lure/Bait owns the specific presented identity.
 - Existing Inline Spinner Fish guidance migrates to Direct-Tie Lure Setup + Inline Spinner without priority/rationale changes; new Rig/configuration compatibility does not inherit Fish guidance automatically.
-
-# Runtime Lure/Bait Presentation Defect — 2026-08-28
-
-The staged Lure/Bait identities remain valid. Their first Rig-page runtime presentation failed usability review, and the 2026-08-29 bounded repair now applies the established component-card/readiness/popover grammar. Direct-Tie recognition Media remains valid; Paddle-tail Swimbait and Tube now have user-approved Lure/Bait recognition Media attached in Drive Current.
-
-For Lure/Bait requirements used by a Rig:
-
-- render the canonical identity using the same required component-card layout as unaffected Rigs: checkbox, unchecked item counted as Missing, and status transition only when all required items are checked;
-- expose a clickable `ⓘ` that opens the canonical `ownerType: "lure-bait"` recognition Media plus useful reference details in the shared contextual popover pattern;
-- use that popover as the recognition-image surface rather than a large full-width image on the Rig page;
-- keep persistent My Tackle ownership out of this transitional control—the checkbox represents current local availability only until the User Data/My Tackle gate supplies the authoritative persistent source;
-- preserve canonical Lure/Bait/Tackle semantic separation.
-
-Paddle-tail Swimbait and Tube now have canonical recognition Media and expose it through this same recognition-help path on their new Rigs. The five Direct-Tie Lure/Bait configurations use the same component-card/popover pattern with their existing recognition Media. Runtime PASS is required before B closes.

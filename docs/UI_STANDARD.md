@@ -27,7 +27,7 @@ The interface should be clean, calm, beginner friendly, fast, field-usable, mobi
 
 Forest Journal is the only production-supported Version 1 theme and the current visual reference baseline.
 
-Forest Copper, Forest Gold, and Legacy Dark remain deferred/inactive theme candidates. They do not require current component parity and are outside the production validation matrix until the Settings/User Preferences gate deliberately defines multi-theme architecture.
+Forest Copper, Forest Gold, and Legacy Dark remain deferred/inactive theme candidates. They do not require current component parity and are outside the production validation matrix until the Settings / User Data Architecture gate deliberately defines theme selection and persistence.
 
 The reference-media surface `#f4f0e8` / RGB `244, 240, 232` is a cross-theme invariant. Future themes must remain visually compatible with it rather than recolor that media surface.
 

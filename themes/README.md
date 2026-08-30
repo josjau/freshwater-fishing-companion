@@ -14,7 +14,7 @@ The project deliberately postpones multi-theme implementation while the applicat
 
 ## Future trigger
 
-Revisit final theme architecture during the Settings / User Preferences architecture gate. At that time:
+Revisit final theme architecture during the active Settings / User Data Architecture gate, specifically when preference ownership and theme persistence are settled. At that time:
 
 - centralize shared base/layout/component behavior where practical,
 - keep individual production themes focused primarily on design tokens and intentional overrides,

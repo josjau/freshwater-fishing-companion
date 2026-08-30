@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.8.0  
+**Document Revision:** 0.9.0  
 **Document Status:** Approved  
-**Implementation Status:** Fish Version 1 relationships COMPLETE / VALIDATED / CLOSED — 20 identification pairs; 27 Fish guidance records currently active  
+**Implementation Status:** VALIDATED CURRENT RELATIONSHIPS — 20 Fish identification pairs; 27 Fish guidance records; 177 intrinsic Compatibility relationships (54/69/54)  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, D069, FISH-001–FISH-007  
 **Last Updated:** 2026-08-30
 
@@ -13,7 +13,7 @@
 
 This document defines how canonical entities, Decision Knowledge, and User Knowledge relate within Freshwater Fishing Companion.
 
-Relationships use stable identifiers and follow the site's semantic single-owner rule. The Fish Version 1 production relationship milestone is complete: the approved 20-pair identification graph is fully implemented and Fish-to-Rig guidance is populated for the 27 Fish with approved guidance records. Other future relationship domains/gates remain governed separately below.
+Relationships use stable identifiers and follow the site's semantic single-owner rule. The Fish Version 1 relationship milestone is complete, and the Recommendation Prerequisites Foundation implemented the typed intrinsic Compatibility domain. The approved 20-pair Fish identification graph is fully implemented, Fish-to-Rig guidance is populated for the 27 Fish with approved guidance records, and `data/compatibility.js` contains exactly 177 active intrinsic Compatibility relationships.
 
 ---
 
@@ -21,7 +21,7 @@ Relationships use stable identifiers and follow the site's semantic single-owner
 
 ## Layer 1 — Reference Knowledge
 
-Curated facts and reusable fishing concepts, including implemented Fish, Rigs, Knots, Tackle, and Media plus approved future domains including Techniques, Conditions, Lure/Bait, and intrinsic Compatibility Relationships.
+Curated facts and reusable fishing concepts, including implemented Fish, Rigs, Knots, Tackle, Media, Techniques, Conditions, Lure/Bait, and intrinsic Compatibility Relationships.
 
 Fish pairwise field-identification relationships are Reference Knowledge owned by `FISH_IDENTIFICATION_RELATIONSHIPS`. The registry is implemented and expands with each approved Fish production package.
 
@@ -120,7 +120,7 @@ Media.ownerType
 Media.ownerId
 ```
 
-Canonical Fish, Rig, Knot, Tackle, and future Technique/Condition/Lure records must not maintain inverse media-ID arrays solely to locate Media that already identifies its owner.
+Canonical Fish, Rig, Knot, Tackle, Technique, Condition, and Lure/Bait records must not maintain inverse media-ID arrays solely to locate Media that already identifies its owner.
 
 The Repository Audit Section 4 Tackle cleanup is **implemented, validated, and closed**: transitional Tackle `mediaIds[]` duplicate storage was removed from production. Historical versions remain available through Git history.
 
@@ -364,7 +364,7 @@ Future recommendation relationships should follow the same ownership test: conte
 
 ---
 
-# Approved Intrinsic Compatibility Relationships — Planning Closed / Production Authorized
+# Intrinsic Compatibility Relationships — IMPLEMENTED / VALIDATED
 
 D069 approves one typed Compatibility Relationship domain for intrinsic pairwise compatibility among:
 
@@ -413,7 +413,7 @@ My Tackle owned-item mappings and current-availability state are User Knowledge 
 
 ## Locked authored scope — 177 exact V1 records
 
-The complete V1 Compatibility target is exactly **177 active intrinsic relationships**: **54 `rig-lure-bait` + 69 `rig-technique` + 54 `lure-bait-technique`**. The active workstream preserves the same execution scope; this document owns the canonical relationship contract.
+The complete V1 Compatibility production set is exactly **177 active intrinsic relationships**: **54 `rig-lure-bait` + 69 `rig-technique` + 54 `lure-bait-technique`**. `data/compatibility.js` implements that exact set; this document owns the canonical relationship contract.
 
 ### Rig ↔ Lure/Bait — exactly 54
 
@@ -529,9 +529,9 @@ For implemented and approved production relationship domains, validate as applic
 - every production-ready migrated Fish has exactly one active primary-identification Media relationship,
 - ordinary production relationship IDs are not used as forward-planning placeholders.
 
-For the future Compatibility Relationship domain, validation must additionally enforce valid relationship types, deterministic IDs, correct participant entity types, duplicate-pair prevention, active-participant runtime gating, and the absence of contextual recommendation fields. Staged production must record when a compatibility family/scope is complete before absence is treated as authoritative incompatibility.
+For the implemented Compatibility Relationship domain, validation additionally enforces valid relationship types, deterministic IDs, correct participant entity types, duplicate-pair prevention, active-participant runtime gating, exact authored-set coverage, and the absence of contextual recommendation fields. During any future staged expansion, the affected compatibility family/scope must be explicitly declared complete before absence is treated as authoritative incompatibility.
 
-The current production Rig library contains 21 active Rigs, including Split-Shot Bait Rig.
+The current production Rig library contains 23 active Rigs, including Direct-Tie Lure Setup, Weighted Swimbait Hook Rig, Tube Jig Rig, and Split-Shot Bait Rig.
 
 ---
 

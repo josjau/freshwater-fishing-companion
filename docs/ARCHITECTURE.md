@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Architecture
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.12.0  
+**Document Revision:** 0.13.0  
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
-**Last Updated:** 2026-08-27
+**Last Updated:** 2026-08-30
 
 # Purpose
 
@@ -16,7 +16,7 @@ This document defines the current application architecture, source ownership, an
 
 - GitHub `main` is authoritative for committed source, documentation, and formal history.
 - Google Drive `Working Source/Current` is the complete editable repository working tree and owns approved uncommitted repository work under D068.
-- The Live Working State carries active review-cycle identity, approval/validation state, defects, and detailed resume context.
+- The Live Working State is the compact active operational manifest for review-cycle identity, approval/validation state, defects, and exact resume context; it is not an append-only history log.
 - `docs/WORKING_STATE.md` is the single compact repository current-state/exact-resume entrypoint.
 - Review/checkpoint ZIPs in Drive Packages are transport artifacts, not working truth.
 - ChatGPT Work is not part of the supported FCC execution environment.
@@ -71,6 +71,10 @@ Required production JavaScript load order remains:
 data/fish-categories.js
 data/fish.js
 data/rigs.js
+data/conditions.js
+data/lure-bait.js
+data/techniques.js
+data/compatibility.js
 data/fish-identification.js
 data/fish-rig-guidance.js
 data/knots.js
@@ -124,7 +128,7 @@ Do not blur these layers without an explicit architecture decision.
 
 The Dashboard exposes four foundational connected-knowledge domains: Fish Guide, Knots, Rig Guide, and Tackle. Tackle remains the root domain; **Tackle Reference / Find Tackle** is Reference Knowledge while **My Tackle** is User Knowledge. D063/D067 own that durable boundary.
 
-D069 adds the approved recommendation prerequisite architecture: **Conditions**, **Lure/Bait**, and **Techniques** are distinct Reference Knowledge domains; contextual ranking/rationale and Fish/Condition-specific suitability remain Recommendation Decision Knowledge. A typed Compatibility Relationship domain owns intrinsic Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique compatibility once implemented.
+D069 adds the approved recommendation prerequisite architecture: **Conditions**, **Lure/Bait**, and **Techniques** are distinct Reference Knowledge domains; contextual ranking/rationale and Fish/Condition-specific suitability remain Recommendation Decision Knowledge. A typed Compatibility Relationship domain owns intrinsic Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique compatibility. The Recommendation Prerequisites Foundation implemented these domains on current `main`.
 
 Regulations is a resource-navigation domain, not a new owner of legal facts.
 
@@ -158,13 +162,13 @@ Fish identification media is accuracy-critical and follows `MEDIA_GUIDE.md`.
 
 ## Rigs
 
-`data/rigs.js` owns 21 active canonical Rig records and physical setup facts including difficulty, use cases, conditions, component requirements, assembly, setup notes, mistakes, safety, variations, knot applications, references/tutorial metadata, versioning, and lifecycle state.
+`data/rigs.js` owns 23 active canonical Rig records and physical setup facts including difficulty, use cases, conditions, component requirements, assembly, setup notes, mistakes, safety, variations, knot applications, references/tutorial metadata, versioning, and lifecycle state.
 
 - `assemblySteps` is the authoritative in-app build sequence.
 - `componentRequirements` owns Rig -> Tackle usage; reverse Tackle `Used In` is derived.
 - `CORE_RIG_IDS` owns Core membership/order.
 - Rig does not own inverse media IDs.
-- Technique is Approved / Not Implemented under D003/D024/D069; reusable presentation behavior belongs to Technique, while intrinsic Rig↔Technique compatibility will be stored once under the typed Compatibility Relationship domain.
+- `data/techniques.js` owns the 16 active canonical Technique records and reusable presentation behavior. Intrinsic Rig↔Technique compatibility is stored once in `data/compatibility.js`; Rig does not store inverse Technique arrays.
 
 ## Knots and reel/line guidance
 
@@ -181,13 +185,13 @@ The Knots milestone is closed and validated.
 
 Persistent owned tackle belongs to future My Tackle/User Knowledge. The current readiness store is transitional only and must not be mistaken for authoritative ownership.
 
-A separate Lure/Bait Reference domain is Approved / Not Implemented under D069. Tackle owns functional fishing equipment and Rig-building components; Lure/Bait owns canonical lure and bait identities intentionally presented to Fish. Commercial product identity is not required for the initial Lure/Bait architecture.
+`data/lure-bait.js` owns the implemented 13-identity Lure/Bait Reference domain under D069. Tackle owns functional fishing equipment and Rig-building components; Lure/Bait owns canonical lure and bait identities intentionally presented to Fish. Commercial product identity is not required for the current Lure/Bait architecture.
 
 D069 refines sequencing while preserving D067's ownership invariant: after Conditions, Lure/Bait, and Techniques are implemented, the Settings / User Data Architecture gate must settle stable user/profile identity, persistence, retention, migration, backup/restore, device transfer, preference ownership, and ownership-vs-current-availability semantics before authoritative My Tackle. A scoped My Tackle availability foundation then precedes What Should I Throw production. Full Tackle Reference expansion and Catch Log remain later milestones.
 
-## Approved recommendation prerequisite domains
+## Implemented recommendation prerequisite domains
 
-**Approved / Not Implemented:**
+**Current / Implemented:**
 
 - Conditions owns reusable environmental/situational vocabulary, not recommendation lists or weights.
 - Lure/Bait owns canonical fishing-relevant lure/bait identity, not commercial SKUs or context-specific recommended size/color.
@@ -195,7 +199,14 @@ D069 refines sequencing while preserving D067's ownership invariant: after Condi
 - Compatibility Relationship owns intrinsic pairwise compatibility for Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique. Each pair is stored once; reverse navigation is derived.
 - Recommendation Decision Knowledge owns contextual selection, ranking, rationale, exact context-specific parameters, and Fish/Condition suitability.
 
-The approved prerequisite sequence is Conditions → Lure/Bait → Techniques → Settings/User Data → scoped My Tackle Availability → What Should I Throw production.
+The first three prerequisite domains are complete. The remaining approved sequence is Settings/User Data → scoped My Tackle Availability → What Should I Throw production.
+
+## User Knowledge identity and synchronization
+
+**UD-1 — Locked / architecture planning, refinement allowed:** FCC targets one persistent user identity/profile that may span multiple devices. Devices may maintain local offline-capable copies of supported User Knowledge and synchronize durable profile-owned records through a shared profile-scoped service when connectivity is available. Multiple devices are replicas of the same semantic profile rather than independent users. Cross-device synchronization requires secure authentication or an equivalent approved account/device-linking mechanism, and synchronization is record-oriented rather than whole-profile replacement. Manual export/restore remains a backup/portability/recovery mechanism. Multi-profile/family sharing is deferred.
+
+The exact authentication/account-linking mechanism, sync service, local persistence technology, conflict-resolution rules, schema/versioning details, and privacy/security implementation remain unresolved under the active Settings / User Data Architecture workstream. Current Rig-readiness `localStorage` remains transitional availability state and is not authoritative ownership.
+
 
 ## Media
 
@@ -208,7 +219,7 @@ ownerId
 
 Entity records do not maintain inverse media-ID arrays merely for lookup.
 
-Current production includes 29 Tackle recognition attachments, 30 primary Fish identification attachments, and approved instructional-media records for all 10 Version 1 Knots.
+Current production includes 31 Tackle recognition attachments, 30 primary Fish identification attachments, and approved instructional-media records for all 10 Version 1 Knots.
 
 `MEDIA_GUIDE.md` owns detailed rights, provenance, rendering, fallback, and asset-quality rules.
 
@@ -318,7 +329,7 @@ Documentation uses single-owner semantics:
 - `PROJECT.md` — mission/product scope.
 - `ARCHITECTURE.md` — current technical/source architecture.
 - `DECISIONS.md` + `decisions/*.md` — decision index and full durable decision bodies.
-- `DEVELOPMENT_WORKFLOW.md` + three `workflow/*.md` procedures — execution/governance.
+- `DEVELOPMENT_WORKFLOW.md` + two `workflow/*.md` procedures — execution/governance.
 - `ROADMAP.md` — product milestone order/future direction.
 - `WORKING_STATE.md` — single current-state/exact-resume entrypoint.
 - `ACTIVE-CHANGE-LEDGER.md` — material non-closed carry-forward.

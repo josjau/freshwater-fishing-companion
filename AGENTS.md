@@ -5,7 +5,7 @@ These instructions apply to the entire repository. They define hard invariants a
 ## Hard invariants
 
 1. **Authority:** GitHub `main` is committed authority. Google Drive `Working Source/Current` is the complete editable working tree and owns approved uncommitted repository changes.
-2. **Continuity:** `docs/WORKING_STATE.md` is the compact repository current-state/exact-resume entrypoint. The Live Working State is the active operational ledger and must be updated + read back after each material transition before dependent work continues. `docs/ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward.
+2. **Continuity:** `docs/WORKING_STATE.md` is the compact repository current-state/exact-resume entrypoint. The Live Working State is the compact active operational manifest and must be updated + read back after each material transition before dependent work continues. It is **not** an append-only history log: superseded checkpoint detail must be removed/compacted after durable facts move to their canonical owners. `docs/ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward.
 3. **Source edits:** Before editing an existing repository file, verify current GitHub `main`, locate the matching Drive Current file, and edit Drive Current. Never reconstruct current source from chat, memory, old ZIPs, or prior proposals.
 4. **Bounded scope:** Questions/findings/proposals do not authorize writes. Production/data/media/configuration writes require explicit scope approval. Preserve unrelated changes and use targeted edits by default.
 5. **Commit authority:** Production/user-facing commit or push requires explicit user authorization. Documentation-only commits retain standing authority after Drive-first edit and applicable validation.
