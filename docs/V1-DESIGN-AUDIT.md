@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Version 1 Design Audit
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.6  
+**Document Revision:** 1.0.9  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-08-30
 
 # Purpose
 
@@ -172,6 +172,8 @@ The audit must standardize this distinction:
 
 Context labels and navigation targets should not become visually interchangeable.
 
+**2026-08-29 carry-forward:** runtime review confirmed that attachment/application presentation inside **Knots You'll Tie** is inconsistent across Rig pages, not merely stylistically different. The final audit must inventory every implementation for both wording and structure, including grouped `Use these knots for:` context chips versus per-connection headings such as `Main line or leader to inline spinner`, plus any plain-label variants. Where the semantic role is equivalent, establish one shared attachment/application grammar and consistent context-label treatment. Preserve genuine physical connection differences rather than forcing different attachment points into identical copy.
+
 ## 7. Information-Section Border / Accent Grammar
 
 **Status:** AUDIT REQUIRED
@@ -263,6 +265,35 @@ The Version 1 UX Design Audit must:
 - validate that revised Rig copy still explains the Rig clearly without misleading users about its broader applicability.
 
 This defect is intentionally parked for the site-wide UX Design Audit unless it blocks an active Fish-production review. It must not be solved by adding more species-specific duplication to Rig data.
+
+## 14. Knowledge Card Element Standardization
+
+**Status:** AUDIT REQUIRED / SITE-WIDE COMPONENT CONSISTENCY
+
+The Subphase B Conditions/Lure-Bait review exposed a broader cross-domain issue: equivalent information and interaction elements inside Reference Knowledge / knowledge-detail cards are not always presented consistently across card types. The final Version 1 UX Design Audit must therefore review **every element used on knowledge cards**, not only whole-card shells.
+
+The audit must inventory and compare, across Fish, Rigs, Knots, Tackle, Regulations, Lure/Bait, Conditions, Techniques, and any other implemented knowledge-card surfaces:
+
+- section headings and subsection hierarchy;
+- static label/chip treatments versus clickable knowledge/reference chips;
+- padding, min-height, border radius, borders, background/accent treatment, and spacing;
+- internal-navigation links, external-reference links, relationship links, and contextual popover triggers;
+- metadata badges, category/difficulty/status labels, and other compact facts;
+- component/readiness controls, checkboxes, info controls, and their alignment;
+- instructional/action links and workflow-launching controls;
+- media containers, captions, source/provenance treatments, and media-to-text spacing;
+- empty-state/absence messaging;
+- list/group layout, wrapping behavior, and mobile density;
+- hover, focus, active, disabled, and selected states;
+- typography, iconography, arrow/cue usage, and internal-vs-external interaction signals.
+
+For each recurring element, determine whether the occurrences are semantically equivalent. Equivalent elements should converge on one shared visual/interaction grammar. Intentional differences must have a documented semantic reason rather than being historical styling drift.
+
+The audit must specifically preserve the newly established distinction that **clickable user-knowledge/reference chips look interactive**, while passive labels such as **Best For** remain visually neutral. Compact contextual-chip density should be standardized where appropriate rather than allowing each domain to invent its own padding.
+
+The output of this audit should be a reusable component rule set in the proper governing UI documentation, followed by implementation normalization and actual-device validation. Do not normalize elements merely because they look similar if they serve materially different tasks.
+
+**2026-08-30 Technique-chip carry-forward:** Subphase C runtime review accepted the Technique knowledge-reference chips as functionally correct, including configuration-aware Technique subsets on Direct-Tie Lure Setup, but the current chip layout/formatting is not considered visually final. During the Version 1 UX Design Audit, specifically review Technique-chip wrapping, spacing, alignment, density, grouping, label fit, and responsive behavior within Rig Detail At-a-Glance. Compare the Technique treatment with other clickable knowledge/reference chips and nearby passive labels so the result follows the shared semantic component grammar without making navigation targets and non-interactive context look interchangeable. Preserve the approved Technique interactions, popover behavior, and Compatibility semantics; this is a presentation-refinement item, not authorization to reopen Technique content or relationship data.
 
 # Mobile Validation Matrix
 

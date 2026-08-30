@@ -2,6 +2,7 @@
 "use strict";
 
 const childProcess = require("child_process");
+const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
@@ -226,6 +227,23 @@ function validateEntrypoint() {
         for (const dataFile of directDataFiles) {
             if (!loadedDataFiles.includes(dataFile)) {
                 fail("Entrypoint", `production data source is not loaded by index.html: ${dataFile}`);
+            }
+        }
+    }
+
+    const requiredOrder = [
+        "data/rigs.js",
+        "data/lure-bait.js",
+        "data/techniques.js",
+        "data/compatibility.js",
+        "view-renderer.js"
+    ];
+    const requiredIndexes = requiredOrder.map((item) => refs.scriptRefs.indexOf(item));
+    if (requiredIndexes.every((index) => index >= 0)) {
+        for (let index = 1; index < requiredIndexes.length; index += 1) {
+            if (requiredIndexes[index] <= requiredIndexes[index - 1]) {
+                fail("Entrypoint", `required production load order is ${requiredOrder.join(" -> ")}`);
+                break;
             }
         }
     }
@@ -1177,6 +1195,357 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
     }
 }
 
+
+function validateTechniqueAndCompatibilityFoundation(techniques, relationships, rigs, lureBait) {
+    recordCheck("Technique and intrinsic Compatibility foundation");
+
+    const expectedTechniqueNames = new Map([
+        ["steady-retrieve", "Steady Retrieve"],
+        ["stop-and-go-retrieve", "Stop-and-Go Retrieve"],
+        ["twitch-and-pause", "Twitch and Pause"],
+        ["swim", "Swim"],
+        ["hop", "Hop"],
+        ["drag", "Drag"],
+        ["shake", "Shake"],
+        ["deadstick", "Deadstick"],
+        ["lift-and-fall", "Lift and Fall"],
+        ["vertical-jig", "Vertical Jig"],
+        ["natural-drift", "Natural Drift"],
+        ["float-presentation", "Float Presentation"],
+        ["tight-line", "Tight-Line Presentation"],
+        ["bottom-presentation", "Bottom Presentation"],
+        ["troll", "Troll"],
+        ["drift", "Drift"]
+    ]);
+    const expectedTechniqueIds = [...expectedTechniqueNames.keys()];
+    if (techniques.length !== expectedTechniqueIds.length) {
+        fail("Technique production", `expected ${expectedTechniqueIds.length} records; found ${techniques.length}`);
+    }
+    const actualTechniqueIds = techniques.map((item) => item?.id);
+    if (JSON.stringify(actualTechniqueIds) !== JSON.stringify(expectedTechniqueIds)) {
+        fail("Technique production", `Technique identity/order must be exactly ${expectedTechniqueIds.join(", ")}`);
+    }
+    validateUniqueIds(techniques, "Technique production");
+    const techniqueFields = [
+        "id", "name", "summary", "createdVersion", "lastModifiedVersion", "isActive",
+        "presentationSteps", "strikeCues", "commonMistakes", "beginnerTips"
+    ];
+    for (const technique of techniques) {
+        if (!isPlainObject(technique)) continue;
+        validateExactFieldOrder(technique, techniqueFields, `Technique ${technique.id}`);
+        if (technique.name !== expectedTechniqueNames.get(technique.id)) {
+            fail("Technique production", `${technique.id}: unexpected name ${JSON.stringify(technique.name)}`);
+        }
+        if (typeof technique.summary !== "string" || technique.summary.trim() === "") {
+            fail("Technique production", `${technique.id}: summary must be meaningful text`);
+        }
+        if (technique.isActive !== true) fail("Technique production", `${technique.id}: approved V1 Technique must be active`);
+        validateTextArray(technique.presentationSteps, `Technique ${technique.id} presentationSteps`, false);
+        validateTextArray(technique.strikeCues, `Technique ${technique.id} strikeCues`, false);
+        validateTextArray(technique.commonMistakes, `Technique ${technique.id} commonMistakes`, false);
+        validateTextArray(technique.beginnerTips, `Technique ${technique.id} beginnerTips`, false);
+    }
+
+    const contentProjection = techniques.map((technique) => ({
+        id: technique.id,
+        name: technique.name,
+        summary: technique.summary,
+        presentationSteps: technique.presentationSteps,
+        strikeCues: technique.strikeCues,
+        commonMistakes: technique.commonMistakes,
+        beginnerTips: technique.beginnerTips
+    }));
+    const contentHash = crypto.createHash("sha256").update(JSON.stringify(contentProjection), "utf8").digest("hex");
+    const expectedContentHash = "e1aeae83ec43403e8c7d5f6f01bdb43a968408d81c17c52849fc6b934a8f48f6";
+    if (contentHash !== expectedContentHash) {
+        fail("Technique production", `approved C2 exact-content lock mismatch: ${contentHash}`);
+    }
+
+    const expectedRelationshipIds = new Set([
+        "rig-lure-bait-texas-rig-stick-worm",
+        "rig-lure-bait-jighead-soft-plastic-stick-worm",
+        "rig-lure-bait-wacky-rig-stick-worm",
+        "rig-lure-bait-ned-rig-stick-worm",
+        "rig-lure-bait-weightless-soft-plastic-rig-stick-worm",
+        "rig-lure-bait-drop-shot-rig-stick-worm",
+        "rig-lure-bait-carolina-rig-stick-worm",
+        "rig-lure-bait-neko-rig-stick-worm",
+        "rig-lure-bait-shaky-head-rig-stick-worm",
+        "rig-lure-bait-free-rig-stick-worm",
+        "rig-lure-bait-jika-rig-stick-worm",
+        "rig-lure-bait-punch-pegged-texas-rig-stick-worm",
+        "rig-lure-bait-texas-rig-craw",
+        "rig-lure-bait-jighead-soft-plastic-craw",
+        "rig-lure-bait-carolina-rig-craw",
+        "rig-lure-bait-free-rig-craw",
+        "rig-lure-bait-jika-rig-craw",
+        "rig-lure-bait-punch-pegged-texas-rig-craw",
+        "rig-lure-bait-texas-rig-creature-bait",
+        "rig-lure-bait-carolina-rig-creature-bait",
+        "rig-lure-bait-free-rig-creature-bait",
+        "rig-lure-bait-jika-rig-creature-bait",
+        "rig-lure-bait-punch-pegged-texas-rig-creature-bait",
+        "rig-lure-bait-texas-rig-paddle-tail-swimbait",
+        "rig-lure-bait-jighead-soft-plastic-paddle-tail-swimbait",
+        "rig-lure-bait-weightless-soft-plastic-rig-paddle-tail-swimbait",
+        "rig-lure-bait-weighted-swimbait-hook-rig-paddle-tail-swimbait",
+        "rig-lure-bait-texas-rig-tube",
+        "rig-lure-bait-weightless-soft-plastic-rig-tube",
+        "rig-lure-bait-drop-shot-rig-tube",
+        "rig-lure-bait-tube-jig-rig-tube",
+        "rig-lure-bait-direct-tie-lure-setup-spinnerbait",
+        "rig-lure-bait-direct-tie-lure-setup-crankbait",
+        "rig-lure-bait-direct-tie-lure-setup-jerkbait",
+        "rig-lure-bait-direct-tie-lure-setup-inline-spinner",
+        "rig-lure-bait-direct-tie-lure-setup-spoon",
+        "rig-lure-bait-fixed-bobber-rig-minnow",
+        "rig-lure-bait-slip-bobber-rig-minnow",
+        "rig-lure-bait-basic-bottom-rig-minnow",
+        "rig-lure-bait-live-bait-slip-sinker-rig-minnow",
+        "rig-lure-bait-three-way-rig-minnow",
+        "rig-lure-bait-bottom-bouncer-spinner-rig-minnow",
+        "rig-lure-bait-split-shot-bait-rig-minnow",
+        "rig-lure-bait-fixed-bobber-rig-nightcrawler",
+        "rig-lure-bait-slip-bobber-rig-nightcrawler",
+        "rig-lure-bait-basic-bottom-rig-nightcrawler",
+        "rig-lure-bait-live-bait-slip-sinker-rig-nightcrawler",
+        "rig-lure-bait-three-way-rig-nightcrawler",
+        "rig-lure-bait-bottom-bouncer-spinner-rig-nightcrawler",
+        "rig-lure-bait-split-shot-bait-rig-nightcrawler",
+        "rig-lure-bait-fixed-bobber-rig-cricket",
+        "rig-lure-bait-slip-bobber-rig-cricket",
+        "rig-lure-bait-basic-bottom-rig-cricket",
+        "rig-lure-bait-split-shot-bait-rig-cricket",
+        "rig-technique-fixed-bobber-rig-float-presentation",
+        "rig-technique-fixed-bobber-rig-natural-drift",
+        "rig-technique-slip-bobber-rig-float-presentation",
+        "rig-technique-slip-bobber-rig-natural-drift",
+        "rig-technique-basic-bottom-rig-bottom-presentation",
+        "rig-technique-basic-bottom-rig-tight-line",
+        "rig-technique-texas-rig-hop",
+        "rig-technique-texas-rig-drag",
+        "rig-technique-texas-rig-shake",
+        "rig-technique-texas-rig-deadstick",
+        "rig-technique-jighead-soft-plastic-swim",
+        "rig-technique-jighead-soft-plastic-hop",
+        "rig-technique-jighead-soft-plastic-lift-and-fall",
+        "rig-technique-jighead-soft-plastic-vertical-jig",
+        "rig-technique-direct-tie-lure-setup-steady-retrieve",
+        "rig-technique-direct-tie-lure-setup-stop-and-go-retrieve",
+        "rig-technique-direct-tie-lure-setup-twitch-and-pause",
+        "rig-technique-direct-tie-lure-setup-lift-and-fall",
+        "rig-technique-direct-tie-lure-setup-vertical-jig",
+        "rig-technique-direct-tie-lure-setup-troll",
+        "rig-technique-wacky-rig-shake",
+        "rig-technique-wacky-rig-deadstick",
+        "rig-technique-ned-rig-drag",
+        "rig-technique-ned-rig-hop",
+        "rig-technique-ned-rig-shake",
+        "rig-technique-ned-rig-deadstick",
+        "rig-technique-ned-rig-swim",
+        "rig-technique-weightless-soft-plastic-rig-swim",
+        "rig-technique-weightless-soft-plastic-rig-twitch-and-pause",
+        "rig-technique-weightless-soft-plastic-rig-deadstick",
+        "rig-technique-drop-shot-rig-shake",
+        "rig-technique-drop-shot-rig-deadstick",
+        "rig-technique-carolina-rig-drag",
+        "rig-technique-live-bait-slip-sinker-rig-bottom-presentation",
+        "rig-technique-live-bait-slip-sinker-rig-drift",
+        "rig-technique-live-bait-slip-sinker-rig-troll",
+        "rig-technique-live-bait-slip-sinker-rig-tight-line",
+        "rig-technique-three-way-rig-bottom-presentation",
+        "rig-technique-three-way-rig-natural-drift",
+        "rig-technique-neko-rig-hop",
+        "rig-technique-neko-rig-drag",
+        "rig-technique-neko-rig-shake",
+        "rig-technique-neko-rig-deadstick",
+        "rig-technique-shaky-head-rig-shake",
+        "rig-technique-shaky-head-rig-drag",
+        "rig-technique-shaky-head-rig-hop",
+        "rig-technique-shaky-head-rig-deadstick",
+        "rig-technique-free-rig-lift-and-fall",
+        "rig-technique-free-rig-hop",
+        "rig-technique-free-rig-drag",
+        "rig-technique-double-jig-crappie-rig-vertical-jig",
+        "rig-technique-double-jig-crappie-rig-lift-and-fall",
+        "rig-technique-jika-rig-hop",
+        "rig-technique-jika-rig-drag",
+        "rig-technique-jika-rig-lift-and-fall",
+        "rig-technique-punch-pegged-texas-rig-lift-and-fall",
+        "rig-technique-bottom-bouncer-spinner-rig-troll",
+        "rig-technique-bottom-bouncer-spinner-rig-drift",
+        "rig-technique-split-shot-bait-rig-natural-drift",
+        "rig-technique-split-shot-bait-rig-tight-line",
+        "rig-technique-split-shot-bait-rig-bottom-presentation",
+        "rig-technique-weighted-swimbait-hook-rig-swim",
+        "rig-technique-weighted-swimbait-hook-rig-steady-retrieve",
+        "rig-technique-weighted-swimbait-hook-rig-stop-and-go-retrieve",
+        "rig-technique-tube-jig-rig-hop",
+        "rig-technique-tube-jig-rig-drag",
+        "rig-technique-tube-jig-rig-lift-and-fall",
+        "rig-technique-tube-jig-rig-vertical-jig",
+        "rig-technique-tube-jig-rig-swim",
+        "lure-bait-technique-stick-worm-deadstick",
+        "lure-bait-technique-stick-worm-shake",
+        "lure-bait-technique-stick-worm-hop",
+        "lure-bait-technique-stick-worm-drag",
+        "lure-bait-technique-stick-worm-swim",
+        "lure-bait-technique-stick-worm-twitch-and-pause",
+        "lure-bait-technique-craw-hop",
+        "lure-bait-technique-craw-drag",
+        "lure-bait-technique-craw-shake",
+        "lure-bait-technique-craw-deadstick",
+        "lure-bait-technique-craw-lift-and-fall",
+        "lure-bait-technique-creature-bait-hop",
+        "lure-bait-technique-creature-bait-drag",
+        "lure-bait-technique-creature-bait-shake",
+        "lure-bait-technique-creature-bait-deadstick",
+        "lure-bait-technique-creature-bait-lift-and-fall",
+        "lure-bait-technique-paddle-tail-swimbait-swim",
+        "lure-bait-technique-paddle-tail-swimbait-steady-retrieve",
+        "lure-bait-technique-paddle-tail-swimbait-stop-and-go-retrieve",
+        "lure-bait-technique-tube-hop",
+        "lure-bait-technique-tube-drag",
+        "lure-bait-technique-tube-lift-and-fall",
+        "lure-bait-technique-tube-vertical-jig",
+        "lure-bait-technique-tube-swim",
+        "lure-bait-technique-spinnerbait-steady-retrieve",
+        "lure-bait-technique-spinnerbait-stop-and-go-retrieve",
+        "lure-bait-technique-crankbait-steady-retrieve",
+        "lure-bait-technique-crankbait-stop-and-go-retrieve",
+        "lure-bait-technique-crankbait-troll",
+        "lure-bait-technique-jerkbait-twitch-and-pause",
+        "lure-bait-technique-jerkbait-steady-retrieve",
+        "lure-bait-technique-inline-spinner-steady-retrieve",
+        "lure-bait-technique-inline-spinner-troll",
+        "lure-bait-technique-spoon-steady-retrieve",
+        "lure-bait-technique-spoon-stop-and-go-retrieve",
+        "lure-bait-technique-spoon-lift-and-fall",
+        "lure-bait-technique-spoon-vertical-jig",
+        "lure-bait-technique-spoon-troll",
+        "lure-bait-technique-minnow-natural-drift",
+        "lure-bait-technique-minnow-float-presentation",
+        "lure-bait-technique-minnow-tight-line",
+        "lure-bait-technique-minnow-bottom-presentation",
+        "lure-bait-technique-minnow-drift",
+        "lure-bait-technique-minnow-troll",
+        "lure-bait-technique-nightcrawler-natural-drift",
+        "lure-bait-technique-nightcrawler-float-presentation",
+        "lure-bait-technique-nightcrawler-tight-line",
+        "lure-bait-technique-nightcrawler-bottom-presentation",
+        "lure-bait-technique-nightcrawler-drift",
+        "lure-bait-technique-nightcrawler-troll",
+        "lure-bait-technique-cricket-natural-drift",
+        "lure-bait-technique-cricket-float-presentation",
+        "lure-bait-technique-cricket-tight-line",
+        "lure-bait-technique-cricket-bottom-presentation"
+]);
+    if (relationships.length !== 177) fail("Compatibility production", `expected 177 records; found ${relationships.length}`);
+    validateUniqueIds(relationships, "Compatibility production");
+    const expectedFields = [
+        "id", "relationshipType", "sourceType", "sourceId", "targetType", "targetId",
+        "createdVersion", "lastModifiedVersion", "isActive"
+    ];
+    const familyDefinitions = {
+        "rig-lure-bait": { sourceType: "rig", targetType: "lure-bait", expectedCount: 54 },
+        "rig-technique": { sourceType: "rig", targetType: "technique", expectedCount: 69 },
+        "lure-bait-technique": { sourceType: "lure-bait", targetType: "technique", expectedCount: 54 }
+    };
+    const rigById = indexById(rigs);
+    const lureById = indexById(lureBait);
+    const techniqueById = indexById(techniques);
+    const registryByType = { rig: rigById, "lure-bait": lureById, technique: techniqueById };
+    const familyCounts = new Map();
+    const semanticPairs = new Set();
+    const actualRelationshipIds = new Set();
+
+    for (const relationship of relationships) {
+        if (!isPlainObject(relationship)) continue;
+        validateExactFieldOrder(relationship, expectedFields, `Compatibility ${relationship.id}`);
+        const definition = familyDefinitions[relationship.relationshipType];
+        if (!definition) {
+            fail("Compatibility production", `${relationship.id}: invalid relationshipType ${JSON.stringify(relationship.relationshipType)}`);
+            continue;
+        }
+        familyCounts.set(relationship.relationshipType, (familyCounts.get(relationship.relationshipType) || 0) + 1);
+        if (relationship.sourceType !== definition.sourceType || relationship.targetType !== definition.targetType) {
+            fail("Compatibility production", `${relationship.id}: noncanonical participant type ordering`);
+        }
+        const expectedId = `${relationship.relationshipType}-${relationship.sourceId}-${relationship.targetId}`;
+        if (relationship.id !== expectedId) fail("Compatibility production", `${relationship.id}: deterministic ID must be ${expectedId}`);
+        if (relationship.isActive !== true) fail("Compatibility production", `${relationship.id}: approved V1 relationship must be active`);
+        const source = registryByType[relationship.sourceType]?.get(relationship.sourceId);
+        const target = registryByType[relationship.targetType]?.get(relationship.targetId);
+        if (!source) fail("Compatibility production", `${relationship.id}: unresolved source ${relationship.sourceType}:${relationship.sourceId}`);
+        else if (source.isActive !== true) fail("Compatibility production", `${relationship.id}: active relationship references inactive source`);
+        if (!target) fail("Compatibility production", `${relationship.id}: unresolved target ${relationship.targetType}:${relationship.targetId}`);
+        else if (target.isActive !== true) fail("Compatibility production", `${relationship.id}: active relationship references inactive target`);
+        const semanticKey = `${relationship.relationshipType}:${relationship.sourceType}:${relationship.sourceId}:${relationship.targetType}:${relationship.targetId}`;
+        const reverseKey = `${relationship.relationshipType}:${relationship.targetType}:${relationship.targetId}:${relationship.sourceType}:${relationship.sourceId}`;
+        if (semanticPairs.has(semanticKey)) fail("Compatibility production", `${relationship.id}: duplicate semantic relationship`);
+        if (semanticPairs.has(reverseKey)) fail("Compatibility production", `${relationship.id}: reversed duplicate relationship`);
+        semanticPairs.add(semanticKey);
+        actualRelationshipIds.add(relationship.id);
+    }
+
+    for (const [family, definition] of Object.entries(familyDefinitions)) {
+        const actualCount = familyCounts.get(family) || 0;
+        if (actualCount !== definition.expectedCount) {
+            fail("Compatibility production", `${family}: expected ${definition.expectedCount} records; found ${actualCount}`);
+        }
+    }
+    for (const expectedId of expectedRelationshipIds) {
+        if (!actualRelationshipIds.has(expectedId)) fail("Compatibility production", `missing approved relationship ${expectedId}`);
+    }
+    for (const actualId of actualRelationshipIds) {
+        if (!expectedRelationshipIds.has(actualId)) fail("Compatibility production", `unapproved extra relationship ${actualId}`);
+    }
+
+    const directTieRigTechniqueIds = relationships
+        .filter((relationship) =>
+            relationship.isActive === true &&
+            relationship.relationshipType === "rig-technique" &&
+            relationship.sourceId === "direct-tie-lure-setup"
+        )
+        .map((relationship) => relationship.targetId);
+    const expectedDirectTieConfigurationTechniques = new Map([
+        ["spinnerbait", ["steady-retrieve", "stop-and-go-retrieve"]],
+        ["crankbait", ["steady-retrieve", "stop-and-go-retrieve", "troll"]],
+        ["jerkbait", ["steady-retrieve", "twitch-and-pause"]],
+        ["inline-spinner", ["steady-retrieve", "troll"]],
+        ["spoon", ["steady-retrieve", "stop-and-go-retrieve", "lift-and-fall", "vertical-jig", "troll"]]
+    ]);
+    for (const [lureBaitId, expectedIds] of expectedDirectTieConfigurationTechniques) {
+        const lureTechniqueIds = new Set(relationships
+            .filter((relationship) =>
+                relationship.isActive === true &&
+                relationship.relationshipType === "lure-bait-technique" &&
+                relationship.sourceId === lureBaitId
+            )
+            .map((relationship) => relationship.targetId));
+        const resolvedIds = directTieRigTechniqueIds.filter((techniqueId) => lureTechniqueIds.has(techniqueId));
+        if (JSON.stringify(resolvedIds) !== JSON.stringify(expectedIds)) {
+            fail("Direct-Tie Technique presentation", `${lureBaitId}: expected configuration-aware Techniques ${expectedIds.join(", ")}; found ${resolvedIds.join(", ")}`);
+        }
+    }
+
+    const rendererText = readText("view-renderer.js");
+    if (rendererText) {
+        if (!rendererText.includes('function getRigTechniqueRecords(rigId, lureBaitId = null)')) {
+            fail("Direct-Tie Technique presentation", "renderer must accept selected Lure/Bait when resolving Rig Techniques");
+        }
+        if (!rendererText.includes('rigId === "direct-tie-lure-setup" && lureBaitId')) {
+            fail("Direct-Tie Technique presentation", "renderer must restrict configuration-aware Technique intersection to Direct-Tie Lure Setup");
+        }
+        if (!rendererText.includes('getCompatibleTargetIds("lure-bait-technique", "lure-bait", lureBaitId, "technique")')) {
+            fail("Direct-Tie Technique presentation", "renderer must intersect Direct-Tie Rig Techniques with selected Lure/Bait Technique compatibility");
+        }
+        if (!rendererText.includes('buildRigTechniqueTagList(record.id, selectedConfiguration?.lureBaitId ?? null)')) {
+            fail("Direct-Tie Technique presentation", "Rig Detail must pass the selected Direct-Tie Lure/Bait configuration into Technique rendering");
+        }
+    }
+}
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
@@ -1190,6 +1559,8 @@ function validateCanonicalData() {
     const rigBindings = loadBindings("data/rigs.js", ["RIG_DATA", "CORE_RIG_IDS"]);
     const conditionBindings = loadBindings("data/conditions.js", ["CONDITION_DATA"]);
     const lureBaitBindings = loadBindings("data/lure-bait.js", ["LURE_BAIT_DATA"]);
+    const techniqueBindings = loadBindings("data/techniques.js", ["TECHNIQUE_DATA"]);
+    const compatibilityBindings = loadBindings("data/compatibility.js", ["COMPATIBILITY_RELATIONSHIPS"]);
     const knotBindings = loadBindings("data/knots.js", ["KNOT_DATA", "CORE_KNOT_IDS"]);
     const tackleBindings = loadBindings("data/tackle.js", ["TACKLE_DATA"]);
     const guidanceBindings = loadBindings("data/knot-guidance.js", ["KNOT_TASK_DEFINITIONS"]);
@@ -1211,6 +1582,8 @@ function validateCanonicalData() {
     const rigs = requireArray(rigBindings.RIG_DATA, "Rig registry");
     const conditions = requireArray(conditionBindings.CONDITION_DATA, "Condition registry");
     const lureBait = requireArray(lureBaitBindings.LURE_BAIT_DATA, "Lure/Bait registry");
+    const techniques = requireArray(techniqueBindings.TECHNIQUE_DATA, "Technique registry");
+    const compatibility = requireArray(compatibilityBindings.COMPATIBILITY_RELATIONSHIPS, "Compatibility registry");
     const knots = requireArray(knotBindings.KNOT_DATA, "Knot registry");
     const tackle = requireArray(tackleBindings.TACKLE_DATA, "Tackle registry");
     const knotTasks = requireArray(guidanceBindings.KNOT_TASK_DEFINITIONS, "Knot task guidance");
@@ -1222,6 +1595,7 @@ function validateCanonicalData() {
     validateCanonicalRecords(rigs, "Rig registry");
     validateCanonicalRecords(conditions, "Condition registry");
     validateCanonicalRecords(lureBait, "Lure/Bait registry");
+    validateCanonicalRecords(techniques, "Technique registry");
     validateCanonicalRecords(knots, "Knot registry");
     validateCanonicalRecords(tackle, "Tackle registry");
 
@@ -1231,6 +1605,7 @@ function validateCanonicalData() {
     validateRegulationsData(regulationsBindings.REGULATIONS_DATA_BUILD_INFO, states, stateResources, stateNotices);
     validateConditionsData(conditions, rigs);
     validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishRigGuidance, knots);
+    validateTechniqueAndCompatibilityFoundation(techniques, compatibility, rigs, lureBait);
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
@@ -1453,6 +1828,8 @@ function validateCanonicalData() {
         rigs,
         conditions,
         lureBait,
+        techniques,
+        compatibility,
         knots,
         tackle,
         states,

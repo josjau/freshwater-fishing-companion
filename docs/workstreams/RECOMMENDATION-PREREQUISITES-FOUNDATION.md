@@ -1,12 +1,12 @@
 # Freshwater Fishing Companion — Recommendation Prerequisites Foundation
 
 **Document:** workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md  
-**Document Status:** Approved — Production Active / Third Runtime Repair Staged + Targeted PASS / Runtime Re-review Pending / Subphase C Blocked  
-**GitHub Baseline:** `38a974ce00560ac575ef0ebb9b706510d549b43c` (`Conditions - Lure/Bait Review`)  
+**Document Status:** Approved — Production Active / Subphase C Runtime PASS / Pre-Commit Validation Pending  
+**GitHub Baseline:** `3b5e77f0772b306977edb0252d5f9004069318f7` (`Lure/Bait UX fixes`)  
 **Decision Baseline:** D003, D004, D024, D056, D069  
 **Planning Locks:** RP-A1–RP-A4, RP-B1, RP-B2A–RP-B2D, B-01–B-13, RP-C1–RP-C4  
 **Created:** 2026-08-27  
-**Planning Closeout:** 2026-08-28
+**Planning Closeout:** 2026-08-30
 
 # Purpose
 
@@ -105,9 +105,9 @@ Semantic rule: **Rig tells how assembled → Tackle identifies required physical
 - **B-12 Nightcrawler:** intrinsic compatibility with Fixed Bobber Rig, Slip Bobber Rig, Basic Bottom Rig, Live-Bait Slip-Sinker Rig, Three-Way Rig, Bottom-Bouncer / Spinner Rig, and Split-Shot Bait Rig.
 - **B-13 Cricket:** intrinsic compatibility with Fixed Bobber Rig, Slip Bobber Rig, Basic Bottom Rig, and Split-Shot Bait Rig only.
 
-**Checkpoint:** The initial repaired B candidate is committed on GitHub `38a974ce`; the second runtime review is PARTIAL PASS. Drive Current now stages the bounded follow-up: Direct-Tie configurations own concise configuration-specific Best For/Good Conditions presentation values, Light/Heavy Cover canonical reference support is present, supported Fish labels open shared Condition references, Weighted Swimbait Hook Rig and Tube Jig Rig remain Beginner+, and shared reference popovers lock the background page and center/scroll independently. Targeted syntax/data/static checks PASS. Served GitHub playback confirms the embed path works. The Tube Jig tutorial is now replaced with the user-preferred generic physical-rigging tutorial *How to use a tube jig* by Arcasting (`FqlK7rqk5E4`). Fish→Direct-Tie Inline Spinner navigation remains a preserve target. Typed Compatibility remains deferred to Subphase C, which is blocked until the next browser checkpoint passes.
+**Checkpoint:** The initial repaired B candidate is committed on GitHub `38a974ce`; the second runtime review is PARTIAL PASS. Drive Current now stages the bounded follow-up: Direct-Tie configurations own concise configuration-specific Best For/Good Conditions presentation values, Light/Heavy Cover canonical reference support is present, supported Fish labels open shared Condition references, Weighted Swimbait Hook Rig and Tube Jig Rig remain Beginner+, and shared reference popovers lock the background page and center/scroll independently. Targeted syntax/data/static checks PASS. Served GitHub playback confirms the embed path works. The Tube Jig tutorial is now the served-working physical-rigging tutorial *How To Rig A Tube Bait The Right Way* by BassResource - The Ultimate Bass Fishing Resource (`EibSWhI6nbM`); the earlier Arcasting candidate was superseded after external-site playback was disabled. Fish→Direct-Tie Inline Spinner navigation remains a preserve target. Typed Compatibility remains deferred to Subphase C, which is blocked until the next browser checkpoint passes.
 
-# Subphase C — Techniques / Compatibility — LOCKED / BLOCKED PENDING B RUNTIME REVIEW
+# Subphase C — Techniques / Compatibility — IMPLEMENTED / RUNTIME PASS / PRE-COMMIT VALIDATION PENDING
 
 ## RP-C1 — exact V1 Technique vocabulary
 
@@ -221,15 +221,17 @@ VERIFIED — NO CHANGE REQUIRED:
 
 # Planning-to-Build Gate — CLOSED / PASS
 
-Planning decisions are complete and reconciled into the applicable canonical Drive Current documentation owners. Production may begin only through the normal FCC source-edit path and in the locked sequence below.
+Subphase C C1–C3 planning and documentation closeout are complete. The exact 16-Technique production copy is owned by `data-model/03A-TECHNIQUES.md`. The exact 177 Compatibility target — 54 Rig↔Lure/Bait, 69 Rig↔Technique, 54 Lure/Bait↔Technique — is owned by `data-model/09-RELATIONSHIPS.md`. The earlier B-01–B-05 count-only defect and C2 exact-copy preservation defect were both explicitly re-locked and resolved before build authorization.
+
+Authorized production scope is exactly six source/runtime files: new `data/techniques.js`, new `data/compatibility.js`, plus `index.html`, `view-renderer.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`. No Rig, Lure/Bait, Fish guidance, `script.js`, `search.js`, or media source changes are authorized by this gate.
 
 # Production Sequence / Exact Resume
 
-1. GitHub `main` is verified at `301acd22cc016a1a94d87504bcc785fcada7506c`; the commit is housekeeping-only (`Delete SHA256SUMS.txt`) relative to the prior product/data baseline.
-2. **Subphase A Conditions is staged in Drive Current and targeted validation is PASS.** Preserve its pending full Repository Integrity/final combined closeout obligations.
-3. **Subphase B source/data completeness remains staged and targeted data/static validation is PASS, but the first browser review FAILED.** Preserve the passing media/data work, execute only the locked runtime repair scope, and do not treat prior tutorial/fallback presentation as production-final until the repaired runtime review passes.
-4. **Exact resume: remain in Subphase B repair.** Refetch current Drive source against current GitHub `main`, implement the locked 2026-08-28 runtime repair scope, reconcile validators, rerun targeted checks, and repeat the user browser review. **Do not begin Subphase C** until the repaired runtime checkpoint passes. After PASS, Subphase C becomes the next production subphase under RP-C1–RP-C4.
-5. Default combined closeout remains one bounded local review/commit cycle at the end of the complete Recommendation Prerequisites Foundation unless a blocker, risky structural change, validator limitation, or required user-facing runtime review justifies an earlier gate.
+1. Subphase C implementation and targeted validation are complete in Drive Current.
+2. Representative runtime/browser review is USER-APPROVED / PASS, including the Direct-Tie configuration-aware Technique intersection repair.
+3. Run the full local Repository Integrity validator against the complete local checkout.
+4. Review the exact local changed-file diff against GitHub baseline `3b5e77f0772b306977edb0252d5f9004069318f7`; only the approved Subphase C source/runtime files plus reconciled documentation may be present.
+5. Do not commit/push until Repository Integrity and exact diff/scope review both PASS.
 6. Do not begin Settings/User Data, My Tackle, or What Should I Throw recommendation-engine production inside this workstream.
 
 # Foundation Exit Criteria
@@ -272,7 +274,7 @@ The resulting bounded follow-up is now staged and targeted PASS:
 5. **Popover behavior:** shared Condition/Tackle/Lure-Bait reference popovers center in the viewport, contain wheel/touch scrolling, lock background-page scrolling, and restore the prior page position on close.
 6. **Difficulty:** Weighted Swimbait Hook Rig and Tube Jig Rig remain Beginner+ after validation.
 7. **Tutorial playback:** served GitHub playback confirms current Weighted Swimbait Hook and Tube Jig videos load; local `file://` errors were environmental.
-8. **Tube Jig tutorial content:** REPAIRED. The user selected *How to use a tube jig* by Arcasting (`FqlK7rqk5E4`) as the preferred generic physical-rigging tutorial.
+8. **Tube Jig tutorial content:** REPAIRED. The earlier Arcasting selection was superseded after external-site playback was disabled; the current served-working tutorial is *How To Rig A Tube Bait The Right Way* by BassResource - The Ultimate Bass Fishing Resource (`EibSWhI6nbM`).
 
 **Gate:** Subphase C remains BLOCKED until this staged follow-up passes browser review.
 
@@ -280,3 +282,42 @@ The resulting bounded follow-up is now staged and targeted PASS:
 # Third Runtime Repair Checkpoint — 2026-08-29
 
 The third review accepts Condition popover placement and scroll behavior. The remaining bounded UX/content repair is staged: every current Fish habitat/water chip has a live explanation; canonical equivalents use Conditions while Fish-only `Cold Water`, generic `Current`, and `Mud` use Fish Habitat explanations so the locked Condition semantics are not distorted. Rig Good Conditions presents canonical Condition references only. Shared chip geometry is normalized to the compact existing Rig-link treatment. Best For values are shortened to high-signal phrases. Jerkbait has no embedded tutorial until a suitable hard-bait video is approved. Spoon tutorial is Anglers `pLsX7nhM1qk`; Tube Jig tutorial is BassResource `EibSWhI6nbM`. Targeted checks pass; runtime re-review remains the gate to Subphase C.
+
+
+# Third Runtime Review Checkpoint — 2026-08-29
+
+Status: **PARTIAL PASS / FOURTH BOUNDED UX REPAIR REQUIRED**.
+
+Accepted in browser review:
+
+- shared Condition/reference popovers open centered in the viewport;
+- popover scrolling is contained correctly and no longer scrolls the underlying Rig page;
+- Tube Jig tutorial `EibSWhI6nbM` (*How To Rig A Tube Bait The Right Way* — BassResource - The Ultimate Bass Fishing Resource) loads correctly.
+
+Remaining blocking UX defects:
+
+1. Condition/Fish reference chips are still too large. Use the existing `Use these knots for:` context-chip padding/density as the compact geometry reference rather than the larger current Good Conditions treatment.
+2. Clickable Condition/Fish knowledge chips and static **Best For** labels currently share essentially the same visual treatment. This is rejected because users cannot tell which chips open additional knowledge. Clickable knowledge/reference chips require a distinct accent/background treatment; Best For remains a neutral/static label treatment.
+3. Best For wording should remain short label-level guidance; review only values that still produce awkwardly long chips after the styling distinction is corrected.
+
+Semantic boundary remains unchanged: Conditions are Reference Knowledge, Best For is Rig presentation/context, and no Rig↔Condition or Fish↔Condition relationship is created by these controls. All Fish habitat/water labels retain a live reference action through either a canonical Condition or Fish-owned habitat explanation.
+
+**Separate UX Design Audit carry-forward:** review the full Rig **Knots You'll Tie** section. Attachment/application wording and grouping are inconsistent across pages (for example, `Use these knots for:` chips on some Rigs versus per-connection headings such as `Main line or leader to inline spinner` on others). Standardize that later as a cross-Rig UX rule; do not broaden the current Subphase B repair into a site-wide Knot/Rig redesign.
+
+**Gate:** Subphase B is PASS. Subphase C — Techniques + Compatibility is next after normal startup verification.
+
+
+# Fourth Runtime Review — 2026-08-30 — PASS / SUBPHASE B COMPLETE
+
+The user approved Review 4. The final bounded Subphase B UX repair is accepted:
+
+- clickable Condition/Fish knowledge-reference chips use a distinct interactive accent/background;
+- knowledge-reference chips use the approved compact contextual density;
+- passive Best For labels remain neutral and visually distinct;
+- previously accepted centered popovers, scroll containment/background lock, Direct-Tie/Rig behavior, Fish configured navigation, and Tube Jig served playback remain preserve/PASS items.
+
+**Subphase B is complete / PASS. Subphase C — Techniques + Compatibility is next.** Review 4's CSS remains an approved Drive Current change until committed by the user; ChatGPT has not committed or pushed it.
+
+**UX Design Audit carry-forward:** add a site-wide knowledge-card element standardization pass. Inventory every recurring knowledge-card element across implemented domains and normalize semantically equivalent headings, chips/labels, links, reference/popover triggers, metadata, controls, media containers, spacing, interaction states, typography, and mobile density. Intentional differences require a semantic reason. Preserve the accepted distinction between clickable knowledge/reference chips and passive labels such as Best For. The previously recorded cross-Rig Knots You'll Tie attachment/application consistency item remains open in that audit.
+
+**Exact resume:** begin Subphase C production implementation using the closed C1–C3 plan. Re-verify GitHub `main` at `3b5e77f0772b306977edb0252d5f9004069318f7`, fetch matching Drive Current source, then implement only the approved six-file scope and run the exact validation contract before review/commit.

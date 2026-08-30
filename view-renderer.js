@@ -1420,6 +1420,17 @@ function unlockReferencePopoverBackground() {
     window.scrollTo(0, restoreY);
 }
 
+function removeOpenReferencePopovers() {
+    document.querySelectorAll([
+        "[data-reference-popover]",
+        "[data-condition-popover]",
+        "[data-fish-habitat-popover]",
+        "[data-lure-bait-popover]",
+        "[data-technique-popover]"
+    ].join(", ")).forEach((dialog) => dialog.remove());
+    unlockReferencePopoverBackground();
+}
+
 function renderConditionPopover(conditionId, triggerElement) {
     if (typeof CONDITION_DATA === "undefined") {
         console.error("Condition reference data is not available.");
@@ -1432,8 +1443,7 @@ function renderConditionPopover(conditionId, triggerElement) {
         return;
     }
 
-    document.querySelector("[data-reference-popover]")?.remove();
-    document.querySelector("[data-condition-popover]")?.remove();
+    removeOpenReferencePopovers();
 
     const dialog = document.createElement("dialog");
     dialog.className = "reference-popover";
@@ -1481,13 +1491,121 @@ function initializeConditionLinks(appMain) {
     });
 }
 
+function getTechniqueRecord(techniqueId) {
+    if (!techniqueId || typeof TECHNIQUE_DATA === "undefined") return null;
+    const record = findRecordById(TECHNIQUE_DATA, techniqueId);
+    return record?.isActive === true ? record : null;
+}
+
+function getActiveCompatibilityRelationships(relationshipType) {
+    if (typeof COMPATIBILITY_RELATIONSHIPS === "undefined") return [];
+    return COMPATIBILITY_RELATIONSHIPS.filter((relationship) =>
+        relationship?.isActive === true && relationship.relationshipType === relationshipType
+    );
+}
+
+function getCompatibleTargetIds(relationshipType, sourceType, sourceId, targetType) {
+    return getActiveCompatibilityRelationships(relationshipType)
+        .filter((relationship) =>
+            relationship.sourceType === sourceType &&
+            relationship.sourceId === sourceId &&
+            relationship.targetType === targetType
+        )
+        .map((relationship) => relationship.targetId);
+}
+
+function getRigTechniqueRecords(rigId, lureBaitId = null) {
+    const rigTechniqueIds = getCompatibleTargetIds("rig-technique", "rig", rigId, "technique");
+    const techniqueIds = rigId === "direct-tie-lure-setup" && lureBaitId
+        ? (() => {
+            const lureTechniqueIds = new Set(
+                getCompatibleTargetIds("lure-bait-technique", "lure-bait", lureBaitId, "technique")
+            );
+            return rigTechniqueIds.filter((techniqueId) => lureTechniqueIds.has(techniqueId));
+        })()
+        : rigTechniqueIds;
+
+    return techniqueIds
+        .map((techniqueId) => getTechniqueRecord(techniqueId))
+        .filter(Boolean);
+}
+
+function renderTechniquePopover(techniqueId, triggerElement) {
+    const technique = getTechniqueRecord(techniqueId);
+    if (!technique) {
+        console.warn(`Technique record was not found: ${techniqueId}`);
+        return;
+    }
+
+    removeOpenReferencePopovers();
+
+    const buildListSection = (title, items, ordered = false) => {
+        if (!Array.isArray(items) || items.length === 0) return "";
+        const tag = ordered ? "ol" : "ul";
+        const className = ordered ? "detail-steps" : "detail-list";
+        return `
+            <section class="reference-popover__section">
+                <h3>${title}</h3>
+                <${tag} class="${className}">${items.map((item) => `<li>${item}</li>`).join("")}</${tag}>
+            </section>
+        `;
+    };
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "reference-popover";
+    dialog.dataset.techniquePopover = "";
+    dialog.setAttribute("aria-labelledby", "technique-popover-title");
+    dialog.innerHTML = `
+        <div class="reference-popover__shell">
+            <header class="reference-popover__header">
+                <div class="reference-popover__header-main">
+                    <p class="reference-popover__eyebrow">Technique</p>
+                    <h2 id="technique-popover-title">${technique.name}</h2>
+                </div>
+                <button class="reference-popover__close" type="button" data-technique-close aria-label="Close ${technique.name} information">&times;</button>
+            </header>
+            <div class="reference-popover__body">
+                <p class="reference-popover__summary">${technique.summary}</p>
+                ${buildListSection("How to Present", technique.presentationSteps, true)}
+                ${buildListSection("Strike Cues", technique.strikeCues)}
+                ${buildListSection("Common Mistakes", technique.commonMistakes)}
+                ${buildListSection("Beginner Tips", technique.beginnerTips)}
+            </div>
+        </div>
+    `;
+
+    const closeDialog = () => {
+        if (dialog.open) dialog.close();
+    };
+
+    dialog.querySelector("[data-technique-close]")?.addEventListener("click", closeDialog);
+    dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeDialog();
+    });
+    dialog.addEventListener("close", () => {
+        dialog.remove();
+        unlockReferencePopoverBackground();
+        triggerElement?.focus();
+    });
+
+    document.body.append(dialog);
+    lockReferencePopoverBackground();
+    dialog.showModal();
+}
+
+function initializeTechniqueLinks(appMain) {
+    appMain.querySelectorAll("[data-technique-id]").forEach((techniqueLink) => {
+        techniqueLink.addEventListener("click", () => {
+            renderTechniquePopover(techniqueLink.dataset.techniqueId, techniqueLink);
+        });
+    });
+}
+
 function renderFishHabitatReferencePopover(label, triggerElement) {
     const detail = FISH_INTRINSIC_REFERENCE_DETAILS[label];
     if (!detail) return;
 
-    document.querySelector("[data-reference-popover]")?.remove();
-    document.querySelector("[data-condition-popover]")?.remove();
-    document.querySelector("[data-fish-habitat-popover]")?.remove();
+    removeOpenReferencePopovers();
 
     const dialog = document.createElement("dialog");
     dialog.className = "reference-popover";
@@ -1542,9 +1660,7 @@ function renderLureBaitReferencePopover(lureBaitId, triggerElement, requirement 
         return;
     }
 
-    document.querySelector("[data-reference-popover]")?.remove();
-    document.querySelector("[data-condition-popover]")?.remove();
-    document.querySelector("[data-lure-bait-popover]")?.remove();
+    removeOpenReferencePopovers();
 
     const dialog = document.createElement("dialog");
     dialog.className = "reference-popover";
@@ -1627,7 +1743,7 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
         return;
     }
 
-    document.querySelector("[data-reference-popover]")?.remove();
+    removeOpenReferencePopovers();
 
     const dialog = document.createElement("dialog");
     dialog.className = "reference-popover";
@@ -1841,6 +1957,14 @@ function buildTagList(items) {
     return `<ul class="tag-list">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 }
 
+function buildRigTechniqueTagList(rigId, lureBaitId = null) {
+    const techniques = getRigTechniqueRecords(rigId, lureBaitId);
+    if (techniques.length === 0) return "";
+    return `<ul class="tag-list tag-list--conditions">${techniques.map((technique) => `
+        <li><button class="technique-tag-button" type="button" data-technique-id="${technique.id}" aria-label="Learn about ${technique.name}">${technique.name}</button></li>
+    `).join("")}</ul>`;
+}
+
 const RIG_CONDITION_REFERENCE_IDS = Object.freeze({
     "Clear Water": "water-clarity-clear",
     "Deep Water": "deep",
@@ -2040,6 +2164,7 @@ function renderInstructionDetail(appMain, detailConfig) {
             <section class="detail-section rig-at-a-glance">
                 <div class="rig-at-a-glance__group"><h3>Best For</h3>${buildTagList(record.useCases)}</div>
                 <div class="rig-at-a-glance__group"><h3>Good Conditions</h3>${buildConditionTagList(record.conditionTags)}</div>
+                <div class="rig-at-a-glance__group"><h3>Techniques</h3>${buildRigTechniqueTagList(record.id, selectedConfiguration?.lureBaitId ?? null)}</div>
             </section>
             <section class="detail-section rig-requirements-section">
                 <div class="rig-requirements-section__header">
@@ -2117,6 +2242,7 @@ function renderInstructionDetail(appMain, detailConfig) {
     initializeReferenceLinks(appMain, { onRigSelect: detailConfig.onRigSelect, currentRigId: record.id });
     initializeLureBaitReferenceLinks(appMain, lureBaitRequirements);
     initializeConditionLinks(appMain);
+    initializeTechniqueLinks(appMain);
     initializeRigTutorial(appMain);
     initializeHomeNavigation(appMain);
     updateReadinessStatus();

@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.6.0  
+**Document Revision:** 0.8.0  
 **Document Status:** Approved  
 **Implementation Status:** Fish Version 1 relationships COMPLETE / VALIDATED / CLOSED — 20 identification pairs; 27 Fish guidance records currently active  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, D069, FISH-001–FISH-007  
-**Last Updated:** 2026-08-27
+**Last Updated:** 2026-08-30
 
 ---
 
@@ -364,7 +364,7 @@ Future recommendation relationships should follow the same ownership test: conte
 
 ---
 
-# Approved Intrinsic Compatibility Relationships — Not Yet Implemented
+# Approved Intrinsic Compatibility Relationships — Planning Closed / Production Authorized
 
 D069 approves one typed Compatibility Relationship domain for intrinsic pairwise compatibility among:
 
@@ -374,19 +374,29 @@ D069 approves one typed Compatibility Relationship domain for intrinsic pairwise
 
 Compatibility means the two canonical concepts are legitimately usable together under normal use. It does **not** mean they are best for a Fish/Condition, that the angler owns the required items, or that the combination is executable now.
 
-Conceptual V1 record shape:
+Locked V1 record shape:
 
 ```text
 id
 relationshipType
+sourceType
 sourceId
+targetType
 targetId
 createdVersion
 lastModifiedVersion
 isActive
 ```
 
-Exact field/literal names may be finalized during implementation, but the semantic contract is locked:
+RP-C4 locks canonical ordering and deterministic IDs by relationship family:
+
+- `rig-lure-bait`: Rig first, Lure/Bait second;
+- `rig-technique`: Rig first, Technique second;
+- `lure-bait-technique`: Lure/Bait first, Technique second.
+
+Deterministic record ID format is exactly `<relationship-type>-<source-id>-<target-id>`. Examples: `rig-lure-bait-texas-rig-stick-worm`, `rig-technique-texas-rig-hop`, and `lure-bait-technique-stick-worm-deadstick`.
+
+The semantic and production contract is locked:
 
 - deterministic relationship IDs;
 - exactly one stored record per intrinsic pair;
@@ -394,11 +404,82 @@ Exact field/literal names may be finalized during implementation, but the semant
 - active runtime compatibility requires the relationship and both referenced entities to be active;
 - no `score`, `strength`, `priority`, `rank`, `confidence`, Fish applicability, Condition applicability, or contextual recommendation weighting;
 - missing compatibility during staged authoring is not automatically incompatibility until the applicable authored scope is declared complete;
-- three-way Rig/Lure/Bait/Technique combinations are derived from pairwise compatibility unless future evidence proves pairwise modeling insufficient.
+- three-way Rig + Lure/Bait + Technique validity is derived from active pairwise Compatibility intersection; no canonical compound compatibility record is created in V1.
 
 Fish ↔ Technique, Fish ↔ Lure/Bait, and Condition-specific Fish/Rig/Lure/Bait/Technique suitability are contextual Recommendation Decision Knowledge under D069 rather than intrinsic Compatibility Relationship records. Fish intrinsic habitat/waterbody facts remain Fish-owned.
 
 My Tackle owned-item mappings and current-availability state are User Knowledge and remain separate from Reference compatibility. Search or UI needs do not authorize inverse compatibility arrays on participating entities.
+
+
+## Locked authored scope — 177 exact V1 records
+
+The complete V1 Compatibility target is exactly **177 active intrinsic relationships**: **54 `rig-lure-bait` + 69 `rig-technique` + 54 `lure-bait-technique`**. The active workstream preserves the same execution scope; this document owns the canonical relationship contract.
+
+### Rig ↔ Lure/Bait — exactly 54
+
+- Stick Worm → Texas Rig; Jighead Soft-Plastic Rig; Wacky Rig; Ned Rig; Weightless Soft-Plastic Rig; Drop Shot Rig; Carolina Rig; Neko Rig; Shaky Head Rig; Free Rig; Jika Rig; Punch / Pegged Texas Rig.
+- Craw → Texas Rig; Jighead Soft-Plastic Rig; Carolina Rig; Free Rig; Jika Rig; Punch / Pegged Texas Rig.
+- Creature Bait → Texas Rig; Carolina Rig; Free Rig; Jika Rig; Punch / Pegged Texas Rig.
+- Paddle-tail Swimbait → Texas Rig; Jighead Soft-Plastic Rig; Weightless Soft-Plastic Rig; Weighted Swimbait Hook Rig.
+- Tube → Texas Rig; Weightless Soft-Plastic Rig; Drop Shot Rig; Tube Jig Rig.
+- Spinnerbait → Direct-Tie Lure Setup.
+- Crankbait → Direct-Tie Lure Setup.
+- Jerkbait → Direct-Tie Lure Setup.
+- Inline Spinner → Direct-Tie Lure Setup.
+- Spoon → Direct-Tie Lure Setup.
+- Minnow → Fixed Bobber Rig; Slip Bobber Rig; Basic Bottom Rig; Live-Bait Slip-Sinker Rig; Three-Way Rig; Bottom-Bouncer / Spinner Rig; Split-Shot Bait Rig.
+- Nightcrawler → Fixed Bobber Rig; Slip Bobber Rig; Basic Bottom Rig; Live-Bait Slip-Sinker Rig; Three-Way Rig; Bottom-Bouncer / Spinner Rig; Split-Shot Bait Rig.
+- Cricket → Fixed Bobber Rig; Slip Bobber Rig; Basic Bottom Rig; Split-Shot Bait Rig.
+
+### Rig ↔ Technique — exactly 69
+
+- Fixed Bobber Rig → Float Presentation; Natural Drift.
+- Slip Bobber Rig → Float Presentation; Natural Drift.
+- Basic Bottom Rig → Bottom Presentation; Tight-Line Presentation.
+- Texas Rig → Hop; Drag; Shake; Deadstick.
+- Jighead Soft-Plastic Rig → Swim; Hop; Lift and Fall; Vertical Jig.
+- Direct-Tie Lure Setup → Steady Retrieve; Stop-and-Go Retrieve; Twitch and Pause; Lift and Fall; Vertical Jig; Troll.
+- Wacky Rig → Shake; Deadstick.
+- Ned Rig → Drag; Hop; Shake; Deadstick; Swim.
+- Weightless Soft-Plastic Rig → Swim; Twitch and Pause; Deadstick.
+- Drop Shot Rig → Shake; Deadstick.
+- Carolina Rig → Drag.
+- Live-Bait Slip-Sinker Rig → Bottom Presentation; Drift; Troll; Tight-Line Presentation.
+- Three-Way Rig → Bottom Presentation; Natural Drift.
+- Neko Rig → Hop; Drag; Shake; Deadstick.
+- Shaky Head Rig → Shake; Drag; Hop; Deadstick.
+- Free Rig → Lift and Fall; Hop; Drag.
+- Double-Jig Crappie Rig → Vertical Jig; Lift and Fall.
+- Jika Rig → Hop; Drag; Lift and Fall.
+- Punch / Pegged Texas Rig → Lift and Fall.
+- Bottom-Bouncer / Spinner Rig → Troll; Drift.
+- Split-Shot Bait Rig → Natural Drift; Tight-Line Presentation; Bottom Presentation.
+- Weighted Swimbait Hook Rig → Swim; Steady Retrieve; Stop-and-Go Retrieve.
+- Tube Jig Rig → Hop; Drag; Lift and Fall; Vertical Jig; Swim.
+
+### Lure/Bait ↔ Technique — exactly 54
+
+- Stick Worm → Deadstick; Shake; Hop; Drag; Swim; Twitch and Pause.
+- Craw → Hop; Drag; Shake; Deadstick; Lift and Fall.
+- Creature Bait → Hop; Drag; Shake; Deadstick; Lift and Fall.
+- Paddle-tail Swimbait → Swim; Steady Retrieve; Stop-and-Go Retrieve.
+- Tube → Hop; Drag; Lift and Fall; Vertical Jig; Swim.
+- Spinnerbait → Steady Retrieve; Stop-and-Go Retrieve.
+- Crankbait → Steady Retrieve; Stop-and-Go Retrieve; Troll.
+- Jerkbait → Twitch and Pause; Steady Retrieve.
+- Inline Spinner → Steady Retrieve; Troll.
+- Spoon → Steady Retrieve; Stop-and-Go Retrieve; Lift and Fall; Vertical Jig; Troll.
+- Minnow → Natural Drift; Float Presentation; Tight-Line Presentation; Bottom Presentation; Drift; Troll.
+- Nightcrawler → Natural Drift; Float Presentation; Tight-Line Presentation; Bottom Presentation; Drift; Troll.
+- Cricket → Natural Drift; Float Presentation; Tight-Line Presentation; Bottom Presentation.
+
+These scopes represent normal reusable compatibility, not all mechanically possible manipulation.
+
+A relationship family/scope becomes authoritative for absence only after all approved records are present and validation declares that authored scope complete. Before completeness, a missing record is not automatically incompatibility. After completeness, a missing record is unsupported intrinsic compatibility for V1.
+
+Production validation hard-fails on orphan references, invalid relationship/participant types, duplicate IDs, duplicate semantic pairs, reversed duplicates, inactive referenced entities attached to active Compatibility, missing approved authored relationships, unapproved extras, and contextual Recommendation fields leaking into Compatibility.
+
+Direct-Tie Lure Setup may carry the union of Techniques supported across its approved configurations. That Rig-level union does not make every Direct-Tie Lure/Bait configuration compatible with every Direct-Tie Technique; valid three-part combinations require all applicable pairwise relationships.
 
 # Search Relationships
 
@@ -540,3 +621,17 @@ Any future cache remains derived and non-authoritative unless an explicit later 
 - `../FISH_REFERENCE_SOURCES.md`
 - `../../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0.md`
 - `../../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
+# RP-B2A — Rig↔Technique Eligibility Boundary — LOCKED
+
+For Rig↔Technique Compatibility, "compatible" means more than mechanical possibility. A pair is authored only when the Technique is genuinely usable within the Rig's normal intended use envelope represented by the Rig's general **Best For** and **Good Conditions** guidance.
+
+The stored compatibility graph establishes the **eligible Technique set** for a Rig. It must not contain Fish-specific, Condition-specific, ranking, weighting, or preferred-Technique semantics.
+
+Recommendation Decision Knowledge owns the later contextual intersection of Fish, Conditions, Rig, Lure/Bait, and eligible Techniques and determines the **contextually viable/recommended subset**.
+
+# RP-B2B — Dependency-Complete Expansion and Bounded Guidance Review — LOCKED
+
+Recommendation Prerequisites Foundation uses a dependency-complete expansion rule. Before a candidate Lure/Bait is admitted to the Version 1 vocabulary, evaluate any required Rig, Tackle, Technique, and intrinsic Compatibility dependencies. New Rigs must not be activated with unresolved required Tackle components or missing applicable Technique/Compatibility coverage for the authored scope.
+
+Because `FISH_RIG_GUIDANCE` is curated Decision Knowledge, adding a new canonical Rig triggers a bounded re-evaluation only for Fish that could plausibly benefit from the new Rig. This does not reopen all Fish automatically. Existing Primary/Alternative guidance changes only when the bounded review demonstrates that the expanded Rig catalog provides a better fit.
+
