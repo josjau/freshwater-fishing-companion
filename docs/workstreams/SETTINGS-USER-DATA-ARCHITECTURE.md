@@ -2,7 +2,7 @@
 
 **Document:** workstreams/SETTINGS-USER-DATA-ARCHITECTURE.md  
 **Document Status:** Active — Architecture Planning  
-**GitHub Baseline:** `584f97caa4874075f745834145813ac9bdcf78b3` (`Close Recommendation Prerequisites Foundation`)  
+**GitHub Baseline:** `f7fd363d473a6f55d4008303fc951b3ce22c0459` (`Close documentation execution gate`)  
 **Decision Baseline:** D028, D029, D056, D067, D069  
 **Created:** 2026-08-30
 
@@ -37,10 +37,25 @@ FCC targets one persistent user identity/profile that may span multiple devices.
 
 UD-1 may be refined if later persistence, conflict-resolution, privacy, security, or implementation findings demonstrate a better boundary without silently changing the approved cross-device product goal.
 
+# UD-2 — Identity + Sync Model — PROVISIONALLY LOCKED / Refinement Allowed
+
+Version 1 uses Firebase as the working identity/synchronization architecture while this planning gate remains open.
+
+- Firebase Authentication provides the stable technical identity; the authenticated Firebase UID scopes the user's FCC profile.
+- A second device joins the same semantic FCC profile by authenticating to the same account; Version 1 does not require a separate custom device-linking protocol.
+- Initial sign-in mechanisms are email/password and Google Sign-In unless implementation/security review demonstrates a better minimal set.
+- Reference Knowledge remains usable without authentication. Authentication is required when the user elects to create or synchronize durable profile-owned User Knowledge.
+- Cloud Firestore is the provisional profile-scoped synchronization service. Durable User Knowledge synchronizes as independently addressable records/documents rather than one replaceable profile payload.
+- Browser clients may communicate directly with Firebase through the supported web SDK while the application remains statically hosted; no custom application server or Cloud Functions dependency is approved unless a later requirement demonstrates one.
+- Firestore Security Rules must enforce authenticated UID-scoped access. Client-side routing or hidden UI is never an authorization boundary.
+- Firestore offline caching/synchronization is transport behavior, not the final FCC conflict policy. UD-10 still owns revision, concurrent-edit, deletion/tombstone, and resurrection-prevention semantics.
+- Automatic cloud backup remains separate from synchronization and remains owned by UD-9.
+- The Firebase provider choice is provisional until architecture closeout. It may be refined if current pricing/free-tier, browser/PWA compatibility, security/privacy, exportability, or implementation findings materially violate project constraints without changing the locked UD-1 cross-device product goal.
+
 # Open Architecture Decisions
 
-1. **UD-2 — Identity + Sync Model:** authentication/account-linking method, profile bootstrap/recovery, sync-service boundary, security/privacy expectations.
-2. **UD-3 — Local Persistence Technology:** authoritative local/offline store and access abstraction.
+1. **UD-2 — Identity + Sync Model:** PROVISIONALLY LOCKED / refinement allowed as documented above.
+2. **UD-3 — Local Persistence Technology:** authoritative local/offline store and access abstraction; determine how Firestore browser persistence relates to FCC authoritative local state and the application access abstraction.
 3. **UD-4 — User Data Store Structure:** how Profile, Preferences, My Tackle, Catch Log, and later User Knowledge coexist without a speculative monolith.
 4. **UD-5 — Schema Versioning + Migration:** compatibility, migrations, rollback/failure handling.
 5. **UD-6 — Retention + Deletion:** browser/site-data clearing, app reset, account/profile deletion, tombstones/retention as required by sync.
@@ -67,4 +82,4 @@ Every material lock must be checkpointed in the compact Live Working State and, 
 
 # Exact Resume
 
-**UD-2 — Identity + Sync Model.** Settle secure identity/account linking and the synchronization-service boundary before selecting the authoritative local persistence technology.
+**UD-3 — Local Persistence Technology.** Decide the authoritative local/offline storage model and access abstraction, including whether Firestore persistent browser cache is sufficient as the local replica or whether FCC requires a separately owned local store.
