@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 07-USER-DATA.md  
-**Document Revision:** 0.6.0  
+**Document Revision:** 0.7.0  
 **Document Status:** Draft  
 **Implementation Status:** Mixed — transitional local state exists; authoritative User Knowledge schemas not implemented  
 **Decision Baseline:** D028, D029, D056, D067, D069
@@ -80,7 +80,24 @@ UD-1 establishes the current Version 1 architecture baseline:
 
 UD-1 may be refined if later persistence, conflict-resolution, privacy, security, or implementation findings demonstrate a better boundary without silently changing the approved cross-device product goal.
 
-The exact authentication/account-linking mechanism, synchronization service, local persistence technology, conflict-resolution rules, and detailed profile schema remain unresolved for UD-2 and subsequent architecture decisions. Earlier candidate profile attributes such as display name, experience level, measurement preference, and preferred region remain design inputs, not approved fields.
+The detailed profile schema remains unresolved. Earlier candidate profile attributes such as display name, experience level, measurement preference, and preferred region remain design inputs, not approved fields.
+
+# Identity + Sync Model — UD-2 PROVISIONALLY LOCKED / Refinement Allowed
+
+UD-2 establishes the current working Version 1 identity/synchronization architecture:
+
+- Firebase Authentication is the provisional identity provider; the authenticated Firebase UID is the stable technical identity used to scope the FCC profile.
+- Additional devices access the same semantic FCC profile by authenticating to the same account; a custom Version 1 device-linking protocol is not currently required.
+- Initial sign-in mechanisms are email/password and Google Sign-In, subject to implementation/security refinement.
+- Reference Knowledge remains usable while signed out. Authentication is required when a user elects to create or synchronize durable profile-owned User Knowledge.
+- Cloud Firestore is the provisional profile-scoped synchronization service. User Knowledge synchronizes as independently addressable records/documents rather than one replaceable profile payload.
+- The statically hosted browser application may use the supported Firebase web SDK directly. No custom application server or Cloud Functions dependency is approved without a demonstrated later requirement.
+- Firestore Security Rules must enforce authenticated UID-scoped authorization.
+- Firestore offline caching/synchronization is transport behavior only; UD-10 remains responsible for FCC application-level revision, conflict, deletion/tombstone, and resurrection-prevention semantics.
+- Automatic cloud backup remains a separate recovery concern under UD-9.
+- The provider choice remains provisional until architecture closeout and may be refined if pricing/free-tier, browser/PWA compatibility, security/privacy, exportability, or implementation findings materially violate project constraints without changing UD-1's approved cross-device goal.
+
+UD-3 remains responsible for authoritative local/offline persistence technology and the application access abstraction; UD-2 does not pre-decide whether Firestore persistent browser cache alone is sufficient for that role.
 
 ---
 
@@ -163,7 +180,7 @@ JSON is a plausible portable/inspectable format but is **not** an approved Versi
 
 Any future restore should be transactional from the user's perspective and must not leave partially replaced User Knowledge after failed validation/migration/restore.
 
-Profile synchronization is now an approved product requirement under UD-1, but no specific cloud/account provider is approved. Automatic cloud **backup** providers remain a separate optional recovery feature and require their own value/privacy/maintenance approval; they must not be conflated with the synchronization service required for the synced profile.
+Profile synchronization is an approved product requirement under UD-1. Firebase Authentication plus Cloud Firestore is the provisional UD-2 provider architecture pending architecture closeout. Automatic cloud **backup** providers remain a separate optional recovery feature and require their own value/privacy/maintenance approval; they must not be conflated with the synchronization service required for the synced profile.
 
 # Data Ownership
 
