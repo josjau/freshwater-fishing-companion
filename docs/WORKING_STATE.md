@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.18.2  
+**Document Revision:** 1.18.3  
 **Document Status:** Approved — Active Repository Continuity Record  
 **Workstream Status:** Settings / User Data Architecture — ACTIVE / PLANNING  
 **Last Updated:** 2026-08-30
@@ -12,10 +12,9 @@ This file is the single compact repository current-state and exact-resume entryp
 
 # Authority / Current Baseline
 
-- GitHub `main` is committed authority. The documentation consistency cleanup landed at `8621feb0cea929a0ce8e7de539545f6b55265ee0` (`Documentation Cleanup - Lure/Bait`), and the bounded Working State lifecycle-marker repair landed at `c5307d8942e93028f70a3860ec8623fccde917e4` (`Fix Working State resume marker`).
-- Local Repository Integrity on `c5307d8942e93028f70a3860ec8623fccde917e4`: PASS — 12 validation groups, no repository content modified.
-- GitHub Repository Integrity #108: PASS.
-- GitHub Pages #596: PASS.
+- GitHub `main` is committed authority. Provisional UD-2 documentation is landed through `a66f5a18c7cb1f4ee839917a69fdef9a774f8813` (`Document provisional UD-2 architecture`), parent `82a7bcf82e42d5f0235233d792da2eee557651ef`.
+- Last fully verified documentation baseline before the provisional UD-2 checkpoint: `f7fd363d473a6f55d4008303fc951b3ce22c0459`; Repository Integrity #109 PASS and GitHub Pages #597 PASS.
+- Drive Current matches the landed provisional UD-2 workstream/User Data documentation plus this current-state reconciliation; no production source/data/media/configuration change is authorized by this planning checkpoint.
 - The final Recommendation Prerequisites Foundation source/runtime commit remains `cdf8f408011c5137d0351cec9f350d0a6eee66c2` (`Techniques to Rig - Final`).
 - Google Drive `Working Source/Current` remains the complete editable working tree for approved uncommitted changes.
 
@@ -42,6 +41,17 @@ This file is the single compact repository current-state and exact-resume entryp
 - UD-1 may be refined if later persistence, conflict-resolution, privacy, security, or implementation findings demonstrate a better boundary without silently changing the approved cross-device product goal.
 - Current Rig-readiness `localStorage` state remains transitional availability state and must not silently become authoritative My Tackle ownership.
 
+**UD-2 — Identity + Sync Model: PROVISIONALLY LOCKED, refinement allowed.**
+
+- Firebase Authentication is the working Version 1 identity provider; authenticated Firebase UID scopes the FCC profile.
+- Additional devices access the same semantic profile by authenticating to the same account; no custom Version 1 device-linking protocol is currently required.
+- Initial sign-in mechanisms are email/password and Google Sign-In, subject to implementation/security refinement.
+- Reference Knowledge remains usable signed out; durable synchronized User Knowledge requires authentication when the user elects to create/sync it.
+- Cloud Firestore is the working profile-scoped synchronization service; records synchronize independently rather than as one replaceable profile payload.
+- Firestore Security Rules must enforce UID-scoped authorization. Firestore offline cache/sync is transport behavior; UD-10 still owns FCC conflict/deletion semantics.
+- No custom server/Cloud Functions dependency is approved without a demonstrated requirement. Backup remains separate under UD-9.
+- Firebase remains provisional until architecture closeout and may be refined if project cost, browser/PWA, security/privacy, exportability, or implementation constraints require it without changing UD-1.
+
 No production User Data/My Tackle implementation is authorized until this architecture planning phase is closed through the Planning-to-Build documentation gate.
 
 # Active Gates / Carry-Forward
@@ -54,11 +64,11 @@ No production User Data/My Tackle implementation is authorized until this archit
 
 # Documentation Execution Gate
 
-**CLOSED / PASS.** The active-documentation reconciliation is landed. The required `# Exact Resume Point` lifecycle marker is restored. Local Repository Integrity passed all 12 validation groups without modifying repository content; GitHub Repository Integrity #108 and GitHub Pages #596 passed on the repair commit. Normal product planning may resume without reopening the completed documentation cleanup.
+**CLOSED / PASS.** The active-documentation reconciliation is landed. The required `# Exact Resume Point` lifecycle marker is restored. Repository Integrity #109 and GitHub Pages #597 passed on `f7fd363d473a6f55d4008303fc951b3ce22c0459`. Normal product planning may proceed without reopening the completed documentation cleanup.
 
 # Exact Resume Point
 
-1. Resume **UD-2 — Identity + Sync Model** in `docs/workstreams/SETTINGS-USER-DATA-ARCHITECTURE.md` under D067/D069.
-2. Settle authentication/account-linking and synchronization-service boundaries before selecting authoritative local persistence technology.
-3. Preserve UD-1 as the controlling cross-device product goal; refine it only if later security, privacy, conflict, persistence, or implementation findings require a better boundary without silently changing that goal.
+1. Resume **UD-3 — Local Persistence Technology** in `docs/workstreams/SETTINGS-USER-DATA-ARCHITECTURE.md` under D067/D069.
+2. Decide the authoritative local/offline storage model and access abstraction, including whether Firestore persistent browser cache alone is sufficient as FCC's local replica or whether a separately owned local store is required.
+3. Preserve UD-1 as the controlling cross-device product goal and UD-2 as the provisional Firebase identity/sync architecture unless later evidence requires refinement.
 4. Do not authorize production User Data/My Tackle writes until the Settings / User Data Architecture planning gate closes through the Planning-to-Build documentation gate.
