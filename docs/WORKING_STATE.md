@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.18.1  
+**Document Revision:** 1.18.2  
 **Document Status:** Approved — Active Repository Continuity Record  
 **Workstream Status:** Settings / User Data Architecture — ACTIVE / PLANNING  
 **Last Updated:** 2026-08-30
@@ -12,11 +12,12 @@ This file is the single compact repository current-state and exact-resume entryp
 
 # Authority / Current Baseline
 
-- GitHub `main` is authoritative at `8621feb0cea929a0ce8e7de539545f6b55265ee0` (`Documentation Cleanup - Lure/Bait`), parent `584f97caa4874075f745834145813ac9bdcf78b3`.
-- The cleanup commit contains the approved documentation reconciliation plus removal of obsolete root `REVIEW-MANIFEST.txt`; it does not reopen product source/data/media/configuration scope.
-- Local Repository Integrity on that cleanup reported one documentation-governance defect only: this file used `# Exact Resume` instead of the required `# Exact Resume Point` lifecycle marker.
-- The final Recommendation Prerequisites Foundation source/runtime commit remains `cdf8f408011c5137d0351cec9f350d0a6eee66c2` (`Techniques to Rig - Final`). Repository Integrity #106 and GitHub Pages #594 passed on the Foundation documentation-closeout SHA.
-- Google Drive `Working Source/Current` remains the complete editable working tree for approved uncommitted changes; this file is the bounded corrective candidate for the reported validator defect.
+- GitHub `main` is committed authority. The documentation consistency cleanup landed at `8621feb0cea929a0ce8e7de539545f6b55265ee0` (`Documentation Cleanup - Lure/Bait`), and the bounded Working State lifecycle-marker repair landed at `c5307d8942e93028f70a3860ec8623fccde917e4` (`Fix Working State resume marker`).
+- Local Repository Integrity on `c5307d8942e93028f70a3860ec8623fccde917e4`: PASS — 12 validation groups, no repository content modified.
+- GitHub Repository Integrity #108: PASS.
+- GitHub Pages #596: PASS.
+- The final Recommendation Prerequisites Foundation source/runtime commit remains `cdf8f408011c5137d0351cec9f350d0a6eee66c2` (`Techniques to Rig - Final`).
+- Google Drive `Working Source/Current` remains the complete editable working tree for approved uncommitted changes.
 
 # Current Product State
 
@@ -53,11 +54,11 @@ No production User Data/My Tackle implementation is authorized until this archit
 
 # Documentation Execution Gate
 
-The documentation consistency cleanup has landed on GitHub `main`, but normal product planning remains blocked until the single reported lifecycle-marker defect is repaired and Repository Integrity passes on the corrected local repository. This repair is limited to `docs/WORKING_STATE.md`; do not reopen the completed cleanup or product source/data/media/configuration scope.
+**CLOSED / PASS.** The active-documentation reconciliation is landed. The required `# Exact Resume Point` lifecycle marker is restored. Local Repository Integrity passed all 12 validation groups without modifying repository content; GitHub Repository Integrity #108 and GitHub Pages #596 passed on the repair commit. Normal product planning may resume without reopening the completed documentation cleanup.
 
 # Exact Resume Point
 
-1. Apply this corrected `docs/WORKING_STATE.md` over the local repository at GitHub baseline `8621feb0cea929a0ce8e7de539545f6b55265ee0`.
-2. Run Repository Integrity once. If it fails, stop and reconcile only the reported defect(s).
-3. If Repository Integrity passes, commit/push only this one-file documentation-governance repair, verify the resulting GitHub commit scope plus required Repository Integrity CI and GitHub Pages, and update the compact Live Working State.
-4. After those gates pass, resume **UD-2 — Identity + Sync Model**: settle authentication/account-linking and synchronization-service boundaries before selecting the authoritative local persistence technology.
+1. Resume **UD-2 — Identity + Sync Model** in `docs/workstreams/SETTINGS-USER-DATA-ARCHITECTURE.md` under D067/D069.
+2. Settle authentication/account-linking and synchronization-service boundaries before selecting authoritative local persistence technology.
+3. Preserve UD-1 as the controlling cross-device product goal; refine it only if later security, privacy, conflict, persistence, or implementation findings require a better boundary without silently changing that goal.
+4. Do not authorize production User Data/My Tackle writes until the Settings / User Data Architecture planning gate closes through the Planning-to-Build documentation gate.
