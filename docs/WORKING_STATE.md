@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion — Working State
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.18.41  
+**Document Revision:** 1.18.42  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** Settings / User Data Architecture — UD-12 CLOSEOUT / ACTIVE PATH RETIRED / VALIDATION + COMMIT PENDING  
+**Workstream Status:** My Tackle Availability Foundation — GATE-007 ACTIVE / SETTINGS ARCHITECTURE CLOSED-PASS  
 **Last Updated:** 2026-09-02
 
 # Purpose
@@ -12,15 +12,15 @@ This file is the single compact repository current-state and exact-resume entryp
 
 # Authority / Current Baseline
 
-- GitHub `main` is committed authority. Current verified planning baseline before the UD-3 lock is `fc1bc201ff093a9651b362053f0e2cb68fddd90d` (`Advance Settings architecture to UD-3`), parent `a66f5a18c7cb1f4ee839917a69fdef9a774f8813`.
-- Repository Integrity #112: PASS. GitHub Pages #600: PASS on `fc1bc201ff093a9651b362053f0e2cb68fddd90d`.
+- GitHub `main` is committed authority. Current verified baseline is `ec6ef2e43573400ca25811a48f801565bcc16902` (`Close Settings/User Data architecture`), parent `fc1bc201ff093a9651b362053f0e2cb68fddd90d`.
+- Repository Integrity #117: PASS. GitHub Pages #605: PASS on `ec6ef2e43573400ca25811a48f801565bcc16902`.
 - Drive Current contains the approved UD-3 through UD-7 architecture locks plus **UD-8 — Ownership vs Current Availability: LOCKED / refinement allowed**. UD-8 now includes the design-level item-family locks, beginner availability capture model, and temporary profile-scoped lifecycle/cross-device boundary. Remaining exact My Tackle schemas/UX mechanics are deferred to their later gate. No production source/data/media/configuration change is authorized by this planning checkpoint.
 - **UD-9 — Export / Backup / Restore: LOCKED / refinement allowed.** Backup is one complete provider-independent recovery artifact covering all implemented authoritative durable User Knowledge; Reports are separate configurable non-authoritative views. Normal exports are user-controlled; FCC keeps only bounded inactive pre-restore recovery material, with a working V1 value of one latest copy for 30 days and that exact value provisional. Full restore uses complete preflight, a validated safety checkpoint, supported-schema migration, complete Replace semantics, post-restore validation, and rollback on failure. The package has independent `formatVersion` plus record-level `schemaVersion`, explicit domain/count/provenance/integrity metadata, excludes authentication secrets, and does not expose raw Firestore layout. Temporary **What I Have With Me Today** state remains outside durable backup under UD-8.
-- **UD-10 — Conflict / Multi-Device Reconciliation: LOCKED / refinement allowed.** Normal sync is record-oriented; authoritative mutable records carry revision/change metadata separate from `schemaVersion`; stale writes cannot silently overwrite unseen newer data; Create/Update/Delete are distinct; deleted IDs are not reused for ordinary creation; minimal tombstones are bounded; concurrent edits auto-reconcile only when deterministic, lossless, and semantically valid; unresolved semantic conflicts preserve both intentions; and current availability is one shared temporary profile context with local drafts until explicit confirmation, revision-controlled Confirm/Reset, and mandatory prior-day reconfirmation. Full Replace restore now uses a separate monotonically advancing profile generation/epoch plus a profile-wide write gate, inactive validated candidate state, logical generation cutover, stale-generation rejection, connected-device refresh/rebind, non-reused generations, and rollback through a newer generation. Successful full restore invalidates authoritative What I Have With Me Today state until explicit reconfirmation. UD-11 is now CLOSED / PASS; the active architecture step is UD-12 — Architecture Closeout.
-- **UD-11 — Settings UX Boundary: CLOSED / PASS / refinement allowed.** Appearance, Profile, Data Management, About, and the cross-cutting authentication / synchronization / conflict / recovery status surfaces are **LOCKED / refinement allowed**; Preferences Version 1 is **LOCKED / refinement allowed / CLOSED** with exactly **Preferred Regulation States** and **Measurement System**. **UD-2 — Identity + Sync Model is LOCKED / refinement allowed** with Firebase Authentication + Cloud Firestore. **UD-12 — Architecture Closeout is ACTIVE — canonical reconciliation complete / repository validation + commit pending.**
+- **UD-10 — Conflict / Multi-Device Reconciliation: LOCKED / refinement allowed.** Normal sync is record-oriented; authoritative mutable records carry revision/change metadata separate from `schemaVersion`; stale writes cannot silently overwrite unseen newer data; Create/Update/Delete are distinct; deleted IDs are not reused for ordinary creation; minimal tombstones are bounded; concurrent edits auto-reconcile only when deterministic, lossless, and semantically valid; unresolved semantic conflicts preserve both intentions; and current availability is one shared temporary profile context with local drafts until explicit confirmation, revision-controlled Confirm/Reset, and mandatory prior-day reconfirmation. Full Replace restore now uses a separate monotonically advancing profile generation/epoch plus a profile-wide write gate, inactive validated candidate state, logical generation cutover, stale-generation rejection, connected-device refresh/rebind, non-reused generations, and rollback through a newer generation. Successful full restore invalidates authoritative What I Have With Me Today state until explicit reconfirmation. UD-11 and UD-12 are CLOSED / PASS; GATE-006 is closed and GATE-007 — My Tackle Availability Foundation is now active.
+- **UD-11 — Settings UX Boundary: CLOSED / PASS / refinement allowed.** Appearance, Profile, Data Management, About, and the cross-cutting authentication / synchronization / conflict / recovery status surfaces are **LOCKED / refinement allowed**; Preferences Version 1 is **LOCKED / refinement allowed / CLOSED** with exactly **Preferred Regulation States** and **Measurement System**. **UD-2 — Identity + Sync Model is LOCKED / refinement allowed** with Firebase Authentication + Cloud Firestore. **UD-12 — Architecture Closeout is CLOSED / PASS. GATE-006 is CLOSED / PASS and GATE-007 — My Tackle Availability Foundation is ACTIVE.**
 - The final Recommendation Prerequisites Foundation source/runtime commit remains `cdf8f408011c5137d0351cec9f350d0a6eee66c2` (`Techniques to Rig - Final`).
 - Google Drive `Working Source/Current` remains the complete editable working tree for approved uncommitted changes.
-- Session-close documentation reconciliation updated the current canonical User Data, architecture, theme/UI, roadmap, and gate owners to match the locked UD-8 through UD-10 and UD-11 Appearance state. Historical/retired design-history records were intentionally not rewritten. GitHub remains unchanged until the Settings / User Data Architecture planning section closes.
+- Settings / User Data Architecture closed at `ec6ef2e43573400ca25811a48f801565bcc16902` after Repository Integrity #117 and GitHub Pages #605 passed. The former active workstream path is retired and the final planning record remains archived for reconstruction/design-lineage value. Drive Current now advances only the minimal post-commit state needed to activate GATE-007.
 
 # Current Product State
 
@@ -29,9 +29,10 @@ This file is the single compact repository current-state and exact-resume entryp
 - Regulations — U.S. State Fishing Resource Gateway — CLOSED / PASS; later link/resource corrections remain maintenance rather than milestone reopening.
 - What Should I Throw Phase 0 — PLANNING COMPLETE / PRODUCTION DEFERRED / CLOSED-PASS under D069.
 - Recommendation Prerequisites Foundation — CLOSED / PASS / FINAL. Production includes the approved 35 Condition records, 13 Lure/Bait identities, 16 Technique records, and 177 intrinsic Compatibility relationships (54 Rig↔Lure/Bait, 69 Rig↔Technique, 54 Lure/Bait↔Technique).
-- Settings / User Data Architecture — ACTIVE / ARCHITECTURE CLOSEOUT under D067/D069; UD-11 CLOSED / PASS, UD-12 ACTIVE.
+- Settings / User Data Architecture — CLOSED / PASS under D067/D069; UD-1 through UD-10 remain LOCKED / refinement allowed and UD-11/UD-12 are CLOSED / PASS.
+- My Tackle Availability Foundation — ACTIVE / GATE-007.
 
-# Active Settings / User Data Architecture
+# Closed Settings / User Data Architecture
 
 **UD-1 — Persistent Synced User Identity: LOCKED, refinement allowed.**
 
@@ -125,24 +126,23 @@ This file is the single compact repository current-state and exact-resume entryp
 - UD-8 is refinement-allowed: later implementation, UX, provider, or conflict findings may refine mechanics without violating explicit freshness, no stale silent carry-forward, one synchronized semantic context, or the ownership boundary.
 - Exact item-family production fields, selector vocabularies/custom mapping, multi-location persistence shape, quantity depletion/low-stock behavior, CSV/screenshot import details, Fishing Setup mechanics, Recommendation normalization/ranking/display, and advanced loadouts remain open under later gates.
 
-No production User Data/My Tackle implementation is authorized until this architecture planning phase is closed through the Planning-to-Build documentation gate.
+Settings / User Data Architecture planning is closed. GATE-007 now authorizes only the scoped My Tackle Availability Foundation work required to establish authoritative ownership/current availability; What Should I Throw production remains blocked until GATE-007 closes.
 
 # Active Gates / Carry-Forward
 
-- GATE-006 — Settings / User Data Architecture: ACTIVE / CLOSEOUT VALIDATION — architecture complete; repository validation/commit/final convergence pending.
-- GATE-007 — My Tackle Availability Foundation: BLOCKED until GATE-006 lands and passes.
-- GATE-004 — What Should I Throw production: BLOCKED behind GATE-006 and GATE-007.
+- GATE-006 — Settings / User Data Architecture: CLOSED / PASS at `ec6ef2e43573400ca25811a48f801565bcc16902`; Repository Integrity #117 and GitHub Pages #605 PASS.
+- GATE-007 — My Tackle Availability Foundation: ACTIVE / REQUIRED.
+- GATE-004 — What Should I Throw production: BLOCKED behind GATE-007.
 - GATE-012 — Repository Disaster Recovery / Reconstruction remains required before major Version 1 release or before irreplaceable User Knowledge enters scope, whichever occurs first.
 - Other non-closed cross-domain items remain owned by `ACTIVE-CHANGE-LEDGER.md` and `V1-DESIGN-AUDIT.md`; they are not duplicated here.
 
 # Documentation Execution Gate
 
-**CLOSED / PASS.** The completed documentation reconciliation remains closed. Repository Integrity #112 and GitHub Pages #600 passed on `fc1bc201ff093a9651b362053f0e2cb68fddd90d`; normal Settings / User Data Architecture planning continues without reopening prior cleanup.
+**CLOSED / PASS.** Settings / User Data Architecture closeout is landed at `ec6ef2e43573400ca25811a48f801565bcc16902` with Repository Integrity #117 and GitHub Pages #605 PASS. GATE-007 is the active product gate.
 
 # Exact Resume Point
 
-1. **UD-12 — Architecture Closeout** canonical-owner reconciliation is complete. The former active path `docs/workstreams/SETTINGS-USER-DATA-ARCHITECTURE.md` is retired; the final planning record is retained under `archive/workstreams/settings-user-data/SETTINGS-USER-DATA-ARCHITECTURE.md` for architecture reconstruction/design-lineage value.
-2. Preserve **UD-2 — Identity + Sync Model: LOCKED / refinement allowed**, **UD-11 — Settings UX Boundary: CLOSED / PASS / refinement allowed**, and the other approved UD-1 through UD-10 locks.
-3. Run complete-repository `tools/validate_repository_integrity.js`. The specialized `tools/validate_workstream_closeout.js` check is not required for this closeout; per the updated closeout workflow it is a targeted diagnostic only when a demonstrated stale-workstream risk remains.
-4. If Repository Integrity passes, commit/push the bounded documentation-only closeout under standing documentation authority; verify exact changed-file scope and required CI/Pages.
-5. Only after landed verification: record **GATE-006 CLOSED / PASS**, activate **GATE-007 — My Tackle Availability Foundation**, and begin its shared authenticated User Knowledge repository/access foundation plus minimum authoritative My Tackle ownership/current-availability contracts. What Should I Throw production remains blocked until GATE-007 closes.
+1. **GATE-006 — Settings / User Data Architecture is CLOSED / PASS** at `ec6ef2e43573400ca25811a48f801565bcc16902` (`Close Settings/User Data architecture`). Repository Integrity #117 and GitHub Pages #605 passed; the former active workstream path is retired and the final planning record is archived at `archive/workstreams/settings-user-data/SETTINGS-USER-DATA-ARCHITECTURE.md`.
+2. **GATE-007 — My Tackle Availability Foundation is ACTIVE / REQUIRED.** Preserve D067/D069 and the locked UD-1 through UD-10 architecture, including Firebase Authentication + Cloud Firestore, explicit My Tackle ownership, and separate temporary/current availability.
+3. Begin the first bounded GATE-007 step: establish the shared authenticated User Knowledge repository/access foundation and the minimum authoritative My Tackle ownership/current-availability production contracts needed for Recommendation matching.
+4. **GATE-004 — What Should I Throw production remains BLOCKED** until GATE-007 closes.

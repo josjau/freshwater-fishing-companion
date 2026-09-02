@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.9.0  
+**Document Revision:** 0.11.1  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-08-30
+**Last Updated:** 2026-09-02
 
 # Purpose
 
@@ -49,8 +49,8 @@ The original validated 20-Rig library remains canonical. The additive Four-State
 3. **Regulations — U.S. State Fishing Resource Gateway** — completed / validated / closed.
 4. **What Should I Throw? Phase 0 Planning** — complete; production deferred behind the approved prerequisites below.
 5. **Recommendation Prerequisites Foundation** — completed / validated / closed: Conditions → Lure/Bait Reference → Techniques/Compatibility.
-6. **Settings / User Data Architecture Gate** — active architecture-planning milestone.
-7. **My Tackle Availability Foundation** — scoped to authoritative ownership/availability and recommendation matching.
+6. **Settings / User Data Architecture Gate** — completed / validated / closed.
+7. **My Tackle Availability Foundation** — active; scoped to authoritative ownership/availability and recommendation matching.
 8. **What Should I Throw? Recommendation Engine + UX Pilot**.
 9. **Tackle Reference / Find Tackle** — later unless prerequisite implementation demonstrates a direct dependency.
 10. **Catch Log**.
@@ -140,17 +140,17 @@ Intrinsic Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique compatibil
 
 The workstream closed after all three subphases passed source/schema/relationship validation, runtime review, Repository Integrity, exact-scope commit verification, and required CI/Pages.
 
-# 6. Settings / User Data Architecture Gate — Active
+# 6. Settings / User Data Architecture Gate — Completed / Closed
 
-This gate is now the active architecture-planning milestone and must close before authoritative My Tackle. It resolves stable user/profile identity, authentication/account linking, synchronization, local persistence, retention, migration, backup/restore, device transfer, preference ownership, and the boundary between persistent ownership and temporary/current availability.
+This gate is **CLOSED / PASS**. The settled architecture covers stable user/profile identity, authentication/account linking, synchronization, local persistence, retention, migration, backup/restore, device transfer, profile/preference ownership, Settings UX boundaries, and the boundary between persistent ownership and temporary/current availability.
 
-D067 remains the durable User Knowledge ownership rule; D069 refines its sequencing trigger. **UD-1 is locked with refinement allowed:** FCC targets one persistent profile that may span multiple devices through local offline-capable copies plus shared profile-scoped record-level synchronization. Cross-device synchronization requires secure authentication or an equivalent approved account/device-linking mechanism. Manual export/restore is backup/portability/recovery rather than routine synchronization. Multi-profile/family sharing remains deferred. Exact authentication provider, sync service, persistence technology, and conflict semantics remain for the active gate.
+D067 remains the durable User Knowledge ownership rule; D069 refines its sequencing trigger. UD-1 through UD-10 are **LOCKED / refinement allowed**, including Firebase Authentication + Cloud Firestore under final UD-2; UD-11 and UD-12 are **CLOSED / PASS / refinement allowed**. Closeout landed at `ec6ef2e43573400ca25811a48f801565bcc16902` with Repository Integrity #117 and GitHub Pages #605 PASS. The final planning record is retained at `archive/workstreams/settings-user-data/SETTINGS-USER-DATA-ARCHITECTURE.md`; GATE-007 My Tackle Availability Foundation is now active.
 
-# 7. My Tackle Availability Foundation
+# 7. My Tackle Availability Foundation — Active
 
-Implement only the User Knowledge foundation required to make ownership and recommendation availability authoritative. The initial goal is to answer which canonical Tackle/Lure/Bait items the angler owns and which relevant variants are available for the current recommendation workflow.
+This is the active product gate. Implement only the User Knowledge foundation required to make ownership and recommendation availability authoritative. The initial goal is to answer which canonical Tackle/Lure/Bait items the angler owns and which relevant variants are available for the current recommendation workflow.
 
-Persistent ownership and temporary/current availability must remain semantically distinguishable. The exact V1 representation is settled at the User Data/My Tackle gate; temporary availability must never silently create ownership. Full inventory-management breadth is not a prerequisite.
+Persistent ownership and temporary/current availability are already semantically separated by locked UD-8 architecture: My Tackle is the sole ownership authority, while effective current availability may derive from selected owned equipment/Fishing Setups, selected Inventory Location contents, loose owned additions, temporary additions, and explicit exceptions. What I Have With Me Today is temporary profile-scoped state requiring explicit confirmation and later-day reconfirmation. GATE-007 owns the exact production schemas, selectors, mapping, quantity behavior, Fishing Setup mechanics, and Recommendation-facing implementation needed to make that architecture authoritative. Full inventory-management breadth is not a prerequisite.
 
 # 8. What Should I Throw? Recommendation Engine + UX Pilot
 
@@ -182,7 +182,7 @@ The Regulations gateway is deliberately broader geographically than the rest of 
 
 It provides **official-resource navigation**, not legal interpretation or a normalized nationwide regulation database. Freshwater Fishing Companion may normalize labels, categories, state identity, agency identity, link metadata, and verification metadata, while the state authority owns the underlying current legal requirements.
 
-The active Settings / User Data Architecture gate may define a future user preference for preferred states. The preferred behavior is to prioritize those states while preserving access to the complete supported state list; a preference should not make other supported states appear unavailable.
+UD-7 already locks preferred Regulations states as a synchronized profile-owned preference. The behavior remains prioritization/pinning while preserving access to the complete supported state list; preferred states never make other supported states appear unavailable. UD-11 Preferences owns the Settings presentation/interaction for this choice, while exact field names and provider layout remain implementation details.
 
 # Parking Lot
 

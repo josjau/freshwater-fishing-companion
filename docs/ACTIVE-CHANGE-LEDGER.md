@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.16  
+**Document Revision:** 1.10.19  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `584f97caa4874075f745834145813ac9bdcf78b3`  
-**Last Updated:** 2026-08-30
+**Reconciliation Baseline:** `ec6ef2e43573400ca25811a48f801565bcc16902`  
+**Last Updated:** 2026-09-02
 
 # Purpose
 
@@ -68,14 +68,14 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 
 | ID | Status | Item | Trigger / owner |
 |---|---|---|---|
-| GATE-004 | BLOCKED | What Should I Throw production | Recommendation Prerequisites Foundation is CLOSED / PASS. Resume recommendation engine/UX only after GATE-006 Settings/User Data Architecture and GATE-007 scoped My Tackle Availability Foundation close. |
+| GATE-004 | BLOCKED | What Should I Throw production | Recommendation Prerequisites Foundation and GATE-006 Settings / User Data Architecture are CLOSED / PASS. Resume recommendation engine/UX only after GATE-007 My Tackle Availability Foundation closes. |
 | GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Later roadmap milestone after the recommendation prerequisite path unless a direct dependency is demonstrated. |
-| GATE-006 | ACTIVE / REQUIRED | Settings / User Data Architecture | D067/D069. UD-1 is locked with refinement allowed: one persistent profile may span devices through local offline-capable replicas plus profile-scoped record-level synchronization; secure authentication or equivalent account/device linking is required for cross-device sync. Next: UD-2 Identity + Sync Model, then persistence, retention, migration, backup/restore, preference ownership, and ownership-vs-current-availability. |
-| GATE-007 | REQUIRED | My Tackle Availability Foundation | After User Data gate and before What Should I Throw production; implement only the authoritative ownership/current-availability and recommendation-matching scope required by D069. |
+
+| GATE-007 | ACTIVE / REQUIRED | My Tackle Availability Foundation | GATE-006 closed at `ec6ef2e43573400ca25811a48f801565bcc16902` with Repository Integrity #117 and GitHub Pages #605 PASS. First bounded action: establish the shared authenticated User Knowledge repository/access foundation plus the minimum authoritative My Tackle ownership/current-availability production contracts required for D069. What Should I Throw remains blocked until GATE-007 closes. |
 | GATE-008 | DEFERRED TO NAMED GATE | Catch Log | After the settled User Data/My Tackle foundation and later roadmap progression. |
 | GATE-009 | DEFERRED TO NAMED GATE | Global Search | After major searchable domains are stable. |
 | GATE-010 | PARKED | Favorites final keep/replace/remove decision | Near project completion. |
-| GATE-011 | DEFERRED WITHIN ACTIVE GATE | Multi-theme support | Settings / User Data Architecture; settle theme selection/persistence when preference ownership is reached. |
+| GATE-011 | APPROVED / PENDING IMPLEMENTATION | Multi-theme support | UD-11 Appearance is LOCKED / refinement allowed: Theme and Color Scheme are separate device-local settings; only production-approved/validated themes may be selectable. Forest Journal remains the current production baseline; Forest Copper/Gold/Legacy Dark remain candidates. Final Version 1 theme set and candidate promotion remain implementation/validation work. |
 | GATE-012 | REQUIRED | Repository Disaster Recovery / Reconstruction | D064; implement and validate before major Version 1 release or before irreplaceable User Knowledge enters scope, whichever comes first. Not a current Fish blocker. |
 | GATE-013 | DEFERRED TO NAMED GATE | Reusable Rig alternate-terminal configuration modeling | D065 + `data-model/03-RIGS.md`; revisit when a user workflow requires mutually exclusive component/assembly/readiness branches within one Rig or another Rig demonstrates the same reusable need. |
 

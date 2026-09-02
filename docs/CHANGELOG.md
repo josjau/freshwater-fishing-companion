@@ -1,14 +1,24 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.5.0  
+**Document Revision:** 3.6.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-08-30
+**Last Updated:** 2026-09-02
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to `WORKING_STATE.md`; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-09-02 — Settings / User Data Architecture — Closed
+
+Documentation closeout `ec6ef2e43573400ca25811a48f801565bcc16902` — `Close Settings/User Data architecture`
+
+- Closed GATE-006 after UD-1 through UD-10 were locked / refinement allowed, UD-11 Settings UX Boundary closed / pass, and UD-12 canonical-owner reconciliation retired the former active workstream path.
+- Locked Version 1 User Knowledge architecture includes Firebase Authentication + Cloud Firestore, one profile across devices, Firestore offline replication behind an FCC repository boundary, record-scoped schema migration, explicit retention/deletion semantics, profile/device preference ownership, independent My Tackle ownership versus current availability, provider-independent backup/restore, and application-level multi-device conflict/reconciliation rules.
+- Archived the final Settings planning record at `archive/workstreams/settings-user-data/SETTINGS-USER-DATA-ARCHITECTURE.md` for reconstruction/design-lineage value.
+- Repository Integrity #117 and GitHub Pages #605 passed on the closeout SHA.
+- Activated GATE-007 — My Tackle Availability Foundation. What Should I Throw production remains blocked until GATE-007 closes.
 
 # 2026-08-30 — Recommendation Prerequisites Foundation — Closed
 
