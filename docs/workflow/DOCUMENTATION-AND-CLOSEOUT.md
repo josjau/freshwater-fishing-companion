@@ -4,7 +4,7 @@
 **Document Status:** Approved  
 **Role:** Durable documentation, impact reconciliation, session continuity, commit verification, and closeout  
 **Decision Baseline:** D038-D041, D055, D068  
-**Last Updated:** 2026-08-28
+**Last Updated:** 2026-09-02
 
 # Documentation Is Part of the Work
 
@@ -181,9 +181,9 @@ The impact set must include current-state owners, roadmap/ledger/history owners 
 
 ## Gate B — Documentation Consistency
 
-Before commit, run `tools/validate_repository_integrity.js`. For documentation/structural work this validator is responsible for mechanically detectable governance defects including required/retired paths, active Markdown relative-link targets, decision-index/body ID integrity, and required governance markers.
+Before commit, run `tools/validate_repository_integrity.js`. For documentation/structural work this validator is the normal mandatory repository/documentation consistency gate and is responsible for mechanically detectable governance defects including required/retired paths, active Markdown relative-link targets, decision-index/body ID integrity, and required governance markers.
 
-When closing a named workstream, also run `tools/validate_workstream_closeout.js` with the workstream aliases and former active path. A failure blocks commit/closeout; do not waive it by prose review.
+`tools/validate_workstream_closeout.js` is a targeted diagnostic, not a universal closeout gate. Run it only when a specific workstream presents a demonstrated stale-state risk that the normal repository-integrity validation does not adequately cover—for example, uncertainty about retirement of a former active path or suspected stale closeout wording tied to that workstream. When it is invoked for such a demonstrated need, its failure must be reconciled before closeout. Do not add it to routine closeout solely because the work has a named workstream.
 
 ## Gate C — Review / Commit
 

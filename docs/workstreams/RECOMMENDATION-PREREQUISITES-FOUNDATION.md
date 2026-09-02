@@ -334,6 +334,6 @@ Final verification:
 - Direct-Tie configuration-aware Technique display is accepted;
 - Technique-chip visual refinement remains a non-blocking Version 1 Design Audit carry-forward.
 
-**Next product gate:** Settings / User Data Architecture under D067/D069, followed by scoped My Tackle Availability Foundation before What Should I Throw recommendation production.
+**Next product gate:** GATE-006 Settings / User Data Architecture closeout under D067/D069, followed by GATE-007 My Tackle Availability Foundation before What Should I Throw recommendation production.
 
-**Final disposition:** Settings / User Data Architecture is the successor workstream. Current execution must resume from `WORKING_STATE.md` and `workstreams/SETTINGS-USER-DATA-ARCHITECTURE.md`; do not reopen this Foundation workstream unless a regression or explicitly approved dependency requires it.
+**Final disposition:** Settings / User Data Architecture succeeded this Foundation and is architecture-complete; its former active workstream path is retired during UD-12 closeout. Current execution resumes from `WORKING_STATE.md`; the historical Settings planning record is retained under `../../archive/workstreams/settings-user-data/SETTINGS-USER-DATA-ARCHITECTURE.md`. Do not reopen this Foundation workstream unless a regression or explicitly approved dependency requires it.

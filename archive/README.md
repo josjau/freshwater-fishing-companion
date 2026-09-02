@@ -33,12 +33,15 @@ archive/
         knots/
         repository-audit/
         regulations/
+        settings-user-data/
         rig/
         ux/
         workflow/
 ```
 
 `archive/workstreams/repository-audit/` contains the completed Repository Audit Cleanup workstream and section records retained for audit/provenance value after final closeout. Historical OPEN/PENDING/PASS wording inside those files reflects the state at the time and does not override current governing documents.
+
+`archive/workstreams/settings-user-data/` retains the completed Settings / User Data Architecture planning record because its final Drive-only UD-1 through UD-12 design lineage has reconstruction value beyond the earlier committed active-workstream revisions. It is historical evidence and does not own current User Knowledge architecture.
 
 Additional archive subdirectories are created only when a real retained artifact class requires them. Do not create speculative archive categories in advance.
 

@@ -4,7 +4,7 @@
 **Document Status:** Approved  
 **Role:** Canonical durable decision bodies for this ownership domain  
 **Migration Baseline:** `af3bffb9995d56f8b9e47236bbadfa481d88cc34`  
-**Last Updated:** 2026-08-27
+**Last Updated:** 2026-09-02
 
 # Purpose
 
@@ -327,16 +327,16 @@ The gate must deliberately resolve at minimum:
 
 **UD-1 refinement — LOCKED 2026-08-30, refinement allowed:** FCC targets one persistent user identity/profile that may span multiple devices. Each device may maintain a local offline-capable copy of supported User Knowledge, while durable profile-owned records synchronize through a shared profile-scoped service when connectivity is available. Devices are replicas of the same semantic profile rather than independent users. Cross-device synchronization requires secure authentication or an equivalent approved account/device-linking mechanism. Synchronization is record-oriented rather than whole-profile replacement. Manual export/restore remains backup, portability, and disaster recovery rather than routine multi-device synchronization. Multi-profile/family sharing remains deferred.
 
-UD-1 may be refined if later persistence, conflict-resolution, privacy, security, or implementation findings demonstrate a better boundary without silently changing the approved cross-device product goal. The exact authentication/account-linking mechanism, synchronization service, persistence technology, conflict rules, and detailed profile schema remain unresolved for UD-2 and subsequent gate decisions.
+UD-1 remains refinement-allowed without weakening the approved cross-device product goal. The Settings / User Data Architecture planning work subsequently locked the Version 1 implementation foundation: Firebase Authentication with Firebase UID-scoped profiles; email/password plus Google Sign-In as the initial sign-in mechanisms subject to implementation/security refinement; Cloud Firestore as the profile-scoped synchronized authority; supported browser persistence as the local/offline replica; FCC-owned repository/data-access abstraction; record-scoped schema versioning; explicit retention/deletion, backup/restore, conflict/tombstone/anti-resurrection, and profile-generation restore semantics; synchronized Profile/Preferences ownership boundaries; and independent persistent ownership versus current availability.
 
-D069 refines sequencing while preserving this ownership rule. Conditions, Lure/Bait, and Techniques/Compatibility are now implemented and closed; the Settings / User Data Architecture gate is active and must close before authoritative My Tackle. A scoped My Tackle Availability Foundation remains a prerequisite for What Should I Throw production so the feature can distinguish Best Overall from Best Currently Available without treating transitional readiness state as ownership.
+D069 refines sequencing while preserving this ownership rule. Conditions, Lure/Bait, and Techniques/Compatibility are implemented and closed. The Settings / User Data Architecture is architecture-complete through UD-12 canonical reconciliation and remains blocked only on required repository closeout validation/commit/final convergence before authoritative My Tackle. A scoped My Tackle Availability Foundation remains the next prerequisite for What Should I Throw production so the feature can distinguish Best Overall from Best Currently Available without treating transitional readiness state as ownership.
 
 **Reason:** My Tackle and Catch Log are durable user-owned data. A purely local browser-bucket design makes multi-device use cumbersome and makes divergent inventories difficult to reconcile; whole-profile backup/restore is insufficient once multiple devices can make legitimate edits. Defining synchronized profile ownership before feature-specific schemas prevents incompatible storage islands and avoids baking one-device assumptions into durable User Knowledge.
 
-**Current implementation status:** Architecture gate ACTIVE / production User Data not implemented. UD-1 is locked with refinement allowed. Current Rig-readiness persistence remains transitional local availability state and is not authoritative ownership or the final synchronization model.
+**Current implementation status:** Shared User Knowledge architecture is approved/locked but production User Data is not implemented. UD-12 documentation closeout must land and pass before GATE-007 begins. Current Rig-readiness persistence remains transitional local availability state and is not authoritative ownership.
 
-**Next decision:** UD-2 — Identity + Sync Model. Settle secure identity/account linking and synchronization-service boundaries before locking authoritative local persistence technology.
+**Next gate:** GATE-007 — My Tackle Availability Foundation after GATE-006 closeout PASS. Its first bounded production action is the shared authenticated User Knowledge repository/access foundation plus minimum authoritative My Tackle ownership/current-availability contracts required by D069.
 
-**Canonical owners:** D067; `ROADMAP.md`; `ARCHITECTURE.md`; `data-model/01-FOUNDATION.md`; `05-TACKLE.md`; `05A-INVENTORY.md`; `07-USER-DATA.md`; `workstreams/SETTINGS-USER-DATA-ARCHITECTURE.md`.
+**Canonical owners:** D067; `ROADMAP.md`; `ARCHITECTURE.md`; `data-model/01-FOUNDATION.md`; `05-TACKLE.md`; `05A-INVENTORY.md`; `07-USER-DATA.md`. The retired detailed planning record is retained under `../../archive/workstreams/settings-user-data/SETTINGS-USER-DATA-ARCHITECTURE.md` as historical architecture evidence, not a current owner.
 
 Permanent principle: **define who owns persistent User Knowledge, how the same user is recognized across devices, and how durable records survive/synchronize before building authoritative ownership/history features.**
