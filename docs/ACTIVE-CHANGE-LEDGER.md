@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.47  
+**Document Revision:** 1.10.48  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** GitHub `main` commit `7aab1bbbbfb6837efbb175d715f55f9146fdad39`  
+**Reconciliation Baseline:** GitHub `main` commit `6ee6917bba43ec6c0fa70f15528d750d34354d6a`  
 **Last Updated:** 2026-09-13
 
 # Purpose
@@ -81,7 +81,7 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 
 | ID | Status | Item | Trigger / owner |
 |---|---|---|---|
-| GATE-004 | ACTIVE / REQUIRED | What Should I Throw production | Recommendation Prerequisites Foundation, GATE-006, and GATE-007 are CLOSED / PASS. GitHub `main` is `7aab1bbbbfb6837efbb175d715f55f9146fdad39`; all five G4 semantic checkpoints and planning-to-build documentation closeout are complete. Recommendation runtime foundation R1 is staged in Drive Current and pending the bundled local PASS/FAIL review; G4 items remain APPROVED / PENDING IMPLEMENTATION until authored Decision Knowledge and engine integration complete. |
+| GATE-004 | ACTIVE / REQUIRED | What Should I Throw production | Recommendation Prerequisites Foundation, GATE-006, and GATE-007 are CLOSED / PASS. GitHub `main` is `6ee6917bba43ec6c0fa70f15528d750d34354d6a`; all five G4 semantic checkpoints and planning-to-build documentation closeout are complete. The bounded Recommendation runtime foundation is LANDED / VERIFIED; Repository Integrity #124 and GitHub Pages #612 passed. Continue with authored Recommendation Decision Knowledge and ranking integration; G4 items remain APPROVED / PENDING IMPLEMENTATION until that integration completes. |
 | GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Later roadmap milestone after the recommendation prerequisite path unless a direct dependency is demonstrated. |
 
 | GATE-008 | DEFERRED TO NAMED GATE | Catch Log | After the settled User Data/My Tackle foundation and later roadmap progression. |

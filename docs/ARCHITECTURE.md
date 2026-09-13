@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Architecture
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.15.1  
+**Document Revision:** 0.15.2  
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
 **Last Updated:** 2026-09-13
@@ -29,6 +29,11 @@ The browser application remains plain HTML, CSS, and JavaScript hosted through G
 AGENTS.md
 index.html
 forest-journal.css
+availability-quantity.js
+availability-attention.js
+my-tackle-reconciliation.js
+current-context-source-change.js
+recommendation-engine.js
 search.js
 view-renderer.js
 knot-media-renderer.js
@@ -81,8 +86,14 @@ data/knots.js
 data/knot-guidance.js
 data/reel-guidance.js
 data/tackle.js
+data/canonical-requirement-satisfaction.js
 data/media.js
 data/regulations.js
+availability-quantity.js
+availability-attention.js
+my-tackle-reconciliation.js
+current-context-source-change.js
+recommendation-engine.js
 search.js
 view-renderer.js
 knot-media-renderer.js
@@ -203,7 +214,9 @@ D069 refines sequencing while preserving D067's ownership invariant. GATE-006 Se
 
 GATE-004 adds five approved production refinements without changing those owners: candidate identity is a derived Rig + applicable configuration + Lure/Bait + Technique + material-parameter composite; current-equipment executability is derived separately from confirmed availability; simplicity is only a bounded post-suitability ranking modifier; legality is consumed only from authoritative structured constraints with current Regulations remaining a resource gateway; and Recommendation Context is temporary device/session-local Decision-input state with explicit freshness/reuse boundaries rather than durable User Knowledge.
 
-The three Reference Knowledge prerequisites plus GATE-006 Settings/User Data and GATE-007 scoped My Tackle Availability are complete. GATE-004 What Should I Throw production is active.
+**Current / Implemented Recommendation runtime foundation:** `recommendation-engine.js` landed at `6ee6917bba43ec6c0fa70f15528d750d34354d6a`. It provides bounded runtime primitives for deterministic composite candidate identity, three-state executability, legality evaluation without compliance claims, bounded simplicity preference, Recommendation Context freshness, and separate Best Overall / Best Currently Available invalidation. It does not yet provide authored Fish/Condition Recommendation Decision Knowledge, candidate generation, contextual scoring/ranking, current-availability orchestration, or the Recommendation UX pilot.
+
+The three Reference Knowledge prerequisites plus GATE-006 Settings/User Data and GATE-007 scoped My Tackle Availability are complete. GATE-004 What Should I Throw production is active; authored Recommendation Decision Knowledge plus candidate-generation/contextual-ranking integration is next.
 
 ## User Knowledge identity and synchronization
 

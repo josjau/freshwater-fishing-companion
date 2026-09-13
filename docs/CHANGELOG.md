@@ -1,14 +1,24 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.6.0  
+**Document Revision:** 3.7.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-13
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to `WORKING_STATE.md`; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-09-13 — Recommendation Runtime Foundation — Landed
+
+Source/runtime + documentation commit `6ee6917bba43ec6c0fa70f15528d750d34354d6a` — `Recommendation runtime foundation R1`
+
+- Landed the bounded GATE-004 Recommendation runtime foundation after the cumulative 13-file R2 review state passed exact-scope validation and Repository Integrity with 18 validation groups.
+- Added `recommendation-engine.js`, wired the runtime through `index.html`, and expanded repository integrity coverage for the Recommendation foundation while preserving the already-approved G4 semantic boundaries.
+- The R2 production/runtime bytes were identical to the already-passed R1 browser review, so repeat browser validation was not required.
+- Repository Integrity #124 and GitHub Pages #612 passed after push.
+- GATE-004 remains ACTIVE / REQUIRED. Exact next production work is authored Recommendation Decision Knowledge and ranking integration; the G4 candidate/executability/simplicity/legality/context items remain pending implementation until that integration is complete.
 
 # 2026-09-02 — Settings / User Data Architecture — Closed
 
