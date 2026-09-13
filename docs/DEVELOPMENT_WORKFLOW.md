@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 2.3.0  
+**Document Revision:** 2.3.2  
 **Document Status:** Approved  
 **Role:** Compact canonical workflow entrypoint  
 **Decision Baseline:** D014, D038-D041, D055, D068  
-**Last Updated:** 2026-08-30
+**Last Updated:** 2026-09-13
 
 # Purpose
 
@@ -102,13 +102,13 @@ Absent an invalidation condition, do not repeat whole-project reconstruction mer
 
 # Planning-to-Build Hard Gate
 
-When a planning phase or planning subphase is declared complete, **production/build implementation is blocked until planning documentation closeout passes**. Live Working State capture alone is not sufficient.
+When a planning phase or planning subphase is declared complete, **production/build implementation is blocked until planning documentation closeout passes**. Live Working State capture alone is not sufficient. This closeout is a verification/convergence gate; it must not be the first time approval-stage owner documentation catches up.
 
 Before the build phase may start:
 
-1. reconcile every locked planning decision, vocabulary, authored scope, schema/relationship contract, status, and exact resume point into all applicable canonical repository documentation owners in Drive Working Source/Current;
-2. remove or correct superseded planning language;
-3. update the active workstream, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md` as applicable;
+1. verify that every approved planning decision, discussion outcome, vocabulary, authored scope, schema/relationship contract, and project-direction change was already reconciled at its approval gate into every applicable repository documentation owner in Drive Working Source/Current; if not, treat that as a workflow defect and reconcile it before continuing;
+2. reconcile only aggregate phase-level status/resume transitions that arise from declaring the planning phase complete, and remove or correct superseded planning language;
+3. update the active workstream, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md` for the phase transition as applicable;
 4. give every applicable durable owner an `UPDATED` or `VERIFIED — NO CHANGE REQUIRED` disposition;
 5. run targeted documentation consistency/structural-readability validation and reconcile repository validators when the documentation change affects validator expectations;
 6. verify the bounded changed-file scope and read back the resulting Drive Current files;
@@ -132,9 +132,11 @@ Only then may production implementation begin.
 7. One write-authorized project-chat cycle owns edits to the active Drive working tree at a time.
 8. Use review-cycle identity, changed/deletion sets, package hashes when applicable, and targeted validation instead of routine full-state reconstruction.
 9. Every applicable durable documentation owner receives `UPDATED` or `VERIFIED — NO CHANGE REQUIRED` disposition before commit.
-10. Post-write GitHub verification is mandatory.
-11. Before any dependent next action, the Live Working State must have been updated for the authorizing material transition and verified by readback.
-12. Do not begin a dependent build segment until the current segment is finalized or deliberately parked with an exact resume point.
+10. **Every explicit approval gate is a Drive Current documentation gate.** Immediately reconcile the approved decision, discussion outcome, or project-direction change into **every applicable owner document whose owned semantics changed**, not only the primary decision owner or minimum continuity files. Applicable owners can include decision bodies, domain/data-model owners, relationship/architecture/roadmap/workstream owners, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md`. Update and read back the Live Working State for the same material transition. All required Drive Current owner updates and targeted readback must finish **before moving to the next approval/dependent checkpoint**. Do not defer owner updates to planning closeout, staging, ZIP creation, local review, commit, or session end. Git commits may be intentionally batched; Drive working-state capture may not.
+11. Drive Current accumulates the complete approved uncommitted working state—source plus documentation. The local repository review/package path must carry that complete approved state forward; after local validation and commit/push, GitHub `main` becomes the committed authoritative version of those accumulated Drive changes.
+12. Post-write GitHub verification is mandatory.
+13. Before any dependent next action, the Live Working State must have been updated for the authorizing material transition and verified by readback.
+14. Do not begin a dependent build segment until the current segment is finalized or deliberately parked with an exact resume point.
 
 # Performance Standard
 

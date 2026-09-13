@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.11.1  
+**Document Revision:** 0.11.2  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-13
 
 # Purpose
 
@@ -50,8 +50,8 @@ The original validated 20-Rig library remains canonical. The additive Four-State
 4. **What Should I Throw? Phase 0 Planning** — complete; production deferred behind the approved prerequisites below.
 5. **Recommendation Prerequisites Foundation** — completed / validated / closed: Conditions → Lure/Bait Reference → Techniques/Compatibility.
 6. **Settings / User Data Architecture Gate** — completed / validated / closed.
-7. **My Tackle Availability Foundation** — active; scoped to authoritative ownership/availability and recommendation matching.
-8. **What Should I Throw? Recommendation Engine + UX Pilot**.
+7. **My Tackle Availability Foundation** — completed / validated / closed for the scoped Recommendation-facing foundation.
+8. **What Should I Throw? Recommendation Engine + UX Pilot** — active under GATE-004.
 9. **Tackle Reference / Find Tackle** — later unless prerequisite implementation demonstrates a direct dependency.
 10. **Catch Log**.
 11. **Global Search**.
@@ -144,19 +144,19 @@ The workstream closed after all three subphases passed source/schema/relationshi
 
 This gate is **CLOSED / PASS**. The settled architecture covers stable user/profile identity, authentication/account linking, synchronization, local persistence, retention, migration, backup/restore, device transfer, profile/preference ownership, Settings UX boundaries, and the boundary between persistent ownership and temporary/current availability.
 
-D067 remains the durable User Knowledge ownership rule; D069 refines its sequencing trigger. UD-1 through UD-10 are **LOCKED / refinement allowed**, including Firebase Authentication + Cloud Firestore under final UD-2; UD-11 and UD-12 are **CLOSED / PASS / refinement allowed**. Closeout landed at `ec6ef2e43573400ca25811a48f801565bcc16902` with Repository Integrity #117 and GitHub Pages #605 PASS. The final planning record is retained at `archive/workstreams/settings-user-data/SETTINGS-USER-DATA-ARCHITECTURE.md`; GATE-007 My Tackle Availability Foundation is now active.
+D067 remains the durable User Knowledge ownership rule; D069 refines its sequencing trigger. UD-1 through UD-10 are **LOCKED / refinement allowed**, including Firebase Authentication + Cloud Firestore under final UD-2; UD-11 and UD-12 are **CLOSED / PASS / refinement allowed**. Closeout landed at `ec6ef2e43573400ca25811a48f801565bcc16902` with Repository Integrity #117 and GitHub Pages #605 PASS. The final planning record is retained at `archive/workstreams/settings-user-data/SETTINGS-USER-DATA-ARCHITECTURE.md`; GATE-007 My Tackle Availability Foundation is now CLOSED / PASS and GATE-004 What Should I Throw is active.
 
-# 7. My Tackle Availability Foundation — Active
+# 7. My Tackle Availability Foundation — Completed / Closed
 
-This is the active product gate. Implement only the User Knowledge foundation required to make ownership and recommendation availability authoritative. The initial goal is to answer which canonical Tackle/Lure/Bait items the angler owns and which relevant variants are available for the current recommendation workflow.
+GATE-007 is **CLOSED / PASS** for the scoped Recommendation-facing My Tackle/current-availability foundation. It settled authoritative ownership/current-availability semantics, item-family coverage, explicit canonical mapping and satisfaction, quantity sufficiency, derived Needs Attention diagnostics, Merge/Split dependent-reference reconciliation, and current-context source-change visibility. The final G7-CTX production landing is `7aab1bbbbfb6837efbb175d715f55f9146fdad39`, with Repository Integrity #123 and GitHub Pages #611 PASS.
 
-Persistent ownership and temporary/current availability are already semantically separated by locked UD-8 architecture: My Tackle is the sole ownership authority, while effective current availability may derive from selected owned equipment/Fishing Setups, selected Inventory Location contents, loose owned additions, temporary additions, and explicit exceptions. What I Have With Me Today is temporary profile-scoped state requiring explicit confirmation and later-day reconfirmation. GATE-007 owns the exact production schemas, selectors, mapping, quantity behavior, Fishing Setup mechanics, and Recommendation-facing implementation needed to make that architecture authoritative. Full inventory-management breadth is not a prerequisite.
+Persistent My Tackle product UI/storage breadth remains separate from this completed foundation. The closed gate means Recommendation now has the bounded semantics/runtime helpers it requires; it does not imply every future My Tackle management surface is already implemented.
 
-# 8. What Should I Throw? Recommendation Engine + UX Pilot
+# 8. What Should I Throw? Recommendation Engine + UX Pilot — Active
 
-Resume recommendation production only after the required prerequisite gates above are satisfied. The pilot implements the locked Best Overall / Best Currently Available output, compact V1 input flow, contextual Recommendation Decision Knowledge, and explanation model against real canonical Conditions, Lure/Bait, Techniques, compatibility, and availability data.
+GATE-004 is the active product gate. All five Recommendation-side semantic handoff checkpoints are COMPLETE / APPROVED WITH REVISION ALLOWED: G4-CAND candidate identity, G4-EQUIP executability, G4-SIMPLE bounded simplicity treatment, G4-LEGAL legality boundary, and G4-CTX Recommendation Context freshness/session lifecycle.
 
-Material changes to the locked Phase 0 semantic boundaries require explicit reapproval. Recommendation Prerequisites planning is now locked through RP-A1–RP-A4, RP-B1/RP-B2A–RP-B2D/B-01–B-13, and RP-C1–RP-C4; changes to those locked vocabularies, authored scopes, or production contracts require reopening the relevant bounded gate.
+Production begins with the Recommendation Decision Knowledge model/runtime boundary, then engine integration and validator coverage, followed by the UX pilot. The implementation must preserve the locked Best Overall / Best Currently Available distinction, compact V1 input flow, canonical-domain ownership boundaries, explainability, and the five G4 contracts. Material changes to the locked Phase 0 or G4 semantic boundaries require explicit reapproval and durable documentation update.
 
 # 9. Tackle Reference / Find Tackle
 

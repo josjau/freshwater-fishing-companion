@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Architecture
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.13.0  
+**Document Revision:** 0.15.1  
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
-**Last Updated:** 2026-08-30
+**Last Updated:** 2026-09-13
 
 # Purpose
 
@@ -112,9 +112,11 @@ Existing validated content is progressively reconciled when audited or materiall
 
 ## Theme boundary
 
-**Current:** Forest Journal is the only production-supported Version 1 theme. Deferred theme concepts under `themes/concepts/` are not production themes and are outside current parity requirements.
+**Current:** Forest Journal is the only production-supported Version 1 theme. Deferred theme concepts under `themes/concepts/` are not production themes and remain outside current parity requirements.
 
-**Approved / Not Implemented:** final multi-theme selection/persistence belongs to the Settings / User Data architecture gate. The reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
+**Approved / Not Implemented - UD-11 Appearance:** Settings separates **Theme** from **Color Scheme**. Theme and Color Scheme are device-local, outside synchronized User Knowledge and the authoritative UD-9 backup. Each production theme declares the System/Light/Dark variants it supports; unsupported combinations are not offered. Only production-approved/validated themes may be selectable. Forest Copper, Forest Gold, and Legacy Dark remain deferred candidates. The architecture permits multiple production themes in Version 1 but does not require a minimum count; the final supported-theme set remains open pending implementation/validation.
+
+Shared UI/layout/component behavior should remain centralized where practical while production themes primarily own design tokens and bounded intentional overrides. The reference-media surface `#f4f0e8` / RGB `244, 240, 232` remains a cross-theme invariant.
 
 # Knowledge Architecture
 
@@ -187,7 +189,7 @@ Persistent owned tackle belongs to future My Tackle/User Knowledge. The current 
 
 `data/lure-bait.js` owns the implemented 13-identity Lure/Bait Reference domain under D069. Tackle owns functional fishing equipment and Rig-building components; Lure/Bait owns canonical lure and bait identities intentionally presented to Fish. Commercial product identity is not required for the current Lure/Bait architecture.
 
-D069 refines sequencing while preserving D067's ownership invariant: after Conditions, Lure/Bait, and Techniques are implemented, the Settings / User Data Architecture gate must settle stable user/profile identity, persistence, retention, migration, backup/restore, device transfer, preference ownership, and ownership-vs-current-availability semantics before authoritative My Tackle. A scoped My Tackle availability foundation then precedes What Should I Throw production. Full Tackle Reference expansion and Catch Log remain later milestones.
+D069 refines sequencing while preserving D067's ownership invariant. GATE-006 Settings / User Data Architecture and GATE-007 My Tackle Availability Foundation are CLOSED / PASS. The scoped GATE-007 foundation now supplies the Recommendation-facing ownership/current-availability semantics and runtime helpers required by GATE-004, while broader My Tackle management UI/storage remains separately implementable. GATE-004 What Should I Throw is the active product gate. Full Tackle Reference expansion and Catch Log remain later milestones.
 
 ## Implemented recommendation prerequisite domains
 
@@ -199,14 +201,27 @@ D069 refines sequencing while preserving D067's ownership invariant: after Condi
 - Compatibility Relationship owns intrinsic pairwise compatibility for Rig↔Lure/Bait, Rig↔Technique, and Lure/Bait↔Technique. Each pair is stored once; reverse navigation is derived.
 - Recommendation Decision Knowledge owns contextual selection, ranking, rationale, exact context-specific parameters, and Fish/Condition suitability.
 
-The first three prerequisite domains are complete. The remaining approved sequence is Settings/User Data → scoped My Tackle Availability → What Should I Throw production.
+GATE-004 adds five approved production refinements without changing those owners: candidate identity is a derived Rig + applicable configuration + Lure/Bait + Technique + material-parameter composite; current-equipment executability is derived separately from confirmed availability; simplicity is only a bounded post-suitability ranking modifier; legality is consumed only from authoritative structured constraints with current Regulations remaining a resource gateway; and Recommendation Context is temporary device/session-local Decision-input state with explicit freshness/reuse boundaries rather than durable User Knowledge.
+
+The three Reference Knowledge prerequisites plus GATE-006 Settings/User Data and GATE-007 scoped My Tackle Availability are complete. GATE-004 What Should I Throw production is active.
 
 ## User Knowledge identity and synchronization
 
-**UD-1 — Locked / architecture planning, refinement allowed:** FCC targets one persistent user identity/profile that may span multiple devices. Devices may maintain local offline-capable copies of supported User Knowledge and synchronize durable profile-owned records through a shared profile-scoped service when connectivity is available. Multiple devices are replicas of the same semantic profile rather than independent users. Cross-device synchronization requires secure authentication or an equivalent approved account/device-linking mechanism, and synchronization is record-oriented rather than whole-profile replacement. Manual export/restore remains a backup/portability/recovery mechanism. Multi-profile/family sharing is deferred.
+The closed Settings / User Data Architecture workstream settled the core Version 1 User Knowledge foundation:
 
-The exact authentication/account-linking mechanism, sync service, local persistence technology, conflict-resolution rules, schema/versioning details, and privacy/security implementation remain unresolved under the active Settings / User Data Architecture workstream. Current Rig-readiness `localStorage` remains transitional availability state and is not authoritative ownership.
+- **UD-1 - LOCKED / refinement allowed:** one persistent FCC profile may span devices; devices are replicas of the same semantic profile and durable User Knowledge synchronizes record-by-record.
+- **UD-2 - LOCKED / refinement allowed:** Firebase Authentication is the Version 1 identity provider and Cloud Firestore the profile-scoped sync service; Firebase UID scopes the profile; email/password plus Google Sign-In are the initial sign-in mechanisms, subject to implementation/security refinement; no custom server/Cloud Functions dependency is approved absent demonstrated need.
+- **UD-3 - LOCKED / refinement allowed:** Firestore is the durable synchronized authority while UD-2 remains in force; its persistent browser cache is the Version 1 local/offline replica where supported; application code accesses User Knowledge through one FCC-owned repository/data-access abstraction rather than a parallel authoritative IndexedDB store.
+- **UD-4 - LOCKED / refinement allowed:** User Knowledge is partitioned into semantic profile-scoped domains with independently addressable growing records and bounded singleton documents where appropriate.
+- **UD-5 - LOCKED / refinement allowed:** authoritative records carry record/document-scoped `schemaVersion`; supported older records migrate forward behind the repository boundary; older clients cannot overwrite newer unsupported schemas.
+- **UD-6 - LOCKED / refinement allowed:** local clearing/sign-out is distinct from synchronized deletion; account deletion deliberately removes implemented profile User Knowledge before authentication removal; minimum deletion state may exist only for safe reconciliation.
+- **UD-7 - LOCKED / refinement allowed:** durable user intent may synchronize as profile Preferences while device/system/runtime state does not by default. Preferred Regulation States and Measurement System are synchronized profile-owned Version 1 preferences; Appearance is device-local.
+- **UD-8 - LOCKED / refinement allowed:** My Tackle is the sole persistent ownership authority; current availability is independent and may include temporary non-owned tackle. What I Have With Me Today is temporary profile-scoped state requiring explicit confirmation and later-day reconfirmation.
+- **UD-9 - LOCKED / refinement allowed:** full backup covers all implemented authoritative durable User Knowledge in a provider-independent package; Reports are separate; full restore uses validated Replace semantics, a pre-restore safety checkpoint, post-restore validation, and rollback.
+- **UD-10 - LOCKED / refinement allowed:** application-level record revisions, stale-write protection, tombstone/anti-resurrection semantics, deterministic/lossless reconciliation, explicit semantic conflict resolution, shared current-availability concurrency, and profile-generation/write-gated full restore are settled at architecture level.
+- **UD-11 - CLOSED / PASS / refinement allowed:** Appearance, Preferences Version 1, Profile, Data Management, About, and cross-cutting authentication/synchronization/conflict/recovery status surfaces are architecture-complete for demonstrated Version 1 needs.
 
+Firebase Authentication + Cloud Firestore is LOCKED / refinement allowed. Exact provider primitives, domain record fields, UI wording/layout, and later My Tackle/Catch Log implementation mechanics remain owned by their appropriate implementation gates. Current Rig-readiness `localStorage` remains transitional availability state and is not authoritative ownership. UD-12 and GATE-007 are CLOSED / PASS; GATE-004 Recommendation production is active.
 
 ## Media
 

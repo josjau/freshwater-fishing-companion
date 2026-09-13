@@ -236,6 +236,8 @@ function validateEntrypoint() {
         "data/lure-bait.js",
         "data/techniques.js",
         "data/compatibility.js",
+        "current-context-source-change.js",
+        "recommendation-engine.js",
         "view-renderer.js"
     ];
     const requiredIndexes = requiredOrder.map((item) => refs.scriptRefs.indexOf(item));
@@ -3768,6 +3770,276 @@ function validateRepositoryHygiene() {
 }
 
 
+
+function validateRecommendationEngineContract() {
+    recordCheck("Recommendation semantic runtime contract");
+
+    const bindings = loadBindings("recommendation-engine.js", [
+        "RECOMMENDATION_ENGINE_BUILD_INFO",
+        "RECOMMENDATION_EXECUTABILITY_STATUS",
+        "RECOMMENDATION_REQUIREMENT_PROOF_STATUS",
+        "RECOMMENDATION_LEGAL_STATUS",
+        "RECOMMENDATION_SIMPLICITY_PREFERENCE",
+        "createRecommendationCandidateIdentity",
+        "deriveRecommendationExecutability",
+        "deriveRecommendationLegalEvaluation",
+        "deriveSimplicityPreference",
+        "evaluateRecommendationContextFreshness",
+        "deriveRecommendationResultInvalidation"
+    ]);
+
+    const expectedExecutability = [
+        "executable",
+        "not-currently-executable",
+        "executability-unconfirmed"
+    ];
+    const expectedRequirementProof = ["proven", "known-failure", "unconfirmed"];
+    const expectedLegal = [
+        "not-evaluated",
+        "no-known-blocking-constraint",
+        "blocked-by-known-constraint",
+        "compliance-unconfirmed"
+    ];
+    const expectedSimplicity = ["first", "second", "none"];
+
+    function assertExactValues(actualObject, expectedValues, label) {
+        const actual = Object.values(actualObject || {});
+        if (JSON.stringify(actual) !== JSON.stringify(expectedValues)) {
+            fail("Recommendation runtime", `${label} must be exactly ${expectedValues.join(", ")}; found ${actual.join(", ")}`);
+        }
+    }
+
+    assertExactValues(bindings.RECOMMENDATION_EXECUTABILITY_STATUS, expectedExecutability, "executability statuses");
+    assertExactValues(bindings.RECOMMENDATION_REQUIREMENT_PROOF_STATUS, expectedRequirementProof, "requirement-proof statuses");
+    assertExactValues(bindings.RECOMMENDATION_LEGAL_STATUS, expectedLegal, "legal statuses");
+    assertExactValues(bindings.RECOMMENDATION_SIMPLICITY_PREFERENCE, expectedSimplicity, "simplicity preferences");
+
+    if (bindings.RECOMMENDATION_ENGINE_BUILD_INFO?.file !== "recommendation-engine.js") {
+        fail("Recommendation runtime", "build info must identify recommendation-engine.js");
+    }
+
+    const createCandidate = bindings.createRecommendationCandidateIdentity;
+    const deriveExecutability = bindings.deriveRecommendationExecutability;
+    const deriveLegal = bindings.deriveRecommendationLegalEvaluation;
+    const deriveSimplicity = bindings.deriveSimplicityPreference;
+    const evaluateContext = bindings.evaluateRecommendationContextFreshness;
+    const deriveInvalidation = bindings.deriveRecommendationResultInvalidation;
+
+    if ([createCandidate, deriveExecutability, deriveLegal, deriveSimplicity, evaluateContext, deriveInvalidation].some((fn) => typeof fn !== "function")) {
+        fail("Recommendation runtime", "one or more required runtime functions are missing");
+        return;
+    }
+
+    const baseCandidateInput = {
+        rigId: "texas-rig",
+        rigConfigurationId: null,
+        lureBaitId: "stick-worm",
+        techniqueId: "drag",
+        parameters: { weight: { amount: 0.25, unit: "oz" }, cadence: "slow" }
+    };
+
+    try {
+        const first = createCandidate(baseCandidateInput);
+        const reordered = createCandidate({
+            rigId: "texas-rig",
+            rigConfigurationId: null,
+            lureBaitId: "stick-worm",
+            techniqueId: "drag",
+            parameters: { cadence: "slow", weight: { unit: "oz", amount: 0.25 } }
+        });
+        const changed = createCandidate({
+            ...baseCandidateInput,
+            techniqueId: "deadstick"
+        });
+        if (!first.candidateKey || first.candidateKey !== reordered.candidateKey) {
+            fail("Recommendation runtime", "candidateKey must be deterministic across parameter key order");
+        }
+        if (first.candidateKey === changed.candidateKey) {
+            fail("Recommendation runtime", "candidateKey must change when semantic identity changes");
+        }
+        const forbiddenFields = ["fishId", "score", "rank", "availabilityStatus", "legalStatus", "simplicityScore"];
+        for (const field of forbiddenFields) {
+            let rejected = false;
+            try {
+                createCandidate({ ...baseCandidateInput, [field]: "forbidden" });
+            } catch {
+                rejected = true;
+            }
+            if (!rejected) fail("Recommendation runtime", `candidate identity must reject non-identity field ${field}`);
+        }
+    } catch (error) {
+        fail("Recommendation runtime", `candidate identity contract threw unexpectedly: ${error.message}`);
+    }
+
+    try {
+        const noContext = deriveExecutability({
+            hasConfirmedAvailabilityContext: false,
+            requirementProofs: ["proven"]
+        });
+        const allProven = deriveExecutability({
+            hasConfirmedAvailabilityContext: true,
+            requirementProofs: ["proven", "proven"]
+        });
+        const unknown = deriveExecutability({
+            hasConfirmedAvailabilityContext: true,
+            requirementProofs: ["proven", "unconfirmed"]
+        });
+        const failed = deriveExecutability({
+            hasConfirmedAvailabilityContext: true,
+            requirementProofs: ["unconfirmed", "known-failure"]
+        });
+        if (noContext.status !== "executability-unconfirmed" || noContext.eligibleForBestCurrentlyAvailable !== false) {
+            fail("Recommendation runtime", "no confirmed availability must not qualify for Best Currently Available");
+        }
+        if (allProven.status !== "executable" || allProven.eligibleForBestCurrentlyAvailable !== true) {
+            fail("Recommendation runtime", "all proven requirements in confirmed context must be Executable");
+        }
+        if (unknown.status !== "executability-unconfirmed") {
+            fail("Recommendation runtime", "unresolved requirement proof must be Executability Unconfirmed");
+        }
+        if (failed.status !== "not-currently-executable") {
+            fail("Recommendation runtime", "known failure must dominate unresolved proof");
+        }
+    } catch (error) {
+        fail("Recommendation runtime", `executability contract threw unexpectedly: ${error.message}`);
+    }
+
+    try {
+        const notEvaluated = deriveLegal({ status: "not-evaluated" });
+        const blocked = deriveLegal({ status: "blocked-by-known-constraint" });
+        const complianceUnknown = deriveLegal({ status: "compliance-unconfirmed" });
+        if (!notEvaluated.eligibleForRecommendationRanking || notEvaluated.claimsLegalCompliance) {
+            fail("Recommendation runtime", "Not Evaluated must remain rank-eligible without claiming legal compliance");
+        }
+        if (blocked.eligibleForRecommendationRanking || !blocked.blockedByKnownConstraint) {
+            fail("Recommendation runtime", "known legal prohibition must be a hard ranking exclusion");
+        }
+        if (!complianceUnknown.eligibleForRecommendationRanking || complianceUnknown.claimsLegalCompliance) {
+            fail("Recommendation runtime", "Compliance Unconfirmed must not fabricate a legality claim");
+        }
+    } catch (error) {
+        fail("Recommendation runtime", `legal contract threw unexpectedly: ${error.message}`);
+    }
+
+    try {
+        const notNearTie = deriveSimplicity({
+            isNearTie: false,
+            firstDifficultyRank: 0,
+            secondDifficultyRank: 5,
+            firstIsCore: true,
+            secondIsCore: false
+        });
+        const easierFirst = deriveSimplicity({
+            isNearTie: true,
+            firstDifficultyRank: 1,
+            secondDifficultyRank: 2,
+            firstIsCore: false,
+            secondIsCore: false
+        });
+        const coreSecond = deriveSimplicity({
+            isNearTie: true,
+            firstDifficultyRank: 1,
+            secondDifficultyRank: 1,
+            firstIsCore: false,
+            secondIsCore: true
+        });
+        if (notNearTie !== "none") fail("Recommendation runtime", "simplicity must not affect a non-near-tie");
+        if (easierFirst !== "first") fail("Recommendation runtime", "lower Rig difficulty must win an approved near-tie simplicity comparison");
+        if (coreSecond !== "second") fail("Recommendation runtime", "Core membership may break an otherwise-equal simplicity near-tie");
+    } catch (error) {
+        fail("Recommendation runtime", `simplicity contract threw unexpectedly: ${error.message}`);
+    }
+
+    try {
+        const current = evaluateContext({
+            wasExplicitlyActivated: true,
+            sameSession: true,
+            sameCalendarDay: true,
+            materialBaseContextChanged: false,
+            explicitReset: false,
+            sessionLost: false
+        });
+        const priorDay = evaluateContext({
+            wasExplicitlyActivated: true,
+            sameSession: false,
+            sameCalendarDay: false,
+            materialBaseContextChanged: false,
+            explicitReset: false,
+            sessionLost: true
+        });
+        const baseChanged = evaluateContext({
+            wasExplicitlyActivated: true,
+            sameSession: true,
+            sameCalendarDay: true,
+            materialBaseContextChanged: true,
+            explicitReset: false,
+            sessionLost: false
+        });
+        const reset = evaluateContext({
+            wasExplicitlyActivated: true,
+            sameSession: true,
+            sameCalendarDay: true,
+            materialBaseContextChanged: false,
+            explicitReset: true,
+            sessionLost: false
+        });
+        if (!current.current || current.resultsStale) {
+            fail("Recommendation runtime", "active same-session same-day context must remain current");
+        }
+        if (priorDay.current || !priorDay.resultsStale || !priorDay.explicitReuseRequired || !priorDay.retainedValuesMayBeOffered) {
+            fail("Recommendation runtime", "prior-day/session-lost context must require explicit reuse");
+        }
+        if (baseChanged.current || !baseChanged.explicitReuseRequired) {
+            fail("Recommendation runtime", "material base-context change must prevent silent reuse");
+        }
+        if (reset.current || reset.explicitReuseRequired || reset.retainedValuesMayBeOffered) {
+            fail("Recommendation runtime", "explicit reset must invalidate current context without offering silent retained reuse");
+        }
+        let inactivityRejected = false;
+        try {
+            evaluateContext({
+                wasExplicitlyActivated: true,
+                sameSession: true,
+                sameCalendarDay: true,
+                materialBaseContextChanged: false,
+                explicitReset: false,
+                sessionLost: false,
+                inactivityMinutes: 30
+            });
+        } catch {
+            inactivityRejected = true;
+        }
+        if (!inactivityRejected) fail("Recommendation runtime", "context freshness must not accept an arbitrary inactivity timer input");
+    } catch (error) {
+        fail("Recommendation runtime", `context freshness contract threw unexpectedly: ${error.message}`);
+    }
+
+    try {
+        const availabilityOnly = deriveInvalidation({
+            contextChanged: false,
+            referenceKnowledgeChanged: false,
+            decisionKnowledgeChanged: false,
+            legalConstraintsChanged: false,
+            availabilityChanged: true
+        });
+        const contextChanged = deriveInvalidation({
+            contextChanged: true,
+            referenceKnowledgeChanged: false,
+            decisionKnowledgeChanged: false,
+            legalConstraintsChanged: false,
+            availabilityChanged: false
+        });
+        if (availabilityOnly.bestOverallStale || !availabilityOnly.bestCurrentlyAvailableStale) {
+            fail("Recommendation runtime", "availability-only change must stale Best Currently Available without contaminating Best Overall");
+        }
+        if (!contextChanged.bestOverallStale || !contextChanged.bestCurrentlyAvailableStale) {
+            fail("Recommendation runtime", "Recommendation context change must stale both result tracks");
+        }
+    } catch (error) {
+        fail("Recommendation runtime", `result invalidation contract threw unexpectedly: ${error.message}`);
+    }
+}
+
 function validateDocumentationGovernance() {
     recordCheck("Documentation governance roles and lifecycle markers");
 
@@ -4058,6 +4330,7 @@ function main() {
     validateFishSearchHelpers(canonicalData);
     validateReelGuidance();
     validateMedia(canonicalData);
+    validateRecommendationEngineContract();
     validateRepositoryHygiene();
     validateDocumentationGovernance();
 

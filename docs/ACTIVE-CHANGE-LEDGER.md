@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Active Change Ledger
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.19  
+**Document Revision:** 1.10.47  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** `ec6ef2e43573400ca25811a48f801565bcc16902`  
-**Last Updated:** 2026-09-02
+**Reconciliation Baseline:** GitHub `main` commit `7aab1bbbbfb6837efbb175d715f55f9146fdad39`  
+**Last Updated:** 2026-09-13
 
 # Purpose
 
@@ -43,12 +43,25 @@ No active workflow-transition item remains. The 2026-08-25 Workflow Performance 
 | UX-006 | PARKED | Technically verified local Rig visual library | Rig/media future quality gate | Use licensed/verified/manual/reference-grounded media only; generated finished/build-step Rig imagery remains prohibited. |
 | UX-008 | DEFERRED TO NAMED GATE | Package-era source headers such as `REPLACEMENT` | Next deliberate edit to an affected permanent source file | Remove obsolete package-era header language when that file is next intentionally edited; do not create unrelated source churn solely for comments. |
 | UX-009 | REQUIRED | Version 1 full site-wide design/mobile audit | `V1-DESIGN-AUDIT.md` | After Version 1 functional scope is sufficiently stable, execute the component-first site-wide audit, including the recorded Rig `useCases[]` species-applicability ownership defect under D056. Treat the approved native directional-glyph grammar and shared `font-weight: 800` navigation-arrow rule as established standards to verify, not redesign. Reconcile remaining inconsistent visual/link/container semantics and duplicated relationship semantics, then require PASS on an actual mobile device before Version 1 design is complete. |
+| UX-010 | DEFERRED TO NAMED GATE | My Tackle / Recommendation visual recognition examples | `V1-DESIGN-AUDIT.md` Section 15; settled GATE-007 + What Should I Throw / Recommendation UX | After My Tackle and Recommendation UX are sufficiently settled, define representative visual recognition for the approved Hook and Weight style vocabularies and evaluate whether the same shared pattern should extend to Lure/Bait or other My Tackle families. Do not turn the requirement into a commercial tackle catalog; no presentation mechanism is preselected. |
 
 # Tackle Open Design
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
 | TACKLE-004 | OPEN | Tackle-root `Check Rig Readiness` placeholder | D020 + Tackle/My Tackle milestone | Remove, rename/redefine as a secondary aggregate view, or explicitly approve; do not auto-build a separate primary readiness page. |
+
+# My Tackle / Recommendation Cross-Boundary Audit — 2026-09-07
+
+The detailed issue owner is `data-model/05A-INVENTORY.md` under the 2026-09-07 cross-boundary gap-audit section. The rows below keep each material non-closed finding visible and assign the gate that must disposition it. These rows do not themselves approve the unresolved semantic choice.
+
+| ID | Status | Item | Canonical detail / gate | Next action |
+|---|---|---|---|---|
+| G4-CAND | APPROVED / PENDING IMPLEMENTATION | Exact Recommendation candidate identity | GATE-004 / D069 | Implement the approved composite candidate identity: Rig + applicable configuration + applicable Lure/Bait + Technique + material normalized Recommendation parameters; keep context/rank/availability/legality/simplicity outside identity. |
+| G4-EQUIP | APPROVED / PENDING IMPLEMENTATION | Candidate executability boundary | GATE-004 / D069; completed CA/G7-QTY/SETUP contracts | Implement Executable / Not Currently Executable / Executability Unconfirmed from effective confirmed availability; only Executable may compete for Best Currently Available. |
+| G4-SIMPLE | APPROVED / PENDING IMPLEMENTATION | Beginner simplicity / experience behavior | GATE-004 / D069; canonical Rig `difficulty` + Core membership | Implement simplicity as a bounded near-tie ranking modifier after contextual suitability; do not infer Technique difficulty or create a user skill profile. |
+| G4-LEGAL | APPROVED / PENDING IMPLEMENTATION | Legal/regulatory recommendation boundary | GATE-004 / D066/D069 | Implement Not Evaluated / No Known Blocking Constraint / Blocked by Known Constraint / Compliance Unconfirmed; current Regulations links remain resource navigation, not machine-readable legality authority. |
+| G4-CTX | APPROVED / PENDING IMPLEMENTATION | Recommendation context freshness/session lifecycle | GATE-004 / D069 | Implement temporary device/session-local Recommendation Context with explicit activation/reuse, deterministic stale-result invalidation, same-session preservation, reset/reconfirmation boundaries, and no cross-device environmental-context synchronization. |
 
 # Fish Guide — Production
 
@@ -68,10 +81,9 @@ Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. F
 
 | ID | Status | Item | Trigger / owner |
 |---|---|---|---|
-| GATE-004 | BLOCKED | What Should I Throw production | Recommendation Prerequisites Foundation and GATE-006 Settings / User Data Architecture are CLOSED / PASS. Resume recommendation engine/UX only after GATE-007 My Tackle Availability Foundation closes. |
+| GATE-004 | ACTIVE / REQUIRED | What Should I Throw production | Recommendation Prerequisites Foundation, GATE-006, and GATE-007 are CLOSED / PASS. GitHub `main` is `7aab1bbbbfb6837efbb175d715f55f9146fdad39`; all five G4 semantic checkpoints and planning-to-build documentation closeout are complete. Recommendation runtime foundation R1 is staged in Drive Current and pending the bundled local PASS/FAIL review; G4 items remain APPROVED / PENDING IMPLEMENTATION until authored Decision Knowledge and engine integration complete. |
 | GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Later roadmap milestone after the recommendation prerequisite path unless a direct dependency is demonstrated. |
 
-| GATE-007 | ACTIVE / REQUIRED | My Tackle Availability Foundation | GATE-006 closed at `ec6ef2e43573400ca25811a48f801565bcc16902` with Repository Integrity #117 and GitHub Pages #605 PASS. First bounded action: establish the shared authenticated User Knowledge repository/access foundation plus the minimum authoritative My Tackle ownership/current-availability production contracts required for D069. What Should I Throw remains blocked until GATE-007 closes. |
 | GATE-008 | DEFERRED TO NAMED GATE | Catch Log | After the settled User Data/My Tackle foundation and later roadmap progression. |
 | GATE-009 | DEFERRED TO NAMED GATE | Global Search | After major searchable domains are stable. |
 | GATE-010 | PARKED | Favorites final keep/replace/remove decision | Near project completion. |
@@ -89,7 +101,7 @@ These items are not current blockers and must not be promoted merely because the
 - PARK-004 — Heavy fuzzy Search, advanced typo tolerance, natural-language intent parsing.
 - PARK-005 — Commercial ProductDefinition architecture, exhaustive manufacturer/product catalogs, SKU/UPC/retailer modeling, advanced size/style-aware readiness.
 - PARK-006 — Automatic cloud-backup provider/service integration beyond the approved profile synchronization boundary; revisit only if recovery value justifies separate provider/privacy/maintenance scope.
-- PARK-007 — AI fish identification, actual-size lure calibration, container hierarchy, trip planning, smart packing, online pricing, live weather, live regulation updates, family sharing, achievements.
+- PARK-007 — AI fish identification, actual-size lure calibration, advanced/deep container hierarchy beyond the minimum GATE-007 Location-containment decision, trip planning, smart packing, online pricing, live weather, live regulation updates, family sharing, achievements.
 - PARK-008 — Advanced Knots placeholder does not authorize a new canonical Advanced Knot build.
 - PARK-009 — Optional barcode scanning.
 - PARK-010 — More sophisticated analytics; telemetry requires separate explicit value/privacy approval.

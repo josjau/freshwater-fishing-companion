@@ -4,7 +4,7 @@
 **Document Status:** Approved  
 **Role:** Durable documentation, impact reconciliation, session continuity, commit verification, and closeout  
 **Decision Baseline:** D038-D041, D055, D068  
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-13
 
 # Documentation Is Part of the Work
 
@@ -19,6 +19,18 @@ For every material durable decision preserve:
 5. **Canonical owner**.
 
 Architecturally meaningful non-actions and deferrals require the same recoverable context.
+
+# Approval-Gate Documentation Capture — Mandatory
+
+Every explicit approval gate is a Drive Working Source/Current documentation gate. Before moving to the next approval or dependent checkpoint:
+
+1. identify **every applicable owner document whose owned semantics changed** because of the approved decision, discussion outcome, or project-direction change;
+2. update those owner documents immediately in the complete Drive Current working tree, including decision, domain/data-model, relationship, architecture, roadmap, workstream, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md` owners as applicable;
+3. update the Live Working State for the same material transition;
+4. perform targeted readback sufficient to prove the intended owner updates are present;
+5. only then continue to the next checkpoint.
+
+Approval-stage documentation must not be deferred to planning closeout, staging, ZIP creation, local review, commit, or session end. Git commits may be batched, but Drive working-state capture may not. Drive Current therefore remains the complete approved uncommitted working state. The later local repository review/package process carries that accumulated state into the local repo; after validation and commit/push, GitHub `main` becomes the committed authority for it.
 
 # Live Working State — Inline Operational Ledger
 
@@ -63,9 +75,11 @@ If startup or active work finds the Live Working State stale, missing, or contra
 # Drive-First Documentation Path
 
 ```text
-approved decision/change
-→ identify affected owners once
-→ edit canonical files in complete Drive Current tree
+approval gate / approved decision-change
+→ identify every applicable owner whose semantics changed
+→ update those owners immediately in complete Drive Current tree
+→ update/read back Live Working State
+→ only then continue to next checkpoint
 → targeted preservation/consistency checks
 → review/package when required
 → commit under applicable authority
@@ -132,14 +146,14 @@ A document may be retired only after every unique active rule/status/decision it
 
 # Planning Phase Closeout — Mandatory Build Gate
 
-A planning phase is not complete for execution purposes merely because decisions are approved or captured in Live Working State. Before any dependent production/build phase starts, run a complete planning documentation closeout.
+A planning phase is not complete for execution purposes merely because decisions are approved or captured in Live Working State. Before any dependent production/build phase starts, run a complete planning documentation closeout. **This is a verification/convergence gate, not a catch-up pass; approval-stage owner updates should already be present in Drive Current.**
 
 Required sequence:
 
-1. identify every canonical owner affected by the locked plan;
-2. reconcile the final approved vocabulary, authored scopes, schema/relationship contracts, dependency decisions, statuses, and exact resume point into those owners in Drive Current;
+1. verify every approval-stage decision and discussion outcome is already present in every applicable owner in Drive Current; any stale owner is an approval-capture defect and must be reconciled before closeout can pass;
+2. identify and reconcile only aggregate phase-level vocabulary/status/resume changes that arise from closing the planning phase;
 3. remove superseded/open-planning language that would contradict the locked plan;
-4. update the active workstream, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md` as applicable;
+4. update the active workstream, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md` for the phase transition as applicable;
 5. complete the documentation impact disposition matrix (`UPDATED`, `VERIFIED — NO CHANGE REQUIRED`, or `NOT APPLICABLE`);
 6. run targeted consistency and structural-readability validation and reconcile repository validators if the documentation changes alter mechanically enforced expectations;
 7. verify the bounded changed-file scope and connector-read back the changed Drive Current owners;

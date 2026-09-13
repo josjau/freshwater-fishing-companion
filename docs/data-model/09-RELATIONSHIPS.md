@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.9.0  
+**Document Revision:** 0.9.4  
 **Document Status:** Approved  
-**Implementation Status:** VALIDATED CURRENT RELATIONSHIPS — 20 Fish identification pairs; 27 Fish guidance records; 177 intrinsic Compatibility relationships (54/69/54)  
+**Implementation Status:** VALIDATED CURRENT RELATIONSHIPS + G7-XMAP IMPLEMENTED / APPROVED / VERIFIED — 20 Fish identification pairs; 27 Fish guidance records; 177 intrinsic Compatibility relationships (54/69/54) + 13 Canonical Requirement Satisfaction rules  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, D069, FISH-001–FISH-007  
-**Last Updated:** 2026-08-30
+**Last Updated:** 2026-09-13
 
 ---
 
@@ -481,6 +481,213 @@ Production validation hard-fails on orphan references, invalid relationship/part
 
 Direct-Tie Lure Setup may carry the union of Techniques supported across its approved configurations. That Rig-level union does not make every Direct-Tie Lure/Bait configuration compatible with every Direct-Tie Technique; valid three-part combinations require all applicable pairwise relationships.
 
+# Canonical Requirement Satisfaction Relationships — APPROVED CONTRACT / NOT IMPLEMENTED
+
+G7-XMAP-1A establishes **Canonical Requirement Satisfaction** as a distinct Layer-1 Reference Knowledge relationship family owned here under D056. It answers whether an item already carrying an explicit valid canonical source mapping may truthfully fulfill another canonical requirement without adding a redundant User Knowledge mapping. This relationship is distinct from intrinsic Compatibility: Compatibility says two concepts may be used together, while Requirement Satisfaction says one canonical concept may fulfill the requirement for another.
+
+Approved Version 1 rule semantics:
+
+- satisfaction rules are explicit positive allow-rules; absence of a rule cannot establish substitution,
+- rules are directional and do not imply the reverse,
+- rules are not transitively chained by default; every automated source-to-target satisfaction edge must be explicitly approved,
+- rules may be unconditional canonical-to-canonical relationships or qualified relationships whose truth also requires an approved fishing-relevant My Tackle family characteristic,
+- the universal rule remains Reference Knowledge while the actual qualifying owned-item characteristic remains User Knowledge,
+- an owned or temporary/current-availability item must first have an explicit valid MT-1C/D canonical source mapping before a rule can apply,
+- applying a rule does not create, change, or persist another My Tackle mapping and does not revise MT-1D's at-most-one-mapping-per-canonical-domain boundary,
+- satisfaction establishes functional eligibility only; CA-4 hard family constraints and later Recommendation Exact/Preferred versus Usable classification and ranking remain separate derived behavior,
+- names, aliases, categories, `relatedTackleIds[]`, item-family labels, commercial metadata, free text, and superficial physical similarity are never satisfaction rules.
+
+Qualified rules are specifically permitted for cases such as a Convertible Fixed-or-Slip Float satisfying an alternate canonical float requirement when the owned Float's approved Operating Mode characteristic proves that capability. This avoids inventing duplicate canonical identities or requiring duplicate Tackle-domain mappings.
+
+## G7-XMAP-1B — Approved Version 1 Edge Inventory
+
+G7-XMAP-1B approves exactly **13 positive directional satisfaction rules**. Each rule requires the effectively available owned/temporary item to carry the explicit valid source mapping identified below before the bridge may establish the target requirement.
+
+### Unconditional Lure/Bait -> broader Tackle — exactly 8
+
+- `lure-bait:stick-worm` -> `tackle:soft-plastic`
+- `lure-bait:craw` -> `tackle:soft-plastic`
+- `lure-bait:creature-bait` -> `tackle:soft-plastic`
+- `lure-bait:paddle-tail-swimbait` -> `tackle:soft-plastic`
+- `lure-bait:tube` -> `tackle:soft-plastic`
+- `lure-bait:minnow` -> `tackle:bait`
+- `lure-bait:nightcrawler` -> `tackle:bait`
+- `lure-bait:cricket` -> `tackle:bait`
+
+These are explicit identity rules. The `soft-plastic` Lure/Bait category does not itself create satisfaction, and other present or future Lure/Bait records do not inherit these edges by category, name, family, or similarity.
+
+### Unconditional specific Tackle -> broader Tackle — exactly 3
+
+- `tackle:ned-jighead` -> `tackle:jighead`
+- `tackle:shaky-head-jighead` -> `tackle:jighead`
+- `tackle:tube-jighead` -> `tackle:jighead`
+
+These rules are one-way. Generic `tackle:jighead` never satisfies a specialized Jighead requirement solely through this bridge. Applicable Jighead-family hard constraints still apply under CA-4.
+
+### Qualified Convertible Float satisfaction — exactly 2
+
+- `tackle:fixed-bobber` -> `tackle:slip-float` **only when** the effectively available item is governed by the approved Float family and its Operating Mode is **Convertible Fixed-or-Slip**.
+- `tackle:slip-float` -> `tackle:fixed-bobber` **only when** the effectively available item is governed by the approved Float family and its Operating Mode is **Convertible Fixed-or-Slip**.
+
+The two Float directions are separate rules rather than inferred symmetry. Fixed-only and Slip-only Floats do not gain alternate satisfaction, and Pattern/Form does not prove Operating Mode. Serialized qualification semantics are now settled by G7-XMAP-1C; exact routine implementation property naming remains refinement allowed.
+
+### Deliberate Version 1 non-substitution boundaries
+
+The following are deliberate absence/guardrail semantics, not negative-edge records:
+
+- `tackle:bait` and `tackle:soft-plastic` remain sibling requirement meanings. The five approved soft-plastic Lure/Bait identities do **not** also satisfy `tackle:bait`, despite the current legacy `bait` description being broad enough to mention artificial material. Any later Reference copy reconciliation must preserve this approved requirement boundary unless G7-XMAP is explicitly revised.
+- Spinnerbait, Crankbait, Jerkbait, Inline Spinner, and Spoon do not satisfy generic `bait` or `soft-plastic`. `lure-bait:inline-spinner` does not satisfy legacy `tackle:inline-spinner` merely because the labels match; those domains own different semantic roles.
+- Version 1 approves no specialized-Hook -> generic-`hook` bridge rules. `worm-hook`, `wacky-hook`, and `weighted-swimbait-hook` do not automatically broaden to `hook`; existing `worm-hook` / `weighted-swimbait-hook` non-substitution remains controlling.
+- Shared My Tackle family membership never creates substitution by itself. In particular, Bobber Stop and Weight Peg remain distinct; Stop Bead does not automatically satisfy generic Bead; Snap Swivel or Duo-Lock Snap does not automatically satisfy Barrel Swivel; and distinct ordinary Weight concepts do not substitute merely because their mechanics overlap.
+- Integrated/subordinate constituents do not decompose into separate requirement satisfaction. Jigheads do not separately satisfy Hook or ordinary Weight; Spinner Harnesses do not separately satisfy their embedded Hook/Leader/Bead/Connector/Float parts; weighted Floats do not separately satisfy ordinary Weight; and Bottom Bouncers do not separately satisfy ordinary Weight.
+- Planned canonical reconciliations `offset-worm-hook` -> `worm-hook`, `split-shot` -> `line-mounted-sinker`, and `fixed-sinker` + `ringed-sinker` -> `external-eye-sinker` are Reference migrations and must not be implemented as enduring satisfaction edges.
+
+No negative-edge registry is approved. For bridge evaluation, absence of an approved positive rule means the bridge cannot establish the additional target requirement.
+
+**G7-XMAP-1B status: COMPLETE / APPROVED WITH REVISION ALLOWED.** The Version 1 positive edge inventory is frozen at exactly 13 rules.
+
+## G7-XMAP-1C — Approved Serialization + Validation Contract
+
+G7-XMAP-1C approves the production serialization and validation boundary for exactly the G7-XMAP-1B edge set. Exact release-version strings and routine implementation naming refinements remain allowed; they must not change the approved semantic shape, edge inventory, or evaluation behavior.
+
+### Production owner
+
+Canonical Requirement Satisfaction remains separate from intrinsic Compatibility. The working production owner is:
+
+```text
+data/canonical-requirement-satisfaction.js
+CANONICAL_REQUIREMENT_SATISFACTION_RELATIONSHIPS
+```
+
+No inverse arrays or duplicate My Tackle relationship storage are authorized. The Reference registry is the canonical runtime owner; validator expected-ID assertions are validation fixtures rather than a second semantic owner.
+
+### Version 1 record shape
+
+Every record uses this canonical field order:
+
+```text
+id
+relationshipType
+sourceType
+sourceId
+targetType
+targetId
+qualification
+createdVersion
+lastModifiedVersion
+isActive
+```
+
+Version 1 constraints:
+
+- `relationshipType` is `canonical-requirement-satisfaction`;
+- `sourceType` is `lure-bait` or `tackle`;
+- `targetType` is `tackle`;
+- the 11 unconditional rules use `qualification: null`;
+- the 2 Convertible Float rules use the single approved qualification form below;
+- lifecycle/version fields follow established Reference relationship conventions.
+
+Representative unconditional record, with release-version strings illustrative until implementation:
+
+```js
+{
+    id: "canonical-requirement-satisfaction-lure-bait-stick-worm-to-tackle-soft-plastic",
+    relationshipType: "canonical-requirement-satisfaction",
+    sourceType: "lure-bait",
+    sourceId: "stick-worm",
+    targetType: "tackle",
+    targetId: "soft-plastic",
+    qualification: null,
+    createdVersion: "<production-version>",
+    lastModifiedVersion: "<production-version>",
+    isActive: true
+}
+```
+
+### Qualified-rule representation
+
+Version 1 supports only this bounded qualifier semantic for the two approved Convertible Float directions:
+
+```js
+qualification: {
+    type: "item-family-characteristic-equals",
+    itemFamily: "float",
+    characteristic: "operating-mode",
+    value: "convertible-fixed-or-slip"
+}
+```
+
+`characteristic` is a semantic characteristic identifier, not an arbitrary application-object property path. G7-XMAP-1C does not authorize a generalized predicate/operator language. Future ranges, set membership, compound predicates, additional item families, or additional qualifier types require explicit architecture approval. Custom, Unknown, missing, descriptive, or inferred characteristic data cannot establish the qualifier.
+
+### Deterministic directional identity and ordering
+
+The deterministic relationship ID is:
+
+```text
+canonical-requirement-satisfaction-<sourceType>-<sourceId>-to-<targetType>-<targetId>
+```
+
+Qualification is not part of relationship identity. Version 1 permits at most one stored record for an exact directional source/target tuple. A reverse-direction record is not a duplicate when independently approved; therefore both Convertible Float directions are valid authored records and neither implies the other. Runtime consumers read participant fields and must not parse the ID to recover participants.
+
+The production registry is sorted in ascending lexicographic `id` order. Stored order has no priority, preference, strength, ranking, or Recommendation meaning.
+
+### Runtime evaluation
+
+For an effectively available owned or temporary item and an availability-bearing canonical requirement:
+
+1. Resolve the item's explicit valid MT-1C/D FCC Reference mapping.
+2. If that mapping directly equals the requested canonical requirement, direct canonical satisfaction applies without the bridge.
+3. Otherwise inspect active Canonical Requirement Satisfaction records matching that explicit mapping as source and the requested requirement as target.
+4. An unconditional record may establish bridge eligibility when lifecycle/reference checks pass.
+5. A qualified record additionally requires the actual effective item to positively establish the approved family characteristic.
+6. Bridge evaluation is strictly one-hop and stops after that single edge. A bridge-derived target never becomes a new source mapping, so no recursive or transitive closure occurs.
+7. Applicable CA-4 hard family constraints still apply. Exact/Preferred versus Usable Functional classification and later Recommendation ranking remain separate derived behavior.
+
+The bridge does not create, alter, or persist My Tackle mappings.
+
+### Runtime activation
+
+A satisfaction rule may participate in runtime matching only when:
+
+- the relationship has `isActive: true`;
+- source and target references resolve to active canonical entities of their declared types;
+- the effective item has the explicit valid source mapping;
+- any qualification is positively established from approved family User Knowledge;
+- applicable CA-4 hard constraints pass.
+
+Inactive/unresolved Reference targets preserve the underlying owned User Knowledge but cannot establish automated requirement satisfaction.
+
+### Repository-integrity validation
+
+Validation is added to the existing canonical validator:
+
+```text
+tools/validate_repository_integrity.js
+```
+
+No second relationship validator is approved. For the Version 1 production set, integrity validation hard-fails on:
+
+- any relationship count other than exactly 13;
+- a missing approved deterministic relationship ID;
+- any unapproved extra relationship;
+- duplicate IDs or duplicate directional source/target tuples;
+- malformed deterministic IDs or ID/participant mismatch;
+- incorrect exact field order or invalid relationship/participant types;
+- unresolved source or target references;
+- active rules referencing inactive participants;
+- inactive records within the locked Version 1 authored set;
+- source-to-itself satisfaction;
+- non-null qualification on one of the 11 unconditional rules;
+- absent/malformed qualification on either Convertible Float rule;
+- any Version 1 qualifier other than Float + Operating Mode = Convertible Fixed-or-Slip under the approved equality qualifier type;
+- score, strength, priority, rank, confidence, or other Recommendation fields;
+- negative/prohibition relationship records;
+- specialized-Hook -> generic-`hook`, soft-plastic -> generic-`bait`, embedded-constituent, same-family heuristic, or migration-as-satisfaction edges not present in the approved 13-rule set.
+
+The validator may carry the exact expected 13 deterministic IDs to enforce authored-set completeness. That expected set is a structural assertion; the production Reference registry remains the sole runtime relationship owner.
+
+**G7-XMAP-1C status: COMPLETE / APPROVED WITH REVISION ALLOWED / PRODUCTION IMPLEMENTED / APPROVED / VERIFIED.** The 13-rule Canonical Requirement Satisfaction registry and one-hop runtime bridge landed at `31547b18f8576f0a94631cd65ffddd4113c9a6b6`; Repository Integrity #119 and GitHub Pages #607 passed. No generalized rule engine, arbitrary property-path evaluation, inferred symmetry, transitive closure, negative rules, or Recommendation scoring is approved.
+
 # Search Relationships
 
 Search should identify the strongest intended entity first. Connected knowledge can then expose pertinent breadth.
@@ -497,12 +704,13 @@ D061 requires scope filtering before relevance ranking. Helper/examples shown in
 
 Canonical Tackle defines functional tackle concepts. Future My Tackle defines actual persistent user ownership.
 
-When My Tackle becomes authoritative, Rig Readiness will derive buildability from:
+When My Tackle becomes authoritative, Rig Readiness will derive buildability from the requirement plus effective current availability. A directly mapped item may satisfy the requirement itself; an approved Canonical Requirement Satisfaction rule may establish an additional target requirement without duplicating that universal relationship into User Knowledge:
 
 ```text
-Rig.componentRequirements[].tackleId
-    -> canonical Tackle
-    -> My Tackle owned-item mapping
+Effective available My Tackle / temporary item
+    -> explicit valid FCC source mapping
+    -> optional approved Canonical Requirement Satisfaction rule
+    -> Rig.componentRequirements[].tackleId
 ```
 
 Until then, the existing lightweight local readiness state is transitional.
