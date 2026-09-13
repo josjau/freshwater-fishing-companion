@@ -1546,6 +1546,200 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
     }
 }
 
+function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackle) {
+    recordCheck("Canonical Requirement Satisfaction exact V1 registry");
+
+    const expectedFields = [
+        "id",
+        "relationshipType",
+        "sourceType",
+        "sourceId",
+        "targetType",
+        "targetId",
+        "qualification",
+        "createdVersion",
+        "lastModifiedVersion",
+        "isActive"
+    ];
+    const qualificationFields = ["type", "itemFamily", "characteristic", "value"];
+    const expectedRules = [
+        ["lure-bait", "stick-worm", "tackle", "soft-plastic", null],
+        ["lure-bait", "craw", "tackle", "soft-plastic", null],
+        ["lure-bait", "creature-bait", "tackle", "soft-plastic", null],
+        ["lure-bait", "paddle-tail-swimbait", "tackle", "soft-plastic", null],
+        ["lure-bait", "tube", "tackle", "soft-plastic", null],
+        ["lure-bait", "minnow", "tackle", "bait", null],
+        ["lure-bait", "nightcrawler", "tackle", "bait", null],
+        ["lure-bait", "cricket", "tackle", "bait", null],
+        ["tackle", "ned-jighead", "tackle", "jighead", null],
+        ["tackle", "shaky-head-jighead", "tackle", "jighead", null],
+        ["tackle", "tube-jighead", "tackle", "jighead", null],
+        ["tackle", "fixed-bobber", "tackle", "slip-float", "convertible-float"],
+        ["tackle", "slip-float", "tackle", "fixed-bobber", "convertible-float"]
+    ];
+    const deterministicId = (sourceType, sourceId, targetType, targetId) =>
+        `canonical-requirement-satisfaction-${sourceType}-${sourceId}-to-${targetType}-${targetId}`;
+    const expectedById = new Map(
+        expectedRules.map(([sourceType, sourceId, targetType, targetId, qualificationKind]) => {
+            const id = deterministicId(sourceType, sourceId, targetType, targetId);
+            return [id, { sourceType, sourceId, targetType, targetId, qualificationKind }];
+        })
+    );
+    const expectedIds = [...expectedById.keys()].sort();
+
+    if (relationships.length !== expectedIds.length) {
+        fail(
+            "Canonical Requirement Satisfaction",
+            `expected exactly ${expectedIds.length} approved V1 relationships; found ${relationships.length}`
+        );
+    }
+
+    validateUniqueIds(relationships, "Canonical Requirement Satisfaction");
+    const lureById = indexById(lureBait);
+    const tackleById = indexById(tackle);
+    const registryByType = { "lure-bait": lureById, tackle: tackleById };
+    const actualIds = [];
+    const semanticTuples = new Set();
+
+    for (const relationship of relationships) {
+        if (!isPlainObject(relationship)) continue;
+
+        validateExactFieldOrder(
+            relationship,
+            expectedFields,
+            `Canonical Requirement Satisfaction ${relationship.id || "<unknown>"}`
+        );
+        actualIds.push(relationship.id);
+
+        if (relationship.relationshipType !== "canonical-requirement-satisfaction") {
+            fail(
+                "Canonical Requirement Satisfaction",
+                `${relationship.id || "<unknown>"}: relationshipType must be canonical-requirement-satisfaction`
+            );
+        }
+        if (!new Set(["lure-bait", "tackle"]).has(relationship.sourceType)) {
+            fail(
+                "Canonical Requirement Satisfaction",
+                `${relationship.id || "<unknown>"}: invalid sourceType ${JSON.stringify(relationship.sourceType)}`
+            );
+        }
+        if (relationship.targetType !== "tackle") {
+            fail(
+                "Canonical Requirement Satisfaction",
+                `${relationship.id || "<unknown>"}: targetType must be tackle`
+            );
+        }
+
+        const expectedId = deterministicId(
+            relationship.sourceType,
+            relationship.sourceId,
+            relationship.targetType,
+            relationship.targetId
+        );
+        if (relationship.id !== expectedId) {
+            fail(
+                "Canonical Requirement Satisfaction",
+                `${relationship.id || "<unknown>"}: deterministic ID must be ${expectedId}`
+            );
+        }
+        if (relationship.sourceType === relationship.targetType && relationship.sourceId === relationship.targetId) {
+            fail("Canonical Requirement Satisfaction", `${relationship.id}: self-satisfaction is prohibited`);
+        }
+        if (relationship.isActive !== true) {
+            fail("Canonical Requirement Satisfaction", `${relationship.id}: approved V1 relationship must be active`);
+        }
+        for (const field of ["createdVersion", "lastModifiedVersion"]) {
+            if (typeof relationship[field] !== "string" || relationship[field].trim() === "") {
+                fail("Canonical Requirement Satisfaction", `${relationship.id}: ${field} must be non-empty text`);
+            }
+        }
+
+        const source = registryByType[relationship.sourceType]?.get(relationship.sourceId);
+        const target = registryByType[relationship.targetType]?.get(relationship.targetId);
+        if (!source) {
+            fail(
+                "Canonical Requirement Satisfaction",
+                `${relationship.id}: unresolved source ${relationship.sourceType}:${relationship.sourceId}`
+            );
+        } else if (source.isActive !== true) {
+            fail("Canonical Requirement Satisfaction", `${relationship.id}: active relationship references inactive source`);
+        }
+        if (!target) {
+            fail(
+                "Canonical Requirement Satisfaction",
+                `${relationship.id}: unresolved target ${relationship.targetType}:${relationship.targetId}`
+            );
+        } else if (target.isActive !== true) {
+            fail("Canonical Requirement Satisfaction", `${relationship.id}: active relationship references inactive target`);
+        }
+
+        const semanticTuple = `${relationship.sourceType}:${relationship.sourceId}->${relationship.targetType}:${relationship.targetId}`;
+        if (semanticTuples.has(semanticTuple)) {
+            fail("Canonical Requirement Satisfaction", `${relationship.id}: duplicate directional tuple`);
+        }
+        semanticTuples.add(semanticTuple);
+
+        const expected = expectedById.get(relationship.id);
+        if (!expected) {
+            fail("Canonical Requirement Satisfaction", `${relationship.id}: unapproved extra relationship`);
+            continue;
+        }
+        if (
+            relationship.sourceType !== expected.sourceType ||
+            relationship.sourceId !== expected.sourceId ||
+            relationship.targetType !== expected.targetType ||
+            relationship.targetId !== expected.targetId
+        ) {
+            fail("Canonical Requirement Satisfaction", `${relationship.id}: participant tuple does not match approved rule`);
+        }
+
+        if (expected.qualificationKind === null) {
+            if (relationship.qualification !== null) {
+                fail("Canonical Requirement Satisfaction", `${relationship.id}: unconditional rule must use qualification: null`);
+            }
+        } else {
+            if (!isPlainObject(relationship.qualification)) {
+                fail("Canonical Requirement Satisfaction", `${relationship.id}: qualified Float rule requires qualification object`);
+            } else {
+                validateExactFieldOrder(
+                    relationship.qualification,
+                    qualificationFields,
+                    `Canonical Requirement Satisfaction ${relationship.id} qualification`
+                );
+                const expectedQualification = {
+                    type: "item-family-characteristic-equals",
+                    itemFamily: "float",
+                    characteristic: "operating-mode",
+                    value: "convertible-fixed-or-slip"
+                };
+                for (const [field, value] of Object.entries(expectedQualification)) {
+                    if (relationship.qualification[field] !== value) {
+                        fail(
+                            "Canonical Requirement Satisfaction",
+                            `${relationship.id}: qualification.${field} must be ${JSON.stringify(value)}`
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    const sortedActualIds = [...actualIds].sort();
+    if (JSON.stringify(actualIds) !== JSON.stringify(sortedActualIds)) {
+        fail("Canonical Requirement Satisfaction", "registry records must be in lexicographic ID order");
+    }
+    for (const expectedId of expectedIds) {
+        if (!actualIds.includes(expectedId)) {
+            fail("Canonical Requirement Satisfaction", `missing approved relationship ${expectedId}`);
+        }
+    }
+    for (const actualId of actualIds) {
+        if (!expectedById.has(actualId)) {
+            fail("Canonical Requirement Satisfaction", `unapproved relationship ${actualId}`);
+        }
+    }
+}
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
@@ -1561,6 +1755,10 @@ function validateCanonicalData() {
     const lureBaitBindings = loadBindings("data/lure-bait.js", ["LURE_BAIT_DATA"]);
     const techniqueBindings = loadBindings("data/techniques.js", ["TECHNIQUE_DATA"]);
     const compatibilityBindings = loadBindings("data/compatibility.js", ["COMPATIBILITY_RELATIONSHIPS"]);
+    const canonicalRequirementSatisfactionBindings = loadBindings(
+        "data/canonical-requirement-satisfaction.js",
+        ["CANONICAL_REQUIREMENT_SATISFACTION_RELATIONSHIPS"]
+    );
     const knotBindings = loadBindings("data/knots.js", ["KNOT_DATA", "CORE_KNOT_IDS"]);
     const tackleBindings = loadBindings("data/tackle.js", ["TACKLE_DATA"]);
     const guidanceBindings = loadBindings("data/knot-guidance.js", ["KNOT_TASK_DEFINITIONS"]);
@@ -1584,6 +1782,10 @@ function validateCanonicalData() {
     const lureBait = requireArray(lureBaitBindings.LURE_BAIT_DATA, "Lure/Bait registry");
     const techniques = requireArray(techniqueBindings.TECHNIQUE_DATA, "Technique registry");
     const compatibility = requireArray(compatibilityBindings.COMPATIBILITY_RELATIONSHIPS, "Compatibility registry");
+    const canonicalRequirementSatisfaction = requireArray(
+        canonicalRequirementSatisfactionBindings.CANONICAL_REQUIREMENT_SATISFACTION_RELATIONSHIPS,
+        "Canonical Requirement Satisfaction registry"
+    );
     const knots = requireArray(knotBindings.KNOT_DATA, "Knot registry");
     const tackle = requireArray(tackleBindings.TACKLE_DATA, "Tackle registry");
     const knotTasks = requireArray(guidanceBindings.KNOT_TASK_DEFINITIONS, "Knot task guidance");
@@ -1606,6 +1808,7 @@ function validateCanonicalData() {
     validateConditionsData(conditions, rigs);
     validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishRigGuidance, knots);
     validateTechniqueAndCompatibilityFoundation(techniques, compatibility, rigs, lureBait);
+    validateCanonicalRequirementSatisfaction(canonicalRequirementSatisfaction, lureBait, tackle);
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
@@ -1830,6 +2033,7 @@ function validateCanonicalData() {
         lureBait,
         techniques,
         compatibility,
+        canonicalRequirementSatisfaction,
         knots,
         tackle,
         states,
