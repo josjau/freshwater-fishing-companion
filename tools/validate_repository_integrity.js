@@ -1949,6 +1949,222 @@ function validateAvailabilityQuantityFoundation(rigs) {
     }
 }
 
+
+function validateAvailabilityAttentionFoundation() {
+    recordCheck("G7-ATTN derived Needs Attention diagnostic runtime semantics");
+
+    const bindings = loadBindings(
+        "availability-attention.js",
+        [
+            "AVAILABILITY_ATTENTION_BUILD_INFO",
+            "ATTENTION_CLASS",
+            "ATTENTION_CAPABILITY",
+            "ATTENTION_CONDITION",
+            "FORBIDDEN_PERSISTED_ATTENTION_FIELDS",
+            "assertNoPersistedAttentionAuthority",
+            "deriveAttentionDiagnostic",
+            "deriveNeedsAttentionDiagnostics",
+            "hasAttentionClass"
+        ]
+    );
+
+    const buildInfo = bindings.AVAILABILITY_ATTENTION_BUILD_INFO;
+    const attentionClass = bindings.ATTENTION_CLASS;
+    const capability = bindings.ATTENTION_CAPABILITY;
+    const condition = bindings.ATTENTION_CONDITION;
+    const forbiddenFields = bindings.FORBIDDEN_PERSISTED_ATTENTION_FIELDS;
+    const assertNoPersistedAttentionAuthority = bindings.assertNoPersistedAttentionAuthority;
+    const deriveDiagnostic = bindings.deriveAttentionDiagnostic;
+    const deriveDiagnostics = bindings.deriveNeedsAttentionDiagnostics;
+    const hasClass = bindings.hasAttentionClass;
+
+    if (!isPlainObject(buildInfo) || buildInfo.file !== "availability-attention.js") {
+        fail("G7-ATTN runtime", "availability-attention.js must expose AVAILABILITY_ATTENTION_BUILD_INFO for itself");
+    }
+
+    const indexHtml = readText("index.html");
+    if (indexHtml !== null) {
+        const refs = extractEntrypointReferences(indexHtml).scriptRefs;
+        const attentionRefs = refs.filter((item) => item === "availability-attention.js");
+        if (attentionRefs.length !== 1) {
+            fail("G7-ATTN runtime", `index.html must load availability-attention.js exactly once; found ${attentionRefs.length}`);
+        }
+        const attentionIndex = refs.indexOf("availability-attention.js");
+        const quantityIndex = refs.indexOf("availability-quantity.js");
+        if (quantityIndex < 0 || attentionIndex <= quantityIndex) {
+            fail("G7-ATTN runtime", "availability-attention.js must load after availability-quantity.js");
+        }
+        for (const dependent of ["search.js", "view-renderer.js", "script.js"]) {
+            const dependentIndex = refs.indexOf(dependent);
+            if (attentionIndex < 0 || (dependentIndex >= 0 && attentionIndex >= dependentIndex)) {
+                fail("G7-ATTN runtime", `availability-attention.js must load before ${dependent}`);
+            }
+        }
+    }
+
+    const expectedClasses = {
+        ADVISORY: "advisory",
+        AUTOMATION_BLOCKER: "automation-blocker",
+        CONFLICT: "conflict"
+    };
+    for (const [key, value] of Object.entries(expectedClasses)) {
+        if (attentionClass?.[key] !== value) {
+            fail("G7-ATTN runtime", `ATTENTION_CLASS.${key} must be ${value}`);
+        }
+    }
+
+    const expectedCapabilities = {
+        ORGANIZATION: "organization",
+        CANONICAL_AUTOMATION: "canonical-automation",
+        FAMILY_VALIDATION: "family-validation",
+        FISHING_SETUP_AUTOMATION: "fishing-setup-automation",
+        ALLOCATION_INTEGRITY: "allocation-integrity",
+        CURRENT_CONTEXT_INTEGRITY: "current-context-integrity"
+    };
+    for (const [key, value] of Object.entries(expectedCapabilities)) {
+        if (capability?.[key] !== value) {
+            fail("G7-ATTN runtime", `ATTENTION_CAPABILITY.${key} must be ${value}`);
+        }
+    }
+
+    const expectedConditions = {
+        UNASSIGNED_OWNERSHIP: "unassigned-ownership",
+        CANONICAL_MAPPING_MISSING: "canonical-mapping-missing",
+        CANONICAL_MAPPING_INVALID: "canonical-mapping-invalid",
+        REQUIRED_STRUCTURE_INVALID: "required-structure-invalid",
+        SETUP_REFERENCE_MISSING: "setup-reference-missing",
+        SETUP_REQUIRED_EQUIPMENT_EXCLUDED: "setup-required-equipment-excluded",
+        SETUP_KNOWN_INCOMPATIBILITY: "setup-known-incompatibility",
+        SETUP_HARD_CONFIGURATION_CONFLICT: "setup-hard-configuration-conflict",
+        LOCATION_ALLOCATIONS_EXCEED_OWNED_QUANTITY: "location-allocations-exceed-owned-quantity",
+        DEPLETED_POOL_WITH_POSITIVE_ALLOCATION: "depleted-pool-with-positive-allocation",
+        CURRENT_CONTEXT_CONFIGURATION_CONFLICT: "current-context-configuration-conflict"
+    };
+    for (const [key, value] of Object.entries(expectedConditions)) {
+        if (condition?.[key] !== value) {
+            fail("G7-ATTN runtime", `ATTENTION_CONDITION.${key} must be ${value}`);
+        }
+    }
+
+    const expectedForbiddenFields = ["needsAttention", "attentionStatus", "isBroken", "automationReady"];
+    if (!Array.isArray(forbiddenFields) || JSON.stringify([...forbiddenFields]) !== JSON.stringify(expectedForbiddenFields)) {
+        fail("G7-ATTN runtime", `forbidden persisted attention fields must be exactly ${expectedForbiddenFields.join(", ")}`);
+    }
+
+    if (
+        typeof assertNoPersistedAttentionAuthority !== "function" ||
+        typeof deriveDiagnostic !== "function" ||
+        typeof deriveDiagnostics !== "function" ||
+        typeof hasClass !== "function"
+    ) {
+        fail("G7-ATTN runtime", "diagnostic derivation and persisted-authority guard functions must be available");
+        return;
+    }
+
+    const expectThrows = (fn, label) => {
+        let threw = false;
+        try {
+            fn();
+        } catch {
+            threw = true;
+        }
+        if (!threw) fail("G7-ATTN runtime", `${label}: expected validation error`);
+    };
+
+    const subject = Object.freeze({ type: "my-tackle", id: "example-record" });
+    const expectDiagnostic = (conditionValue, expectedClass, expectedCapability, label) => {
+        try {
+            const diagnostic = deriveDiagnostic({
+                active: true,
+                condition: conditionValue,
+                subject,
+                details: { source: label }
+            });
+            if (!isPlainObject(diagnostic)) {
+                fail("G7-ATTN runtime", `${label}: diagnostic must be an object`);
+                return null;
+            }
+            if (diagnostic.attentionClass !== expectedClass) {
+                fail("G7-ATTN runtime", `${label}: expected class ${expectedClass}; found ${diagnostic.attentionClass}`);
+            }
+            if (diagnostic.capability !== expectedCapability) {
+                fail("G7-ATTN runtime", `${label}: expected capability ${expectedCapability}; found ${diagnostic.capability}`);
+            }
+            for (const field of ["subject", "condition", "reason", "impact", "attentionClass", "capability", "repairDirection", "details"]) {
+                if (!Object.prototype.hasOwnProperty.call(diagnostic, field)) {
+                    fail("G7-ATTN runtime", `${label}: diagnostic missing ${field}`);
+                }
+            }
+            if (!Object.isFrozen(diagnostic) || !Object.isFrozen(diagnostic.subject) || !Object.isFrozen(diagnostic.details)) {
+                fail("G7-ATTN runtime", `${label}: diagnostic, subject, and details must be immutable`);
+            }
+            return diagnostic;
+        } catch (error) {
+            fail("G7-ATTN runtime", `${label}: unexpected error ${error.message}`);
+            return null;
+        }
+    };
+
+    expectDiagnostic(condition.UNASSIGNED_OWNERSHIP, attentionClass.ADVISORY, capability.ORGANIZATION, "valid unassigned ownership advisory");
+    expectDiagnostic(condition.CANONICAL_MAPPING_MISSING, attentionClass.AUTOMATION_BLOCKER, capability.CANONICAL_AUTOMATION, "missing canonical mapping blocker");
+    expectDiagnostic(condition.CANONICAL_MAPPING_INVALID, attentionClass.AUTOMATION_BLOCKER, capability.CANONICAL_AUTOMATION, "invalid canonical mapping blocker");
+    expectDiagnostic(condition.REQUIRED_STRUCTURE_INVALID, attentionClass.AUTOMATION_BLOCKER, capability.FAMILY_VALIDATION, "required family structure blocker");
+    expectDiagnostic(condition.SETUP_REFERENCE_MISSING, attentionClass.AUTOMATION_BLOCKER, capability.FISHING_SETUP_AUTOMATION, "missing Setup reference blocker");
+    expectDiagnostic(condition.SETUP_REQUIRED_EQUIPMENT_EXCLUDED, attentionClass.AUTOMATION_BLOCKER, capability.FISHING_SETUP_AUTOMATION, "excluded Setup equipment blocker");
+    expectDiagnostic(condition.SETUP_KNOWN_INCOMPATIBILITY, attentionClass.AUTOMATION_BLOCKER, capability.FISHING_SETUP_AUTOMATION, "known Setup incompatibility blocker");
+    expectDiagnostic(condition.SETUP_HARD_CONFIGURATION_CONFLICT, attentionClass.AUTOMATION_BLOCKER, capability.FISHING_SETUP_AUTOMATION, "hard Setup configuration blocker");
+    expectDiagnostic(condition.LOCATION_ALLOCATIONS_EXCEED_OWNED_QUANTITY, attentionClass.CONFLICT, capability.ALLOCATION_INTEGRITY, "allocation exceeds owned quantity conflict");
+    expectDiagnostic(condition.DEPLETED_POOL_WITH_POSITIVE_ALLOCATION, attentionClass.CONFLICT, capability.ALLOCATION_INTEGRITY, "depleted pool allocation conflict");
+    expectDiagnostic(condition.CURRENT_CONTEXT_CONFIGURATION_CONFLICT, attentionClass.CONFLICT, capability.CURRENT_CONTEXT_INTEGRITY, "current-context configuration conflict");
+
+    try {
+        const inactive = deriveDiagnostic({ active: false, condition: condition.CANONICAL_MAPPING_MISSING, subject });
+        if (inactive !== null) fail("G7-ATTN runtime", "inactive/cleared condition must derive no diagnostic");
+    } catch (error) {
+        fail("G7-ATTN runtime", `inactive condition: unexpected error ${error.message}`);
+    }
+
+    try {
+        const diagnostics = deriveDiagnostics([
+            { active: false, condition: condition.CANONICAL_MAPPING_MISSING, subject },
+            { active: true, condition: condition.UNASSIGNED_OWNERSHIP, subject },
+            { active: true, condition: condition.LOCATION_ALLOCATIONS_EXCEED_OWNED_QUANTITY, subject }
+        ]);
+        if (!Array.isArray(diagnostics) || diagnostics.length !== 2) {
+            fail("G7-ATTN runtime", `derived collection must contain only active diagnostics; found ${diagnostics?.length}`);
+        }
+        if (!Object.isFrozen(diagnostics)) {
+            fail("G7-ATTN runtime", "derived diagnostic collection must be immutable");
+        }
+        if (!hasClass(diagnostics, attentionClass.ADVISORY) || !hasClass(diagnostics, attentionClass.CONFLICT)) {
+            fail("G7-ATTN runtime", "derived collection class queries must preserve Advisory and Conflict diagnostics");
+        }
+        if (hasClass(diagnostics, attentionClass.AUTOMATION_BLOCKER)) {
+            fail("G7-ATTN runtime", "inactive blocker must not appear in derived collection");
+        }
+    } catch (error) {
+        fail("G7-ATTN runtime", `derived collection: unexpected error ${error.message}`);
+    }
+
+    try {
+        if (assertNoPersistedAttentionAuthority({ id: "valid-record" }) !== true) {
+            fail("G7-ATTN runtime", "persisted-authority guard must accept a record without derived status fields");
+        }
+    } catch (error) {
+        fail("G7-ATTN runtime", `persisted-authority guard: unexpected error ${error.message}`);
+    }
+    for (const field of expectedForbiddenFields) {
+        expectThrows(() => assertNoPersistedAttentionAuthority({ id: "invalid-record", [field]: true }), `forbidden persisted field ${field}`);
+    }
+
+    expectThrows(() => deriveDiagnostic(null), "non-object observation");
+    expectThrows(() => deriveDiagnostic({ active: true, condition: "invented-condition", subject }), "unsupported condition");
+    expectThrows(() => deriveDiagnostic({ active: true, condition: condition.UNASSIGNED_OWNERSHIP, subject: { type: "", id: "x" } }), "invalid subject type");
+    expectThrows(() => deriveDiagnostic({ active: true, condition: condition.UNASSIGNED_OWNERSHIP, subject, details: [] }), "invalid details");
+    expectThrows(() => deriveDiagnostics(null), "non-array observations");
+    expectThrows(() => hasClass([], "invented-class"), "unsupported attention class query");
+}
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
@@ -2019,6 +2235,7 @@ function validateCanonicalData() {
     validateTechniqueAndCompatibilityFoundation(techniques, compatibility, rigs, lureBait);
     validateCanonicalRequirementSatisfaction(canonicalRequirementSatisfaction, lureBait, tackle);
     validateAvailabilityQuantityFoundation(rigs);
+    validateAvailabilityAttentionFoundation();
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
