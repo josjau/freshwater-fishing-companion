@@ -2165,6 +2165,534 @@ function validateAvailabilityAttentionFoundation() {
     expectThrows(() => hasClass([], "invented-class"), "unsupported attention class query");
 }
 
+function validateMyTackleReconciliationFoundation() {
+    recordCheck("G7-REFS Merge/Split and dependent-reference reconciliation semantics");
+
+    const bindings = loadBindings(
+        "my-tackle-reconciliation.js",
+        [
+            "MY_TACKLE_RECONCILIATION_BUILD_INFO",
+            "RECONCILIATION_STATUS",
+            "RECONCILIATION_ISSUE",
+            "CANONICAL_REFERENCE_MIGRATIONS",
+            "combineKnownOrUnknownQuantities",
+            "mergeLocationAllocations",
+            "mergeDirectCurrentAvailability",
+            "planMergeIdentity",
+            "rebindMergedReference",
+            "assertRetiredIdNotRecreated",
+            "planMergeReferenceMappings",
+            "planMergeScopedRestrictions",
+            "validateSplitQuantityDistribution",
+            "validateSplitLocationDistribution",
+            "planSplitReferenceMappings",
+            "planSplitCurrentAvailability",
+            "evaluateReconciliationRevisionPreconditions",
+            "resolveRetiredMyTackleReference",
+            "findApprovedCanonicalReferenceMigration",
+            "reconcileCanonicalReferenceMapping"
+        ]
+    );
+
+    const buildInfo = bindings.MY_TACKLE_RECONCILIATION_BUILD_INFO;
+    const status = bindings.RECONCILIATION_STATUS;
+    const issue = bindings.RECONCILIATION_ISSUE;
+    const migrations = bindings.CANONICAL_REFERENCE_MIGRATIONS;
+    const combineQuantities = bindings.combineKnownOrUnknownQuantities;
+    const mergeLocations = bindings.mergeLocationAllocations;
+    const mergeDirect = bindings.mergeDirectCurrentAvailability;
+    const planMergeIdentity = bindings.planMergeIdentity;
+    const rebindMergedReference = bindings.rebindMergedReference;
+    const assertRetiredIdNotRecreated = bindings.assertRetiredIdNotRecreated;
+    const planMergeMappings = bindings.planMergeReferenceMappings;
+    const planMergeRestrictions = bindings.planMergeScopedRestrictions;
+    const validateSplitQuantity = bindings.validateSplitQuantityDistribution;
+    const validateSplitLocation = bindings.validateSplitLocationDistribution;
+    const planSplitMappings = bindings.planSplitReferenceMappings;
+    const planSplitCurrentAvailability = bindings.planSplitCurrentAvailability;
+    const evaluateRevisionPreconditions = bindings.evaluateReconciliationRevisionPreconditions;
+    const resolveRetiredReference = bindings.resolveRetiredMyTackleReference;
+    const findMigration = bindings.findApprovedCanonicalReferenceMigration;
+    const reconcileCanonicalMapping = bindings.reconcileCanonicalReferenceMapping;
+
+    if (!isPlainObject(buildInfo) || buildInfo.file !== "my-tackle-reconciliation.js") {
+        fail("G7-REFS runtime", "my-tackle-reconciliation.js must expose MY_TACKLE_RECONCILIATION_BUILD_INFO for itself");
+    }
+
+    const indexHtml = readText("index.html");
+    if (indexHtml !== null) {
+        const refs = extractEntrypointReferences(indexHtml).scriptRefs;
+        const reconciliationRefs = refs.filter((item) => item === "my-tackle-reconciliation.js");
+        if (reconciliationRefs.length !== 1) {
+            fail("G7-REFS runtime", `index.html must load my-tackle-reconciliation.js exactly once; found ${reconciliationRefs.length}`);
+        }
+        const reconciliationIndex = refs.indexOf("my-tackle-reconciliation.js");
+        const attentionIndex = refs.indexOf("availability-attention.js");
+        if (attentionIndex < 0 || reconciliationIndex <= attentionIndex) {
+            fail("G7-REFS runtime", "my-tackle-reconciliation.js must load after availability-attention.js");
+        }
+        for (const dependent of ["search.js", "view-renderer.js", "script.js"]) {
+            const dependentIndex = refs.indexOf(dependent);
+            if (reconciliationIndex < 0 || (dependentIndex >= 0 && reconciliationIndex >= dependentIndex)) {
+                fail("G7-REFS runtime", `my-tackle-reconciliation.js must load before ${dependent}`);
+            }
+        }
+    }
+
+    const expectedStatuses = {
+        READY: "ready",
+        REQUIRES_EXPLICIT_RESOLUTION: "requires-explicit-resolution",
+        STALE: "stale"
+    };
+    for (const [key, value] of Object.entries(expectedStatuses)) {
+        if (status?.[key] !== value) {
+            fail("G7-REFS runtime", `RECONCILIATION_STATUS.${key} must be ${value}`);
+        }
+    }
+
+    const expectedIssues = {
+        MERGE_MAPPING_CONFIRMATION_REQUIRED: "merge-mapping-confirmation-required",
+        MERGE_MAPPING_CONFLICT: "merge-mapping-conflict",
+        MERGE_RESTRICTION_BROADENING_RISK: "merge-restriction-broadening-risk",
+        SPLIT_QUANTITY_DISTRIBUTION_REQUIRED: "split-quantity-distribution-required",
+        SPLIT_QUANTITY_CONSERVATION_FAILED: "split-quantity-conservation-failed",
+        SPLIT_LOCATION_DISTRIBUTION_REQUIRED: "split-location-distribution-required",
+        SPLIT_LOCATION_CONSERVATION_FAILED: "split-location-conservation-failed",
+        SPLIT_CURRENT_AVAILABILITY_ASSIGNMENT_REQUIRED: "split-current-availability-assignment-required",
+        STALE_RECONCILIATION_PLAN: "stale-reconciliation-plan",
+        RETIRED_REFERENCE_AMBIGUOUS: "retired-reference-ambiguous",
+        CANONICAL_MIGRATION_TARGET_UNAVAILABLE: "canonical-migration-target-unavailable"
+    };
+    for (const [key, value] of Object.entries(expectedIssues)) {
+        if (issue?.[key] !== value) {
+            fail("G7-REFS runtime", `RECONCILIATION_ISSUE.${key} must be ${value}`);
+        }
+    }
+
+    const requiredFunctions = [
+        combineQuantities,
+        mergeLocations,
+        mergeDirect,
+        planMergeIdentity,
+        rebindMergedReference,
+        assertRetiredIdNotRecreated,
+        planMergeMappings,
+        planMergeRestrictions,
+        validateSplitQuantity,
+        validateSplitLocation,
+        planSplitMappings,
+        planSplitCurrentAvailability,
+        evaluateRevisionPreconditions,
+        resolveRetiredReference,
+        findMigration,
+        reconcileCanonicalMapping
+    ];
+    if (requiredFunctions.some((fn) => typeof fn !== "function")) {
+        fail("G7-REFS runtime", "all approved reconciliation helper functions must be available");
+        return;
+    }
+
+    const expectedMigrations = [
+        ["tackle-fixed-sinker-to-external-eye-sinker", "tackle", "fixed-sinker", "external-eye-sinker"],
+        ["tackle-offset-worm-hook-to-worm-hook", "tackle", "offset-worm-hook", "worm-hook"],
+        ["tackle-ringed-sinker-to-external-eye-sinker", "tackle", "ringed-sinker", "external-eye-sinker"],
+        ["tackle-split-shot-to-line-mounted-sinker", "tackle", "split-shot", "line-mounted-sinker"]
+    ];
+    if (!Array.isArray(migrations) || migrations.length !== expectedMigrations.length) {
+        fail("G7-REFS migration", `expected exactly ${expectedMigrations.length} approved canonical Reference migrations; found ${migrations?.length}`);
+    } else {
+        const migrationFields = ["migrationId", "migrationVersion", "referenceDomain", "fromReferenceId", "toReferenceId"];
+        const sourceKeys = new Set();
+        migrations.forEach((migration, index) => {
+            if (!isPlainObject(migration)) {
+                fail("G7-REFS migration", `migration ${index} must be an object`);
+                return;
+            }
+            if (JSON.stringify(Object.keys(migration)) !== JSON.stringify(migrationFields)) {
+                fail("G7-REFS migration", `${migration.migrationId ?? index}: fields/order must be exactly ${migrationFields.join(", ")}`);
+            }
+            const expected = expectedMigrations[index];
+            if (
+                migration.migrationId !== expected[0] ||
+                migration.migrationVersion !== 1 ||
+                migration.referenceDomain !== expected[1] ||
+                migration.fromReferenceId !== expected[2] ||
+                migration.toReferenceId !== expected[3]
+            ) {
+                fail("G7-REFS migration", `migration ${index} does not match the approved deterministic migration inventory`);
+            }
+            const sourceKey = `${migration.referenceDomain}:${migration.fromReferenceId}`;
+            if (sourceKeys.has(sourceKey)) {
+                fail("G7-REFS migration", `duplicate deterministic migration source ${sourceKey}`);
+            }
+            sourceKeys.add(sourceKey);
+            if (!Object.isFrozen(migration)) {
+                fail("G7-REFS migration", `${migration.migrationId}: migration record must be immutable`);
+            }
+        });
+        const actualIds = migrations.map((migration) => migration.migrationId);
+        const sortedIds = [...actualIds].sort();
+        if (JSON.stringify(actualIds) !== JSON.stringify(sortedIds)) {
+            fail("G7-REFS migration", "canonical Reference migrations must be in deterministic lexicographic migrationId order");
+        }
+        if (!Object.isFrozen(migrations)) {
+            fail("G7-REFS migration", "canonical Reference migration registry must be immutable");
+        }
+    }
+
+    const expectThrows = (fn, label) => {
+        let threw = false;
+        try {
+            fn();
+        } catch {
+            threw = true;
+        }
+        if (!threw) fail("G7-REFS runtime", `${label}: expected validation error`);
+    };
+
+    const expectStatus = (result, expectedStatus, label) => {
+        if (!isPlainObject(result)) {
+            fail("G7-REFS runtime", `${label}: expected result object`);
+            return false;
+        }
+        if (result.status !== expectedStatus) {
+            fail("G7-REFS runtime", `${label}: expected status ${expectedStatus}; found ${result.status}`);
+        }
+        if (!Object.isFrozen(result)) {
+            fail("G7-REFS runtime", `${label}: result must be immutable`);
+        }
+        return true;
+    };
+
+    try {
+        if (combineQuantities(2, 3) !== 5) fail("G7-REFS runtime", "known + known Merge quantity must sum");
+        if (combineQuantities(null, 3) !== null) fail("G7-REFS runtime", "unknown + known Merge quantity must remain Unknown");
+        if (combineQuantities(undefined, null) !== null) fail("G7-REFS runtime", "unknown + unknown Merge quantity must remain Unknown");
+    } catch (error) {
+        fail("G7-REFS runtime", `Merge quantity semantics: unexpected error ${error.message}`);
+    }
+    expectThrows(() => combineQuantities(-1, 2), "negative Merge quantity");
+
+    try {
+        const locations = mergeLocations(
+            [
+                { locationId: "bag", quantity: null },
+                { locationId: "box", quantity: 2 }
+            ],
+            [
+                { locationId: "box", quantity: 3 },
+                { locationId: "crate", quantity: 1 }
+            ]
+        );
+        const byId = new Map(locations.map((entry) => [entry.locationId, entry.quantity]));
+        if (locations.length !== 3 || byId.get("bag") !== null || byId.get("box") !== 5 || byId.get("crate") !== 1) {
+            fail("G7-REFS runtime", "Merge Location reconciliation must preserve distinct Locations and sum known same-Location quantities");
+        }
+        const unknownSameLocation = mergeLocations([{ locationId: "box", quantity: 2 }], [{ locationId: "box", quantity: null }]);
+        if (unknownSameLocation[0]?.quantity !== null) {
+            fail("G7-REFS runtime", "known + unknown same-Location Merge allocation must become quantity-unknown");
+        }
+    } catch (error) {
+        fail("G7-REFS runtime", `Merge Location reconciliation: unexpected error ${error.message}`);
+    }
+
+    try {
+        const directKnown = mergeDirect(null, { quantity: 2 });
+        if (directKnown?.quantity !== 2) fail("G7-REFS runtime", "single direct current-availability contribution must be preserved");
+        const directMerged = mergeDirect({ quantity: 1 }, { quantity: 2 });
+        if (directMerged?.quantity !== 3) fail("G7-REFS runtime", "known + known direct current amounts must sum");
+        const directUnknown = mergeDirect({ quantity: null }, { quantity: 2 });
+        if (directUnknown?.quantity !== null) fail("G7-REFS runtime", "unknown direct current amount must keep merged amount Unknown");
+    } catch (error) {
+        fail("G7-REFS runtime", `Merge direct current availability: unexpected error ${error.message}`);
+    }
+
+    try {
+        const identity = planMergeIdentity("survivor", ["absorbed-a", "absorbed-b"]);
+        expectStatus(identity, status.READY, "Merge survivor identity");
+        if (identity.retiredRecords.length !== 2 || identity.retiredRecords.some((entry) => entry.replacementId !== "survivor")) {
+            fail("G7-REFS runtime", "Merge must retire every absorbed ID with minimum survivor replacement metadata");
+        }
+        const rebound = rebindMergedReference("absorbed-a", identity);
+        if (rebound.referenceId !== "survivor" || rebound.redirected !== true) {
+            fail("G7-REFS runtime", "losslessly reconcilable absorbed reference must rebind to survivor");
+        }
+        const untouched = rebindMergedReference("other", identity);
+        if (untouched.referenceId !== "other" || untouched.redirected !== false) {
+            fail("G7-REFS runtime", "unaffected stable reference must remain unchanged");
+        }
+        if (assertRetiredIdNotRecreated("new-id", ["absorbed-a", "absorbed-b"]) !== true) {
+            fail("G7-REFS runtime", "non-retired ID should remain valid for ordinary creation");
+        }
+        expectThrows(() => assertRetiredIdNotRecreated("absorbed-a", ["absorbed-a"]), "absorbed ID anti-resurrection");
+    } catch (error) {
+        fail("G7-REFS runtime", `Merge identity/retirement: unexpected error ${error.message}`);
+    }
+
+    try {
+        const exact = planMergeMappings(
+            [{ referenceDomain: "tackle", referenceId: "jighead" }],
+            [{ referenceDomain: "tackle", referenceId: "jighead" }]
+        );
+        expectStatus(exact, status.READY, "same-domain/same-target mapping dedupe");
+        if (exact.mappings.length !== 1 || exact.mappings[0].referenceId !== "jighead") {
+            fail("G7-REFS runtime", "same-domain/same-target mappings must deduplicate");
+        }
+
+        const mappedPlusUnmapped = planMergeMappings(
+            [{ referenceDomain: "tackle", referenceId: "jighead" }],
+            []
+        );
+        expectStatus(mappedPlusUnmapped, status.REQUIRES_EXPLICIT_RESOLUTION, "mapped + unmapped Merge mapping");
+        if (mappedPlusUnmapped.issues[0]?.issue !== issue.MERGE_MAPPING_CONFIRMATION_REQUIRED) {
+            fail("G7-REFS runtime", "mapped + unmapped Merge must require explicit mapping confirmation");
+        }
+
+        const conflict = planMergeMappings(
+            [{ referenceDomain: "tackle", referenceId: "jighead" }],
+            [{ referenceDomain: "tackle", referenceId: "hook" }]
+        );
+        expectStatus(conflict, status.REQUIRES_EXPLICIT_RESOLUTION, "conflicting same-domain Merge mapping");
+        if (conflict.issues[0]?.issue !== issue.MERGE_MAPPING_CONFLICT) {
+            fail("G7-REFS runtime", "conflicting same-domain mappings must block Merge until explicitly resolved");
+        }
+
+        const crossDomain = planMergeMappings(
+            [{ referenceDomain: "tackle", referenceId: "jighead" }],
+            [{ referenceDomain: "lure-bait", referenceId: "minnow" }]
+        );
+        if (crossDomain.status !== status.REQUIRES_EXPLICIT_RESOLUTION || crossDomain.issues.length !== 2) {
+            fail("G7-REFS runtime", "cross-domain mappings from separate records must not silently survive mapped + unmapped domain cases");
+        }
+    } catch (error) {
+        fail("G7-REFS runtime", `Merge mapping reconciliation: unexpected error ${error.message}`);
+    }
+
+    try {
+        const identicalRestrictions = planMergeRestrictions(["whole:excluded", "source:box"], ["source:box", "whole:excluded"]);
+        expectStatus(identicalRestrictions, status.READY, "identical Merge restrictions");
+        if (identicalRestrictions.preservedRestrictionKeys.length !== 2) {
+            fail("G7-REFS runtime", "identical exclusions/exceptions must safely deduplicate");
+        }
+        const unilateralRestriction = planMergeRestrictions(["whole:excluded"], []);
+        expectStatus(unilateralRestriction, status.REQUIRES_EXPLICIT_RESOLUTION, "unilateral Merge restriction");
+        if (unilateralRestriction.issues[0]?.issue !== issue.MERGE_RESTRICTION_BROADENING_RISK) {
+            fail("G7-REFS runtime", "one-sided exclusion/exception must not silently broaden to survivor");
+        }
+    } catch (error) {
+        fail("G7-REFS runtime", `Merge exclusion/exception reconciliation: unexpected error ${error.message}`);
+    }
+
+    try {
+        const knownSplit = validateSplitQuantity(5, [2, 3]);
+        expectStatus(knownSplit, status.READY, "known Split quantity conservation");
+        const badKnownSplit = validateSplitQuantity(5, [2, 2]);
+        expectStatus(badKnownSplit, status.REQUIRES_EXPLICIT_RESOLUTION, "known Split quantity mismatch");
+        if (badKnownSplit.issues[0]?.issue !== issue.SPLIT_QUANTITY_CONSERVATION_FAILED) {
+            fail("G7-REFS runtime", "known Split quantity mismatch must block commit");
+        }
+        const unknownChild = validateSplitQuantity(5, [2, null]);
+        if (unknownChild.status !== status.REQUIRES_EXPLICIT_RESOLUTION) {
+            fail("G7-REFS runtime", "known original quantity cannot prove conservation with unknown child quantity");
+        }
+        const unknownUnconfirmed = validateSplitQuantity(null, [null, null]);
+        expectStatus(unknownUnconfirmed, status.REQUIRES_EXPLICIT_RESOLUTION, "unknown Split quantity without explicit distribution");
+        if (unknownUnconfirmed.issues[0]?.issue !== issue.SPLIT_QUANTITY_DISTRIBUTION_REQUIRED) {
+            fail("G7-REFS runtime", "unknown Split quantity must require explicit truthful distribution confirmation");
+        }
+        const unknownConfirmed = validateSplitQuantity(null, [null, 2], { explicitlyConfirmedUnknownDistribution: true });
+        expectStatus(unknownConfirmed, status.READY, "explicitly confirmed unknown Split quantity distribution");
+    } catch (error) {
+        fail("G7-REFS runtime", `Split quantity conservation: unexpected error ${error.message}`);
+    }
+
+    try {
+        const knownLocation = validateSplitLocation(5, [
+            { resultId: "original", quantity: 2 },
+            { resultId: "child", quantity: 3 }
+        ]);
+        expectStatus(knownLocation, status.READY, "known Split Location conservation");
+        const badLocation = validateSplitLocation(5, [
+            { resultId: "original", quantity: 2 },
+            { resultId: "child", quantity: 2 }
+        ]);
+        expectStatus(badLocation, status.REQUIRES_EXPLICIT_RESOLUTION, "known Split Location mismatch");
+        if (badLocation.issues[0]?.issue !== issue.SPLIT_LOCATION_CONSERVATION_FAILED) {
+            fail("G7-REFS runtime", "known Location allocation mismatch must block Split");
+        }
+        const unknownLocation = validateSplitLocation(null, [{ resultId: "original", quantity: null }]);
+        expectStatus(unknownLocation, status.REQUIRES_EXPLICIT_RESOLUTION, "unknown Location presence without explicit Split assignment");
+        const explicitUnknownLocation = validateSplitLocation(
+            null,
+            [{ resultId: "child", quantity: null }],
+            { explicitlyConfirmedUnknownPresence: true }
+        );
+        expectStatus(explicitUnknownLocation, status.READY, "explicit unknown Location presence assignment");
+    } catch (error) {
+        fail("G7-REFS runtime", `Split Location reconciliation: unexpected error ${error.message}`);
+    }
+
+    try {
+        const inheritedMappings = planSplitMappings(
+            [{ referenceDomain: "tackle", referenceId: "jighead" }],
+            ["original", "child"]
+        );
+        if (inheritedMappings.length !== 2 || inheritedMappings.some((entry) => entry.mappings[0]?.referenceId !== "jighead")) {
+            fail("G7-REFS runtime", "Split results must preserve existing explicit mappings by default");
+        }
+        const overriddenMappings = planSplitMappings(
+            [{ referenceDomain: "tackle", referenceId: "jighead" }],
+            ["original", "child"],
+            { child: [] }
+        );
+        const child = overriddenMappings.find((entry) => entry.resultId === "child");
+        const original = overriddenMappings.find((entry) => entry.resultId === "original");
+        if (child?.mappings.length !== 0 || original?.mappings[0]?.referenceId !== "jighead") {
+            fail("G7-REFS runtime", "Split mapping preservation must allow explicit child change/removal without inferring replacement identity");
+        }
+        expectThrows(
+            () => planSplitMappings([], ["original", "child"], { invented: [] }),
+            "Split mapping override for unknown result"
+        );
+    } catch (error) {
+        fail("G7-REFS runtime", `Split mapping preservation: unexpected error ${error.message}`);
+    }
+
+    try {
+        const safeCurrent = planSplitCurrentAvailability({
+            resultIds: ["original", "child"],
+            wholeItemExcluded: true,
+            sourceExceptions: [{ sourceId: "box", removesEntireOriginalContribution: true }]
+        });
+        expectStatus(safeCurrent, status.READY, "safe Split exclusion/whole-source exception propagation");
+        if (safeCurrent.propagatedWholeItemExclusions.length !== 2 || safeCurrent.propagatedSourceExceptions.length !== 2) {
+            fail("G7-REFS runtime", "whole-item exclusion and whole-source exception must propagate to applicable Split results");
+        }
+        const directPresent = planSplitCurrentAvailability({
+            resultIds: ["original", "child"],
+            directAvailability: { quantity: null }
+        });
+        expectStatus(directPresent, status.REQUIRES_EXPLICIT_RESOLUTION, "positive direct current availability Split");
+        if (
+            directPresent.issues[0]?.issue !== issue.SPLIT_CURRENT_AVAILABILITY_ASSIGNMENT_REQUIRED ||
+            directPresent.directAvailabilityAssignments.length !== 0
+        ) {
+            fail("G7-REFS runtime", "positive direct current availability must not be cloned across Split results");
+        }
+        const partialException = planSplitCurrentAvailability({
+            resultIds: ["original", "child"],
+            sourceExceptions: [{ sourceId: "box", removesEntireOriginalContribution: false }]
+        });
+        if (partialException.status !== status.REQUIRES_EXPLICIT_RESOLUTION) {
+            fail("G7-REFS runtime", "partial source exception must require explicit Split reconciliation");
+        }
+    } catch (error) {
+        fail("G7-REFS runtime", `Split current availability reconciliation: unexpected error ${error.message}`);
+    }
+
+    try {
+        const current = evaluateRevisionPreconditions(
+            { item: "rev-1", location: "rev-2" },
+            { item: "rev-1", location: "rev-2" }
+        );
+        expectStatus(current, status.READY, "current reconciliation revisions");
+        const stale = evaluateRevisionPreconditions(
+            { item: "rev-1", location: "rev-2" },
+            { item: "rev-1", location: "rev-3" }
+        );
+        expectStatus(stale, status.STALE, "stale reconciliation revisions");
+        if (JSON.stringify(stale.changedIds) !== JSON.stringify(["location"]) || stale.issues[0]?.issue !== issue.STALE_RECONCILIATION_PLAN) {
+            fail("G7-REFS runtime", "stale plan must identify changed touched dependencies and block overwrite");
+        }
+    } catch (error) {
+        fail("G7-REFS runtime", `UD-10 revision preconditions: unexpected error ${error.message}`);
+    }
+
+    try {
+        const lossless = resolveRetiredReference("absorbed", {
+            absorbed: { survivorId: "survivor", lossless: true }
+        });
+        expectStatus(lossless, status.READY, "lossless stale retired reference redirect");
+        if (lossless.referenceId !== "survivor" || lossless.redirected !== true) {
+            fail("G7-REFS runtime", "lossless stale retired reference may redirect to survivor");
+        }
+        const ambiguous = resolveRetiredReference("absorbed", {
+            absorbed: { survivorId: "survivor", lossless: false }
+        });
+        expectStatus(ambiguous, status.REQUIRES_EXPLICIT_RESOLUTION, "ambiguous stale retired reference");
+        if (ambiguous.referenceId !== "absorbed" || ambiguous.issues[0]?.issue !== issue.RETIRED_REFERENCE_AMBIGUOUS) {
+            fail("G7-REFS runtime", "ambiguous stale retired reference must be preserved for explicit reconciliation");
+        }
+        const unchanged = resolveRetiredReference("active", {});
+        if (unchanged.referenceId !== "active" || unchanged.redirected !== false) {
+            fail("G7-REFS runtime", "active non-retired stable reference must remain unchanged");
+        }
+    } catch (error) {
+        fail("G7-REFS runtime", `retired stable-reference handling: unexpected error ${error.message}`);
+    }
+
+    try {
+        const migration = findMigration({ referenceDomain: "tackle", referenceId: "offset-worm-hook" });
+        if (migration?.toReferenceId !== "worm-hook") {
+            fail("G7-REFS migration", "offset-worm-hook must deterministically migrate to worm-hook");
+        }
+
+        const activeIds = new Set(["worm-hook"]);
+        const migrated = reconcileCanonicalMapping(
+            { referenceDomain: "tackle", referenceId: "offset-worm-hook" },
+            (domain, id) => domain === "tackle" && activeIds.has(id)
+        );
+        expectStatus(migrated, status.READY, "deterministic canonical mapping migration");
+        if (migrated.migrated !== true || migrated.mapping.referenceId !== "worm-hook") {
+            fail("G7-REFS migration", "approved retired canonical mapping must rewrite to active deterministic replacement");
+        }
+
+        const idempotent = reconcileCanonicalMapping(
+            migrated.mapping,
+            (domain, id) => domain === "tackle" && activeIds.has(id)
+        );
+        if (idempotent.status !== status.READY || idempotent.migrated !== false || idempotent.mapping.referenceId !== "worm-hook") {
+            fail("G7-REFS migration", "canonical mapping migration must be idempotent");
+        }
+
+        const sourceStillActive = reconcileCanonicalMapping(
+            { referenceDomain: "tackle", referenceId: "offset-worm-hook" },
+            (domain, id) => domain === "tackle" && id === "offset-worm-hook"
+        );
+        if (sourceStillActive.migrated !== false || sourceStillActive.mapping.referenceId !== "offset-worm-hook") {
+            fail("G7-REFS migration", "approved migration must not rewrite while the current canonical target remains active");
+        }
+
+        const unavailableTarget = reconcileCanonicalMapping(
+            { referenceDomain: "tackle", referenceId: "split-shot" },
+            () => false
+        );
+        expectStatus(unavailableTarget, status.REQUIRES_EXPLICIT_RESOLUTION, "canonical migration target unavailable");
+        if (unavailableTarget.issues[0]?.issue !== issue.CANONICAL_MIGRATION_TARGET_UNAVAILABLE) {
+            fail("G7-REFS migration", "migration must not publish an inactive/unavailable canonical replacement");
+        }
+
+        const ambiguousRetired = reconcileCanonicalMapping(
+            { referenceDomain: "tackle", referenceId: "retired-without-approved-replacement" },
+            () => false
+        );
+        expectStatus(ambiguousRetired, status.REQUIRES_EXPLICIT_RESOLUTION, "ambiguous retired canonical mapping");
+        if (
+            ambiguousRetired.mapping.referenceId !== "retired-without-approved-replacement" ||
+            ambiguousRetired.issues[0]?.issue !== issue.RETIRED_REFERENCE_AMBIGUOUS
+        ) {
+            fail("G7-REFS migration", "ambiguous retired canonical target must preserve stale mapping evidence and require explicit remapping");
+        }
+    } catch (error) {
+        fail("G7-REFS migration", `canonical Reference migration semantics: unexpected error ${error.message}`);
+    }
+
+    expectThrows(
+        () => reconcileCanonicalMapping({ referenceDomain: "tackle", referenceId: "split-shot" }, null),
+        "missing canonical target-activity resolver"
+    );
+}
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
@@ -2236,6 +2764,7 @@ function validateCanonicalData() {
     validateCanonicalRequirementSatisfaction(canonicalRequirementSatisfaction, lureBait, tackle);
     validateAvailabilityQuantityFoundation(rigs);
     validateAvailabilityAttentionFoundation();
+    validateMyTackleReconciliationFoundation();
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
