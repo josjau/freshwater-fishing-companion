@@ -2693,6 +2693,402 @@ function validateMyTackleReconciliationFoundation() {
     );
 }
 
+function validateCurrentContextSourceChangeFoundation() {
+    recordCheck("G7-CTX current-context source-change visibility semantics");
+
+    const bindings = loadBindings(
+        "current-context-source-change.js",
+        [
+            "CURRENT_CONTEXT_SOURCE_CHANGE_BUILD_INFO",
+            "SOURCE_CHANGE_STATUS",
+            "SOURCE_ACKNOWLEDGEMENT_STATUS",
+            "CONTEXT_INTENT_STATUS",
+            "MATERIAL_FACT_DIMENSION",
+            "SOURCE_ACKNOWLEDGEMENT_STALE_REASON",
+            "captureSourceObservation",
+            "deriveChangedMaterialDimensions",
+            "evaluateSourceChange",
+            "advanceSourceObservationBaseline"
+        ]
+    );
+
+    const buildInfo = bindings.CURRENT_CONTEXT_SOURCE_CHANGE_BUILD_INFO;
+    const status = bindings.SOURCE_CHANGE_STATUS;
+    const acknowledgementStatus = bindings.SOURCE_ACKNOWLEDGEMENT_STATUS;
+    const intentStatus = bindings.CONTEXT_INTENT_STATUS;
+    const dimension = bindings.MATERIAL_FACT_DIMENSION;
+    const staleReason = bindings.SOURCE_ACKNOWLEDGEMENT_STALE_REASON;
+    const captureObservation = bindings.captureSourceObservation;
+    const deriveChangedDimensions = bindings.deriveChangedMaterialDimensions;
+    const evaluateChange = bindings.evaluateSourceChange;
+    const advanceBaseline = bindings.advanceSourceObservationBaseline;
+
+    if (!isPlainObject(buildInfo) || buildInfo.file !== "current-context-source-change.js") {
+        fail("G7-CTX runtime", "current-context-source-change.js must expose CURRENT_CONTEXT_SOURCE_CHANGE_BUILD_INFO for itself");
+    }
+
+    const indexHtml = readText("index.html");
+    if (indexHtml !== null) {
+        const refs = extractEntrypointReferences(indexHtml).scriptRefs;
+        const contextRefs = refs.filter((item) => item === "current-context-source-change.js");
+        if (contextRefs.length !== 1) {
+            fail("G7-CTX runtime", `index.html must load current-context-source-change.js exactly once; found ${contextRefs.length}`);
+        }
+        const contextIndex = refs.indexOf("current-context-source-change.js");
+        const reconciliationIndex = refs.indexOf("my-tackle-reconciliation.js");
+        if (reconciliationIndex < 0 || contextIndex <= reconciliationIndex) {
+            fail("G7-CTX runtime", "current-context-source-change.js must load after my-tackle-reconciliation.js");
+        }
+        for (const dependent of ["search.js", "view-renderer.js", "script.js"]) {
+            const dependentIndex = refs.indexOf(dependent);
+            if (contextIndex < 0 || (dependentIndex >= 0 && contextIndex >= dependentIndex)) {
+                fail("G7-CTX runtime", `current-context-source-change.js must load before ${dependent}`);
+            }
+        }
+    }
+
+    const expectedStatuses = {
+        UNCHANGED: "unchanged",
+        CHANGED_SINCE_CONFIRMATION: "changed-since-confirmation",
+        REQUIRES_EXPLICIT_RESOLUTION: "requires-explicit-resolution"
+    };
+    for (const [key, value] of Object.entries(expectedStatuses)) {
+        if (status?.[key] !== value) fail("G7-CTX runtime", `SOURCE_CHANGE_STATUS.${key} must be ${value}`);
+    }
+
+    const expectedAcknowledgementStatuses = { ADVANCED: "advanced", STALE: "stale" };
+    for (const [key, value] of Object.entries(expectedAcknowledgementStatuses)) {
+        if (acknowledgementStatus?.[key] !== value) {
+            fail("G7-CTX runtime", `SOURCE_ACKNOWLEDGEMENT_STATUS.${key} must be ${value}`);
+        }
+    }
+
+    const expectedIntentStatuses = {
+        PRESERVED: "preserved",
+        REQUIRES_EXPLICIT_RESOLUTION: "requires-explicit-resolution"
+    };
+    for (const [key, value] of Object.entries(expectedIntentStatuses)) {
+        if (intentStatus?.[key] !== value) fail("G7-CTX runtime", `CONTEXT_INTENT_STATUS.${key} must be ${value}`);
+    }
+
+    const expectedDimensions = {
+        EFFECTIVE_AVAILABILITY: "effective-availability",
+        QUANTITY_SUFFICIENCY: "quantity-sufficiency",
+        CANONICAL_SATISFACTION: "canonical-satisfaction",
+        SETUP_USABILITY: "setup-usability",
+        SOURCE_PROVENANCE: "source-provenance",
+        OTHER_AUTOMATION_RELEVANT: "other-automation-relevant"
+    };
+    for (const [key, value] of Object.entries(expectedDimensions)) {
+        if (dimension?.[key] !== value) fail("G7-CTX runtime", `MATERIAL_FACT_DIMENSION.${key} must be ${value}`);
+    }
+
+    const expectedStaleReasons = {
+        CONTEXT_REVISION_CHANGED: "context-revision-changed",
+        SOURCE_REVISION_CHANGED: "source-revision-changed"
+    };
+    for (const [key, value] of Object.entries(expectedStaleReasons)) {
+        if (staleReason?.[key] !== value) {
+            fail("G7-CTX runtime", `SOURCE_ACKNOWLEDGEMENT_STALE_REASON.${key} must be ${value}`);
+        }
+    }
+
+    if (
+        typeof captureObservation !== "function" ||
+        typeof deriveChangedDimensions !== "function" ||
+        typeof evaluateChange !== "function" ||
+        typeof advanceBaseline !== "function"
+    ) {
+        fail("G7-CTX runtime", "all approved source-change helper functions must be available");
+        return;
+    }
+
+    const sourceText = readText("current-context-source-change.js");
+    if (sourceText !== null) {
+        for (const forbidden of [
+            "localStorage", "sessionStorage", "indexedDB", "firebase", "firestore",
+            "new Date(", "Date.now(", "setItem(", "planMergeIdentity(", "planSplitCurrentAvailability(",
+            "deriveAttentionDiagnostic(", "resolveQuantitySufficiency("
+        ]) {
+            if (sourceText.includes(forbidden)) {
+                fail("G7-CTX boundary", `source-change module must not own persistence, day-boundary, reconciliation, attention, or quantity logic: ${forbidden}`);
+            }
+        }
+    }
+
+    const expectThrows = (fn, label) => {
+        let threw = false;
+        try {
+            fn();
+        } catch {
+            threw = true;
+        }
+        if (!threw) fail("G7-CTX runtime", `${label}: expected validation error`);
+    };
+
+    const makeFacts = (overrides = {}) => ({
+        [dimension.EFFECTIVE_AVAILABILITY]: ["tackle:hook"],
+        [dimension.QUANTITY_SUFFICIENCY]: { "tackle:hook": "known-sufficient" },
+        [dimension.CANONICAL_SATISFACTION]: ["tackle:hook"],
+        [dimension.SETUP_USABILITY]: { "setup:bank": "usable" },
+        [dimension.SOURCE_PROVENANCE]: ["location:main-box"],
+        [dimension.OTHER_AUTOMATION_RELEVANT]: null,
+        ...overrides
+    });
+
+    let baseline = null;
+    let sameFactsNewRevision = null;
+    try {
+        baseline = captureObservation({
+            sourceType: "inventory-location",
+            sourceId: "main-box",
+            sourceRevision: 10,
+            materialFacts: makeFacts()
+        });
+        sameFactsNewRevision = captureObservation({
+            sourceType: "inventory-location",
+            sourceId: "main-box",
+            sourceRevision: 11,
+            materialFacts: makeFacts()
+        });
+
+        const expectedObservationFields = ["sourceType", "sourceId", "sourceRevision", "materialFingerprints"];
+        if (JSON.stringify(Object.keys(baseline)) !== JSON.stringify(expectedObservationFields)) {
+            fail("G7-CTX baseline", "confirmation observation must retain only source identity/revision plus material fingerprints");
+        }
+        for (const forbiddenField of ["materialFacts", "sourceContents", "quantity", "mappings", "effectiveAvailability"] ) {
+            if (Object.prototype.hasOwnProperty.call(baseline, forbiddenField)) {
+                fail("G7-CTX baseline", `confirmation observation must not retain authoritative source snapshot field ${forbiddenField}`);
+            }
+        }
+        if (!Object.isFrozen(baseline) || !Object.isFrozen(baseline.materialFingerprints)) {
+            fail("G7-CTX baseline", "confirmation observation and material fingerprints must be immutable");
+        }
+
+        const reordered = captureObservation({
+            sourceType: "inventory-location",
+            sourceId: "main-box",
+            sourceRevision: 10,
+            materialFacts: makeFacts({
+                [dimension.QUANTITY_SUFFICIENCY]: { beta: "known-insufficient", alpha: "known-sufficient" }
+            })
+        });
+        const reorderedEquivalent = captureObservation({
+            sourceType: "inventory-location",
+            sourceId: "main-box",
+            sourceRevision: 10,
+            materialFacts: makeFacts({
+                [dimension.QUANTITY_SUFFICIENCY]: { alpha: "known-sufficient", beta: "known-insufficient" }
+            })
+        });
+        if (reordered.materialFingerprints[dimension.QUANTITY_SUFFICIENCY] !== reorderedEquivalent.materialFingerprints[dimension.QUANTITY_SUFFICIENCY]) {
+            fail("G7-CTX baseline", "material fingerprints must be deterministic for equivalent plain-object facts regardless of key insertion order");
+        }
+    } catch (error) {
+        fail("G7-CTX baseline", `confirmation observation: unexpected error ${error.message}`);
+    }
+
+    if (baseline && sameFactsNewRevision) {
+        try {
+            const descriptiveOnly = evaluateChange(baseline, sameFactsNewRevision);
+            if (descriptiveOnly.status !== status.UNCHANGED) {
+                fail("G7-CTX visibility", "source revision change with unchanged automation facts must remain Unchanged");
+            }
+            if (descriptiveOnly.sourceRevisionChanged !== true || descriptiveOnly.descriptiveOnlyChange !== true) {
+                fail("G7-CTX visibility", "descriptive-only source revision change must be distinguishable without creating a material notice");
+            }
+            if (descriptiveOnly.materialChanged !== false || descriptiveOnly.dependentDerivedResultsStale !== false) {
+                fail("G7-CTX visibility", "descriptive-only change must not invalidate derived availability/Recommendation results");
+            }
+            if (descriptiveOnly.useCurrentTruth !== true || descriptiveOnly.confirmationRemainsValid !== true) {
+                fail("G7-CTX visibility", "current truth must remain controlling without blanket reconfirmation");
+            }
+        } catch (error) {
+            fail("G7-CTX visibility", `descriptive-only change: unexpected error ${error.message}`);
+        }
+    }
+
+    const expectMaterialChange = (changedDimension, overrideValue, label) => {
+        try {
+            const current = captureObservation({
+                sourceType: "inventory-location",
+                sourceId: "main-box",
+                sourceRevision: 11,
+                materialFacts: makeFacts({ [changedDimension]: overrideValue })
+            });
+            const result = evaluateChange(baseline, current);
+            if (result.status !== status.CHANGED_SINCE_CONFIRMATION) {
+                fail("G7-CTX visibility", `${label}: expected changed-since-confirmation; found ${result.status}`);
+            }
+            if (result.materialChanged !== true || result.explicitResolutionRequired !== false) {
+                fail("G7-CTX visibility", `${label}: normal material change must not become an explicit-resolution blocker`);
+            }
+            if (result.confirmationRemainsValid !== true || result.dependentDerivedResultsStale !== true || result.useCurrentTruth !== true) {
+                fail("G7-CTX visibility", `${label}: material change must use current truth, invalidate dependent derived results, and preserve unambiguous confirmation intent`);
+            }
+            if (JSON.stringify([...result.changedDimensions]) !== JSON.stringify([changedDimension])) {
+                fail("G7-CTX visibility", `${label}: expected only ${changedDimension} to be identified as changed`);
+            }
+            if (!Object.isFrozen(result) || !Object.isFrozen(result.source) || !Object.isFrozen(result.changedDimensions) || !Object.isFrozen(result.deltaDetails)) {
+                fail("G7-CTX visibility", `${label}: derived source-change result must be immutable`);
+            }
+            return current;
+        } catch (error) {
+            fail("G7-CTX visibility", `${label}: unexpected error ${error.message}`);
+            return null;
+        }
+    };
+
+    const availabilityChanged = expectMaterialChange(
+        dimension.EFFECTIVE_AVAILABILITY,
+        ["tackle:hook", "tackle:jighead"],
+        "effective availability changed"
+    );
+    expectMaterialChange(
+        dimension.QUANTITY_SUFFICIENCY,
+        { "tackle:hook": "sufficiency-unknown" },
+        "quantity sufficiency/knowledge changed"
+    );
+    expectMaterialChange(
+        dimension.CANONICAL_SATISFACTION,
+        [],
+        "canonical satisfaction changed"
+    );
+    expectMaterialChange(
+        dimension.SETUP_USABILITY,
+        { "setup:bank": "incomplete" },
+        "Fishing Setup usability changed"
+    );
+    expectMaterialChange(
+        dimension.SOURCE_PROVENANCE,
+        ["location:secondary-box"],
+        "source contribution/provenance changed"
+    );
+    expectMaterialChange(
+        dimension.OTHER_AUTOMATION_RELEVANT,
+        { token: "changed" },
+        "other approved automation-relevant fact changed"
+    );
+
+    if (availabilityChanged) {
+        try {
+            const sameRevisionMaterialChange = captureObservation({
+                sourceType: "inventory-location",
+                sourceId: "main-box",
+                sourceRevision: 10,
+                materialFacts: makeFacts({ [dimension.EFFECTIVE_AVAILABILITY]: ["tackle:hook", "tackle:jighead"] })
+            });
+            const result = evaluateChange(baseline, sameRevisionMaterialChange);
+            if (result.status !== status.CHANGED_SINCE_CONFIRMATION || result.sourceRevisionChanged !== false) {
+                fail("G7-CTX visibility", "material current-truth change must be detected even when a source revision token did not advance");
+            }
+
+            const withDelta = evaluateChange(baseline, availabilityChanged, {
+                deltaDetails: [{ dimension: dimension.EFFECTIVE_AVAILABILITY, summary: "A current item was added to the selected Location." }]
+            });
+            if (withDelta.deltaDetails.length !== 1 || !Object.isFrozen(withDelta.deltaDetails[0])) {
+                fail("G7-CTX visibility", "explainable material delta details must be preserved as immutable derived presentation support");
+            }
+        } catch (error) {
+            fail("G7-CTX visibility", `current-truth/delta explanation: unexpected error ${error.message}`);
+        }
+    }
+
+    if (baseline && sameFactsNewRevision) {
+        try {
+            const unsafe = evaluateChange(baseline, sameFactsNewRevision, {
+                intentStatus: intentStatus.REQUIRES_EXPLICIT_RESOLUTION,
+                deltaDetails: [{ dimension: dimension.OTHER_AUTOMATION_RELEVANT, summary: "The selected source can no longer be reconciled losslessly." }]
+            });
+            if (unsafe.status !== status.REQUIRES_EXPLICIT_RESOLUTION || unsafe.explicitResolutionRequired !== true) {
+                fail("G7-CTX visibility", "unsafe/unreconciled selected source must require explicit resolution");
+            }
+            if (unsafe.confirmationRemainsValid !== false || unsafe.dependentDerivedResultsStale !== true) {
+                fail("G7-CTX visibility", "unsafe source change must not silently preserve confirmation or derived results");
+            }
+        } catch (error) {
+            fail("G7-CTX visibility", `explicit resolution boundary: unexpected error ${error.message}`);
+        }
+    }
+
+    if (baseline && availabilityChanged) {
+        try {
+            const dimensions = deriveChangedDimensions(baseline, availabilityChanged);
+            if (JSON.stringify([...dimensions]) !== JSON.stringify([dimension.EFFECTIVE_AVAILABILITY]) || !Object.isFrozen(dimensions)) {
+                fail("G7-CTX visibility", "changed material dimensions must be deterministic and immutable");
+            }
+
+            const advanced = advanceBaseline({
+                expectedContextRevision: 5,
+                currentContextRevision: 5,
+                expectedSourceRevision: 11,
+                currentObservation: availabilityChanged
+            });
+            if (advanced.status !== acknowledgementStatus.ADVANCED || advanced.baseline?.sourceRevision !== 11) {
+                fail("G7-CTX acknowledgement", "Review Changes / Use Updated Contents must advance to the current source observation when revision preconditions still match");
+            }
+            if (!Object.isFrozen(advanced) || !Object.isFrozen(advanced.staleReasons) || !Object.isFrozen(advanced.baseline)) {
+                fail("G7-CTX acknowledgement", "advanced acknowledgement result/baseline must be immutable");
+            }
+
+            const staleContext = advanceBaseline({
+                expectedContextRevision: 5,
+                currentContextRevision: 6,
+                expectedSourceRevision: 11,
+                currentObservation: availabilityChanged
+            });
+            if (
+                staleContext.status !== acknowledgementStatus.STALE ||
+                staleContext.baseline !== null ||
+                !staleContext.staleReasons.includes(staleReason.CONTEXT_REVISION_CHANGED)
+            ) {
+                fail("G7-CTX acknowledgement", "stale device must not acknowledge over a newer current-context revision");
+            }
+
+            const staleSource = advanceBaseline({
+                expectedContextRevision: 5,
+                currentContextRevision: 5,
+                expectedSourceRevision: 10,
+                currentObservation: availabilityChanged
+            });
+            if (
+                staleSource.status !== acknowledgementStatus.STALE ||
+                staleSource.baseline !== null ||
+                !staleSource.staleReasons.includes(staleReason.SOURCE_REVISION_CHANGED)
+            ) {
+                fail("G7-CTX acknowledgement", "stale source observation must not be acknowledged over a newer source revision");
+            }
+        } catch (error) {
+            fail("G7-CTX acknowledgement", `revision-aware acknowledgement: unexpected error ${error.message}`);
+        }
+    }
+
+    expectThrows(
+        () => captureObservation({ sourceType: "inventory-location", sourceId: "box", sourceRevision: 1, materialFacts: { [dimension.EFFECTIVE_AVAILABILITY]: [] } }),
+        "incomplete material-fact dimensions"
+    );
+    expectThrows(
+        () => captureObservation({ ...baseline, materialFacts: makeFacts(), sourceRevision: -1 }),
+        "invalid source revision token"
+    );
+    expectThrows(
+        () => evaluateChange(
+            baseline,
+            captureObservation({ sourceType: "fishing-setup", sourceId: "other", sourceRevision: 1, materialFacts: makeFacts() })
+        ),
+        "mismatched persistent source identity"
+    );
+    expectThrows(
+        () => evaluateChange(baseline, sameFactsNewRevision, { intentStatus: "invented-intent-status" }),
+        "unsupported context intent status"
+    );
+    expectThrows(
+        () => evaluateChange(baseline, sameFactsNewRevision, { deltaDetails: [{ dimension: "invented-dimension", summary: "x" }] }),
+        "unsupported delta dimension"
+    );
+}
+
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
@@ -2765,6 +3161,7 @@ function validateCanonicalData() {
     validateAvailabilityQuantityFoundation(rigs);
     validateAvailabilityAttentionFoundation();
     validateMyTackleReconciliationFoundation();
+    validateCurrentContextSourceChangeFoundation();
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
