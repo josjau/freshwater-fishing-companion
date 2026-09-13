@@ -1740,6 +1740,215 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
     }
 }
 
+function validateAvailabilityQuantityFoundation(rigs) {
+    recordCheck("G7-QTY quantity sufficiency and depletion runtime semantics");
+
+    const bindings = loadBindings(
+        "availability-quantity.js",
+        [
+            "AVAILABILITY_QUANTITY_BUILD_INFO",
+            "QUANTITY_SUFFICIENCY_STATUS",
+            "FUNCTIONAL_POOL_QUANTITY_STATUS",
+            "QUANTITY_EVIDENCE_TYPE",
+            "deriveFunctionalPoolQuantityStatus",
+            "resolveQuantitySufficiency"
+        ]
+    );
+
+    const buildInfo = bindings.AVAILABILITY_QUANTITY_BUILD_INFO;
+    const sufficiency = bindings.QUANTITY_SUFFICIENCY_STATUS;
+    const poolStatus = bindings.FUNCTIONAL_POOL_QUANTITY_STATUS;
+    const evidenceType = bindings.QUANTITY_EVIDENCE_TYPE;
+    const derivePoolStatus = bindings.deriveFunctionalPoolQuantityStatus;
+    const resolveSufficiency = bindings.resolveQuantitySufficiency;
+
+    if (!isPlainObject(buildInfo) || buildInfo.file !== "availability-quantity.js") {
+        fail("G7-QTY runtime", "availability-quantity.js must expose AVAILABILITY_QUANTITY_BUILD_INFO for itself");
+    }
+
+    const indexHtml = readText("index.html");
+    if (indexHtml !== null) {
+        const refs = extractEntrypointReferences(indexHtml).scriptRefs;
+        const quantityRefs = refs.filter((item) => item === "availability-quantity.js");
+        if (quantityRefs.length !== 1) {
+            fail("G7-QTY runtime", `index.html must load availability-quantity.js exactly once; found ${quantityRefs.length}`);
+        }
+        const quantityIndex = refs.indexOf("availability-quantity.js");
+        for (const dependent of ["search.js", "view-renderer.js", "script.js"]) {
+            const dependentIndex = refs.indexOf(dependent);
+            if (quantityIndex < 0 || (dependentIndex >= 0 && quantityIndex >= dependentIndex)) {
+                fail("G7-QTY runtime", `availability-quantity.js must load before ${dependent}`);
+            }
+        }
+    }
+
+    const expectedSufficiency = {
+        KNOWN_SUFFICIENT: "known-sufficient",
+        KNOWN_INSUFFICIENT: "known-insufficient",
+        SUFFICIENCY_UNKNOWN: "sufficiency-unknown"
+    };
+    for (const [key, value] of Object.entries(expectedSufficiency)) {
+        if (sufficiency?.[key] !== value) {
+            fail("G7-QTY runtime", `QUANTITY_SUFFICIENCY_STATUS.${key} must be ${value}`);
+        }
+    }
+
+    const expectedPoolStatus = {
+        KNOWN_POSITIVE: "known-positive",
+        DEPLETED: "depleted",
+        QUANTITY_UNKNOWN: "quantity-unknown"
+    };
+    for (const [key, value] of Object.entries(expectedPoolStatus)) {
+        if (poolStatus?.[key] !== value) {
+            fail("G7-QTY runtime", `FUNCTIONAL_POOL_QUANTITY_STATUS.${key} must be ${value}`);
+        }
+    }
+
+    if (!isPlainObject(evidenceType) || typeof derivePoolStatus !== "function" || typeof resolveSufficiency !== "function") {
+        fail("G7-QTY runtime", "quantity evidence constants and derivation functions must be available");
+        return;
+    }
+
+    const expectedEvidenceTypes = {
+        PHYSICAL_ITEM: "physical-item",
+        KNOWN_QUANTITY: "known-quantity",
+        AT_LEAST: "at-least",
+        UNKNOWN_PRESENT: "unknown-present"
+    };
+    for (const [key, value] of Object.entries(expectedEvidenceTypes)) {
+        if (evidenceType[key] !== value) {
+            fail("G7-QTY runtime", `QUANTITY_EVIDENCE_TYPE.${key} must be ${value}`);
+        }
+    }
+
+    const expectThrows = (fn, label) => {
+        let threw = false;
+        try {
+            fn();
+        } catch {
+            threw = true;
+        }
+        if (!threw) fail("G7-QTY runtime", `${label}: expected validation error`);
+    };
+
+    const expectPoolStatus = (ownedQuantity, expected, label) => {
+        try {
+            const actual = derivePoolStatus(ownedQuantity);
+            if (actual !== expected) {
+                fail("G7-QTY runtime", `${label}: expected ${expected}; found ${actual}`);
+            }
+        } catch (error) {
+            fail("G7-QTY runtime", `${label}: unexpected error ${error.message}`);
+        }
+    };
+
+    expectPoolStatus(undefined, poolStatus.QUANTITY_UNKNOWN, "omitted functional-pool quantity");
+    expectPoolStatus(null, poolStatus.QUANTITY_UNKNOWN, "null functional-pool quantity");
+    expectPoolStatus(0, poolStatus.DEPLETED, "zero functional-pool quantity");
+    expectPoolStatus(3, poolStatus.KNOWN_POSITIVE, "positive functional-pool quantity");
+    expectThrows(() => derivePoolStatus(-1), "negative functional-pool quantity");
+    expectThrows(() => derivePoolStatus(1.5), "fractional functional-pool quantity");
+
+    const expectSufficiency = (requiredQuantity, contributions, expected, expectedMinimum, expectedExact, label) => {
+        try {
+            const result = resolveSufficiency(requiredQuantity, contributions);
+            if (!isPlainObject(result)) {
+                fail("G7-QTY runtime", `${label}: resolver must return an object`);
+                return;
+            }
+            if (result.status !== expected) {
+                fail("G7-QTY runtime", `${label}: expected ${expected}; found ${result.status}`);
+            }
+            if (result.requiredQuantity !== requiredQuantity) {
+                fail("G7-QTY runtime", `${label}: requiredQuantity must be preserved`);
+            }
+            if (result.confirmedMinimum !== expectedMinimum) {
+                fail("G7-QTY runtime", `${label}: expected confirmedMinimum ${expectedMinimum}; found ${result.confirmedMinimum}`);
+            }
+            if (result.exactAvailableQuantity !== expectedExact) {
+                fail("G7-QTY runtime", `${label}: expected exactAvailableQuantity ${expectedExact}; found ${result.exactAvailableQuantity}`);
+            }
+            if (!Object.isFrozen(result)) {
+                fail("G7-QTY runtime", `${label}: derived result must be immutable`);
+            }
+        } catch (error) {
+            fail("G7-QTY runtime", `${label}: unexpected error ${error.message}`);
+        }
+    };
+
+    expectSufficiency(1, [], sufficiency.KNOWN_INSUFFICIENT, 0, 0, "no matching availability");
+    expectSufficiency(1, [{ type: evidenceType.UNKNOWN_PRESENT }], sufficiency.KNOWN_SUFFICIENT, 1, null, "unknown presence satisfies one");
+    expectSufficiency(2, [{ type: evidenceType.UNKNOWN_PRESENT }], sufficiency.SUFFICIENCY_UNKNOWN, 1, null, "unknown presence cannot prove two");
+    expectSufficiency(2, [{ type: evidenceType.AT_LEAST, quantity: 2 }], sufficiency.KNOWN_SUFFICIENT, 2, null, "explicit at-least confirmation");
+    expectSufficiency(2, [{ type: evidenceType.AT_LEAST, quantity: 1 }], sufficiency.SUFFICIENCY_UNKNOWN, 1, null, "bounded minimum below requirement remains unknown");
+    expectSufficiency(2, [{ type: evidenceType.KNOWN_QUANTITY, quantity: 1 }], sufficiency.KNOWN_INSUFFICIENT, 1, 1, "known insufficient functional pool");
+    expectSufficiency(2, [{ type: evidenceType.PHYSICAL_ITEM }, { type: evidenceType.PHYSICAL_ITEM }], sufficiency.KNOWN_SUFFICIENT, 2, 2, "two physical items contribute two");
+    expectSufficiency(2, [{ type: evidenceType.KNOWN_QUANTITY, quantity: 1 }, { type: evidenceType.UNKNOWN_PRESENT }], sufficiency.KNOWN_SUFFICIENT, 2, null, "known plus unknown-present lower bound");
+    expectSufficiency(3, [{ type: evidenceType.KNOWN_QUANTITY, quantity: 1 }, { type: evidenceType.UNKNOWN_PRESENT }], sufficiency.SUFFICIENCY_UNKNOWN, 2, null, "unknown arithmetic remains unknown");
+    expectSufficiency(1, [{ type: evidenceType.KNOWN_QUANTITY, quantity: 0 }], sufficiency.KNOWN_INSUFFICIENT, 0, 0, "depleted contribution provides zero");
+
+    const frozenEvidence = Object.freeze([
+        Object.freeze({ type: evidenceType.PHYSICAL_ITEM }),
+        Object.freeze({ type: evidenceType.UNKNOWN_PRESENT })
+    ]);
+    expectSufficiency(2, frozenEvidence, sufficiency.KNOWN_SUFFICIENT, 2, null, "resolver does not require mutable evidence");
+
+    expectThrows(() => resolveSufficiency(0, []), "zero required quantity");
+    expectThrows(() => resolveSufficiency(1.5, []), "fractional required quantity");
+    expectThrows(() => resolveSufficiency(1, null), "non-array contributions");
+    expectThrows(() => resolveSufficiency(1, [{ type: "invented-evidence" }]), "unsupported evidence type");
+    expectThrows(() => resolveSufficiency(1, [{ type: evidenceType.AT_LEAST, quantity: 0 }]), "invalid at-least quantity");
+    expectThrows(() => resolveSufficiency(1, [{ type: evidenceType.KNOWN_QUANTITY, quantity: -1 }]), "negative known quantity");
+
+    const authoredRequirements = [];
+    const validateRequirementList = (requirements, label) => {
+        for (const requirement of requireArray(requirements, label)) {
+            if (!isPlainObject(requirement)) continue;
+            if (!Number.isInteger(requirement.quantity) || requirement.quantity < 1) {
+                fail("G7-QTY Rig requirement", `${label}: quantity must be a positive whole number; found ${JSON.stringify(requirement.quantity)}`);
+                continue;
+            }
+            authoredRequirements.push({
+                label,
+                tackleId: requirement.tackleId ?? null,
+                lureBaitId: requirement.lureBaitId ?? null,
+                quantity: requirement.quantity
+            });
+        }
+    };
+
+    for (const rig of rigs) {
+        if (!isPlainObject(rig)) continue;
+        validateRequirementList(rig.componentRequirements, `Rig ${rig.id} componentRequirements`);
+        if (Object.prototype.hasOwnProperty.call(rig, "lureBaitRequirements")) {
+            validateRequirementList(rig.lureBaitRequirements, `Rig ${rig.id} lureBaitRequirements`);
+        }
+        for (const configuration of Array.isArray(rig.configurations) ? rig.configurations : []) {
+            validateRequirementList(configuration.componentRequirements, `Rig ${rig.id}/${configuration.id} componentRequirements`);
+            validateRequirementList(configuration.lureBaitRequirements, `Rig ${rig.id}/${configuration.id} lureBaitRequirements`);
+        }
+    }
+
+    if (authoredRequirements.length !== 87) {
+        fail("G7-QTY Rig requirement", `expected 87 current availability-bearing Rig requirements; found ${authoredRequirements.length}`);
+    }
+    const quantityOneCount = authoredRequirements.filter((item) => item.quantity === 1).length;
+    const quantityTwo = authoredRequirements.filter((item) => item.quantity === 2);
+    if (quantityOneCount !== 85 || quantityTwo.length !== 2) {
+        fail("G7-QTY Rig requirement", `expected quantity distribution 85x1 + 2x2; found ${quantityOneCount}x1 + ${quantityTwo.length}x2`);
+    }
+    const quantityTwoKeys = quantityTwo
+        .map((item) => `${item.label}|${item.tackleId ?? item.lureBaitId ?? "<unknown>"}`)
+        .sort();
+    const expectedQuantityTwoKeys = [
+        "Rig double-jig-crappie-rig componentRequirements|jighead",
+        "Rig double-jig-crappie-rig componentRequirements|soft-plastic"
+    ];
+    if (JSON.stringify(quantityTwoKeys) !== JSON.stringify(expectedQuantityTwoKeys)) {
+        fail("G7-QTY Rig requirement", `quantity-2 requirements must remain the approved Double Jig Crappie Rig jighead + soft-plastic pair; found ${quantityTwoKeys.join(", ")}`);
+    }
+}
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
@@ -1809,6 +2018,7 @@ function validateCanonicalData() {
     validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishRigGuidance, knots);
     validateTechniqueAndCompatibilityFoundation(techniques, compatibility, rigs, lureBait);
     validateCanonicalRequirementSatisfaction(canonicalRequirementSatisfaction, lureBait, tackle);
+    validateAvailabilityQuantityFoundation(rigs);
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
