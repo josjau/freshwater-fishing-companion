@@ -1,21 +1,126 @@
-# Freshwater Fishing Companion — Active Change Ledger
+﻿# Freshwater Fishing Companion — Active Change Ledger
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.48  
+**Document Revision:** 1.10.132  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** GitHub `main` commit `6ee6917bba43ec6c0fa70f15528d750d34354d6a`  
-**Last Updated:** 2026-09-13
+**Reconciliation Baseline:** GitHub `main` commit `38c1ab70b51a8ecd498b34068d34bacb9b7c3ace`  
+**Last Updated:** 2026-09-18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Purpose
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This ledger keeps every material non-closed project item visible until it receives an explicit terminal disposition.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 It does not duplicate full design reasoning. Each entry identifies the current status, the controlling detailed owner/gate, and the required next action.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 GitHub `main` owns committed formal state. Google Drive `Working Source/Current` owns all approved uncommitted repository changes against its recorded GitHub baseline; `WORKING_STATE.md` owns compact repository workstream/resume context. The Live Working State is a compact operational manifest, not a source-authority mirror or historical journal.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Status Vocabulary
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - **OPEN** — unresolved decision/action requires discussion or work.
 - **APPROVED / PENDING IMPLEMENTATION** — direction is settled; implementation remains.
@@ -26,13 +131,88 @@ GitHub `main` owns committed formal state. Google Drive `Working Source/Current`
 - **REQUIRED** — applicable gate cannot pass without it.
 - **BLOCKED** — dependent work may not proceed until named conditions close.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Closed, superseded, rejected, and deliberate non-action items are not maintained here unless temporarily needed to explain an active dependency. Their provenance remains in decisions, closed workstreams, archive, Changelog, and Git history.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Workflow Transition
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 No active workflow-transition item remains. The 2026-08-25 Workflow Performance Refactor is closed; D068 and the current workflow documents own the settled operating model. Closure history remains in `CHANGELOG.md`, D068, and Git history.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Cross-Domain UX / Source Follow-Ups
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
@@ -42,62 +222,415 @@ No active workflow-transition item remains. The 2026-08-25 Workflow Performance 
 | UX-005 | DEFERRED TO NAMED GATE | Compact detail density outside Rigs | Domain-specific review | Reuse only after the target domain demonstrates the Rig density pattern fits. |
 | UX-006 | PARKED | Technically verified local Rig visual library | Rig/media future quality gate | Use licensed/verified/manual/reference-grounded media only; generated finished/build-step Rig imagery remains prohibited. |
 | UX-008 | DEFERRED TO NAMED GATE | Package-era source headers such as `REPLACEMENT` | Next deliberate edit to an affected permanent source file | Remove obsolete package-era header language when that file is next intentionally edited; do not create unrelated source churn solely for comments. |
-| UX-009 | REQUIRED | Version 1 full site-wide design/mobile audit | `V1-DESIGN-AUDIT.md` | After Version 1 functional scope is sufficiently stable, execute the component-first site-wide audit, including the recorded Rig `useCases[]` species-applicability ownership defect under D056. Treat the approved native directional-glyph grammar and shared `font-weight: 800` navigation-arrow rule as established standards to verify, not redesign. Reconcile remaining inconsistent visual/link/container semantics and duplicated relationship semantics, then require PASS on an actual mobile device before Version 1 design is complete. |
-| UX-010 | DEFERRED TO NAMED GATE | My Tackle / Recommendation visual recognition examples | `V1-DESIGN-AUDIT.md` Section 15; settled GATE-007 + What Should I Throw / Recommendation UX | After My Tackle and Recommendation UX are sufficiently settled, define representative visual recognition for the approved Hook and Weight style vocabularies and evaluate whether the same shared pattern should extend to Lure/Bait or other My Tackle families. Do not turn the requirement into a commercial tackle catalog; no presentation mechanism is preselected. |
+| UX-009 | REQUIRED | Version 1 full site-wide design/mobile audit | `V1-DESIGN-AUDIT.md` | After Version 1 functional scope is sufficiently stable, execute the component-first site-wide audit, including the recorded Rig `useCases[]` species-applicability ownership defect under D056. Treat the approved native directional-glyph grammar and shared `font-weight: 800` navigation-arrow rule as established standards to verify, not redesign. Reconcile remaining inconsistent visual/link/container semantics and duplicated relationship semantics. Explicitly re-evaluate local/offline Knot visual tying instruction: search again for acceptable rights-compatible instructional media and/or prototype project-owned stepped visuals/controlled animation; implement only if the result passes accuracy, quality, rights, mobile, accessibility, and instructional-usefulness gates. If it does not, retain the functional written Knot Guide and document the disposition. Require PASS on an actual mobile device before Version 1 design is complete. |
+| UX-010 | DEFERRED TO NAMED GATE | My Tackle / Recommendation visual recognition examples | `V1-DESIGN-AUDIT.md` Section 15; settled GATE-007 + What Should I Throw / Recommendation UX | Hook and Weight remain minimum required recognition scope. FCC 37 additionally approved the **Variant Recognition Gallery** as a UX candidate for applicable Tackle/Lure-Bait concepts across Rig -> What You Need, Tackle/Lure Index, and detail/reference surfaces. Resolve exact Media ownership/roles, interaction, accessibility, mobile density, and whether the shared pattern extends to other families during the named UX gate. No gallery mechanic or commercial-catalog expansion is preselected. |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Knot visual-instruction carry-forward:** historical `PARK-003` is superseded as a pure Parking Lot item. The Knot Guide remains functionally complete; local/offline visual tying instruction is now an explicit UX-009 evaluation/refinement requirement, with implementation conditional on acceptable instructional quality, accuracy, rights/provenance, mobile behavior, and accessibility.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Tackle Open Design
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
-| TACKLE-004 | OPEN | Tackle-root `Check Rig Readiness` placeholder | D020 + Tackle/My Tackle milestone | Remove, rename/redefine as a secondary aggregate view, or explicitly approve; do not auto-build a separate primary readiness page. |
+| TACKLE-004 | DIRECTION APPROVED / UX PENDING | Tackle-root `Check Rig Readiness` placeholder | D020 + My Tackle / What Should I Throw | Do not build a separate primary Rig Readiness authority/page. Readiness should be derived in the What Should I Throw workflow from authoritative My Tackle + confirmed current availability, with Rig/detail surfaces allowed to display derived buildability/missing requirements. Exact WSIT/readiness presentation remains for Recommendation/My Tackle UX design. |
+| TACKLE-005 | APPROVED / REQUIRED IN V1 MY TACKLE | My Tackle bulk import/export and existing-inventory migration | `data-model/05A-INVENTORY.md` — My Tackle Import / Export V1 Direction | Build with My Tackle, not as a later convenience: one shared import-candidate/normalization/review pipeline; XLSX primary guided template with canonical/dependent validation where practical; CSV universal interchange; FCC-native My Tackle JSON lossless interchange; custom/unmapped items remain valid User Knowledge with optional explicit canonical functional mapping; full-profile backup/restore remains separate under UD-9. Use the existing Fishing Tackle Inventory as the first migration acceptance dataset. Exact file/UX details belong to the My Tackle Import/Export build. |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # My Tackle / Recommendation Cross-Boundary Audit — 2026-09-07
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 The detailed issue owner is `data-model/05A-INVENTORY.md` under the 2026-09-07 cross-boundary gap-audit section. The rows below keep each material non-closed finding visible and assign the gate that must disposition it. These rows do not themselves approve the unresolved semantic choice.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
+| G4-DK | ACTIVE / REQUIRED — HELD FOR V1 AUDIT | Contextual Recommendation Decision Knowledge | GATE-004 / D069 | G4-DK-1A through G4-DK-1G.4 are COMPLETE / APPROVED WITH REVISION ALLOWED and G4-DK-1G Authoring Evidence & Validation Contract is CLOSED / COMPLETE. Do not begin G4-DK-2 until the project-wide V1 Completion Audit reconciles the remaining end-to-end Recommendation dependencies and overall product priority. |
+| V1-AUDIT | ACTIVE / REQUIRED | Project Completion Inventory & Prioritization | Project-wide Version 1 completion review + historical-intent reconciliation | **2A Library Completeness is CLOSED / APPROVED. 2B Tiered Suggestions is IN PROGRESS.** 2B.1 closes the beginner product-recommendation principle and 2B.2 now owns the graduated purchasing-guidance model plus the approved-with-revisions Rod/Reel path. Rod/Reel guidance is specification-first with reputable brands and curated current examples rather than mandatory permanent four-tier model rankings. Spinning is the default general-purpose beginner path; Spincast remains a supported simplicity-first alternative; Baitcasting remains fully supported with explicit learning-curve/backlash guidance. Fishing Line is now **Specification + Reputable Brands**: determine role/type/strength first, then offer researched reputable manufacturers; routine exact-spool/SKU recommendations are not required. The equipment-selection decision path determines compatible Rod + Reel + Line specifications, while Tackle Reference owns reusable education and Attach Line to Reel remains a downstream setup/execution workflow rather than duplicated purchasing content. User choice is not restricted. D023 is the durable semantic owner. Choose a Setup is now canonically housed in Tackle while remaining reusable from other appropriate entry points; a beginner-facing Start Here Dashboard card is approved as an orchestration surface with the approved copy that introduces “fishing setup” and immediately explains it through rod, reel, and line. Start Here conceptually separates Choose a Fishing Setup from Build a Starter Tackle Box. Persistence/authentication for selected setup/progress remains unresolved and must not silently create My Tackle ownership. Hooks/terminal hardware and Weights/Floats/Leader Material category thresholds are CLOSED / APPROVED WITH REVISIONS ALLOWED under D023. **Lure/Bait purchasing-guidance threshold is also CLOSED / APPROVED WITH REVISIONS ALLOWED:** artificial lures/soft plastics and Prepared Bait use Tiered Specific Products; ordinary natural bait uses Specification Guidance; Specification + Reputable Brands remains a selective evidence-driven option. The exact Fishing Recommendation -> commercial product-guidance handoff remains OPEN. **Starter Tackle Box Direct-Tie scope is settled with revisions allowed:** the base box supports all Core Rigs; Direct-Tie uses Inline Spinner + Crankbait as the two required confidence-lure families; each may use 1–3 curated functional variants with two as the normal default; color/pattern alternatives are not separate functional variants; Spoon is an optional expansion/confidence lure rather than a base requirement. **Budget + Capability Planning is also settled with revisions allowed:** the complete Starter Box remains price-independent; budget is an optional acquisition-priority/completeness layer rather than a membership rule; FCC may show broad researched total-investment ranges and capability/equipment envelopes but does not require individual-item price maintenance. Exact `$200–$300` or any other band remains unapproved pending specification completion and current market validation. **Starter Tackle Box Functional Package Architecture is CLOSED / APPROVED WITH REVISIONS ALLOWED:** the six Core Rigs are one shared component system; natural/live bait is trip-consumable rather than durable box inventory; the Fixed/Slip/Bottom cluster, Jighead + Soft Plastic range, and Texas Rig range are bounded at the functional-slot level. **Choose a Setup Starting-State + Product-Family Guidance Architecture is also CLOSED / APPROVED WITH REVISIONS ALLOWED and refined by Gates 138–139:** Spinning remains the default general-purpose beginner path; the workflow supports starting from scratch or matching around an owned Rod, Reel, or Rod + Reel; a starting-from-scratch user may choose a researched Matched Rod + Reel Combo or Rod + Reel selected separately inside the same setup path; exact Combos qualify independently as complete systems and do not inherit standalone-family specifications; budget is optional and applies to missing purchases; full-build planning may protect a minimum useful tackle allocation; Rod/Reel commercial tiers may identify researched product families/series rather than blanket brands or every exact SKU, with the resolved functional specification selecting the correct family variant; manufacturer family/series pages are the preferred durable commercial link target where applicable. Exact standalone Rod/Reel commercial tiers, final Combo quality/value tiers/counts, component specifications, final soft-plastic identities, prices, exact investment bands, maintenance mechanics, and retailer integration remain unresolved. Production remains unchanged until explicit implementation authorization. **FCC 40 / 2B.2 Beginner Spinning Setup Job + Capability Envelope is CLOSED / APPROVED WITH REVISIONS ALLOWED.** The default Spinning system is the first-system / one-system freshwater default, must support useful beginner/general-purpose implementations of all six Core Rigs and the minimum Starter Tackle package, covers light-to-moderate general-purpose presentations and ordinary small-to-medium freshwater fishing plus incidental larger-fish capability, and excludes specialty ultralight/heavy-power applications from the default envelope. Existing equipment may be preferred, usable, or unsuitable for this job rather than automatically replaced. **FCC 40–41 / 2B.2 Beginner Spinning Rod Specification is CLOSED / APPROVED WITH REVISIONS ALLOWED and refined by Gate 137:** approximately 7'0" Medium remains the preferred center; Fast and Moderate-Fast are co-preferred; Preferred hard qualification requires a published casting range containing approximately 1/4–5/8 oz; 3/16 and 1/8 oz are beneficial light-range extensions rather than prerequisites; ~3/4 oz is beneficial upper headroom rather than a prerequisite; and the working Rod line-rating target remains 8–10 lb compatible (approximately 6–12 lb or broader). **FCC 40 / 2B.2 Beginner Spinning Line Specification is CLOSED / APPROVED WITH REVISIONS ALLOWED:** 10 lb general-purpose monofilament is the preferred default; 8 lb mono is the preferred lighter alternative; the preferred behavior is supple/low-memory/easy-casting/easy-managing; diameter remains secondary product-validation data; leader use is taught early but is not required for setup completeness; braid/fluorocarbon remain supported alternatives. The six-Core-Rig challenge passed inside the approved general-purpose envelope, with heavy-cover Texas Rigging and dedicated heavy-catfish/heavy-river work remaining outside the default. Reel capacity is product-specific validation rather than a universal yardage threshold: directly published 10 lb mono or comparable diameter/capacity data per candidate variant, with the approved-variant range/median derived during market research; Attach Line to Reel owns the ~1/8-inch spool-lip fill standard. **FCC 40–41 / 2B.2 Combined Rod + Reel + Line Compatibility / Fishing-Capability Envelope is CLOSED / APPROVED WITH REVISIONS ALLOWED and refined by Gate 137:** the preferred default is approximately 7' Medium-power Spinning with Fast or Moderate-Fast action + mid-size general-purpose freshwater Spinning Reel + 10 lb general-purpose mono; Preferred Rod hard qualification centers on approximately 1/4–5/8 oz completed casting load, with lighter 3/16-/1/8-oz and ~3/4-oz upper capability treated as useful extensions; compatibility remains actual-specification and completed-load based; all six Core Rigs retain useful general-purpose implementations; existing equipment resolves as Preferred Fit / Usable but Capability-Shifted / Not Suitable. **Gate 139 closes the bounded Matched-Spinning-Combo hard screen. Gate 140 closes the curated Combo commercial price-position structure:** Budget = Daiwa Crossfire LT; Mid-tier = Pflueger President, Lew's MACH Smash, Daiwa Revros LT, Ugly Stik Elite; Premium = Abu Garcia Max Elite, Daiwa Legalis LT. One Budget product is sufficient absent a materially distinct second hard-qualified option. Max X and Veritas remain technically hard-qualified but are pruned from the curated beginner set for redundancy/value reasons respectively; neither is Avoid. **Gates 141–145 close standalone Rod hard qualification, Rod commercial grouping/pruning/order, and matched-Combo ordering under the approved Gate-144 presentation.** **Gate 146 closes the standalone Spinning Reel exact-variant selection method:** applicable adjacent mid-size variants must be compared within each Reel family before an exact Preferred reference variant is locked; manufacturer-specific compact-body/spool relationships require direct evidence and are not normalized across brands. **Gate 147 closes the adjacent-size/compact-body hard screen:** all 34 families remain Preferred Fit, with 21 exact reference variants revised and 13 retained. **Gate 148 closes standalone Reel commercial grouping/pruning:** 20 families are retained in the curated beginner set and 14 are commercially pruned with 0 Avoid; retained grouping is Budget 9 / Mid-tier 6 / Premium 5. Commercial pruning does not alter Gate-147 technical qualification. **Gate 149 closes standalone Reel Gate-144 descending order + selective awards:** Budget order is Regal LT; Sedona FJ; President; Ceymar A; **Crossfire LT — Best Budget**; Legalis LT; Sienna FG; Sharky III; Zephyr. Mid-tier order is **Fuego LT — Best Value**; Nasci FD; Inspira ISX; Miravel A; Max Elite; Battle IV. Premium order is **Stradic FM — Best of the Best**; Tatula MQ LT; Vanford A; Revo SX; Vanquish. Regal leads Budget on overall value while Crossfire owns the D023 Best Budget award; no explicit Good Alternative labels are required. **Exact next action: FCC 44C / 2B.2 — Fishing Line reputable-brand ordering under the approved Specification + Reputable Brands model.** Continue the broader capability classification, full Chat Log reconciliation, V1-REPO-AUDIT, and discussion-depth/session-boundary rules before the final prioritized Version 1 roadmap. |
+| V1-REPO-AUDIT | REQUIRED / PART OF V1 COMPLETION AUDIT | Full repository documentation completeness + JavaScript source organization | V1-AUDIT-1; `V1-DESIGN-AUDIT.md` Section 16; `DEVELOPMENT_WORKFLOW.md` / `AGENTS.md` as later governing-rule owners where applicable | Review every tracked repository path for purpose/status/ownership; distinguish active authority from archive; identify missing, stale, contradictory, or duplicated documentation; review every active `.js` file for clear purpose, labeled semantic sections, understandable flow, deliberate grouping, and correct edit placement. Detect chronological patch accumulation/random end-of-file appends. Future code must be inserted into its semantic owning section; if no owner exists, resolve the organization/architecture issue first. Produce an explicit disposition for every active JavaScript file and every material documentation gap before Version 1 audit closeout. |
+| G4-RIF-1A.1 | APPROVED / PENDING IMPLEMENTATION | Fish Habitat domain direction | GATE-004 / D069; Fish domain | Normalize individual Habitat concepts once and store explicit Fish↔Habitat associations; do not create shared habitat-combination profiles. |
+| G4-RIF-1A.2 | APPROVED / PENDING IMPLEMENTATION | Habitat ↔ Condition relationship semantics | GATE-004 / D069; Fish + Conditions + Relationships | Exact Habitat↔Condition correspondence is locked. `current-light` intentionally bridges both Still / Slow Water and Flowing Water; correspondence is environmental equivalence only, never weight/rank/suitability. No Habitat counterpart is created for Drop-off / Deep Structure or other purely situational Conditions. Implement later with the approved Fish/Condition migration. |
+| G4-RIF-1A.3 | APPROVED / PENDING IMPLEMENTATION | Physical Habitat vocabulary + dimensions | GATE-004 / D069; Fish + Conditions | Implement the 13-concept Habitat vocabulary with Rock / Boulder Structure distinct from Bottom / Substrate and Pool / Deep Hole distinct from Deep Water. Exact Bottom / Substrate Condition IDs are `bottom-rocky-gravel`, `bottom-sandy`, and `bottom-muddy-silty`; target `open-water` copy is locked to the no-immediate-cover wording. |
+| G4-RIF-1A.4 | APPROVED / PENDING IMPLEMENTATION | Temperature semantics | GATE-004 / D069; Fish + Recommendation Context | Keep water temperature out of canonical Condition bands and physical Habitat. Retain optional numeric Recommendation Context with Unknown/Not sure degradation; use sparse evidence-backed Fish-specific Decision Knowledge only where temperature materially changes recommendations. Do not require universal Coldwater/Coolwater/Warmwater Fish classes. Legacy `Cold Water` does not migrate into physical Habitat. G4-RIF-1A.5 is now complete; these temperature semantics remain pending implementation with the approved Fish Habitat migration. |
+| G4-RIF-1A.5 | APPROVED / PENDING IMPLEMENTATION | Fish↔Habitat Association Set | GATE-004 / D069; Fish + Conditions | All 30 Version 1 Fish associations are re-locked against the approved 13-concept Habitat vocabulary. Twenty-two Fish add Pool / Deep Hole; Spotted Bass additionally gains Channel; Channel Catfish and Freshwater Drum remove Channel; exact Fish↔Channel set is Spotted Bass, Blue Catfish, and Sauger. Fish `Creek` normalizes to `Creek / Stream`; no Fish identities change. G4-RIF-1A semantic review is CLOSED / PASS; migration remains pending implementation. |
+| G4-RIF-1B.1 | APPROVED / PENDING IMPLEMENTATION | Fish↔Rig Suitability semantic boundary | GATE-004 / D069; Relationships | Keep Fish↔Rig Suitability as a broad non-ranking Reference Knowledge eligibility relationship separate from curated Fish Guide `FISH_RIG_GUIDANCE`; require configuration awareness where needed and require Fish Guide recommendations to be a subset of the completed suitability set. Exact record contract is G4-RIF-1B.2. |
+| G4-RIF-1B.2 | APPROVED / PENDING IMPLEMENTATION | Fish↔Rig Suitability exact relationship contract | GATE-004 / D069; Relationships | Implement the dedicated seven-field Fish + Rig + optional exact Rig-configuration relationship contract with deterministic IDs, no configurationless edge for configured Rigs, no duplicated Lure/Bait field, Fish Guide subset validation, and authored-scope completeness semantics. Exact authored positive edge set is G4-RIF-1B.3. |
+| G4-RIF-1B.3 | APPROVED / PENDING IMPLEMENTATION | 30-Fish Fish↔Rig Suitability authored-set audit | GATE-004 / D069; Relationships | COMPLETE / APPROVED WITH REVISION ALLOWED: all 30 Version 1 Fish are audited with exactly 209 positive suitability edges across four approved batches. Paddlefish, Longnose Gar, and Spotted Gar deliberately have zero current edges because ordinary targeting depends on specialized rigs/methods outside the current Version 1 Rig library. The complete authored scope is declared complete, so missing-edge exclusion is now authoritative for ordinary Version 1 Rig eligibility. Continue with G4-RIF-1C Rig Input Adequacy. |
 | G4-CAND | APPROVED / PENDING IMPLEMENTATION | Exact Recommendation candidate identity | GATE-004 / D069 | Implement the approved composite candidate identity: Rig + applicable configuration + applicable Lure/Bait + Technique + material normalized Recommendation parameters; keep context/rank/availability/legality/simplicity outside identity. |
 | G4-EQUIP | APPROVED / PENDING IMPLEMENTATION | Candidate executability boundary | GATE-004 / D069; completed CA/G7-QTY/SETUP contracts | Implement Executable / Not Currently Executable / Executability Unconfirmed from effective confirmed availability; only Executable may compete for Best Currently Available. |
 | G4-SIMPLE | APPROVED / PENDING IMPLEMENTATION | Beginner simplicity / experience behavior | GATE-004 / D069; canonical Rig `difficulty` + Core membership | Implement simplicity as a bounded near-tie ranking modifier after contextual suitability; do not infer Technique difficulty or create a user skill profile. |
-| G4-LEGAL | APPROVED / PENDING IMPLEMENTATION | Legal/regulatory recommendation boundary | GATE-004 / D066/D069 | Implement Not Evaluated / No Known Blocking Constraint / Blocked by Known Constraint / Compliance Unconfirmed; current Regulations links remain resource navigation, not machine-readable legality authority. |
+| G4-LEGAL | APPROVED / PENDING IMPLEMENTATION | Bounded legal/regulatory Recommendation boundary | GATE-004 / D066/D069 | Keep the 48-state Regulations Gateway link-based. Recommendation gets a universal regulations caution/resource path without claiming evaluation. Structured V1 legality is bounded to Oklahoma, Kansas, Missouri, and Arkansas and is negative-first: known authoritative tracked constraints may block; incomplete coverage is Compliance Unconfirmed; the other 44 contiguous states are Not Evaluated. Use No Known Blocking Constraint only where a declared bounded scope is sufficiently complete. Exact schema, authored constraint set, freshness/maintenance mechanics, candidate effects, and UX are deferred to the G4-LEGAL build. |
 | G4-CTX | APPROVED / PENDING IMPLEMENTATION | Recommendation context freshness/session lifecycle | GATE-004 / D069 | Implement temporary device/session-local Recommendation Context with explicit activation/reuse, deterministic stale-result invalidation, same-session preservation, reset/reconfirmation boundaries, and no cross-device environmental-context synchronization. |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Fish Guide — Production
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Fish Guide Phase 0 and the Version 1 Fish production milestone are **CLOSED**. FISH-001 through FISH-009 are terminal historical items and are no longer active ledger entries. All 30 locked Version 1 Fish now use the approved production model with primary-identification media and complete source evidence; the approved 20-pair identification graph is complete.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
 | FISH-010 | DEFERRED TO NAMED GATE | Fish-to-Lure / advanced recommendation detail | What Should I Throw production after prerequisite gates | Keep contextual lure/color/retrieve/weather/season/clarity/cover/depth optimization out of canonical Fish; implement through the next Decision Knowledge milestone rather than duplicating it into Fish. |
 | FISH-011 | DEFERRED / NOT AUTOMATIC IMPLEMENTATION | Deferred Fish candidates outside V1 | Future explicit scope/evidence | Do not treat excluded candidates as unfinished Version 1 Fish work. |
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+120. **V1-AUDIT-1 — FCC 39 / 2B.2 Graduated Purchasing-Guidance Coverage Model: CLOSED / APPROVED — 2026-09-16.** Version 1 purchasing guidance uses the lowest commercial specificity that materially helps a beginner: **Specification Guidance**, **Specification + Reputable Brands**, or **Tiered Specific Products**. Simple/commodity components do not receive forced product tiers; where manufacturer trust materially helps selection, FCC may provide researched reputable-brand guidance alongside functional specifications. Exact tiered products are reserved for categories where model/product differences materially improve the purchase decision. Named brand guidance must be evidence-backed when authored; planning examples are not canonical recommendations. D023 owns the durable semantic rule. Exact category-by-category assignment and Lure/Bait treatment remain open. No production migration, GitHub commit/push, or CI run is authorized. **Exact resume: 2B.2 category threshold review — decide which domains require Tiered Specific Products versus Specification + Reputable Brands.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+121. **V1-AUDIT-1 — FCC 39 / 2B.2 Rod/Reel Beginner Equipment Path: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-17.** Rod/Reel purchasing guidance is specification-first: determine equipment system and functional specification first, then provide researched reputable brands and a small curated set of proven current examples where useful instead of requiring permanent four-tier exact-product rankings. **Spinning is the default general-purpose beginner recommendation; Spincast is a supported simplicity-first alternative; Baitcasting remains fully supported when appropriate, with clear learning-curve/backlash guidance.** FCC does not impose a Spincast -> Spinning -> Baitcasting progression and does not treat spinning as equipment that must be outgrown. Deliberate user choice remains supported with system-specific guidance. Version 1 may emphasize Spinning most deeply while still supporting Baitcasting and a smaller Spincast curated set. Detailed baitcaster brake/spool-tension/backlash instruction remains PARK-002. Exact current brands/models require later research/evidence. D023 owns the durable rule. No production migration, GitHub commit/push, or CI run is authorized. **Exact resume: 2B.2 Category Threshold Review — remaining purchasing categories after Rod/Reel.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+122. **V1-AUDIT-1 — FCC 39 / 2B.2 Fishing Line Threshold + Equipment-Selection Workflow Boundary: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-17.** Fishing Line uses **Specification + Reputable Brands** rather than routine exact-spool/SKU recommendations or permanent four-tier line rankings. FCC first determines line role/type/strength and then offers researched evidence-backed reputable manufacturers; one brand set may span mono/fluoro/braid where supported. Rod/Reel/Line purchasing guidance determines a compatible equipment system/specification; Tackle Reference supplies reusable education; **Attach Line to Reel** remains downstream setup/execution; Knot owns knot knowledge; My Tackle owns actual ownership. One reusable **Choose a Setup / Help Me Choose a Setup** decision experience is the working direction, but its exact navigation placement is unresolved. D023 owns the durable product-guidance boundary. No production migration, GitHub commit/push, or CI run is authorized. **Exact resume: 2B.2 — Choose a Setup placement discussion.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Regulations Maintenance
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The Regulations maintenance operating model is **CLOSED / PASS** for Version 1 audit purposes. Ongoing maintenance does not reopen the closed Regulations product milestone. Only the bounded non-blocking operational follow-up below remains active.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 | ID | Status | Item | Canonical detail / gate | Next action |
 |---|---|---|---|---|
+| REG-MAINT-001 | OPEN | Initial live Regulations maintenance follow-up | `EXTERNAL_REFERENCE_MAINTENANCE.md`; GitHub Issue #2 | Review the current 35-item Issue #2 queue under the approved human-review classifications and record durable review decisions in issue comments; confirm GitHub Actions/email notification delivery once. This follow-up is normal maintenance and does not block V1-AUDIT-1. |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Named Future Architecture / Product Gates
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 | ID | Status | Item | Trigger / owner |
 |---|---|---|---|
-| GATE-004 | ACTIVE / REQUIRED | What Should I Throw production | Recommendation Prerequisites Foundation, GATE-006, and GATE-007 are CLOSED / PASS. GitHub `main` is `6ee6917bba43ec6c0fa70f15528d750d34354d6a`; all five G4 semantic checkpoints and planning-to-build documentation closeout are complete. The bounded Recommendation runtime foundation is LANDED / VERIFIED; Repository Integrity #124 and GitHub Pages #612 passed. Continue with authored Recommendation Decision Knowledge and ranking integration; G4 items remain APPROVED / PENDING IMPLEMENTATION until that integration completes. |
-| GATE-005 | DEFERRED TO NAMED GATE | Tackle Reference / Find Tackle | Later roadmap milestone after the recommendation prerequisite path unless a direct dependency is demonstrated. |
+| GATE-004 | ACTIVE / REQUIRED — HELD FOR V1 AUDIT | What Should I Throw production | Recommendation Prerequisites Foundation, GATE-006, GATE-007, and G4-RIF are CLOSED / PASS. Verified GitHub `main` remains `38c1ab70b51a8ecd498b34068d34bacb9b7c3ace`; bounded Recommendation runtime foundation and documentation closeout are LANDED / VERIFIED. G4-DK-1A through G4-DK-1G.4 are approved and G4-DK-1G is CLOSED / COMPLETE. G4-DK-2 is intentionally held; exact next project checkpoint is **V1-AUDIT-1 — Project Completion Inventory & Prioritization**. |
+| GATE-005 | APPROVED / REQUIRED IN V1 — PENDING IMPLEMENTATION | Tackle Reference | V1-AUDIT-1 + `data-model/05-TACKLE.md`: standalone canonical Tackle learning/reference surface. Tackle Reference is the feature/domain; Tackle Index is its browse surface; Search is internal discovery rather than a separate Find Tackle domain. Build under Roadmap milestone 9 after the current prerequisite/Recommendation path unless dependency reprioritization changes the sequence; exact taxonomy/search/detail UX remains implementation refinement. |
 
-| GATE-008 | DEFERRED TO NAMED GATE | Catch Log | After the settled User Data/My Tackle foundation and later roadmap progression. |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| GATE-008 | APPROVED / REQUIRED IN V1 — DELIBERATELY LATE | Catch Log | Build near the end of functional development after the core learning/reference/recommendation path is stable and before UX-009/final release validation. V1 is bounded to synchronized create/view/edit/delete catch history with compact fishing-event data; exact schema/UX belongs to the build. Photos, precise GPS, advanced statistics, Recommendation learning, social/weather/regulation snapshots, and map-history views are not V1 requirements. |
 | GATE-009 | DEFERRED TO NAMED GATE | Global Search | After major searchable domains are stable. |
 | GATE-010 | PARKED | Favorites final keep/replace/remove decision | Near project completion. |
 | GATE-011 | APPROVED / PENDING IMPLEMENTATION | Multi-theme support | UD-11 Appearance is LOCKED / refinement allowed: Theme and Color Scheme are separate device-local settings; only production-approved/validated themes may be selectable. Forest Journal remains the current production baseline; Forest Copper/Gold/Legacy Dark remain candidates. Final Version 1 theme set and candidate promotion remain implementation/validation work. |
 | GATE-012 | REQUIRED | Repository Disaster Recovery / Reconstruction | D064; implement and validate before major Version 1 release or before irreplaceable User Knowledge enters scope, whichever comes first. Not a current Fish blocker. |
 | GATE-013 | DEFERRED TO NAMED GATE | Reusable Rig alternate-terminal configuration modeling | D065 + `data-model/03-RIGS.md`; revisit when a user workflow requires mutually exclusive component/assembly/readiness branches within one Rig or another Rig demonstrates the same reusable need. |
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Parking Lot — Deliberate Future Items
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 These items are not current blockers and must not be promoted merely because they remain visible:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - PARK-001 — Fly reels, fly-line setup, and fly-line-specific knot systems.
 - PARK-002 — Detailed baitcaster brake/spool-tension/backlash/lure-weight/casting instruction.
-- PARK-003 — Project-owned Knot diagrams/controlled animations as a quality improvement.
 - PARK-004 — Heavy fuzzy Search, advanced typo tolerance, natural-language intent parsing.
 - PARK-005 — Commercial ProductDefinition architecture, exhaustive manufacturer/product catalogs, SKU/UPC/retailer modeling, advanced size/style-aware readiness.
 - PARK-006 — Automatic cloud-backup provider/service integration beyond the approved profile synchronization boundary; revisit only if recovery value justifies separate provider/privacy/maintenance scope.
@@ -107,7 +640,37 @@ These items are not current blockers and must not be promoted merely because the
 - PARK-010 — More sophisticated analytics; telemetry requires separate explicit value/privacy approval.
 - PARK-011 — Automatic shopping/retailer integration; revisit only with demonstrated need and explicit approval.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Maintenance Rules
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 1. Every material non-closed item has one entry here until terminal disposition.
 2. Detailed reasoning belongs in the canonical decision/domain/workstream owner; link/reference it here rather than duplicating it.
@@ -117,3 +680,526 @@ These items are not current blockers and must not be promoted merely because the
 6. Historical PASS/CLOSED records do not override later approved architecture.
 7. Live Working State may record active-cycle detail first, but durable checkpointing must reconcile material non-closed items here and durable truth into the correct canonical owner.
 8. Before every commit, every durable repository documentation file receives an explicit UPDATED or VERIFIED — NO CHANGE REQUIRED disposition; no applicable document may be silently skipped.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+123. **V1-AUDIT-1 — FCC 39 / 2B.2 Start Here + Choose a Setup Placement and Beginner Wording: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-17.** **Choose a Setup** lives canonically in **Tackle** but may be surfaced elsewhere through the same shared workflow. Version 1 adds a beginner-facing **Start Here** Dashboard card as navigation/orchestration rather than a new semantic owner. Approved copy: **Start Here** — “New to fishing? Learn how to build a compatible fishing setup for the way you want to fish. Get help choosing your first **rod, reel, and line**, then build a **starter tackle box**.” The copy deliberately introduces “fishing setup” while grounding it in beginner-readable equipment terms. Start Here separates **Choose a Fishing Setup** (Rod + Reel + Line) from **Build a Starter Tackle Box** (small versatile terminal tackle, confidence baits/lures, and basic tools), while detailed Starter Tackle Box scope remains open. Shared downstream handoffs may include Tackle Reference, My Tackle, and Attach Line to Reel without duplication. **Persistence/authentication remains OPEN:** setup/progress may ultimately be session-only, local cross-session, or synchronized User Knowledge; no recommendation may silently create ownership. If durable cross-session/device beginner progress is approved, authentication/profile status must be treated site-wide. D023 owns the durable product decision. No production migration, GitHub commit/push, or CI run is authorized. **Exact resume: 2B.2 — remaining category threshold review, beginning with Hooks + terminal hardware.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+124. **V1-AUDIT-1 — FCC 39 / 2B.2 Hooks + Terminal Hardware Purchasing-Guidance Threshold: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-17.** Fishing Hooks; Barrel/Three-Way Swivels; Snaps; Snap Swivels; Split Rings; and Jigheads use **Specification + Reputable Brands**. Hooks resolve style/size/relevant construction first; Connectors resolve hardware type plus applicable size/strength first; Jigheads resolve type/mass/embedded Hook size/relevant secondary characteristics first. Curated exact Jighead examples are allowed only where a material product-specific distinction helps, not as mandatory permanent four-tier rankings. Bobber Stops, Weight Pegs, Beads, Soft-Plastic Retainers / Wacky O-Rings or Bands, and Sinker Slides use **Specification Guidance** by default. No category in this checkpoint requires Tiered Specific Products by default. D023 is the durable semantic owner. Production remains unchanged until explicit implementation authorization. **Exact next action: 2B.2 — remaining category threshold review, beginning with Weights + Floats + Leader Material.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+125. **V1-AUDIT-1 — FCC 39 / 2B.2 Weights + Floats + Leader Material Purchasing-Guidance Threshold: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-17.** Ordinary standalone Weights/sinkers use **Specification Guidance**. **Floats**, **Leader Material**, and **Bottom Bouncer** use **Specification + Reputable Brands**, with FCC resolving functional specification before commercial guidance. Leader manufacturer guidance may reuse Fishing Line brand research where current evidence supports it. Bottom Bouncer remains separate from ordinary standalone Weight for commercial guidance because wire construction, attachment hardware, balance, and assembly quality materially matter. No category in this checkpoint requires Tiered Specific Products by default. D023 is the durable semantic owner. Production remains unchanged until explicit implementation authorization. **Exact next action: 2B.2 — Lure/Bait purchasing-guidance threshold.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+126. **V1-AUDIT-1 — FCC 39 / 2B.2 Lure/Bait Purchasing-Guidance Threshold: CLOSED / APPROVED WITH REVISIONS ALLOWED; HANDOFF DISCUSSION OPEN — 2026-09-17.** Artificial lures and soft plastics use **Tiered Specific Products** where commercial product design materially affects beginner success; **Prepared Bait** also uses Tiered Specific Products because the formulation itself is material. Ordinary natural bait uses **Specification Guidance** rather than maintained national product tiers or brand lists. Tier population remains evidence-driven rather than mandatory. **Specification + Reputable Brands** remains available selectively if evidence later justifies it. The exact **What Should I Throw / Fishing Recommendation -> commercial purchasing-guidance handoff remains OPEN** and is not settled by this approval; D069 continues to own contextual selection/ranking/rationale and exact context-dependent parameters, while commercial brand/model/SKU identity remains outside canonical Lure/Bait Reference Knowledge. D023 is the durable commercial-guidance owner. Production remains unchanged until explicit implementation authorization. **Exact next action: clarify that Recommendation/commercial handoff before advancing beyond Lure/Bait.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+127. **V1-AUDIT-1 — FCC 39 / 2B.2 Starter Tackle Box Direct-Tie Confidence-Lure Scope: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-17.** The base Starter Tackle Box must support all six Core Rigs. Direct-Tie uses **Inline Spinner + Crankbait** as the two required confidence-lure families rather than exposing the full Direct-Tie lure library. Each family may use **1–3 curated functional variants**, normally two, and additional variants require a material capability gain; color/pattern alternatives do not count as separate functional variants. Initial functional slots are small/light + medium/general-purpose Inline Spinner and small/shallow + medium/general-purpose shallow-to-medium Crankbait. **Spoon is supported but optional**, not a base Starter Box requirement. Exact variant specifications/products remain later authoring work. D023 owns the durable product rule. `03-RIGS.md` is reconciled in Drive Current to match the canonical `CORE_RIG_IDS` list/order and the **Direct-Tie Lure Setup** name. The broader Recommendation -> commercial purchasing handoff remains OPEN. No production migration, GitHub commit/push, or CI run is authorized. **Exact next action: 2B.2 — continue the Starter Tackle Box Core-Rig coverage audit and define the minimum curated package for the remaining Core Rigs.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+128. **V1-AUDIT-1 — FCC 39 / 2B.2 Starter Tackle Box Budget + Capability Planning Layer: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-17.** The Starter Tackle Box remains a **price-independent complete beginner target**. Budget is an optional purchase-planning constraint that controls acquisition priority/completeness rather than Starter Box membership, and the normal beginner path must not require a budget answer. FCC may present broad researched total-investment ranges after the complete package is defined, but does not require maintaining/displaying individual-item prices as canonical guidance. Budget guidance should explain the fishing capability unlocked, including Core-Rig coverage and the practical Rod/Reel/Line equipment envelope, while distinguishing Rig capability from equipment capability. The discussion example **$200–$300 is not approved** and must be derived only after the complete Core-Rig Starter package is settled and market-validated. Later UX may prioritize missing purchases and use My Tackle ownership to avoid duplicates without silently creating ownership. Retailer-specific/live price tracking and automatic shopping integration remain outside this checkpoint. D023 owns the durable product rule. Production remains unchanged until explicit implementation authorization. **Exact next action: 2B.2 — continue the Starter Tackle Box Core-Rig coverage audit and define the minimum curated package for the remaining Core Rigs.**
+129. **V1-AUDIT-1 — FCC 39 / 2B.2 Starter Tackle Box Functional Package Architecture: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-17.** The Starter Tackle Box is one shared Core-Rig component system rather than six independent Rig kits. Ordinary live/natural bait is trip-consumable rather than durable box inventory. Fixed/Slip Bobber + Basic Bottom share a bounded working range: 1–2 Fixed Bobber sizes, 1–2 Slip Float sizes, Bobber Stop/Stop Bead supply, small Split Shot range, 2–3 general bait-hook sizes, 2 Sliding Sinker weight classes, one general Barrel Swivel class, and one general-purpose Leader Material spec; current optional Basic Bottom bead remains non-mandatory. Jighead + Soft Plastic uses small/light + medium/general Jighead jobs and approximately two complementary soft-plastic presentation slots. Texas Rig uses light/general + medium/heavier-cover Bullet Weight jobs, 1–2 broadly useful Worm Hook sizes, and at least one versatile confidence soft-plastic family; Weight Peg remains optional. The box must carry enough functional range for genuine use rather than merely satisfy one build instance. Exact specifications, final soft-plastic identities, products, prices, and budget bands remain open. D023 owns the durable product rule. Production remains unchanged until explicit implementation authorization. **Exact next action: 2B.2 — specify the bait/float/bottom cluster first, then Jighead + Soft Plastic and Texas Rig; market-validate the completed package before locking any total-investment band.**
+130. **V1-AUDIT-1 — FCC 39 / 2B.2 Choose a Setup Starting-State + Product-Family Guidance Architecture: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-17.** **Spinning remains the default general-purpose beginner path.** Choose a Setup supports a full build and matching around existing Rod/Reel ownership; budget is optional and applies only to missing purchases, while whole-system budget planning may reserve enough for a minimum useful Starter Tackle package. Existing equipment is a compatibility anchor rather than a reason to force replacement. Rod/Reel positive commercial tiers may be authored at the researched **product family/series** level; blanket brand tiering is not approved, and the setup specification resolves the correct variant within the selected family. Manufacturer family/series pages are the preferred durable commercial-link target where useful; exact-model/SKU cataloging, live pricing, and retailer integration remain outside this checkpoint. Exact Spinning specs, product families/tiers/variants, prices, and budget bands remain open. D023 owns the durable rule. Production remains unchanged until explicit implementation authorization. **FCC 39 is closed at this checkpoint. Exact next action: FCC 40 — V1 Completion Audit — 2B.2 Beginner Spinning Setup Specification; begin with the default general-purpose Spinning setup job/capability envelope, then Rod, Reel, Line, and compatibility envelope.**
+131. **V1-AUDIT-1 — FCC 40 / 2B.2 Beginner Spinning Setup Job + Capability Envelope: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** FCC's default general-purpose beginner Spinning system is the first-system / one-system freshwater default. It prioritizes learnability, forgiveness, versatility, manageable everyday use, and long-term usefulness; supports useful beginner/general-purpose implementations of all six Core Rigs and the corresponding minimum Starter Tackle package; and is intended for light-to-moderate general-purpose presentations across normal bank, dock, kayak/small-boat, and conventional-boat freshwater use. The fish-control envelope covers ordinary small-to-medium freshwater fishing plus reasonable incidental larger-fish capability, not dedicated heavy-fish work. True ultralight specialization, heavy-cover power fishing, very heavy rigs/lures, specialized trolling, fly fishing, and comparable specialty uses are outside the default. Existing gear is evaluated as preferred, usable, or unsuitable for this job rather than automatically replaced. Exact Rod/Reel/Line specifications and commercial research remain open. D023 owns the durable rule. No production migration, GitHub commit/push, or CI run is authorized. GitHub `main` remains `38c1ab70b51a8ecd498b34068d34bacb9b7c3ace`. **Exact resume: FCC 40 / 2B.2 — Rod specification.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+132. **V1-AUDIT-1 — FCC 40 / 2B.2 Beginner Spinning Rod Specification: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Preferred default is **7'0" Medium/Fast Spinning**. Approximately **6'6"–7'3"** and Moderate-Fast may remain usable when the complete capability envelope remains sound; Medium-Light and Medium-Heavy are capability-shifted rather than equivalent defaults. Required functional casting-load envelope is approximately **1/8–5/8 oz completed load**, with approximately **3/4 oz upper capability preferred as useful headroom**. Working Rod line-rating target is approximately **6–12 lb or another published range including both 8 lb and 10 lb**. One-piece/two-piece is a transport/shopping choice rather than an intrinsic quality ranking when the specification is otherwise satisfied. Exact commercial Rod families/tiers/variants, current prices, Reel/Line specifications, and budget bands remain open. D023 owns the durable rule. No production migration, market/product research, GitHub commit/push, or CI run is authorized. **Later refinement:** checkpoint 137 supersedes the Fast-only preference and approximately 1/8-oz hard lower qualification boundary; see checkpoint 137 for the current Rod baseline. **Historical resume at checkpoint 132: FCC 40 / 2B.2 — Reel specification.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+133. **V1-AUDIT-1 — FCC 40 / 2B.2 Beginner Spinning Reel Architecture: CLOSED / APPROVED WITH REVISIONS ALLOWED; LINE CAPACITY PENDING LINE RESOLUTION — 2026-09-18.** Default Reel type is **Spinning**. The preferred functional class is a mid-size general-purpose freshwater Reel selected by actual capacity and practical pairing with the approved 7' Medium Rod and final Line, not by a universal manufacturer size number. Roughly **2500-class** is the working shopping/reference center; compact 3000/C3000-type or other family-specific variants may be equally preferred when their actual characteristics satisfy the same job. FCC does not infer cross-brand equivalence or capacity from nominal Reel Size/Class. General-purpose retrieve behavior is required; exact Gear Ratio, Line Retrieve, Max Drag, bearing count, Reel mass, body/spool dimensions, handle configuration, and construction material are not hard normalized default requirements absent demonstrated need, while real-world drag/line-lay/bail/durability/balance/support factors may inform later commercial research. Existing Reels may be Preferred, Usable but capability-shifted, or Not Suitable from actual compatibility. **Exact capacity remains open until Line is resolved; ~100–120+ yd of 10 lb mono is provisional discussion guidance only and is not an approved canonical minimum.** D023 is the durable product owner. D068 / `DEVELOPMENT_WORKFLOW.md` now explicitly require **verbatim user/assistant transcript capture** in the consolidated Chat Log; summaries/checkpoint digests may be additional metadata only and may not replace transcript text. No production migration, market/product research, GitHub commit/push, or CI run is authorized. **Exact resume: FCC 40 / 2B.2 — Line specification.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+134. **V1-AUDIT-1 — FCC 40 / 2B.2 Beginner Spinning Line Specification: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Final challenge PASS. Preferred default main line is **10 lb general-purpose monofilament**; 8 lb mono is the preferred lighter alternative, with approximately 6 lb/12 lb treated as lighter/heavier capability shifts rather than equivalent defaults. FCC prefers supple, low-memory, easy-casting/easy-managing mono with reliable knot strength and adequate durability/abrasion resistance; specialty abrasion-first or minimum-stretch optimization does not override all-around handling. Monofilament is the beginner default; braid and fluorocarbon remain supported alternatives. A leader is not required for setup completeness, but leader use should be taught early; 8 lb is a useful lighter-leader working example/candidate and does not make a 10 lb main line cast like 8 lb main line. Published diameter is secondary validation data, not a universal 10 lb diameter rule. All six Core Rigs retain useful general-purpose implementations inside the approved Rod/Reel/Line envelope; heavy-cover Texas Rigging and dedicated heavy-catfish/heavy-river applications remain specialty use outside the default. Reel capacity is resolved as **product-specific evidence**, not a universal fixed-yardage threshold: retire the provisional ~100–120+ yd minimum as canonical; use directly published 10 lb mono or directly comparable diameter/capacity data for each candidate Reel variant and derive the final approved-variant range/median during current-market research. Attach Line to Reel owns the working ~1/8-inch spool-lip fill standard. D023 is the durable owner; `03-RIGS.md` 0.5.13 and `05A-INVENTORY.md` 0.4.74 are VERIFIED — NO CHANGE REQUIRED. No production migration, commercial tier assignment, price research, GitHub commit/push, or CI run is authorized. **Exact resume: FCC 40 / 2B.2 — combined Rod + Reel + Line compatibility / fishing-capability envelope, then current-market product-family research.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+135. **V1-AUDIT-1 — FCC 40-41 / 2B.2 Combined Rod + Reel + Line Compatibility / Fishing-Capability Envelope: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Preferred complete system is **7'0" Medium/Fast Spinning Rod + mid-size general-purpose freshwater Spinning Reel + 10 lb general-purpose monofilament**. Approx. 6'6"–7'3", Moderate-Fast, and 8 lb mono may remain usable/capability-shifted alternatives when the complete job remains intact. Hard compatibility requires correct Spinning type pairing, directly comparable Rod/Line rating support, directly comparable Reel/Line capacity evidence for the actual variant and selected Line, and complete casting load inside the Rod envelope; nominal size/model labels and unrelated/interpolated capacity do not establish compatibility. All six Core Rigs retain useful beginner/general-purpose implementations within the approved light-to-moderate envelope. True ultralight, heavy-cover/punching, very heavy rigs/lures, dedicated heavy-river/heavy-catfish, specialized trolling, and comparable specialty applications remain outside the default. Existing gear resolves as **Preferred Fit**, **Usable but Capability-Shifted**, or **Not Suitable for This Job** from actual function. Starter Tackle normal configurations must live primarily inside the middle of the ~1/8–5/8 oz completed-load envelope rather than habitually at its limits. D023 owns the durable rule; `03-RIGS.md`, `05-TACKLE.md`, `05A-INVENTORY.md`, and `09-RELATIONSHIPS.md` are VERIFIED — NO CHANGE REQUIRED. No production migration, market/product research, product-tier assignment, GitHub commit/push, or CI run is authorized. **Later refinement:** checkpoint 137 supersedes the Fast-over-Moderate-Fast hierarchy and ~1/8–5/8 hard Rod qualification interpretation while preserving the rest of this combined-system decision. **Historical resume at checkpoint 135: FCC 41 / 2B.2 — current-market Rod/Reel/Line product-family research and evidence framework.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+136. **V1-AUDIT-1 — FCC 41 / 2B.2 Current-Market Rod/Reel/Line Commercial Evidence Framework: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Specification-first commercial research is locked: exact current variants must hard-qualify against the approved setup before quality/value comparison; manufacturer evidence owns hard facts, retailer evidence is secondary, and independent/recurring owner evidence supports real-world commercial claims. Commercial observations are date-stamped, unsupported fields stay unknown, and recommendation tiers are not filled for completeness. Fishing Line remains Specification + Reputable Brands. **Commercial staleness/freshness monitoring policy remains DEFERRED** until the actual presentation/persistence model is known. No family/tier/variant/price band/capacity market summary is approved by this checkpoint. D023 owns the durable framework; implementation remains unchanged. **Exact resume: FCC 41 / 2B.2 — current-market Rod-family screen.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+137. **V1-AUDIT-1 — FCC 41 / 2B.2 Beginner Spinning Rod Baseline Challenge Revision: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** The Rod baseline is revised after a six-Core-Rig challenge: ~7' Medium remains the center; Fast and Moderate-Fast are co-preferred; Preferred hard qualification requires a published range containing ~1/4–5/8 oz; 3/16 and 1/8 oz are light-range extensions rather than mandatory prerequisites; ~3/4 oz is useful upper headroom rather than mandatory qualification; 10 lb line compatibility remains required. The combined system is reconciled to the same rule; Reel/Line decisions remain unchanged. Candidate discovery must build a bounded market universe from multiple current independent beginner/general-purpose recommendation sources plus major competing manufacturer lineups before manufacturer-spec qualification. The preliminary Rod-family dispositions from the superseded baseline are INVALIDATED / NOT APPROVED. D023 owns the durable revision. No production migration, commercial tier assignment, GitHub commit/push, or CI run is authorized. **Exact resume: FCC 41 / 2B.2 — rerun the current-market Rod-family hard screen under the revised baseline.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+138. **V1-AUDIT-1 — FCC 41 / 2B.2 Matched Rod + Reel Combo Purchasing Path: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Starting-from-scratch Choose a Setup now supports either a researched Matched Rod + Reel Combo or Rod + Reel selected separately inside the same Spinning path. Exact Combo variants qualify as complete systems; standalone family names/specifications do not transfer by assumption; bundled/pre-spooled Line is evaluated separately. Combo commercial presentation remains distinct from standalone Rod/Reel purchases and exact Combo tier structure remains open. `05A-INVENTORY.md` already preserves one Rod + one Reel as separate owned items for factory combos and requires no change; `05-TACKLE.md` likewise requires no change. No specific Combo commercial recommendation is approved. D023 owns the durable purchasing rule. No production migration, GitHub commit/push, or CI run is authorized. **Exact resume: FCC 41 / 2B.2 — parallel current-market Rod-family and matched-Spinning-Combo hard screens under the approved evidence framework.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+139. **V1-AUDIT-1 — FCC 41 / 2B.2 Matched Spinning Combo Hard-Screen: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Preferred exact complete-system candidates are Abu Garcia Max X `MAXXSP3000/701M`, Pflueger President `PRESSP-7035`, Ugly Stik Elite `USELSP702M/35CBO`, Abu Garcia Max Elite `MAXELT3000H/701M`, Abu Garcia Veritas `VRPSP3000/701M`, Daiwa Revros LT `RVRLT30-4BI/G702M`, Daiwa Legalis LT `LEGLT30G702M`, Daiwa Crossfire LT `CF30G702M-C` / `CF30G702M-E`, and Lew's MACH Smash `MHS3070MSG2`. Shimano Nexave 7' Medium/Fast, Pflueger President XT `PFLPXT70M/35`, and Lew's American Hero Camo `AHC4070MSG2-2` are Usable but Capability-Shifted. Ugly Stik GX2 `USGXSP702M/35CBO` remains Insufficient Evidence for Preferred classification because Action is omitted by current manufacturer data and secondary evidence conflicts. Mach Crush is not retained as a current-market candidate. No commercial quality/value tier is assigned yet. D023 owns the durable disposition; implementation remains unchanged. **Exact resume: FCC 41 / 2B.2 — Matched Spinning Combo commercial quality/value pruning among the nine Preferred hard-fit candidates; standalone Rod-family hard-screen work remains open in parallel.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+140. **V1-AUDIT-1 — FCC 41 / 2B.2 Matched Spinning Combo Commercial Tier Structure: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Curated Combo presentation uses price/product-position groups: **Budget** — Daiwa Crossfire LT; **Mid-tier** — Pflueger President, Lew's MACH Smash, Daiwa Revros LT, Ugly Stik Elite; **Premium** — Abu Garcia Max Elite, Daiwa Legalis LT. These groups are distinct from the D023 positive recommendation labels and have no permanent dollar thresholds. One Budget candidate is sufficient; no symmetry rule requires a second. Max X is pruned as redundant with Crossfire's low-cost role; Veritas is pruned after the premium challenge because the approximately $350 current price does not establish enough incremental beginner/general-purpose value versus Max Elite / Legalis and Build Separately; neither is Avoid. Revros is retained for its distinct 1/8–3/4 oz broad-capability role. D023 owns the durable decision; implementation remains unchanged. **Exact resume: FCC 41 / 2B.2 — standalone current-market Rod-family hard-screen rerun under Gate 137.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+141. **V1-AUDIT-1 — FCC 42 / 2B.2 Standalone Current-Market Rod-Family Hard Screen: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Final bounded result under Gate 137 is **22 Preferred Fit / 3 Usable but Capability-Shifted / 0 Insufficient Evidence**. Preferred families/variants are Daiwa Tatula XT `TATULAXT701MFS`, Fuego `FGO701MFS-B`, AIRD-X `AIRX701MFS`; Shimano Sellus `SUS70MB`, Teramar SE `TERSES70MB`; St. Croix Triumph `27TRS70MF`, Premier `SCPS70MF`, Victory `VTS71MF`; Abu Garcia Vengeance `VENS70-5`, Veritas `VRPS70-5`, Veritas Winch `VRPSW70-5`, Fantasista X `FNXS70-5`; Dobyns Fury `FR703SF`, Sierra `SA703SF`, Colt `CL703SF`; Ugly Stik Elite `USELSP701M`, Carbon `USCBSP701M`, GX2 `USGXSP702M`; Berkley Lightning Rod `BSLR701M`; Fenwick Eagle Inshore `EGLINS70M-FS`, HMG Inshore `HMGINS70M-FS`; Lew's MACH 1 `M1APSR`. Capability-Shifted: Shimano Clarus `CSS70MF`, Falcon BuCoo SR `BRS-4-17`, Lew's American Hero `AH70MSG3`. GX2 is Preferred with a retained action-source caveat because the manufacturer omits Action while established exact-model retailer evidence places it as Fast or Moderate-Fast, both Gate 137-accepted actions. This standalone finding does not alter the independently qualified GX2 Combo state from Gate 139. No commercial winner/value tier is assigned. D023 owns the durable result; implementation remains unchanged. **Exact resume: FCC 42 / 2B.2 — standalone Rod-family commercial quality/value pruning among the 22 Preferred candidates.** **Operational write-path correction:** existing raw Drive files use same-file-ID replacement on the original Drive object, with a single temporary Drive transport object only when needed to obtain a connector file reference; read back the original ID and delete the temporary object. Library/path overwrite and duplicate/swap replacement are not used.
+142. **V1-AUDIT-1 — FCC 43 / 2B.2 Standalone Rod Commercial Position Grouping Method: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** The 22 Gate-141 Preferred Fit Rod candidates will be organized into current **Budget / Mid-tier / Premium** price/product-position groups before commercial pruning. These are shopping-position groups, not permanent dollar thresholds and not automatic Best Budget / Best Value / Best of the Best / Good Alternative awards. Pruning is primarily within position groups and across adjacent groups only for genuine functional redundancy; evidence-backed distinctions such as durability/forgiveness, graphite performance/sensitivity, transport configuration, capability variation, construction, warranty/support, or ergonomics may justify retaining multiple sound choices in the same group. The earlier unapproved 7-retain / 15-prune proposal is discarded. No exact group membership, retained count, recommendation award, or permanent price threshold is approved yet. D023 owns the durable method; implementation remains unchanged. **Exact resume: FCC 43 / 2B.2 — group the 22 Preferred standalone Rod candidates by current Budget / Mid-tier / Premium position, then perform within-group redundancy/value/quality challenges before recommendation awards.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+143. **V1-AUDIT-1 — FCC 43 / 2B.2 Standalone Rod Commercial Position Groups + Curated Set: CLOSED / APPROVED WITH REVISIONS ALLOWED; GROUPING REFINED — 2026-09-18.** Current-market grouping/pruning is closed at **16 retained / 6 commercially pruned / 0 Avoid** from the 22 Gate-141 Preferred Fit standalone Rod families. **Budget retained (8):** Abu Garcia Vengeance; Ugly Stik GX2; Daiwa AIRD-X; Shimano Sellus B; Lew's MACH 1; Ugly Stik Elite; Dobyns Colt; Ugly Stik Carbon. **Mid-tier retained (5):** Daiwa Tatula XT; Abu Garcia Veritas; Abu Garcia Veritas Winch; St. Croix Triumph; Dobyns Fury. **Premium retained (3):** St. Croix Premier; Dobyns Sierra; St. Croix Victory. **Commercial prunes (6):** Berkley Lightning Rod; Daiwa Fuego; Fenwick Eagle Inshore; Fenwick HMG Inshore; Shimano Teramar SE; Abu Garcia Fantasista X. Pruning is commercial-only and does not alter Gate-141 technical qualification; none of the six is Avoid. Approximate current-market bands (Budget generally below ~$100, Mid-tier generally ~$100–$170, Premium generally ~$175+) are internal research heuristics only and are not user-facing definitions or permanent cutoffs; product position controls boundary cases, placing Tatula XT at the start of Mid-tier. The groups exist to narrow a huge market into a manageable set of meaningfully differentiated sound choices without using the grouping itself to steer a predetermined purchase. GX2 retains its Gate-141 action-source caveat; Fury and Sierra retain current commercial-evidence cautions without changing technical state. D023 owns the durable result; production remains unchanged. **Exact resume: FCC 43 / 2B.2 — assign Best Budget / Best Value / Best of the Best / Good Alternative as justified among the 16 retained standalone Rod families, without forcing symmetry or complete award population.**
+144. **V1-AUDIT-1 — FCC 43 / 2B.2 Tier/Descending Commercial Presentation + Standalone Rod Awards: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** FCC now defaults commercial lists that do not warrant full four-award treatment to **commercial-position grouping when useful + unnumbered descending evidence-backed overall value order within each group**. Select standout awards may be shown without repeating Good Alternative on every remaining positive candidate; all displayed retained items remain sound recommendations and lower placement is not a negative/Avoid disposition. The pattern is the default for Rods, Reels, and matched Combos where meaningful. Fishing Line remains Specification + Reputable Brands: order reputable brands/selective examples descending by evidence-backed preference/value and use price-position groups only when materially useful; do not force exact-SKU tiering. Other categories may reuse the pattern only when it fits D023's lowest-commercial-specificity rule. **Standalone Rod presentation:** Budget — GX2 (Best Budget), AIRD-X, Sellus B, Vengeance, Ugly Stik Elite, Ugly Stik Carbon, Dobyns Colt, MACH 1; Mid-tier — Tatula XT (Best Value), St. Croix Triumph, Veritas, Veritas Winch, Dobyns Fury; Premium — St. Croix Victory (Best of the Best), St. Croix Premier, Dobyns Sierra. Existing GX2/Fury/Sierra caveats remain. D023 owns the durable rule/result; production remains unchanged. **Exact resume: apply Gate 144 ordering to the Gate-140 matched Combo set, then continue standalone Reel commercial curation and Line reputable-brand ordering.**
+145. **V1-AUDIT-1 — FCC 43 / 2B.2 Matched Combo Tier/Descending Ordering: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Gate 144 is applied to the Gate-140 curated Matched Spinning Combo set. **Budget:** Daiwa Crossfire LT — Best Budget. **Mid-tier:** Pflueger President — Best Value; Lew's MACH Smash; Daiwa Revros LT; Ugly Stik Elite. **Premium:** Abu Garcia Max Elite — Best of the Best; Daiwa Legalis LT. Ordering is unnumbered descending evidence-backed overall value inside each group; all retained products remain positive recommendations. Gate-139 technical qualification, Gate-140 commercial pruning, Max X / Veritas non-Avoid prune states, Revros LT's broad-capability rationale/evidence caveat, and the deliberate one-product Budget group remain unchanged. D023 owns the durable result; production remains unchanged. **Exact resume: FCC 43 / 2B.2 — standalone Spinning Reel commercial curation under the approved Reel architecture, followed by Fishing Line reputable-brand ordering.**
+146. **V1-AUDIT-1 — FCC 44 / 2B.2 Standalone Spinning Reel Exact-Variant Selection Method: CLOSED / APPROVED WITH REVISIONS ALLOWED — 2026-09-18.** Each candidate Reel family must compare all materially applicable adjacent mid-size variants before final Preferred-Fit qualification rather than defaulting to nominal `2500`. Relevant 2500-class, compact 3000/C3000/3000-C, and ordinary 3000/30/35 alternatives are compared using current manufacturer evidence; manufacturer-specific compact-body/spool relationships are not normalized across brands. FCC selects the exact reference/qualifying variant that best preserves the approximately 7' Medium + 10 lb mono job with the least unnecessary size/weight and no hard compatibility loss. The provisional 34-family exact-variant list remains screening input and is **NOT APPROVED**. D023 owns the durable method; production remains unchanged. **Exact resume: FCC 44 / 2B.2 — adjacent-size/compact-body variant challenge across the provisional standalone Reel family pool, then final Reel hard-screen closure before commercial grouping/pruning. Fishing Line reputable-brand ordering follows.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 2026-09-18 — FCC 44B / Gate 147 — Standalone Reel Adjacent-Variant Hard Screen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- **Status:** CLOSED / APPROVED WITH REVISIONS ALLOWED.
+- **Result:** 34/34 Reel families remain Preferred Fit; 21 exact variants revised; 13 retained.
+- **Canonical owner:** D023 in `decisions/product.md` owns the exact approved reference variants and selection principle.
+- **No production effect:** no source/data/media/configuration migration; GitHub `main` remains `38c1ab70b51a8ecd498b34068d34bacb9b7c3ace`.
+- **Exact resume:** standalone Reel Budget / Mid-tier / Premium grouping, then evidence-backed commercial quality/value/redundancy pruning; awards/order afterward; Line ordering follows.
+
+
+
+
+
+
+
+
+### 2026-09-18 — FCC 44B / Gate 148 — Standalone Reel Commercial Grouping + Pruning
+
+
+
+
+
+
+
+
+- **Status:** CLOSED / APPROVED WITH REVISIONS ALLOWED.
+- **Result:** 34 Gate-147 technically Preferred Reel families -> 20 retained / 14 commercially pruned / 0 Avoid.
+- **Retained groups:** Budget 9; Mid-tier 6; Premium 5.
+- **Technical state:** unchanged; all 14 commercial prunes remain Gate-147 Preferred Fit and are not Avoid.
+- **Canonical owner:** D023 in `decisions/product.md` owns exact retained/pruned membership and commercial-position semantics.
+- **No production effect:** no source/data/media/configuration migration; GitHub `main` remains `38c1ab70b51a8ecd498b34068d34bacb9b7c3ace`.
+- **Exact resume:** standalone Reel descending evidence-backed order + selective D023 awards within the three approved commercial-position groups; Fishing Line reputable-brand ordering follows.
+
+
+
+
+
+
+
+
+### 2026-09-18 — FCC 44C / Gate 149 — Standalone Reel Descending Order + Selective Awards
+
+
+
+
+
+
+
+
+- **Status:** CLOSED / APPROVED WITH REVISIONS ALLOWED.
+- **Budget order:** Regal LT; Sedona FJ; President; Ceymar A; **Crossfire LT — Best Budget**; Legalis LT; Sienna FG; Sharky III; Zephyr.
+- **Mid-tier order:** **Fuego LT — Best Value**; Nasci FD; Inspira ISX; Miravel A; Max Elite; Battle IV.
+- **Premium order:** **Stradic FM — Best of the Best**; Tatula MQ LT; Vanford A; Revo SX; Vanquish.
+- **Presentation semantics:** unnumbered descending evidence-backed overall value within the approved commercial-position groups. Regal leads Budget on overall value while Crossfire receives D023 Best Budget; no explicit Good Alternative labels are required.
+- **Prior gates unchanged:** Gate 147 technical qualification and Gate 148 retained/pruned membership remain in force; 0 Avoid.
+- **Canonical owner:** D023 in `decisions/product.md`.
+- **No production effect:** no source/data/media/configuration migration; GitHub `main` remains `38c1ab70b51a8ecd498b34068d34bacb9b7c3ace`.
+- **Exact resume:** Fishing Line reputable-brand ordering under the approved Specification + Reputable Brands model.
+
+
+
+
+
+
+
+
+.
+
+
+
+
+### 2026-09-18 — FCC 45 / Gate 150 — Fishing Line Reputable-Brand Ordering
+
+
+
+
+- **Status:** CLOSED / APPROVED WITH REVISIONS ALLOWED.
+- **Monofilament order:** Berkley; Sufix; Sunline; Maxima; Stren.
+- **Fluorocarbon order:** Seaguar; Sunline; Berkley; Sufix; P-Line.
+- **Braid order:** PowerPro; Sufix; Seaguar; Berkley; Sunline; Yo-Zuri.
+- **Presentation semantics:** line-type-specific, unnumbered descending current reputable-brand guidance after FCC resolves line role/type/strength; no universal cross-line brand ranking and no permanent exact-product/SKU ranking.
+- **Default-path emphasis:** Monofilament is presented first because 10 lb general-purpose mono remains the approved default beginner Spinning line, with 8 lb mono as the lighter alternative.
+- **Canonical owner:** D023 in `decisions/product.md`.
+- **No production effect:** no source/data/media/configuration migration; GitHub `main` remains `38c1ab70b51a8ecd498b34068d34bacb9b7c3ace`.
+- **Exact resume:** 2B.2 — clarify the What Should I Throw / Fishing Recommendation -> commercial product-guidance handoff boundary.

@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Version 1 Design Audit
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.9  
+**Document Revision:** 1.0.14  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-08-30
+**Last Updated:** 2026-09-16
 
 # Purpose
 
@@ -214,6 +214,21 @@ Determine whether instructional media has a deliberate semantic reason for a dis
 
 The Visual Guide belongs directly beneath **How to Tie It** in the instructional progression.
 
+### 2026-09-15 — Local Knot Visual Instruction Carry-Forward — APPROVED
+
+The Knot Guide remains **functionally complete / user-usable** with its existing written tying steps. Local visual tying instruction is a Version 1 **UX refinement/optimization item**, not a separate core-feature milestone and not an independent Recommendation/User Data dependency.
+
+Historical `PARK-003` existed because prior attempts did not produce project-owned Knot diagrams/animations of acceptable instructional quality; the concept itself was not rejected. The pure Parking Lot disposition is superseded. During UX-009, the audit must deliberately re-evaluate local/offline visual tying instruction by:
+
+- searching for accurate public-domain or otherwise rights-compatible instructional imagery that can be stored locally;
+- retrying project-owned stepped illustrations/diagrams or controlled animation if acceptable assets can now be produced;
+- using a one-Knot prototype when useful before committing to library-wide production;
+- considering stepped visual states with optional controlled playback/animation, while locking no specific media technology in advance;
+- preserving local/offline usability as the primary instructional path; external tutorial links may remain supplemental but must not be required to understand the Knot;
+- validating accuracy, provenance/licensing, mobile density, accessibility/reduced-motion behavior where applicable, and actual instructional usefulness before expanding the treatment across the Knot library.
+
+Implementation is **conditional on the quality gate**. If acceptable local instructional assets still cannot be sourced or produced, UX-009 must document that outcome and retain the functional written Knot Guide rather than ship misleading, low-quality, or rights-uncertain media merely to satisfy a checklist item.
+
 ## 10. Knot Empty Relationship Copy
 
 **Status:** AUDIT / COPY CLEANUP
@@ -295,6 +310,121 @@ The output of this audit should be a reusable component rule set in the proper g
 
 **2026-08-30 Technique-chip carry-forward:** Subphase C runtime review accepted the Technique knowledge-reference chips as functionally correct, including configuration-aware Technique subsets on Direct-Tie Lure Setup, but the current chip layout/formatting is not considered visually final. During the Version 1 UX Design Audit, specifically review Technique-chip wrapping, spacing, alignment, density, grouping, label fit, and responsive behavior within Rig Detail At-a-Glance. Compare the Technique treatment with other clickable knowledge/reference chips and nearby passive labels so the result follows the shared semantic component grammar without making navigation targets and non-interactive context look interchangeable. Preserve the approved Technique interactions, popover behavior, and Compatibility semantics; this is a presentation-refinement item, not authorization to reopen Technique content or relationship data.
 
+## 15. Hook / Weight Style Visual Recognition
+
+**Status:** DEFERRED UX REQUIREMENT / AUDIT REQUIRED
+
+GATE-007 expanded the bounded Version 1 Hook Style and Weight Style vocabularies beyond the small subset that users can currently see illustrated through Rig content. The existing Rig imagery is not sufficient as the only recognition aid for users who may not know the names or physical differences among those styles.
+
+The Version 1 UX Design Audit must address a user-facing way to see representative visual examples of the approved standard Hook and Weight styles so an angler can identify what they own and understand Recommendation/My Tackle terminology. This is a visual-recognition requirement, not authorization to build a commercial tackle catalog.
+
+Carry-forward constraints:
+
+- cover the FCC standard Hook and Weight style vocabularies at minimum;
+- after the Lure/Bait and remaining applicable My Tackle/Recommendation contracts are settled, explicitly evaluate whether the same visual-recognition pattern should extend to Lure/Bait or other My Tackle families; this is a required scope review, not a pre-approval to create imagery for every family;
+- favor representative, identification-safe examples rather than manufacturer-specific catalog completeness;
+- preserve the distinction between canonical Tackle identity and finer My Tackle Style;
+- determine the best presentation only after My Tackle and What Should I Throw / Recommendation UX are sufficiently settled, so the same visual system can support authoring, recognition, and recommendation interpretation without duplicate owners;
+- evaluate whether examples belong inline in selectors, in contextual help, in a reusable Tackle reference/gallery surface, or through another shared pattern; **no presentation mechanism is locked by this carry-forward**;
+- apply existing media accuracy, provenance/licensing, mobile-density, and field-guide visual standards to any implemented examples.
+
+This item must receive an explicit disposition before the Version 1 design audit closes.
+
+### 2026-09-16 - Variant Recognition Gallery Candidate - APPROVED FOR UX EVALUATION
+
+FCC 37 approved a more concrete candidate within UX-010: applicable Tackle and Lure/Bait concepts may expose multiple recognized variants through a shared **Variant Recognition Gallery** pattern. Candidate surfaces include **Rig -> What You Need**, **Tackle/Lure Index**, and Tackle/Lure-Bait detail/reference presentation.
+
+This is an approved UX evaluation requirement, not an implementation lock. Swipe, click, arrow, thumbnail, or other gallery mechanics remain undecided. Exact data ownership, Media roles/order, interaction behavior, accessibility, narrow-screen/mobile behavior, and loading/density treatment must be resolved under UX-010 and the applicable Media/UI standards.
+
+Variant imagery must not force creation of separate canonical Tackle or Lure/Bait records merely to support media. The canonical identity remains the reusable concept; the gallery exists only to improve recognition of legitimate variants when multiple representative images add instructional value.
+
+## 16. Repository Documentation + JavaScript Source Organization
+
+**Status:** REQUIRED / FULL REPOSITORY QUALITY AUDIT
+
+The Version 1 completion audit must include a deliberate review of the **entire tracked repository**, not only user-facing runtime surfaces. The purpose is to ensure that the repository can be understood, maintained, reconstructed, and safely extended without relying on chat history or on a maintainer reverse-engineering where code and documentation belong.
+
+This is a repository-quality and maintainability requirement that complements the visual/interaction audit. It is not authorization for broad cosmetic source churn before findings are reviewed and approved.
+
+### Repository-wide documentation completeness
+
+Inventory every tracked path and determine its current role. Active source, active documentation, tools, workflows, configuration, data, and operational files receive a current-state review. Archived material must be checked for correct archival classification and for misleading active references, but historical files do not need to be rewritten to current style unless they are deliberately reactivated.
+
+For active documentation, verify that the project has enough authoritative material to understand and safely operate at least:
+
+- repository purpose, structure, and startup/resume procedure;
+- architecture and ownership boundaries;
+- active feature/domain contracts and data models;
+- Reference Knowledge, Decision Knowledge, User Knowledge, and relationship ownership;
+- implementation/development workflow and change-placement rules;
+- validation, testing, CI, and release expectations;
+- media/evidence/provenance requirements;
+- external-reference and Regulations maintenance operations;
+- User Data, export/backup/restore, and disaster-recovery/reconstruction requirements;
+- active-versus-archived workstream ownership and exact authoritative sources.
+
+The review must identify and disposition:
+
+- missing documentation required to understand, build, validate, operate, or recover the project;
+- stale or contradictory documentation;
+- duplicate semantic owners that should be reconciled;
+- obsolete active references to archived/retired material;
+- active documents whose purpose, authority, status, or relationship to other owners is unclear;
+- important behavior or maintenance knowledge that exists only in source comments, chat history, or Working State and needs a durable owner.
+
+Do not create documentation merely to increase file count. A new document is justified only when an important durable concern lacks a clear existing owner or when combining it with an existing owner would materially reduce clarity.
+
+### JavaScript readability + structural organization
+
+Every active `.js` file — including runtime, renderer/controller, Reference Knowledge/data, Decision Knowledge, validation, and tooling JavaScript — must be reviewed as a complete file. A maintainer with ordinary JavaScript familiarity should be able to open the file and determine:
+
+1. what the file owns;
+2. the major sections/responsibilities inside it;
+3. the intended execution or data flow where applicable;
+4. where a future change of a given type belongs; and
+5. which other module/domain owns behavior that is deliberately outside the file.
+
+The audit must evaluate and, where approved, normalize these practices:
+
+- a clear file-level purpose/ownership header where the purpose is not already self-evident;
+- major semantic sections labeled with concise comments/headings;
+- related constants, schemas/data, helpers, rendering/behavior functions, validation, exports, and initialization grouped deliberately rather than scattered by edit chronology;
+- dependencies and execution flow arranged in a predictable order;
+- functions, variables, records, and exported interfaces named clearly enough that comments do not have to compensate for opaque naming;
+- comments that explain **intent, ownership, constraints, or non-obvious flow**, not line-by-line restatements of JavaScript syntax;
+- large files assessed for whether semantic splitting would improve maintainability, without fragmenting files solely to make them smaller;
+- shared behavior centralized when duplication would create multiple semantic owners;
+- stale comments, package-era replacement markers, dead blocks, obsolete fallbacks, and misleading notes identified for disposition;
+- data-oriented `.js` files organized by a documented domain/order rule so new records are inserted predictably rather than appended wherever convenient.
+
+### Change-placement discipline
+
+The audit must specifically detect **chronological patch accumulation**: code added at the end of a file or in an unrelated block simply because that location was convenient during an edit.
+
+Approved source organization must establish this rule for future production work:
+
+> **New code is inserted into the semantic section that owns it. End-of-file append is appropriate only when the file's defined structure says that concern belongs there.**
+
+For substantive changes, the implementation/review process should be able to identify the intended owning section before writing. If a feature has no sensible owner in the existing structure, that is an architecture/organization finding to resolve rather than permission to place code arbitrarily.
+
+Refactoring performed solely to improve organization must preserve behavior and pass the applicable regression/structural validation before closeout.
+
+### Repository-quality audit output
+
+The audit must produce a disposition for every active documentation/source area and every active JavaScript file. Findings may be classified as:
+
+- **PASS — clear/current/appropriately owned**;
+- **DOCUMENTATION GAP**;
+- **STALE / CONTRADICTORY DOCUMENTATION**;
+- **SOURCE ORGANIZATION CLEANUP**;
+- **SEMANTIC OWNER / MODULE BOUNDARY ISSUE**;
+- **FILE SPLIT / CONSOLIDATION CANDIDATE**;
+- **DEAD / OBSOLETE SOURCE CANDIDATE**;
+- **ARCHIVE / RETIREMENT CANDIDATE**; or
+- **INTENTIONALLY DIFFERENT — documented reason**.
+
+The repository-quality portion of the Version 1 audit may close only when all material findings have an explicit disposition and no known required project knowledge or active source ownership remains dependent on accidental file placement or undocumented chat context.
+
 # Mobile Validation Matrix
 
 The final audit must include actual-device checks for at least:
@@ -332,6 +462,9 @@ The Version 1 design audit may close only when:
 4. The final implementation passes actual mobile-device review.
 5. No known mobile design issue remains only in chat history or Working State.
 6. Fish semantic/content approval remains intact unless a separate evidence/content defect is discovered.
+7. The full tracked repository has been inventoried for documentation/source ownership, with archived material correctly distinguished from active authority.
+8. Every active JavaScript file has an explicit audit disposition for readability, semantic organization, change-placement discipline, and maintainability.
+9. No known material documentation gap, contradictory active owner, orphan source block, or arbitrary append-only code placement remains without an explicit approved disposition.
 
 # Relationship to Active Development
 

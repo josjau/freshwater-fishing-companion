@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 03C-LURES-BAIT.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.3.8  
 **Document Status:** Approved  
 **Implementation Status:** IMPLEMENTED / VALIDATED / CLOSED — 13 active Lure/Bait identities  
 **Decision Baseline:** D043, D056, D069
@@ -148,6 +148,70 @@ These recognition assets identify the generic lure category, not an exact commer
 Current production implements the locked 13-identity vocabulary with Foundation fields plus `presentationType` and `category`; no color/pattern normalization or commercial product identity was introduced. The accepted Foundation implementation also includes the Direct-Tie Lure Setup configuration model, Weighted Swimbait Hook and Tube Jig dependencies, configured Inline Spinner Fish-guidance migration, and canonical recognition Media for the Rig-facing Lure/Bait identities.
 
 The typed Rig↔Lure/Bait Compatibility relationships are implemented in `data/compatibility.js` under the canonical relationship contract in `09-RELATIONSHIPS.md`; Lure/Bait does not maintain a parallel or inverse compatibility registry. Runtime availability/media presentation defects discovered during Subphase B were repaired and accepted before Foundation closeout. Detailed review chronology remains in the closed Foundation workstream and Git history.
+
+---
+
+# V1 Completion Audit - 2A.1 Approved Planned Expansion
+
+**Status:** CLOSED / APPROVED FOR AUDIT STAGE / NOT YET IMPLEMENTED
+
+FCC 37 reopened the bounded RP-B2B dependency gate for Version 1 completeness without changing the current production library. The audit-stage Version 1 scope is now **30 proposed canonical Lure/Bait identities**: the 13 currently implemented identities plus these 17 approved additions:
+
+1. Curly-tail Grub
+2. Finesse / Straight-tail Worm
+3. Soft Jerkbait
+4. Soft Minnow / Shad
+5. Soft Frog / Toad
+6. Skirted Jig
+7. Topwater Plug
+8. Buzzbait
+9. Bladed Jig
+10. Blade Bait
+11. Cut Bait
+12. Prepared Bait
+13. Hollow-Body Frog
+14. Crayfish
+15. Leech
+16. Insect Larva
+17. Fish Eggs / Roe
+
+Approved boundary and variant dispositions are:
+
+- Ribbon / Curly-tail Worm remains variant/profile guidance rather than a separate canonical identity.
+- Lizard remains a Creature Bait variant.
+- Ned-style plastic remains variant / Recommendation detail.
+- Popper, Walking Bait, and Prop Bait remain Topwater Plug variants.
+- Dough/paste and stink/dip bait remain Prepared Bait variants.
+- Corn is not canonicalized.
+- Chicken liver is not separately canonicalized.
+- No additional generic live-baitfish identity is added beyond Minnow unless a later dependency review demonstrates a concrete gap.
+
+Three complete-lure decisions are additionally locked for the pending dependency-complete expansion:
+
+- **Buzzbait:** distinct canonical Lure/Bait; use Direct-Tie Lure Setup rather than a new top-level Rig; no new canonical Tackle dependency; intrinsic Technique set is Steady Retrieve; bounded Fish review begins with Largemouth Bass, Smallmouth Bass, and Spotted Bass.
+- **Bladed Jig:** distinct canonical Lure/Bait; use Direct-Tie Lure Setup rather than a new top-level Rig; no new canonical Tackle dependency; intrinsic Techniques are Steady Retrieve and Stop-and-Go Retrieve; bounded Fish review begins with Largemouth Bass, Smallmouth Bass, Spotted Bass, and Walleye.
+- **Blade Bait:** distinct canonical Lure/Bait; use Direct-Tie Lure Setup rather than a new top-level Rig; intrinsic Techniques are Lift and Fall, Vertical Jig, and Steady Retrieve; **Snap is the required canonical Tackle dependency; 2A.3.1 is CLOSED / APPROVED with canonical name Snap and proposed ID `snap`.** Bounded Fish review begins with Walleye, Smallmouth Bass, Largemouth Bass, and Spotted Bass; Sauger, Saugeye, White Bass, Striped Bass, Hybrid Striped Bass, and Crappie remain investigation candidates rather than assumed suitability.
+
+The corresponding pending intrinsic Compatibility ownership is recorded in `09-RELATIONSHIPS.md`; Direct-Tie setup ownership is recorded in `03-RIGS.md`; the Snap dependency is recorded in `05-TACKLE.md`. Current production remains exactly 13 active Lure/Bait identities until dependency-complete production authoring, validation, and explicit implementation authorization occur.
+
+**2A.2A Rig architecture coverage checkpoint — CLOSED / APPROVED.** FCC 38 screened all 30 proposed Version 1 Lure/Bait identities against the current 23-Rig library. The exact architecture matrix is owned by `03-RIGS.md`. Twenty-six identities show no demonstrated top-level Rig architecture gap at this screening stage. Four identities require deliberate 2A.2B challenge before Rig Completeness can close: **Skirted Jig, Soft Frog / Toad, Prepared Bait, and Fish Eggs / Roe**. This checkpoint does not change the 30-identity Lure/Bait scope, does not authorize production records, and does not itself author Rig↔Lure/Bait Compatibility.
+
+**2A.2B.1 Skirted Jig challenge — CLOSED / APPROVED.** Skirted Jig remains a distinct proposed Version 1 Lure/Bait identity but does not require a new top-level Rig. The approved representation is a new **Skirted Jig configuration of Direct-Tie Lure Setup**. Optional soft-plastic trailer setup and common skirted-jig forms such as football, flipping/pitching, swim, finesse, and casting jigs remain configuration/variant guidance rather than separate Rig identities. No new canonical Tackle dependency was demonstrated by this challenge. Exact intrinsic Compatibility, Technique, and Fish-suitability authoring remains deferred to the dependency-completeness pass. Current production remains 13 active Lure/Bait identities and 23 canonical Rigs.
+
+**2A.2B.2 Soft Frog / Toad challenge — CLOSED / APPROVED.** Soft Frog / Toad remains a distinct proposed Version 1 Lure/Bait identity and does not require a new top-level Rig. Its ordinary weightless presentation is represented by the existing **Weightless Soft-Plastic Rig**. For the legitimate weighted-hook presentation, FCC approved generalizing the existing production **Weighted Swimbait Hook Rig** into the audit-stage **Weighted Soft-Plastic Hook Rig** family and using `configurations[]` for lure-specific setup knowledge, initially including **Paddle-tail Swimbait** and **Soft Frog / Toad** configurations. This is a generalization of an existing Rig architecture, not Rig #24. 2A.3.5 resolved the carried Tackle boundary: retain canonical **Weighted Swimbait Hook** with stable ID `weighted-swimbait-hook`, broaden future purpose/aliases/recognition for compatible non-swimbait soft-plastic applications, and do not create a duplicate generalized or weighted-frog Tackle identity. Pending intrinsic Rig↔Lure/Bait ownership is recorded in `09-RELATIONSHIPS.md`; exact Technique and Fish-suitability authoring remains later work. Current production remains 13 active Lure/Bait identities and 23 canonical Rigs until explicit production migration is authorized.
+
+**2A.2B.3 Prepared Bait challenge — CLOSED / APPROVED.** Prepared Bait remains a distinct proposed Version 1 Lure/Bait identity and does not require a new top-level Rig. Dough/paste and stink/dip remain variants of the same Prepared Bait identity, but Version 1 teaches the ordinary beginner path using prepared bait that can be retained on an appropriate ordinary hook within existing bait Rig architecture, principally Basic Bottom Rig. Thin dip-bait delivery that requires a specialized worm/tube/sponge/holder is acknowledged as a legitimate specialized method but is outside the required Version 1 teachable Rig/Tackle path; no Dip-Bait Holder canonical Tackle requirement is created. If useful when the Prepared Bait reference surface is implemented, FCC may provide a small set of vetted external **Further Reading** links for specialized dip-bait methods without treating those methods or components as canonical teachable Rig/Tackle content and without adding a new schema field solely for that purpose. Exact intrinsic Compatibility, Technique, and Fish-suitability authoring remains later work. Current production remains 13 active Lure/Bait identities and 23 canonical Rigs until explicit production migration is authorized.
+
+**2A.2B.4 Fish Eggs / Roe challenge — CLOSED / APPROVED.** Fish Eggs / Roe remains a distinct proposed Version 1 Lure/Bait identity and does not require a new top-level Rig. The primary beginner-teachable architecture is the existing **Split-Shot Bait Rig**. Existing Fixed Bobber and Slip Bobber architectures may also become explicit compatibility paths where later relationship authoring establishes them. Moving-water drift is owned by the existing **Natural Drift** Technique rather than a separate Drift Rig. Existing Hook, Split Shot, and generic Bait Tackle are sufficient for the ordinary path; no specialized egg hook or other new canonical Tackle dependency is required. Treble Hook was reviewed independently in 2A.3.4 and remains Hook Style `Treble` under generic Fishing Hook (`hook`) rather than a Fish Eggs / Roe requirement. Because requirement satisfaction is explicit rather than inferred, the later dependency-completeness pass must explicitly disposition Fish Eggs / Roe -> generic `bait` satisfaction.
+
+**2A.2 Rig Completeness — CLOSED / APPROVED.** All 30 proposed Version 1 Lure/Bait identities now have a defensible architecture within the existing 23 top-level Rig library. No Rig #24 is justified. Exact pending configuration records, generalized weighted-hook Rig migration, intrinsic Compatibility, canonical requirement satisfaction, Technique edges, and Fish suitability remain for later dependency-complete authoring; this audit closeout does not change current production counts.
+
+**2A.3 Tackle Hardware Completeness - CLOSED / APPROVED.** The completed hardware sweep adds exactly two pending canonical Tackle concepts: **Snap** (`snap`) and **Snap Swivel** (`snap-swivel`). Circle Hook and Treble Hook remain Hook Styles / recognizable variants under generic Fishing Hook (`hook`), and existing **Weighted Swimbait Hook** retains stable canonical ID `weighted-swimbait-hook` while future reference/application guidance broadens to compatible non-swimbait soft plastics. Dip-Bait Holder / Prepared-Bait Holder and Egg Hook remain deliberate non-additions. No additional physical-hardware gap or Rig #24 is justified by the 30-identity proposed Version 1 Lure/Bait scope.
+
+Pending configuration records, intrinsic Compatibility, Canonical Requirement Satisfaction, Technique/Fish relationship authoring, Media, and validators remain dependency-complete implementation work; current production remains exactly 13 active Lure/Bait identities until explicit migration authorization.
+
+**Exact audit resume:** **2B - Tiered Suggestions**.
+
 
 ---
 

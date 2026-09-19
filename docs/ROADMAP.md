@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.11.2  
+**Document Revision:** 0.11.4  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-09-13
+**Last Updated:** 2026-09-15
 
 # Purpose
 
@@ -52,9 +52,9 @@ The original validated 20-Rig library remains canonical. The additive Four-State
 6. **Settings / User Data Architecture Gate** — completed / validated / closed.
 7. **My Tackle Availability Foundation** — completed / validated / closed for the scoped Recommendation-facing foundation.
 8. **What Should I Throw? Recommendation Engine + UX Pilot** — active under GATE-004.
-9. **Tackle Reference / Find Tackle** — later unless prerequisite implementation demonstrates a direct dependency.
-10. **Catch Log**.
-11. **Global Search**.
+9. **Tackle Reference** — required Version 1 Reference Knowledge surface; implementation remains after the current prerequisite/Recommendation path unless dependency reprioritization changes the sequence.
+10. **Global Search**.
+11. **Catch Log** — required for Version 1 but deliberately held until near the end of functional development because it does not block the core learn/reference/recommendation experience; complete before the final site-wide UX/release audit.
 12. **Favorites final decision**.
 
 Repository Audit Cleanup is a maintenance/governance gate, not a numbered product milestone and does not change this sequence.
@@ -158,19 +158,27 @@ GATE-004 is the active product gate. All five Recommendation-side semantic hando
 
 Production begins with the Recommendation Decision Knowledge model/runtime boundary, then engine integration and validator coverage, followed by the UX pilot. The implementation must preserve the locked Best Overall / Best Currently Available distinction, compact V1 input flow, canonical-domain ownership boundaries, explainability, and the five G4 contracts. Material changes to the locked Phase 0 or G4 semantic boundaries require explicit reapproval and durable documentation update.
 
-# 9. Tackle Reference / Find Tackle
+# 9. Tackle Reference — Required V1 / Not Yet Built
 
-Build the broader canonical Tackle discovery/reference experience after the prerequisite path unless a direct dependency is demonstrated earlier. Canonical Tackle remains Reference Knowledge distinct from My Tackle ownership and from the separate Lure/Bait domain.
+Build the standalone user-facing learning/reference home for the canonical Tackle concepts already used by Rig Guide **What You Need**. The existing canonical Tackle library remains the single identity/definition owner; Tackle Reference gives those concepts a place to be learned, recognized, browsed, searched, and reached outside the Rig domain without duplicating records or relationship ownership.
 
-Search and connected-knowledge behavior continue to follow the established relevance-first and single-owner relationship rules.
+**Tackle Reference** is the feature/domain. **Tackle Index** is the planned primary browse/index surface inside it. Search is a discovery behavior within Tackle Reference; historical **Find Tackle** wording does not define a separate feature or domain. Canonical Tackle remains Reference Knowledge distinct from My Tackle ownership and from the separate Lure/Bait domain.
 
-# 10. Catch Log
+Version 1 may expose recognition help, purpose/summary, common variants, related Tackle, and **Used In** Rig connections derived from authoritative Rig component requirements. Search and connected-knowledge behavior continue to follow the established relevance-first and single-owner relationship rules. Exact browse taxonomy, search behavior, detail layout, and navigation polish belong to the GATE-005 implementation. Commercial ProductDefinition, manufacturer catalogs, pricing, retailer integration, and exact-product shopping recommendations remain deferred unless separately approved.
 
-Build after the settled User Knowledge/My Tackle foundation. Catch Log design must review user/profile ownership, canonical Fish/Rig/Lure/Bait/Technique references, date/time and measurements, location/privacy, notes, media, backup/restore, and migration/versioning. Candidate fields remain unapproved until that segment.
-
-# 11. Global Search
+# 10. Global Search
 
 Defer until major searchable domains and canonical entity models are stable. Build on relevance-first/connected-knowledge architecture rather than an undifferentiated cross-domain dump.
+
+# 11. Catch Log — Required V1 / Deliberately Late
+
+Catch Log remains a required Version 1 User Knowledge feature, but it is intentionally scheduled near the end of functional development because it is useful history rather than a prerequisite for learning the app, using its reference content, or receiving Recommendations. Complete it after the core learning/reference/recommendation path is stable and before the final site-wide UX/release audit.
+
+Version 1 provides durable synchronized catch create/view/edit/delete history using a deliberately compact domain centered on date/time, Fish, optional measurements, optional canonical Rig/Lure-Bait/Technique references, optional non-precise location information, and notes. Exact record fields, serialization, validation, and UX remain for the Catch Log build.
+
+Catch Log inherits the approved User Knowledge identity, synchronization, schema-versioning/migration, conflict, deletion, safe-rendering, and backup/restore architecture. Exact owned-item or Fishing Setup references remain optional and should be added only if the implemented My Tackle workflow demonstrates clear value.
+
+Version 1 does not require catch-photo storage, precise GPS/location tracking, advanced statistics/analytics, Recommendation learning from catch history, social sharing, automatic weather capture, regulations snapshots, or map/history visualization. Those capabilities require separate later approval rather than being implied by the Catch Log milestone.
 
 # 12. Favorites Final Decision
 

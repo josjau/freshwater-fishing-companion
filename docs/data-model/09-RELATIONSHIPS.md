@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.9.4  
+**Document Revision:** 0.9.13  
 **Document Status:** Approved  
 **Implementation Status:** VALIDATED CURRENT RELATIONSHIPS + G7-XMAP IMPLEMENTED / APPROVED / VERIFIED — 20 Fish identification pairs; 27 Fish guidance records; 177 intrinsic Compatibility relationships (54/69/54) + 13 Canonical Requirement Satisfaction rules  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, D069, FISH-001–FISH-007  
-**Last Updated:** 2026-09-13
+**Last Updated:** 2026-09-16
 
 ---
 
@@ -316,6 +316,129 @@ Alternative: 0–3
 
 These limits are **provisionally approved** and should be enforced while they remain the project standard. They may be deliberately revised if real production authoring demonstrates that a different limit materially improves the model. Do not silently exceed them.
 
+## Fish ↔ Rig Suitability — G4-RIF-1B.1 / 1B.2 APPROVED
+
+Knowledge layer: **Reference Knowledge**.
+
+Fish↔Rig Suitability is distinct from `FISH_RIG_GUIDANCE`. A positive suitability edge means the Rig is a defensible ordinary method for intentionally targeting the Fish under at least one plausible Version 1 fishing context, assuming an appropriate compatible Lure/Bait and Technique are selected. It does not encode current-context suitability, preference, ranking, score, reason, confidence, availability, legality, or simplicity.
+
+`FISH_RIG_GUIDANCE` remains the narrower curated Fish Guide teaching subset. Every active Fish Guide Rig recommendation must ultimately resolve to a positive Fish↔Rig Suitability relationship, but most suitability relationships need not appear in Fish Guide guidance.
+
+Suitability must be configuration-aware where one canonical Rig family contains materially distinct configurations. A positive edge for one Direct-Tie Lure Setup configuration does not authorize any other Direct-Tie configuration for that Fish. Exact configuration reference shape and exact record identity are deferred to G4-RIF-1B.2.
+
+No inverse `fishIds[]` array is added to Rig and no suitability list is duplicated into Fish merely for convenience. Reverse navigation or indexing derives from the canonical suitability owner.
+
+Authored-scope semantics follow the established completeness rule: before the complete Version 1 Fish↔Rig suitability scope is declared complete, a missing relationship is not authoritative exclusion. After completeness, presence admits the Rig/configuration to the Fish-specific Version 1 candidate pool; absence means unsupported as an ordinary Version 1 targeting method for that Fish, not physically impossible or incapable of catching that Fish.
+
+**G4-RIF-1B.1 status: COMPLETE / APPROVED WITH REVISION ALLOWED.**
+
+### G4-RIF-1B.2 — Exact relationship granularity + record contract — APPROVED
+
+Working production owner:
+
+```text
+data/fish-rig-suitability.js
+FISH_RIG_SUITABILITY_RELATIONSHIPS
+```
+
+Knowledge layer: **Reference Knowledge**.
+
+One positive record represents one **Fish + Rig + optional canonical Rig configuration** tuple. The exact Version 1 field order is:
+
+```text
+id
+fishId
+rigId
+rigConfigurationId
+createdVersion
+lastModifiedVersion
+isActive
+```
+
+Granularity rules:
+
+- an ordinary Rig with no `configurations[]` uses `rigConfigurationId: null`;
+- a Rig with materially distinct canonical configurations requires an exact non-null `rigConfigurationId`;
+- configured Rigs do not permit a null all-configurations edge;
+- configuration identity is scoped to the referenced parent Rig;
+- suitability does not duplicate `lureBaitId`; applicable Lure/Bait identity resolves through the canonical Rig/configuration contract;
+- suitability does not carry `relationshipType`, participant-type fields, priority, reason, score, strength, rank, confidence, Conditions, Habitat, Techniques, difficulty, availability, legality, or other Recommendation fields.
+
+Deterministic IDs are:
+
+```text
+fish-rig-suitability-<fishId>-to-<rigId>
+fish-rig-suitability-<fishId>-to-<rigId>-config-<rigConfigurationId>
+```
+
+Runtime consumers read participant fields and must not parse record IDs. Reverse Rig→Fish views derive from the canonical registry rather than adding inverse Fish arrays to Rig.
+
+Repository-integrity validation must reject unresolved/inactive active participants, duplicate IDs, duplicate semantic tuples, ID/participant mismatch, a non-null configuration on a non-configured Rig, a null configuration on a configured Rig, or a configuration that does not resolve inside the referenced Rig.
+
+Every active Fish Guide recommendation must resolve to a positive suitability relationship. For configured Rigs, validation resolves the guidance's explicit Lure/Bait reference through the Rig's canonical configuration and requires that exact configuration edge. Existing `FISH_RIG_GUIDANCE` remains Decision Knowledge and is not migrated merely to replace its meaningful Lure/Bait reference with a configuration ID.
+
+Zero positive relationships for a Fish are valid if the completed Version 1 evidence audit supports that result. No negative relationship registry is approved. Missing-edge exclusion becomes authoritative only after the complete Version 1 Fish↔Rig authored scope is explicitly declared complete.
+
+**G4-RIF-1B.2 status: COMPLETE / APPROVED WITH REVISION ALLOWED.** Exact next action: **G4-RIF-1B.3 — 30-Fish Fish↔Rig Suitability authored-set audit**.
+
+### G4-RIF-1B.3 — 30-Fish Fish↔Rig Suitability Authored-Set Audit — COMPLETE / APPROVED WITH REVISION ALLOWED
+
+Batch 1 — **Bass (6 Fish)** is **APPROVED WITH ALLOWED REVISIONS**. The approved batch contains exactly **92 positive Fish↔Rig suitability edges**. Direct-Tie Lure Setup edges are configuration-specific; no configurationless Direct-Tie edge is authorized. The approved Batch 1 sets are:
+
+- **Largemouth Bass — 22:** Fixed Bobber Rig; Slip Bobber Rig; Texas Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Spinnerbait; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Direct-Tie / Spoon; Wacky Rig; Ned Rig; Weightless Soft-Plastic Rig; Drop Shot Rig; Carolina Rig; Neko Rig; Shaky Head Rig; Free Rig; Jika Rig; Split-Shot Bait Rig; Weighted Swimbait Hook Rig; Tube Jig Rig; Punch / Pegged Texas Rig.
+- **Smallmouth Bass — 20:** Texas Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Spinnerbait; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Direct-Tie / Spoon; Wacky Rig; Ned Rig; Weightless Soft-Plastic Rig; Drop Shot Rig; Carolina Rig; Neko Rig; Shaky Head Rig; Free Rig; Jika Rig; Split-Shot Bait Rig; Weighted Swimbait Hook Rig; Tube Jig Rig; Live-Bait Slip-Sinker Rig.
+- **Spotted Bass — 19:** Texas Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Spinnerbait; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Direct-Tie / Spoon; Wacky Rig; Ned Rig; Weightless Soft-Plastic Rig; Drop Shot Rig; Carolina Rig; Neko Rig; Shaky Head Rig; Free Rig; Jika Rig; Split-Shot Bait Rig; Weighted Swimbait Hook Rig; Tube Jig Rig.
+- **White Bass — 11:** Slip Bobber Rig; Basic Bottom Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Direct-Tie / Spoon; Live-Bait Slip-Sinker Rig; Double-Jig Crappie Rig; Split-Shot Bait Rig; Weighted Swimbait Hook Rig.
+- **Striped Bass — 11:** Slip Bobber Rig; Basic Bottom Rig; Jighead + Soft Plastic; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Direct-Tie / Spoon; Live-Bait Slip-Sinker Rig; Three-Way Rig; Double-Jig Crappie Rig; Split-Shot Bait Rig; Weighted Swimbait Hook Rig.
+- **Hybrid Striped Bass — 9:** Slip Bobber Rig; Basic Bottom Rig; Jighead + Soft Plastic; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Direct-Tie / Spoon; Live-Bait Slip-Sinker Rig; Split-Shot Bait Rig; Weighted Swimbait Hook Rig.
+
+Deliberate Batch 1 boundaries remain: Bottom-Bouncer / Spinner Rig is excluded for all six Bass; Three-Way Rig is positive only for Striped Bass; Punch / Pegged Texas Rig is positive only for Largemouth Bass; Double-Jig Crappie Rig is positive only for White Bass and Striped Bass. All existing Bass Fish Guide Rig recommendations are contained in the approved suitability sets. These 92 edges remain revision-allowed until the complete 30-Fish authored scope is closed.
+
+Batch 2 — **Sunfish & Crappie (9 Fish)** is **APPROVED WITH ALLOWED REVISIONS**. The approved batch contains exactly **64 positive Fish↔Rig suitability edges**. Direct-Tie Lure Setup edges are configuration-specific; no configurationless Direct-Tie edge is authorized. The approved Batch 2 sets are:
+
+- **Bluegill — 6:** Fixed Bobber Rig; Slip Bobber Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Split-Shot Bait Rig; Tube Jig Rig.
+- **Redear Sunfish — 7:** Fixed Bobber Rig; Slip Bobber Rig; Basic Bottom Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Split-Shot Bait Rig; Tube Jig Rig.
+- **Green Sunfish — 6:** Fixed Bobber Rig; Slip Bobber Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Split-Shot Bait Rig; Tube Jig Rig.
+- **Longear Sunfish — 6:** Fixed Bobber Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Spinnerbait; Split-Shot Bait Rig; Tube Jig Rig.
+- **Northern Rock Bass — 6:** Texas Rig; Jighead + Soft Plastic; Direct-Tie / Spinnerbait; Direct-Tie / Crankbait; Split-Shot Bait Rig; Tube Jig Rig.
+- **Warmouth — 9:** Fixed Bobber Rig; Slip Bobber Rig; Basic Bottom Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Crankbait; Direct-Tie / Spoon; Split-Shot Bait Rig; Tube Jig Rig.
+- **Ozark Bass — 6:** Texas Rig; Jighead + Soft Plastic; Direct-Tie / Spinnerbait; Direct-Tie / Crankbait; Split-Shot Bait Rig; Tube Jig Rig.
+- **Black Crappie — 9:** Fixed Bobber Rig; Slip Bobber Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Crankbait; Direct-Tie / Spoon; Double-Jig Crappie Rig; Split-Shot Bait Rig; Tube Jig Rig.
+- **White Crappie — 9:** Fixed Bobber Rig; Slip Bobber Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Crankbait; Direct-Tie / Spoon; Double-Jig Crappie Rig; Split-Shot Bait Rig; Tube Jig Rig.
+
+Deliberate Batch 2 boundaries remain: Longear does not inherit Slip Bobber merely because it is mechanically usable; Northern Rock Bass and Ozark Bass remain a tighter goggle-eye set rather than inheriting the full black-bass catalog; Inline Spinner is not added to the goggle-eye set; Warmouth does not inherit the broader bass finesse family; Crappie does not inherit Jerkbait, Live-Bait Slip-Sinker, Three-Way, Bottom-Bouncer / Spinner, Weighted Swimbait Hook, or bass-oriented finesse/cover rigs. All existing Fish Guide Rig recommendations for these nine Fish are contained in the approved suitability sets.
+
+Batch 3 — **Catfish + Walleye/Sauger (8 Fish)** is **APPROVED WITH ALLOWED REVISIONS**. The approved batch contains exactly **35 positive Fish↔Rig suitability edges**. Direct-Tie Lure Setup edges are configuration-specific; no configurationless Direct-Tie edge is authorized. The approved Batch 3 sets are:
+
+- **Channel Catfish — 4:** Fixed Bobber Rig; Basic Bottom Rig; Three-Way Rig; Split-Shot Bait Rig.
+- **Blue Catfish — 4:** Fixed Bobber Rig; Basic Bottom Rig; Direct-Tie / Crankbait; Three-Way Rig.
+- **Flathead Catfish — 1:** Basic Bottom Rig.
+- **Black Bullhead — 2:** Basic Bottom Rig; Split-Shot Bait Rig.
+- **Yellow Bullhead — 2:** Basic Bottom Rig; Split-Shot Bait Rig.
+- **Walleye — 9:** Slip Bobber Rig; Jighead + Soft Plastic; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Direct-Tie / Spoon; Live-Bait Slip-Sinker Rig; Three-Way Rig; Bottom-Bouncer / Spinner Rig; Weighted Swimbait Hook Rig.
+- **Saugeye — 6:** Jighead + Soft Plastic; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Live-Bait Slip-Sinker Rig; Bottom-Bouncer / Spinner Rig; Weighted Swimbait Hook Rig.
+- **Sauger — 7:** Jighead + Soft Plastic; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Live-Bait Slip-Sinker Rig; Three-Way Rig; Bottom-Bouncer / Spinner Rig; Weighted Swimbait Hook Rig.
+
+Deliberate Batch 3 boundaries remain: Flathead Catfish does not receive Three-Way merely because it can occasionally take a drifting presentation; bullheads are not expanded into the broader catfish catalog; and Texas, Carolina, Drop Shot, and Weightless Soft-Plastic are not admitted to the Walleye/Saugeye/Sauger sets merely because soft swimbaits can be rigged multiple ways. All existing Fish Guide Rig recommendations for these eight Fish are contained in the approved suitability sets.
+
+Batch 4 — **Trout + Remaining Species (7 Fish)** is **APPROVED WITH ALLOWED REVISIONS**. The approved batch contains exactly **18 positive Fish↔Rig suitability edges**. Direct-Tie Lure Setup edges are configuration-specific; no configurationless Direct-Tie edge is authorized. The approved Batch 4 sets are:
+
+- **Rainbow Trout — 7:** Fixed Bobber Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Direct-Tie / Spoon; Split-Shot Bait Rig.
+- **Brown Trout — 7:** Fixed Bobber Rig; Jighead + Soft Plastic; Direct-Tie / Inline Spinner; Direct-Tie / Crankbait; Direct-Tie / Jerkbait; Direct-Tie / Spoon; Split-Shot Bait Rig.
+- **Common Carp — 2:** Basic Bottom Rig; Split-Shot Bait Rig.
+- **Freshwater Drum — 2:** Basic Bottom Rig; Split-Shot Bait Rig.
+- **Paddlefish — 0:** no current canonical Rig is admitted. Paddlefish ordinarily requires a specialized targeting setup not represented by the current Version 1 Rig library.
+- **Longnose Gar — 0:** no current canonical Rig is admitted. Longnose Gar ordinarily requires a specialized targeting setup not represented by the current Version 1 Rig library.
+- **Spotted Gar — 0:** no current canonical Rig is admitted. Spotted Gar ordinarily requires a specialized targeting setup not represented by the current Version 1 Rig library.
+
+Deliberate Batch 4 boundaries remain: Trout does not inherit Slip Bobber or Basic Bottom merely because those methods are mechanically possible; Carp and Freshwater Drum are not expanded into broad artificial-lure catalogs; and Paddlefish, Longnose Gar, and Spotted Gar are deliberate zero-edge results because their ordinary intentional targeting often depends on specialized rigs/methods outside the current canonical Rig library. These zero-edge results are not audit failures and do not authorize forced substitution with an existing Rig. They are explicit input to the next Rig Input Adequacy review, which must decide whether Version 1 needs additional specialized canonical Rigs or should preserve those Fish as unsupported by the current Rig candidate library.
+
+All existing Fish Guide Rig recommendations across the 30-Fish scope are contained in the approved suitability sets. Batch totals are Bass **92**, Sunfish & Crappie **64**, Catfish + Walleye/Sauger **35**, and Trout + Remaining Species **18**, for exactly **209 positive Fish↔Rig suitability edges** across all **30 Version 1 Fish**.
+
+**G4-RIF-1B.3 status:** COMPLETE / APPROVED WITH REVISION ALLOWED — **30 of 30 Fish / exactly 209 positive edges approved**. The complete Version 1 authored scope is now explicitly declared complete. For this scope, a missing edge is authoritative exclusion from ordinary Version 1 Fish-specific Rig eligibility; it does not mean the Rig could never catch the Fish or that a specialized method outside the current Rig library is invalid.
+
+**G4-RIF-1B Fish↔Rig Suitability Adequacy: CLOSED / PASS.** Exact next action: **G4-RIF-1C — Rig Input Adequacy**. G4-DK-1A remains HELD until Rig Input Adequacy and the combined adequacy test complete.
+
 ### Optionality / activation
 
 Every Version 1 Fish is deliberately evaluated for guidance during authoring. If no defensible curated recommendation exists, omit the guidance record and omit `Rigs to Start With` from Fish Detail.
@@ -361,6 +484,48 @@ Current examples:
 These registries do not make their workflow fields part of canonical Knot, Rig, Fish, or Tackle entities.
 
 Future recommendation relationships should follow the same ownership test: contextual ranking, rationale, confidence, and suitability belong to Decision Knowledge when they answer **what should I do in this context?** rather than an intrinsic canonical fact.
+
+---
+
+# G4-RIF Habitat / Waterbody Correspondence — APPROVED / PENDING IMPLEMENTATION
+
+G4-RIF-1A approves explicit authored correspondence between stable Fish-owned environmental Reference Knowledge and current-context Conditions. These correspondence relationships are **not** Intrinsic Compatibility and carry no Fish preference, candidate eligibility, contextual suitability, weighting, ranking, confidence, or Recommendation score. Missing correspondence means only that no equivalence is authored; it is not incompatibility.
+
+The exact Habitat↔Condition correspondence set is:
+
+| Habitat | Condition ID(s) |
+|---|---|
+| Aquatic Vegetation | `vegetation` |
+| Wood / Brush | `wood-brush` |
+| Open Water | `open-water` |
+| Shallow Water | `shallow` |
+| Deep Water | `deep` |
+| Still / Slow Water | `current-none`; `current-light` |
+| Flowing Water | `current-light`; `current-moderate`; `current-strong` |
+| Rock / Boulder Structure | `rock-boulder` |
+| Channel | `channel` |
+| Pool / Deep Hole | `pool-deep-hole` |
+| Rocky / Gravel Bottom | `bottom-rocky-gravel` |
+| Sandy Bottom | `bottom-sandy` |
+| Muddy / Silty Bottom | `bottom-muddy-silty` |
+
+`current-light` intentionally corresponds to both **Still / Slow Water** and **Flowing Water**. The overlap expresses a semantic transition zone only; downstream Recommendation ranking must not treat the duplicate correspondence as double evidence or extra weight.
+
+No Habitat counterpart is authored for Light Cover, Heavy Cover, Dock / Man-made Cover, Drop-off / Deep Structure, Access/Position, Water Clarity, Season, Light/Sky, or other situational Conditions merely because those Conditions exist.
+
+Fish waterbody correspondence is stored/treated separately from Habitat correspondence because Fish waterbody association remains a separate Fish fact. The exact bridge is:
+
+| Fish waterbody value | Waterbody Condition ID |
+|---|---|
+| Pond | `pond` |
+| Lake | `lake` |
+| Reservoir | `reservoir` |
+| River | `river` |
+| Creek / Stream | `creek-stream` |
+
+Fish `Creek` normalizes to **Creek / Stream** during the later migration. This bridge also conveys environmental equivalence only and must not create preference, ranking, weighting, eligibility, or score.
+
+These approved correspondence sets are pending production implementation. Their physical storage shape and validator mechanics may be refined during migration so long as the exact semantics and stable IDs above are preserved. No runtime mapping by label, string similarity, or fuzzy inference is authorized.
 
 ---
 
@@ -809,6 +974,53 @@ Relationship validation should verify, where applicable:
 Potential future relationship infrastructure includes runtime indexes when scale justifies them, automated repository-wide relationship validation, and more sophisticated graph/cache infrastructure.
 
 Any future cache remains derived and non-authoritative unless an explicit later architecture decision changes ownership.
+
+---
+
+# V1 Completion Audit 2A.1 - Approved Pending Compatibility Expansion
+
+**Status:** APPROVED / NOT YET IMPLEMENTED
+
+FCC 37 approved the following intrinsic Compatibility additions for dependency-complete production authoring. They are **pending relationships** and are not included in the current validated production total of 177 intrinsic Compatibility relationships:
+
+- Direct-Tie Lure Setup <-> Buzzbait
+- Buzzbait <-> Steady Retrieve
+- Direct-Tie Lure Setup <-> Bladed Jig
+- Bladed Jig <-> Steady Retrieve
+- Bladed Jig <-> Stop-and-Go Retrieve
+- Direct-Tie Lure Setup <-> Blade Bait
+- Blade Bait <-> Lift and Fall
+- Blade Bait <-> Vertical Jig
+- Blade Bait <-> Steady Retrieve
+
+Exact stable IDs, Direct-Tie configuration IDs, file order, and production serialization remain production-authoring details governed by the existing relationship contract and validators. No pending relationship becomes active until its canonical participants and all required dependencies are implemented and validated.
+
+The bounded Fish re-evaluations associated with Buzzbait, Bladed Jig, and Blade Bait are **not intrinsic Compatibility**. Fish-specific ordinary-method admission remains Fish<->Rig Suitability / Recommendation work and must be reviewed separately rather than inferred from these pairs.
+
+## V1 Completion Audit 2A.2B.2 - Soft Frog / Toad Pending Compatibility
+
+**Status:** APPROVED / NOT YET IMPLEMENTED
+
+FCC 38 approved two intrinsic Rig↔Lure/Bait paths required by the Soft Frog / Toad architecture disposition. These remain **pending relationships** and do not change the current validated production total of 177 intrinsic Compatibility relationships:
+
+- Weightless Soft-Plastic Rig <-> Soft Frog / Toad
+- Weighted Soft-Plastic Hook Rig <-> Soft Frog / Toad
+
+`Weighted Soft-Plastic Hook Rig` is the approved audit-stage generalization of the current production `Weighted Swimbait Hook Rig`. The existing Paddle-tail Swimbait weighted-hook compatibility migrates with that Rig family; it is not counted here as a second new architecture relationship. The generalized Rig will use lure-specific configurations for at least Paddle-tail Swimbait and Soft Frog / Toad. Exact production Rig ID migration, configuration IDs, deterministic relationship IDs, file order, and serialization remain dependency-complete production-authoring work.
+
+No Soft Frog / Toad Technique pair is locked by this checkpoint. Technique compatibility and Fish-specific suitability remain separate later authoring tasks.
+
+## V1 Completion Audit 2A.2B.4 - Fish Eggs / Roe Pending Relationships
+
+**Status:** APPROVED / NOT YET IMPLEMENTED
+
+FCC 38 approved **Split-Shot Bait Rig <-> Fish Eggs / Roe** as the primary pending Rig↔Lure/Bait path for the final 2A.2B architecture disposition. Existing Fixed Bobber Rig and Slip Bobber Rig may also support Fish Eggs / Roe, but those secondary intrinsic Compatibility edges are not pre-authorized by the architecture challenge and must be explicitly dispositioned during dependency-complete relationship authoring.
+
+Moving-water drift remains presentation behavior owned by the existing **Natural Drift** Technique. The 2A.2 closeout does not create a new Technique identity and does not by itself pre-author a Fish Eggs / Roe <-> Natural Drift intrinsic Compatibility edge; that pair must be authored explicitly if the later dependency pass confirms it under the existing Technique compatibility rules.
+
+Canonical Requirement Satisfaction remains explicit rather than inferred. The dependency-completeness pass must explicitly disposition a **Fish Eggs / Roe -> generic `bait`** satisfaction rule so the specific Lure/Bait identity can truthfully satisfy Rigs that require generic Bait without adding redundant User Knowledge mapping. This checkpoint does not increment the current validated production total of 13 Canonical Requirement Satisfaction rules.
+
+**2A.2 Rig Completeness relationship closeout:** CLOSED / APPROVED. No production Compatibility or Satisfaction record is activated by this documentation checkpoint; current production remains 177 intrinsic Compatibility relationships and 13 Canonical Requirement Satisfaction rules until explicit implementation and validation.
 
 ---
 

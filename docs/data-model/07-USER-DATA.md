@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 07-USER-DATA.md  
-**Document Revision:** 0.13.1  
+**Document Revision:** 0.13.2  
 **Document Status:** Draft  
 **Implementation Status:** Mixed — transitional local state exists; authoritative User Knowledge schemas not implemented  
 **Decision Baseline:** D028, D029, D056, D067, D069
@@ -253,15 +253,17 @@ UD-4 establishes one independently addressable record per setup. The approved pr
 
 ---
 
-# Catch Log — Domain Approved / Schema Unresolved
+# Catch Log — Version 1 Scope Approved / Exact Schema Deferred
 
-Catch Log is a User Knowledge domain for fishing events. UD-4 establishes one independently addressable record per catch/event.
+Catch Log is a profile-owned User Knowledge domain for fishing events. UD-4 establishes one independently addressable record per catch/event. The V1 Completion Audit confirms that Catch Log remains required for Version 1, but it is intentionally held until near the end of functional development because it does not block the core learning/reference/recommendation experience. It must complete before the final site-wide UX/release audit.
 
-Earlier planning identified possible references and observations such as Fish, Rig, Technique, Lure, setup, date, measurements, location, notes, or photos. These are candidate concepts rather than an approved production record shape.
+Version 1 must support durable synchronized create/view/edit/delete catch history. The approved compact information boundary centers on date/time, Fish, optional measurements, optional canonical Rig/Lure-Bait/Technique references, optional non-precise location information, and notes. Exact field names, required/optional details, serialization, validation, and presentation remain for the Catch Log build; this direction does not pre-build a speculative schema.
 
-When Catch Log implementation begins, each field must be justified by an approved feature, and historical snapshot requirements must be distinguished from live canonical references.
+Catch Log inherits the common User Knowledge architecture for authenticated ownership, synchronization, record-level `schemaVersion`, migration, conflict/revision handling, deletion, safe rendering of user-entered/imported content, and UD-9 backup/restore. Catch records reference canonical entities by stable ID where practical rather than duplicating their authoritative definitions, and they must never modify canonical Fish or other Reference Knowledge.
 
-Catch records must never modify canonical Fish or other Reference Knowledge.
+Exact owned-item or Fishing Setup relationships remain optional. Add them only if the implemented My Tackle workflow demonstrates clear user value; logging a catch must not require identifying exact owned equipment.
+
+Version 1 does not require catch-photo storage, precise GPS/location tracking, advanced statistics/analytics, Recommendation learning from catch history, social sharing, automatic weather capture, regulations snapshots, or map/history visualization. Those remain later-scope candidates requiring separate approval.
 
 ---
 

@@ -4,7 +4,7 @@
 **Document Status:** Approved  
 **Role:** Canonical durable decision bodies for this ownership domain  
 **Migration Baseline:** `af3bffb9995d56f8b9e47236bbadfa481d88cc34`  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-09-18
 
 # Purpose
 
@@ -164,7 +164,17 @@ The gate must define:
 
 GitHub `main` owns committed truth/formal history. Google Drive `Working Source/Current` is the **complete editable repository working tree** and owns all approved uncommitted repository changes, including documentation, source, data, media, configuration, planning, and workstream files. Documentation-only work retains standing commit authority but uses the same Drive-first edit/validation path.
 
+For existing non-native/raw Drive files such as Markdown, the canonical connector write mechanic preserves the original Drive object: fresh-fetch/materialize the exact current file, make the targeted edit, use a single temporary Drive transport/staging object only when needed to obtain a connector `file_uri`, then replace the bytes of the **original file ID** with Drive `files.update` / `update_file`, read back that original ID, and delete the temporary object. Library/path `overwrite=true`, rename/swap replacement, duplicate canonical files, chat/base64 reconstruction, and persistent staging copies are not valid substitutes. The temporary object is a transport bridge only and never becomes authoritative working state. This narrow transport step is explicitly permitted and is not the kind of alternate temporary workflow prohibited by the circuit breaker.
+
 Live Working State is the compact operational record for active decisions, review-cycle identity, validation/approval state, defects, and detailed resume context. `WORKING_STATE.md` is the single repository current-state/exact-resume entrypoint. `ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward across workstreams.
+
+For chats covered by the consolidated transcript policy, FCC uses a **small sequence of consolidated numbered transcript segments** rather than one indefinitely growing raw Markdown file. `Freshwater Fishing Companion Chat Log 1.md` is the closed historical Segment 1 archive; `Freshwater Fishing Companion Chat Log 2.md` is the active append target. Only one segment is active at a time. When the active segment becomes operationally cumbersome, close it at a clean approval/session boundary and open the next numbered segment; do not create routine per-chat transcript files. Transcript segmentation does not change authority: the archive is historical evidence only and never substitutes for canonical-owner capture.
+
+For the **active transcript segment**, fresh-fetch verbatim append + same-file replacement + tail readback remains a mandatory blocking component of each applicable explicit approval gate after semantic-owner and Live Working State reconciliation. The appended transcript must preserve the actual user and assistant message text, ordering, and material formatting from the chat; summaries, checkpoint digests, reconstructed prose, or paraphrases may not substitute for the transcript. Tool payloads/results and hidden reasoning are excluded. A separately labeled checkpoint/metadata note may follow the verbatim transcript, but it never replaces it. If an older segment contains a discovered verbatim gap, preserve that gap explicitly and repair it only from an authoritative chat export; do not invent wording. A required transcript checkpoint may not be skipped or deferred to later closeout; failure keeps the approval gate open and blocks dependent progression.
+
+**New-chat approval continuity is also a blocking gate.** Before substantive work begins in a new chat/session, the assistant must verify that the most recent applicable approval/disposition gate is actually closed in the canonical owners, Live Working State, and—when transcript preservation applies—the latest Chat Log checkpoint/tail. If the preceding state or transcript says a required write/readback remains, or the expected checkpoint is absent, startup is recovery-only until the smallest authoritative reconciliation closes that gap. A new chat title or remembered resume point never overrides an unclosed prior gate.
+
+After each explicit approval/disposition gate passes, the assistant must provide a **concise user-facing gate receipt** stating what closed, the material owners/state/log that were updated and read back, whether production/commit/CI changed, and the exact next checkpoint/resume point. A promise to update later, a statement that one verification step remains, or an omitted receipt is not a completed handoff.
 
 Review ZIPs are generated from the complete Drive tree and stored in Packages only when transport/local/browser/device review/checkpoint/recovery requires them. ZIPs preserve repository-relative paths and exclude `.git`. When a candidate state removes repository paths, the review manifest carries an explicit deletion list because ZIP extraction cannot delete pre-existing local files.
 

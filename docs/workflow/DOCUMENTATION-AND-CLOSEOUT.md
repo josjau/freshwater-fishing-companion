@@ -4,7 +4,7 @@
 **Document Status:** Approved  
 **Role:** Durable documentation, impact reconciliation, session continuity, commit verification, and closeout  
 **Decision Baseline:** D038-D041, D055, D068  
-**Last Updated:** 2026-09-13
+**Last Updated:** 2026-09-18
 
 # Documentation Is Part of the Work
 
@@ -26,11 +26,32 @@ Every explicit approval gate is a Drive Working Source/Current documentation gat
 
 1. identify **every applicable owner document whose owned semantics changed** because of the approved decision, discussion outcome, or project-direction change;
 2. update those owner documents immediately in the complete Drive Current working tree, including decision, domain/data-model, relationship, architecture, roadmap, workstream, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md` owners as applicable;
-3. update the Live Working State for the same material transition;
+3. update the Live Working State for the same material transition and read it back;
 4. perform targeted readback sufficient to prove the intended owner updates are present;
-5. only then continue to the next checkpoint.
+5. when the consolidated transcript policy applies, fresh-fetch the **currently active numbered Chat Log segment**, append the conversation since the prior transcript checkpoint, replace that same Drive file object, and tail-read back the appended checkpoint;
+6. only after all applicable owner, Live Working State, and Chat Log writes/readbacks pass may the approval gate close;
+7. immediately give the user a concise **approval gate receipt**: what closed, which material owners/state/log were updated and read back, whether production/commit/CI changed, and the exact next checkpoint/resume point. Dependent substantive work starts only after this receipt.
 
 Approval-stage documentation must not be deferred to planning closeout, staging, ZIP creation, local review, commit, or session end. Git commits may be batched, but Drive working-state capture may not. Drive Current therefore remains the complete approved uncommitted working state. The later local repository review/package process carries that accumulated state into the local repo; after validation and commit/push, GitHub `main` becomes the committed authority for it.
+
+**New-chat recovery rule:** every new project chat must prove the prior material approval/disposition gate closed before substantive work begins. Check the current semantic owners and Live Working State and, when transcript preservation applies, the latest Chat Log checkpoint/tail. If the preceding chat ended with a required append/write/readback still pending or the expected checkpoint is absent, the new chat performs only the smallest authoritative recovery needed to close that gate, then issues the missing gate receipt. Do not treat a fresh chat as a reset of an incomplete approval gate.
+
+# Historical Chat Transcript Archive
+
+Google Drive holds the consolidated historical chat transcript as a **small sequence of numbered raw-Markdown segments**, not routine per-chat files. `Freshwater Fishing Companion Chat Log 1.md` is the closed historical Segment 1 archive and `Freshwater Fishing Companion Chat Log 2.md` is the current active segment. The transcript is historical evidence/context only and never replaces GitHub `main`, Drive `Working Source/Current`, the Live Working State, or canonical repository documentation. Only one segment is active at a time.
+
+Beginning with **FCC 37**, preserve the active chat incrementally. **This is a blocking part of the approval gate, not optional archival cleanup.** If the required fresh-fetch, append, same-file replacement, or tail readback fails, the approval gate remains open and dependent discussion/work must stop until transcript preservation succeeds. Do not defer a missed approval checkpoint to session closeout merely because semantic-owner updates succeeded.
+
+1. at each explicit approval gate, after canonical owner/Live Working State capture, append the user/assistant conversation since the previous transcript checkpoint;
+2. if an unusually long discussion risks losing verbatim context before an approval gate, create a transcript-only preservation checkpoint without implying approval or changing project state;
+3. at session closeout, append all conversation since the last transcript checkpoint plus the session boundary, next chat title, and exact resume point;
+4. before every append, fetch the latest Drive copy of the **active Chat Log segment** so manual/user edits or earlier archival work cannot be overwritten;
+5. preserve all existing content, append only the new transcript block, replace the same Drive file object, and read back the appended tail to verify the boundary and content are present;
+6. never reconstruct supposedly verbatim missing conversation from chat memory, summaries, prior proposals, or canonical documentation. If a transcript gap exists, preserve it explicitly and use an authoritative user export when available.
+
+Because each Chat Log segment is a raw Markdown Drive file rather than a native Google Doc, its update path is fresh Drive read -> append -> same-file replacement -> tail verification. When the active segment becomes operationally cumbersome, close it at a clean approval/session boundary and open the next numbered segment. Closed segments are read-only historical archives except for explicit integrity repair from authoritative evidence. A discovered verbatim gap is marked explicitly and is never reconstructed from memory, summaries, canonical decisions, or proposals.
+
+**Transition note:** FCC 36 is excluded from automated archival. The user will insert the authoritative exported FCC 36 transcript manually between FCC 35 and FCC 37. Automated incremental transcript capture starts with FCC 37.
 
 # Live Working State — Inline Operational Ledger
 

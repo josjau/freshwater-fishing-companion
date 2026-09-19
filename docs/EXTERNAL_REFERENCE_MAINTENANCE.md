@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — External Reference Maintenance
 
 **Document:** EXTERNAL_REFERENCE_MAINTENANCE.md  
-**Document Revision:** 1.3.0  
+**Document Revision:** 1.3.1  
 **Document Status:** Approved  
 **Role:** Permanent maintenance standard for external references and externally hosted instructional media  
-**Last Updated:** 2026-08-26
+**Last Updated:** 2026-09-15
 
 # Purpose
 
@@ -54,6 +54,18 @@ Network findings must never automatically replace a URL, disable/remove a resour
 Detected technical concerns produce clear GitHub Actions warnings/run summaries and create or update one persistent Regulations maintenance issue as the authoritative human review queue. GitHub Actions email notifications are the approved initial external alert channel. A separate mail service is not required unless GitHub-native notification behavior later proves insufficient.
 
 The Regulations maintenance workflow should require only `contents: read` and `issues: write`; it must not receive source-write authority.
+
+
+### Regulations operational review queue
+
+The monthly automation and persistent GitHub issue form one operating system, but automation does not complete human review by itself.
+
+- Maintain at most one open `[Maintenance] Regulations resource review` issue as the active human review queue. The workflow-generated issue body is machine-owned current-run output and may be replaced by a later concern run; durable human findings, decisions, verification notes, and completed-review notes belong in issue comments.
+- Do not auto-close the maintenance issue. Human review determines when the current queue has been adequately dispositioned. A clean automated run does not independently establish legal/source correctness and therefore does not by itself close the human review queue.
+- Treat automated classifications as review prompts, not source decisions. Confirmed stale/broken resources or verified better canonical replacements follow the normal source-change workflow; benign redirects may be deliberately retained or normalized; access-limited/transient failures that work for a normal user may be recorded as no source change required; unresolved findings remain in the queue.
+- An open maintenance issue is normal operational state and does not reopen the closed Regulations product milestone or block unrelated Version 1 completion work merely because review items remain.
+- GitHub Actions email notifications remain the Version 1 external alert mechanism. Confirm notification delivery to the maintainer once; add a separate mail/webhook service only if GitHub-native notification behavior proves insufficient in practice.
+- The successful scheduled 2026-09-01 run demonstrated the production chain from schedule through validation/reference checking to persistent issue creation. Do not manufacture a synthetic failure solely to prove that path again; test changes proportionally when the workflow itself is modified.
 
 # Human Freshness Review
 

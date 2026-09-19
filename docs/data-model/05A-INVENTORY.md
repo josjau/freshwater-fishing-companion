@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 05A-INVENTORY.md  
-**Document Revision:** 0.4.73  
+**Document Revision:** 0.4.74  
 **Document Status:** Draft  
 **Implementation Status:** Approved / Not Implemented  
 **Decision Baseline:** D028, D056, D067, D069
@@ -2252,7 +2252,43 @@ The 2026-08-31 planning discussion establishes the following direction for detai
 - Quantity is an optional but supported inventory attribute, especially for consumables. Accurate Recommendation matching must not depend on the user continuously decrementing every lost or consumed item. Quick `-` / `+` adjustment and optional low-stock thresholds were discussed as convenience candidates; zero-stock meaning, low-stock behavior, and notification behavior remain open.
 - Reusable Inventory Locations under D013 are part of the review direction. Simple physical containers such as `My Tackle Box` may group owned pools and may later provide a low-friction current-availability input when the user brings that container. A default `My Tackle Box` plus a lightweight `New Location` flow were discussed as candidates, not locked UX.
 - The beginner continuity test is one owned rod/reel plus one tackle box containing hooks, weights, floats, soft plastics, hard baits, and terminal tackle. FCC should test whether selecting the rod/reel and physical tackle box/location can establish **What I Have With Me Today** with only individual exceptions and temporary/borrowed additions. This test does not create a separate inventory authority or pre-approve a Loadout domain.
-- Bulk import is a supported design goal. Structured imports should normalize values, detect/match existing pools, present the proposed merge/new-item result, and require explicit user approval before creating or changing persistent ownership. Screenshot/image extraction may feed candidate rows as a separate convenience layer but is not itself ownership authority.
+- Bulk import is a **Version 1 My Tackle requirement**, not merely a future convenience. Structured imports must normalize values, detect/match existing pools, present the proposed merge/new-item result, and require explicit user approval before creating or changing persistent ownership. Screenshot/image extraction may feed candidate rows as a separate convenience layer but is not itself ownership authority.
+
+## My Tackle Import / Export V1 Direction — APPROVED / EXACT CONTRACT DEFERRED TO MY TACKLE BUILD
+
+The 2026-09-15 V1 Completion Audit reclassified tackle import/export as an integral part of the Version 1 My Tackle build. The reason is functional rather than cosmetic: My Tackle must be able to ingest an existing real-world collection without forcing the user to recreate every owned item through one-at-a-time Add Entry, and Recommendation / What Should I Throw cannot rely on useful owned-tackle state until that migration path exists.
+
+The following direction is approved. Exact workbook columns, JSON property names, validation formulas, file-format versions, UI copy, and import-review interaction remain deliberately deferred to the dedicated Import/Export portion of the My Tackle production build.
+
+### One authoritative import pipeline
+
+- Manual single-item Add Entry and all bulk-import formats feed the **same authoritative My Tackle record model**. Import must not create a parallel inventory schema or second ownership authority.
+- All bulk formats first convert into one common import-candidate representation. Canonical normalization, family validation, existing-pool detection, duplicate/merge review, explicit ownership approval, and final persistence occur **after** format parsing so XLSX, CSV, JSON, and any later source cannot develop independent matching semantics.
+- Persistent ownership is created or changed only after explicit user review/approval. A parser recognizing a row is not itself an ownership action.
+- The user's existing Fishing Tackle Inventory should be used as the first real migration/acceptance dataset when this portion is built so the contract is tested against actual owned tackle rather than only synthetic examples.
+
+### Planned Version 1 format roles
+
+- **XLSX — primary guided bulk-entry/migration format.** FCC should provide a generated spreadsheet template whose decision-relevant fields use canonical controlled values and, where practical, dependent/cascading validation lists. Example: selecting **Hook** constrains the next selector to applicable Hook types; selecting **EWG** constrains Size to the supported EWG Hook-size vocabulary. The template should be generated from the same FCC canonical/family data used by the application rather than maintaining a hand-authored duplicate vocabulary. Validation lists, formulas, conditional formatting, and protected/supporting sheets may reduce invalid input, but the FCC importer remains authoritative because spreadsheet validation can be bypassed or modified. Template/version metadata should allow FCC to identify an older or incompatible workbook and route affected rows through review rather than silently accepting them.
+- **CSV — simple universal interchange.** CSV uses the same semantic import contract as XLSX but provides fewer authoring guardrails. It remains useful for power users, third-party/generated data, troubleshooting, and broad spreadsheet compatibility. Invalid or noncanonical values are reconciled through the same importer/review pipeline rather than a CSV-specific ruleset.
+- **FCC My Tackle JSON — native structured interchange.** JSON is intended primarily for lossless FCC-to-FCC My Tackle transfer, exact structured export/re-import, migration/version handling, and round-trip validation. Users are not expected to hand-author JSON. A My Tackle JSON export is distinct from the full-profile backup/recovery artifact owned by UD-9.
+- **Full FCC profile backup/restore remains separate.** Profile backup/recovery may include My Tackle plus other implemented durable User Knowledge, but it is a disaster-recovery/portability contract under UD-9 rather than the normal My Tackle bulk-entry format.
+- **Screenshot/image extraction remains optional convenience scope.** It may later produce proposed import candidates but does not bypass review or become ownership authority. Barcode/UPC capture remains separately deferred.
+
+### Custom / noncanonical owned-item rule
+
+My Tackle must remain a truthful user inventory even when FCC does not have a canonical Reference Knowledge identity for an owned item. This applies equally to manual entry, XLSX, CSV, JSON, and later import sources.
+
+- A user-defined/custom item is valid User Knowledge and **does not create or expand canonical Reference Knowledge**.
+- A custom owned item may optionally carry an **explicit user-confirmed canonical functional mapping** when an existing FCC identity truthfully describes how that item functions for fishing decisions. Example: a handmade lure named `Bob's Bluegill Special` may remain the user's custom inventory identity while explicitly mapping to canonical `spinnerbait` for applicable Recommendation/satisfaction behavior.
+- If no truthful canonical mapping exists, the custom item remains valid and visible in My Tackle and may be selected as currently available, but it cannot automatically satisfy a canonical Rig/Recommendation requirement. FCC must not infer a mapping from name, description, manufacturer, appearance, prior use, or other indirect evidence.
+- The import sheet/file must therefore provide an intentional escape hatch for **Custom / Other / Unmapped** values and user-defined names/descriptions rather than rejecting legitimate ownership that falls outside FCC's current canonical vocabulary.
+- Controlled XLSX dropdowns should constrain data where FCC needs canonical/standard semantics while allowing explicit Custom/Other or Unknown states where the governing family contract permits them. Free-form descriptive fields such as custom item name, manufacturer/model, and notes remain separate from canonical matching semantics.
+- This import/export rule is a workflow application of MT-1C/MT-1D: ownership can exist without canonical mapping; explicit valid mapping enables automated canonical satisfaction subject to the governing family contract and current-availability rules.
+
+### Acceptance expectations for the later Import/Export build
+
+The exact build should include, at minimum, tests for guided XLSX entry, CSV import, FCC-native JSON export/import, duplicate/pool detection, quantity merge review, Location handling, Custom/Other/Unknown values, mapped and unmapped custom items, invalid/older-template handling, explicit user approval before persistence, and lossless My Tackle JSON round-trip. XLSX/CSV export should remain human-readable; JSON should preserve the richer FCC-native structure needed for exact round-trip behavior.
 
 ## Approved Item-Family Review Decisions
 
@@ -2432,7 +2468,7 @@ User-entered and imported text is untrusted by default and should render through
 
 GATE-006 Settings / User Data Architecture and GATE-007 My Tackle Availability Foundation are CLOSED / PASS. The closed GATE-007 foundation settled the Recommendation-facing contracts required by D069: My Tackle family semantics, explicit canonical mapping/satisfaction, current-availability composition, quantity sufficiency, Fishing Setup contribution/usability, Inventory Location allocation semantics, derived diagnostics, dependent-reference reconciliation, and source-change freshness. GATE-004 What Should I Throw is now the active product gate.
 
-Broader authoritative My Tackle product persistence/UI, ownership-management workflows, import/export UX, and non-Recommendation inventory conveniences remain later scoped implementation work and must continue to obey the settled User Knowledge architecture and family contracts. GATE-004 must consume the closed foundation without creating a second ownership, availability, compatibility, or inventory authority.
+Broader authoritative My Tackle product persistence/UI and ownership-management workflows remain later implementation work. Import/export UX is now explicitly **required within the Version 1 My Tackle build** under the approved Import / Export V1 Direction above, while exact file contracts and interaction details remain deferred to that build. Non-Recommendation inventory conveniences remain later scoped work. All of these must continue to obey the settled User Knowledge architecture and family contracts. GATE-004 must consume the closed foundation without creating a second ownership, availability, compatibility, or inventory authority.
 
 ---
 

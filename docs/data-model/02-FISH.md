@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.4.11  
+**Document Revision:** 0.4.12  
 **Document Status:** Approved — Production Baseline + Fish Production Contract  
 **Implementation Status:** Version 1 production migration COMPLETE / VALIDATED / CLOSED — 30 active Fish on the approved production schema  
 **Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056–D061, FISH-001–FISH-007  
-**Last Updated:** 2026-08-29
+**Last Updated:** 2026-09-14
 
 ---
 
@@ -564,3 +564,15 @@ Fish Guide Version 1 remains **CLOSED / PASS**. The completed Recommendation Pre
 - no Fish `conditionIds[]`, Fish↔Condition relationship, recommendation relationship, or Fish schema migration was introduced by this presentation behavior.
 
 The accepted UI keeps Fish reference chips in the clickable-knowledge visual family while preserving the semantic distinction between canonical Condition help and Fish-owned Habitat explanations. Detailed Foundation review chronology belongs in the closed Foundation workstream and Git history.
+
+## G4-RIF-1A Fish Migration Target — APPROVED / PENDING IMPLEMENTATION
+
+The legacy production `habitatTags[]` vocabulary and current presentation mappings above remain the runtime baseline until explicit migration. G4-RIF-1A has now CLOSED / PASS at the semantic-review level and approves the later Fish-side migration to:
+
+- one canonical 13-concept physical Habitat registry;
+- explicit evidence-backed Fish↔Habitat associations by stable Habitat ID, using the approved 30-Fish set in D069;
+- Fish remaining the semantic owner of species-intrinsic Habitat association even when relationship storage is external to `fish.js`;
+- Fish waterbody value **`Creek` → `Creek / Stream`** as a label/value normalization only, preserving the same waterbody concept;
+- the separate exact Fish waterbody bridge: Pond↔`pond`, Lake↔`lake`, Reservoir↔`reservoir`, River↔`river`, Creek / Stream↔`creek-stream`.
+
+The waterbody bridge and Habitat correspondence establish environmental equivalence only. They do not encode Fish preference strength, Recommendation eligibility, contextual suitability, ranking, weighting, or score. No Fish identity changes are required. Current production remains unchanged until the approved migration is implemented and validated.

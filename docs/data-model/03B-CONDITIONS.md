@@ -1,10 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 03B-CONDITIONS.md  
-**Document Revision:** 0.5.0  
+**Document Revision:** 0.5.1  
 **Document Status:** Approved  
 **Implementation Status:** IMPLEMENTED / VALIDATED / CLOSED — 35 active Condition records across 8 groups  
 **Decision Baseline:** D004, D056, D069
+**Last Updated:** 2026-09-14
 
 ---
 
@@ -192,6 +193,42 @@ Current production satisfies the locked Conditions contract:
 7. Fish-owned labels without semantically exact Condition equivalents remain Fish-owned rather than being forced into the Condition vocabulary.
 
 The runtime presentation defects discovered during the Foundation review were repaired and accepted before the Foundation closed. Detailed review chronology remains in `workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md` and Git history rather than this canonical domain owner.
+
+# G4-RIF-1A Approved Migration Target — PENDING IMPLEMENTATION
+
+The current production contract above remains authoritative until migration. G4-RIF-1A closes the Fish Recommendation-input semantic review and approves a later Conditions migration from **35 records / 8 groups** to **40 records / 10 groups** without changing Condition ownership.
+
+Approved target category IDs are:
+
+```text
+waterbody
+access-position
+depth-zone
+cover-exposure
+structure-contour
+bottom-substrate
+water-clarity
+current
+season
+light-sky
+```
+
+Approved target Condition changes relevant to the Fish bridge are:
+
+- replace current `rock` with `rock-boulder` — **Rock / Boulder Structure**;
+- split current `drop-off-channel-deep-structure` into `channel` — **Channel** and `drop-off-deep-structure` — **Drop-off / Deep Structure**;
+- add `pool-deep-hole` — **Pool / Deep Hole** under `structure-contour`;
+- add `bottom-rocky-gravel` — **Rocky / Gravel Bottom**, `bottom-sandy` — **Sandy Bottom**, and `bottom-muddy-silty` — **Muddy / Silty Bottom** under `bottom-substrate`;
+- split current mixed `cover-structure` into `cover-exposure` and `structure-contour` as already approved;
+- retain existing `creek-stream` — **Creek / Stream** as the Waterbody Condition corresponding to the normalized Fish waterbody label.
+
+The approved target summary for `open-water` is:
+
+> Water with little immediate cover around the area being fished.
+
+This wording deliberately allows Open Water to coexist with independent Structure / Contour observations such as Channel, Rock / Boulder Structure, Drop-off / Deep Structure, or Pool / Deep Hole.
+
+The exact Habitat↔Condition and Fish-waterbody↔Condition correspondence set is owned by `09-RELATIONSHIPS.md`. Correspondence is environmental equivalence only; it is not suitability, preference, ranking, weighting, or score. Production source, validators, categories, IDs, and UI behavior remain unchanged until an explicit migration implementation/validation step is authorized.
 
 # Future Enhancements
 
