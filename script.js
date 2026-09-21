@@ -1,8 +1,8 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: script.js
-   PURPOSE: Coordinates routes, Fish/Rig/Knot discovery, Reel Setup,
-   connected knowledge navigation, Tackle placeholders, and Rig readiness.
+   PURPOSE: Coordinates shared application routing/navigation and keeps
+   Guide/feature controllers in explicit ownership boundaries.
    ========================================================== */
 
 "use strict";
@@ -15,12 +15,17 @@ const BUILD_INFO = Object.freeze({
 const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
 console.info(`[Loaded] ${BUILD_INFO.file} | ${BUILD_INFO.milestone}`);
 
+/* ==========================================================
+   SHARED APP — ROUTES + GLOBAL NAVIGATION CONTRACT
+   ========================================================== */
+
 const ROUTES = Object.freeze({
     DASHBOARD: "dashboard",
     FISH: "fish",
     FISH_BROWSE: "fish-browse",
     FISH_DETAIL: "fish-detail",
     FISH_COMPARE_CATALOG: "fish-compare-catalog",
+    FISH_COMPARE_CHOOSER: "fish-compare-chooser",
     FISH_COMPARE: "fish-compare",
     RIGS: "rigs",
     RIG_BROWSE: "rig-browse",
@@ -38,6 +43,10 @@ const ROUTES = Object.freeze({
     FAVORITES: "favorites",
     SETTINGS: "settings"
 });
+
+/* ==========================================================
+   RIG GUIDE — COLLECTION CONFIGURATION
+   ========================================================== */
 
 const RIG_COLLECTIONS = Object.freeze({
     core: Object.freeze({
@@ -83,41 +92,9 @@ const RIG_DIFFICULTY_ORDER = Object.freeze([
     "Expert"
 ]);
 
-const FISH_SPECIALIZED_TARGETING = Object.freeze({
-    "longnose-gar": Object.freeze({
-        body: "Gar can be caught with conventional fishing tackle, but their hard, bony jaws can make reliable hooksets difficult. Anglers who target Gar regularly may use specialized tackle or techniques. Check current local regulations before choosing a specialized method.",
-        safety: "Do not eat Gar eggs (roe); they are toxic to humans.",
-        researchTopics: Object.freeze([
-            "longnose gar fishing tackle",
-            "longnose gar fishing techniques",
-            "gar hookset techniques",
-            "longnose gar fishing regulations [your state]"
-        ]),
-        researchNote: "For regulations, prioritize your state wildlife agency or official fishing regulations."
-    }),
-    "spotted-gar": Object.freeze({
-        body: "Gar can be caught with conventional fishing tackle, but their hard, bony jaws can make reliable hooksets difficult. Anglers who target Gar regularly may use specialized tackle or techniques. Check current local regulations before choosing a specialized method.",
-        safety: "Do not eat Gar eggs (roe); they are toxic to humans.",
-        researchTopics: Object.freeze([
-            "spotted gar fishing tackle",
-            "spotted gar fishing techniques",
-            "gar hookset techniques",
-            "spotted gar fishing regulations [your state]"
-        ]),
-        researchNote: "For regulations, prioritize your state wildlife agency or official fishing regulations."
-    }),
-    "paddlefish": Object.freeze({
-        body: "Because Paddlefish feed by filtering plankton rather than chasing bait or lures, anglers commonly target them with specialized snagging tackle during limited seasons and in designated waters. Equipment, legal methods, seasons, permits, and size limits vary by state and waterbody, so check current regulations before fishing.",
-        safety: "Paddlefish snagging commonly uses heavy line, large treble hooks, and heavy sinkers. Keep clear of other anglers, control casts and sweeping hooksets, and use extra caution when landing fish or freeing snagged tackle.",
-        researchTopics: Object.freeze([
-            "paddlefish snagging tackle",
-            "paddlefish snagging techniques",
-            "paddlefish regulations [your state]",
-            "paddlefish season and size limits [your state]"
-        ]),
-        researchNote: "For regulations, prioritize your state wildlife agency or official fishing regulations."
-    })
-});
+/* ==========================================================
+   KNOT GUIDE — COLLECTION CONFIGURATION
+   ========================================================== */
 
 const KNOT_COLLECTIONS = Object.freeze({
     all: Object.freeze({
@@ -147,14 +124,12 @@ const KNOT_COLLECTIONS = Object.freeze({
     })
 });
 
+/* ==========================================================
+   SHARED APP — RUNTIME STATE + DETAIL NAVIGATION STACK
+   ========================================================== */
+
 let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
-let selectedFishId = null;
-let selectedFishCollectionKey = "all";
-let selectedFishRelationshipId = null;
-let fishGuideState = { query: "", scrollY: 0 };
-let fishBrowseState = { query: "", scrollY: 0 };
-let fishComparisonCatalogScrollY = 0;
 let selectedRigId = null;
 let selectedRigCollectionKey = "all";
 let selectedRigConfigurationId = null;
@@ -208,7 +183,16 @@ function returnToDetailNavigationContext() {
 
     if (context.route === ROUTES.FISH_DETAIL) {
         selectedFishId = context.state.selectedFishId;
+        fishDetailState = context.state.fishDetailState
+            ? { ...context.state.fishDetailState, expandedSectionIds: [...context.state.fishDetailState.expandedSectionIds] }
+            : createInitialFishDetailState(selectedFishId);
         showView(ROUTES.FISH_DETAIL);
+        return true;
+    }
+
+    if (context.route === ROUTES.FISH_COMPARE_CHOOSER) {
+        selectedFishId = context.state.selectedFishId;
+        showView(ROUTES.FISH_COMPARE_CHOOSER);
         return true;
     }
 
@@ -248,6 +232,7 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.FISH_BROWSE]: renderFishBrowseView,
     [ROUTES.FISH_DETAIL]: renderFishDetailView,
     [ROUTES.FISH_COMPARE_CATALOG]: renderFishComparisonCatalogView,
+    [ROUTES.FISH_COMPARE_CHOOSER]: renderFishComparisonChooserView,
     [ROUTES.FISH_COMPARE]: renderFishComparisonView,
     [ROUTES.RIGS]: renderRigGuideView,
     [ROUTES.RIG_BROWSE]: renderRigBrowseView,
@@ -281,6 +266,7 @@ function showView(route) {
     if (route === ROUTES.DASHBOARD) {
         clearDetailNavigationStack();
         fishGuideState = { query: "", scrollY: 0 };
+        fishDetailState = createInitialFishDetailState(null);
         selectedRegulationStateId = null;
         regulationsGatewayState = { query: "" };
         currentView = ROUTES.DASHBOARD;
@@ -298,6 +284,59 @@ function showView(route) {
     });
 }
 
+/* ==========================================================
+   FISH GUIDE — STATE + DATA ACCESS + CONTROLLERS
+   Specialized authored targeting/safety/research guidance is owned by
+   data/fish-specialized-guidance.js and consumed here.
+   ========================================================== */
+
+let selectedFishId = null;
+let selectedFishCollectionKey = "all";
+let selectedFishRelationshipId = null;
+let fishGuideState = { query: "", scrollY: 0 };
+let fishBrowseState = { query: "", scrollY: 0 };
+let fishComparisonCatalogScrollY = 0;
+
+function createInitialFishDetailState(fishId) {
+    return {
+        fishId,
+        expandedSectionIds: [],
+        scrollY: 0,
+        restoreScroll: false
+    };
+}
+
+let fishDetailState = createInitialFishDetailState(null);
+
+function resetFishDetailState(fishId) {
+    fishDetailState = createInitialFishDetailState(fishId);
+}
+
+function captureFishDetailNavigationState() {
+    const expandedSectionIds = Array.isArray(fishDetailState.expandedSectionIds)
+        ? [...fishDetailState.expandedSectionIds]
+        : [];
+    return {
+        selectedFishId,
+        fishDetailState: {
+            fishId: selectedFishId,
+            expandedSectionIds,
+            scrollY: window.scrollY,
+            restoreScroll: true
+        }
+    };
+}
+
+function restoreFishDetailScroll() {
+    if (fishDetailState.fishId !== selectedFishId || fishDetailState.restoreScroll !== true) return;
+    const scrollY = Number(fishDetailState.scrollY ?? 0);
+    requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+        fishDetailState = { ...fishDetailState, restoreScroll: false };
+    });
+}
+
+// Data access + derived helpers.
 function getActiveFish() {
     return FISH_DATA.filter((fish) => fish.isActive === true);
 }
@@ -390,6 +429,7 @@ function renderFishSearchResultCard(fish) {
     );
 }
 
+// Landing + browse controllers.
 function renderFishGuideView(appMain) {
     const activeFish = getActiveFish();
     const visibleCategories = getVisibleFishCategories(activeFish);
@@ -443,8 +483,12 @@ function renderFishBrowseView(appMain) {
         inputId: "fish-browse-search-input",
         title: collection.title,
         description: collection.description,
-        label: `Search within ${collection.title}`,
+        label: "Search Fish",
+        helpText: "Fish name, alias, or group",
+        inputDescriptionId: "fish-browse-search-help",
         placeholder: getFishSearchPlaceholder(scopeKey, collection.title),
+        showSubmitButton: false,
+        viewClass: "fish-browse-view",
         parentLabel: "Fish Guide",
         initialQuery: fishBrowseState.query,
         onQueryChange: (query) => {
@@ -467,6 +511,7 @@ function updateFishBrowseResults(appMain, query) {
     });
 }
 
+// Detail controllers + related knowledge.
 function openFishDetailFromGuide(fishId) {
     const fish = findRecordById(getActiveFish(), fishId);
     if (!fish || !isFishDetailReady(fish)) {
@@ -482,6 +527,7 @@ function openFishDetailFromGuide(fishId) {
         state: { fishGuideState: { ...fishGuideState } }
     });
     selectedFishId = fishId;
+    resetFishDetailState(fishId);
     showView(ROUTES.FISH_DETAIL);
 }
 
@@ -503,6 +549,7 @@ function openFishDetailFromBrowse(fishId) {
         }
     });
     selectedFishId = fishId;
+    resetFishDetailState(fishId);
     showView(ROUTES.FISH_DETAIL);
 }
 
@@ -530,7 +577,10 @@ function getFishRigRecommendationContexts(fishId) {
         .map((recommendation) => {
             const rig = findRecordById(RIG_DATA, recommendation.rigId);
             if (!rig || rig.isActive !== true) return null;
-            return { ...recommendation, rig };
+            const lureBait = recommendation.lureBaitId && typeof LURE_BAIT_DATA !== "undefined"
+                ? findRecordById(LURE_BAIT_DATA, recommendation.lureBaitId)
+                : null;
+            return { ...recommendation, rig, lureBait };
         })
         .filter(Boolean);
 }
@@ -545,6 +595,8 @@ function renderFishDetailView(appMain) {
         return;
     }
 
+    if (fishDetailState.fishId !== fish.id) resetFishDetailState(fish.id);
+
     renderFishDetail(appMain, {
         record: fish,
         category: getFishCategory(getFishCategoryId(fish)),
@@ -552,13 +604,25 @@ function renderFishDetailView(appMain) {
         relationships: getFishRelationshipContexts(fish.id),
         rigRecommendations: getFishRigRecommendationContexts(fish.id),
         specializedTargeting: FISH_SPECIALIZED_TARGETING[fish.id] ?? null,
+        expandedDisclosureIds: fishDetailState.expandedSectionIds,
         parentLabel: returnContext?.label ?? "Fish Guide",
         onParent: returnContext ? returnToDetailNavigationContext : () => showView(ROUTES.FISH),
-        onRelationshipSelect: openFishComparisonFromDetail,
-        onRigSelect: openRigDetailFromFish
+        onDisclosureStateChange: (expandedSectionIds) => {
+            fishDetailState = {
+                ...fishDetailState,
+                fishId: fish.id,
+                expandedSectionIds: [...expandedSectionIds]
+            };
+        },
+        onCompareSelect: openFishComparisonFromDetail,
+        onRigSelect: openRigDetailFromFish,
+        onRegulationsSelect: openRegulationsFromFish
     });
+
+    restoreFishDetailScroll();
 }
 
+// Compare workflow.
 function openFishComparisonCatalog() {
     clearDetailNavigationStack();
     fishGuideState.scrollY = window.scrollY;
@@ -612,20 +676,62 @@ function openFishComparisonFromCatalog(relationshipId) {
     showView(ROUTES.FISH_COMPARE);
 }
 
-function openFishComparisonFromDetail(relationshipId) {
-    const relationship = getActiveFishRelationships().find((item) => item.id === relationshipId);
+function openFishComparisonFromDetail() {
     const fish = findRecordById(getActiveFish(), selectedFishId);
-    if (!relationship || !fish || !relationship.fishIds.includes(fish.id)) {
-        console.warn(`Fish comparison could not be opened: ${relationshipId}`);
-        return;
-    }
+    const relationships = fish ? getFishRelationshipsForFish(fish.id) : [];
+    if (!fish || relationships.length === 0) return;
 
     pushDetailNavigationContext({
         route: ROUTES.FISH_DETAIL,
         label: fish.name,
+        state: captureFishDetailNavigationState()
+    });
+
+    if (relationships.length === 1) {
+        selectedFishRelationshipId = relationships[0].id;
+        showView(ROUTES.FISH_COMPARE);
+        return;
+    }
+
+    showView(ROUTES.FISH_COMPARE_CHOOSER);
+}
+
+function renderFishComparisonChooserView(appMain) {
+    const fish = findRecordById(getActiveFish(), selectedFishId);
+    const returnContext = peekDetailNavigationContext();
+    if (!fish) {
+        if (returnContext && returnToDetailNavigationContext()) return;
+        showView(ROUTES.FISH);
+        return;
+    }
+
+    const comparisons = getFishRelationshipContexts(fish.id)
+        .slice()
+        .sort((first, second) => first.relatedFish.name.localeCompare(second.relatedFish.name, undefined, { sensitivity: "base" }));
+
+    renderFishComparisonChooser(appMain, {
+        currentFish: fish,
+        comparisons,
+        parentLabel: returnContext?.label ?? fish.name,
+        onParent: returnContext ? returnToDetailNavigationContext : () => showView(ROUTES.FISH_DETAIL),
+        onSelect: openFishComparisonFromChooser
+    });
+}
+
+function openFishComparisonFromChooser(relationshipId) {
+    const fish = findRecordById(getActiveFish(), selectedFishId);
+    const relationship = getActiveFishRelationships().find((item) => item.id === relationshipId);
+    if (!fish || !relationship || !relationship.fishIds.includes(fish.id)) {
+        console.warn(`Fish comparison could not be opened from the chooser: ${relationshipId}`);
+        return;
+    }
+
+    pushDetailNavigationContext({
+        route: ROUTES.FISH_COMPARE_CHOOSER,
+        label: `Compare ${fish.name}`,
         state: { selectedFishId: fish.id }
     });
-    selectedFishRelationshipId = relationshipId;
+    selectedFishRelationshipId = relationship.id;
     showView(ROUTES.FISH_COMPARE);
 }
 
@@ -676,9 +782,23 @@ function openFishDetailFromComparison(fishId) {
         state: { selectedFishRelationshipId: relationship.id }
     });
     selectedFishId = fish.id;
+    resetFishDetailState(fish.id);
     showView(ROUTES.FISH_DETAIL);
 }
 
+function openRegulationsFromFish() {
+    const fish = findRecordById(getActiveFish(), selectedFishId);
+    if (!fish) return;
+
+    pushDetailNavigationContext({
+        route: ROUTES.FISH_DETAIL,
+        label: fish.name,
+        state: captureFishDetailNavigationState()
+    });
+    showView(ROUTES.REGULATIONS);
+}
+
+// Cross-guide handoff initiated from Fish detail.
 function openRigDetailFromFish(rigId, lureBaitId = null) {
     const fish = findRecordById(getActiveFish(), selectedFishId);
     const rig = findRecordById(RIG_DATA, rigId);
@@ -690,13 +810,17 @@ function openRigDetailFromFish(rigId, lureBaitId = null) {
     pushDetailNavigationContext({
         route: ROUTES.FISH_DETAIL,
         label: fish.name,
-        state: { selectedFishId: fish.id }
+        state: captureFishDetailNavigationState()
     });
     selectedRigId = rig.id;
     selectedRigCollectionKey = "all";
     selectedRigConfigurationId = lureBaitId;
     showView(ROUTES.RIG_DETAIL);
 }
+
+/* ==========================================================
+   END FISH GUIDE
+   ========================================================== */
 
 function renderRigGuideView(appMain) {
     renderView(appMain, {
@@ -3179,6 +3303,7 @@ function openRegulationState(stateId) {
 
 function renderRegulationsGatewayRoute(appMain) {
     const states = getActiveRegulationStates();
+    const returnContext = peekDetailNavigationContext();
     if (!selectedRegulationStateId || !states.some((state) => state.id === selectedRegulationStateId)) {
         selectedRegulationStateId = states[0]?.id ?? null;
     }
@@ -3187,6 +3312,8 @@ function renderRegulationsGatewayRoute(appMain) {
         states,
         selectedStateId: selectedRegulationStateId,
         initialQuery: regulationsGatewayState.query,
+        parentLabel: returnContext?.route === ROUTES.FISH_DETAIL ? returnContext.label : null,
+        onParent: returnContext?.route === ROUTES.FISH_DETAIL ? returnToDetailNavigationContext : null,
         onQueryChange: (query) => {
             regulationsGatewayState.query = query;
         },

@@ -12,6 +12,10 @@ const MEDIA_DATA_BUILD_INFO = Object.freeze({
 });
 
 const MEDIA_DATA = Object.freeze([
+    // ==========================================================
+    // FISH GUIDE MEDIA
+    // Fish-owned primary-identification media records.
+    // ==========================================================
     {
         id: "rainbow-trout-primary-identification",
         ownerType: "fish",
@@ -822,6 +826,10 @@ const MEDIA_DATA = Object.freeze([
         lastModifiedVersion: "0.6.0",
         isActive: true
     },
+    // ==========================================================
+    // NON-FISH MEDIA OWNERS
+    // Tackle, Lure/Bait, and Knot media continue below.
+    // ==========================================================
     {
         id: "fixed-bobber-reference",
         ownerType: "tackle",

@@ -729,6 +729,46 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
     }
 }
 
+function validateFishSpecializedGuidance(specializedGuidance, fish) {
+    const label = "Fish specialized guidance";
+    const requiredFishIds = ["longnose-gar", "spotted-gar", "paddlefish"];
+    const guidanceFields = ["body", "safety", "researchTopics", "researchNote"];
+
+    if (!isPlainObject(specializedGuidance)) {
+        fail(label, "registry must be an object keyed by Fish ID");
+        return;
+    }
+
+    const fishById = indexById(fish);
+    for (const fishId of requiredFishIds) {
+        if (!Object.prototype.hasOwnProperty.call(specializedGuidance, fishId)) {
+            fail(label, `missing required specialized guidance for ${fishId}`);
+        }
+    }
+
+    for (const [fishId, record] of Object.entries(specializedGuidance)) {
+        if (!fishById.has(fishId)) {
+            fail(label, `unresolved Fish ID ${fishId}`);
+        } else if (fishById.get(fishId)?.isActive !== true) {
+            fail(label, `${fishId}: specialized guidance references inactive Fish`);
+        }
+        if (!isPlainObject(record)) {
+            fail(label, `${fishId}: guidance record must be an object`);
+            continue;
+        }
+        validateExactFieldOrder(record, guidanceFields, `${label} ${fishId}`);
+        for (const field of ["body", "safety", "researchNote"]) {
+            if (typeof record[field] !== "string" || record[field].trim() === "") {
+                fail(label, `${fishId}: ${field} must be non-empty text`);
+            }
+        }
+        validateTextArray(record.researchTopics, `${label} ${fishId} researchTopics`);
+        if (Array.isArray(record.researchTopics) && record.researchTopics.length === 0) {
+            fail(label, `${fishId}: researchTopics must not be empty`);
+        }
+    }
+}
+
 function getMarkdownHeadingSection(text, heading) {
     const marker = `## ${heading}`;
     const start = text.indexOf(marker);
@@ -3101,6 +3141,10 @@ function validateCanonicalData() {
         ["FISH_IDENTIFICATION_RELATIONSHIPS"]
     );
     const fishRigGuidanceBindings = loadBindings("data/fish-rig-guidance.js", ["FISH_RIG_GUIDANCE"]);
+    const fishSpecializedGuidanceBindings = loadBindings(
+        "data/fish-specialized-guidance.js",
+        ["FISH_SPECIALIZED_TARGETING"]
+    );
     const rigBindings = loadBindings("data/rigs.js", ["RIG_DATA", "CORE_RIG_IDS"]);
     const conditionBindings = loadBindings("data/conditions.js", ["CONDITION_DATA"]);
     const lureBaitBindings = loadBindings("data/lure-bait.js", ["LURE_BAIT_DATA"]);
@@ -3128,6 +3172,7 @@ function validateCanonicalData() {
         fishRigGuidanceBindings.FISH_RIG_GUIDANCE,
         "Fish-to-Rig guidance"
     );
+    const fishSpecializedGuidance = fishSpecializedGuidanceBindings.FISH_SPECIALIZED_TARGETING;
     const rigs = requireArray(rigBindings.RIG_DATA, "Rig registry");
     const conditions = requireArray(conditionBindings.CONDITION_DATA, "Condition registry");
     const lureBait = requireArray(lureBaitBindings.LURE_BAIT_DATA, "Lure/Bait registry");
@@ -3155,6 +3200,7 @@ function validateCanonicalData() {
     validateCoreRegistry(rigBindings.CORE_RIG_IDS, rigs, "Core Rig registry");
     validateCoreRegistry(knotBindings.CORE_KNOT_IDS, knots, "Core Knot registry");
     validateFishProductionData(fish, categories, fishIdentification, fishRigGuidance, rigs, legacyCategoryMap);
+    validateFishSpecializedGuidance(fishSpecializedGuidance, fish);
     validateRegulationsData(regulationsBindings.REGULATIONS_DATA_BUILD_INFO, states, stateResources, stateNotices);
     validateConditionsData(conditions, rigs);
     validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishRigGuidance, knots);

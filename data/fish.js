@@ -13,6 +13,7 @@ const FISH_DATA_BUILD_INFO = Object.freeze({
 });
 
 const FISH_DATA = Object.freeze([
+    // Bass
     {
         id: "largemouth-bass",
         name: "Largemouth Bass",
@@ -30,7 +31,7 @@ const FISH_DATA = Object.freeze([
             "The mouth hinge extends behind the rear edge of the eye when the mouth is closed.",
             "A broad dark horizontal stripe runs along the side.",
             "The two dorsal-fin sections are weakly connected and separated by a deep notch.",
-            "The tongue usually lacks the rough tooth patch found on many Smallmouth and Spotted Bass; color alone is not decisive."
+            "The tongue usually lacks a rough tooth patch; color alone is not decisive."
         ],
         habitatTags: ["Grass", "Timber", "Brush", "Shallow Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
@@ -73,7 +74,7 @@ const FISH_DATA = Object.freeze([
         identificationTraits: [
             "The mouth hinge is approximately even with the rear edge of the eye when the mouth is closed.",
             "A dark lateral stripe is accompanied by rows of dark spots below it.",
-            "The two dorsal-fin sections are connected and are not divided by the deep notch typical of a Largemouth Bass.",
+            "The two dorsal-fin sections are connected without a deep separating notch.",
             "A rough tooth patch on the tongue can support the identification but should not be used alone."
         ],
         habitatTags: ["Rock", "Current", "Channel", "Deep Water"],
@@ -95,7 +96,7 @@ const FISH_DATA = Object.freeze([
         identificationTraits: [
             "The body is deep, with a distinctly arched back behind the head.",
             "The tongue has one round or heart-shaped tooth patch.",
-            "Horizontal side stripes support the identification, but body shape and tongue-patch pattern provide the stronger separation from Striped Bass."
+            "Horizontal side stripes support the identification, while the deep body and single tongue patch are stronger diagnostic features."
         ],
         habitatTags: ["Open Water", "Current", "Deep Water"],
         waterbodyTypes: ["Lake", "Reservoir", "River", "Creek"]
@@ -114,7 +115,7 @@ const FISH_DATA = Object.freeze([
         family: "Moronidae",
         aliases: ["Striper"],
         identificationTraits: [
-            "The body is slender and does not have the distinctly arched back of a White Bass.",
+            "The body is slender, with a gently arched back profile.",
             "Strong horizontal side stripes are mostly continuous rather than broken.",
             "The tongue has two distinct parallel tooth patches."
         ],
@@ -135,13 +136,121 @@ const FISH_DATA = Object.freeze([
         family: "Moronidae",
         aliases: ["Wiper", "Whiterock Bass"],
         identificationTraits: [
-            "The body is deeper than a typical Striped Bass and intermediate between the parent species.",
+            "The body has intermediate depth between the parent species.",
             "Horizontal side stripes are commonly broken or discontinuous.",
             "Tongue-patch presentation varies and should be treated as supporting evidence rather than the sole identifier."
         ],
         habitatTags: ["Open Water", "Current", "Deep Water"],
         waterbodyTypes: ["Lake", "Reservoir", "River"]
     },
+    // Catfish
+    {
+        id: "channel-catfish",
+        name: "Channel Catfish",
+        summary:
+            "A common catfish recognized by its deeply forked tail, sensory " +
+            "barbels, and the curved lower edge of its anal fin.",
+        createdVersion: "0.1.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Ictalurus punctatus",
+        categoryId: "catfish",
+        family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The tail is deeply forked.",
+            "The lower edge of the anal fin is curved rather than straight.",
+            "Sensory barbels surround the mouth.",
+            "Dark side spots may be present, especially on smaller fish, but the spotting can become faint or absent."
+        ],
+        habitatTags: ["Channel", "Current", "Timber", "Open Water"],
+        waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
+    },
+    {
+        id: "blue-catfish",
+        name: "Blue Catfish",
+        summary:
+            "A large catfish recognized by its deeply forked tail and the " +
+            "long, straight lower edge of its anal fin.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Ictalurus furcatus",
+        categoryId: "catfish",
+        family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The tail is deeply forked.",
+            "The anal fin is long, with a straight lower edge.",
+            "The body is generally a plain blue-gray rather than strongly spotted."
+        ],
+        habitatTags: ["Channel", "Current", "Deep Water", "Rock"],
+        waterbodyTypes: ["River", "Reservoir"]
+    },
+    {
+        id: "flathead-catfish",
+        name: "Flathead Catfish",
+        summary:
+            "A heavy-bodied catfish recognized by its broad flattened head, " +
+            "projecting lower jaw, and tail that is not deeply forked.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Pylodictis olivaris",
+        categoryId: "catfish",
+        family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The head is broad and noticeably flattened.",
+            "The lower jaw projects beyond the upper jaw.",
+            "The tail is not deeply forked."
+        ],
+        habitatTags: ["Timber", "Brush", "Channel", "Deep Water"],
+        waterbodyTypes: ["River", "Reservoir"]
+    },
+    {
+        id: "black-bullhead",
+        name: "Black Bullhead",
+        summary:
+            "A compact bullhead catfish recognized by its dark chin barbels " +
+            "and a nearly square tail with a slight notch.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Ameiurus melas",
+        categoryId: "catfish",
+        family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The chin barbels are dark gray to black.",
+            "The tail is not forked and has a slight notch along the rear edge.",
+            "The body has the compact, broad-headed profile typical of bullhead catfish."
+        ],
+        habitatTags: ["Mud", "Shallow Water"],
+        waterbodyTypes: ["Pond", "Lake", "Reservoir", "River", "Creek"]
+    },
+    {
+        id: "yellow-bullhead",
+        name: "Yellow Bullhead",
+        summary:
+            "A compact bullhead catfish recognized by its white or yellow " +
+            "chin barbels and nearly straight, unforked tail.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        scientificName: "Ameiurus natalis",
+        categoryId: "catfish",
+        family: "Ictaluridae",
+        aliases: [],
+        identificationTraits: [
+            "The chin barbels are white or yellow rather than dark.",
+            "The tail is unforked, with a rear edge that is nearly straight.",
+            "The body has the compact, broad-headed profile typical of bullhead catfish."
+        ],
+        habitatTags: ["Grass", "Shallow Water"],
+        waterbodyTypes: ["Pond", "Lake", "River", "Creek"]
+    },
+    // Crappie & Sunfish
     {
         id: "bluegill",
         name: "Bluegill",
@@ -199,7 +308,7 @@ const FISH_DATA = Object.freeze([
         family: "Centrarchidae",
         aliases: ["Black Perch"],
         identificationTraits: [
-            "The mouth is noticeably larger than a Bluegill's.",
+            "The mouth is noticeably large for a sunfish.",
             "The body is comparatively elongated and thick rather than strongly disk-shaped.",
             "Blue facial markings are visible on the cheek and lower head.",
             "The fins often show pale or salmon-colored margins, and a dark blotch marks the rear of the soft dorsal fin."
@@ -267,7 +376,7 @@ const FISH_DATA = Object.freeze([
             "The mouth is large for a sunfish.",
             "Dark lines radiate backward from the eye across the cheek.",
             "The dorsal fin has 10 spines.",
-            "The anal fin has 3 spines, compared with 6 on a Northern Rock Bass."
+            "The anal fin has 3 spines."
         ],
         habitatTags: ["Grass", "Shallow Water"],
         waterbodyTypes: ["Lake", "Reservoir", "River"]
@@ -286,9 +395,9 @@ const FISH_DATA = Object.freeze([
         family: "Centrarchidae",
         aliases: ["Goggle-Eye"],
         identificationTraits: [
-            "Dark side markings are irregular and freckled rather than arranged in the parallel rows typical of Northern Rock Bass.",
+            "Dark side markings are irregular and freckled rather than arranged in parallel rows.",
             "The body is comparatively slender for a rock bass.",
-            "The eyes are typically smaller in proportion than those of Northern Rock Bass."
+            "The eyes are comparatively small in proportion to the head."
         ],
         habitatTags: ["Rock", "Deep Water"],
         waterbodyTypes: ["River", "Creek"]
@@ -333,112 +442,52 @@ const FISH_DATA = Object.freeze([
         habitatTags: ["Brush", "Timber", "Open Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
+    // Trout
     {
-        id: "channel-catfish",
-        name: "Channel Catfish",
+        id: "rainbow-trout",
+        name: "Rainbow Trout",
         summary:
-            "A common catfish recognized by its deeply forked tail, sensory " +
-            "barbels, and the curved lower edge of its anal fin.",
+            "A cold-water trout recognized by a pink or reddish side stripe, " +
+            "dark spotting, and a distinctly forked, spotted tail.",
         createdVersion: "0.1.0",
         lastModifiedVersion: "0.6.0",
         isActive: true,
-        scientificName: "Ictalurus punctatus",
-        categoryId: "catfish",
-        family: "Ictaluridae",
+        scientificName: "Oncorhynchus mykiss",
+        categoryId: "trout",
+        family: "Salmonidae",
         aliases: [],
         identificationTraits: [
-            "The tail is deeply forked.",
-            "The lower edge of the anal fin is curved rather than straight.",
-            "Sensory barbels surround the mouth.",
-            "Dark side spots may be present, especially on smaller fish, but the spotting can become faint or absent."
+            "A pink or reddish stripe runs lengthwise along the side.",
+            "Dark spots cover the upper body and are prominent on the tail.",
+            "The tail fin is distinctly forked.",
+            "The belly is silvery white."
         ],
-        habitatTags: ["Channel", "Current", "Timber", "Open Water"],
-        waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
+        habitatTags: ["Current", "Rock", "Cold Water", "Open Water"],
+        waterbodyTypes: ["Lake", "River", "Creek", "Reservoir"]
     },
     {
-        id: "blue-catfish",
-        name: "Blue Catfish",
+        id: "brown-trout",
+        name: "Brown Trout",
         summary:
-            "A large catfish recognized by its deeply forked tail and the " +
-            "long, straight lower edge of its anal fin.",
+            "A cold-water trout with black and red-orange body spots and a " +
+            "mostly unspotted tail that is square to only slightly forked.",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true,
-        scientificName: "Ictalurus furcatus",
-        categoryId: "catfish",
-        family: "Ictaluridae",
-        aliases: [],
+        scientificName: "Salmo trutta",
+        categoryId: "trout",
+        family: "Salmonidae",
+        aliases: ["German Brown Trout"],
         identificationTraits: [
-            "The tail is deeply forked.",
-            "The anal fin is long, with a straight lower edge.",
-            "The body is generally a plain blue-gray rather than strongly spotted."
+            "Round black spots appear on the body and dorsal fin.",
+            "Red or orange spots along the body are often surrounded by lighter halos.",
+            "The tail usually has few or no dark spots.",
+            "The tail is usually square to only slightly forked."
         ],
-        habitatTags: ["Channel", "Current", "Deep Water", "Rock"],
-        waterbodyTypes: ["River", "Reservoir"]
+        habitatTags: ["Current", "Timber", "Deep Water", "Cold Water"],
+        waterbodyTypes: ["Lake", "River", "Creek"]
     },
-    {
-        id: "flathead-catfish",
-        name: "Flathead Catfish",
-        summary:
-            "A heavy-bodied catfish recognized by its broad flattened head, " +
-            "projecting lower jaw, and tail that is not deeply forked.",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        scientificName: "Pylodictis olivaris",
-        categoryId: "catfish",
-        family: "Ictaluridae",
-        aliases: [],
-        identificationTraits: [
-            "The head is broad and noticeably flattened.",
-            "The lower jaw projects beyond the upper jaw.",
-            "The tail is not deeply forked like the tail of a Channel or Blue Catfish."
-        ],
-        habitatTags: ["Timber", "Brush", "Channel", "Deep Water"],
-        waterbodyTypes: ["River", "Reservoir"]
-    },
-    {
-        id: "black-bullhead",
-        name: "Black Bullhead",
-        summary:
-            "A compact bullhead catfish recognized by its dark chin barbels " +
-            "and a nearly square tail with a slight notch.",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        scientificName: "Ameiurus melas",
-        categoryId: "catfish",
-        family: "Ictaluridae",
-        aliases: [],
-        identificationTraits: [
-            "The chin barbels are dark gray to black.",
-            "The tail is not forked and has a slight notch along the rear edge.",
-            "The body has the compact, broad-headed profile typical of bullhead catfish."
-        ],
-        habitatTags: ["Mud", "Shallow Water"],
-        waterbodyTypes: ["Pond", "Lake", "Reservoir", "River", "Creek"]
-    },
-    {
-        id: "yellow-bullhead",
-        name: "Yellow Bullhead",
-        summary:
-            "A compact bullhead catfish recognized by its white or yellow " +
-            "chin barbels and nearly straight, unforked tail.",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        scientificName: "Ameiurus natalis",
-        categoryId: "catfish",
-        family: "Ictaluridae",
-        aliases: [],
-        identificationTraits: [
-            "The chin barbels are white or yellow rather than dark.",
-            "The tail is unforked, with a rear edge that is nearly straight.",
-            "The body has the compact, broad-headed profile typical of bullhead catfish."
-        ],
-        habitatTags: ["Grass", "Shallow Water"],
-        waterbodyTypes: ["Pond", "Lake", "River", "Creek"]
-    },
+    // Walleye & Sauger
     {
         id: "walleye",
         name: "Walleye",
@@ -497,55 +546,12 @@ const FISH_DATA = Object.freeze([
         identificationTraits: [
             "The spiny dorsal webbing shows distinct spots together with bars or streaks.",
             "The cheeks are covered with scales.",
-            "Gold-brown body blotching is intermediate between typical Walleye and Sauger markings."
+            "Gold-brown body blotching shows an intermediate mixed pattern."
         ],
         habitatTags: ["Open Water", "Deep Water"],
         waterbodyTypes: ["Lake", "Reservoir"]
     },
-    {
-        id: "rainbow-trout",
-        name: "Rainbow Trout",
-        summary:
-            "A cold-water trout recognized by a pink or reddish side stripe, " +
-            "dark spotting, and a distinctly forked, spotted tail.",
-        createdVersion: "0.1.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        scientificName: "Oncorhynchus mykiss",
-        categoryId: "trout",
-        family: "Salmonidae",
-        aliases: [],
-        identificationTraits: [
-            "A pink or reddish stripe runs lengthwise along the side.",
-            "Dark spots cover the upper body and are prominent on the tail.",
-            "The tail fin is distinctly forked.",
-            "The belly is silvery white."
-        ],
-        habitatTags: ["Current", "Rock", "Cold Water", "Open Water"],
-        waterbodyTypes: ["Lake", "River", "Creek", "Reservoir"]
-    },
-    {
-        id: "brown-trout",
-        name: "Brown Trout",
-        summary:
-            "A cold-water trout with black and red-orange body spots and a " +
-            "mostly unspotted tail that is square to only slightly forked.",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        scientificName: "Salmo trutta",
-        categoryId: "trout",
-        family: "Salmonidae",
-        aliases: ["German Brown Trout"],
-        identificationTraits: [
-            "Round black spots appear on the body and dorsal fin.",
-            "Red or orange spots along the body are often surrounded by lighter halos.",
-            "The tail usually has few or no dark spots.",
-            "The tail is usually square to only slightly forked."
-        ],
-        habitatTags: ["Current", "Timber", "Deep Water", "Cold Water"],
-        waterbodyTypes: ["Lake", "River", "Creek"]
-    },
+    // Carp
     {
         id: "common-carp",
         name: "Common Carp",
@@ -568,6 +574,7 @@ const FISH_DATA = Object.freeze([
         habitatTags: ["Shallow Water", "Mud", "Grass", "Open Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
+    // Drum
     {
         id: "freshwater-drum",
         name: "Freshwater Drum",
@@ -590,6 +597,7 @@ const FISH_DATA = Object.freeze([
         habitatTags: ["Rock", "Channel", "Deep Water", "Mud"],
         waterbodyTypes: ["Lake", "River", "Reservoir"]
     },
+    // Gar
     {
         id: "longnose-gar",
         name: "Longnose Gar",
@@ -633,6 +641,7 @@ const FISH_DATA = Object.freeze([
         habitatTags: ["Grass", "Timber"],
         waterbodyTypes: ["River", "Creek"]
     },
+    // Paddlefish
     {
         id: "paddlefish",
         name: "Paddlefish",
@@ -655,6 +664,7 @@ const FISH_DATA = Object.freeze([
         habitatTags: ["Current", "Open Water", "Deep Water"],
         waterbodyTypes: ["River", "Reservoir"]
     }
+
 ]);
 
 console.info(

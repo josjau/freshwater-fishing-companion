@@ -12,6 +12,7 @@ const FISH_RIG_GUIDANCE_BUILD_INFO = Object.freeze({
 });
 
 const FISH_RIG_GUIDANCE = Object.freeze([
+    // Bass guidance
     {
         fishId: "largemouth-bass",
         createdVersion: "0.6.0",
@@ -122,132 +123,7 @@ const FISH_RIG_GUIDANCE = Object.freeze([
             }
         ]
     },
-    {
-        fishId: "rainbow-trout",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        rigRecommendations: [
-            {
-                rigId: "split-shot-bait-rig",
-                priority: "Primary",
-                reason: "A light split-shot presentation lets bait drift naturally through current while adding only enough weight to reach the feeding lane."
-            }
-        ]
-    },
-    {
-        fishId: "brown-trout",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        rigRecommendations: [
-            {
-                rigId: "split-shot-bait-rig",
-                priority: "Primary",
-                reason: "A light split-shot presentation works through pools, current seams, and cover edges while keeping a natural bait presentation."
-            }
-        ]
-    },
-    {
-        fishId: "common-carp",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        rigRecommendations: [
-            {
-                rigId: "basic-bottom-rig",
-                priority: "Primary",
-                reason: "A sliding-sinker bottom presentation keeps bait near the bottom while allowing a Common Carp to take it with less immediate resistance."
-            }
-        ]
-    },
-    {
-        fishId: "freshwater-drum",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        rigRecommendations: [
-            {
-                rigId: "basic-bottom-rig",
-                priority: "Primary",
-                reason: "A slip-sinker bottom presentation keeps natural bait near the bottom in deeper channels, pools, and reservoirs where Freshwater Drum commonly feed."
-            }
-        ]
-    },
-    {
-        fishId: "walleye",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        rigRecommendations: [
-            {
-                rigId: "live-bait-slip-sinker-rig",
-                priority: "Primary",
-                reason: "A sliding-sinker live-bait presentation keeps minnows, leeches, or crawlers near bottom while allowing a Walleye to take the bait with limited resistance."
-            },
-            {
-                rigId: "jighead-soft-plastic",
-                priority: "Primary",
-                reason: "A jighead and soft plastic can be cast, hopped, dragged, or worked vertically near bottom around rock, points, riprap, and other structure."
-            },
-            {
-                rigId: "slip-bobber-rig",
-                priority: "Primary",
-                reason: "A slip bobber holds live bait at a controlled depth above reefs, humps, and rock while keeping the bait from resting directly on bottom."
-            },
-            {
-                rigId: "bottom-bouncer-spinner-rig",
-                priority: "Alternative",
-                reason: "From a boat, a bottom bouncer and baited spinner harness provides a controlled way to cover open-water structure while keeping the presentation near bottom."
-            }
-        ]
-    },
-    {
-        fishId: "sauger",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        rigRecommendations: [
-            {
-                rigId: "jighead-soft-plastic",
-                priority: "Primary",
-                reason: "A weighted jighead keeps a compact soft-plastic presentation close to bottom around rock, current breaks, channels, and tailwaters; use enough weight to maintain bottom contact."
-            },
-            {
-                rigId: "three-way-rig",
-                priority: "Alternative",
-                reason: "A three-way rig separates the bait leader from the bottom-contact sinker, which is useful when drifting or trolling current over rocky or snag-prone bottom."
-            },
-            {
-                rigId: "live-bait-slip-sinker-rig",
-                priority: "Alternative",
-                reason: "A live-bait slip-sinker rig provides a slower bottom-oriented option along channel edges, deep flats, eddies, and areas with reduced current."
-            }
-        ]
-    },
-    {
-        fishId: "saugeye",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        rigRecommendations: [
-            {
-                rigId: "jighead-soft-plastic",
-                priority: "Primary",
-                reason: "A jighead and soft plastic can be worked close to bottom along riprap, points, drop-offs, and other structure, with weight adjusted for depth and current."
-            },
-            {
-                rigId: "live-bait-slip-sinker-rig",
-                priority: "Primary",
-                reason: "A sliding-sinker rig keeps nightcrawlers or minnows near bottom while fishing flats, points, ledges, and drop-offs."
-            },
-            {
-                rigId: "bottom-bouncer-spinner-rig",
-                priority: "Alternative",
-                reason: "A bottom bouncer and baited spinner harness provides a controlled trolling presentation over flats, points, and open-water structure while staying near bottom."
-            }
-        ]
-    },
+    // Catfish guidance
     {
         fishId: "channel-catfish",
         createdVersion: "0.6.0",
@@ -318,6 +194,7 @@ const FISH_RIG_GUIDANCE = Object.freeze([
             }
         ]
     },
+    // Crappie & Sunfish guidance
     {
         fishId: "bluegill",
         createdVersion: "0.6.0",
@@ -490,7 +367,138 @@ const FISH_RIG_GUIDANCE = Object.freeze([
                 reason: "A double-jig crappie rig provides two compact presentations for vertical or controlled-depth fishing when covering schooling fish."
             }
         ]
+    },
+    // Trout guidance
+    {
+        fishId: "rainbow-trout",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "split-shot-bait-rig",
+                priority: "Primary",
+                reason: "A light split-shot presentation lets bait drift naturally through current while adding only enough weight to reach the feeding lane."
+            }
+        ]
+    },
+    {
+        fishId: "brown-trout",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "split-shot-bait-rig",
+                priority: "Primary",
+                reason: "A light split-shot presentation works through pools, current seams, and cover edges while keeping a natural bait presentation."
+            }
+        ]
+    },
+    // Walleye & Sauger guidance
+    {
+        fishId: "walleye",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "live-bait-slip-sinker-rig",
+                priority: "Primary",
+                reason: "A sliding-sinker live-bait presentation keeps minnows, leeches, or crawlers near bottom while allowing a Walleye to take the bait with limited resistance."
+            },
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A jighead and soft plastic can be cast, hopped, dragged, or worked vertically near bottom around rock, points, riprap, and other structure."
+            },
+            {
+                rigId: "slip-bobber-rig",
+                priority: "Primary",
+                reason: "A slip bobber holds live bait at a controlled depth above reefs, humps, and rock while keeping the bait from resting directly on bottom."
+            },
+            {
+                rigId: "bottom-bouncer-spinner-rig",
+                priority: "Alternative",
+                reason: "From a boat, a bottom bouncer and baited spinner harness provides a controlled way to cover open-water structure while keeping the presentation near bottom."
+            }
+        ]
+    },
+    {
+        fishId: "sauger",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A weighted jighead keeps a compact soft-plastic presentation close to bottom around rock, current breaks, channels, and tailwaters; use enough weight to maintain bottom contact."
+            },
+            {
+                rigId: "three-way-rig",
+                priority: "Alternative",
+                reason: "A three-way rig separates the bait leader from the bottom-contact sinker, which is useful when drifting or trolling current over rocky or snag-prone bottom."
+            },
+            {
+                rigId: "live-bait-slip-sinker-rig",
+                priority: "Alternative",
+                reason: "A live-bait slip-sinker rig provides a slower bottom-oriented option along channel edges, deep flats, eddies, and areas with reduced current."
+            }
+        ]
+    },
+    {
+        fishId: "saugeye",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "jighead-soft-plastic",
+                priority: "Primary",
+                reason: "A jighead and soft plastic can be worked close to bottom along riprap, points, drop-offs, and other structure, with weight adjusted for depth and current."
+            },
+            {
+                rigId: "live-bait-slip-sinker-rig",
+                priority: "Primary",
+                reason: "A sliding-sinker rig keeps nightcrawlers or minnows near bottom while fishing flats, points, ledges, and drop-offs."
+            },
+            {
+                rigId: "bottom-bouncer-spinner-rig",
+                priority: "Alternative",
+                reason: "A bottom bouncer and baited spinner harness provides a controlled trolling presentation over flats, points, and open-water structure while staying near bottom."
+            }
+        ]
+    },
+    // Carp guidance
+    {
+        fishId: "common-carp",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "basic-bottom-rig",
+                priority: "Primary",
+                reason: "A sliding-sinker bottom presentation keeps bait near the bottom while allowing a Common Carp to take it with less immediate resistance."
+            }
+        ]
+    },
+    // Drum guidance
+    {
+        fishId: "freshwater-drum",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        rigRecommendations: [
+            {
+                rigId: "basic-bottom-rig",
+                priority: "Primary",
+                reason: "A slip-sinker bottom presentation keeps natural bait near the bottom in deeper channels, pools, and reservoirs where Freshwater Drum commonly feed."
+            }
+        ]
     }
+
 ]);
 
 console.info(

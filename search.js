@@ -1,17 +1,21 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: search.js
-   PURPOSE: Provides reusable record lookup/search plus deterministic,
-   beginner-oriented Knot relevance ranking and task-intent matching.
+   PURPOSE: Owns shared record lookup/search primitives plus clearly
+   bounded Fish and Knot scoped-search behavior.
    ========================================================== */
 
 "use strict";
 
 const SEARCH_BUILD_INFO = Object.freeze({
     file: "search.js",
-    milestone: "Knot Guide — Production Package 2",
-    replacement: "Shared Search + Deterministic Knot Search"
+    scope: "Shared Search + Fish Guide + Knot Guide",
+    replacement: "Shared Search + Guide-Owned Scoped Search"
 });
+
+/* ==========================================================
+   SHARED SEARCH — GENERIC LOOKUP + RANKING
+   ========================================================== */
 
 function normalizeSearchText(value) {
     return String(value ?? "")
@@ -93,6 +97,10 @@ function searchRecords(records, query, fields = ["name"]) {
         .map((match) => match.record);
 }
 
+/* ==========================================================
+   FISH GUIDE — SCOPED SEARCH
+   ========================================================== */
+
 const FISH_SEARCH_HELPERS = Object.freeze({
     all: Object.freeze(["bass", "bluegill", "rainbow", "brown"]),
     trout: Object.freeze(["rainbow", "brown", "German Brown"]),
@@ -108,23 +116,15 @@ function getFishCategoryName(record, categoryData = [], legacyCategoryMap = {}) 
 
 function getFishSearchMatch(record, normalizedQuery, categoryData, legacyCategoryMap) {
     const normalizedName = normalizeSearchText(record.name);
-    const normalizedScientificName = normalizeSearchText(record.scientificName);
     const normalizedAliases = (record.aliases ?? []).map(normalizeSearchText);
     const normalizedCategory = normalizeSearchText(getFishCategoryName(record, categoryData, legacyCategoryMap));
-    const normalizedFamily = normalizeSearchText(record.family);
 
     if (normalizedName === normalizedQuery) return 1000;
     if (normalizedName.startsWith(normalizedQuery)) return 900;
     if (normalizedAliases.includes(normalizedQuery)) return 850;
     if (normalizedAliases.some((alias) => alias.startsWith(normalizedQuery))) return 800;
-    if (
-        normalizedName.includes(normalizedQuery) ||
-        normalizedScientificName.includes(normalizedQuery)
-    ) {
-        return 700;
-    }
+    if (normalizedName.includes(normalizedQuery)) return 700;
     if (normalizedCategory && normalizedCategory.includes(normalizedQuery)) return 600;
-    if (normalizedFamily && normalizedFamily.includes(normalizedQuery)) return 500;
     if (normalizedAliases.some((alias) => alias.includes(normalizedQuery))) return 450;
 
     return 0;
@@ -163,6 +163,10 @@ function getFishSearchPlaceholder(scopeKey, fallbackLabel = "Fish") {
     if (terms.length === 2) return `Try ${terms[0]} or ${terms[1]}`;
     return `Try ${terms.slice(0, -1).join(", ")}, or ${terms[terms.length - 1]}`;
 }
+
+/* ==========================================================
+   KNOT GUIDE — DETERMINISTIC SCOPED SEARCH
+   ========================================================== */
 
 const KNOT_SEARCH_REPLACEMENTS = Object.freeze({
     mono: "monofilament",
@@ -292,6 +296,10 @@ function searchKnotRecords(records, query, taskDefinitions = []) {
         .map((match) => match.record);
 }
 
+/* ==========================================================
+   SHARED SEARCH — GENERIC FILTER + SORT HELPERS
+   ========================================================== */
+
 function filterRecordsByValue(records, field, expectedValue) {
     if (!Array.isArray(records)) {
         return [];
@@ -336,6 +344,6 @@ function sortRecordsAlphabetically(records, field = "name") {
 
 console.info(
     `[Loaded] ${SEARCH_BUILD_INFO.file} | ` +
-    `${SEARCH_BUILD_INFO.milestone} | ` +
+    `${SEARCH_BUILD_INFO.scope} | ` +
     `${SEARCH_BUILD_INFO.replacement}`
 );

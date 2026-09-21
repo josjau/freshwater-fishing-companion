@@ -25,6 +25,7 @@ const FISH_LEGACY_CATEGORY_ID_MAP = Object.freeze({
 });
 
 const FISH_CATEGORY_DATA = Object.freeze([
+    // Canonical Fish Guide category sequence. Preserve this order for browse and maintenance grouping.
     // Broad / primary target categories — alphabetical within this tier.
     {
         id: "bass",
@@ -38,7 +39,7 @@ const FISH_CATEGORY_DATA = Object.freeze([
     },
     {
         id: "sunfish-crappie",
-        name: "Sunfish & Crappie",
+        name: "Crappie & Sunfish",
         summary: "Browse sunfish, rock-bass relatives, and crappie together to make similar species easier to sort out."
     },
     {

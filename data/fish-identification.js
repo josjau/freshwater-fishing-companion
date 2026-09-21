@@ -12,6 +12,7 @@ const FISH_IDENTIFICATION_BUILD_INFO = Object.freeze({
 });
 
 const FISH_IDENTIFICATION_RELATIONSHIPS = Object.freeze([
+    // Bass comparisons
     {
         id: "largemouth-bass-vs-smallmouth-bass",
         fishIds: ["largemouth-bass", "smallmouth-bass"],
@@ -162,6 +163,108 @@ const FISH_IDENTIFICATION_RELATIONSHIPS = Object.freeze([
             }
         ]
     },
+    // Catfish comparisons
+    {
+        id: "blue-catfish-vs-channel-catfish",
+        fishIds: ["blue-catfish", "channel-catfish"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "blue-catfish",
+                text: "The lower edge of the anal fin is straight."
+            },
+            {
+                fishId: "blue-catfish",
+                text: "The tail is deeply forked, so tail shape alone does not separate it from a Channel Catfish."
+            },
+            {
+                fishId: "channel-catfish",
+                text: "The lower edge of the anal fin is curved rather than straight."
+            },
+            {
+                fishId: "channel-catfish",
+                text: "Dark side spots may support the identification when present, but spotting can become faint or absent."
+            }
+        ]
+    },
+    {
+        id: "black-bullhead-vs-flathead-catfish",
+        fishIds: ["black-bullhead", "flathead-catfish"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "black-bullhead",
+                text: "The body has the compact bullhead profile and the lower jaw does not project like a Flathead Catfish's."
+            },
+            {
+                fishId: "black-bullhead",
+                text: "The chin barbels are dark gray to black."
+            },
+            {
+                fishId: "flathead-catfish",
+                text: "The head is broad and noticeably flattened."
+            },
+            {
+                fishId: "flathead-catfish",
+                text: "The lower jaw projects beyond the upper jaw."
+            }
+        ]
+    },
+    {
+        id: "flathead-catfish-vs-yellow-bullhead",
+        fishIds: ["flathead-catfish", "yellow-bullhead"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "flathead-catfish",
+                text: "The head is broad and noticeably flattened."
+            },
+            {
+                fishId: "flathead-catfish",
+                text: "The lower jaw projects beyond the upper jaw."
+            },
+            {
+                fishId: "yellow-bullhead",
+                text: "The body has the compact bullhead profile rather than the broad flattened head and projecting lower jaw of a Flathead Catfish."
+            },
+            {
+                fishId: "yellow-bullhead",
+                text: "White or yellow chin barbels support the Yellow Bullhead identification."
+            }
+        ]
+    },
+    {
+        id: "black-bullhead-vs-yellow-bullhead",
+        fishIds: ["black-bullhead", "yellow-bullhead"],
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true,
+        distinctions: [
+            {
+                fishId: "black-bullhead",
+                text: "The chin barbels are dark gray to black."
+            },
+            {
+                fishId: "black-bullhead",
+                text: "The rear edge of the unforked tail is slightly notched."
+            },
+            {
+                fishId: "yellow-bullhead",
+                text: "The chin barbels are white or yellow rather than dark."
+            },
+            {
+                fishId: "yellow-bullhead",
+                text: "The rear edge of the unforked tail is nearly straight."
+            }
+        ]
+    },
+    // Crappie & Sunfish comparisons
     {
         id: "bluegill-vs-redear-sunfish",
         fishIds: ["bluegill", "redear-sunfish"],
@@ -287,6 +390,7 @@ const FISH_IDENTIFICATION_RELATIONSHIPS = Object.freeze([
             }
         ]
     },
+    // Trout comparisons
     {
         id: "brown-trout-vs-rainbow-trout",
         fishIds: ["brown-trout", "rainbow-trout"],
@@ -320,31 +424,7 @@ const FISH_IDENTIFICATION_RELATIONSHIPS = Object.freeze([
             }
         ]
     },
-    {
-        id: "longnose-gar-vs-spotted-gar",
-        fishIds: ["longnose-gar", "spotted-gar"],
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        distinctions: [
-            {
-                fishId: "longnose-gar",
-                text: "The snout is exceptionally long and narrow; at the nostrils it is narrower than the eye diameter."
-            },
-            {
-                fishId: "longnose-gar",
-                text: "Dark spotting is concentrated on the fins and may also occur on the body rather than prominently covering the head."
-            },
-            {
-                fishId: "spotted-gar",
-                text: "The snout is noticeably shorter and broader than the Longnose Gar's."
-            },
-            {
-                fishId: "spotted-gar",
-                text: "Well-defined round dark spots cover the top of the head, snout, and paired fins."
-            }
-        ]
-    },
+    // Walleye & Sauger comparisons
     {
         id: "sauger-vs-walleye",
         fishIds: ["sauger", "walleye"],
@@ -420,106 +500,33 @@ const FISH_IDENTIFICATION_RELATIONSHIPS = Object.freeze([
             }
         ]
     },
+    // Gar comparisons
     {
-        id: "blue-catfish-vs-channel-catfish",
-        fishIds: ["blue-catfish", "channel-catfish"],
+        id: "longnose-gar-vs-spotted-gar",
+        fishIds: ["longnose-gar", "spotted-gar"],
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true,
         distinctions: [
             {
-                fishId: "blue-catfish",
-                text: "The lower edge of the anal fin is straight."
+                fishId: "longnose-gar",
+                text: "The snout is exceptionally long and narrow; at the nostrils it is narrower than the eye diameter."
             },
             {
-                fishId: "blue-catfish",
-                text: "The tail is deeply forked, so tail shape alone does not separate it from a Channel Catfish."
+                fishId: "longnose-gar",
+                text: "Dark spotting is concentrated on the fins and may also occur on the body rather than prominently covering the head."
             },
             {
-                fishId: "channel-catfish",
-                text: "The lower edge of the anal fin is curved rather than straight."
+                fishId: "spotted-gar",
+                text: "The snout is noticeably shorter and broader than the Longnose Gar's."
             },
             {
-                fishId: "channel-catfish",
-                text: "Dark side spots may support the identification when present, but spotting can become faint or absent."
-            }
-        ]
-    },
-    {
-        id: "black-bullhead-vs-yellow-bullhead",
-        fishIds: ["black-bullhead", "yellow-bullhead"],
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        distinctions: [
-            {
-                fishId: "black-bullhead",
-                text: "The chin barbels are dark gray to black."
-            },
-            {
-                fishId: "black-bullhead",
-                text: "The rear edge of the unforked tail is slightly notched."
-            },
-            {
-                fishId: "yellow-bullhead",
-                text: "The chin barbels are white or yellow rather than dark."
-            },
-            {
-                fishId: "yellow-bullhead",
-                text: "The rear edge of the unforked tail is nearly straight."
-            }
-        ]
-    },
-    {
-        id: "black-bullhead-vs-flathead-catfish",
-        fishIds: ["black-bullhead", "flathead-catfish"],
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        distinctions: [
-            {
-                fishId: "black-bullhead",
-                text: "The body has the compact bullhead profile and the lower jaw does not project like a Flathead Catfish's."
-            },
-            {
-                fishId: "black-bullhead",
-                text: "The chin barbels are dark gray to black."
-            },
-            {
-                fishId: "flathead-catfish",
-                text: "The head is broad and noticeably flattened."
-            },
-            {
-                fishId: "flathead-catfish",
-                text: "The lower jaw projects beyond the upper jaw."
-            }
-        ]
-    },
-    {
-        id: "flathead-catfish-vs-yellow-bullhead",
-        fishIds: ["flathead-catfish", "yellow-bullhead"],
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true,
-        distinctions: [
-            {
-                fishId: "flathead-catfish",
-                text: "The head is broad and noticeably flattened."
-            },
-            {
-                fishId: "flathead-catfish",
-                text: "The lower jaw projects beyond the upper jaw."
-            },
-            {
-                fishId: "yellow-bullhead",
-                text: "The body has the compact bullhead profile rather than the broad flattened head and projecting lower jaw of a Flathead Catfish."
-            },
-            {
-                fishId: "yellow-bullhead",
-                text: "White or yellow chin barbels support the Yellow Bullhead identification."
+                fishId: "spotted-gar",
+                text: "Well-defined round dark spots cover the top of the head, snout, and paired fins."
             }
         ]
     }
+
 ]);
 
 console.info(

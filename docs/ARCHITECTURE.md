@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Architecture
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.15.2  
+**Document Revision:** 0.15.3  
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
-**Last Updated:** 2026-09-13
+**Last Updated:** 2026-09-21
 
 # Purpose
 
@@ -257,6 +257,18 @@ Current production includes 31 Tackle recognition attachments, 30 primary Fish i
 - `knot-media-renderer.js` owns Knot instructional-media rendering.
 - `script.js` coordinates application routing and major view transitions.
 - `UI_STANDARD.md` owns cross-domain UI/navigation/card/detail/search/mobile/accessibility behavior.
+
+## Guide / Major Feature Source Boundaries
+
+Shared implementation files such as `script.js`, `view-renderer.js`, `search.js`, and other shared helpers may contain multiple Guide/domain/feature implementations, but those implementations must be physically organized into clearly marked ownership sections.
+
+- Each Guide or major feature/card section must have an explicit source boundary so its owned state, constants/configuration, selectors/helpers, routing/controller behavior, rendering behavior, search behavior, and feature-specific event/setup logic can be located as one coherent implementation area.
+- Guide- or feature-specific code/data must remain inside that ownership boundary unless there is a valid architectural reason for it to live elsewhere. Existing placement alone is not sufficient justification.
+- Code outside a Guide boundary must be genuinely shared or infrastructure-level. A useful test is: **would this code still make sense if that Guide did not exist?** If yes, it may belong in a clearly marked shared/common section; if no, it normally belongs inside the Guide boundary.
+- Shared/common sections must also be explicitly marked rather than left as loose interleaved code between Guide sections.
+- Canonical domain facts belong in the appropriate `data/*.js` owner rather than being embedded in controller/rendering files. Transient UI state, route state, presentation configuration, and other implementation-only values may remain in the Guide boundary when they are not canonical data.
+- Guide-owned data modules should have clear single-purpose ownership, consistent field/type conventions, intentional ordering semantics, stable identifiers/relationships, and no unnecessary duplication of facts owned elsewhere.
+- When an audited Guide already requires source edits, targeted reorganization needed to satisfy these boundaries is part of the Guide implementation/refactor scope. This rule does not authorize unrelated whole-application refactoring.
 
 User Knowledge/imported text is untrusted at rendering boundaries and must use safe DOM APIs unless a centrally owned sanitization path is explicitly approved.
 

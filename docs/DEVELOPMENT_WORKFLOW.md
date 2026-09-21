@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 2.3.8  
+**Document Revision:** 2.3.13  
 **Document Status:** Approved  
 **Role:** Compact canonical workflow entrypoint  
 **Decision Baseline:** D014, D038-D041, D055, D068  
-**Last Updated:** 2026-09-18
+**Last Updated:** 2026-09-20
 
 # Purpose
 
@@ -33,6 +33,7 @@ GitHub main
 - `WORKING_STATE.md` is the single compact repository current-state/exact-resume entrypoint.
 - `ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward across workstreams.
 - Drive `Working Source/Packages` owns review/checkpoint/transport artifacts only; packages are not working truth.
+- `Historical Archive` is outside `Working Source` and holds explicitly retained historical/design-reconstruction evidence only. It is not current authority and is excluded from normal startup, documentation reconciliation, and source lookup unless an explicit historical-reconstruction or archive-integrity task requires it.
 - Chat history is context only.
 
 # Startup / Preflight
@@ -43,9 +44,9 @@ Before substantive work:
 2. Read `WORKING_STATE.md`; consult `ACTIVE-CHANGE-LEDGER.md` when open/deferred carry-forward may affect scope.
 3. Verify Drive `Working Source/Current` is the complete working tree and read the Live Working State for active review-cycle identity/resume detail.
 4. Apply the Live Working State hard gate. It must reflect the latest material decision/state transition and be consistent with `WORKING_STATE.md`, applicable `ACTIVE-CHANGE-LEDGER.md` entries, and actual GitHub/Drive lineage. A stale, missing, or contradictory Live Working State blocks normal progression until reconciled.
-5. Load only the workflow, decision, domain, media, UI, source, or workstream owners material to the requested scope.
+5. Load only the workflow, decision, domain, media, UI, source, or workstream owners material to the requested scope. **Do not traverse `Historical Archive` during normal startup or routine documentation work.** Consult it only when the requested task explicitly requires historical-intent reconstruction, archival evidence, or archive-integrity work.
 6. Compare the recorded resume point and lineage with actual GitHub/Drive state.
-7. **Verify prior approval-gate closure before substantive work.** Confirm the latest applicable approval/disposition is CLOSED / PASS in its canonical owners and Live Working State and, when transcript preservation applies, confirm the latest canonical Chat Log checkpoint/tail proves the required append/readback completed. If the prior session ended with a required write/readback still outstanding or the expected transcript checkpoint is missing, startup is recovery-only until that gap is reconciled.
+7. **Verify prior approval-gate closure before substantive work.** Confirm the latest applicable approval/disposition is CLOSED / PASS in its canonical owners and Live Working State. If a required owner/state write or readback remains outstanding, startup is recovery-only until that gap is reconciled.
 8. If the authority/lineage and prior-gate checks pass, continue with targeted work. Broaden reconstruction only when an invalidation condition below applies.
 
 # Live Working State Hard Gate
@@ -72,21 +73,23 @@ If the Live Working State is stale, missing, or contradictory, stop normal progr
 
 # Approval-to-Owner Closure Hard Gate
 
-Every explicit approval, rejection, deferment, scope lock, or other durable disposition is incomplete until its canonical-owner reconciliation passes. This gate applies **before the next dependent checkpoint and before any discussion block/session/module/section is described as closed, complete, a clean boundary, or ready for the next chat/workstream**, even when no Git commit is expected in that session.
+Every explicit approval, rejection, deferment, scope lock, or other durable disposition is incomplete until its canonical-owner reconciliation passes. This gate runs **before the next dependent checkpoint and before any discussion block/session/module/section is described as closed, complete, a clean boundary, or ready for the next chat/workstream**, even when no Git commit is expected in that session.
 
-For each material outcome since the previous passed gate:
+For each material outcome since the previous passed approval gate:
 
 1. enumerate the finite set of canonical repository owners whose semantics may be affected;
 2. classify each owner as `UPDATE REQUIRED`, `VERIFIED — NO CHANGE REQUIRED`, or `NOT APPLICABLE`;
 3. perform every `UPDATE REQUIRED` edit against the latest verified Drive Current file and read back each changed owner;
 4. treat any missing owner, failed write, failed readback, or unresolved ownership question as **BLOCKING**; do not continue dependent work and do not claim closure;
-5. verify that no durable fact exists only in chat, Live Working State, `WORKING_STATE.md`, `ACTIVE-CHANGE-LEDGER.md`, or the consolidated Chat Log when a decision/domain/relationship/architecture/workflow owner should contain it;
-6. after semantic-owner capture passes, update/read back the Live Working State and other required continuity surfaces for the material transition;
-7. when the consolidated Chat Log policy applies, **fresh-fetch the latest Chat Log, append the conversation since the prior transcript checkpoint verbatim, replace the same file object, and tail-read back the appended transcript** before the approval gate may pass. Verbatim means preserve the actual user and assistant message text, ordering, and material formatting; do not substitute a summary, decision digest, reconstructed paraphrase, or approval-checkpoint synopsis for the conversation itself. Tool payloads/results and hidden reasoning are not transcript content. A separately labeled checkpoint/metadata note may be added after the verbatim transcript when useful, but it never replaces it. A Chat Log write/readback failure is **BLOCKING** and may not be deferred to session closeout, staging, or a later approval;
-8. after the gate passes, provide a **concise user-facing gate receipt** that states the approved/closed outcome, material owner/continuity/log readbacks completed, whether production/commit/CI changed, and the exact next checkpoint/resume point. The assistant must not begin dependent substantive discussion before this receipt is delivered.
-9. after every approval-gate receipt, provide a **brief status update** and then identify the **next logical section** plus whether a **fresh chat is required/recommended**. Do **not** automatically launch into that next section. Stop at the boundary and wait for the user to continue or start the new chat. This conservative stop rule applies because remaining chat-capacity cannot be guaranteed reliably; avoiding a mid-section cutoff takes priority over auto-advance.
+5. verify that no durable fact exists only in chat, Live Working State, `WORKING_STATE.md`, or `ACTIVE-CHANGE-LEDGER.md` when a decision/domain/relationship/architecture/workflow owner should contain it;
+6. update/read back the Live Working State and any other required continuity surfaces for the material transition;
+7. run targeted validation proportional to the documentation/state change and reconcile repository validators when the change affects mechanically enforced expectations;
+8. after the gate passes, provide a **concise user-facing gate receipt** stating the approved/closed outcome, material owner/state readbacks completed, whether production/commit/CI changed, and the exact next checkpoint/resume point;
+9. identify the **next logical section** and whether a **fresh chat is required/recommended**, then stop at the boundary and wait for the user to continue.
 
-The owner-disposition matrix is an execution check, not a new permanent document. Keep it bounded to the current outcomes and existing canonical owners. A successful state/log write never proves semantic-owner capture; conversely, successful semantic-owner capture does not waive a required transcript append/readback. An applicable approval gate passes only when both requirements are satisfied.
+The owner-disposition matrix is an execution check, not a new permanent document. Keep it bounded to the current outcomes and existing canonical owners.
+
+**Chat Log boundary:** `Freshwater Fishing Companion Chat Log.md` is manually maintained by the user and is outside FCC approval-gate, startup, closeout, and continuity mechanics. The assistant does not read, write, append, replace, tail-verify, or otherwise use the Chat Log as a gate requirement unless the user explicitly requests a separate Chat Log task.
 
 # Review-Cycle Identity
 
@@ -142,8 +145,8 @@ Only then may production implementation begin.
 
 # Core Change-Control Rules
 
-1. Use latest verified file contents before editing. During an active review cycle, the complete Drive Current tree is the working version; GitHub `main` remains the committed comparison baseline.
-   **Existing raw Drive files (including Markdown) use same-file-ID replacement.** Fresh-fetch/materialize the exact current Drive object; make the targeted edit; when the connector requires a `file_uri`, upload one temporary Drive transport/staging object containing the edited bytes; fetch that temporary object as raw bytes/file reference; call Drive `files.update` / `update_file` on the **original file ID**; read back the original ID; then delete the temporary object. Do not use Library/path `overwrite=true`, rename/swap replacement, duplicate canonical files, or chat/base64 reconstruction. The temporary object is transport only, not working truth, and must not survive the operation.
+1. Use latest verified file contents before editing. During an active review cycle, the complete Drive Current tree is the working version; GitHub `main` remains the committed comparison baseline. `Working Source` contains only `Current` and `Packages`; retained historical material lives outside it under `Historical Archive` and is not a routine lookup/edit surface.
+   **Existing raw Drive files (including Markdown) are identified canonically by their approved `Working Source/Current` path/name plus verified content, not by immutable Drive file ID.** Prefer same-file-ID raw replacement when the connector supports it cleanly. When that path requires a connector `file_uri`, create one temporary Drive transport object from the edited bytes, raw-fetch that transport object, and pass the returned `file_uri.file_id` literal `sediment://...` string to `files.update` / `update_file` for the original Drive file ID. Do not substitute a local/runtime `file_...` handle, the complete `file_uri` metadata object, or the signed `download_url`. Read back the original ID and delete the transport object after success. This single transport object is the established normal path, not custom transport machinery. If preserving the ID would still require Google Docs conversion, base64 reconstruction, additional custom transport machinery, or another circuit-breaker workaround, use a complete raw-file replacement at the exact canonical Current path/name instead; a new Drive file ID is acceptable. After any replacement, verify the expected path/name, verify the resulting content, and verify exactly one canonical Current copy exists. Remove or archive the superseded Current object only after the replacement verifies. GitHub `main` remains the committed version authority. Do not route Markdown through Google Docs merely to preserve a Drive file ID.
 2. Never assume a proposed, staged, downloaded, or previously generated version was implemented.
 3. Make targeted edits and preserve unrelated content unless broader replacement/consolidation is explicitly approved.
 4. Production source/data/media/configuration writes require explicit scoped authorization.
@@ -152,11 +155,11 @@ Only then may production implementation begin.
 7. One write-authorized project-chat cycle owns edits to the active Drive working tree at a time.
 8. Use review-cycle identity, changed/deletion sets, package hashes when applicable, and targeted validation instead of routine full-state reconstruction.
 9. Every applicable durable documentation owner receives `UPDATED`, `VERIFIED — NO CHANGE REQUIRED`, or `NOT APPLICABLE` disposition before any logical block/session closure and again before commit when the commit scope is broader than the last approval gate.
-10. **Every explicit approval gate is a Drive Current canonical-owner gate.** Immediately reconcile the approved decision, discussion outcome, or project-direction change into **every applicable owner document whose owned semantics changed**, not only the primary decision owner or minimum continuity files. Applicable owners can include decision bodies, domain/data-model owners, relationship/architecture/roadmap/workstream owners, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md`. All required owner writes and targeted readback must finish **before moving to the next approval/dependent checkpoint or claiming a closed/complete/clean session boundary**. A successful Live Working State, `WORKING_STATE.md`, ledger, or Chat Log update does not satisfy a missing semantic-owner write. Do not defer owner updates to planning closeout, staging, ZIP creation, local review, commit, or session end. Git commits may be intentionally batched; Drive canonical-owner capture may not.
-11. **Canonical-owner closure proof is mandatory before any discussion boundary is declared closed.** For every material approval/outcome since the prior verified closure checkpoint, explicitly disposition every applicable durable owner as `UPDATED`, `VERIFIED — NO CHANGE REQUIRED`, or `NOT APPLICABLE`. Every `UPDATED` owner must have successful Drive Current write + targeted readback. If any required owner is missing, stale, unread back, or represented only in chat/state/log, the boundary is **NOT CLOSED** and dependent work is blocked.
+10. **Every explicit approval gate is a Drive Current canonical-owner gate.** Immediately reconcile the approved decision, discussion outcome, or project-direction change into **every applicable owner document whose owned semantics changed**, not only the primary decision owner or minimum continuity files. Applicable owners can include decision bodies, domain/data-model owners, relationship/architecture/roadmap/workstream owners, `WORKING_STATE.md`, and `ACTIVE-CHANGE-LEDGER.md`. All required owner writes and targeted readback must finish **before moving to the next approval/dependent checkpoint or claiming a closed/complete/clean session boundary**. A successful Live Working State, `WORKING_STATE.md`, or ledger update does not satisfy a missing semantic-owner write. Do not defer owner updates to planning closeout, staging, ZIP creation, local review, commit, or session end. Git commits may be intentionally batched; Drive canonical-owner capture may not.
+11. **Canonical-owner closure proof is mandatory before any discussion boundary is declared closed.** For every material approval/outcome since the prior verified closure checkpoint, explicitly disposition every applicable durable owner as `UPDATED`, `VERIFIED — NO CHANGE REQUIRED`, or `NOT APPLICABLE`. Every `UPDATED` owner must have successful Drive Current write + targeted readback. If any required owner is missing, stale, unread back, or represented only in chat/state, the boundary is **NOT CLOSED** and dependent work is blocked.
 12. Drive Current accumulates the complete approved uncommitted working state—source plus documentation. The local repository review/package path must carry that complete approved state forward; after local validation and commit/push, GitHub `main` becomes the committed authoritative version of those accumulated Drive changes.
 13. Post-write GitHub verification is mandatory.
-14. Before any dependent next action, the applicable canonical-owner gate, Live Working State readback, and—when transcript preservation applies—the consolidated Chat Log append + tail readback for the authorizing material transition must all have passed.
+14. Before any dependent next action, the applicable canonical-owner gate and Live Working State readback for the authorizing material transition must have passed.
 15. Do not begin a dependent build segment until the current segment is finalized or deliberately parked with an exact resume point.
 
 # Performance Standard
@@ -172,7 +175,7 @@ Normal targets are generally <=10 minutes for small documentation reconciliation
 - ChatGPT Work is not part of the supported Freshwater Fishing Companion workflow.
 - Do not make project procedures dependent on Work-mode filesystem, shell, repository checkout, or persistent workspace behavior.
 - Prefer connector-native Google Drive and GitHub operations that can be completed entirely within the current project chat.
-- For existing raw Drive files, preserve object identity with the canonical same-file-ID replacement path described above; do not substitute path-overwrite semantics.
+- For existing raw Drive files, prefer same-file-ID replacement when clean, but treat canonical `Working Source/Current` path/name + verified content as controlling identity. Full raw-file replacement with a new Drive ID is allowed when it is the simpler authoritative path and duplicate canonical Current files are not left behind.
 - Do not rely on chat memory as source content.
 - Do not renumber decision IDs.
 - Do not split production source solely for tool convenience.
