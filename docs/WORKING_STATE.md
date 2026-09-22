@@ -4096,9 +4096,9 @@
 
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.19.144  
+**Document Revision:** 1.19.145  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** V1 Completion Audit & Roadmap - ACTIVE / FCC 48 FISH GUIDE TARGETED BASELINE-UX REVIEW DISCUSSION COMPLETE / CHECKPOINTS 152-156.3 CLOSED-PASS-REFINEMENT ALLOWED / FCC 48J R3 FISH DETAIL REFINEMENT + CORRECTIVE CLOSEOUT CLOSED-PASS / FCC 48I.5 COMPARE NEXT
+**Workstream Status:** V1 Completion Audit & Roadmap - ACTIVE / FCC 48 FISH GUIDE TARGETED BASELINE-UX REVIEW DISCUSSION COMPLETE / CHECKPOINTS 152-156.3 CLOSED-PASS-REFINEMENT ALLOWED / FCC 48J R3 FISH DETAIL REFINEMENT + CORRECTIVE CLOSEOUT CLOSED-PASS / FCC 48I.5 COMPARE R4 BROWSER REVIEW APPROVED-PENDING COMMIT
 **Last Updated:** 2026-09-21
 
 
@@ -358125,4 +358125,16 @@ Documentation disposition: `WORKING_STATE.md` **UPDATED** to 1.19.144 and Live W
 The next cumulative repository review transport is **`FCC-48I-Fish-Guide-R4.zip`**. It must contain the three FCC 48I.5 production changes plus every Drive Current repository documentation file that differs from GitHub `22914354373de6934e1a18e9442699bf8e412b02`. Deletion set: **none**. Transport-only manifests/reports and external Live Working State do not belong in the repository ZIP.
 
 **Exact resume:** **FCC 48I R4 local browser review of Compare Similar Fish.** Extract `FCC-48I-Fish-Guide-R4.zip` over the verified local checkout at GitHub baseline `22914354373de6934e1a18e9442699bf8e412b02`, confirm the changed-file set, then review the global grouped Compare catalog, scoped chooser, and pair page at narrow/mobile, intermediate, and full-desktop widths. Verify pair-card image framing, group/card spacing and accent rotation, one-versus-two-column breakpoint usefulness, narrow both-images-before-differences order, origin-first/left behavior, Parent/Home paths, focus/scroll restoration, `View Fish ->` return behavior, and regression of the closed R2/R3 Fish baseline. Do not commit/push until R4 browser feedback is dispositioned.
+
+## 2026-09-21 — FCC 48I.5 Compare Similar Fish — R4 Browser Review Approval Gate
+
+FCC 48I.5 R4 browser review is **APPROVED / IMPLEMENTED / PENDING COMMIT**. The user approved the complete R4 review outline with no requested source refinement. GitHub `main` remains `22914354373de6934e1a18e9442699bf8e412b02`; no commit/push or CI run has occurred yet. The approved production delta remains exactly `script.js`, `view-renderer.js`, and `forest-journal.css`, with no change to canonical Fish, relationship, Search, media, or specialized-guidance data owners. The closed R2 Landing/Search/Browse and R3 Fish Detail baselines remain preserved.
+
+Browser disposition: the grouped Compare catalog, scoped current-Fish chooser, shared pair comparison page, mobile/narrow ordering, desktop two-column comparison behavior, origin-first/left routing, Parent/Home paths, focus/scroll restoration, `View Fish ->` round-trip behavior, and R2/R3 regression checks are accepted as reviewed. No additional browser-driven source edit is authorized or required before commit. Existing targeted static/runtime validation from the R4 staging gate remains valid because source bytes are unchanged by this approval.
+
+Canonical-owner disposition: `WORKING_STATE.md` **UPDATED** to 1.19.145 and Live Working State requires the matching approved/pending-commit transition. `ACTIVE-CHANGE-LEDGER.md` 1.10.141 requires **NO NEW semantic item** because this is a finite Fish implementation handoff already owned by the active Fish workstream and exact resume state; `CHANGELOG.md` 3.8.1 requires **NO NEW entry until the implementation actually lands in GitHub**. No new design/architecture owner is required.
+
+The final pre-commit repository transport is **`FCC-48I-Fish-Guide-R5-Commit.zip`**. It is cumulative over GitHub baseline `22914354373de6934e1a18e9442699bf8e412b02` and contains exactly the three approved FCC 48I.5 production changes plus the existing approved repository-documentation delta: `docs/WORKING_STATE.md`, `docs/ACTIVE-CHANGE-LEDGER.md`, and `docs/CHANGELOG.md`. Deletion set remains **none**. Transport-only manifests/reports and external Live Working State remain excluded.
+
+**Exact resume:** apply `FCC-48I-Fish-Guide-R5-Commit.zip` over the local repository that already has or is based on GitHub `22914354373de6934e1a18e9442699bf8e412b02`; verify the changed-file scope is exactly the six repository paths above with no deletions; commit and push the approved R4 Compare implementation. Then verify the GitHub commit SHA, changed-file scope, Repository Integrity, and Pages/CI before FCC 48I.5 closeout documentation is written. Suggested commit message: `FCC 48I.5 - Compare Similar Fish`.
 
