@@ -1012,14 +1012,12 @@ function renderFishComparisonCatalog(appMain, config) {
         console.error("A valid Fish comparison catalog configuration is required.");
         return;
     }
-    const comparisons = Array.isArray(config.comparisons) ? config.comparisons : [];
-    appMain.innerHTML = `
-        <section class="content-view fish-comparison-catalog" aria-labelledby="fish-comparison-catalog-title">
-            ${buildPageNavigationMarkup(config.parentLabel)}
-            <h2 id="fish-comparison-catalog-title">Compare Similar Fish</h2>
-            <p>Choose a pair to compare the most useful visible identification differences.</p>
+    const groups = Array.isArray(config.groups) ? config.groups : [];
+    const groupMarkup = groups.map((group) => `
+        <section class="fish-comparison-catalog-group" aria-labelledby="fish-comparison-group-${group.category.id}">
+            <h3 id="fish-comparison-group-${group.category.id}">${group.title}</h3>
             <div class="fish-comparison-catalog-grid">
-                ${comparisons.map((comparison) => `
+                ${group.comparisons.map((comparison) => `
                     <button class="fish-comparison-catalog-card" type="button" data-fish-relationship-id="${comparison.relationship.id}">
                         <span class="fish-comparison-catalog-card__images">
                             ${buildFishFramedMediaMarkup(
@@ -1045,6 +1043,15 @@ function renderFishComparisonCatalog(appMain, config) {
                 `).join("")}
             </div>
         </section>
+    `).join("");
+
+    appMain.innerHTML = `
+        <section class="content-view fish-comparison-catalog" aria-labelledby="fish-comparison-catalog-title">
+            ${buildPageNavigationMarkup(config.parentLabel)}
+            <h2 id="fish-comparison-catalog-title">Compare Similar Fish</h2>
+            <p>Choose a pair to compare the most useful visible identification differences.</p>
+            <div class="fish-comparison-catalog-groups">${groupMarkup}</div>
+        </section>
     `;
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", config.onParent);
     initializeHomeNavigation(appMain);
@@ -1058,28 +1065,54 @@ function renderFishComparison(appMain, config) {
         console.error("A valid Fish comparison configuration is required.");
         return;
     }
+
     const distinctionsFor = (fishId) => config.relationship.distinctions
         .filter((distinction) => distinction.fishId === fishId)
         .map((distinction) => `<li>${distinction.text}</li>`)
         .join("");
-    const buildSide = (fish, media) => `
-        <section class="fish-comparison-side">
-            <h3>${fish.name}</h3>
-            <p class="fish-scientific-name">${fish.scientificName}</p>
+
+    const buildIdentity = (fish, media, side) => `
+        <section class="fish-comparison-identity fish-comparison-identity--${side}" aria-labelledby="fish-comparison-${side}-name">
+            <h3 id="fish-comparison-${side}-name">${fish.name}</h3>
             ${buildFishFramedMediaMarkup(
                 fish,
                 media,
-                "fish-comparison-side__image",
-                "fish-comparison-side__image-frame",
+                "fish-comparison-identity__image",
+                "fish-comparison-identity__image-frame",
                 "eager",
                 "compareDetail"
             )}
+        </section>
+    `;
+
+    const buildDifferences = (fish, side) => `
+        <section class="fish-comparison-difference fish-comparison-difference--${side}" aria-labelledby="fish-comparison-${side}-differences">
+            <h4 id="fish-comparison-${side}-differences">${fish.name}</h4>
             <ul class="detail-list">${distinctionsFor(fish.id)}</ul>
             <button class="internal-knowledge-link" type="button" data-fish-detail-id="${fish.id}">
                 View ${fish.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
             </button>
         </section>
     `;
+
+    const comparisonMedia = Array.isArray(config.comparisonMedia)
+        ? config.comparisonMedia.filter((media) => media?.file)
+        : [];
+    const comparisonMediaMarkup = comparisonMedia.length
+        ? `
+            <section class="fish-comparison-diagnostic-media" aria-labelledby="fish-comparison-diagnostic-media-title">
+                <h3 id="fish-comparison-diagnostic-media-title">Comparison Detail</h3>
+                <div class="fish-comparison-diagnostic-media__grid">
+                    ${comparisonMedia.map((media) => `
+                        <figure class="fish-comparison-diagnostic-media__item">
+                            ${buildFishMediaMarkup(media, "fish-comparison-diagnostic-media__image", "lazy")}
+                            ${media.caption ? `<figcaption>${media.caption}</figcaption>` : ""}
+                        </figure>
+                    `).join("")}
+                </div>
+            </section>
+        `
+        : "";
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--fish-comparison" aria-labelledby="fish-comparison-title">
@@ -1089,12 +1122,15 @@ function renderFishComparison(appMain, config) {
                 <h2 id="fish-comparison-title">${config.fishA.name} vs ${config.fishB.name}</h2>
                 <p>Focus on the visible traits that best distinguish these two Fish.</p>
             </header>
-            <section class="detail-section fish-comparison-differences">
-                <h3>Key Differences</h3>
-                <div class="fish-comparison-grid">
-                    ${buildSide(config.fishA, config.mediaA)}
-                    ${buildSide(config.fishB, config.mediaB)}
+            <section class="fish-comparison-panel" aria-labelledby="fish-comparison-key-differences-title">
+                <div class="fish-comparison-layout">
+                    ${buildIdentity(config.fishA, config.mediaA, "a")}
+                    ${buildIdentity(config.fishB, config.mediaB, "b")}
+                    <h3 class="fish-comparison-key-differences" id="fish-comparison-key-differences-title">Key Differences</h3>
+                    ${buildDifferences(config.fishA, "a")}
+                    ${buildDifferences(config.fishB, "b")}
                 </div>
+                ${comparisonMediaMarkup}
             </section>
         </article>
     `;

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.8.0  
+**Document Revision:** 3.8.1  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-09-21
@@ -9,6 +9,18 @@
 # Purpose
 
 This is a curated project changelog, not a second Working State, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to `WORKING_STATE.md`; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-09-21 — FCC 48J Fish Detail Refinement + Repository Handoff Correction — Closed
+
+Source refinement commit `0303a358680e04efdeedb54f87001a9f121cec56` — `FCC 48J — Fish Guide — R3 Detail Refinements + Review`  
+Corrective closeout commit `22914354373de6934e1a18e9442699bf8e412b02` — `FCC 48J - Correct repository handoff and workflow governance`
+
+- Closed the R3 Fish Detail browser-review refinements: single-Rig Fish pages omit redundant Primary/Alternative headings; the Compare Similar Fish arrow uses normal row text color with heavier/larger treatment while preserving the approved row structure; expanded ABOUT THIS FISH content keeps modest top spacing; Fish identity upper spacing is tighter; full-desktop Habitat & Water remains two columns and mobile remains stacked.
+- Corrected the repository handoff after the first R3 push: removed the accidentally committed root `CHANGELOG.md` and two FCC 48J manifest files, restored the authoritative repository documentation under `docs/`, and landed the durable FCC package/environment rules.
+- The durable workflow now explicitly prohibits ChatGPT Work for FCC and defines review ZIPs as the normal Drive Current → local-repository transfer, including changed repository documentation while excluding manifests, Chat Logs, the external Live Working State, assistant/package reports, and other transport-only artifacts.
+- Final corrective commit scope was exactly **11 paths: 8 modified repository documentation/governance files + 3 deletions**, with no production runtime/source change in that corrective commit.
+- Repository Integrity run `35678094115` and Pages run `35678093501` passed for the source-refinement commit. Repository Integrity run `35679775720` and Pages run `35679775552` passed for the corrective closeout commit.
+- FCC 48J is **CLOSED / PASS**. Exact next Fish implementation block is **FCC 48I.5 — Compare Similar Fish implementation + browser review**.
 
 # 2026-09-21 — FCC 48I Fish Guide Baseline / R3 Checkpoint — Landed
 

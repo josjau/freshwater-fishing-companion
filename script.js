@@ -177,6 +177,7 @@ function returnToDetailNavigationContext() {
 
     if (context.route === ROUTES.FISH_COMPARE_CATALOG) {
         fishComparisonCatalogScrollY = context.state.scrollY ?? 0;
+        fishComparisonCatalogFocusRelationshipId = context.state.focusRelationshipId ?? null;
         showView(ROUTES.FISH_COMPARE_CATALOG);
         return true;
     }
@@ -192,12 +193,14 @@ function returnToDetailNavigationContext() {
 
     if (context.route === ROUTES.FISH_COMPARE_CHOOSER) {
         selectedFishId = context.state.selectedFishId;
+        fishComparisonChooserFocusRelationshipId = context.state.focusRelationshipId ?? null;
         showView(ROUTES.FISH_COMPARE_CHOOSER);
         return true;
     }
 
     if (context.route === ROUTES.FISH_COMPARE) {
         selectedFishRelationshipId = context.state.selectedFishRelationshipId;
+        fishComparisonFocusFishId = context.state.focusFishId ?? null;
         showView(ROUTES.FISH_COMPARE);
         return true;
     }
@@ -296,13 +299,18 @@ let selectedFishRelationshipId = null;
 let fishGuideState = { query: "", scrollY: 0 };
 let fishBrowseState = { query: "", scrollY: 0 };
 let fishComparisonCatalogScrollY = 0;
+let fishGuideRestoreCompareFocus = false;
+let fishComparisonCatalogFocusRelationshipId = null;
+let fishComparisonChooserFocusRelationshipId = null;
+let fishComparisonFocusFishId = null;
 
 function createInitialFishDetailState(fishId) {
     return {
         fishId,
         expandedSectionIds: [],
         scrollY: 0,
-        restoreScroll: false
+        restoreScroll: false,
+        restoreFocusTarget: null
     };
 }
 
@@ -312,7 +320,7 @@ function resetFishDetailState(fishId) {
     fishDetailState = createInitialFishDetailState(fishId);
 }
 
-function captureFishDetailNavigationState() {
+function captureFishDetailNavigationState(restoreFocusTarget = null) {
     const expandedSectionIds = Array.isArray(fishDetailState.expandedSectionIds)
         ? [...fishDetailState.expandedSectionIds]
         : [];
@@ -322,7 +330,8 @@ function captureFishDetailNavigationState() {
             fishId: selectedFishId,
             expandedSectionIds,
             scrollY: window.scrollY,
-            restoreScroll: true
+            restoreScroll: true,
+            restoreFocusTarget
         }
     };
 }
@@ -333,6 +342,33 @@ function restoreFishDetailScroll() {
     requestAnimationFrame(() => {
         window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
         fishDetailState = { ...fishDetailState, restoreScroll: false };
+    });
+}
+
+function restoreFishFocus(appMain, selector) {
+    if (!appMain || !selector) return;
+    requestAnimationFrame(() => {
+        appMain.querySelector(selector)?.focus({ preventScroll: true });
+    });
+}
+
+function restoreFishDetailFocus(appMain) {
+    if (fishDetailState.fishId !== selectedFishId || !fishDetailState.restoreFocusTarget) return;
+    const selector = fishDetailState.restoreFocusTarget === "compare"
+        ? "[data-fish-compare-from-detail]"
+        : null;
+    fishDetailState = { ...fishDetailState, restoreFocusTarget: null };
+    restoreFishFocus(appMain, selector);
+}
+
+function restoreFishComparisonCardFocus(appMain, selector, relationshipId) {
+    if (!relationshipId) return;
+    requestAnimationFrame(() => {
+        const target = Array.from(appMain.querySelectorAll(selector)).find((element) =>
+            element.dataset.fishRelationshipId === relationshipId ||
+            element.dataset.fishComparisonChoice === relationshipId
+        );
+        target?.focus({ preventScroll: true });
     });
 }
 
@@ -450,6 +486,10 @@ function renderFishGuideView(appMain) {
     });
 
     restoreFishScroll(fishGuideState.scrollY);
+    if (fishGuideRestoreCompareFocus) {
+        fishGuideRestoreCompareFocus = false;
+        restoreFishFocus(appMain, "[data-fish-compare-catalog]");
+    }
 }
 
 function updateFishGuideSearchResults(appMain, query) {
@@ -620,6 +660,7 @@ function renderFishDetailView(appMain) {
     });
 
     restoreFishDetailScroll();
+    restoreFishDetailFocus(appMain);
 }
 
 // Compare workflow.
@@ -627,35 +668,87 @@ function openFishComparisonCatalog() {
     clearDetailNavigationStack();
     fishGuideState.scrollY = window.scrollY;
     fishComparisonCatalogScrollY = 0;
+    fishComparisonCatalogFocusRelationshipId = null;
     showView(ROUTES.FISH_COMPARE_CATALOG);
 }
 
-function getFishComparisonContexts() {
+function returnFromFishComparisonCatalogToGuide() {
+    fishGuideRestoreCompareFocus = true;
+    showView(ROUTES.FISH);
+}
+
+function getFishComparisonMedia(relationshipId) {
+    if (typeof MEDIA_DATA === "undefined") return [];
+    return MEDIA_DATA.filter((media) =>
+        media.ownerType === "fish-identification" &&
+        media.ownerId === relationshipId &&
+        media.role === "comparison" &&
+        media.isActive === true
+    );
+}
+
+function buildFishComparisonContext(relationship, preferredFirstFishId = null) {
+    if (!relationship || !Array.isArray(relationship.fishIds) || relationship.fishIds.length !== 2) return null;
+
+    let [fishAId, fishBId] = relationship.fishIds;
+    if (preferredFirstFishId === fishBId) {
+        [fishAId, fishBId] = [fishBId, fishAId];
+    }
+
     const activeFish = getActiveFish();
+    const fishA = findRecordById(activeFish, fishAId);
+    const fishB = findRecordById(activeFish, fishBId);
+    if (!fishA || !fishB) return null;
+
+    return {
+        relationship,
+        fishA,
+        fishB,
+        mediaA: getFishPrimaryMedia(fishA.id),
+        mediaB: getFishPrimaryMedia(fishB.id),
+        comparisonMedia: getFishComparisonMedia(relationship.id)
+    };
+}
+
+function getFishComparisonContexts() {
     return getActiveFishRelationships()
-        .map((relationship) => {
-            const fishA = findRecordById(activeFish, relationship.fishIds[0]);
-            const fishB = findRecordById(activeFish, relationship.fishIds[1]);
-            if (!fishA || !fishB) return null;
-            return {
-                relationship,
-                fishA,
-                fishB,
-                mediaA: getFishPrimaryMedia(fishA.id),
-                mediaB: getFishPrimaryMedia(fishB.id)
-            };
-        })
+        .map((relationship) => buildFishComparisonContext(relationship))
         .filter(Boolean);
+}
+
+function getFishComparisonCatalogGroups() {
+    const comparisons = getFishComparisonContexts();
+    return FISH_CATEGORY_DATA.map((category) => {
+        const categoryComparisons = comparisons
+            .filter((comparison) =>
+                getFishCategoryId(comparison.fishA) === category.id &&
+                getFishCategoryId(comparison.fishB) === category.id
+            )
+            .sort((first, second) => {
+                const firstFishOrder = first.fishA.name.localeCompare(second.fishA.name, undefined, { sensitivity: "base" });
+                if (firstFishOrder !== 0) return firstFishOrder;
+                return first.fishB.name.localeCompare(second.fishB.name, undefined, { sensitivity: "base" });
+            });
+
+        return {
+            category,
+            title: `${category.name} Comparisons`,
+            comparisons: categoryComparisons
+        };
+    }).filter((group) => group.comparisons.length > 0);
 }
 
 function renderFishComparisonCatalogView(appMain) {
     renderFishComparisonCatalog(appMain, {
-        comparisons: getFishComparisonContexts(),
+        groups: getFishComparisonCatalogGroups(),
         parentLabel: "Fish Guide",
-        onParent: () => showView(ROUTES.FISH),
+        onParent: returnFromFishComparisonCatalogToGuide,
         onSelect: openFishComparisonFromCatalog
     });
     restoreFishScroll(fishComparisonCatalogScrollY);
+    const focusRelationshipId = fishComparisonCatalogFocusRelationshipId;
+    fishComparisonCatalogFocusRelationshipId = null;
+    restoreFishComparisonCardFocus(appMain, "[data-fish-relationship-id]", focusRelationshipId);
 }
 
 function openFishComparisonFromCatalog(relationshipId) {
@@ -670,7 +763,10 @@ function openFishComparisonFromCatalog(relationshipId) {
     pushDetailNavigationContext({
         route: ROUTES.FISH_COMPARE_CATALOG,
         label: "Compare Similar Fish",
-        state: { scrollY: fishComparisonCatalogScrollY }
+        state: {
+            scrollY: fishComparisonCatalogScrollY,
+            focusRelationshipId: relationship.id
+        }
     });
     selectedFishRelationshipId = relationshipId;
     showView(ROUTES.FISH_COMPARE);
@@ -684,7 +780,7 @@ function openFishComparisonFromDetail() {
     pushDetailNavigationContext({
         route: ROUTES.FISH_DETAIL,
         label: fish.name,
-        state: captureFishDetailNavigationState()
+        state: captureFishDetailNavigationState("compare")
     });
 
     if (relationships.length === 1) {
@@ -693,6 +789,7 @@ function openFishComparisonFromDetail() {
         return;
     }
 
+    fishComparisonChooserFocusRelationshipId = null;
     showView(ROUTES.FISH_COMPARE_CHOOSER);
 }
 
@@ -716,6 +813,10 @@ function renderFishComparisonChooserView(appMain) {
         onParent: returnContext ? returnToDetailNavigationContext : () => showView(ROUTES.FISH_DETAIL),
         onSelect: openFishComparisonFromChooser
     });
+
+    const focusRelationshipId = fishComparisonChooserFocusRelationshipId;
+    fishComparisonChooserFocusRelationshipId = null;
+    restoreFishComparisonCardFocus(appMain, "[data-fish-comparison-choice]", focusRelationshipId);
 }
 
 function openFishComparisonFromChooser(relationshipId) {
@@ -729,10 +830,20 @@ function openFishComparisonFromChooser(relationshipId) {
     pushDetailNavigationContext({
         route: ROUTES.FISH_COMPARE_CHOOSER,
         label: `Compare ${fish.name}`,
-        state: { selectedFishId: fish.id }
+        state: {
+            selectedFishId: fish.id,
+            focusRelationshipId: relationship.id
+        }
     });
     selectedFishRelationshipId = relationship.id;
     showView(ROUTES.FISH_COMPARE);
+}
+
+function getFishComparisonOriginFishId(returnContext) {
+    if (returnContext?.route === ROUTES.FISH_DETAIL || returnContext?.route === ROUTES.FISH_COMPARE_CHOOSER) {
+        return returnContext.state?.selectedFishId ?? null;
+    }
+    return null;
 }
 
 function renderFishComparisonView(appMain) {
@@ -745,9 +856,8 @@ function renderFishComparisonView(appMain) {
         return;
     }
 
-    const fishA = findRecordById(getActiveFish(), relationship.fishIds[0]);
-    const fishB = findRecordById(getActiveFish(), relationship.fishIds[1]);
-    if (!fishA || !fishB) {
+    const comparison = buildFishComparisonContext(relationship, getFishComparisonOriginFishId(returnContext));
+    if (!comparison) {
         console.warn(`Fish comparison participants are unavailable: ${relationship.id}`);
         if (returnContext && returnToDetailNavigationContext()) return;
         showView(ROUTES.FISH_COMPARE_CATALOG);
@@ -755,31 +865,34 @@ function renderFishComparisonView(appMain) {
     }
 
     renderFishComparison(appMain, {
-        relationship,
-        fishA,
-        fishB,
-        mediaA: getFishPrimaryMedia(fishA.id),
-        mediaB: getFishPrimaryMedia(fishB.id),
+        ...comparison,
         parentLabel: returnContext?.label ?? "Compare Similar Fish",
         onParent: returnContext ? returnToDetailNavigationContext : () => showView(ROUTES.FISH_COMPARE_CATALOG),
         onFishSelect: openFishDetailFromComparison
     });
+
+    const focusFishId = fishComparisonFocusFishId;
+    fishComparisonFocusFishId = null;
+    restoreFishFocus(appMain, focusFishId ? `[data-fish-detail-id="${focusFishId}"]` : null);
 }
 
 function openFishDetailFromComparison(fishId) {
     const fish = findRecordById(getActiveFish(), fishId);
     const relationship = getActiveFishRelationships().find((item) => item.id === selectedFishRelationshipId);
-    if (!fish || !relationship || !relationship.fishIds.includes(fish.id)) {
+    const returnContext = peekDetailNavigationContext();
+    const comparison = buildFishComparisonContext(relationship, getFishComparisonOriginFishId(returnContext));
+    if (!fish || !relationship || !comparison || !relationship.fishIds.includes(fish.id)) {
         console.warn(`Fish comparison participant could not be opened: ${fishId}`);
         return;
     }
 
-    const fishA = findRecordById(getActiveFish(), relationship.fishIds[0]);
-    const fishB = findRecordById(getActiveFish(), relationship.fishIds[1]);
     pushDetailNavigationContext({
         route: ROUTES.FISH_COMPARE,
-        label: `${fishA?.name ?? relationship.fishIds[0]} vs ${fishB?.name ?? relationship.fishIds[1]}`,
-        state: { selectedFishRelationshipId: relationship.id }
+        label: `${comparison.fishA.name} vs ${comparison.fishB.name}`,
+        state: {
+            selectedFishRelationshipId: relationship.id,
+            focusFishId: fish.id
+        }
     });
     selectedFishId = fish.id;
     resetFishDetailState(fish.id);

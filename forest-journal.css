@@ -1111,6 +1111,9 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .fish-comparison-chooser-card__image-frame { border: 1px solid var(--border-strong); }
 .fish-comparison-chooser-card__image { object-fit: contain; background: var(--reference-media-surface); }
 
+.fish-comparison-catalog-groups { display: grid; gap: var(--space-8); }
+.fish-comparison-catalog-group { min-width: 0; }
+.fish-comparison-catalog-group > h3 { margin-bottom: var(--space-3); }
 .fish-comparison-catalog-grid { display: grid; gap: var(--space-4); }
 .fish-comparison-catalog-card {
     --card-accent: var(--accent);
@@ -1155,47 +1158,82 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 
 .fish-comparison-header {
     margin-bottom: var(--space-5);
-    padding: var(--space-5);
-    border-left: 5px solid var(--accent-fish);
-    border-radius: var(--radius);
-    background:
-        linear-gradient(110deg, color-mix(in srgb, var(--accent-fish) 14%, transparent), transparent 52%),
-        var(--surface-elevated);
+    padding: 0 0 var(--space-4);
+    border-bottom: 1px solid var(--border);
 }
 .fish-comparison-header > p:last-child { margin-bottom: 0; }
-.fish-comparison-grid { display: grid; align-items: stretch; gap: var(--space-5); }
-.fish-comparison-side {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
+.fish-comparison-panel {
     padding: var(--space-4);
     border: 1px solid var(--border);
-    border-radius: var(--radius-small);
+    border-radius: var(--radius);
     background: var(--surface-elevated);
+    box-shadow: var(--shadow-card);
 }
-.fish-comparison-side h3 { margin-bottom: var(--space-1); }
-.fish-comparison-side__image {
+.fish-comparison-layout { display: grid; gap: var(--space-4); }
+.fish-comparison-identity,
+.fish-comparison-difference { min-width: 0; }
+.fish-comparison-identity h3,
+.fish-comparison-difference h4 { margin-top: 0; margin-bottom: var(--space-3); }
+.fish-comparison-identity--b {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+}
+.fish-comparison-identity__image,
+.fish-comparison-identity__image-frame {
     width: 100%;
     aspect-ratio: 16 / 10;
-    margin-bottom: var(--space-4);
 }
-.fish-comparison-side__image-frame {
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    margin-bottom: var(--space-4);
-}
-.fish-comparison-side__image {
+.fish-comparison-identity__image {
     border-radius: var(--radius-small);
     object-fit: contain;
     background: var(--reference-media-surface);
 }
-.fish-comparison-side .detail-list { margin-bottom: var(--space-4); }
-.fish-comparison-side .internal-knowledge-link { margin-top: auto; }
+.fish-comparison-key-differences {
+    margin: var(--space-2) 0 0;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+}
+.fish-comparison-difference {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+.fish-comparison-difference--b {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+}
+.fish-comparison-difference .detail-list { margin-bottom: 0; }
+.fish-comparison-difference .internal-knowledge-link { align-self: flex-start; margin-top: auto; }
+.fish-comparison-diagnostic-media {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+}
+.fish-comparison-diagnostic-media__grid { display: grid; gap: var(--space-4); }
+.fish-comparison-diagnostic-media__item { margin: 0; }
+.fish-comparison-diagnostic-media__image {
+    width: 100%;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-small);
+    background: var(--reference-media-surface);
+}
+.fish-comparison-diagnostic-media figcaption {
+    margin-top: var(--space-2);
+    color: var(--text-muted);
+    font-size: .86rem;
+}
 
 @media (min-width: 640px) {
-    .fish-comparison-grid,
     .fish-comparison-catalog-grid,
     .fish-comparison-chooser-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fish-comparison-diagnostic-media__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 800px) {
+    .fish-comparison-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-5); }
+    .fish-comparison-identity--b { padding-top: 0; padding-left: var(--space-5); border-top: 0; border-left: 1px solid var(--border); }
+    .fish-comparison-key-differences { grid-column: 1 / -1; }
+    .fish-comparison-difference--b { padding-top: 0; padding-left: var(--space-5); border-top: 0; border-left: 1px solid var(--border); }
 }
 
 @media (min-width: 900px) {
