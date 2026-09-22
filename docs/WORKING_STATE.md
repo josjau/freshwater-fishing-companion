@@ -4096,9 +4096,9 @@
 
 
 **Document:** WORKING_STATE.md  
-**Document Revision:** 1.19.138  
+**Document Revision:** 1.19.140  
 **Document Status:** Approved — Active Repository Continuity Record  
-**Workstream Status:** V1 Completion Audit & Roadmap - ACTIVE / FCC 48 FISH GUIDE TARGETED BASELINE-UX REVIEW DISCUSSION COMPLETE / CHECKPOINTS 152-156.3 CLOSED-PASS-REFINEMENT ALLOWED / FCC 48I.1-48I.4 IMPLEMENTED IN DRIVE CURRENT / R2 LANDING-SEARCH-BROWSE APPROVED-PASS / R3 FISH DETAIL LOCAL BROWSER REVIEW NEXT
+**Workstream Status:** V1 Completion Audit & Roadmap - ACTIVE / FCC 48 FISH GUIDE TARGETED BASELINE-UX REVIEW DISCUSSION COMPLETE / CHECKPOINTS 152-156.3 CLOSED-PASS-REFINEMENT ALLOWED / FCC 48J R3 FISH DETAIL REFINEMENT ROUND 2 IMPLEMENTED IN DRIVE CURRENT / REVISED LOCAL BROWSER REVIEW NEXT
 **Last Updated:** 2026-09-21
 
 
@@ -358093,4 +358093,16 @@ Canonical-owner disposition for this staging gate: `WORKING_STATE.md` **UPDATED*
 The next cumulative review transport is **`FCC-48I-Fish-Guide-R3.zip`**, containing the complete current 12-owner Fish implementation package plus every Drive Current repository documentation file that still differs from the starting GitHub baseline; deletion set remains none.
 
 **Exact resume:** R3 local browser review of Fish Detail. Review identity/media hierarchy, visible How to Identify This Fish, independent disclosure behavior and restoration, Habitat & Water desktop one-versus-two-column geometry, structured Rig guidance, Safety & Handling / Fishing This Species / Learn More on exceptional Fish, Compare row behavior with no thumbnails, zero/one/two-plus Compare routing, Parent restoration from Rig/Regulations/Compare, mobile and full-desktop wrapping/overflow/focus/touch behavior, and regression of the R2 Landing/Search/Browse baseline. Do not begin the broader FCC 48I.5 Compare workflow implementation until R3 feedback is dispositioned.
+
+## 2026-09-21 — FCC 48I Session Closeout — R3 Commit / Continuation Gate
+
+GitHub `main` is now **`d243f452a65e969a617941d38a5e3e27a0e26222`** (`FCC 48I - Fish Guide Build Edits`), one commit ahead of the prior `c9189555651cb13f738f00cd6ad2e5799ad0b90c` baseline. The landed commit contains the complete cumulative FCC 48I R3 checkpoint: **19 changed files total — 12 locked production owners plus 7 repository documentation owners — with no deletions**. GitHub Repository Integrity run `35657754739` completed **SUCCESS**, and Pages build/deployment run `35657754169` completed **SUCCESS**.
+
+This commit remains a **continuity checkpoint, not closure of FCC 48I.4 or FCC 48I overall**. The R2 Fish Landing/Search/Browse baseline remains approved. The first FCC 48J refinement pass is now implemented in Drive Current: when a Fish has exactly one Rig recommendation, the recommendation renders without `Primary Choices` / `Alternatives`; the Fish Detail **Compare Similar Fish** arrow now uses normal row text color with a heavier/larger treatment while the row title, related-Fish line, spacing, structure, and whole-row interaction remain unchanged. Full-desktop **Habitat & Water** remains the accepted two-column internal layout; mobile remains stacked.
+
+The first FCC 48J review package was created and browser review produced two additional bounded spacing refinements. Those are now also implemented in Drive Current: every expanded ABOUT THIS FISH panel has modest top content padding, and the Fish identity card uses tighter upper vertical rhythm, with the largest reduction between Common Name and Scientific Name plus smaller reductions through Family/image spacing. Content hierarchy, typography roles, image sizing, and responsive behavior are unchanged. The complete uncommitted production delta from `d243f452...` is confined to `view-renderer.js` and `forest-journal.css`; no GitHub commit/push or new CI run has occurred.
+
+Canonical-owner disposition for this refinement checkpoint: `V1-DESIGN-AUDIT.md` **UPDATED** to 1.0.36 for the build-review spacing refinement; `ACTIVE-CHANGE-LEDGER.md` **UPDATED** to 1.10.139 for the implemented/pending-review carry-forward; `WORKING_STATE.md` **UPDATED** to 1.19.140. `CHANGELOG.md`, `UI_STANDARD.md`, `ARCHITECTURE.md`, `DEVELOPMENT_WORKFLOW.md`, `ROADMAP.md`, decision/data-model owners, and other documentation owners are **VERIFIED — NO CHANGE REQUIRED** because this remains an uncommitted Fish-specific build-review refinement.
+
+**Exact resume:** review `FCC-48J-Fish-Guide-R3-Refinement-Review-R2.zip` locally. Confirm (1) single-Rig pages remain free of Primary/Alternative headings; (2) Compare Similar Fish arrow remains neutral/heavier/larger without row-layout regression; (3) all expanded ABOUT THIS FISH panels have improved top breathing room; (4) Fish identity-card spacing is visibly tighter, especially Common Name → Scientific Name, without becoming cramped; (5) accepted full-desktop two-column Habitat & Water and stacked mobile behavior remain; and (6) R2 Landing/Search/Browse has no regression. Do not begin FCC 48I.5 Compare until this Fish Detail review is dispositioned.
 

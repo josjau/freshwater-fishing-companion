@@ -815,10 +815,10 @@ function renderFishDetail(appMain, detailConfig) {
         : [];
     const primaryRigs = recommendations.filter((item) => item.priority === "Primary");
     const alternativeRigs = recommendations.filter((item) => item.priority === "Alternative");
-    const buildRigGroup = (title, records) => records.length
+    const buildRigGroup = (title, records, showHeading = true) => records.length
         ? `
             <section class="fish-rig-recommendation-group">
-                <h4>${title}</h4>
+                ${showHeading ? `<h4>${title}</h4>` : ""}
                 <div class="fish-rig-recommendation-list">
                     ${records.map((item) => `
                         <button class="fish-rig-recommendation" type="button"
@@ -839,7 +839,9 @@ function renderFishDetail(appMain, detailConfig) {
         ? buildFishDisclosureMarkup(
             "rigs",
             "Rigs to Start With",
-            `${buildRigGroup("Primary Choices", primaryRigs)}${buildRigGroup("Alternatives", alternativeRigs)}`,
+            recommendations.length === 1
+                ? buildRigGroup("", recommendations, false)
+                : `${buildRigGroup("Primary Choices", primaryRigs)}${buildRigGroup("Alternatives", alternativeRigs)}`,
             expandedDisclosureIds.has("rigs")
         )
         : "";

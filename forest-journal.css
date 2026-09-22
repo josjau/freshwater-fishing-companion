@@ -913,9 +913,10 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
     background: var(--surface);
 }
 .fish-detail-header > p:last-child { margin-bottom: 0; }
-.fish-scientific-name { margin-bottom: var(--space-2); color: var(--text-muted); }
+.fish-detail-header h2 { margin-bottom: var(--space-2); }
+.fish-scientific-name { margin-bottom: var(--space-1); color: var(--text-muted); }
 .fish-scientific-name em { font-style: italic; }
-.fish-identity-meta { margin-bottom: var(--space-2); color: var(--text-muted); }
+.fish-identity-meta { margin-bottom: var(--space-1); color: var(--text-muted); }
 
 .fish-primary-media {
     margin: 0 0 var(--space-5);
@@ -925,7 +926,7 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
     background: var(--surface);
 }
 .fish-primary-media--identity {
-    margin: var(--space-4) 0 0;
+    margin: var(--space-3) 0 0;
     padding: 0;
     border: 0;
     border-radius: 0;
@@ -1013,14 +1014,18 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
     font-weight: 800;
 }
 .fish-about-row__panel {
-    padding: 0 var(--space-4) var(--space-4);
+    padding: var(--space-2) var(--space-4) var(--space-4);
     color: var(--text-muted);
 }
 .fish-about-row__panel[hidden] { display: none; }
 .fish-about-row__panel > :last-child { margin-bottom: 0; }
 .fish-about-row__navigation-copy { display: grid; min-width: 0; gap: 2px; }
 .fish-about-row__secondary { color: var(--text-subtle); font-size: .86rem; font-weight: 500; line-height: 1.35; }
-.fish-about-row__trigger--navigation .fish-about-row__navigation-action { color: var(--accent); }
+.fish-about-row__trigger--navigation .fish-about-row__navigation-action {
+    color: var(--text);
+    font-size: 1.25rem;
+    font-weight: 900;
+}
 
 .fish-habitat-groups { display: grid; gap: var(--space-4); }
 .fish-habitat-group h4,
