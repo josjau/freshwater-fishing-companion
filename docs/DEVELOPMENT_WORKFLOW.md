@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** DEVELOPMENT_WORKFLOW.md  
-**Document Revision:** 2.3.13  
+**Document Revision:** 2.3.14  
 **Document Status:** Approved  
 **Role:** Compact canonical workflow entrypoint  
 **Decision Baseline:** D014, D038-D041, D055, D068  
-**Last Updated:** 2026-09-20
+**Last Updated:** 2026-09-21
 
 # Purpose
 
@@ -15,7 +15,7 @@ This file is the canonical entrypoint for Freshwater Fishing Companion workflow 
 
 Freshwater Fishing Companion operates in the **normal ChatGPT project/chat workflow** using connected Google Drive and GitHub capabilities.
 
-**ChatGPT Work is not a supported project execution environment.** Do not make routine repository inspection, documentation editing, Drive working-state maintenance, staging/package preparation, GitHub reconciliation, closeout, or continuity dependent on Work-mode filesystem/shell/persistent-workspace behavior.
+**ChatGPT Work is not a supported project execution environment and must never be suggested, invoked, requested, or used for FCC.** Repository inspection, documentation/source editing, Drive working-state maintenance, staging/package preparation, GitHub reconciliation, closeout, and continuity stay in the normal ChatGPT project/chat workflow using the established Drive/GitHub path.
 
 # Authority Chain
 
@@ -106,7 +106,7 @@ Track only the lineage needed to prove what state is under review:
 - production-write/commit authorization state where applicable;
 - final GitHub SHA after landing.
 
-A review ZIP is a transport/review snapshot generated from Drive Current, not a second authority layer.
+A review ZIP is a transport/review snapshot generated from Drive Current, not a second authority layer. It is also the standard handoff from Drive Current to the user's verified local checkout: when repository files need to move from Drive Current into the local repository for review or commit, package the required repository files so the user does not have to copy them individually from Drive.
 
 # Baseline Invalidation
 

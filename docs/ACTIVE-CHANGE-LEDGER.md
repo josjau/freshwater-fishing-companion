@@ -64,7 +64,7 @@
 
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.139  
+**Document Revision:** 1.10.140  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** GitHub `main` commit `d243f452a65e969a617941d38a5e3e27a0e26222`  
@@ -4370,13 +4370,13 @@ These items are not current blockers and must not be promoted merely because the
 
 ### 2026-09-21 — FCC 48I — Fish Detail R3 Refinement Carry-Forward
 
-- **Status:** IMPLEMENTED / APPROVED / PENDING BROWSER REVIEW.
+- **Status:** IMPLEMENTED / USER-APPROVED / PENDING COMMIT.
 - **Committed baseline:** GitHub `main` `d243f452a65e969a617941d38a5e3e27a0e26222` (`FCC 48I - Fish Guide Build Edits`), containing the cumulative 12-owner FCC 48I production package plus seven documentation owners; no deletions.
 - **CI:** Repository Integrity run `35657754739` PASS; Pages build/deployment run `35657754169` PASS remain the last landed CI results; no new commit/push/CI has occurred.
 - **Approved baseline retained:** R2 Fish Landing/Search/Browse remains approved and is not reopened.
 - **R3 Fish Detail refinement implementation:** exactly-one-Rig pages now omit `Primary Choices` / `Alternatives`; the Fish Detail **Compare Similar Fish** arrow now uses normal row text color with a heavier/larger visual treatment while title, related-Fish line, spacing, row structure, and whole-row interaction remain unchanged.
 - **Follow-up spacing refinement:** expanded ABOUT THIS FISH panel content now receives modest top padding. Fish identity-card upper spacing is condensed, with the strongest reduction between Common Name and Scientific Name and smaller reductions through Family/image spacing; hierarchy, typography roles, media sizing, and accepted responsive behavior remain unchanged.
 - **Resolved build-review decision retained:** full-desktop **Habitat & Water** uses the two-column internal layout; mobile remains stacked.
-- **Transport:** revised browser-review package is `FCC-48J-Fish-Guide-R3-Refinement-Review-R2.zip`.
-- **Exact resume:** browser-review the revised Fish Detail package and disposition the spacing refinements. Do not begin FCC 48I.5 Compare until the R3 Fish Detail refinement review is closed.
+- **Browser review:** `FCC-48J-Fish-Guide-R3-Refinement-Review-R2.zip` is USER-APPROVED / PASS; SHA-256 `1dc1f9c5a929c2e2c150a630475bad087adefc511aaf3f122c1c38e6a9518f6c`. The single-Rig, Compare-arrow, expander-spacing, identity-spacing, Habitat responsive, and R2 regression review points are accepted.
+- **Exact resume:** obtain explicit commit/push authorization for the approved R3 refinement delta, land it, and verify repository changed-file scope plus Repository Integrity/Pages before beginning FCC 48I.5 Compare.
 

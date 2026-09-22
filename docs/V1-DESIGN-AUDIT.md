@@ -128,7 +128,7 @@
 
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.36  
+**Document Revision:** 1.0.37  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
 **Last Updated:** 2026-09-21
@@ -5031,7 +5031,7 @@ This R2 approval validates the reviewed Landing/Search/Browse implementation onl
 
 ## FCC 48I.4 — Fish Detail R3 Browser Review / Session Boundary
 
-**Status:** R3 REFINEMENT ROUND 2 IMPLEMENTED / BROWSER REVIEW REQUIRED / COMMITTED BASELINE RETAINED / 48I.4 NOT CLOSED
+**Status:** R3 USER-APPROVED / PASS / REFINEMENT ALLOWED / 48I.4 FISH DETAIL BROWSER VALIDATION CLOSED / APPROVED UNCOMMITTED REFINEMENT DELTA PENDING LANDING
 
 The cumulative R3 Fish Detail implementation is committed on GitHub `main` at `d243f452a65e969a617941d38a5e3e27a0e26222`. Repository Integrity and Pages both passed for that landed checkpoint. FCC 48J now carries a bounded uncommitted refinement delta in Drive Current while preserving the approved checkpoint-154 detail hierarchy.
 
@@ -5045,9 +5045,9 @@ The cumulative R3 Fish Detail implementation is committed on GitHub `main` at `d
 
 **Fish identity-card vertical rhythm:** reduce excess vertical space in the upper identity stack. The largest reduction is between Common Name and Scientific Name; smaller reductions may tighten Scientific Name → Family and Family → primary image. Preserve the existing hierarchy, font roles, labels, card padding, media size/framing, and beginner-readable separation; the result should read tighter, not compressed. This refinement is implemented in Drive Current.
 
-The revised review transport is `FCC-48J-Fish-Guide-R3-Refinement-Review-R2.zip`. The package is a targeted delta against the committed R3 state, not a rebuild from the former `c9189555651cb13f738f00cd6ad2e5799ad0b90c` baseline.
+The revised review transport `FCC-48J-Fish-Guide-R3-Refinement-Review-R2.zip` is **USER-APPROVED / PASS** with SHA-256 `1dc1f9c5a929c2e2c150a630475bad087adefc511aaf3f122c1c38e6a9518f6c`. Browser review accepts the single-Rig heading suppression, Compare-arrow-only refinement, expanded-panel top padding, tighter Fish identity-card vertical rhythm, full-desktop two-column Habitat & Water layout with stacked mobile behavior, and regression preservation of the R2 Landing/Search/Browse baseline. The package is a targeted delta against the committed R3 state, not a rebuild from the former `c9189555651cb13f738f00cd6ad2e5799ad0b90c` baseline.
 
-**Exact next work unit:** browser-review the revised R3 Fish Detail refinement package, focusing on expanded-panel top breathing room, identity-card vertical rhythm, the already-approved single-Rig and Compare-arrow refinements, and regression of the accepted Habitat & Water responsive layout plus the R2 Landing/Search/Browse baseline. Do not begin FCC 48I.5 Compare workflow implementation until this Fish Detail refinement review is resolved.
+**Exact next work unit:** obtain explicit production commit/push authorization for the approved uncommitted R3 refinement delta, land the bounded source + documentation changes, then verify GitHub changed-file scope, Repository Integrity, and Pages. Do not begin FCC 48I.5 Compare workflow implementation until that landing/CI gate passes.
 
 # Audit Method
 

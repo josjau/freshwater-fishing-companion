@@ -64,7 +64,7 @@
 
 
 **Document:** UI_STANDARD.md  
-**Document Revision:** 1.3.17  
+**Document Revision:** 1.3.18  
 **Document Status:** Approved  
 **Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard  
 **Decision Baseline:** D015, D020-D022, D030-D032, D035, D042, D046-D048, D050-D052, D061, D063  
@@ -4747,7 +4747,7 @@ Checkpoint 154.4 is **APPROVED / refinement allowed**. **Rigs to Start With** re
 
 
 
-Group recommendations as **Primary Choices** and **Alternatives**. Within each group, preserve an intentional **unnumbered descending presentation order** representing general-purpose beginner starting value for targeting that Fish. Do not display numeric ranks, scores, `#1`, Best badges, or other explicit ranking labels. This stable Fish Guide ordering is not a substitute for What Should I Throw contextual ranking and carries no current-condition, availability, legality, or user-tackle meaning.
+Group recommendations as **Primary Choices** and **Alternatives** when multiple recommendations are present. Within each group, preserve an intentional **unnumbered descending presentation order** representing general-purpose beginner starting value for targeting that Fish. When exactly **one total Rig recommendation** exists, omit the redundant Primary/Alternative group heading and render the single recommendation directly while preserving its authored priority semantics. Do not display numeric ranks, scores, `#1`, Best badges, or other explicit ranking labels. This stable Fish Guide ordering is not a substitute for What Should I Throw contextual ranking and carries no current-condition, availability, legality, or user-tackle meaning.
 
 
 
@@ -4915,7 +4915,7 @@ Responsive behavior:
 - **mobile / narrow:** Fish Detail remains fundamentally one column; disclosures stack vertically and expanded content stays in normal document flow;
 - **desktop / wide:** retain the same semantic order and prominent Fish media rather than automatically creating a side-by-side identity/media layout; do not stretch long explanatory prose across the full application canvas when a narrower readable measure is more legible;
 - keep the supporting disclosure rows themselves vertically stacked on desktop;
-- **Habitat & Water** may compare one-column versus two-column internal Habitat-group layout at full desktop during build review;
+- **Habitat & Water** uses the browser-approved two-column internal layout at full desktop and returns to the stacked layout on mobile/narrow widths;
 - Rig recommendation rows and Learn More actions may compact on wider screens but must wrap intact when labels/actions do not fit comfortably;
 - expanded content uses normal page scrolling; do not impose nested panel scrolling, arbitrary max-height clipping, ellipsis, or truncation on substantive guidance;
 - long scientific names, aliases, Rig names, labels, reasons, and action cues wrap without shrinking readable typography or creating horizontal overflow.
@@ -4924,7 +4924,7 @@ Responsive behavior:
 Sticky Parent/Home navigation must not obscure restored scroll targets, keyboard-focused disclosures, or returned contextual triggers. Disclosure/layout animation remains restrained and respects `prefers-reduced-motion`.
 
 
-Checkpoint 154.7 does **not** reopen the already validated per-Fish primary-media framing absent a concrete implementation defect. Exact disclosure border/surface treatment, readable prose max-width, Habitat desktop column decision, spacing, and animation details remain bounded build-review refinements.
+Checkpoint 154.7 does **not** reopen the already validated per-Fish primary-media framing absent a concrete implementation defect. The R3 Fish Detail browser review closes the bounded build-review refinements for this surface: expanded ABOUT THIS FISH panels retain modest top breathing room before their internal content; the Fish identity card uses a tighter upper vertical rhythm with the strongest reduction between Common Name and Scientific Name and smaller reductions through Family/image spacing; and the **Compare Similar Fish** navigation row keeps its approved title, secondary related-Fish line, spacing, structure, and whole-row behavior while only its arrow uses normal row text color with a heavier/larger treatment. These are Fish Detail baseline refinements, not automatic universal spacing or arrow rules for unrelated Guide surfaces. Exact animation details remain refinement-allowed.
 
 ### Fish Compare Similar Fish global catalog — checkpoint 155.1
 

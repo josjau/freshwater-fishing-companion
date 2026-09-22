@@ -1,14 +1,25 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.7.0  
+**Document Revision:** 3.8.0  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-09-13
+**Last Updated:** 2026-09-21
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to `WORKING_STATE.md`; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-09-21 — FCC 48I Fish Guide Baseline / R3 Checkpoint — Landed
+
+Commit `d243f452a65e969a617941d38a5e3e27a0e26222` — `FCC 48I - Fish Guide Build Edits`
+
+- Landed the cumulative FCC 48I Fish Guide implementation checkpoint across **19 files: 12 locked production owners plus 7 documentation owners, with no deletions**.
+- Added the dedicated `data/fish-specialized-guidance.js` owner, strengthened Fish data/source ownership boundaries, reorganized shared Fish JavaScript sections, and expanded repository-integrity validation for the new owner.
+- Landed the browser-approved R2 Fish Landing/Search/Browse baseline, including the two-column maximum Fish result layout, deterministic Common Name + `View Fish →` heading treatment, alias-below-image placement, constrained desktop Fish Search width, and application-wide removal of accent bloom from card surfaces.
+- Landed the R3 Fish Detail checkpoint with the approved identity/media hierarchy, independent ABOUT THIS FISH disclosures, structured Fish-to-Rig guidance, Safety & Handling / specialized Fish guidance, contextual return-state restoration, and the minimum scoped comparison chooser dependency required by Fish Detail.
+- GitHub Repository Integrity run `35657754739` and Pages build/deployment run `35657754169` both passed after push.
+- This is a **landed continuity checkpoint, not FCC 48I closeout**. R3 browser review leaves a small Fish Detail refinement pass: suppress Primary/Alternative group labels for a single Rig recommendation and strengthen/neutralize only the Compare Similar Fish arrow. The full-desktop two-column Habitat & Water layout is retained.
 
 # 2026-09-13 — Recommendation Runtime Foundation — Landed
 

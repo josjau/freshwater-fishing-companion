@@ -3,7 +3,7 @@
 **Document:** workflow/PRODUCTION-CHANGES.md  
 **Document Status:** Approved  
 **Role:** Production write, review/staging, preservation, validation, package transport, and commit authorization  
-**Last Updated:** 2026-08-27
+**Last Updated:** 2026-09-21
 
 # Production Write Approval Gate
 
@@ -23,8 +23,8 @@ A prior approval does not grant blanket authority for later production writes.
 2. Verify the starting GitHub SHA, Drive complete working tree, and Live Working State review-cycle identity.
 3. Create/update the intended files directly in Drive `Working Source/Current` at their repository-relative paths.
 4. Run targeted static/data/media/relationship validation appropriate to the changed surface.
-5. Generate/update a cumulative review ZIP in `Packages` only when user/local/browser/device review requires transport.
-6. Apply the package to a verified local checkout when local/browser validation is required; `.git` is never included/replaced.
+5. Generate/update a cumulative review ZIP in `Packages` whenever the current candidate files need to move from Drive Current into the user's local checkout for review or commit. The ZIP is the standard Drive-to-local handoff; do not make the user shuttle required repository files individually from Drive.
+6. Apply the package to a verified local checkout when local/browser validation or commit staging is required; `.git` is never included/replaced.
 7. Review the complete local diff against the recorded starting GitHub SHA and the review-cycle changed-file set.
 8. Correct defects in Drive first and update only affected validation/package artifacts.
 9. Do not commit/push production/user-facing work until the user explicitly authorizes that action.
@@ -101,29 +101,38 @@ Do not reconstruct the workstream from GitHub when GitHub intentionally has not 
 
 # Packages
 
-`Working Source/Packages` owns transport/checkpoint artifacts such as review ZIPs, manifests, transfer packages, and explicit recovery exports. Packages are **not** authoritative editable working state.
+`Working Source/Packages` owns transport/checkpoint artifacts such as review ZIPs, optional external manifests, transfer packages, and explicit recovery exports. Packages are **not** authoritative editable working state.
 
-A review ZIP must:
+A review ZIP is the complete bounded **Drive Current → local repository handoff** for the current review/commit step. It must:
 
 - preserve repository-relative paths;
 - exclude `.git`;
-- contain the cumulative new/modified files required to reproduce the candidate state over the recorded GitHub baseline;
-- record starting GitHub SHA, review revision, changed-file set, deletion set, and sufficient hash/identity data to prove package contents.
+- contain every new/modified **repository file** the user needs to apply locally for the intended review or commit, including changed repository documentation;
+- avoid unrelated unchanged files that are not needed for the bounded handoff;
+- exclude manifests, Chat Logs, the external Live Working State, assistant notes, package reports/hashes, deletion-instruction files, and any other non-repository operational/transport artifact;
+- never place a manifest inside the review ZIP or create one as a repository payload file.
+
+Repository documentation is production-repository content for packaging purposes. Therefore a changed tracked file such as `docs/WORKING_STATE.md` belongs in the ZIP when it is part of the intended repository commit. The **external Live Working State** is operational continuity state and never belongs in the ZIP.
+
+Package identity/hash or deletion metadata may be retained separately in `Packages` or stated in chat when genuinely useful, but those artifacts are never extracted into the repository.
 
 ## Deletions are explicit
 
-ZIP extraction can overwrite/add files but **cannot remove pre-existing repository files**. Therefore any review revision that retires, renames, or deletes tracked paths must provide an explicit deletion list outside the repo payload and in the review manifest.
+ZIP extraction can overwrite/add files but **cannot remove pre-existing repository files**. Therefore any review revision that retires, renames, or deletes tracked paths must provide the exact deletion paths as user-facing cleanup steps alongside the ZIP. Do not require a deletion-list or manifest file to be copied into the repository.
 
-The local review sequence is:
+The local handoff sequence is:
 
 ```text
 extract ZIP over repository root
-→ delete every path in the package deletion list
+→ perform the explicit cleanup/deletion steps supplied with the ZIP
 → inspect GitHub Desktop diff
-→ compare modifications/additions/deletions with manifest
+→ verify the diff equals the expected bounded repository scope
+→ review if needed
+→ commit/push when authorized
+→ assistant verifies GitHub changed-file scope and required CI
 ```
 
-Do not place the deletion-list artifact inside the repository ZIP if doing so would create an unrelated untracked repository file.
+The package exists to eliminate manual Drive-to-local file movement, not to introduce another staging workflow.
 
 # Targeted Validation
 
