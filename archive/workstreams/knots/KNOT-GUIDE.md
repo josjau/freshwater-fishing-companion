@@ -2,7 +2,7 @@
 
 
 **Document:** KNOT-GUIDE.md  
-**Document Revision:** 0.3.27  
+**Document Revision:** 0.3.28  
 **Document Status:** Approved Planning / In Progress  
 **Milestone:** Knots  
 **Last Updated:** 2026-09-25
@@ -70,7 +70,7 @@ Approved beginner-facing description:
 > Learn the essential fishing knots for attaching line to your reel, tying on hooks and lures, connecting lines, and making loop connections.
 
 
-Knots Guide also requires restrained Knot-specific visual identity/flair. The treatment must add visual interest without becoming graphic-heavy, assigning Knots a fixed Guide color, or disrupting the content hierarchy. Exact motif/graphic choice, placement, scale, and responsive behavior remain bounded build/browser-test refinements and may be revised while preserving this approved direction.
+Decorative Knots Guide identity art is deferred to the final Version 1 UX Audit. The current Knots build keeps the compact text identity without a decorative motif; future visual-flair exploration starts with Dashboard Guide-card imagery rather than adding decoration to Reference Knowledge surfaces by default.
 
 
 # Approved Version 1 Knot Library
@@ -259,7 +259,7 @@ Equivalent Guide components inherit the Fish Guide baseline by default rather th
 The older **Advanced Knots — Coming Soon** placeholder direction is superseded. **Advanced Knots is removed from the Version 1 landing page.** FCC retains `Advanced` as a valid difficulty value for future justified canonical Knot records, but Version 1 does not advertise an empty collection and does not add or reclassify any Knot merely to populate that tier.
 
 
-Exact spacing, accent sequencing, and the restrained Knots motif remain bounded implementation/browser-test refinements. Equivalent Fish components keep Fish baseline interaction/responsive behavior unless browser validation exposes a concrete Knots-specific usability defect.
+Exact spacing and accent sequencing remain bounded implementation/browser-test refinements. Decorative Guide imagery is deferred to the final UX Audit. Equivalent Fish components keep Fish baseline interaction/responsive behavior unless browser validation exposes a concrete Knots-specific usability defect.
 
 
 ## KG Audit — CP2 — Landing Interaction + Responsive Behavior
@@ -1459,7 +1459,7 @@ Read-only dependencies include `data/fish-categories.js`, `data/rigs.js`, `index
 Visual refinement is a required CP9 deliverable rather than optional CSS polish. The implementation must browser-test and deliver:
 
 
-- restrained Knot-specific visual motif/flair without a fixed Knots Guide color or graphic-heavy presentation;
+- compact Knots Guide identity without decorative motif art; later Dashboard imagery remains owned by the final UX Audit;
 - rotating standard-card accents from the shared palette;
 - reserved workflow treatment for **Get Your Reel Ready**;
 - clear Core/beginner-priority hierarchy independent of any one accent color;
@@ -1483,12 +1483,21 @@ The bounded prototype remains **Improved Clinch → Palomar → Double Uni → A
 
 
 1. **CP9.1 — Structural / Data / Search Foundation:** `data/knots.js` → `data/knot-guidance.js` → `search.js` → direct Knots `script.js` consumers → `tools/validate_repository_integrity.js`.
-2. **CP9.2 — Landing / Browse / Visual Treatment + Interaction Effects:** landing hierarchy, Search, browse/results, Knot-specific motif/flair, card accents, workflow/priority treatments, interaction states, responsive visual density, and query/scroll restoration.
+2. **CP9.2 — Landing / Browse / Visual Treatment + Interaction Effects:** landing hierarchy, Search, browse/results, card accents, workflow/priority treatments, interaction states, responsive visual density, query/scroll restoration, and no decorative Guide-identity art in the current build.
 3. **CP9.3 — Knot Detail + Reference + Media Integration:** detail structure, disclosures, adjacent-`ⓘ` Reference behavior, explicit instructional-media mount point, and protected external baseline.
 4. **CP9.4 — Get Your Reel Ready Migration:** coordinated `data/reel-guidance.js` + `script.js` workflow migration, References, Line Weight, Equipment, Braid Backing, Spool, five-phase progress, Ready, and responsive status/semantic visuals.
 5. **CP9.5 — Ready → Rig Guide Handoff:** transient completed Reel Setup context and noninteractive **Your Reel Setup** Rig landing summary without filtering/ranking/auto-selection.
 6. **CP9.6 — Four-Core Instructional Prototype:** progressive reuse-first/custom-build evaluation and explicit treatment verdict.
 7. **CP9.7 — Full Validation + Review Package:** browser/accessibility/regression validation, documentation reconciliation, and cumulative review-package preparation.
+
+
+### CP9.2 Implementation Result
+
+
+**Status:** CLOSED / PASS — R4 USER-APPROVED — 2026-09-25
+
+
+The approved CP9.2 result is the R4 candidate (`FCC-49I-Knots-Guide-CP9.2-R4-Cumulative-Review.zip`, SHA-256 `c23ff1f233314ebe8de39d9eea6468f7f150c0ed26edd524faa325ba84b44e97`). The approved production state includes the **Knots Guide** Dashboard rename, Dashboard-derived two-sided Core/important accent treatment while preserving rotating standard accents, consistent phone placement of task actions beneath titles, the approved landing/Search/browse/result interaction behavior, and removal of decorative Knot identity art. Decorative Dashboard Guide-card imagery remains deferred to the final UX Audit; Reference Knowledge cards remain undecorated by default unless separately approved later.
 
 
 ### Validation Lock

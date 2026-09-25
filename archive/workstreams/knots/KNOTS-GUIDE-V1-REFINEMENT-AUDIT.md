@@ -48,7 +48,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 IN REVIEW — R4 NEXT |  
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3 NEXT |  
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -106,10 +106,10 @@ Refinement remains allowed. The current Knots build uses the compact Guide ident
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |  
 |---|---|---|---|---|---|  
-| KG-CP1-001 | Use **Knots Guide** consistently for the user-facing Guide/page identity. | BUILD REQUIRED | `view-renderer.js` | Browser review + text/search check | OPEN |  
-| KG-CP1-002 | Preserve Fish Guide compact Guide-identity structure where semantics match. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/desktop comparison | OPEN |  
-| KG-CP1-003 | Keep the current Knots Guide identity free of decorative motif art; defer any later Dashboard/Guide imagery direction to the final UX Audit. | DEFERRED — FINAL UX AUDIT / CURRENT MOTIF REMOVAL | `view-renderer.js`, `forest-journal.css`; `V1-DESIGN-AUDIT.md` future owner | R4 removal check + future UX visual review | R4 REMOVE CURRENT MOTIF / FUTURE UX AUDIT |  
-| KG-CP1-004 | Do not add unnecessary generic CTA above Search. | VERIFY ONLY | `view-renderer.js` | Browser review | OPEN |
+| KG-CP1-001 | Use **Knots Guide** consistently for the user-facing Guide/page identity. | BUILD REQUIRED | `view-renderer.js` | Browser review + text/search check | CLOSED / PASS |  
+| KG-CP1-002 | Preserve Fish Guide compact Guide-identity structure where semantics match. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/desktop comparison | CLOSED / PASS |  
+| KG-CP1-003 | Keep the current Knots Guide identity free of decorative motif art; defer any later Dashboard/Guide imagery direction to the final UX Audit. | DEFERRED — FINAL UX AUDIT / CURRENT MOTIF REMOVAL | `view-renderer.js`, `forest-journal.css`; `V1-DESIGN-AUDIT.md` future owner | R4 removal check + future UX visual review | CURRENT BUILD CLOSED / FUTURE UX DEFERRED |  
+| KG-CP1-004 | Do not add unnecessary generic CTA above Search. | VERIFY ONLY | `view-renderer.js` | Browser review | CLOSED / PASS |
 
 
 ## CP1.2 — Search
@@ -149,13 +149,13 @@ Older Knot planning/approval text that requires a visible Search submit action o
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |  
 |---|---|---|---|---|---|  
-| KG-CP1-005 | Preserve current all-active-Knots deterministic scope/ranking semantics. | VERIFY ONLY | `search.js`, `script.js` | Deterministic query suite + browser spot checks | OPEN |  
-| KG-CP1-006 | Standardize landing Search label/helper/placeholder for the approved Knots scope. | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser text/scope review | OPEN |  
-| KG-CP1-007 | Use live Search with no visible Search submit button while preserving Enter/mobile submit equivalence and one-click clear. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/mobile/browser interaction review | OPEN |  
-| KG-CP1-008 | Use shared neutral Search styling and bring clear control to the current Guide touch-target/focus baseline. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive + keyboard/focus review | OPEN |  
-| KG-CP1-009 | Standardize empty-query, active-result status, and no-match behavior for Knots landing Search. | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser state matrix + accessibility announcement check | OPEN |  
-| KG-CP1-010 | Preserve landing Search query + scroll through Search → Knot Detail → Parent. | BUILD REQUIRED | `script.js` | Navigation round-trip review | OPEN |  
-| KG-CP1-011 | Browser-test Knots desktop Search width rather than automatically copying Fish width. | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | OPEN |  
+| KG-CP1-005 | Preserve current all-active-Knots deterministic scope/ranking semantics. | VERIFY ONLY | `search.js`, `script.js` | Deterministic query suite + browser spot checks | CLOSED / PASS |  
+| KG-CP1-006 | Standardize landing Search label/helper/placeholder for the approved Knots scope. | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser text/scope review | CLOSED / PASS |  
+| KG-CP1-007 | Use live Search with no visible Search submit button while preserving Enter/mobile submit equivalence and one-click clear. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/mobile/browser interaction review | CLOSED / PASS |  
+| KG-CP1-008 | Use shared neutral Search styling and bring clear control to the current Guide touch-target/focus baseline. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive + keyboard/focus review | CLOSED / PASS |  
+| KG-CP1-009 | Standardize empty-query, active-result status, and no-match behavior for Knots landing Search. | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser state matrix + accessibility announcement check | CLOSED / PASS |  
+| KG-CP1-010 | Preserve landing Search query + scroll through Search → Knot Detail → Parent. | BUILD REQUIRED | `script.js` | Navigation round-trip review | CLOSED / PASS |  
+| KG-CP1-011 | Browser-test Knots desktop Search width rather than automatically copying Fish width. | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | CLOSED / PASS |  
 | KG-CP1-012 | Reconcile older visible-submit/**Search all Knots** documentation against the newer approved Guide-family Search standard without rewriting historical evidence. | DOC UPDATE | `KNOT-GUIDE.md` current owner + audit traceability | Readback against approved CP1.2 wording | CLOSED / PASS |
 
 
@@ -181,9 +181,9 @@ Older Knot planning/approval text that requires a visible Search submit action o
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-015 | Add dedicated **Get Your Reel Ready** special workflow card immediately after Search and launch the existing Reel Setup path. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Browser interaction + navigation-path review | OPEN |
-| KG-CP1-016 | Remove duplicate landing-level **Attach Line to a Reel** workflow entry; keep Knot discovery and Reel Setup ownership distinct. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing task inventory + navigation review | OPEN |
-| KG-CP1-019 | Inherit the Fish **Compare Similar Fish** workflow-card geometry/responsive behavior for **Get Your Reel Ready** and verify it across breakpoints; redesign only if a concrete Knots-specific defect appears. | VERIFY ONLY | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | OPEN |
+| KG-CP1-015 | Add dedicated **Get Your Reel Ready** special workflow card immediately after Search and launch the existing Reel Setup path. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Browser interaction + navigation-path review | CLOSED / PASS |
+| KG-CP1-016 | Remove duplicate landing-level **Attach Line to a Reel** workflow entry; keep Knot discovery and Reel Setup ownership distinct. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing task inventory + navigation review | CLOSED / PASS |
+| KG-CP1-019 | Inherit the Fish **Compare Similar Fish** workflow-card geometry/responsive behavior for **Get Your Reel Ready** and verify it across breakpoints; redesign only if a concrete Knots-specific defect appears. | VERIFY ONLY | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | CLOSED / PASS |
 
 
 ## CP1.4 — Core Knots — Learn These First
@@ -200,7 +200,7 @@ A standalone **Core Knots — Learn These First** major landing section is not r
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-018 | Remove the standalone Core major landing section while preserving Core access through the task section and All Knots collection. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing hierarchy/browser review | OPEN |
+| KG-CP1-018 | Remove the standalone Core major landing section while preserving Core access through the task section and All Knots collection. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing hierarchy/browser review | CLOSED / PASS |
 
 
 ## CP1.5 — What Are You Trying to Do?
@@ -229,7 +229,7 @@ This section is for task/learning discovery. Reel setup is not duplicated here b
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-017 | Build the approved four-entry **What Are You Trying to Do?** task set and preserve the task-to-Knot/collection semantics. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Task matrix + browser navigation review | OPEN |
+| KG-CP1-017 | Build the approved four-entry **What Are You Trying to Do?** task set and preserve the task-to-Knot/collection semantics. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Task matrix + browser navigation review | CLOSED / PASS |
 
 
 ## CP1.6 — All Knots
@@ -253,8 +253,8 @@ This section is for task/learning discovery. Reel setup is not duplicated here b
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-013 | Apply the validated Fish Guide `Browse →` collection-card grammar to Knots collection cards and preserve responsive left-aligned wrap behavior. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop card review + keyboard/touch check | OPEN |
-| KG-CP1-020 | Implement **All Knots — Browse →** as an ordinary Fish-baseline browse card that opens the complete active Knot library; do not add a separate section-level Browse All action. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Complete-library navigation + responsive browser review | OPEN |
+| KG-CP1-013 | Apply the validated Fish Guide `Browse →` collection-card grammar to Knots collection cards and preserve responsive left-aligned wrap behavior. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop card review + keyboard/touch check | CLOSED / PASS |
+| KG-CP1-020 | Implement **All Knots — Browse →** as an ordinary Fish-baseline browse card that opens the complete active Knot library; do not add a separate section-level Browse All action. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Complete-library navigation + responsive browser review | CLOSED / PASS |
 
 
 ## CP1.7 — Advanced Knots Resolution
@@ -271,7 +271,7 @@ The decision gate is resolved: **remove the Advanced Knots collection/card from 
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-014 | Remove **Advanced Knots** from the Version 1 landing page while retaining `Advanced` in the difficulty taxonomy/future canonical support. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js` | Configuration check + landing browser validation + taxonomy regression check | OPEN |
+| KG-CP1-014 | Remove **Advanced Knots** from the Version 1 landing page while retaining `Advanced` in the difficulty taxonomy/future canonical support. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js` | Configuration check + landing browser validation + taxonomy regression check | CLOSED / PASS |
 
 
 ## CP1.8 — Whole-Page Hierarchy / Density / Accent Review
@@ -298,7 +298,7 @@ The hierarchy is approved with refinement allowed. Exact responsive spacing, car
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-021 | Validate the complete approved landing hierarchy, density, accent sequencing, workflow distinction, and responsive behavior as one page; decorative motif is deferred. | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop whole-page browser review | OPEN |
+| KG-CP1-021 | Validate the complete approved landing hierarchy, density, accent sequencing, workflow distinction, and responsive behavior as one page; decorative motif is deferred. | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop whole-page browser review | CLOSED / PASS |
 
 
 # KG Audit — CP2 — Landing Interaction + Responsive Behavior
@@ -325,12 +325,12 @@ The hierarchy is approved with refinement allowed. Exact responsive spacing, car
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP2-001 | Apply Fish-baseline whole-card interaction, focus/touch/hover behavior, action treatment, and responsive wrapping to equivalent Knots landing cards. | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Keyboard/touch + mobile/intermediate/desktop browser review | OPEN |
-| KG-CP2-002 | Treat **Get Your Reel Ready** as the direct Knots equivalent of **Compare Similar Fish**, including reserved workflow styling and **Start Setup →**. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Visual/interaction comparison against Fish baseline + workflow launch | OPEN |
-| KG-CP2-003 | Implement **All Knots — Browse →** as a normal Fish-baseline browse card and remove/supersede the separate **Browse All →** section-level treatment. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Landing hierarchy + complete-library navigation | OPEN |
-| KG-CP2-004 | Preserve priority styling for **Core Knots** and for the three beginner-important task cards: Learn Core Knots, Tie On a Hook/Swivel/Lure, Connect Two Lines/Add a Leader. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Whole-page hierarchy review across breakpoints | OPEN |
-| KG-CP2-005 | Use **Learn →** for Learn Core Knots while keeping **Browse →** for Core Knots collection browsing. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Action semantics + navigation review | OPEN |
-| KG-CP2-006 | Verify Fish-inherited responsive geometry/reflow works for Knots; diverge only for a documented concrete usability defect. | VERIFY ONLY / BUILD TEST IF DEFECT FOUND | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | OPEN |
+| KG-CP2-001 | Apply Fish-baseline whole-card interaction, focus/touch/hover behavior, action treatment, and responsive wrapping to equivalent Knots landing cards. | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Keyboard/touch + mobile/intermediate/desktop browser review | CLOSED / PASS |
+| KG-CP2-002 | Treat **Get Your Reel Ready** as the direct Knots equivalent of **Compare Similar Fish**, including reserved workflow styling and **Start Setup →**. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Visual/interaction comparison against Fish baseline + workflow launch | CLOSED / PASS |
+| KG-CP2-003 | Implement **All Knots — Browse →** as a normal Fish-baseline browse card and remove/supersede the separate **Browse All →** section-level treatment. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Landing hierarchy + complete-library navigation | CLOSED / PASS |
+| KG-CP2-004 | Preserve priority styling for **Core Knots** and for the three beginner-important task cards: Learn Core Knots, Tie On a Hook/Swivel/Lure, Connect Two Lines/Add a Leader. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Whole-page hierarchy review across breakpoints | CLOSED / PASS |
+| KG-CP2-005 | Use **Learn →** for Learn Core Knots while keeping **Browse →** for Core Knots collection browsing. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Action semantics + navigation review | CLOSED / PASS |
+| KG-CP2-006 | Verify Fish-inherited responsive geometry/reflow works for Knots; diverge only for a documented concrete usability defect. | VERIFY ONLY / BUILD TEST IF DEFECT FOUND | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | CLOSED / PASS |
 
 
 # KG Audit — CP3 — Browse / Search Results
@@ -361,13 +361,13 @@ The hierarchy is approved with refinement allowed. Exact responsive spacing, car
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP3-001 | Use one shared Knot result-card architecture and approved classification/name/`View Knot →`/alias/summary composition across landing Search, browse collections, and task results. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Landing/browse/task card comparison + keyboard/touch review | OPEN |
-| KG-CP3-002 | Keep result cards compact: Core+Difficulty or Difficulty classification, optional alias, summary; no extra connection/line/Best For metadata and no CP3-required media. | BUILD REQUIRED / VERIFY | `view-renderer.js` | Content inventory across all 10 active Knots | OPEN |
-| KG-CP3-003 | Bring Knot browse/task Search to the Fish live scoped baseline with `Knots Guide` parent, `Search Knots`, concise scope help, no visible submit, clear behavior, and no scope widening. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Collection/task Search state matrix + keyboard/mobile review | OPEN |
-| KG-CP3-004 | Preserve approved empty-query ordering (A–Z collections; curated Core; task-definition order), relevance-ranked typed Search, and route Learn Core Knots into the existing Core collection. | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, `search.js`, `script.js` | Deterministic ordering/query suite + navigation review | OPEN |
-| KG-CP3-005 | Use Fish result-grid density (1 column mobile / 2 columns maximum thereafter) and rotating standard accents with Core priority treatment independent of accent identity. | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop visual review | OPEN |
-| KG-CP3-006 | Preserve active collection/task + query + scroll through result → Knot Detail → Parent. | BUILD REQUIRED | `script.js` | Round-trip state restoration browser test | OPEN |
-| KG-CP3-007 | Use Knot-specific result status/no-match wording, including `N knots found` and scoped `No knots found in <scope>. Try another search.` | BUILD REQUIRED | `view-renderer.js`, `script.js` | Search state matrix + accessibility announcement check | OPEN |
+| KG-CP3-001 | Use one shared Knot result-card architecture and approved classification/name/`View Knot →`/alias/summary composition across landing Search, browse collections, and task results. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Landing/browse/task card comparison + keyboard/touch review | CLOSED / PASS |
+| KG-CP3-002 | Keep result cards compact: Core+Difficulty or Difficulty classification, optional alias, summary; no extra connection/line/Best For metadata and no CP3-required media. | BUILD REQUIRED / VERIFY | `view-renderer.js` | Content inventory across all 10 active Knots | CLOSED / PASS |
+| KG-CP3-003 | Bring Knot browse/task Search to the Fish live scoped baseline with `Knots Guide` parent, `Search Knots`, concise scope help, no visible submit, clear behavior, and no scope widening. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Collection/task Search state matrix + keyboard/mobile review | CLOSED / PASS |
+| KG-CP3-004 | Preserve approved empty-query ordering (A–Z collections; curated Core; task-definition order), relevance-ranked typed Search, and route Learn Core Knots into the existing Core collection. | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, `search.js`, `script.js` | Deterministic ordering/query suite + navigation review | CLOSED / PASS |
+| KG-CP3-005 | Use Fish result-grid density (1 column mobile / 2 columns maximum thereafter) and rotating standard accents with Core priority treatment independent of accent identity. | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop visual review | CLOSED / PASS |
+| KG-CP3-006 | Preserve active collection/task + query + scroll through result → Knot Detail → Parent. | BUILD REQUIRED | `script.js` | Round-trip state restoration browser test | CLOSED / PASS |
+| KG-CP3-007 | Use Knot-specific result status/no-match wording, including `N knots found` and scoped `No knots found in <scope>. Try another search.` | BUILD REQUIRED | `view-renderer.js`, `script.js` | Search state matrix + accessibility announcement check | CLOSED / PASS |
 
 
 # KG Audit — CP4 — Knot Detail Page
@@ -890,40 +890,40 @@ This table becomes the CP8 implementation lock and CP10 closure checklist. Add e
 
 | ID | Checkpoint | Item | Disposition | Expected owner/file scope | Validation | Implementation status | Validation status |  
 |---|---|---|---|---|---|---|---|  
-| KG-CP1-001 | CP1.1 | Knots Guide naming | BUILD REQUIRED | `view-renderer.js` | Browser + text check | OPEN | OPEN |  
-| KG-CP1-002 | CP1.1 | Fish-baseline compact identity | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive browser review | OPEN | OPEN |  
-| KG-CP1-003 | CP1.1 | Decorative Knots identity art deferred; remove current motif | DEFERRED — FINAL UX AUDIT / CURRENT REMOVAL | `view-renderer.js`, `forest-journal.css`; `V1-DESIGN-AUDIT.md` | R4 removal + future UX review | R4 REQUIRED | DEFERRED |  
-| KG-CP1-004 | CP1.1 | No unnecessary generic CTA | VERIFY ONLY | `view-renderer.js` | Browser review | OPEN | OPEN |
-| KG-CP1-005 | CP1.2 | Preserve Knots deterministic Search scope/ranking | VERIFY ONLY | `search.js`, `script.js` | Deterministic query suite + browser spot checks | OPEN | OPEN |  
-| KG-CP1-006 | CP1.2 | Search label/helper/placeholder | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser text/scope review | OPEN | OPEN |  
-| KG-CP1-007 | CP1.2 | Live Search / no visible submit / clear behavior | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/mobile/browser interaction review | OPEN | OPEN |  
-| KG-CP1-008 | CP1.2 | Neutral Search styling + current clear touch/focus treatment | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive + keyboard/focus review | OPEN | OPEN |  
-| KG-CP1-009 | CP1.2 | Empty/status/no-match state behavior | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser state matrix + accessibility review | OPEN | OPEN |  
-| KG-CP1-010 | CP1.2 | Search query + scroll restoration through Knot Detail | BUILD REQUIRED | `script.js` | Navigation round-trip review | OPEN | OPEN |  
-| KG-CP1-011 | CP1.2 | Knots desktop Search-width experiment | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive browser comparison | OPEN | OPEN |  
+| KG-CP1-001 | CP1.1 | Knots Guide naming | BUILD REQUIRED | `view-renderer.js` | Browser + text check | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-002 | CP1.1 | Fish-baseline compact identity | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive browser review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-003 | CP1.1 | Decorative Knots identity art deferred; remove current motif | DEFERRED — FINAL UX AUDIT / CURRENT REMOVAL | `view-renderer.js`, `forest-journal.css`; `V1-DESIGN-AUDIT.md` | R4 removal + future UX review | CURRENT BUILD CLOSED / FUTURE UX DEFERRED | R4 PASS / FUTURE UX DEFERRED |  
+| KG-CP1-004 | CP1.1 | No unnecessary generic CTA | VERIFY ONLY | `view-renderer.js` | Browser review | CLOSED / PASS | CLOSED / PASS |
+| KG-CP1-005 | CP1.2 | Preserve Knots deterministic Search scope/ranking | VERIFY ONLY | `search.js`, `script.js` | Deterministic query suite + browser spot checks | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-006 | CP1.2 | Search label/helper/placeholder | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser text/scope review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-007 | CP1.2 | Live Search / no visible submit / clear behavior | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/mobile/browser interaction review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-008 | CP1.2 | Neutral Search styling + current clear touch/focus treatment | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive + keyboard/focus review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-009 | CP1.2 | Empty/status/no-match state behavior | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser state matrix + accessibility review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-010 | CP1.2 | Search query + scroll restoration through Knot Detail | BUILD REQUIRED | `script.js` | Navigation round-trip review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-011 | CP1.2 | Knots desktop Search-width experiment | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive browser comparison | CLOSED / PASS | CLOSED / PASS |  
 | KG-CP1-012 | CP1.2 | Search documentation supersession reconciliation | DOC UPDATE | `KNOT-GUIDE.md` + audit record | Readback | CLOSED / PASS | CLOSED / PASS |  
-| KG-CP1-013 | CP1.6 | Fish-baseline `Browse →` collection-card grammar | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive card + interaction review | OPEN | OPEN |  
-| KG-CP1-014 | CP1.7 | Remove Advanced Knots V1 landing card; retain Advanced taxonomy/future-record support | BUILD REQUIRED | `data/knot-guidance.js`, `script.js` | Config + browser + taxonomy regression review | OPEN | OPEN |
-| KG-CP1-015 | CP1.3 | Dedicated Get Your Reel Ready workflow card after Search | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Workflow launch + browser review | OPEN | OPEN |  
-| KG-CP1-016 | CP1.3 | Remove duplicate Attach Line to a Reel landing workflow entry | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing task inventory + navigation review | OPEN | OPEN |  
-| KG-CP1-017 | CP1.5 | Approved four-entry task/learning section | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Task matrix + browser navigation review | OPEN | OPEN |  
-| KG-CP1-018 | CP1.4 | Remove standalone Core major landing section; preserve task + collection access | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing hierarchy review | OPEN | OPEN |  
-| KG-CP1-019 | CP1.3 | Inherit Fish Compare workflow-card geometry/responsive behavior; verify Knots fit | VERIFY ONLY | `view-renderer.js`, `forest-journal.css` | Responsive browser comparison | OPEN | OPEN |  
-| KG-CP1-020 | CP1.6 | All Knots `Browse →` complete-library browse card | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Complete-library navigation + responsive review | OPEN | OPEN |  
-| KG-CP1-021 | CP1.8 | Whole landing hierarchy/density/accent/responsive validation; motif deferred | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Whole-page responsive browser review | OPEN | OPEN |  
-| KG-CP2-001 | CP2 | Fish-baseline whole-card interaction/focus/touch/action/wrap behavior | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Keyboard/touch + responsive browser review | OPEN | OPEN |  
-| KG-CP2-002 | CP2 | Get Your Reel Ready = Compare Similar Fish workflow-card treatment | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Fish baseline comparison + workflow launch | OPEN | OPEN |  
-| KG-CP2-003 | CP2 | All Knots = All Fish-style Browse card; no separate Browse All action | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Landing + complete-library navigation | OPEN | OPEN |  
-| KG-CP2-004 | CP2 | Priority styling for Core Knots + three beginner-important task cards | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Whole-page hierarchy review | OPEN | OPEN |  
-| KG-CP2-005 | CP2 | Learn Core Knots uses Learn →; Core collection uses Browse → | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Action semantics/navigation | OPEN | OPEN |  
-| KG-CP2-006 | CP2 | Verify inherited Fish responsive geometry; diverge only on concrete defect | VERIFY ONLY / BUILD TEST IF DEFECT FOUND | `view-renderer.js`, `forest-journal.css` | Responsive comparison | OPEN | OPEN |  
-| KG-CP3-001 | CP3 | Shared Knot result-card architecture + approved card composition | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Landing/browse/task result-card comparison | OPEN | OPEN |
-| KG-CP3-002 | CP3 | Compact classification/alias/summary content; no extra metadata/media requirement | BUILD REQUIRED / VERIFY | `view-renderer.js` | All-10-Knot content inventory | OPEN | OPEN |
-| KG-CP3-003 | CP3 | Fish-baseline live scoped Search on browse/task pages | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Collection/task Search state matrix | OPEN | OPEN |
-| KG-CP3-004 | CP3 | Approved collection/task ordering + relevance Search + Learn Core route | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, `search.js`, `script.js` | Ordering/query/navigation suite | OPEN | OPEN |
-| KG-CP3-005 | CP3 | 1/2-column maximum result grid + rotating standard accents/Core priority separation | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Responsive visual review | OPEN | OPEN |
-| KG-CP3-006 | CP3 | Browse/task collection/query/scroll restoration through detail | BUILD REQUIRED | `script.js` | Navigation round-trip browser test | OPEN | OPEN |
-| KG-CP3-007 | CP3 | Knot-specific result count + scoped no-match wording | BUILD REQUIRED | `view-renderer.js`, `script.js` | Search state/accessibility review | OPEN | OPEN |
+| KG-CP1-013 | CP1.6 | Fish-baseline `Browse →` collection-card grammar | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive card + interaction review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-014 | CP1.7 | Remove Advanced Knots V1 landing card; retain Advanced taxonomy/future-record support | BUILD REQUIRED | `data/knot-guidance.js`, `script.js` | Config + browser + taxonomy regression review | CLOSED / PASS | CLOSED / PASS |
+| KG-CP1-015 | CP1.3 | Dedicated Get Your Reel Ready workflow card after Search | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Workflow launch + browser review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-016 | CP1.3 | Remove duplicate Attach Line to a Reel landing workflow entry | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing task inventory + navigation review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-017 | CP1.5 | Approved four-entry task/learning section | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Task matrix + browser navigation review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-018 | CP1.4 | Remove standalone Core major landing section; preserve task + collection access | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing hierarchy review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-019 | CP1.3 | Inherit Fish Compare workflow-card geometry/responsive behavior; verify Knots fit | VERIFY ONLY | `view-renderer.js`, `forest-journal.css` | Responsive browser comparison | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-020 | CP1.6 | All Knots `Browse →` complete-library browse card | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Complete-library navigation + responsive review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP1-021 | CP1.8 | Whole landing hierarchy/density/accent/responsive validation; motif deferred | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Whole-page responsive browser review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP2-001 | CP2 | Fish-baseline whole-card interaction/focus/touch/action/wrap behavior | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Keyboard/touch + responsive browser review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP2-002 | CP2 | Get Your Reel Ready = Compare Similar Fish workflow-card treatment | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Fish baseline comparison + workflow launch | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP2-003 | CP2 | All Knots = All Fish-style Browse card; no separate Browse All action | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Landing + complete-library navigation | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP2-004 | CP2 | Priority styling for Core Knots + three beginner-important task cards | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Whole-page hierarchy review | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP2-005 | CP2 | Learn Core Knots uses Learn →; Core collection uses Browse → | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Action semantics/navigation | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP2-006 | CP2 | Verify inherited Fish responsive geometry; diverge only on concrete defect | VERIFY ONLY / BUILD TEST IF DEFECT FOUND | `view-renderer.js`, `forest-journal.css` | Responsive comparison | CLOSED / PASS | CLOSED / PASS |  
+| KG-CP3-001 | CP3 | Shared Knot result-card architecture + approved card composition | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Landing/browse/task result-card comparison | CLOSED / PASS | CLOSED / PASS |
+| KG-CP3-002 | CP3 | Compact classification/alias/summary content; no extra metadata/media requirement | BUILD REQUIRED / VERIFY | `view-renderer.js` | All-10-Knot content inventory | CLOSED / PASS | CLOSED / PASS |
+| KG-CP3-003 | CP3 | Fish-baseline live scoped Search on browse/task pages | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Collection/task Search state matrix | CLOSED / PASS | CLOSED / PASS |
+| KG-CP3-004 | CP3 | Approved collection/task ordering + relevance Search + Learn Core route | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, `search.js`, `script.js` | Ordering/query/navigation suite | CLOSED / PASS | CLOSED / PASS |
+| KG-CP3-005 | CP3 | 1/2-column maximum result grid + rotating standard accents/Core priority separation | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Responsive visual review | CLOSED / PASS | CLOSED / PASS |
+| KG-CP3-006 | CP3 | Browse/task collection/query/scroll restoration through detail | BUILD REQUIRED | `script.js` | Navigation round-trip browser test | CLOSED / PASS | CLOSED / PASS |
+| KG-CP3-007 | CP3 | Knot-specific result count + scoped no-match wording | BUILD REQUIRED | `view-renderer.js`, `script.js` | Search state/accessibility review | CLOSED / PASS | CLOSED / PASS |
 
 
 | KG-CP4-001 | CP4.1 | Shared adjacent-`ⓘ` Reference convention on Knot Line Compatibility | BUILD REQUIRED / VERIFY | `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/touch + responsive interaction review | OPEN | OPEN |
@@ -1314,8 +1314,8 @@ CP7.3 is limited to ownership of canonical Knot records versus Knots Guide curat
 | KG-CP7-020 | Move `CORE_KNOT_IDS` from canonical Knot data to Knots Guide guidance without changing the approved four-Knot membership/order. | BUILD REQUIRED | `data/knots.js`, `data/knot-guidance.js`, `script.js`, `view-renderer.js`, `tools/validate_repository_integrity.js` | Core membership/order regression + source ownership review | CP9.1 CLOSED / PASS |
 | KG-CP7-021 | Remove Search-only `keywords[]` from canonical Knot records and place maintained search intent/vocabulary in Guide guidance. | BUILD REQUIRED | `data/knots.js`, `data/knot-guidance.js`, `search.js`, `tools/validate_repository_integrity.js` | Query regression suite + duplicate vocabulary audit | CP9.1 CLOSED / PASS |
 | KG-CP7-022 | Separate practical task definitions, visible landing tasks, and search-intent vocabulary into distinct guidance concepts. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js`, `search.js` | Landing/task/detail/search matrix | CP9.1 CLOSED / PASS |
-| KG-CP7-023 | Preserve `Attach Line to a Reel` as practical/search/detail context while preventing it from returning as a peer landing task. | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, `script.js`, `search.js` | Landing hierarchy + detail handoff + reel/spool Search review | CP9.1 FOUNDATION COMPLETE / CP9.2 UI VALIDATION PENDING |
-| KG-CP7-024 | Add/retain **Learn Core Knots** as the visible learning task and derive membership from the single Core registry. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js`, `view-renderer.js` | Core task → Core collection navigation | CP9.1 FOUNDATION COMPLETE / CP9.2 UI VALIDATION PENDING |
+| KG-CP7-023 | Preserve `Attach Line to a Reel` as practical/search/detail context while preventing it from returning as a peer landing task. | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, `script.js`, `search.js` | Landing hierarchy + detail handoff + reel/spool Search review | CP9.2 CLOSED / PASS |
+| KG-CP7-024 | Add/retain **Learn Core Knots** as the visible learning task and derive membership from the single Core registry. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js`, `view-renderer.js` | Core task → Core collection navigation | CP9.2 CLOSED / PASS |
 | KG-CP7-025 | Preserve Arbor Knot + Uni Knot reel/spool Search discovery after task/search data separation. | VERIFY ONLY / REGRESSION GUARD | `data/knot-guidance.js`, `search.js` | Deterministic reel/spool query suite | CP9.1 CLOSED / PASS |
 | KG-CP7-026 | Move `KNOT_COLLECTIONS` out of `script.js` into Guide guidance and remove the superseded active V1 Advanced placeholder configuration. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js` | Collection inventory + landing/browse regression | CP9.1 CLOSED / PASS |
 | KG-CP7-027 | Keep Search normalization/scoring/ranking algorithms in `search.js`; data migration must not alter approved deterministic relevance semantics. | VERIFY ONLY / GUARDRAIL | `search.js` | Search algorithm diff + query suite | CP9.1 CLOSED / PASS |
@@ -1545,7 +1545,7 @@ CP9.1 is **CLOSED / PASS / refinement allowed**. Drive Current is authoritative 
 
 # KG Audit — CP9.2 — Landing / Browse / Visual Treatment + Interaction Effects
 
-**Status:** IN REVIEW / R3 USER REVIEW — 2026-09-25
+**Status:** CLOSED / PASS — R4 USER-APPROVED + PROMOTED — 2026-09-25
 
 ## Review-Cycle Baseline
 
@@ -1604,13 +1604,24 @@ R4 must retain all other accepted R3 corrections and remove only the decorative 
 ## R4 Candidate
 
 - Resulting revision: `FCC-49I-Knots-Guide-CP9.2-R4-Cumulative-Review.zip`.
+- R4 SHA-256: `c23ff1f233314ebe8de39d9eea6468f7f150c0ed26edd524faa325ba84b44e97`.
 - R4 is rebuilt from immutable R1 plus all cumulative accepted CP9.2 corrections; R2/R3 source bytes are not reconstruction authority.
 - Accepted R3 corrections retained: Dashboard **Knots Guide** rename, Dashboard-style Core/important two-sided accent emphasis, `Recommended First` only on **Learn Core Knots**, and consistent phone task-action placement.
 - `KG-CP9.2-R3-001` correction applied: decorative Knot identity motif removed entirely from `view-renderer.js` and its motif-only CSS removed from `forest-journal.css`.
 - `docs/V1-DESIGN-AUDIT.md` carries the approved future owner/disposition: prototype Dashboard Guide-card imagery in the final UX Audit; Reference Knowledge cards remain undecorated by default.
-- Targeted validation required before handoff: JavaScript syntax, motif-absence/source assertions, CSS brace/integrity, Dashboard rename, unchanged-file hash comparison to R1, and package-path review. Browser visual acceptance remains PENDING USER REVIEW.
-- R4 remains an unapproved review candidate and is not promoted to Drive Current.
+- Targeted validation PASS before handoff: JavaScript syntax; motif-absence/source assertions; CSS brace/integrity; Dashboard rename; unchanged-file hash comparison to R1; package-path/inclusion review.
+- User gave **Final Approval** on 2026-09-25. R4 is the frozen approved CP9.2 candidate.
+- Approved production bytes were promoted to Drive Current for the candidate-delta files and read back exactly: `view-renderer.js` SHA-256 `a0f9a995a65bb4985c154605542d932a7c3d488236e8cabe765980ce07657d6e`; `forest-journal.css` SHA-256 `cd0206706cc03c88fb4219b5b8af4dd73aa69362b96678a82db497d5b93c97c3`; `index.html` SHA-256 `2f885ff3be64887ca49f487f30ffbeb2bf440e9179bed0761491f484a93ca417`. Other cumulative CP9.2 files already matched the authoritative Drive baseline and required no candidate-delta rewrite.
+- Browser acceptance is **PASS by user approval** for the reviewed CP9.2 landing/Search/browse/result, priority/workflow, responsive, Dashboard naming, and no-motif surfaces. Decorative Dashboard imagery remains deferred to the final UX Audit.
+
+## CP9.2 Approval + Promotion Close
+
+- **R4 final verdict:** USER-APPROVED / FROZEN / PROMOTED.
+- `KNOT-GUIDE.md` reconciled to the approved no-motif direction and CP9.2 result.
+- `docs/V1-DESIGN-AUDIT.md` verified no additional change required; it already owns the deferred Dashboard-imagery discussion and Reference Knowledge no-decoration default.
+- Temporary audit remains active for later CP9/CP10 work; R1/R2/R3/R4 revision traceability is retained here while review ZIPs remain non-authoritative transport artifacts.
+- The cumulative CP9.1 + CP9.2 production/documentation scope was subsequently committed and pushed as GitHub `main` `0fa323bb24929fbdcbe74abb0d46f6f4723322dc` (`Knot Guide - Dashboard and Landing`). Repository Integrity run `36189763625` and Pages run `36189763447` both PASS. This audit and `KNOT-GUIDE.md` are the bounded documentation-only convergence follow-up required because their post-approval Drive Current revisions were newer than the copies included in that commit.
 
 # Current Exact Resume
 
-**CP9.2 remains OPEN / IN REVIEW — R4 NEXT.** Build R4 from immutable R1 plus cumulative accepted corrections: retain Dashboard **Knots Guide** rename, Dashboard-style Core/important accent emphasis, consistent phone task-action placement, and all prior CP9.2 behavior; remove the decorative Knot identity motif entirely. Run targeted source/CSS/browser checks and hand off R4 ZIP + exact review areas. Decorative Dashboard imagery is deferred to the final UX Audit; do not add imagery to Reference Knowledge cards in this Knots cycle. Do not begin CP9.3+ scope. Commit/push remains separately authorized after candidate approval/promotion.
+**CP9.2 is CLOSED / PASS. Exact resume after the bounded documentation-convergence commit: CP9.3 — Knot Detail + Reference + Media Integration.** The approved CP9.1 + CP9.2 production scope landed at GitHub `main` `0fa323bb24929fbdcbe74abb0d46f6f4723322dc` with Repository Integrity and Pages PASS. This audit and `KNOT-GUIDE.md` are the only documentation-convergence paths carried into the closeout commit. After that commit is verified for exact two-file scope and CI/Pages PASS, begin CP9.3 from the converged GitHub/Drive baseline. CP9.3 owns Knot Detail structure, disclosures, adjacent-`ⓘ` Reference behavior, explicit instructional-media integration, and the protected external instructional baseline. Do not start CP9.4+ until CP9.3 is finalized or explicitly parked.
