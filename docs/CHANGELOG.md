@@ -1,14 +1,25 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.8.1  
+**Document Revision:** 3.8.3  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-09-21
+**Last Updated:** 2026-09-24
 
 # Purpose
 
-This is a curated project changelog, not a second Working State, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to `WORKING_STATE.md`; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+This is a curated project changelog, not a second Working State, current-state/resume surface, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to the external Live Working State; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-09-21 — FCC 48 Fish Guide Baseline/UX + Compare Similar Fish — Closed
+
+Implementation commit `9f448d8dbbf92aaa420b361f63f14d4a340bedf4` — `FCC 48I.5 - Compare Similar Fish`  
+Final approval-state commit `db5d664c918fe83ce8c9142440573de85395c4c0` — `FCC 48I.5 - Compare Similar Fish`
+
+- Landed the browser-approved Compare Similar Fish workflow: relationship-derived grouped catalog covering all 20 active canonical comparison pairs exactly once, scoped current-Fish chooser behavior, origin-first/left pair ordering, responsive shared comparison composition, contextual Parent/Home routing, and scroll/focus/detail-state restoration.
+- Preserved the closed R2 Fish Landing/Search/Browse and R3 Fish Detail baselines; no canonical Fish, relationship, Search, primary-media, or specialized-guidance data owner changed in the Compare implementation.
+- Final cumulative diff from `22914354373de6934e1a18e9442699bf8e412b02` is exactly **6 modified paths / 0 deletions**: three production owners (`script.js`, `view-renderer.js`, `forest-journal.css`) plus the then-active repository Working State, `docs/ACTIVE-CHANGE-LEDGER.md`, and `docs/CHANGELOG.md`.
+- Repository Integrity run `35682651782` and Pages build/deployment run `35682650788` both passed on final `main` `db5d664c918fe83ce8c9142440573de85395c4c0`. Drive Current pre-closeout bytes matched all six landed GitHub blobs exactly.
+- FCC 48 — Fish Guide targeted baseline/UX review + implementation is **CLOSED / PASS / refinement allowed**. The next Reference Knowledge Completion block is the **Knots Guide** targeted baseline/UX review.
 
 # 2026-09-21 — FCC 48J Fish Detail Refinement + Repository Handoff Correction — Closed
 

@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.12  
+**Document Revision:** 1.0.13  
 **Document Status:** Approved  
-**Last Updated:** 2026-08-28
+**Last Updated:** 2026-09-24
 
 # Purpose
 
@@ -241,7 +241,7 @@ For every approved Fish media selection:
 8. Produce a manifest and contact sheet for multi-asset Fish packages. Show source identity, input/output dimensions, file size, transformation notes, and visual/rights status.
 9. Obtain user approval of processed Fish media before attaching it to production records or treating the media package as closed.
 
-Production or staging writes inside the repository remain subject to the specific source/media authorization gate in `DEVELOPMENT_WORKFLOW.md`.
+Production or staging writes inside the repository remain subject to the specific source/media authorization gate in `PROJECT-RULES.md`.
 
 ## Fish Isolation and Reference-Surface Standard
 

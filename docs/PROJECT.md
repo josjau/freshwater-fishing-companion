@@ -1,58 +1,81 @@
-# Freshwater Fishing Companion
+﻿# Freshwater Fishing Companion
+
 
 **Document:** PROJECT.md  
-**Document Revision:** 0.3.3  
+**Document Revision:** 0.3.5  
 **Document Status:** Approved  
 **Decision Baseline:** D027, D038-D041, D057, D066  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-09-24
+
 
 # Purpose
 
+
 Freshwater Fishing Companion is a mobile-first field companion designed to help first-time and new freshwater anglers learn, prepare to fish, fish responsibly, and enjoy the sport.
+
 
 The application is intended to be a practical tool used before and while fishing rather than a general fishing encyclopedia.
 
+
 # Target Audience
 
+
 ## Primary
+
 
 - First-time freshwater anglers
 - New freshwater anglers
 - Returning anglers seeking a quick field reference
 - Parents, mentors, and youth learning to fish together
 
+
 ## Secondary
+
 
 - Casual freshwater anglers looking for a lightweight mobile companion
 
+
 # Regional Content Focus
 
+
 The Companion's forward Version 1 regional content focus is:
+
 
 - Northeast Oklahoma
 - Southeast Kansas
 - Southwest Missouri
 - Northwest Arkansas
 
+
 Existing validated content may retain a narrower original selection or validation context. Domains are progressively reconciled against the Four-State region when they are audited or materially modified.
+
 
 Regional reconciliation is additive by default: important missing regional coverage may be added, but valid existing content is not automatically invalidated merely because the geographic focus expanded. If a regional finding would require significant architecture, data-model, or UI rewiring, that change must be discussed and approved before implementation.
 
+
 ## Regulations Coverage Exception
+
 
 Regulations is an intentional geographic exception to the Four-State curated-content focus. The approved direction is a state-first official-resource gateway covering the **48 contiguous U.S. states**. This broader coverage does **not** expand Fish, Rig, recommendation, or other curated fishing-knowledge domains beyond their separately approved regional scope.
 
+
 The Companion links anglers to authoritative state resources rather than maintaining or interpreting changing legal rules itself. State pages may surface official regulations, licenses/permits, seasons and size/bag-limit resources, special-water and species-specific rules, special permits/tags, public fishing/access resources, stocking information, agency fishing reports/forecasts, aquatic-invasive-species guidance, and other high-value official angler resources when a state provides them.
+
 
 # Mission
 
+
 Provide a fast, trustworthy, and easy-to-use companion that helps a first-time or new angler move from uncertainty to actually fishing with as little unnecessary friction as practical.
+
 
 The Companion should teach, build confidence, and encourage ethical fishing practices without overwhelming the user.
 
+
 It should address basic setup questions that experienced anglers may take for granted when those questions can prevent a beginner from getting on the water or making a first cast.
 
+
 # Core Philosophy
+
 
 - Teach, don't overwhelm.
 - Help the user get fishing, not merely read about fishing.
@@ -68,13 +91,18 @@ It should address basic setup questions that experienced anglers may take for gr
 - Search should find the relevant entity quickly, then connected knowledge should expose pertinent next steps.
 - Build confidence with broadly useful fundamentals before expanding into specialized fishing methods.
 
+
 # First-Time Angler Readiness Principle
+
 
 A beginner should not be blocked from fishing because the application omitted a foundational task that experienced anglers consider obvious.
 
+
 When a practical prerequisite is necessary to get from equipment to a fishable setup, the Companion should teach it or provide a clear path to it.
 
+
 Examples include:
+
 
 - putting line on a reel correctly,
 - understanding when backing is needed,
@@ -84,11 +112,15 @@ Examples include:
 - identifying the minimum tackle needed to fish that Rig,
 - understanding the next immediate step after setup.
 
+
 These workflows should favor simple, dependable beginner methods before advanced alternatives.
+
 
 # Design Principles
 
+
 The Companion should:
+
 
 - Load quickly.
 - Be readable in bright outdoor conditions.
@@ -100,20 +132,27 @@ The Companion should:
 - Use one source of truth for canonical knowledge and ownership.
 - Surface prerequisite setup guidance before the user is likely to need it rather than requiring them to know the correct technical term to search for.
 
+
 # Technical Philosophy
+
 
 - Plain HTML
 - Plain CSS
 - Plain JavaScript
 - GitHub Pages hosting
 
+
 Frameworks and external dependencies will only be introduced when they provide clear, measurable benefits that outweigh their complexity.
+
 
 # Long-Term Vision
 
+
 Freshwater Fishing Companion is intended to become a complete learning and reference companion for freshwater anglers.
 
+
 Planned capabilities include:
+
 
 - Fish identification and reference
 - Rig Guide
@@ -127,15 +166,21 @@ Planned capabilities include:
 - State-first official fishing regulations and angler-resource gateway
 - Smart recommendations
 
+
 Each capability is evaluated against the project's mission and current architecture before implementation.
+
 
 # Rig Learning Direction
 
+
 The approved initial 20-Rig library was selected and validated using Northeast Oklahoma and Southwest Kansas as its original regional-practicality scope.
+
 
 That 20-Rig library remains canonical and validated. It will receive an additive Four-State adequacy audit to determine whether any materially important regional Rig or specialized setup is missing. Existing valid Rigs are not removed solely because the geographic focus expanded.
 
+
 Six Core Rigs provide a confidence-building starting set:
+
 
 - Fixed Bobber Rig
 - Basic Bottom Rig — especially useful for catfish
@@ -144,17 +189,24 @@ Six Core Rigs provide a confidence-building starting set:
 - Texas Rig
 - Slip Bobber Rig
 
+
 The goal is to help a newer angler become successful with a small number of broadly useful rigs before expanding the fishing arsenal.
+
 
 # Project Continuity
 
-`WORKING_STATE.md` is the single repository current-state and exact-resume entrypoint. `ACTIVE-CHANGE-LEDGER.md` preserves material non-closed carry-forward across workstreams.
+
+The external Live Working State is the single operational continuity/exact-resume surface. `ACTIVE-CHANGE-LEDGER.md` preserves material non-closed carry-forward across workstreams, while durable repository state remains in the applicable canonical owners and actual GitHub/Drive lineage.
+
 
 A session, module, or section is not finalized until relevant documentation is updated and validated in GitHub. The project does not move into a new build segment while the current segment remains unfinalized.
 
+
 # Success Criteria
 
+
 The Companion is successful if a first-time or new angler can quickly answer questions such as:
+
 
 - How do I put line on this reel and get it ready to fish?
 - Do I need backing, and how do I connect it?
@@ -166,14 +218,16 @@ The Companion is successful if a first-time or new angler can quickly answer que
 - What useful information should I look at next?
 - Where can I find the official current regulations, licenses, limits, and special rules for the state I am fishing?
 
+
 while spending more time preparing to fish or fishing than navigating the application or searching elsewhere for basic setup information.
+
 
 # Related Documents
 
-- `WORKING_STATE.md`
+
 - `ACTIVE-CHANGE-LEDGER.md`
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
-- `DEVELOPMENT_WORKFLOW.md`
+- `PROJECT-RULES.md`
 - `ROADMAP.md`
 - `UI_STANDARD.md`

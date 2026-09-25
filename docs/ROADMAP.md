@@ -2,10 +2,10 @@
 
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.12.1  
+**Document Revision:** 0.12.3  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-09-20
+**Last Updated:** 2026-09-24
 
 
 # Purpose
@@ -14,7 +14,7 @@
 This document defines the canonical planned product-development direction for Freshwater Fishing Companion.
 
 
-It deliberately does **not** own exact active workstream status, current commit baselines, validation package state, or session resume instructions. Those belong to `WORKING_STATE.md`, `ACTIVE-CHANGE-LEDGER.md`, the Live Working State, and active workstreams.
+It deliberately does **not** own exact active workstream status, current commit baselines, validation package state, or session resume instructions. Operational continuity and exact resume belong to the external Live Working State; material non-closed cross-workstream carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`; detailed active scope belongs to the active workstream.
 
 
 It does not override `DECISIONS.md` or `ARCHITECTURE.md`.
@@ -308,8 +308,6 @@ Version 1 may expose recognition help, purpose/summary, common variants, related
 **Technique Guide** is the approved user-facing top-level Guide for the existing canonical Technique domain. It should expose reusable **How to Fish It** knowledge such as movement/cadence/rod/reel action plus authoritative Compatibility-derived connections to applicable Rigs and Lure/Bait. It remains Reference Knowledge, not Recommendation ranking or context-specific Decision Knowledge. Exact Technique Guide card/detail presentation is completed during FCC 47 Phase 1 and follows the shared Guide-family rule while preserving Technique-specific instructional needs.
 
 
-
-
 # 10. Global Search
 
 
@@ -395,7 +393,7 @@ These are rejected/out of scope for Version 1 rather than automatic future backl
 # Release / Segment Completion
 
 
-Feature/segment completion requires the applicable implementation, testing, GitHub verification, runtime validation, and documentation closeout defined by `DEVELOPMENT_WORKFLOW.md`.
+Feature/segment completion requires the applicable implementation, testing, GitHub verification, runtime validation, and documentation closeout defined by `PROJECT-RULES.md`.
 
 
 ## Repository Disaster Recovery / Reconstruction Gate
@@ -410,8 +408,7 @@ Before a major Version 1 release—or earlier if irreplaceable User Knowledge or
 - `PROJECT.md`
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
-- `DEVELOPMENT_WORKFLOW.md`
-- `WORKING_STATE.md`
+- `PROJECT-RULES.md`
 - `ACTIVE-CHANGE-LEDGER.md`
 - `UI_STANDARD.md`
 - applicable data-model/domain documents

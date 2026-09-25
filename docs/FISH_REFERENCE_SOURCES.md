@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.2.2  
+**Document Revision:** 1.2.3  
 **Document Status:** Approved — Production Authoring Standard  
 **Implementation Status:** Standard active; Version 1 evidence baseline COMPLETE through closed Wave 4 — 30 Fish / 20 identification pairs, with approved Fish-to-Rig guidance recorded where applicable  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-09-24
 
 # Purpose
 
@@ -1968,7 +1968,7 @@ Notes
 - `data-model/09-RELATIONSHIPS.md`
 - `MEDIA_GUIDE.md`
 - `DECISIONS.md`
-- `DEVELOPMENT_WORKFLOW.md`
+- `PROJECT-RULES.md`
 - `EXTERNAL_REFERENCE_MAINTENANCE.md`
 - `../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0.md`
 - `../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`

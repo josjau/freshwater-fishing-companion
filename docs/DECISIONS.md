@@ -1,18 +1,24 @@
-# Freshwater Fishing Companion
+﻿# Freshwater Fishing Companion
+
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.8.0  
+**Document Revision:** 0.8.1  
 **Document Status:** Approved  
 **Role:** Compact canonical decision index  
-**Last Updated:** 2026-08-27
+**Last Updated:** 2026-09-24
+
 
 # Purpose
 
+
 This file is the canonical index for durable project decisions. Full decision bodies are grouped under `docs/decisions/` by durable ownership/domain so routine work can load only the decisions relevant to its scope.
+
 
 Decision IDs are permanent. The decomposition does not renumber existing decisions or make the index a second owner of decision reasoning.
 
+
 # Decision Files
+
 
 - [`decisions/architecture.md`](decisions/architecture.md) — core architecture and knowledge-hub boundaries
 - [`decisions/data-model.md`](decisions/data-model.md) — data model, semantic ownership, inventory/user knowledge
@@ -21,7 +27,9 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 - [`decisions/product.md`](decisions/product.md) — product/domain scope and sequencing decisions
 - [`decisions/workflow.md`](decisions/workflow.md) — workflow, governance, continuity, archive/recovery decisions
 
+
 # Decision Index
+
 
 | ID | Title | Status | Canonical decision body |
 |---|---|---|---|
@@ -62,7 +70,7 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 | D035 | Single Production-Supported Theme | Approved | [`decisions/architecture.md`](decisions/architecture.md#d035--single-production-supported-theme) |
 | D036 | Status and Version Semantics | Approved | [`decisions/workflow.md`](decisions/workflow.md#d036--status-and-version-semantics) |
 | D037 | Data-Model Documentation Structure | Approved | [`decisions/data-model.md`](decisions/data-model.md#d037--data-model-documentation-structure) |
-| D038 | Repository Continuity Entrypoint | Approved | [`decisions/workflow.md`](decisions/workflow.md#d038--repository-continuity-entrypoint) |
+| D038 | Repository Continuity Entrypoint | Superseded by D070 | [`decisions/workflow.md`](decisions/workflow.md#d038--repository-continuity-entrypoint) |
 | D039 | Documentation-Validated Closeout | Approved | [`decisions/workflow.md`](decisions/workflow.md#d039--documentation-validated-closeout) |
 | D040 | No Unvalidated Build Transition | Approved | [`decisions/workflow.md`](decisions/workflow.md#d040--no-unvalidated-build-transition) |
 | D041 | Cross-Segment Decision Capture and Parking | Approved | [`decisions/workflow.md`](decisions/workflow.md#d041--cross-segment-decision-capture-and-parking) |
@@ -94,3 +102,4 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 | D067 | User-Aware User Knowledge Architecture Before Tackle Expansion | Approved | [`decisions/data-model.md`](decisions/data-model.md#d067--user-aware-user-knowledge-architecture-before-tackle-expansion) |
 | D068 | Drive-First Complete Working Tree and ChatGPT Project Workflow Performance Standard | Approved | [`decisions/workflow.md`](decisions/workflow.md#d068--drive-first-complete-working-tree-and-chatgpt-project-workflow-performance-standard) |
 | D069 | What Should I Throw Prerequisite Architecture and Phase 0 Handoff | Approved | [`decisions/product.md`](decisions/product.md#d069--what-should-i-throw-prerequisite-architecture-and-phase-0-handoff) |
+| D070 | Live Working State Sole Operational Continuity and Repository Working State Retirement | Approved | [`decisions/workflow.md`](decisions/workflow.md#d070--live-working-state-sole-operational-continuity-and-repository-working-state-retirement) |

@@ -1,16 +1,16 @@
 # Freshwater Fishing Companion — Style Guide
 
 **Document:** STYLE_GUIDE.md  
-**Document Revision:** 1.5.0  
+**Document Revision:** 1.5.1  
 **Document Status:** Approved  
 **Role:** Code, data, file, and documentation conventions  
-**Last Updated:** 2026-08-25
+**Last Updated:** 2026-09-24
 
 # Purpose
 
 This document defines implementation and documentation conventions for Freshwater Fishing Companion.
 
-It deliberately does **not** duplicate cross-domain UI/navigation/card/detail/search/mobile/accessibility rules; those belong to `UI_STANDARD.md`. Workflow/authority/review/closeout rules belong to `DEVELOPMENT_WORKFLOW.md` and `docs/workflow/`. Media rules belong to `MEDIA_GUIDE.md`.
+It deliberately does **not** duplicate cross-domain UI/navigation/card/detail/search/mobile/accessibility rules; those belong to `UI_STANDARD.md`. Workflow/authority/review/closeout rules belong to `PROJECT-RULES.md`. Media rules belong to `MEDIA_GUIDE.md`.
 
 # General Principles
 
@@ -90,12 +90,11 @@ Canonical documentation examples:
 PROJECT.md
 ARCHITECTURE.md
 DECISIONS.md
-DEVELOPMENT_WORKFLOW.md
+PROJECT-RULES.md
 ROADMAP.md
 STYLE_GUIDE.md
 UI_STANDARD.md
 MEDIA_GUIDE.md
-WORKING_STATE.md
 ACTIVE-CHANGE-LEDGER.md
 ```
 
@@ -151,7 +150,7 @@ For an existing source or documentation file:
 
 During an active review cycle, Drive `Working Source/Current` is the authoritative uncommitted tree and GitHub `main` is the committed comparison baseline. Direct documentation integrity corrections made under standing authority must be reconciled back into Drive immediately after GitHub verification.
 
-Detailed review/commit/closeout mechanics belong to `DEVELOPMENT_WORKFLOW.md` and `docs/workflow/`.
+Detailed review/commit/closeout mechanics belong to `PROJECT-RULES.md`.
 
 # Commit Messages
 
@@ -189,9 +188,8 @@ A completed change should be functional where applicable, tested at the level ju
 - `PROJECT.md`
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
-- `DEVELOPMENT_WORKFLOW.md`
+- `PROJECT-RULES.md`
 - `ROADMAP.md`
 - `UI_STANDARD.md`
 - `MEDIA_GUIDE.md`
-- `WORKING_STATE.md`
 - `CHANGELOG.md`

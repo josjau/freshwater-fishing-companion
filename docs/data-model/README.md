@@ -73,7 +73,7 @@ Future domains receive a dedicated file only when the domain/architecture is suf
 
 # Related Documents
 
-- `../WORKING_STATE.md`
+- `../PROJECT-RULES.md`
 - `../PROJECT.md`
 - `../ARCHITECTURE.md`
 - `../STYLE_GUIDE.md`

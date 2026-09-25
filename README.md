@@ -1,7 +1,10 @@
-# Freshwater Fishing Companion
+﻿# Freshwater Fishing Companion
+
 
 A mobile field guide designed to help new anglers make good decisions on the water.
 
+
 ## Project handoff / current state
 
-Start with [`docs/WORKING_STATE.md`](docs/WORKING_STATE.md) for the current repository state and exact resume point. From there, follow only the governing workflow, decision, and domain documents needed for the requested scope.
+
+Start with [`docs/PROJECT-RULES.md`](docs/PROJECT-RULES.md) for the canonical current FCC execution procedure. Active operational continuity and the exact resume point are maintained in the external Live Working State and are intentionally not duplicated in the repository. From there, follow only the governing decision, domain, and active-workstream documents needed for the requested scope.

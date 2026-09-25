@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 "use strict";
 
+
 const childProcess = require("child_process");
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+
 
 const ROOT = path.resolve(__dirname, "..");
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -13,21 +15,26 @@ const FAILURES = [];
 const CHECKS = [];
 let TRACKED_FILES = null;
 
+
 function absolutePath(relativePath) {
     return path.join(ROOT, ...relativePath.split("/"));
 }
+
 
 function recordCheck(name) {
     CHECKS.push(name);
 }
 
+
 function fail(group, message) {
     FAILURES.push(`[${group}] ${message}`);
 }
 
+
 function isPlainObject(value) {
     return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
+
 
 function fileExists(relativePath) {
     try {
@@ -37,6 +44,7 @@ function fileExists(relativePath) {
     }
 }
 
+
 function directoryExists(relativePath) {
     try {
         return fs.statSync(absolutePath(relativePath)).isDirectory();
@@ -45,11 +53,13 @@ function directoryExists(relativePath) {
     }
 }
 
+
 function readText(relativePath) {
     if (!fileExists(relativePath)) {
         fail("Required file", `missing ${relativePath}`);
         return null;
     }
+
 
     try {
         return fs.readFileSync(absolutePath(relativePath), "utf8");
@@ -59,8 +69,10 @@ function readText(relativePath) {
     }
 }
 
+
 function gitExecutableCandidates() {
     const candidates = ["git"];
+
 
     if (process.platform === "win32") {
         const localAppData = process.env.LOCALAPPDATA;
@@ -74,6 +86,7 @@ function gitExecutableCandidates() {
                     .sort()
                     .reverse();
 
+
                 for (const appDirectory of appDirectories) {
                     candidates.push(
                         path.join(desktopRoot, appDirectory, "resources", "app", "git", "cmd", "git.exe"),
@@ -85,6 +98,7 @@ function gitExecutableCandidates() {
             }
         }
 
+
         for (const programFiles of [process.env.ProgramFiles, process.env["ProgramFiles(x86)"]]) {
             if (programFiles) {
                 candidates.push(path.join(programFiles, "Git", "cmd", "git.exe"));
@@ -92,15 +106,19 @@ function gitExecutableCandidates() {
         }
     }
 
+
     return [...new Set(candidates)];
 }
+
 
 function listTrackedRepositoryFiles() {
     if (TRACKED_FILES !== null) {
         return TRACKED_FILES;
     }
 
+
     let lastError = null;
+
 
     for (const executable of gitExecutableCandidates()) {
         try {
@@ -123,6 +141,7 @@ function listTrackedRepositoryFiles() {
         }
     }
 
+
     const detail = lastError && lastError.code === "ENOENT"
         ? "Git could not be located, including the normal GitHub Desktop installation path"
         : "git ls-files failed for this repository";
@@ -134,10 +153,12 @@ function listTrackedRepositoryFiles() {
     return TRACKED_FILES;
 }
 
+
 function normalizeLocalReference(reference) {
     if (typeof reference !== "string") {
         return null;
     }
+
 
     const trimmed = reference.trim();
     if (
@@ -153,13 +174,16 @@ function normalizeLocalReference(reference) {
         return null;
     }
 
+
     const withoutQuery = trimmed.split(/[?#]/, 1)[0];
     return withoutQuery.replace(/^\.\//, "").replace(/^\//, "");
 }
 
+
 function extractEntrypointReferences(indexHtml) {
     const stylesheetRefs = [];
     const scriptRefs = [];
+
 
     for (const match of indexHtml.matchAll(/<link\b[^>]*\bhref=["']([^"']+)["'][^>]*>/gi)) {
         const tag = match[0];
@@ -172,6 +196,7 @@ function extractEntrypointReferences(indexHtml) {
         }
     }
 
+
     for (const match of indexHtml.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)) {
         const local = normalizeLocalReference(match[1]);
         if (local) {
@@ -179,16 +204,20 @@ function extractEntrypointReferences(indexHtml) {
         }
     }
 
+
     return { stylesheetRefs, scriptRefs };
 }
 
+
 function validateEntrypoint() {
     recordCheck("Entrypoint and active JavaScript syntax");
+
 
     const indexHtml = readText("index.html");
     if (indexHtml === null) {
         return { stylesheetRefs: [], scriptRefs: [] };
     }
+
 
     const refs = extractEntrypointReferences(indexHtml);
     const duplicates = [...refs.stylesheetRefs, ...refs.scriptRefs].filter(
@@ -198,11 +227,13 @@ function validateEntrypoint() {
         fail("Entrypoint", `duplicate local asset reference: ${duplicate}`);
     }
 
+
     for (const relativePath of [...refs.stylesheetRefs, ...refs.scriptRefs]) {
         if (!fileExists(relativePath)) {
             fail("Entrypoint", `local asset does not exist: ${relativePath}`);
         }
     }
+
 
     for (const relativePath of refs.scriptRefs.filter((item) => item.endsWith(".js"))) {
         const source = readText(relativePath);
@@ -216,6 +247,7 @@ function validateEntrypoint() {
         }
     }
 
+
     if (directoryExists("data")) {
         const directDataFiles = fs
             .readdirSync(absolutePath("data"), { withFileTypes: true })
@@ -224,12 +256,14 @@ function validateEntrypoint() {
             .sort();
         const loadedDataFiles = refs.scriptRefs.filter((item) => /^data\/[^/]+\.js$/.test(item)).sort();
 
+
         for (const dataFile of directDataFiles) {
             if (!loadedDataFiles.includes(dataFile)) {
                 fail("Entrypoint", `production data source is not loaded by index.html: ${dataFile}`);
             }
         }
     }
+
 
     const requiredOrder = [
         "data/rigs.js",
@@ -250,14 +284,17 @@ function validateEntrypoint() {
         }
     }
 
+
     return refs;
 }
+
 
 function loadBindings(relativePath, names) {
     const source = readText(relativePath);
     if (source === null) {
         return {};
     }
+
 
     const context = vm.createContext({
         console: Object.freeze({
@@ -268,7 +305,9 @@ function loadBindings(relativePath, names) {
         })
     });
 
+
     const exportSource = `${source}\n;globalThis.__REPOSITORY_VALIDATOR_EXPORTS__ = { ${names.join(", ")} };`;
+
 
     try {
         const script = new vm.Script(exportSource, { filename: relativePath });
@@ -280,6 +319,7 @@ function loadBindings(relativePath, names) {
     }
 }
 
+
 function requireArray(value, label) {
     if (!Array.isArray(value)) {
         fail(label, "expected an array");
@@ -288,6 +328,7 @@ function requireArray(value, label) {
     return value;
 }
 
+
 function validateId(value, label) {
     if (typeof value !== "string" || !ID_PATTERN.test(value)) {
         fail(label, `invalid canonical ID: ${JSON.stringify(value)}`);
@@ -295,6 +336,7 @@ function validateId(value, label) {
     }
     return true;
 }
+
 
 function validateUniqueIds(records, label) {
     const seen = new Set();
@@ -314,9 +356,11 @@ function validateUniqueIds(records, label) {
     return seen;
 }
 
+
 function validateCanonicalRecords(records, label) {
     const requiredFields = ["id", "name", "summary", "createdVersion", "lastModifiedVersion", "isActive"];
     validateUniqueIds(records, label);
+
 
     for (const record of records) {
         if (!isPlainObject(record)) {
@@ -338,6 +382,7 @@ function validateCanonicalRecords(records, label) {
     }
 }
 
+
 function indexById(records) {
     return new Map(
         records
@@ -346,10 +391,12 @@ function indexById(records) {
     );
 }
 
+
 function validateCoreRegistry(coreIds, registry, label) {
     const ids = requireArray(coreIds, label);
     const registryById = indexById(registry);
     const seen = new Set();
+
 
     for (const id of ids) {
         if (!validateId(id, label)) {
@@ -360,6 +407,7 @@ function validateCoreRegistry(coreIds, registry, label) {
         }
         seen.add(id);
 
+
         const record = registryById.get(id);
         if (!record) {
             fail(label, `Core ID does not resolve: ${id}`);
@@ -368,6 +416,7 @@ function validateCoreRegistry(coreIds, registry, label) {
         }
     }
 }
+
 
 function validateNoForbiddenFields(records, fields, label) {
     for (const record of records) {
@@ -381,6 +430,7 @@ function validateNoForbiddenFields(records, fields, label) {
         }
     }
 }
+
 
 function validateControlledArray(values, allowed, label) {
     if (!Array.isArray(values)) {
@@ -400,6 +450,8 @@ function validateControlledArray(values, allowed, label) {
 }
 
 
+
+
 function validateExactFieldOrder(record, expectedFields, label) {
     if (!isPlainObject(record)) return;
     const actualFields = Object.keys(record);
@@ -410,6 +462,7 @@ function validateExactFieldOrder(record, expectedFields, label) {
         );
     }
 }
+
 
 function validateTextArray(values, label, allowEmpty = true) {
     const items = requireArray(values, label);
@@ -431,9 +484,11 @@ function validateTextArray(values, label, allowEmpty = true) {
     return items;
 }
 
+
 function expectedFishIdentificationId(fishIds) {
     return [...fishIds].sort().join("-vs-");
 }
+
 
 function isFishTargetProductionRecord(record) {
     return isPlainObject(record) &&
@@ -441,6 +496,7 @@ function isFishTargetProductionRecord(record) {
         Array.isArray(record.aliases) &&
         Array.isArray(record.identificationTraits);
 }
+
 
 function validateFishProductionData(fish, categories, relationships, guidance, rigs, legacyCategoryMap) {
     const expectedCategoryIds = [
@@ -517,6 +573,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
     const waterbodyValues = new Set(["Pond", "Lake", "Reservoir", "River", "Creek"]);
     const guidancePriorities = new Set(["Primary", "Alternative"]);
 
+
     const categoryIds = validateUniqueIds(categories, "Fish category registry");
     const actualCategoryIds = categories.map((category) => category?.id);
     if (JSON.stringify(actualCategoryIds) !== JSON.stringify(expectedCategoryIds)) {
@@ -537,6 +594,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
             fail("Fish category registry", `${category.id}: category must not own isActive`);
         }
     }
+
 
     const fishById = indexById(fish);
     const forbiddenFishFields = [
@@ -560,6 +618,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         "isArkansasFish"
     ];
     validateNoForbiddenFields(fish, forbiddenFishFields, "Fish production ownership");
+
 
     for (const record of fish) {
         if (!isPlainObject(record)) continue;
@@ -596,6 +655,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         validateControlledArray(record.waterbodyTypes, waterbodyValues, `Fish ${record.id} waterbodyTypes`);
     }
 
+
     validateUniqueIds(relationships, "Fish identification relationships");
     const pairKeys = new Set();
     for (const relationship of relationships) {
@@ -623,6 +683,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         }
         pairKeys.add(pairKey);
 
+
         for (const fishId of ids) {
             const participant = fishById.get(fishId);
             if (!participant) {
@@ -631,6 +692,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
                 fail("Fish identification relationships", `${relationship.id}: active relationship references inactive Fish ${fishId}`);
             }
         }
+
 
         const distinctions = requireArray(
             relationship.distinctions,
@@ -659,6 +721,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         }
     }
 
+
     const rigById = indexById(rigs);
     const guidanceFishIds = new Set();
     for (const record of guidance) {
@@ -681,6 +744,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         if (typeof record.isActive !== "boolean") {
             fail("Fish-to-Rig guidance", `${record.fishId}: isActive must be Boolean`);
         }
+
 
         const recommendations = requireArray(
             record.rigRecommendations,
@@ -729,15 +793,18 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
     }
 }
 
+
 function validateFishSpecializedGuidance(specializedGuidance, fish) {
     const label = "Fish specialized guidance";
     const requiredFishIds = ["longnose-gar", "spotted-gar", "paddlefish"];
     const guidanceFields = ["body", "safety", "researchTopics", "researchNote"];
 
+
     if (!isPlainObject(specializedGuidance)) {
         fail(label, "registry must be an object keyed by Fish ID");
         return;
     }
+
 
     const fishById = indexById(fish);
     for (const fishId of requiredFishIds) {
@@ -745,6 +812,7 @@ function validateFishSpecializedGuidance(specializedGuidance, fish) {
             fail(label, `missing required specialized guidance for ${fishId}`);
         }
     }
+
 
     for (const [fishId, record] of Object.entries(specializedGuidance)) {
         if (!fishById.has(fishId)) {
@@ -769,6 +837,7 @@ function validateFishSpecializedGuidance(specializedGuidance, fish) {
     }
 }
 
+
 function getMarkdownHeadingSection(text, heading) {
     const marker = `## ${heading}`;
     const start = text.indexOf(marker);
@@ -777,6 +846,7 @@ function getMarkdownHeadingSection(text, heading) {
     const nextHeading = text.indexOf("\n## ", bodyStart);
     return text.slice(bodyStart, nextHeading < 0 ? text.length : nextHeading);
 }
+
 
 function collectEvidenceSourceIds(section, label) {
     if (typeof section !== "string") return [];
@@ -794,14 +864,17 @@ function collectEvidenceSourceIds(section, label) {
     return ids;
 }
 
+
 function validateFishEvidence(fish, relationships) {
     recordCheck("Fish production evidence and relationship provenance");
     const sourceText = readText("docs/FISH_REFERENCE_SOURCES.md");
     if (sourceText === null) return;
 
+
     const sourceIds = new Set(
         [...sourceText.matchAll(/^## ([A-Z][A-Z0-9-]+)\s*$/gm)].map((match) => match[1])
     );
+
 
     const authoredFish = fish.filter(
         (record) => isPlainObject(record) && Array.isArray(record.identificationTraits) && record.identificationTraits.length > 0
@@ -827,6 +900,7 @@ function validateFishEvidence(fish, relationships) {
         }
     }
 
+
     for (const relationship of relationships) {
         if (!isPlainObject(relationship) || !Array.isArray(relationship.fishIds)) continue;
         const section = getMarkdownHeadingSection(sourceText, relationship.id);
@@ -851,6 +925,7 @@ function validateFishEvidence(fish, relationships) {
     }
 }
 
+
 function validateFishSearchHelpers(canonicalData) {
     recordCheck("Fish scoped-search helper validity");
     const bindings = loadBindings("search.js", ["FISH_SEARCH_HELPERS", "searchFishRecords"]);
@@ -860,6 +935,7 @@ function validateFishSearchHelpers(canonicalData) {
         fail("Fish search helpers", "FISH_SEARCH_HELPERS and searchFishRecords must be available");
         return;
     }
+
 
     const activeFish = canonicalData.fish.filter((record) => record.isActive === true);
     for (const [scopeKey, terms] of Object.entries(helpers)) {
@@ -890,8 +966,11 @@ function validateFishSearchHelpers(canonicalData) {
 }
 
 
+
+
 function validateRegulationsData(buildInfo, states, resources, notices) {
     recordCheck("Regulations state/resource/notice schema, provenance, relationships, and freshness");
+
 
     const stateFields = ["id", "name", "abbreviation", "agencyName", "agencyUrl", "verifiedDate", "active"];
     const resourceFields = ["id", "stateId", "section", "primaryCategory", "capabilities", "title", "description", "url", "experienceType", "status", "authorityName", "authorityUrl", "sourceRelationship", "designationUrl", "verifiedDate"];
@@ -905,6 +984,7 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
     const urlPattern = /^https:\/\//i;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+
 
     const parseDate = (value, label, required = true) => {
         if ((value === null || value === "") && !required) return null;
@@ -921,24 +1001,29 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
         return parsed;
     };
 
+
     const requireText = (value, label) => {
         if (typeof value !== "string" || value.trim() === "") fail(label, "must be non-empty text");
     };
+
 
     const requireUrl = (value, label, required = true) => {
         if ((value === null || value === "") && !required) return;
         if (typeof value !== "string" || !urlPattern.test(value)) fail(label, `must be an https URL; found ${JSON.stringify(value)}`);
     };
 
+
     if (!isPlainObject(buildInfo)) fail("Regulations build info", "expected an object");
     if (buildInfo && buildInfo.externalReferenceReviewedDate !== null) {
         parseDate(buildInfo.externalReferenceReviewedDate, "Regulations externalReferenceReviewedDate");
     }
 
+
     validateUniqueIds(states, "State registry");
     validateUniqueIds(resources, "StateResource registry");
     validateUniqueIds(notices, "StateNotice registry");
     const stateById = indexById(states);
+
 
     for (const state of states) {
         if (!isPlainObject(state)) continue;
@@ -951,6 +1036,7 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
         if (typeof state.active !== "boolean") fail("State registry", `${state.id}: active must be Boolean`);
         if (state.active === true && verified && (today - verified) / 86400000 > 90) fail("Regulations freshness", `${state.id}: State verification is older than 90 days`);
     }
+
 
     const resourcesByState = new Map();
     const duplicateUrls = new Map();
@@ -977,6 +1063,7 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
         const verified = parseDate(resource.verifiedDate, `StateResource ${resource.id} verifiedDate`);
         if (["active", "temporarily-unavailable"].includes(resource.status) && verified && (today - verified) / 86400000 > 90) fail("Regulations freshness", `${resource.id}: resource verification is older than 90 days`);
 
+
         if (!resourcesByState.has(resource.stateId)) resourcesByState.set(resource.stateId, []);
         resourcesByState.get(resource.stateId).push(resource);
         const duplicateKey = `${resource.stateId}|${resource.url}`;
@@ -984,12 +1071,14 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
         duplicateUrls.set(duplicateKey, resource.id);
     }
 
+
     for (const state of states.filter((item) => item.active === true)) {
         const stateResources = (resourcesByState.get(state.id) || []).filter((resource) => resource.status !== "retired");
         const capabilitySet = new Set(stateResources.flatMap((resource) => resource.capabilities));
         if (!capabilitySet.has("statewide-regulations")) fail("Regulations required capabilities", `${state.id}: missing statewide-regulations`);
         if (!capabilitySet.has("license-information") && !capabilitySet.has("license-purchase")) fail("Regulations required capabilities", `${state.id}: missing license-information/license-purchase`);
     }
+
 
     for (const notice of notices) {
         if (!isPlainObject(notice)) continue;
@@ -1014,6 +1103,7 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
     }
 }
 
+
 function validateConditionsData(conditions, rigs) {
     const expectedByCategory = new Map([
         ["waterbody", ["pond", "lake", "reservoir", "river", "creek-stream"]],
@@ -1028,9 +1118,11 @@ function validateConditionsData(conditions, rigs) {
     const expectedIds = new Set([...expectedByCategory.values()].flat());
     const expectedFields = ["id", "name", "category", "summary", "createdVersion", "lastModifiedVersion", "isActive"];
 
+
     if (conditions.length !== 35) {
         fail("Condition registry", `expected exactly 35 records; found ${conditions.length}`);
     }
+
 
     const seenByCategory = new Map([...expectedByCategory.keys()].map((category) => [category, new Set()]));
     for (const condition of conditions) {
@@ -1046,6 +1138,7 @@ function validateConditionsData(conditions, rigs) {
         seenByCategory.get(condition.category).add(condition.id);
     }
 
+
     for (const [category, expectedCategoryIds] of expectedByCategory.entries()) {
         const actual = seenByCategory.get(category);
         const missing = expectedCategoryIds.filter((id) => !actual.has(id));
@@ -1057,6 +1150,7 @@ function validateConditionsData(conditions, rigs) {
             fail("Condition category membership", `${category}: unexpected ${extras.join(", ")}`);
         }
     }
+
 
     const frozenLegacyConditionTags = new Set([
         "Bottom Fishing",
@@ -1078,6 +1172,7 @@ function validateConditionsData(conditions, rigs) {
         "Wind"
     ]);
 
+
     for (const rig of rigs) {
         if (!isPlainObject(rig)) continue;
         if (Object.prototype.hasOwnProperty.call(rig, "conditionIds")) {
@@ -1091,6 +1186,8 @@ function validateConditionsData(conditions, rigs) {
         }
     }
 }
+
+
 
 
 function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, knots) {
@@ -1128,11 +1225,13 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
     const unexpectedLureIds = lureBait.map((item) => item?.id).filter((id) => !expectedLureBait.some(([expectedId]) => expectedId === id));
     if (unexpectedLureIds.length > 0) fail("Lure/Bait registry", `unexpected V1 identities: ${unexpectedLureIds.join(", ")}`);
 
+
     const tackleById = indexById(tackle);
     for (const id of ["weighted-swimbait-hook", "tube-jighead"]) {
         if (tackleById.get(id)?.isActive !== true) fail("Lure/Bait Tackle dependencies", `missing active Tackle ${id}`);
     }
     if (tackle.length !== 31) fail("Lure/Bait Tackle dependencies", `expected 31 Tackle records after two approved additions; found ${tackle.length}`);
+
 
     const rigById = indexById(rigs);
     if (rigs.length !== 23) fail("Lure/Bait Rig dependencies", `expected 23 Rig records after Subphase B additions; found ${rigs.length}`);
@@ -1141,32 +1240,34 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
         if (rigById.get(id)?.isActive !== true) fail("Lure/Bait Rig dependencies", `missing active Rig ${id}`);
     }
 
+
     const knotById = indexById(knots);
     const validateTackleRequirements = (requirements, label) => {
         for (const requirement of requireArray(requirements, `${label} componentRequirements`)) {
             if (!isPlainObject(requirement) || typeof requirement.tackleId !== "string") {
-                fail("Rig → Tackle", `${label}: invalid component requirement`);
+                fail("Rig â Tackle", `${label}: invalid component requirement`);
                 continue;
             }
-            if (tackleById.get(requirement.tackleId)?.isActive !== true) fail("Rig → Tackle", `${label}: unresolved/inactive Tackle ${requirement.tackleId}`);
+            if (tackleById.get(requirement.tackleId)?.isActive !== true) fail("Rig â Tackle", `${label}: unresolved/inactive Tackle ${requirement.tackleId}`);
         }
     };
     const validateLureRequirements = (requirements, label) => {
         for (const requirement of requireArray(requirements, `${label} lureBaitRequirements`)) {
             if (!isPlainObject(requirement) || typeof requirement.lureBaitId !== "string") {
-                fail("Rig → Lure/Bait requirement", `${label}: invalid Lure/Bait requirement`);
+                fail("Rig â Lure/Bait requirement", `${label}: invalid Lure/Bait requirement`);
                 continue;
             }
-            if (lureById.get(requirement.lureBaitId)?.isActive !== true) fail("Rig → Lure/Bait requirement", `${label}: unresolved/inactive Lure/Bait ${requirement.lureBaitId}`);
+            if (lureById.get(requirement.lureBaitId)?.isActive !== true) fail("Rig â Lure/Bait requirement", `${label}: unresolved/inactive Lure/Bait ${requirement.lureBaitId}`);
         }
     };
     const validateKnotApplications = (applications, label) => {
         for (const application of requireArray(applications, `${label} knotApplications`)) {
             for (const knotId of requireArray(application?.recommendedKnotIds, `${label} recommendedKnotIds`)) {
-                if (knotById.get(knotId)?.isActive !== true) fail("Rig → Knot", `${label}: unresolved/inactive Knot ${knotId}`);
+                if (knotById.get(knotId)?.isActive !== true) fail("Rig â Knot", `${label}: unresolved/inactive Knot ${knotId}`);
             }
         }
     };
+
 
     for (const rig of rigs) {
         if (!isPlainObject(rig)) continue;
@@ -1216,6 +1317,7 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
         validateTutorialVideo(rigById.get("tube-jig-rig")?.tutorialVideo, "Tube Jig Rig", "EibSWhI6nbM");
     }
 
+
     const configuredGuidance = [];
     for (const guidance of fishGuidance) {
         for (const recommendation of requireArray(guidance?.rigRecommendations, `Fish guidance ${guidance?.fishId}`)) {
@@ -1238,8 +1340,11 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
 }
 
 
+
+
 function validateTechniqueAndCompatibilityFoundation(techniques, relationships, rigs, lureBait) {
     recordCheck("Technique and intrinsic Compatibility foundation");
+
 
     const expectedTechniqueNames = new Map([
         ["steady-retrieve", "Steady Retrieve"],
@@ -1288,6 +1393,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         validateTextArray(technique.beginnerTips, `Technique ${technique.id} beginnerTips`, false);
     }
 
+
     const contentProjection = techniques.map((technique) => ({
         id: technique.id,
         name: technique.name,
@@ -1302,6 +1408,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
     if (contentHash !== expectedContentHash) {
         fail("Technique production", `approved C2 exact-content lock mismatch: ${contentHash}`);
     }
+
 
     const expectedRelationshipIds = new Set([
         "rig-lure-bait-texas-rig-stick-worm",
@@ -1501,6 +1608,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
     const semanticPairs = new Set();
     const actualRelationshipIds = new Set();
 
+
     for (const relationship of relationships) {
         if (!isPlainObject(relationship)) continue;
         validateExactFieldOrder(relationship, expectedFields, `Compatibility ${relationship.id}`);
@@ -1530,6 +1638,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         actualRelationshipIds.add(relationship.id);
     }
 
+
     for (const [family, definition] of Object.entries(familyDefinitions)) {
         const actualCount = familyCounts.get(family) || 0;
         if (actualCount !== definition.expectedCount) {
@@ -1542,6 +1651,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
     for (const actualId of actualRelationshipIds) {
         if (!expectedRelationshipIds.has(actualId)) fail("Compatibility production", `unapproved extra relationship ${actualId}`);
     }
+
 
     const directTieRigTechniqueIds = relationships
         .filter((relationship) =>
@@ -1571,6 +1681,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         }
     }
 
+
     const rendererText = readText("view-renderer.js");
     if (rendererText) {
         if (!rendererText.includes('function getRigTechniqueRecords(rigId, lureBaitId = null)')) {
@@ -1588,8 +1699,10 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
     }
 }
 
+
 function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackle) {
     recordCheck("Canonical Requirement Satisfaction exact V1 registry");
+
 
     const expectedFields = [
         "id",
@@ -1629,12 +1742,14 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
     );
     const expectedIds = [...expectedById.keys()].sort();
 
+
     if (relationships.length !== expectedIds.length) {
         fail(
             "Canonical Requirement Satisfaction",
             `expected exactly ${expectedIds.length} approved V1 relationships; found ${relationships.length}`
         );
     }
+
 
     validateUniqueIds(relationships, "Canonical Requirement Satisfaction");
     const lureById = indexById(lureBait);
@@ -1643,8 +1758,10 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
     const actualIds = [];
     const semanticTuples = new Set();
 
+
     for (const relationship of relationships) {
         if (!isPlainObject(relationship)) continue;
+
 
         validateExactFieldOrder(
             relationship,
@@ -1652,6 +1769,7 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
             `Canonical Requirement Satisfaction ${relationship.id || "<unknown>"}`
         );
         actualIds.push(relationship.id);
+
 
         if (relationship.relationshipType !== "canonical-requirement-satisfaction") {
             fail(
@@ -1671,6 +1789,7 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
                 `${relationship.id || "<unknown>"}: targetType must be tackle`
             );
         }
+
 
         const expectedId = deterministicId(
             relationship.sourceType,
@@ -1696,6 +1815,7 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
             }
         }
 
+
         const source = registryByType[relationship.sourceType]?.get(relationship.sourceId);
         const target = registryByType[relationship.targetType]?.get(relationship.targetId);
         if (!source) {
@@ -1715,11 +1835,13 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
             fail("Canonical Requirement Satisfaction", `${relationship.id}: active relationship references inactive target`);
         }
 
+
         const semanticTuple = `${relationship.sourceType}:${relationship.sourceId}->${relationship.targetType}:${relationship.targetId}`;
         if (semanticTuples.has(semanticTuple)) {
             fail("Canonical Requirement Satisfaction", `${relationship.id}: duplicate directional tuple`);
         }
         semanticTuples.add(semanticTuple);
+
 
         const expected = expectedById.get(relationship.id);
         if (!expected) {
@@ -1734,6 +1856,7 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
         ) {
             fail("Canonical Requirement Satisfaction", `${relationship.id}: participant tuple does not match approved rule`);
         }
+
 
         if (expected.qualificationKind === null) {
             if (relationship.qualification !== null) {
@@ -1766,6 +1889,7 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
         }
     }
 
+
     const sortedActualIds = [...actualIds].sort();
     if (JSON.stringify(actualIds) !== JSON.stringify(sortedActualIds)) {
         fail("Canonical Requirement Satisfaction", "registry records must be in lexicographic ID order");
@@ -1782,8 +1906,10 @@ function validateCanonicalRequirementSatisfaction(relationships, lureBait, tackl
     }
 }
 
+
 function validateAvailabilityQuantityFoundation(rigs) {
     recordCheck("G7-QTY quantity sufficiency and depletion runtime semantics");
+
 
     const bindings = loadBindings(
         "availability-quantity.js",
@@ -1797,6 +1923,7 @@ function validateAvailabilityQuantityFoundation(rigs) {
         ]
     );
 
+
     const buildInfo = bindings.AVAILABILITY_QUANTITY_BUILD_INFO;
     const sufficiency = bindings.QUANTITY_SUFFICIENCY_STATUS;
     const poolStatus = bindings.FUNCTIONAL_POOL_QUANTITY_STATUS;
@@ -1804,9 +1931,11 @@ function validateAvailabilityQuantityFoundation(rigs) {
     const derivePoolStatus = bindings.deriveFunctionalPoolQuantityStatus;
     const resolveSufficiency = bindings.resolveQuantitySufficiency;
 
+
     if (!isPlainObject(buildInfo) || buildInfo.file !== "availability-quantity.js") {
         fail("G7-QTY runtime", "availability-quantity.js must expose AVAILABILITY_QUANTITY_BUILD_INFO for itself");
     }
+
 
     const indexHtml = readText("index.html");
     if (indexHtml !== null) {
@@ -1824,6 +1953,7 @@ function validateAvailabilityQuantityFoundation(rigs) {
         }
     }
 
+
     const expectedSufficiency = {
         KNOWN_SUFFICIENT: "known-sufficient",
         KNOWN_INSUFFICIENT: "known-insufficient",
@@ -1834,6 +1964,7 @@ function validateAvailabilityQuantityFoundation(rigs) {
             fail("G7-QTY runtime", `QUANTITY_SUFFICIENCY_STATUS.${key} must be ${value}`);
         }
     }
+
 
     const expectedPoolStatus = {
         KNOWN_POSITIVE: "known-positive",
@@ -1846,10 +1977,12 @@ function validateAvailabilityQuantityFoundation(rigs) {
         }
     }
 
+
     if (!isPlainObject(evidenceType) || typeof derivePoolStatus !== "function" || typeof resolveSufficiency !== "function") {
         fail("G7-QTY runtime", "quantity evidence constants and derivation functions must be available");
         return;
     }
+
 
     const expectedEvidenceTypes = {
         PHYSICAL_ITEM: "physical-item",
@@ -1863,6 +1996,7 @@ function validateAvailabilityQuantityFoundation(rigs) {
         }
     }
 
+
     const expectThrows = (fn, label) => {
         let threw = false;
         try {
@@ -1872,6 +2006,7 @@ function validateAvailabilityQuantityFoundation(rigs) {
         }
         if (!threw) fail("G7-QTY runtime", `${label}: expected validation error`);
     };
+
 
     const expectPoolStatus = (ownedQuantity, expected, label) => {
         try {
@@ -1884,12 +2019,14 @@ function validateAvailabilityQuantityFoundation(rigs) {
         }
     };
 
+
     expectPoolStatus(undefined, poolStatus.QUANTITY_UNKNOWN, "omitted functional-pool quantity");
     expectPoolStatus(null, poolStatus.QUANTITY_UNKNOWN, "null functional-pool quantity");
     expectPoolStatus(0, poolStatus.DEPLETED, "zero functional-pool quantity");
     expectPoolStatus(3, poolStatus.KNOWN_POSITIVE, "positive functional-pool quantity");
     expectThrows(() => derivePoolStatus(-1), "negative functional-pool quantity");
     expectThrows(() => derivePoolStatus(1.5), "fractional functional-pool quantity");
+
 
     const expectSufficiency = (requiredQuantity, contributions, expected, expectedMinimum, expectedExact, label) => {
         try {
@@ -1918,6 +2055,7 @@ function validateAvailabilityQuantityFoundation(rigs) {
         }
     };
 
+
     expectSufficiency(1, [], sufficiency.KNOWN_INSUFFICIENT, 0, 0, "no matching availability");
     expectSufficiency(1, [{ type: evidenceType.UNKNOWN_PRESENT }], sufficiency.KNOWN_SUFFICIENT, 1, null, "unknown presence satisfies one");
     expectSufficiency(2, [{ type: evidenceType.UNKNOWN_PRESENT }], sufficiency.SUFFICIENCY_UNKNOWN, 1, null, "unknown presence cannot prove two");
@@ -1929,11 +2067,13 @@ function validateAvailabilityQuantityFoundation(rigs) {
     expectSufficiency(3, [{ type: evidenceType.KNOWN_QUANTITY, quantity: 1 }, { type: evidenceType.UNKNOWN_PRESENT }], sufficiency.SUFFICIENCY_UNKNOWN, 2, null, "unknown arithmetic remains unknown");
     expectSufficiency(1, [{ type: evidenceType.KNOWN_QUANTITY, quantity: 0 }], sufficiency.KNOWN_INSUFFICIENT, 0, 0, "depleted contribution provides zero");
 
+
     const frozenEvidence = Object.freeze([
         Object.freeze({ type: evidenceType.PHYSICAL_ITEM }),
         Object.freeze({ type: evidenceType.UNKNOWN_PRESENT })
     ]);
     expectSufficiency(2, frozenEvidence, sufficiency.KNOWN_SUFFICIENT, 2, null, "resolver does not require mutable evidence");
+
 
     expectThrows(() => resolveSufficiency(0, []), "zero required quantity");
     expectThrows(() => resolveSufficiency(1.5, []), "fractional required quantity");
@@ -1941,6 +2081,7 @@ function validateAvailabilityQuantityFoundation(rigs) {
     expectThrows(() => resolveSufficiency(1, [{ type: "invented-evidence" }]), "unsupported evidence type");
     expectThrows(() => resolveSufficiency(1, [{ type: evidenceType.AT_LEAST, quantity: 0 }]), "invalid at-least quantity");
     expectThrows(() => resolveSufficiency(1, [{ type: evidenceType.KNOWN_QUANTITY, quantity: -1 }]), "negative known quantity");
+
 
     const authoredRequirements = [];
     const validateRequirementList = (requirements, label) => {
@@ -1959,6 +2100,7 @@ function validateAvailabilityQuantityFoundation(rigs) {
         }
     };
 
+
     for (const rig of rigs) {
         if (!isPlainObject(rig)) continue;
         validateRequirementList(rig.componentRequirements, `Rig ${rig.id} componentRequirements`);
@@ -1970,6 +2112,7 @@ function validateAvailabilityQuantityFoundation(rigs) {
             validateRequirementList(configuration.lureBaitRequirements, `Rig ${rig.id}/${configuration.id} lureBaitRequirements`);
         }
     }
+
 
     if (authoredRequirements.length !== 87) {
         fail("G7-QTY Rig requirement", `expected 87 current availability-bearing Rig requirements; found ${authoredRequirements.length}`);
@@ -1992,8 +2135,11 @@ function validateAvailabilityQuantityFoundation(rigs) {
 }
 
 
+
+
 function validateAvailabilityAttentionFoundation() {
     recordCheck("G7-ATTN derived Needs Attention diagnostic runtime semantics");
+
 
     const bindings = loadBindings(
         "availability-attention.js",
@@ -2010,6 +2156,7 @@ function validateAvailabilityAttentionFoundation() {
         ]
     );
 
+
     const buildInfo = bindings.AVAILABILITY_ATTENTION_BUILD_INFO;
     const attentionClass = bindings.ATTENTION_CLASS;
     const capability = bindings.ATTENTION_CAPABILITY;
@@ -2020,9 +2167,11 @@ function validateAvailabilityAttentionFoundation() {
     const deriveDiagnostics = bindings.deriveNeedsAttentionDiagnostics;
     const hasClass = bindings.hasAttentionClass;
 
+
     if (!isPlainObject(buildInfo) || buildInfo.file !== "availability-attention.js") {
         fail("G7-ATTN runtime", "availability-attention.js must expose AVAILABILITY_ATTENTION_BUILD_INFO for itself");
     }
+
 
     const indexHtml = readText("index.html");
     if (indexHtml !== null) {
@@ -2044,6 +2193,7 @@ function validateAvailabilityAttentionFoundation() {
         }
     }
 
+
     const expectedClasses = {
         ADVISORY: "advisory",
         AUTOMATION_BLOCKER: "automation-blocker",
@@ -2054,6 +2204,7 @@ function validateAvailabilityAttentionFoundation() {
             fail("G7-ATTN runtime", `ATTENTION_CLASS.${key} must be ${value}`);
         }
     }
+
 
     const expectedCapabilities = {
         ORGANIZATION: "organization",
@@ -2068,6 +2219,7 @@ function validateAvailabilityAttentionFoundation() {
             fail("G7-ATTN runtime", `ATTENTION_CAPABILITY.${key} must be ${value}`);
         }
     }
+
 
     const expectedConditions = {
         UNASSIGNED_OWNERSHIP: "unassigned-ownership",
@@ -2088,10 +2240,12 @@ function validateAvailabilityAttentionFoundation() {
         }
     }
 
+
     const expectedForbiddenFields = ["needsAttention", "attentionStatus", "isBroken", "automationReady"];
     if (!Array.isArray(forbiddenFields) || JSON.stringify([...forbiddenFields]) !== JSON.stringify(expectedForbiddenFields)) {
         fail("G7-ATTN runtime", `forbidden persisted attention fields must be exactly ${expectedForbiddenFields.join(", ")}`);
     }
+
 
     if (
         typeof assertNoPersistedAttentionAuthority !== "function" ||
@@ -2103,6 +2257,7 @@ function validateAvailabilityAttentionFoundation() {
         return;
     }
 
+
     const expectThrows = (fn, label) => {
         let threw = false;
         try {
@@ -2112,6 +2267,7 @@ function validateAvailabilityAttentionFoundation() {
         }
         if (!threw) fail("G7-ATTN runtime", `${label}: expected validation error`);
     };
+
 
     const subject = Object.freeze({ type: "my-tackle", id: "example-record" });
     const expectDiagnostic = (conditionValue, expectedClass, expectedCapability, label) => {
@@ -2147,6 +2303,7 @@ function validateAvailabilityAttentionFoundation() {
         }
     };
 
+
     expectDiagnostic(condition.UNASSIGNED_OWNERSHIP, attentionClass.ADVISORY, capability.ORGANIZATION, "valid unassigned ownership advisory");
     expectDiagnostic(condition.CANONICAL_MAPPING_MISSING, attentionClass.AUTOMATION_BLOCKER, capability.CANONICAL_AUTOMATION, "missing canonical mapping blocker");
     expectDiagnostic(condition.CANONICAL_MAPPING_INVALID, attentionClass.AUTOMATION_BLOCKER, capability.CANONICAL_AUTOMATION, "invalid canonical mapping blocker");
@@ -2159,12 +2316,14 @@ function validateAvailabilityAttentionFoundation() {
     expectDiagnostic(condition.DEPLETED_POOL_WITH_POSITIVE_ALLOCATION, attentionClass.CONFLICT, capability.ALLOCATION_INTEGRITY, "depleted pool allocation conflict");
     expectDiagnostic(condition.CURRENT_CONTEXT_CONFIGURATION_CONFLICT, attentionClass.CONFLICT, capability.CURRENT_CONTEXT_INTEGRITY, "current-context configuration conflict");
 
+
     try {
         const inactive = deriveDiagnostic({ active: false, condition: condition.CANONICAL_MAPPING_MISSING, subject });
         if (inactive !== null) fail("G7-ATTN runtime", "inactive/cleared condition must derive no diagnostic");
     } catch (error) {
         fail("G7-ATTN runtime", `inactive condition: unexpected error ${error.message}`);
     }
+
 
     try {
         const diagnostics = deriveDiagnostics([
@@ -2188,6 +2347,7 @@ function validateAvailabilityAttentionFoundation() {
         fail("G7-ATTN runtime", `derived collection: unexpected error ${error.message}`);
     }
 
+
     try {
         if (assertNoPersistedAttentionAuthority({ id: "valid-record" }) !== true) {
             fail("G7-ATTN runtime", "persisted-authority guard must accept a record without derived status fields");
@@ -2199,6 +2359,7 @@ function validateAvailabilityAttentionFoundation() {
         expectThrows(() => assertNoPersistedAttentionAuthority({ id: "invalid-record", [field]: true }), `forbidden persisted field ${field}`);
     }
 
+
     expectThrows(() => deriveDiagnostic(null), "non-object observation");
     expectThrows(() => deriveDiagnostic({ active: true, condition: "invented-condition", subject }), "unsupported condition");
     expectThrows(() => deriveDiagnostic({ active: true, condition: condition.UNASSIGNED_OWNERSHIP, subject: { type: "", id: "x" } }), "invalid subject type");
@@ -2207,8 +2368,10 @@ function validateAvailabilityAttentionFoundation() {
     expectThrows(() => hasClass([], "invented-class"), "unsupported attention class query");
 }
 
+
 function validateMyTackleReconciliationFoundation() {
     recordCheck("G7-REFS Merge/Split and dependent-reference reconciliation semantics");
+
 
     const bindings = loadBindings(
         "my-tackle-reconciliation.js",
@@ -2236,6 +2399,7 @@ function validateMyTackleReconciliationFoundation() {
         ]
     );
 
+
     const buildInfo = bindings.MY_TACKLE_RECONCILIATION_BUILD_INFO;
     const status = bindings.RECONCILIATION_STATUS;
     const issue = bindings.RECONCILIATION_ISSUE;
@@ -2257,9 +2421,11 @@ function validateMyTackleReconciliationFoundation() {
     const findMigration = bindings.findApprovedCanonicalReferenceMigration;
     const reconcileCanonicalMapping = bindings.reconcileCanonicalReferenceMapping;
 
+
     if (!isPlainObject(buildInfo) || buildInfo.file !== "my-tackle-reconciliation.js") {
         fail("G7-REFS runtime", "my-tackle-reconciliation.js must expose MY_TACKLE_RECONCILIATION_BUILD_INFO for itself");
     }
+
 
     const indexHtml = readText("index.html");
     if (indexHtml !== null) {
@@ -2281,6 +2447,7 @@ function validateMyTackleReconciliationFoundation() {
         }
     }
 
+
     const expectedStatuses = {
         READY: "ready",
         REQUIRES_EXPLICIT_RESOLUTION: "requires-explicit-resolution",
@@ -2291,6 +2458,7 @@ function validateMyTackleReconciliationFoundation() {
             fail("G7-REFS runtime", `RECONCILIATION_STATUS.${key} must be ${value}`);
         }
     }
+
 
     const expectedIssues = {
         MERGE_MAPPING_CONFIRMATION_REQUIRED: "merge-mapping-confirmation-required",
@@ -2310,6 +2478,7 @@ function validateMyTackleReconciliationFoundation() {
             fail("G7-REFS runtime", `RECONCILIATION_ISSUE.${key} must be ${value}`);
         }
     }
+
 
     const requiredFunctions = [
         combineQuantities,
@@ -2333,6 +2502,7 @@ function validateMyTackleReconciliationFoundation() {
         fail("G7-REFS runtime", "all approved reconciliation helper functions must be available");
         return;
     }
+
 
     const expectedMigrations = [
         ["tackle-fixed-sinker-to-external-eye-sinker", "tackle", "fixed-sinker", "external-eye-sinker"],
@@ -2382,6 +2552,7 @@ function validateMyTackleReconciliationFoundation() {
         }
     }
 
+
     const expectThrows = (fn, label) => {
         let threw = false;
         try {
@@ -2391,6 +2562,7 @@ function validateMyTackleReconciliationFoundation() {
         }
         if (!threw) fail("G7-REFS runtime", `${label}: expected validation error`);
     };
+
 
     const expectStatus = (result, expectedStatus, label) => {
         if (!isPlainObject(result)) {
@@ -2406,6 +2578,7 @@ function validateMyTackleReconciliationFoundation() {
         return true;
     };
 
+
     try {
         if (combineQuantities(2, 3) !== 5) fail("G7-REFS runtime", "known + known Merge quantity must sum");
         if (combineQuantities(null, 3) !== null) fail("G7-REFS runtime", "unknown + known Merge quantity must remain Unknown");
@@ -2414,6 +2587,7 @@ function validateMyTackleReconciliationFoundation() {
         fail("G7-REFS runtime", `Merge quantity semantics: unexpected error ${error.message}`);
     }
     expectThrows(() => combineQuantities(-1, 2), "negative Merge quantity");
+
 
     try {
         const locations = mergeLocations(
@@ -2438,6 +2612,7 @@ function validateMyTackleReconciliationFoundation() {
         fail("G7-REFS runtime", `Merge Location reconciliation: unexpected error ${error.message}`);
     }
 
+
     try {
         const directKnown = mergeDirect(null, { quantity: 2 });
         if (directKnown?.quantity !== 2) fail("G7-REFS runtime", "single direct current-availability contribution must be preserved");
@@ -2448,6 +2623,7 @@ function validateMyTackleReconciliationFoundation() {
     } catch (error) {
         fail("G7-REFS runtime", `Merge direct current availability: unexpected error ${error.message}`);
     }
+
 
     try {
         const identity = planMergeIdentity("survivor", ["absorbed-a", "absorbed-b"]);
@@ -2471,6 +2647,7 @@ function validateMyTackleReconciliationFoundation() {
         fail("G7-REFS runtime", `Merge identity/retirement: unexpected error ${error.message}`);
     }
 
+
     try {
         const exact = planMergeMappings(
             [{ referenceDomain: "tackle", referenceId: "jighead" }],
@@ -2481,6 +2658,7 @@ function validateMyTackleReconciliationFoundation() {
             fail("G7-REFS runtime", "same-domain/same-target mappings must deduplicate");
         }
 
+
         const mappedPlusUnmapped = planMergeMappings(
             [{ referenceDomain: "tackle", referenceId: "jighead" }],
             []
@@ -2490,6 +2668,7 @@ function validateMyTackleReconciliationFoundation() {
             fail("G7-REFS runtime", "mapped + unmapped Merge must require explicit mapping confirmation");
         }
 
+
         const conflict = planMergeMappings(
             [{ referenceDomain: "tackle", referenceId: "jighead" }],
             [{ referenceDomain: "tackle", referenceId: "hook" }]
@@ -2498,6 +2677,7 @@ function validateMyTackleReconciliationFoundation() {
         if (conflict.issues[0]?.issue !== issue.MERGE_MAPPING_CONFLICT) {
             fail("G7-REFS runtime", "conflicting same-domain mappings must block Merge until explicitly resolved");
         }
+
 
         const crossDomain = planMergeMappings(
             [{ referenceDomain: "tackle", referenceId: "jighead" }],
@@ -2509,6 +2689,7 @@ function validateMyTackleReconciliationFoundation() {
     } catch (error) {
         fail("G7-REFS runtime", `Merge mapping reconciliation: unexpected error ${error.message}`);
     }
+
 
     try {
         const identicalRestrictions = planMergeRestrictions(["whole:excluded", "source:box"], ["source:box", "whole:excluded"]);
@@ -2524,6 +2705,7 @@ function validateMyTackleReconciliationFoundation() {
     } catch (error) {
         fail("G7-REFS runtime", `Merge exclusion/exception reconciliation: unexpected error ${error.message}`);
     }
+
 
     try {
         const knownSplit = validateSplitQuantity(5, [2, 3]);
@@ -2547,6 +2729,7 @@ function validateMyTackleReconciliationFoundation() {
     } catch (error) {
         fail("G7-REFS runtime", `Split quantity conservation: unexpected error ${error.message}`);
     }
+
 
     try {
         const knownLocation = validateSplitLocation(5, [
@@ -2574,6 +2757,7 @@ function validateMyTackleReconciliationFoundation() {
         fail("G7-REFS runtime", `Split Location reconciliation: unexpected error ${error.message}`);
     }
 
+
     try {
         const inheritedMappings = planSplitMappings(
             [{ referenceDomain: "tackle", referenceId: "jighead" }],
@@ -2599,6 +2783,7 @@ function validateMyTackleReconciliationFoundation() {
     } catch (error) {
         fail("G7-REFS runtime", `Split mapping preservation: unexpected error ${error.message}`);
     }
+
 
     try {
         const safeCurrent = planSplitCurrentAvailability({
@@ -2632,6 +2817,7 @@ function validateMyTackleReconciliationFoundation() {
         fail("G7-REFS runtime", `Split current availability reconciliation: unexpected error ${error.message}`);
     }
 
+
     try {
         const current = evaluateRevisionPreconditions(
             { item: "rev-1", location: "rev-2" },
@@ -2649,6 +2835,7 @@ function validateMyTackleReconciliationFoundation() {
     } catch (error) {
         fail("G7-REFS runtime", `UD-10 revision preconditions: unexpected error ${error.message}`);
     }
+
 
     try {
         const lossless = resolveRetiredReference("absorbed", {
@@ -2673,11 +2860,13 @@ function validateMyTackleReconciliationFoundation() {
         fail("G7-REFS runtime", `retired stable-reference handling: unexpected error ${error.message}`);
     }
 
+
     try {
         const migration = findMigration({ referenceDomain: "tackle", referenceId: "offset-worm-hook" });
         if (migration?.toReferenceId !== "worm-hook") {
             fail("G7-REFS migration", "offset-worm-hook must deterministically migrate to worm-hook");
         }
+
 
         const activeIds = new Set(["worm-hook"]);
         const migrated = reconcileCanonicalMapping(
@@ -2689,6 +2878,7 @@ function validateMyTackleReconciliationFoundation() {
             fail("G7-REFS migration", "approved retired canonical mapping must rewrite to active deterministic replacement");
         }
 
+
         const idempotent = reconcileCanonicalMapping(
             migrated.mapping,
             (domain, id) => domain === "tackle" && activeIds.has(id)
@@ -2696,6 +2886,7 @@ function validateMyTackleReconciliationFoundation() {
         if (idempotent.status !== status.READY || idempotent.migrated !== false || idempotent.mapping.referenceId !== "worm-hook") {
             fail("G7-REFS migration", "canonical mapping migration must be idempotent");
         }
+
 
         const sourceStillActive = reconcileCanonicalMapping(
             { referenceDomain: "tackle", referenceId: "offset-worm-hook" },
@@ -2705,6 +2896,7 @@ function validateMyTackleReconciliationFoundation() {
             fail("G7-REFS migration", "approved migration must not rewrite while the current canonical target remains active");
         }
 
+
         const unavailableTarget = reconcileCanonicalMapping(
             { referenceDomain: "tackle", referenceId: "split-shot" },
             () => false
@@ -2713,6 +2905,7 @@ function validateMyTackleReconciliationFoundation() {
         if (unavailableTarget.issues[0]?.issue !== issue.CANONICAL_MIGRATION_TARGET_UNAVAILABLE) {
             fail("G7-REFS migration", "migration must not publish an inactive/unavailable canonical replacement");
         }
+
 
         const ambiguousRetired = reconcileCanonicalMapping(
             { referenceDomain: "tackle", referenceId: "retired-without-approved-replacement" },
@@ -2729,14 +2922,17 @@ function validateMyTackleReconciliationFoundation() {
         fail("G7-REFS migration", `canonical Reference migration semantics: unexpected error ${error.message}`);
     }
 
+
     expectThrows(
         () => reconcileCanonicalMapping({ referenceDomain: "tackle", referenceId: "split-shot" }, null),
         "missing canonical target-activity resolver"
     );
 }
 
+
 function validateCurrentContextSourceChangeFoundation() {
     recordCheck("G7-CTX current-context source-change visibility semantics");
+
 
     const bindings = loadBindings(
         "current-context-source-change.js",
@@ -2754,6 +2950,7 @@ function validateCurrentContextSourceChangeFoundation() {
         ]
     );
 
+
     const buildInfo = bindings.CURRENT_CONTEXT_SOURCE_CHANGE_BUILD_INFO;
     const status = bindings.SOURCE_CHANGE_STATUS;
     const acknowledgementStatus = bindings.SOURCE_ACKNOWLEDGEMENT_STATUS;
@@ -2765,9 +2962,11 @@ function validateCurrentContextSourceChangeFoundation() {
     const evaluateChange = bindings.evaluateSourceChange;
     const advanceBaseline = bindings.advanceSourceObservationBaseline;
 
+
     if (!isPlainObject(buildInfo) || buildInfo.file !== "current-context-source-change.js") {
         fail("G7-CTX runtime", "current-context-source-change.js must expose CURRENT_CONTEXT_SOURCE_CHANGE_BUILD_INFO for itself");
     }
+
 
     const indexHtml = readText("index.html");
     if (indexHtml !== null) {
@@ -2789,6 +2988,7 @@ function validateCurrentContextSourceChangeFoundation() {
         }
     }
 
+
     const expectedStatuses = {
         UNCHANGED: "unchanged",
         CHANGED_SINCE_CONFIRMATION: "changed-since-confirmation",
@@ -2798,12 +2998,14 @@ function validateCurrentContextSourceChangeFoundation() {
         if (status?.[key] !== value) fail("G7-CTX runtime", `SOURCE_CHANGE_STATUS.${key} must be ${value}`);
     }
 
+
     const expectedAcknowledgementStatuses = { ADVANCED: "advanced", STALE: "stale" };
     for (const [key, value] of Object.entries(expectedAcknowledgementStatuses)) {
         if (acknowledgementStatus?.[key] !== value) {
             fail("G7-CTX runtime", `SOURCE_ACKNOWLEDGEMENT_STATUS.${key} must be ${value}`);
         }
     }
+
 
     const expectedIntentStatuses = {
         PRESERVED: "preserved",
@@ -2812,6 +3014,7 @@ function validateCurrentContextSourceChangeFoundation() {
     for (const [key, value] of Object.entries(expectedIntentStatuses)) {
         if (intentStatus?.[key] !== value) fail("G7-CTX runtime", `CONTEXT_INTENT_STATUS.${key} must be ${value}`);
     }
+
 
     const expectedDimensions = {
         EFFECTIVE_AVAILABILITY: "effective-availability",
@@ -2825,6 +3028,7 @@ function validateCurrentContextSourceChangeFoundation() {
         if (dimension?.[key] !== value) fail("G7-CTX runtime", `MATERIAL_FACT_DIMENSION.${key} must be ${value}`);
     }
 
+
     const expectedStaleReasons = {
         CONTEXT_REVISION_CHANGED: "context-revision-changed",
         SOURCE_REVISION_CHANGED: "source-revision-changed"
@@ -2835,6 +3039,7 @@ function validateCurrentContextSourceChangeFoundation() {
         }
     }
 
+
     if (
         typeof captureObservation !== "function" ||
         typeof deriveChangedDimensions !== "function" ||
@@ -2844,6 +3049,7 @@ function validateCurrentContextSourceChangeFoundation() {
         fail("G7-CTX runtime", "all approved source-change helper functions must be available");
         return;
     }
+
 
     const sourceText = readText("current-context-source-change.js");
     if (sourceText !== null) {
@@ -2858,6 +3064,7 @@ function validateCurrentContextSourceChangeFoundation() {
         }
     }
 
+
     const expectThrows = (fn, label) => {
         let threw = false;
         try {
@@ -2868,6 +3075,7 @@ function validateCurrentContextSourceChangeFoundation() {
         if (!threw) fail("G7-CTX runtime", `${label}: expected validation error`);
     };
 
+
     const makeFacts = (overrides = {}) => ({
         [dimension.EFFECTIVE_AVAILABILITY]: ["tackle:hook"],
         [dimension.QUANTITY_SUFFICIENCY]: { "tackle:hook": "known-sufficient" },
@@ -2877,6 +3085,7 @@ function validateCurrentContextSourceChangeFoundation() {
         [dimension.OTHER_AUTOMATION_RELEVANT]: null,
         ...overrides
     });
+
 
     let baseline = null;
     let sameFactsNewRevision = null;
@@ -2894,6 +3103,7 @@ function validateCurrentContextSourceChangeFoundation() {
             materialFacts: makeFacts()
         });
 
+
         const expectedObservationFields = ["sourceType", "sourceId", "sourceRevision", "materialFingerprints"];
         if (JSON.stringify(Object.keys(baseline)) !== JSON.stringify(expectedObservationFields)) {
             fail("G7-CTX baseline", "confirmation observation must retain only source identity/revision plus material fingerprints");
@@ -2906,6 +3116,7 @@ function validateCurrentContextSourceChangeFoundation() {
         if (!Object.isFrozen(baseline) || !Object.isFrozen(baseline.materialFingerprints)) {
             fail("G7-CTX baseline", "confirmation observation and material fingerprints must be immutable");
         }
+
 
         const reordered = captureObservation({
             sourceType: "inventory-location",
@@ -2930,6 +3141,7 @@ function validateCurrentContextSourceChangeFoundation() {
         fail("G7-CTX baseline", `confirmation observation: unexpected error ${error.message}`);
     }
 
+
     if (baseline && sameFactsNewRevision) {
         try {
             const descriptiveOnly = evaluateChange(baseline, sameFactsNewRevision);
@@ -2949,6 +3161,7 @@ function validateCurrentContextSourceChangeFoundation() {
             fail("G7-CTX visibility", `descriptive-only change: unexpected error ${error.message}`);
         }
     }
+
 
     const expectMaterialChange = (changedDimension, overrideValue, label) => {
         try {
@@ -2981,6 +3194,7 @@ function validateCurrentContextSourceChangeFoundation() {
         }
     };
 
+
     const availabilityChanged = expectMaterialChange(
         dimension.EFFECTIVE_AVAILABILITY,
         ["tackle:hook", "tackle:jighead"],
@@ -3012,6 +3226,7 @@ function validateCurrentContextSourceChangeFoundation() {
         "other approved automation-relevant fact changed"
     );
 
+
     if (availabilityChanged) {
         try {
             const sameRevisionMaterialChange = captureObservation({
@@ -3025,6 +3240,7 @@ function validateCurrentContextSourceChangeFoundation() {
                 fail("G7-CTX visibility", "material current-truth change must be detected even when a source revision token did not advance");
             }
 
+
             const withDelta = evaluateChange(baseline, availabilityChanged, {
                 deltaDetails: [{ dimension: dimension.EFFECTIVE_AVAILABILITY, summary: "A current item was added to the selected Location." }]
             });
@@ -3035,6 +3251,7 @@ function validateCurrentContextSourceChangeFoundation() {
             fail("G7-CTX visibility", `current-truth/delta explanation: unexpected error ${error.message}`);
         }
     }
+
 
     if (baseline && sameFactsNewRevision) {
         try {
@@ -3053,12 +3270,14 @@ function validateCurrentContextSourceChangeFoundation() {
         }
     }
 
+
     if (baseline && availabilityChanged) {
         try {
             const dimensions = deriveChangedDimensions(baseline, availabilityChanged);
             if (JSON.stringify([...dimensions]) !== JSON.stringify([dimension.EFFECTIVE_AVAILABILITY]) || !Object.isFrozen(dimensions)) {
                 fail("G7-CTX visibility", "changed material dimensions must be deterministic and immutable");
             }
+
 
             const advanced = advanceBaseline({
                 expectedContextRevision: 5,
@@ -3073,6 +3292,7 @@ function validateCurrentContextSourceChangeFoundation() {
                 fail("G7-CTX acknowledgement", "advanced acknowledgement result/baseline must be immutable");
             }
 
+
             const staleContext = advanceBaseline({
                 expectedContextRevision: 5,
                 currentContextRevision: 6,
@@ -3086,6 +3306,7 @@ function validateCurrentContextSourceChangeFoundation() {
             ) {
                 fail("G7-CTX acknowledgement", "stale device must not acknowledge over a newer current-context revision");
             }
+
 
             const staleSource = advanceBaseline({
                 expectedContextRevision: 5,
@@ -3104,6 +3325,7 @@ function validateCurrentContextSourceChangeFoundation() {
             fail("G7-CTX acknowledgement", `revision-aware acknowledgement: unexpected error ${error.message}`);
         }
     }
+
 
     expectThrows(
         () => captureObservation({ sourceType: "inventory-location", sourceId: "box", sourceRevision: 1, materialFacts: { [dimension.EFFECTIVE_AVAILABILITY]: [] } }),
@@ -3131,8 +3353,11 @@ function validateCurrentContextSourceChangeFoundation() {
 }
 
 
+
+
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
+
 
     const categoryBindings = loadBindings("data/fish-categories.js", ["FISH_CATEGORY_DATA", "FISH_LEGACY_CATEGORY_ID_MAP"]);
     const fishBindings = loadBindings("data/fish.js", ["FISH_DATA"]);
@@ -3158,6 +3383,7 @@ function validateCanonicalData() {
     const tackleBindings = loadBindings("data/tackle.js", ["TACKLE_DATA"]);
     const guidanceBindings = loadBindings("data/knot-guidance.js", ["KNOT_TASK_DEFINITIONS"]);
     const regulationsBindings = loadBindings("data/regulations.js", ["REGULATIONS_DATA_BUILD_INFO", "STATE_DATA", "STATE_RESOURCE_DATA", "STATE_NOTICE_DATA"]);
+
 
     const categories = requireArray(categoryBindings.FISH_CATEGORY_DATA, "Fish category registry");
     const legacyCategoryMap = isPlainObject(categoryBindings.FISH_LEGACY_CATEGORY_ID_MAP)
@@ -3189,6 +3415,7 @@ function validateCanonicalData() {
     const stateResources = requireArray(regulationsBindings.STATE_RESOURCE_DATA, "StateResource registry");
     const stateNotices = requireArray(regulationsBindings.STATE_NOTICE_DATA, "StateNotice registry");
 
+
     validateCanonicalRecords(fish, "Fish registry");
     validateCanonicalRecords(rigs, "Rig registry");
     validateCanonicalRecords(conditions, "Condition registry");
@@ -3196,6 +3423,7 @@ function validateCanonicalData() {
     validateCanonicalRecords(techniques, "Technique registry");
     validateCanonicalRecords(knots, "Knot registry");
     validateCanonicalRecords(tackle, "Tackle registry");
+
 
     validateCoreRegistry(rigBindings.CORE_RIG_IDS, rigs, "Core Rig registry");
     validateCoreRegistry(knotBindings.CORE_KNOT_IDS, knots, "Core Knot registry");
@@ -3210,6 +3438,7 @@ function validateCanonicalData() {
     validateAvailabilityAttentionFoundation();
     validateMyTackleReconciliationFoundation();
     validateCurrentContextSourceChangeFoundation();
+
 
     validateNoForbiddenFields(fish, ["imageIds", "mediaIds"], "Fish ownership");
     validateNoForbiddenFields(
@@ -3234,6 +3463,7 @@ function validateCanonicalData() {
         "Knot ownership"
     );
 
+
     const rigDifficultyValues = new Set([
         "Beginner",
         "Beginner+",
@@ -3252,78 +3482,88 @@ function validateCanonicalData() {
     ]);
     const knotLineTypes = new Set(["monofilament", "fluorocarbon", "braid"]);
 
+
     const rigById = indexById(rigs);
     const knotById = indexById(knots);
     const tackleById = indexById(tackle);
+
 
     for (const rig of rigs) {
         if (!isPlainObject(rig)) {
             continue;
         }
 
+
         if (!rigDifficultyValues.has(rig.difficulty)) {
             fail("Rig controlled values", `${rig.id}: unapproved difficulty ${JSON.stringify(rig.difficulty)}`);
         }
 
+
         const requirements = requireArray(rig.componentRequirements, `Rig ${rig.id} componentRequirements`);
         for (const requirement of requirements) {
             if (!isPlainObject(requirement) || typeof requirement.tackleId !== "string") {
-                fail("Rig → Tackle", `${rig.id}: component requirement is missing tackleId`);
+                fail("Rig â Tackle", `${rig.id}: component requirement is missing tackleId`);
                 continue;
             }
             const target = tackleById.get(requirement.tackleId);
             if (!target) {
-                fail("Rig → Tackle", `${rig.id}: unresolved tackleId ${requirement.tackleId}`);
+                fail("Rig â Tackle", `${rig.id}: unresolved tackleId ${requirement.tackleId}`);
             } else if (rig.isActive === true && target.isActive !== true) {
-                fail("Rig → Tackle", `${rig.id}: active Rig references inactive Tackle ${requirement.tackleId}`);
+                fail("Rig â Tackle", `${rig.id}: active Rig references inactive Tackle ${requirement.tackleId}`);
             }
         }
+
 
         const applications = requireArray(rig.knotApplications, `Rig ${rig.id} knotApplications`);
         for (const application of applications) {
             if (!isPlainObject(application)) {
-                fail("Rig → Knot", `${rig.id}: knot application is not an object`);
+                fail("Rig â Knot", `${rig.id}: knot application is not an object`);
                 continue;
             }
+
 
             const expectedFields = ["connectionType", "label", "notes", "recommendedKnotIds"];
             const actualFields = Object.keys(application).sort();
             if (JSON.stringify(actualFields) !== JSON.stringify(expectedFields)) {
                 fail(
-                    "Rig → Knot",
+                    "Rig â Knot",
                     `${rig.id}: knot application fields must be exactly label, connectionType, recommendedKnotIds, notes; found ${actualFields.join(", ")}`
                 );
             }
 
+
             if (!knotConnectionTypes.has(application.connectionType)) {
                 fail(
-                    "Rig → Knot",
+                    "Rig â Knot",
                     `${rig.id}: unapproved connectionType ${JSON.stringify(application.connectionType)}`
                 );
             }
+
 
             const recommendedIds = requireArray(
                 application.recommendedKnotIds,
                 `Rig ${rig.id} recommendedKnotIds`
             );
             if (recommendedIds.length === 0) {
-                fail("Rig → Knot", `${rig.id}: knot application has no recommended Knot IDs`);
+                fail("Rig â Knot", `${rig.id}: knot application has no recommended Knot IDs`);
             }
+
 
             const seenRecommended = new Set();
             for (const knotId of recommendedIds) {
                 if (seenRecommended.has(knotId)) {
-                    fail("Rig → Knot", `${rig.id}: duplicate recommended Knot ID ${knotId}`);
+                    fail("Rig â Knot", `${rig.id}: duplicate recommended Knot ID ${knotId}`);
                 }
                 seenRecommended.add(knotId);
 
+
                 const knot = knotById.get(knotId);
                 if (!knot) {
-                    fail("Rig → Knot", `${rig.id}: unresolved recommended Knot ID ${knotId}`);
+                    fail("Rig â Knot", `${rig.id}: unresolved recommended Knot ID ${knotId}`);
                     continue;
                 }
                 if (rig.isActive === true && knot.isActive !== true) {
-                    fail("Rig → Knot", `${rig.id}: active Rig references inactive Knot ${knotId}`);
+                    fail("Rig â Knot", `${rig.id}: active Rig references inactive Knot ${knotId}`);
                 }
                 if (
                     typeof application.connectionType === "string" &&
@@ -3331,12 +3571,13 @@ function validateCanonicalData() {
                     !knot.connectionTypes.includes(application.connectionType)
                 ) {
                     fail(
-                        "Rig → Knot",
+                        "Rig â Knot",
                         `${rig.id}: ${knotId} does not declare connection type ${application.connectionType}`
                     );
                 }
             }
         }
+
 
         const variationIds = requireArray(rig.variationIds, `Rig ${rig.id} variationIds`);
         const seenVariations = new Set();
@@ -3349,6 +3590,7 @@ function validateCanonicalData() {
             }
             seenVariations.add(variationId);
 
+
             const variation = rigById.get(variationId);
             if (!variation) {
                 fail("Rig variations", `${rig.id}: unresolved variation ID ${variationId}`);
@@ -3357,6 +3599,7 @@ function validateCanonicalData() {
             }
         }
     }
+
 
     for (const knot of knots) {
         if (!isPlainObject(knot)) {
@@ -3377,6 +3620,7 @@ function validateCanonicalData() {
         );
     }
 
+
     for (const item of tackle) {
         if (!isPlainObject(item)) {
             continue;
@@ -3392,12 +3636,14 @@ function validateCanonicalData() {
             }
             seenRelated.add(relatedId);
 
+
             const target = tackleById.get(relatedId);
             if (!target) {
                 fail("Tackle relationships", `${item.id}: unresolved related Tackle ID ${relatedId}`);
             }
         }
     }
+
 
     validateUniqueIds(knotTasks, "Knot task guidance");
     for (const task of knotTasks) {
@@ -3423,6 +3669,7 @@ function validateCanonicalData() {
         }
     }
 
+
     return {
         categories,
         legacyCategoryMap,
@@ -3443,6 +3690,7 @@ function validateCanonicalData() {
     };
 }
 
+
 function validateOptionArray(records, label) {
     const array = requireArray(records, label);
     validateUniqueIds(array, label);
@@ -3453,11 +3701,13 @@ function validateOptionArray(records, label) {
     );
 }
 
+
 function validateObjectRegistry(registry, label) {
     if (!isPlainObject(registry)) {
         fail(label, "expected an object registry");
         return new Set();
     }
+
 
     const ids = new Set();
     for (const [key, value] of Object.entries(registry)) {
@@ -3470,8 +3720,10 @@ function validateObjectRegistry(registry, label) {
     return ids;
 }
 
+
 function validateReelGuidance() {
     recordCheck("Reel & Line Setup Decision Knowledge references");
+
 
     const names = [
         "REEL_SETUP_STEP_IDS",
@@ -3492,6 +3744,7 @@ function validateReelGuidance() {
     ];
     const bindings = loadBindings("data/reel-guidance.js", names);
 
+
     const entryIds = validateOptionArray(bindings.REEL_SETUP_ENTRY_OPTIONS, "Reel setup entry options");
     const reelTypeIds = validateOptionArray(bindings.REEL_TYPE_OPTIONS, "Reel type options");
     const actionIds = validateOptionArray(bindings.REEL_LINE_GUIDANCE_ACTIONS, "Reel line guidance actions");
@@ -3500,10 +3753,12 @@ function validateReelGuidance() {
     const backingIds = validateObjectRegistry(bindings.REEL_BACKING_CHOICES, "Reel backing choices");
     const leaderIds = validateObjectRegistry(bindings.REEL_LEADER_CHOICES, "Reel leader choices");
 
+
     void entryIds;
     void actionIds;
     void targetIds;
     void backingIds;
+
 
     if (!isPlainObject(bindings.REEL_SETUP_STEP_IDS)) {
         fail("Reel setup steps", "expected REEL_SETUP_STEP_IDS object");
@@ -3523,6 +3778,7 @@ function validateReelGuidance() {
         }
     }
 
+
     if (isPlainObject(bindings.REEL_BEGINNER_LINE_RECOMMENDATIONS)) {
         for (const [reelTypeId, recommendation] of Object.entries(bindings.REEL_BEGINNER_LINE_RECOMMENDATIONS)) {
             if (!reelTypeIds.has(reelTypeId)) {
@@ -3538,6 +3794,7 @@ function validateReelGuidance() {
     } else {
         fail("Reel line recommendations", "expected recommendation registry");
     }
+
 
     if (isPlainObject(bindings.REEL_LINE_COMPATIBILITY_NOTES)) {
         for (const [reelTypeId, notes] of Object.entries(bindings.REEL_LINE_COMPATIBILITY_NOTES)) {
@@ -3558,6 +3815,7 @@ function validateReelGuidance() {
         fail("Reel compatibility notes", "expected compatibility registry");
     }
 
+
     if (isPlainObject(bindings.REEL_SPOOLING_GUIDANCE)) {
         for (const reelTypeId of Object.keys(bindings.REEL_SPOOLING_GUIDANCE)) {
             if (!reelTypeIds.has(reelTypeId)) {
@@ -3568,6 +3826,7 @@ function validateReelGuidance() {
         fail("Reel spooling guidance", "expected spooling registry");
     }
 
+
     if (isPlainObject(bindings.REEL_LEADER_DECISION_GUIDANCE)) {
         for (const lineTypeId of Object.keys(bindings.REEL_LEADER_DECISION_GUIDANCE)) {
             if (!lineTypeIds.has(lineTypeId)) {
@@ -3577,6 +3836,7 @@ function validateReelGuidance() {
     } else {
         fail("Reel leader guidance", "expected leader-decision registry");
     }
+
 
     if (isPlainObject(bindings.REEL_LEADER_SETUP_GUIDANCE)) {
         for (const leaderId of Object.keys(bindings.REEL_LEADER_SETUP_GUIDANCE)) {
@@ -3589,12 +3849,15 @@ function validateReelGuidance() {
     }
 }
 
+
 function validateMedia(canonicalData) {
     recordCheck("Media ownership, local assets, and orphan image detection");
+
 
     const bindings = loadBindings("data/media.js", ["MEDIA_DATA"]);
     const media = requireArray(bindings.MEDIA_DATA, "Media registry");
     validateUniqueIds(media, "Media registry");
+
 
     const ownerRegistries = {
         fish: indexById(canonicalData.fish),
@@ -3604,6 +3867,7 @@ function validateMedia(canonicalData) {
         tackle: indexById(canonicalData.tackle),
         "lure-bait": indexById(canonicalData.lureBait)
     };
+
 
     const referencedLocalFiles = new Set();
     const activeFishPrimaryCounts = new Map(
@@ -3621,6 +3885,7 @@ function validateMedia(canonicalData) {
             .filter((record) => requiredLureBaitRecognitionIds.has(record.id))
             .map((record) => [record.id, 0])
     );
+
 
     function validateFishLicense(item) {
         if (!isPlainObject(item.license)) {
@@ -3644,6 +3909,7 @@ function validateMedia(canonicalData) {
         }
     }
 
+
     for (const item of media) {
         if (!isPlainObject(item)) {
             continue;
@@ -3664,6 +3930,7 @@ function validateMedia(canonicalData) {
             }
         }
 
+
         let localFile = null;
         if (typeof item.file === "string" && item.file.trim() !== "") {
             localFile = normalizeLocalReference(item.file);
@@ -3676,6 +3943,7 @@ function validateMedia(canonicalData) {
                 }
             }
         }
+
 
         if (item.ownerType === "fish") {
             const allowedRoles = new Set(["primary-identification", "supplemental-identification"]);
@@ -3711,6 +3979,7 @@ function validateMedia(canonicalData) {
             validateFishLicense(item);
         }
 
+
         if (item.ownerType === "fish-identification") {
             if (item.role !== "comparison") {
                 fail("Fish comparison media", `${item.id}: Fish-identification role must be comparison`);
@@ -3731,17 +4000,20 @@ function validateMedia(canonicalData) {
             validateFishLicense(item);
         }
 
+
         if (item.ownerType === "tackle" && item.isActive === true && item.type === "image") {
             if (!localFile || !localFile.startsWith("images/tackle/")) fail("Tackle media readiness", `${item.id}: Tackle recognition image must be local under images/tackle/`);
             if (typeof item.alt !== "string" || item.alt.trim() === "") fail("Tackle media readiness", `${item.id}: recognition alt text must be non-empty`);
             if (activeTackleRecognitionCounts.has(item.ownerId)) activeTackleRecognitionCounts.set(item.ownerId, activeTackleRecognitionCounts.get(item.ownerId) + 1);
         }
 
+
         if (item.ownerType === "lure-bait" && item.isActive === true && item.type === "image") {
             if (typeof item.alt !== "string" || item.alt.trim() === "") fail("Lure/Bait media readiness", `${item.id}: recognition alt text must be non-empty`);
             if (activeRequiredLureMediaCounts.has(item.ownerId)) activeRequiredLureMediaCounts.set(item.ownerId, activeRequiredLureMediaCounts.get(item.ownerId) + 1);
         }
     }
+
 
     for (const fish of canonicalData.fish) {
         if (!isFishTargetProductionRecord(fish) || fish.isActive !== true) continue;
@@ -3751,16 +4023,19 @@ function validateMedia(canonicalData) {
         }
     }
 
+
     for (const tackleRecord of canonicalData.tackle) {
         if (!isPlainObject(tackleRecord) || tackleRecord.isActive !== true) continue;
         const count = activeTackleRecognitionCounts.get(tackleRecord.id) ?? 0;
         if (count !== 1) fail("Tackle media readiness", `${tackleRecord.id}: active Tackle must have exactly one active recognition image; found ${count}`);
     }
 
+
     for (const lureBaitId of requiredLureBaitRecognitionIds) {
         const count = activeRequiredLureMediaCounts.get(lureBaitId) ?? 0;
         if (count !== 1) fail("Lure/Bait media readiness", `${lureBaitId}: required Rig-facing Lure/Bait must have exactly one active recognition image; found ${count}`);
     }
+
 
     const allowlistedImageFiles = new Set(["images/rigs/.gitkeep"]);
     const trackedImageFiles = listTrackedRepositoryFiles().filter((repoPath) => repoPath.startsWith("images/"));
@@ -3774,19 +4049,24 @@ function validateMedia(canonicalData) {
     }
 }
 
+
 function validateRepositoryHygiene() {
     recordCheck("Repository hygiene and Section 11 ignore safeguards");
 
+
     const trackedFiles = listTrackedRepositoryFiles();
+
 
     if (trackedFiles.some((repoPath) => repoPath.startsWith("docs/docs/"))) {
         fail("Repository hygiene", "unexpected tracked duplicate documentation subtree exists: docs/docs/");
     }
 
+
     for (const repoPath of trackedFiles) {
         const lower = repoPath.toLowerCase();
         const basename = path.posix.basename(repoPath);
         const parts = repoPath.split("/");
+
 
         if (lower.endsWith(".tmp") || lower.endsWith(".bak")) {
             fail("Repository hygiene", `committed temporary/backup artifact: ${repoPath}`);
@@ -3798,6 +4078,7 @@ function validateRepositoryHygiene() {
             fail("Repository hygiene", `committed Python cache/bytecode artifact: ${repoPath}`);
         }
     }
+
 
     const gitignore = readText(".gitignore");
     if (gitignore !== null) {
@@ -3817,8 +4098,12 @@ function validateRepositoryHygiene() {
 
 
 
+
+
+
 function validateRecommendationEngineContract() {
     recordCheck("Recommendation semantic runtime contract");
+
 
     const bindings = loadBindings("recommendation-engine.js", [
         "RECOMMENDATION_ENGINE_BUILD_INFO",
@@ -3834,6 +4119,7 @@ function validateRecommendationEngineContract() {
         "deriveRecommendationResultInvalidation"
     ]);
 
+
     const expectedExecutability = [
         "executable",
         "not-currently-executable",
@@ -3848,6 +4134,7 @@ function validateRecommendationEngineContract() {
     ];
     const expectedSimplicity = ["first", "second", "none"];
 
+
     function assertExactValues(actualObject, expectedValues, label) {
         const actual = Object.values(actualObject || {});
         if (JSON.stringify(actual) !== JSON.stringify(expectedValues)) {
@@ -3855,14 +4142,17 @@ function validateRecommendationEngineContract() {
         }
     }
 
+
     assertExactValues(bindings.RECOMMENDATION_EXECUTABILITY_STATUS, expectedExecutability, "executability statuses");
     assertExactValues(bindings.RECOMMENDATION_REQUIREMENT_PROOF_STATUS, expectedRequirementProof, "requirement-proof statuses");
     assertExactValues(bindings.RECOMMENDATION_LEGAL_STATUS, expectedLegal, "legal statuses");
     assertExactValues(bindings.RECOMMENDATION_SIMPLICITY_PREFERENCE, expectedSimplicity, "simplicity preferences");
 
+
     if (bindings.RECOMMENDATION_ENGINE_BUILD_INFO?.file !== "recommendation-engine.js") {
         fail("Recommendation runtime", "build info must identify recommendation-engine.js");
     }
+
 
     const createCandidate = bindings.createRecommendationCandidateIdentity;
     const deriveExecutability = bindings.deriveRecommendationExecutability;
@@ -3871,10 +4161,12 @@ function validateRecommendationEngineContract() {
     const evaluateContext = bindings.evaluateRecommendationContextFreshness;
     const deriveInvalidation = bindings.deriveRecommendationResultInvalidation;
 
+
     if ([createCandidate, deriveExecutability, deriveLegal, deriveSimplicity, evaluateContext, deriveInvalidation].some((fn) => typeof fn !== "function")) {
         fail("Recommendation runtime", "one or more required runtime functions are missing");
         return;
     }
+
 
     const baseCandidateInput = {
         rigId: "texas-rig",
@@ -3883,6 +4175,7 @@ function validateRecommendationEngineContract() {
         techniqueId: "drag",
         parameters: { weight: { amount: 0.25, unit: "oz" }, cadence: "slow" }
     };
+
 
     try {
         const first = createCandidate(baseCandidateInput);
@@ -3917,6 +4210,7 @@ function validateRecommendationEngineContract() {
         fail("Recommendation runtime", `candidate identity contract threw unexpectedly: ${error.message}`);
     }
 
+
     try {
         const noContext = deriveExecutability({
             hasConfirmedAvailabilityContext: false,
@@ -3950,6 +4244,7 @@ function validateRecommendationEngineContract() {
         fail("Recommendation runtime", `executability contract threw unexpectedly: ${error.message}`);
     }
 
+
     try {
         const notEvaluated = deriveLegal({ status: "not-evaluated" });
         const blocked = deriveLegal({ status: "blocked-by-known-constraint" });
@@ -3966,6 +4261,7 @@ function validateRecommendationEngineContract() {
     } catch (error) {
         fail("Recommendation runtime", `legal contract threw unexpectedly: ${error.message}`);
     }
+
 
     try {
         const notNearTie = deriveSimplicity({
@@ -3995,6 +4291,7 @@ function validateRecommendationEngineContract() {
     } catch (error) {
         fail("Recommendation runtime", `simplicity contract threw unexpectedly: ${error.message}`);
     }
+
 
     try {
         const current = evaluateContext({
@@ -4060,6 +4357,7 @@ function validateRecommendationEngineContract() {
         fail("Recommendation runtime", `context freshness contract threw unexpectedly: ${error.message}`);
     }
 
+
     try {
         const availabilityOnly = deriveInvalidation({
             contextChanged: false,
@@ -4086,18 +4384,19 @@ function validateRecommendationEngineContract() {
     }
 }
 
+
 function validateDocumentationGovernance() {
     recordCheck("Documentation governance roles and lifecycle markers");
 
+
     const requiredDocs = [
         "docs/PROJECT.md",
+        "docs/PROJECT-RULES.md",
         "docs/ARCHITECTURE.md",
         "docs/DECISIONS.md",
-        "docs/DEVELOPMENT_WORKFLOW.md",
         "docs/ROADMAP.md",
         "docs/STYLE_GUIDE.md",
         "docs/UI_STANDARD.md",
-        "docs/WORKING_STATE.md",
         "docs/ACTIVE-CHANGE-LEDGER.md",
         "docs/CHANGELOG.md",
         "docs/data-model/README.md",
@@ -4106,10 +4405,9 @@ function validateDocumentationGovernance() {
         "docs/decisions/media.md",
         "docs/decisions/product.md",
         "docs/decisions/ux-navigation.md",
-        "docs/decisions/workflow.md",
-        "docs/workflow/PRODUCTION-CHANGES.md",
-        "docs/workflow/DOCUMENTATION-AND-CLOSEOUT.md"
+        "docs/decisions/workflow.md"
     ];
+
 
     const retiredDocs = [
         "docs/HANDOFF.md",
@@ -4128,8 +4426,13 @@ function validateDocumentationGovernance() {
         "docs/workflow/DOCUMENTATION.md",
         "docs/workflow/CLOSEOUT.md",
         "docs/workflow/SESSION-HANDOFF.md",
-        "docs/workflow/REVIEW-AND-STAGING.md"
+        "docs/workflow/REVIEW-AND-STAGING.md",
+        "docs/WORKING_STATE.md",
+        "docs/DEVELOPMENT_WORKFLOW.md",
+        "docs/workflow/PRODUCTION-CHANGES.md",
+        "docs/workflow/DOCUMENTATION-AND-CLOSEOUT.md"
     ];
+
 
     const docs = new Map();
     for (const relativePath of requiredDocs) {
@@ -4139,18 +4442,20 @@ function validateDocumentationGovernance() {
         }
     }
 
+
     for (const relativePath of retiredDocs) {
         if (fileExists(relativePath)) {
             fail("Documentation governance", `retired documentation path must remain absent: ${relativePath}`);
         }
     }
 
+
     const requiredMarkers = new Map([
         [
             "docs/ARCHITECTURE.md",
             [
                 "**Role:** Current technical/source architecture and durable ownership boundaries",
-                "`docs/WORKING_STATE.md` is the single compact repository current-state/exact-resume entrypoint"
+                "single operational continuity/exact-resume surface"
             ]
         ],
         [
@@ -4162,11 +4467,12 @@ function validateDocumentationGovernance() {
             ]
         ],
         [
-            "docs/DEVELOPMENT_WORKFLOW.md",
+            "docs/PROJECT-RULES.md",
             [
-                "**Role:** Compact canonical workflow entrypoint",
-                "# Procedure Index",
-                "workflow/DOCUMENTATION-AND-CLOSEOUT.md"
+                "**Role:** Single canonical current FCC procedural owner",
+                "# Block 1 — Authority and Startup",
+                "# Block 8 — Guide Audits, Rule Lifecycle, and Chat Presentation",
+                "## File-integrity protections"
             ]
         ],
         [
@@ -4189,13 +4495,6 @@ function validateDocumentationGovernance() {
                 "**Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard",
                 "# Card System",
                 "# Persistent Navigation Component"
-            ]
-        ],
-        [
-            "docs/WORKING_STATE.md",
-            [
-                "**Document Status:** Approved — Active Repository Continuity Record",
-                "# Exact Resume Point"
             ]
         ],
         [
@@ -4222,6 +4521,7 @@ function validateDocumentationGovernance() {
         ]
     ]);
 
+
     for (const [relativePath, markers] of requiredMarkers.entries()) {
         const text = docs.get(relativePath);
         if (text === undefined) {
@@ -4234,16 +4534,17 @@ function validateDocumentationGovernance() {
         }
     }
 
+
     const activeMechanicsFiles = [
         "README.md",
         "AGENTS.md",
         "docs/PROJECT.md",
         "docs/DECISIONS.md",
-        "docs/DEVELOPMENT_WORKFLOW.md",
-        "docs/ROADMAP.md",
-        "docs/WORKING_STATE.md"
+        "docs/PROJECT-RULES.md",
+        "docs/ROADMAP.md"
     ];
     const retiredReferenceNames = retiredDocs.map((relativePath) => relativePath.replace(/^docs\//, ""));
+
 
     for (const relativePath of activeMechanicsFiles) {
         const text = ["README.md", "AGENTS.md"].includes(relativePath) ? readText(relativePath) : docs.get(relativePath);
@@ -4262,13 +4563,25 @@ function validateDocumentationGovernance() {
         }
     }
 
+
     recordCheck("Active documentation path/reference integrity");
+
 
     const activeTextFiles = listTrackedRepositoryFiles().filter((repoPath) =>
         /\.md$/i.test(repoPath) &&
         !repoPath.startsWith("archive/") &&
         fileExists(repoPath)
     );
+
+
+    recordCheck("Active Markdown whitespace integrity");
+    for (const relativePath of activeTextFiles) {
+        const text = readText(relativePath);
+        if (text !== null && /\n[\t ]*\n[\t ]*\n[\t ]*\n/.test(text)) {
+            fail("Documentation whitespace", `${relativePath}: contains more than two consecutive blank lines`);
+        }
+    }
+
 
     function resolveDocReference(fromPath, reference) {
         const clean = reference.split(/[?#]/, 1)[0].trim();
@@ -4280,9 +4593,11 @@ function validateDocumentationGovernance() {
         return path.posix.normalize(path.posix.join(path.posix.dirname(fromPath), clean));
     }
 
+
     function isExplicitRetirementLine(line) {
         return /\b(?:GIT HISTORY ONLY|ARCHIVE|retir(?:e|ed|ement)|delete|deletion|remove|removal|move|moved|former active path|planned repository disposition)\b/i.test(line);
     }
+
 
     for (const relativePath of activeTextFiles) {
         const text = readText(relativePath);
@@ -4295,6 +4610,7 @@ function validateDocumentationGovernance() {
             const plain = line.match(/^\s*[-*]\s+((?:docs\/|archive\/|\.\.?\/)[A-Za-z0-9_.\/-]+\.md)\s*$/i);
             if (plain) references.push(plain[1]);
 
+
             for (const reference of references) {
                 const resolved = resolveDocReference(relativePath, reference);
                 if (!resolved) continue;
@@ -4304,6 +4620,7 @@ function validateDocumentationGovernance() {
             }
         });
     }
+
 
     recordCheck("Decision index/body identity integrity");
     const decisionIndex = docs.get("docs/DECISIONS.md");
@@ -4339,16 +4656,19 @@ function validateDocumentationGovernance() {
         }
     }
 
+
     const foundation = readText("docs/data-model/01-FOUNDATION.md");
     if (foundation !== null && !foundation.includes("**Document Status:** Approved")) {
         fail("Documentation governance", "docs/data-model/01-FOUNDATION.md: canonical inherited foundation must have Approved document status");
     }
+
 
     const staleCurrentStatePatterns = [
         /^##\s+Current Repository State\b/im,
         /^\*\*Implementation Status:\*\*\s*Repository Audit Section\s+\d+\b/im,
         /^\*\*Current Audit Section:\*\*\s*\d+\b/im
     ];
+
 
     for (const relativePath of ["docs/ROADMAP.md", "docs/CHANGELOG.md"]) {
         const text = docs.get(relativePath);
@@ -4366,9 +4686,11 @@ function validateDocumentationGovernance() {
     }
 }
 
+
 function main() {
     console.log("REPOSITORY INTEGRITY VALIDATION");
     console.log(`Root: ${ROOT}`);
+
 
     validateEntrypoint();
     const canonicalData = validateCanonicalData();
@@ -4380,6 +4702,7 @@ function main() {
     validateRepositoryHygiene();
     validateDocumentationGovernance();
 
+
     if (FAILURES.length > 0) {
         console.error("\nREPOSITORY INTEGRITY: FAIL");
         for (const failure of FAILURES) {
@@ -4389,10 +4712,12 @@ function main() {
         return 1;
     }
 
+
     console.log("\nREPOSITORY INTEGRITY: PASS");
     console.log(`- ${CHECKS.length} validation groups passed`);
     console.log("- no repository content was modified");
     return 0;
 }
+
 
 process.exitCode = main();
