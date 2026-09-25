@@ -93,38 +93,6 @@ const RIG_DIFFICULTY_ORDER = Object.freeze([
 ]);
 
 /* ==========================================================
-   KNOT GUIDE — COLLECTION CONFIGURATION
-   ========================================================== */
-
-const KNOT_COLLECTIONS = Object.freeze({
-    all: Object.freeze({
-        title: "All Knots",
-        description: "Browse every Knot in the guide.",
-        isAvailable: true
-    }),
-    core: Object.freeze({
-        title: "Core Knots",
-        description: "Four practical starter knots covering reel attachment, common terminal connections, and joining lines.",
-        isAvailable: true
-    }),
-    beginner: Object.freeze({
-        title: "Beginner Knots",
-        description: "Six approachable knots selected for common freshwater fishing connections.",
-        isAvailable: true
-    }),
-    intermediate: Object.freeze({
-        title: "Intermediate Knots",
-        description: "Four specialized knots for loops, hook-specific tying, and leader connections.",
-        isAvailable: true
-    }),
-    advanced: Object.freeze({
-        title: "Advanced Knots",
-        description: "More specialized knots for advanced connections.",
-        isAvailable: false
-    })
-});
-
-/* ==========================================================
    SHARED APP — RUNTIME STATE + DETAIL NAVIGATION STACK
    ========================================================== */
 
@@ -270,6 +238,8 @@ function showView(route) {
         clearDetailNavigationStack();
         fishGuideState = { query: "", scrollY: 0 };
         fishDetailState = createInitialFishDetailState(null);
+        knotGuideState = { query: "", scrollY: 0 };
+        knotBrowseState = { query: "", scrollY: 0 };
         selectedRegulationStateId = null;
         regulationsGatewayState = { query: "" };
         currentView = ROUTES.DASHBOARD;
@@ -3092,12 +3062,32 @@ function renderReelSetupReelReadyCheckStep(appMain) {
     renderReelSetupGuidanceList(appMain, guidance);
 }
 
+let knotGuideState = { query: "", scrollY: 0 };
+let knotBrowseState = { query: "", scrollY: 0 };
+
+function restoreKnotScroll(scrollY) {
+    if (!Number.isFinite(scrollY) || scrollY <= 0) return;
+    window.requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+    });
+}
+
+function updateKnotResultStatus(appMain, count) {
+    if (!Number.isInteger(count) || count <= 0) return;
+    const status = appMain.querySelector("[data-search-status]");
+    if (status) status.textContent = `${count} ${count === 1 ? "knot" : "knots"} found`;
+}
+
 function getActiveKnots() {
     return KNOT_DATA.filter((knot) => knot.isActive === true);
 }
 
 function getKnotTask(taskId) {
     return KNOT_TASK_DEFINITIONS.find((task) => task.id === taskId) ?? null;
+}
+
+function getKnotLandingTask(taskId) {
+    return KNOT_LANDING_TASK_DEFINITIONS.find((task) => task.id === taskId) ?? null;
 }
 
 function getCoreKnots(activeKnots = getActiveKnots()) {
@@ -3107,7 +3097,15 @@ function getCoreKnots(activeKnots = getActiveKnots()) {
 }
 
 function openKnotDetail(knotId, source = "guide") {
+    const knot = findRecordById(getActiveKnots(), knotId);
+    if (!knot) {
+        console.warn(`Knot was not found: ${knotId}`);
+        return;
+    }
+
     clearDetailNavigationStack();
+    if (source === "browse") knotBrowseState.scrollY = window.scrollY;
+    else knotGuideState.scrollY = window.scrollY;
     selectedKnotId = knotId;
     selectedKnotDetailSource = source;
     showView(ROUTES.KNOT_DETAIL);
@@ -3174,6 +3172,21 @@ function renderLineTypeDetailView(appMain) {
     });
 }
 
+function openKnotBrowse(collectionKey, taskId = null) {
+    const isTask = collectionKey === "task";
+    const isValid = isTask
+        ? Boolean(getKnotTask(taskId))
+        : KNOT_COLLECTIONS[collectionKey]?.isAvailable === true;
+    if (!isValid) return;
+
+    clearDetailNavigationStack();
+    knotGuideState.scrollY = window.scrollY;
+    selectedKnotBrowseKey = collectionKey;
+    selectedKnotTaskId = isTask ? taskId : null;
+    knotBrowseState = { query: "", scrollY: 0 };
+    showView(ROUTES.KNOT_BROWSE);
+}
+
 function renderKnotsView(appMain) {
     const collectionCards = Object.entries(KNOT_COLLECTIONS).map(([key, collection]) => ({
         key,
@@ -3181,42 +3194,49 @@ function renderKnotsView(appMain) {
     }));
 
     renderKnotGuideLanding(appMain, {
-        tasks: KNOT_TASK_DEFINITIONS,
+        tasks: KNOT_LANDING_TASK_DEFINITIONS,
         collections: collectionCards,
+        initialQuery: knotGuideState.query,
+        onQueryChange: (query) => {
+            knotGuideState.query = query.trim();
+        },
         onSearch: (query) => updateKnotGuideSearchResults(appMain, query),
+        onWorkflowSelect: () => {
+            knotGuideState.scrollY = window.scrollY;
+            openReelSetup();
+        },
         onTaskSelect: (taskId) => {
-            if (taskId === "attach-line-to-reel") {
-                selectedKnotBrowseKey = "all";
-                selectedKnotTaskId = null;
-                openReelSetup();
+            const landingTask = getKnotLandingTask(taskId);
+            if (!landingTask) return;
+
+            if (landingTask.targetType === "collection") {
+                openKnotBrowse(landingTask.targetId);
                 return;
             }
 
-            selectedKnotBrowseKey = "task";
-            selectedKnotTaskId = taskId;
-            showView(ROUTES.KNOT_BROWSE);
+            if (landingTask.targetType === "task") {
+                openKnotBrowse("task", landingTask.targetId);
+            }
         },
-        onCollectionSelect: (collectionKey) => {
-            if (!KNOT_COLLECTIONS[collectionKey]?.isAvailable) return;
-            selectedKnotBrowseKey = collectionKey;
-            selectedKnotTaskId = null;
-            showView(ROUTES.KNOT_BROWSE);
-        }
+        onCollectionSelect: (collectionKey) => openKnotBrowse(collectionKey)
     });
+
+    restoreKnotScroll(knotGuideState.scrollY);
 }
 
 function updateKnotGuideSearchResults(appMain, query) {
     const matches = searchKnotRecords(
         getActiveKnots(),
         query,
-        KNOT_TASK_DEFINITIONS
+        KNOT_SEARCH_INTENTS
     );
 
     renderSearchResults(appMain, matches, {
-        emptyMessage: "No knots matched. Try a Knot name, a task such as ‘tie hook’ or ‘add leader’, or a line type such as braid.",
+        emptyMessage: "No knots found. Try another search.",
         renderRecord: buildKnotResultCardMarkup,
         onResultSelect: (knotId) => openKnotDetail(knotId, "guide")
     });
+    updateKnotResultStatus(appMain, matches.length);
 }
 
 function getKnotBrowseConfig() {
@@ -3244,8 +3264,6 @@ function getKnotBrowseConfig() {
         records = sortRecordsAlphabetically(activeKnots.filter((knot) => knot.difficulty === "Beginner"));
     } else if (selectedKnotBrowseKey === "intermediate") {
         records = sortRecordsAlphabetically(activeKnots.filter((knot) => knot.difficulty === "Intermediate"));
-    } else if (selectedKnotBrowseKey === "advanced") {
-        records = sortRecordsAlphabetically(activeKnots.filter((knot) => knot.difficulty === "Advanced"));
     } else {
         records = sortRecordsAlphabetically(activeKnots);
     }
@@ -3266,28 +3284,39 @@ function renderKnotBrowseView(appMain) {
         inputId: "knot-browse-search-input",
         title: browseConfig.title,
         description: browseConfig.description,
-        label: `Search within ${browseConfig.title}`,
-        placeholder: `Search ${browseConfig.title}`,
-        parentLabel: fromKnotDetail ? returnContext.label : "Knots",
+        label: "Search Knots",
+        helpText: "Search by Knot name, task, line type, or difficulty.",
+        inputDescriptionId: "knot-browse-search-help",
+        placeholder: "Try Palomar, tie hook, braid, or beginner",
+        showSubmitButton: false,
+        viewClass: "knot-browse-view",
+        parentLabel: fromKnotDetail ? returnContext.label : "Knots Guide",
+        initialQuery: knotBrowseState.query,
+        onQueryChange: (query) => {
+            knotBrowseState.query = query.trim();
+        },
         onParent: fromKnotDetail
             ? returnToDetailNavigationContext
             : () => showView(ROUTES.KNOTS),
         onSearch: (query) => updateKnotBrowseResults(appMain, query)
     });
+
+    restoreKnotScroll(knotBrowseState.scrollY);
 }
 
 function updateKnotBrowseResults(appMain, query) {
     const browseConfig = getKnotBrowseConfig();
     const normalizedQuery = normalizeKnotSearchText(query);
     const records = normalizedQuery
-        ? searchKnotRecords(browseConfig.records, query, KNOT_TASK_DEFINITIONS)
+        ? searchKnotRecords(browseConfig.records, query, KNOT_SEARCH_INTENTS)
         : browseConfig.records;
 
     renderSearchResults(appMain, records, {
-        emptyMessage: "No knots in this group matched. Try the Knot name, task, line type, or difficulty.",
+        emptyMessage: `No knots found in ${browseConfig.title}. Try another search.`,
         renderRecord: buildKnotResultCardMarkup,
         onResultSelect: (knotId) => openKnotDetail(knotId, "browse")
     });
+    updateKnotResultStatus(appMain, records.length);
 }
 
 function getRigDifficultyRank(difficulty) {
@@ -3365,7 +3394,7 @@ function renderKnotDetailView(appMain) {
         usageContexts: getKnotUsageContexts(knot.id),
         parentLabel: hasReturnContext
             ? returnContext.label
-            : (fromBrowse ? browseConfig.title : "Knots"),
+            : (fromBrowse ? browseConfig.title : "Knots Guide"),
         onParent: hasReturnContext
             ? returnToDetailNavigationContext
             : () => showView(fromBrowse ? ROUTES.KNOT_BROWSE : ROUTES.KNOTS),

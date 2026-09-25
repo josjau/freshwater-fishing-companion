@@ -1262,12 +1262,12 @@ The current accent system is generally liked but the site needs additional restr
 Required evaluation:
 
 
-- **Guide-specific lightweight motifs** for Fish, Knots, Tackle, Technique, and Rig, using one coherent illustration style while allowing subject-specific imagery.
+- Prototype restrained **Dashboard Guide-card imagery** first for Fish Guide, Knots Guide, Tackle Guide, Technique Guide, and Rig Guide, using one coherent illustration style with subject-specific imagery.
 - Prefer small line-art, silhouette, watermark, or restrained decorative SVG treatments over photo-heavy or graphic-heavy layouts.
-- Apply decorative treatment most strongly to Dashboard Guide cards and Guide landing/browse identity areas; use it sparingly inside dense detail/instruction cards.
+- **Do not carry decorative imagery into Reference Knowledge cards, Guide landing/browse cards, or detail/instruction cards by default.** Those Knowledge surfaces remain content-first unless the final UX Audit later proves and separately approves a specific exception.
 - Preserve the existing semantic accent/border hierarchy unless a reviewed alternative is demonstrably better.
 - Decorative graphics must not reduce legibility, touch-target clarity, contrast, or content density.
-- Validate every decorative treatment in each supported Appearance variant; Forest Journal's dark-oriented presentation must not lose readability through low-contrast or excessively dark decorative layers.
+- Validate every approved Dashboard treatment in each supported Appearance variant; Forest Journal's dark-oriented presentation must not lose readability through low-contrast or excessively dark decorative layers.
 
 
 ### FCC brand mark / favicon
@@ -1298,15 +1298,15 @@ Requirements:
 ### Dashboard card visual appeal
 
 
-Dashboard cards were originally intended to carry modest visual character. The audit must prototype restrained treatments such as:
+Dashboard cards were originally intended to carry modest visual character. The final UX Audit must prototype representative domain imagery there before any broader decorative rollout, including options such as:
 
 
 - a low-contrast domain line-art motif or watermark;
-- a small domain badge/icon near the heading;
-- or a combined treatment using the existing accent plus a small badge and subtle opposite-corner motif.
+- a small representative illustration/badge near the heading;
+- or an accent + compact illustration treatment.
 
 
-The goal is **visual flair, not a graphic-heavy interface**. Card decoration must not become a separate information layer, inflate card height unnecessarily, or reduce scannability.
+The goal is **visual flair, not a graphic-heavy interface**. Dashboard decoration must not become a separate information layer, inflate card height unnecessarily, or reduce scannability. Current Reference Knowledge cards remain undecorated by default.
 
 
 ## 18. Full Desktop + Mobile Responsive Validation

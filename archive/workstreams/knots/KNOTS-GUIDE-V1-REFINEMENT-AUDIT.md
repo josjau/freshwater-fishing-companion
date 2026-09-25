@@ -46,9 +46,9 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP4 | Knot Detail Page | CLOSED / APPROVED / REFINEMENT ALLOWED |  
 | KG Audit — CP5 | Instructional Media | CLOSED / APPROVED / REFINEMENT ALLOWED — CP5.1-CP5.7 CLOSED |  
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
-| KG Audit — CP7 | JavaScript / Data Structural Audit | IN PROGRESS — CP7.1-CP7.3 CLOSED / APPROVED / REFINEMENT ALLOWED |  
-| KG Audit — CP8 | Implementation Scope Lock | NOT STARTED |  
-| KG Audit — CP9 | Implementation + Browser Validation | NOT STARTED |  
+| KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
+| KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 IN REVIEW — R4 NEXT |  
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -58,7 +58,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 1. **Chat IDs and audit checkpoints are independent.** FCC 49 / FCC 49B / FCC 49C / etc. identify chats only. KG Audit — CP# identifies stable work checkpoints and may span any number of chats.  
 2. **Fish Guide is the Guide-family baseline.** Reuse validated Fish structure/interaction where semantics match.  
 3. **Do not deliberately build known incompleteness.** If an approved requirement is known during Knots discovery, track and implement/test it in the Knots cycle unless explicitly deferred to a named owner.  
-4. **Guide-specific restrained visual identity/flair is an active requirement.** Knots Guide may use a restrained Knot-specific motif/graphic treatment without fixed Guide-specific coloration or graphic-heavy presentation. Exact treatment must be browser-tested.  
+4. **Decorative Guide-identity art is deferred to the final UX audit.** The current Knots build keeps the compact Guide identity without a decorative motif. Dashboard imagery may be prototyped later; do not extend it into Reference Knowledge cards by default.  
 5. **Approval-gate batching rule.** Ordinary discussion does not trigger documentation writes. Discussion findings stay in the active conversation until the user gives an explicit approval or explicitly requests an immediate documentation update. At approval, consolidate the approved decisions, discovered defects, build actions, browser experiments, validation results, deferrals, and exact resume point into one bounded documentation pass. If the user asks questions while approving or immediately before approval, answer those questions before starting the documentation gate.  
 6. **CP8 is a hard implementation traceability gate.** Production implementation may not begin until every open item has an explicit source owner/file scope and validation method.  
 7. **CP10 is a line-by-line closure gate.** Every BUILD REQUIRED / BUILD TEST REQUIRED item must be implemented + validated or explicitly re-dispositioned before Knots can close.
@@ -86,7 +86,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 - Do not assign Knots Guide a fixed Guide-specific color.  
 - Do not add generic duplicate navigation CTA merely to create activity above Search.  
 - Search follows the identity area.  
-- Knots Guide must not intentionally omit visual flair simply because Fish missed its implementation.
+- Decorative Knot-specific identity art is not required in the current Knots build; final UX Audit owns any later imagery decision.
 
 
 ### Approved Description + Retained Build Refinements
@@ -98,7 +98,7 @@ Approved beginner-facing description:
 > Learn the essential fishing knots for attaching line to your reel, tying on hooks and lures, connecting lines, and making loop connections.
 
 
-Refinement remains allowed. Exact restrained Knot-specific motif/graphic treatment, placement, responsive collapse/scale behavior, and comparable browser-tested presentation details remain **BUILD TEST REQUIRED** implementation refinements rather than unresolved CP1.1 discovery decisions.
+Refinement remains allowed. The current Knots build uses the compact Guide identity without decorative art. Any later Dashboard/Guide imagery treatment is deferred to the final UX Audit and requires its own visual review before implementation.
 
 
 ### Action Items
@@ -106,10 +106,10 @@ Refinement remains allowed. Exact restrained Knot-specific motif/graphic treatme
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |  
 |---|---|---|---|---|---|  
-| KG-CP1-001 | Use **Knots Guide** consistently for the user-facing Guide/page identity. | BUILD REQUIRED | Knots landing renderer/copy owner(s), exact files locked at CP8 | Browser review + text/search check | OPEN |  
-| KG-CP1-002 | Preserve Fish Guide compact Guide-identity structure where semantics match. | BUILD REQUIRED | Knots landing renderer/CSS owner(s), exact files locked at CP8 | Mobile/intermediate/desktop comparison | OPEN |  
-| KG-CP1-003 | Add restrained Knot-specific visual identity/flair without a fixed Guide color or graphic-heavy design. | BUILD TEST REQUIRED | Knots landing renderer/CSS/media as justified at CP8 | Browser A/B or bounded visual review across breakpoints | OPEN |  
-| KG-CP1-004 | Do not add unnecessary generic CTA above Search. | VERIFY ONLY | Knots landing renderer | Browser review | OPEN |
+| KG-CP1-001 | Use **Knots Guide** consistently for the user-facing Guide/page identity. | BUILD REQUIRED | `view-renderer.js` | Browser review + text/search check | OPEN |  
+| KG-CP1-002 | Preserve Fish Guide compact Guide-identity structure where semantics match. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/desktop comparison | OPEN |  
+| KG-CP1-003 | Keep the current Knots Guide identity free of decorative motif art; defer any later Dashboard/Guide imagery direction to the final UX Audit. | DEFERRED — FINAL UX AUDIT / CURRENT MOTIF REMOVAL | `view-renderer.js`, `forest-journal.css`; `V1-DESIGN-AUDIT.md` future owner | R4 removal check + future UX visual review | R4 REMOVE CURRENT MOTIF / FUTURE UX AUDIT |  
+| KG-CP1-004 | Do not add unnecessary generic CTA above Search. | VERIFY ONLY | `view-renderer.js` | Browser review | OPEN |
 
 
 ## CP1.2 — Search
@@ -149,13 +149,13 @@ Older Knot planning/approval text that requires a visible Search submit action o
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |  
 |---|---|---|---|---|---|  
-| KG-CP1-005 | Preserve current all-active-Knots deterministic scope/ranking semantics. | VERIFY ONLY | `search.js`, canonical Knot/task data consumed by search; exact implementation scope revalidated at CP8 | Deterministic query suite + browser spot checks | OPEN |  
-| KG-CP1-006 | Standardize landing Search label/helper/placeholder for the approved Knots scope. | BUILD REQUIRED | Knots landing renderer/copy owner(s), exact files locked at CP8 | Browser text/scope review | OPEN |  
-| KG-CP1-007 | Use live Search with no visible Search submit button while preserving Enter/mobile submit equivalence and one-click clear. | BUILD REQUIRED | Shared/Knots Search renderer/controller owner(s), exact files locked at CP8 | Keyboard/mobile/browser interaction review | OPEN |  
-| KG-CP1-008 | Use shared neutral Search styling and bring clear control to the current Guide touch-target/focus baseline. | BUILD REQUIRED | Shared Search CSS/renderer owner(s), exact files locked at CP8 | Responsive + keyboard/focus review | OPEN |  
-| KG-CP1-009 | Standardize empty-query, active-result status, and no-match behavior for Knots landing Search. | BUILD REQUIRED | Knots Search controller/renderer owner(s), exact files locked at CP8 | Browser state matrix + accessibility announcement check | OPEN |  
-| KG-CP1-010 | Preserve landing Search query + scroll through Search → Knot Detail → Parent. | BUILD REQUIRED | Knots route/state controller owner(s), exact files locked at CP8 | Navigation round-trip review | OPEN |  
-| KG-CP1-011 | Browser-test Knots desktop Search width rather than automatically copying Fish width. | BUILD TEST REQUIRED | Knots landing CSS/layout owner(s), exact files locked at CP8 | Mobile/intermediate/full-desktop comparison | OPEN |  
+| KG-CP1-005 | Preserve current all-active-Knots deterministic scope/ranking semantics. | VERIFY ONLY | `search.js`, `script.js` | Deterministic query suite + browser spot checks | OPEN |  
+| KG-CP1-006 | Standardize landing Search label/helper/placeholder for the approved Knots scope. | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser text/scope review | OPEN |  
+| KG-CP1-007 | Use live Search with no visible Search submit button while preserving Enter/mobile submit equivalence and one-click clear. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/mobile/browser interaction review | OPEN |  
+| KG-CP1-008 | Use shared neutral Search styling and bring clear control to the current Guide touch-target/focus baseline. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive + keyboard/focus review | OPEN |  
+| KG-CP1-009 | Standardize empty-query, active-result status, and no-match behavior for Knots landing Search. | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser state matrix + accessibility announcement check | OPEN |  
+| KG-CP1-010 | Preserve landing Search query + scroll through Search → Knot Detail → Parent. | BUILD REQUIRED | `script.js` | Navigation round-trip review | OPEN |  
+| KG-CP1-011 | Browser-test Knots desktop Search width rather than automatically copying Fish width. | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | OPEN |  
 | KG-CP1-012 | Reconcile older visible-submit/**Search all Knots** documentation against the newer approved Guide-family Search standard without rewriting historical evidence. | DOC UPDATE | `KNOT-GUIDE.md` current owner + audit traceability | Readback against approved CP1.2 wording | CLOSED / PASS |
 
 
@@ -181,9 +181,9 @@ Older Knot planning/approval text that requires a visible Search submit action o
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-015 | Add dedicated **Get Your Reel Ready** special workflow card immediately after Search and launch the existing Reel Setup path. | BUILD REQUIRED | Knots landing renderer/controller owner(s), exact files locked at CP8 | Browser interaction + navigation-path review | OPEN |
-| KG-CP1-016 | Remove duplicate landing-level **Attach Line to a Reel** workflow entry; keep Knot discovery and Reel Setup ownership distinct. | BUILD REQUIRED | Knots landing/task renderer + task-definition usage, exact files locked at CP8 | Landing task inventory + navigation review | OPEN |
-| KG-CP1-019 | Inherit the Fish **Compare Similar Fish** workflow-card geometry/responsive behavior for **Get Your Reel Ready** and verify it across breakpoints; redesign only if a concrete Knots-specific defect appears. | VERIFY ONLY | Knots landing CSS/layout owner(s), exact files locked at CP8 | Mobile/intermediate/full-desktop comparison | OPEN |
+| KG-CP1-015 | Add dedicated **Get Your Reel Ready** special workflow card immediately after Search and launch the existing Reel Setup path. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Browser interaction + navigation-path review | OPEN |
+| KG-CP1-016 | Remove duplicate landing-level **Attach Line to a Reel** workflow entry; keep Knot discovery and Reel Setup ownership distinct. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing task inventory + navigation review | OPEN |
+| KG-CP1-019 | Inherit the Fish **Compare Similar Fish** workflow-card geometry/responsive behavior for **Get Your Reel Ready** and verify it across breakpoints; redesign only if a concrete Knots-specific defect appears. | VERIFY ONLY | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | OPEN |
 
 
 ## CP1.4 — Core Knots — Learn These First
@@ -200,7 +200,7 @@ A standalone **Core Knots — Learn These First** major landing section is not r
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-018 | Remove the standalone Core major landing section while preserving Core access through the task section and All Knots collection. | BUILD REQUIRED | Knots landing renderer/copy owner(s), exact files locked at CP8 | Landing hierarchy/browser review | OPEN |
+| KG-CP1-018 | Remove the standalone Core major landing section while preserving Core access through the task section and All Knots collection. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing hierarchy/browser review | OPEN |
 
 
 ## CP1.5 — What Are You Trying to Do?
@@ -229,7 +229,7 @@ This section is for task/learning discovery. Reel setup is not duplicated here b
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-017 | Build the approved four-entry **What Are You Trying to Do?** task set and preserve the task-to-Knot/collection semantics. | BUILD REQUIRED | Knots landing/task renderer + canonical task definitions, exact files locked at CP8 | Task matrix + browser navigation review | OPEN |
+| KG-CP1-017 | Build the approved four-entry **What Are You Trying to Do?** task set and preserve the task-to-Knot/collection semantics. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Task matrix + browser navigation review | OPEN |
 
 
 ## CP1.6 — All Knots
@@ -253,8 +253,8 @@ This section is for task/learning discovery. Reel setup is not duplicated here b
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-013 | Apply the validated Fish Guide `Browse →` collection-card grammar to Knots collection cards and preserve responsive left-aligned wrap behavior. | BUILD REQUIRED | Knots landing renderer/CSS owner(s), exact files locked at CP8 | Mobile/intermediate/full-desktop card review + keyboard/touch check | OPEN |
-| KG-CP1-020 | Implement **All Knots — Browse →** as an ordinary Fish-baseline browse card that opens the complete active Knot library; do not add a separate section-level Browse All action. | BUILD REQUIRED | Knots landing renderer/controller owner(s), exact files locked at CP8 | Complete-library navigation + responsive browser review | OPEN |
+| KG-CP1-013 | Apply the validated Fish Guide `Browse →` collection-card grammar to Knots collection cards and preserve responsive left-aligned wrap behavior. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop card review + keyboard/touch check | OPEN |
+| KG-CP1-020 | Implement **All Knots — Browse →** as an ordinary Fish-baseline browse card that opens the complete active Knot library; do not add a separate section-level Browse All action. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Complete-library navigation + responsive browser review | OPEN |
 
 
 ## CP1.7 — Advanced Knots Resolution
@@ -271,7 +271,7 @@ The decision gate is resolved: **remove the Advanced Knots collection/card from 
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-014 | Remove **Advanced Knots** from the Version 1 landing page while retaining `Advanced` in the difficulty taxonomy/future canonical support. | BUILD REQUIRED | Knot collection configuration + Knots landing renderer/controller owner(s), exact files locked at CP8 | Configuration check + landing browser validation + taxonomy regression check | OPEN |
+| KG-CP1-014 | Remove **Advanced Knots** from the Version 1 landing page while retaining `Advanced` in the difficulty taxonomy/future canonical support. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js` | Configuration check + landing browser validation + taxonomy regression check | OPEN |
 
 
 ## CP1.8 — Whole-Page Hierarchy / Density / Accent Review
@@ -290,7 +290,7 @@ The decision gate is resolved: **remove the Advanced Knots collection/card from 
 5. **All Knots** — **All Knots — Browse →** plus **Core Knots — Browse →**, **Beginner Knots — Browse →**, and **Intermediate Knots — Browse →** cards
 
 
-The hierarchy is approved with refinement allowed. Exact responsive spacing, card width/span, visual density, standard-card accent rotation, workflow accent implementation, and restrained Knot-specific motif remain implementation/browser-test concerns; they do not reopen the approved information hierarchy unless testing exposes a material usability defect.
+The hierarchy is approved with refinement allowed. Exact responsive spacing, card width/span, visual density, standard-card accent rotation, and workflow accent implementation remain implementation/browser-test concerns. Decorative Guide imagery is deferred to the final UX Audit and does not remain a CP9.2 closure requirement.
 
 
 ### Action Items
@@ -298,7 +298,7 @@ The hierarchy is approved with refinement allowed. Exact responsive spacing, car
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP1-021 | Validate the complete approved landing hierarchy, density, accent sequencing, workflow distinction, motif, and responsive behavior as one page. | BUILD TEST REQUIRED | Knots landing renderer/CSS/media owner(s), exact files locked at CP8 | Mobile/intermediate/full-desktop whole-page browser review | OPEN |
+| KG-CP1-021 | Validate the complete approved landing hierarchy, density, accent sequencing, workflow distinction, and responsive behavior as one page; decorative motif is deferred. | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop whole-page browser review | OPEN |
 
 
 # KG Audit — CP2 — Landing Interaction + Responsive Behavior
@@ -325,12 +325,12 @@ The hierarchy is approved with refinement allowed. Exact responsive spacing, car
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP2-001 | Apply Fish-baseline whole-card interaction, focus/touch/hover behavior, action treatment, and responsive wrapping to equivalent Knots landing cards. | BUILD REQUIRED / VERIFY | Knots landing renderer/CSS owner(s), exact files locked at CP8 | Keyboard/touch + mobile/intermediate/desktop browser review | OPEN |
-| KG-CP2-002 | Treat **Get Your Reel Ready** as the direct Knots equivalent of **Compare Similar Fish**, including reserved workflow styling and **Start Setup →**. | BUILD REQUIRED | Knots landing renderer/CSS/controller owner(s), exact files locked at CP8 | Visual/interaction comparison against Fish baseline + workflow launch | OPEN |
-| KG-CP2-003 | Implement **All Knots — Browse →** as a normal Fish-baseline browse card and remove/supersede the separate **Browse All →** section-level treatment. | BUILD REQUIRED | Knots landing renderer/controller owner(s), exact files locked at CP8 | Landing hierarchy + complete-library navigation | OPEN |
-| KG-CP2-004 | Preserve priority styling for **Core Knots** and for the three beginner-important task cards: Learn Core Knots, Tie On a Hook/Swivel/Lure, Connect Two Lines/Add a Leader. | BUILD REQUIRED | Knots landing renderer/CSS owner(s), exact files locked at CP8 | Whole-page hierarchy review across breakpoints | OPEN |
-| KG-CP2-005 | Use **Learn →** for Learn Core Knots while keeping **Browse →** for Core Knots collection browsing. | BUILD REQUIRED | Knots landing renderer/copy/controller owner(s), exact files locked at CP8 | Action semantics + navigation review | OPEN |
-| KG-CP2-006 | Verify Fish-inherited responsive geometry/reflow works for Knots; diverge only for a documented concrete usability defect. | VERIFY ONLY / BUILD TEST IF DEFECT FOUND | Knots landing CSS/layout owner(s), exact files locked at CP8 | Mobile/intermediate/full-desktop comparison | OPEN |
+| KG-CP2-001 | Apply Fish-baseline whole-card interaction, focus/touch/hover behavior, action treatment, and responsive wrapping to equivalent Knots landing cards. | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Keyboard/touch + mobile/intermediate/desktop browser review | OPEN |
+| KG-CP2-002 | Treat **Get Your Reel Ready** as the direct Knots equivalent of **Compare Similar Fish**, including reserved workflow styling and **Start Setup →**. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Visual/interaction comparison against Fish baseline + workflow launch | OPEN |
+| KG-CP2-003 | Implement **All Knots — Browse →** as a normal Fish-baseline browse card and remove/supersede the separate **Browse All →** section-level treatment. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Landing hierarchy + complete-library navigation | OPEN |
+| KG-CP2-004 | Preserve priority styling for **Core Knots** and for the three beginner-important task cards: Learn Core Knots, Tie On a Hook/Swivel/Lure, Connect Two Lines/Add a Leader. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Whole-page hierarchy review across breakpoints | OPEN |
+| KG-CP2-005 | Use **Learn →** for Learn Core Knots while keeping **Browse →** for Core Knots collection browsing. | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Action semantics + navigation review | OPEN |
+| KG-CP2-006 | Verify Fish-inherited responsive geometry/reflow works for Knots; diverge only for a documented concrete usability defect. | VERIFY ONLY / BUILD TEST IF DEFECT FOUND | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | OPEN |
 
 
 # KG Audit — CP3 — Browse / Search Results
@@ -361,13 +361,13 @@ The hierarchy is approved with refinement allowed. Exact responsive spacing, car
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP3-001 | Use one shared Knot result-card architecture and approved classification/name/`View Knot →`/alias/summary composition across landing Search, browse collections, and task results. | BUILD REQUIRED | Knot result renderer + shared result-card CSS owner(s), exact files locked at CP8 | Landing/browse/task card comparison + keyboard/touch review | OPEN |
-| KG-CP3-002 | Keep result cards compact: Core+Difficulty or Difficulty classification, optional alias, summary; no extra connection/line/Best For metadata and no CP3-required media. | BUILD REQUIRED / VERIFY | Knot result renderer/data consumption, exact files locked at CP8 | Content inventory across all 10 active Knots | OPEN |
-| KG-CP3-003 | Bring Knot browse/task Search to the Fish live scoped baseline with `Knots Guide` parent, `Search Knots`, concise scope help, no visible submit, clear behavior, and no scope widening. | BUILD REQUIRED | Knot browse controller + shared Search renderer/CSS, exact files locked at CP8 | Collection/task Search state matrix + keyboard/mobile review | OPEN |
-| KG-CP3-004 | Preserve approved empty-query ordering (A–Z collections; curated Core; task-definition order), relevance-ranked typed Search, and route Learn Core Knots into the existing Core collection. | BUILD REQUIRED / VERIFY | `script.js`, `search.js`, `data/knot-guidance.js`, exact scope locked at CP8 | Deterministic ordering/query suite + navigation review | OPEN |
-| KG-CP3-005 | Use Fish result-grid density (1 column mobile / 2 columns maximum thereafter) and rotating standard accents with Core priority treatment independent of accent identity. | BUILD REQUIRED / VERIFY | Knot/shared result CSS, exact files locked at CP8 | Mobile/intermediate/full-desktop visual review | OPEN |
-| KG-CP3-006 | Preserve active collection/task + query + scroll through result → Knot Detail → Parent. | BUILD REQUIRED | Knot browse/detail navigation state controller, exact files locked at CP8 | Round-trip state restoration browser test | OPEN |
-| KG-CP3-007 | Use Knot-specific result status/no-match wording, including `N knots found` and scoped `No knots found in <scope>. Try another search.` | BUILD REQUIRED | Shared result renderer/config + Knot browse/search controller, exact files locked at CP8 | Search state matrix + accessibility announcement check | OPEN |
+| KG-CP3-001 | Use one shared Knot result-card architecture and approved classification/name/`View Knot →`/alias/summary composition across landing Search, browse collections, and task results. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Landing/browse/task card comparison + keyboard/touch review | OPEN |
+| KG-CP3-002 | Keep result cards compact: Core+Difficulty or Difficulty classification, optional alias, summary; no extra connection/line/Best For metadata and no CP3-required media. | BUILD REQUIRED / VERIFY | `view-renderer.js` | Content inventory across all 10 active Knots | OPEN |
+| KG-CP3-003 | Bring Knot browse/task Search to the Fish live scoped baseline with `Knots Guide` parent, `Search Knots`, concise scope help, no visible submit, clear behavior, and no scope widening. | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Collection/task Search state matrix + keyboard/mobile review | OPEN |
+| KG-CP3-004 | Preserve approved empty-query ordering (A–Z collections; curated Core; task-definition order), relevance-ranked typed Search, and route Learn Core Knots into the existing Core collection. | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, `search.js`, `script.js` | Deterministic ordering/query suite + navigation review | OPEN |
+| KG-CP3-005 | Use Fish result-grid density (1 column mobile / 2 columns maximum thereafter) and rotating standard accents with Core priority treatment independent of accent identity. | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop visual review | OPEN |
+| KG-CP3-006 | Preserve active collection/task + query + scroll through result → Knot Detail → Parent. | BUILD REQUIRED | `script.js` | Round-trip state restoration browser test | OPEN |
+| KG-CP3-007 | Use Knot-specific result status/no-match wording, including `N knots found` and scoped `No knots found in <scope>. Try another search.` | BUILD REQUIRED | `view-renderer.js`, `script.js` | Search state matrix + accessibility announcement check | OPEN |
 
 
 # KG Audit — CP4 — Knot Detail Page
@@ -408,16 +408,16 @@ The hierarchy is approved with refinement allowed. Exact responsive spacing, car
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP4-001 | Apply the shared adjacent-`ⓘ` Reference convention to Knot Detail Line Compatibility; only the icon opens Reference, text keeps its own semantics, hit area is enlarged without visual detachment/overlap, and focus returns after close. | BUILD REQUIRED / VERIFY | Knot detail renderer + shared Reference-control CSS/controller owner(s), exact files locked at CP8 | Keyboard/touch + mobile/intermediate/desktop interaction review | OPEN |
-| KG-CP4-002 | Browser-test the Line Type Reference surface (contextual popover vs current dedicated detail route) while preserving the approved `ⓘ` trigger convention and full return context. | BUILD TEST REQUIRED | Knot/Line Type reference navigation + Reference surface owner(s), exact files locked at CP8 | Bounded A/B browser review + round-trip state/focus test | OPEN |
-| KG-CP4-003 | Implement approved Knot Detail identity order: origin navigation → Core+Difficulty/Difficulty classification → Knot name → summary → optional alias; classification remains non-interactive and no fixed Knots color is introduced. | BUILD REQUIRED | Knot detail renderer/CSS owner(s), exact files locked at CP8 | All-10-Knot identity inventory + responsive browser review | OPEN |
-| KG-CP4-004 | Build **ABOUT THIS KNOT** as independent collapsed Fish-baseline disclosures for Best For, Line Compatibility, and Where You'll Use It using full-row `▾`/`▴` disclosure controls. | BUILD REQUIRED | Knot detail renderer/disclosure controller/CSS owner(s), exact files locked at CP8 | Keyboard/touch + independent-state + responsive review | OPEN |
-| KG-CP4-005 | Keep **HOW TO TIE IT** always visible with authoritative numbered `tyingSteps[]` and an instructional-media area whose exact media behavior remains owned by CP5. | BUILD REQUIRED | Knot detail renderer + instructional layout owner(s), exact files locked at CP8 | All-10-Knot step inventory + mobile/desktop instructional-flow review | OPEN |
-| KG-CP4-006 | Keep **CHECK YOUR KNOT** always visible immediately after tying steps and render `finalChecks[]` as primary verification guidance. | BUILD REQUIRED | Knot detail renderer/data owner(s), exact files locked at CP8 | All-10-Knot final-check inventory + browser review | OPEN |
-| KG-CP4-007 | Build **MORE HELP** independent collapsed disclosures for Common Mistakes (`commonMistakes[]`) and When to Choose Another Knot (`limitations[]`). | BUILD REQUIRED | Knot detail renderer/disclosure owner(s), exact files locked at CP8 | Content mapping + disclosure keyboard/touch review | OPEN |
-| KG-CP4-008 | Preserve structured **Where You'll Use It** navigation with `→` task/workflow/Rig actions; route reel-spool contexts to **Get Your Reel Ready →** rather than resurrecting Attach Line to a Reel as a competing task. | BUILD REQUIRED / VERIFY | Knot usage-context/relationship renderer + navigation controller, exact files locked at CP8 | Relationship matrix + navigation round-trip review | OPEN |
-| KG-CP4-009 | Keep **Sources & References** collapsed by default; use actual-origin parent navigation and do not add a generic duplicate bottom Back to Knots action. | BUILD REQUIRED / VERIFY | Knot detail renderer/navigation state owner(s), exact files locked at CP8 | Origin matrix + source-disclosure + keyboard/browser review | OPEN |
-| KG-CP4-010 | Browser-test final Knot Detail instructional geometry after CP5; do not pre-lock desktop to a two-column layout. Preserve clear mobile single-flow order and no horizontal scrolling. | BUILD TEST REQUIRED | Knot detail/instructional media CSS/layout owner(s), exact files locked at CP8 | Mobile/intermediate/full-desktop visual comparison after CP5 | OPEN |
+| KG-CP4-001 | Apply the shared adjacent-`ⓘ` Reference convention to Knot Detail Line Compatibility; only the icon opens Reference, text keeps its own semantics, hit area is enlarged without visual detachment/overlap, and focus returns after close. | BUILD REQUIRED / VERIFY | `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/touch + mobile/intermediate/desktop interaction review | OPEN |
+| KG-CP4-002 | Browser-test the Line Type Reference surface (contextual popover vs current dedicated detail route) while preserving the approved `ⓘ` trigger convention and full return context. | BUILD TEST REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Bounded A/B browser review + round-trip state/focus test | OPEN |
+| KG-CP4-003 | Implement approved Knot Detail identity order: origin navigation → Core+Difficulty/Difficulty classification → Knot name → summary → optional alias; classification remains non-interactive and no fixed Knots color is introduced. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | All-10-Knot identity inventory + responsive browser review | OPEN |
+| KG-CP4-004 | Build **ABOUT THIS KNOT** as independent collapsed Fish-baseline disclosures for Best For, Line Compatibility, and Where You'll Use It using full-row `▾`/`▴` disclosure controls. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Keyboard/touch + independent-state + responsive review | OPEN |
+| KG-CP4-005 | Keep **HOW TO TIE IT** always visible with authoritative numbered `tyingSteps[]` and an instructional-media area whose exact media behavior remains owned by CP5. | BUILD REQUIRED | `view-renderer.js`, `knot-media-renderer.js`, `forest-journal.css` | All-10-Knot step inventory + mobile/desktop instructional-flow review | OPEN |
+| KG-CP4-006 | Keep **CHECK YOUR KNOT** always visible immediately after tying steps and render `finalChecks[]` as primary verification guidance. | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | All-10-Knot final-check inventory + browser review | OPEN |
+| KG-CP4-007 | Build **MORE HELP** independent collapsed disclosures for Common Mistakes (`commonMistakes[]`) and When to Choose Another Knot (`limitations[]`). | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Content mapping + disclosure keyboard/touch review | OPEN |
+| KG-CP4-008 | Preserve structured **Where You'll Use It** navigation with `→` task/workflow/Rig actions; route reel-spool contexts to **Get Your Reel Ready →** rather than resurrecting Attach Line to a Reel as a competing task. | BUILD REQUIRED / VERIFY | `view-renderer.js`, `script.js` | Relationship matrix + navigation round-trip review | OPEN |
+| KG-CP4-009 | Keep **Sources & References** collapsed by default; use actual-origin parent navigation and do not add a generic duplicate bottom Back to Knots action. | BUILD REQUIRED / VERIFY | `view-renderer.js`, `script.js` | Origin matrix + source-disclosure + keyboard/browser review | OPEN |
+| KG-CP4-010 | Browser-test final Knot Detail instructional geometry after CP5; do not pre-lock desktop to a two-column layout. Preserve clear mobile single-flow order and no horizontal scrolling. | BUILD TEST REQUIRED | `view-renderer.js`, `knot-media-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop visual comparison after CP5 | OPEN |
 
 
 ## CP4.2 — Detail Identity / Header
@@ -517,10 +517,10 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP5-001 | Preserve all current verified external instructional destinations as the known-working baseline until a replacement treatment is explicitly validated and approved. | VERIFY ONLY | Knot instructional media/reference-link owners, exact files locked at CP8 | All-10-Knot media inventory + browser link verification | OPEN |
-| KG-CP5-002 | Build a bounded FCC-owned instructional prototype for Arbor, Improved Clinch, Palomar, and Double Uni that proves accurate static states plus user-controlled step-through presentation. | BUILD TEST REQUIRED | Knot media assets + media renderer/controller/CSS, exact files locked at CP8 | Technical geometry review + mobile/intermediate/desktop browser review | OPEN |
-| KG-CP5-003 | Keep `tyingSteps[]` authoritative and ensure candidate visuals synchronize to canonical steps without becoming a duplicate independent instruction source. | BUILD TEST REQUIRED / VERIFY | Knot canonical data + instructional renderer/media mapping, exact files locked at CP8 | Step-by-step content/visual cross-check across Core prototype | OPEN |
-| KG-CP5-004 | Do not require transition animation for Version 1; if motion is later tested, require user control, no autoplay, reduced-motion safety, and a clear static final state. | VERIFY ONLY / BUILD TEST IF MOTION USED | Knot media renderer/CSS/accessibility owner(s), exact files locked at CP8 | Motion/reduced-motion/accessibility browser matrix if motion is implemented | OPEN |
+| KG-CP5-001 | Preserve all current verified external instructional destinations as the known-working baseline until a replacement treatment is explicitly validated and approved. | VERIFY ONLY | `data/media.js` (verify existing), `knot-media-renderer.js` | All-10-Knot media inventory + browser link verification | OPEN |
+| KG-CP5-002 | Build a bounded FCC-owned instructional prototype for Arbor, Improved Clinch, Palomar, and Double Uni that proves accurate static states plus user-controlled step-through presentation. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Technical geometry review + mobile/intermediate/desktop browser review | OPEN |
+| KG-CP5-003 | Keep `tyingSteps[]` authoritative and ensure candidate visuals synchronize to canonical steps without becoming a duplicate independent instruction source. | BUILD TEST REQUIRED / VERIFY | `data/knots.js` (instruction authority), `knot-media-renderer.js`, `view-renderer.js` | Step-by-step content/visual cross-check across Core prototype | OPEN |
+| KG-CP5-004 | Do not require transition animation for Version 1; if motion is later tested, require user control, no autoplay, reduced-motion safety, and a clear static final state. | VERIFY ONLY / BUILD TEST IF MOTION USED | `knot-media-renderer.js`, `forest-journal.css` | Motion/reduced-motion/accessibility browser matrix if motion is implemented | OPEN |
 
 
 ## CP5.2 — FCC Diagram / Step-Through Model
@@ -549,11 +549,11 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP5-005 | Prototype static instructional states synchronized to canonical `tyingSteps[]`, using one visual state per canonical step as the default without making 1:1 a permanent schema constraint. | BUILD TEST REQUIRED | Knot canonical data + instructional media mapping/renderer, exact files locked at CP8 | Four-Core-Knot step/state cross-check + geometry review | OPEN |
-| KG-CP5-006 | Prototype the user-controlled viewer with current visual, Step N of M, canonical current-step text, Previous/Next or equivalent controls, while retaining the complete numbered tying sequence outside the viewer. | BUILD TEST REQUIRED | Knot detail instructional renderer/controller/CSS, exact files locked at CP8 | Keyboard/touch + text fallback + mobile/intermediate/desktop browser review | OPEN |
-| KG-CP5-007 | Use the final canonical tying step as the normal completed-Knot visual state; do not add an artificial media-only Finished Knot step before Check Your Knot. | BUILD TEST REQUIRED / VERIFY | Knot canonical step data + instructional renderer/media mapping, exact files locked at CP8 | Core prototype final-state + Check Your Knot flow review | OPEN |
-| KG-CP5-008 | Preserve the current string-array `tyingSteps[]` model and derived numbering; do not add stable step IDs, step objects, or a separate media step count without demonstrated prototype need. | VERIFY ONLY | Knot canonical schema/data + renderer, exact files locked at CP8 | Schema/data diff + prototype mapping review | OPEN |
-| KG-CP5-009 | Use SVG-based static instructional states as the candidate visual unit while deferring exact file/state packaging to CP5.4. | BUILD TEST REQUIRED | Knot instructional media assets/renderer, exact files locked at CP8 | SVG fidelity/readability/maintainability review during Core prototype | OPEN |
+| KG-CP5-005 | Prototype static instructional states synchronized to canonical `tyingSteps[]`, using one visual state per canonical step as the default without making 1:1 a permanent schema constraint. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Four-Core-Knot step/state cross-check + geometry review | OPEN |
+| KG-CP5-006 | Prototype the user-controlled viewer with current visual, Step N of M, canonical current-step text, Previous/Next or equivalent controls, while retaining the complete numbered tying sequence outside the viewer. | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Keyboard/touch + text fallback + mobile/intermediate/desktop browser review | OPEN |
+| KG-CP5-007 | Use the final canonical tying step as the normal completed-Knot visual state; do not add an artificial media-only Finished Knot step before Check Your Knot. | BUILD TEST REQUIRED / VERIFY | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Core prototype final-state + Check Your Knot flow review | OPEN |
+| KG-CP5-008 | Preserve the current string-array `tyingSteps[]` model and derived numbering; do not add stable step IDs, step objects, or a separate media step count without demonstrated prototype need. | VERIFY ONLY | `data/knots.js`, `tools/validate_repository_integrity.js` | Schema/data diff + prototype mapping review | OPEN |
+| KG-CP5-009 | Use SVG-based static instructional states as the candidate visual unit while deferring exact file/state packaging to CP5.4. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | SVG fidelity/readability/maintainability review during Core prototype | OPEN |
 
 
 ## CP5.3 — Visual Grammar
@@ -584,12 +584,12 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP5-010 | Apply the approved phone-first vector line grammar; continuous line keeps one underlying stroke treatment with standing/tag distinction supplied by labels/end cues rather than false material changes. | BUILD TEST REQUIRED | Knot SVG assets + instructional media CSS/renderer, exact files locked at CP8 | Four-Core-Knot phone readability + visual-consistency review | OPEN |
-| KG-CP5-011 | Use a colorblind-friendly instructional palette whenever separate lines use color, and preserve line identity through non-color cues so meaning survives grayscale/color-vision-deficiency/theme changes. | BUILD TEST REQUIRED | Knot SVG assets + theme/accessibility CSS, exact files locked at CP8 | Color-vision/grayscale + light/dark theme review | OPEN |
-| KG-CP5-012 | Make every meaningful over/under crossing and referenced loop/opening unambiguous at phone size; ambiguity is a prototype failure. | BUILD TEST REQUIRED | Knot SVG geometry, exact files locked at CP8 | Crossing/loop geometry checklist across Core prototype | OPEN |
-| KG-CP5-013 | Standardize restrained action cues, simplified recognizable hardware, and default no-hands treatment; add complexity only when needed for accurate instruction. | BUILD TEST REQUIRED | Knot SVG assets + visual grammar helpers, exact files locked at CP8 | Core action-cue/hardware clarity review | OPEN |
-| KG-CP5-014 | Keep visual labels sparse and do not duplicate canonical tying instructions inside SVG states; `tyingSteps[]` remains the textual authority. | BUILD TEST REQUIRED / VERIFY | Knot SVG assets + instructional renderer, exact files locked at CP8 | SVG text/content inventory + step/visual cross-check | OPEN |
-| KG-CP5-015 | Validate theme-aware, phone-first, orientation-flexible presentation and technical geometry accuracy; no essential desktop-only information and no pinch-zoom dependency. | BUILD TEST REQUIRED | Knot SVG assets + instructional viewer/CSS, exact files locked at CP8 | Mobile/intermediate/desktop + theme/accessibility + geometry review | OPEN |
+| KG-CP5-010 | Apply the approved phone-first vector line grammar; continuous line keeps one underlying stroke treatment with standing/tag distinction supplied by labels/end cues rather than false material changes. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Four-Core-Knot phone readability + visual-consistency review | OPEN |
+| KG-CP5-011 | Use a colorblind-friendly instructional palette whenever separate lines use color, and preserve line identity through non-color cues so meaning survives grayscale/color-vision-deficiency/theme changes. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Color-vision/grayscale + light/dark theme review | OPEN |
+| KG-CP5-012 | Make every meaningful over/under crossing and referenced loop/opening unambiguous at phone size; ambiguity is a prototype failure. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Crossing/loop geometry checklist across Core prototype | OPEN |
+| KG-CP5-013 | Standardize restrained action cues, simplified recognizable hardware, and default no-hands treatment; add complexity only when needed for accurate instruction. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Core action-cue/hardware clarity review | OPEN |
+| KG-CP5-014 | Keep visual labels sparse and do not duplicate canonical tying instructions inside SVG states; `tyingSteps[]` remains the textual authority. | BUILD TEST REQUIRED / VERIFY | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | SVG text/content inventory + step/visual cross-check | OPEN |
+| KG-CP5-015 | Validate theme-aware, phone-first, orientation-flexible presentation and technical geometry accuracy; no essential desktop-only information and no pinch-zoom dependency. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Mobile/intermediate/desktop + theme/accessibility + geometry review | OPEN |
 
 
 ## CP5.4 — Production + Technical Validation Workflow
@@ -618,13 +618,13 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP5-016 | Before custom drawing each Core prototype Knot, search for technically suitable public-domain/open-license instructional material and verify reuse/modification rights at the asset/source level. | BUILD TEST REQUIRED / VERIFY | Knot media research/provenance owner(s), exact files locked at CP8 | Asset-level rights/provenance record + suitability review for all four Core Knots | OPEN |
-| KG-CP5-017 | Accept reusable material only when it also matches canonical method/`tyingSteps[]`, geometry, phone readability, and CP5.3 visual/accessibility grammar; otherwise use custom FCC SVG fallback. | BUILD TEST REQUIRED | Knot media research + canonical step/media mapping, exact files locked at CP8 | Four-Core-Knot rights + technical suitability matrix | OPEN |
-| KG-CP5-018 | For custom states, deliberately construct and technically validate SVG geometry from verified Knot-method facts; AI/tool assistance may author SVG but generated imagery cannot establish/validate geometry or be traced into production states. | BUILD TEST REQUIRED / VERIFY | Knot SVG assets + technical validation owner(s), exact files locked at CP8 | Geometry provenance + state-by-state technical review | OPEN |
-| KG-CP5-019 | Use one inspectable SVG per instructional state as the prototype packaging default while avoiding premature dynamic/canvas/layer-animation architecture; retain packaging as refinement allowed after evidence. | BUILD TEST REQUIRED | Knot media assets/loader/renderer, exact files locked at CP8 | File/loader simplicity + diffability/maintainability review | OPEN |
-| KG-CP5-020 | Run state validation covering source/step alignment, crossings, wraps, threading, line identity, direction cues, hardware, phone readability, color independence, and final-state correctness. | BUILD TEST REQUIRED | Knot media assets + validation checklist owner(s), exact files locked at CP8 | Completed per-state checklist across four-Core prototype | OPEN |
-| KG-CP5-021 | Run sequence and finished-Knot validation; reject/rework unexplained transitions or final geometry that does not match the verified method. | BUILD TEST REQUIRED | Knot canonical steps + media sequence reviewer(s), exact files locked at CP8 | Full sequence walkthrough + final-state comparison for each prototype Knot | OPEN |
-| KG-CP5-022 | Prototype in order Improved Clinch → Palomar → Double Uni → Arbor and require the complete four-Knot set to pass before proposing FCC-owned media for primary-treatment promotion. | BUILD TEST REQUIRED | Knot prototype implementation/validation owner(s), exact files locked at CP8 | Progressive gate results + four-Knot acceptance summary | OPEN |
+| KG-CP5-016 | Before custom drawing each Core prototype Knot, search for technically suitable public-domain/open-license instructional material and verify reuse/modification rights at the asset/source level. | BUILD TEST REQUIRED / VERIFY | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Asset-level rights/provenance record + suitability review for all four Core Knots | OPEN |
+| KG-CP5-017 | Accept reusable material only when it also matches canonical method/`tyingSteps[]`, geometry, phone readability, and CP5.3 visual/accessibility grammar; otherwise use custom FCC SVG fallback. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Four-Core-Knot rights + technical suitability matrix | OPEN |
+| KG-CP5-018 | For custom states, deliberately construct and technically validate SVG geometry from verified Knot-method facts; AI/tool assistance may author SVG but generated imagery cannot establish/validate geometry or be traced into production states. | BUILD TEST REQUIRED / VERIFY | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Geometry provenance + state-by-state technical review | OPEN |
+| KG-CP5-019 | Use one inspectable SVG per instructional state as the prototype packaging default while avoiding premature dynamic/canvas/layer-animation architecture; retain packaging as refinement allowed after evidence. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | File/loader simplicity + diffability/maintainability review | OPEN |
+| KG-CP5-020 | Run state validation covering source/step alignment, crossings, wraps, threading, line identity, direction cues, hardware, phone readability, color independence, and final-state correctness. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Completed per-state checklist across four-Core prototype | OPEN |
+| KG-CP5-021 | Run sequence and finished-Knot validation; reject/rework unexplained transitions or final geometry that does not match the verified method. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Full sequence walkthrough + final-state comparison for each prototype Knot | OPEN |
+| KG-CP5-022 | Prototype in order Improved Clinch → Palomar → Double Uni → Arbor and require the complete four-Knot set to pass before proposing FCC-owned media for primary-treatment promotion. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Progressive gate results + four-Knot acceptance summary | OPEN |
 
 
 ## CP5.5 — External Supplemental Instruction
@@ -650,12 +650,12 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP5-023 | Keep the selected external instructional destination within HOW TO TIE IT as the protected established visual help through prototype/replacement validation; after a proven replacement, continued retention/placement is governed by CP5.7 evidence rather than being permanently mandatory. | BUILD REQUIRED / VERIFY | Knot detail instructional renderer + external media/reference mapping, exact files locked at CP8 | All-10-Knot instructional-placement inventory + browser review | OPEN |
-| KG-CP5-024 | Use medium-specific external action labels, restrained provider attribution, and `↗` external-navigation semantics while reserving `→` for FCC-internal navigation. | BUILD REQUIRED / VERIFY | Knot instructional renderer/copy + shared navigation affordance CSS, exact files locked at CP8 | All-10-Knot label/provider/affordance review + keyboard/touch check | OPEN |
-| KG-CP5-025 | Link third-party supplemental media rather than copying/rehosting/extracting/reproducing it unless CP5.4 separately verifies reuse rights and local-incorporation suitability. | VERIFY ONLY | Knot media/reference owners + media assets, exact files locked at CP8 | Rights/provenance + asset/link inventory | OPEN |
-| KG-CP5-026 | Use one preferred supplemental external instructional destination per Knot by default; require materially distinct teaching value for any additional destination. | VERIFY ONLY | Knot instructional reference data, exact files locked at CP8 | All-10-Knot destination-count + rationale inventory | OPEN |
-| KG-CP5-027 | Make external-resource failure non-blocking and verify every active instructional destination while preserving canonical text/local-media usability. | VERIFY ONLY / BUILD REQUIRED IF DEFECT FOUND | Knot instructional link data + renderer, exact files locked at CP8 | All-10-Knot external link verification + failure-state review | OPEN |
-| KG-CP5-028 | Preserve Knot/detail context across external instruction and browser-test exact More visual instruction placement relative to the full numbered steps; retain viewer state where practical. | BUILD TEST REQUIRED | Knot detail/navigation state + instructional layout owner(s), exact files locked at CP8 | External round-trip state test + mobile/intermediate/desktop teaching-flow comparison | OPEN |
+| KG-CP5-023 | Keep the selected external instructional destination within HOW TO TIE IT as the protected established visual help through prototype/replacement validation; after a proven replacement, continued retention/placement is governed by CP5.7 evidence rather than being permanently mandatory. | BUILD REQUIRED / VERIFY | `data/media.js`, `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | All-10-Knot instructional-placement inventory + browser review | OPEN |
+| KG-CP5-024 | Use medium-specific external action labels, restrained provider attribution, and `↗` external-navigation semantics while reserving `→` for FCC-internal navigation. | BUILD REQUIRED / VERIFY | `data/media.js`, `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | All-10-Knot label/provider/affordance review + keyboard/touch check | OPEN |
+| KG-CP5-025 | Link third-party supplemental media rather than copying/rehosting/extracting/reproducing it unless CP5.4 separately verifies reuse rights and local-incorporation suitability. | VERIFY ONLY | `data/media.js` (rights/source owner), `knot-media-renderer.js` | Rights/provenance + asset/link inventory | OPEN |
+| KG-CP5-026 | Use one preferred supplemental external instructional destination per Knot by default; require materially distinct teaching value for any additional destination. | VERIFY ONLY | `data/media.js` (rights/source owner), `knot-media-renderer.js` | All-10-Knot destination-count + rationale inventory | OPEN |
+| KG-CP5-027 | Make external-resource failure non-blocking and verify every active instructional destination while preserving canonical text/local-media usability. | VERIFY ONLY / BUILD REQUIRED IF DEFECT FOUND | `data/media.js`, `knot-media-renderer.js`; `tools/check_external_references.js` verify-only | All-10-Knot external link verification + failure-state review | OPEN |
+| KG-CP5-028 | Preserve Knot/detail context across external instruction and browser-test exact More visual instruction placement relative to the full numbered steps; retain viewer state where practical. | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | External round-trip state test + mobile/intermediate/desktop teaching-flow comparison | OPEN |
 
 
 ## CP5.6 — Responsive Instructional Presentation
@@ -682,12 +682,12 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP5-029 | Preserve one semantic teaching hierarchy across all breakpoints, with phone as the authoritative single-column composition and no horizontal-scroll/pinch-zoom or desktop-only essential instruction. | BUILD TEST REQUIRED | Knot detail instructional renderer/CSS + media viewer owner(s), exact files locked at CP8 | Phone/intermediate/desktop hierarchy + overflow/information-parity review | OPEN |
-| KG-CP5-030 | Keep Previous/Next semantics consistent at every viewport, with explicit discoverable controls, optional swipe only, predictable disabled states, and stable keyboard/touch focus behavior. | BUILD REQUIRED / VERIFY | Knot viewer controller/accessibility/CSS owner(s), exact files locked at CP8 | Keyboard/touch/focus + first/middle/final-state matrix | OPEN |
-| KG-CP5-031 | Keep intermediate/tablet stacked by default and reuse shared FCC breakpoints unless a concrete prototype defect justifies a Knot-specific exception. | BUILD TEST REQUIRED / VERIFY | Knot detail/shared responsive CSS owner(s), exact files locked at CP8 | Intermediate/tablet breakpoint comparison + CSS breakpoint inventory | OPEN |
-| KG-CP5-032 | Browser-test centered stacked desktop against sufficiently wide side-by-side viewer/reference treatment; do not pre-approve two columns or add desktop-only instructional content. | BUILD TEST REQUIRED | Knot detail instructional layout/CSS owner(s), exact files locked at CP8 | Full-desktop A/B comparison across Core prototype | OPEN |
-| KG-CP5-033 | Support orientation-flexible SVG/viewBox geometry while keeping viewer controls/visual region reasonably stable across state changes without cropping/distortion. | BUILD TEST REQUIRED | Knot SVG assets + viewer layout/CSS owner(s), exact files locked at CP8 | State-transition layout-stability review across four Core Knots | OPEN |
-| KG-CP5-034 | Keep the full numbered `tyingSteps[]` as normal accessible non-interactive document content for the initial prototype; test non-color current-step emphasis and explicitly stress-test Double Uni + Arbor responsive behavior. | BUILD TEST REQUIRED / VERIFY | Knot detail renderer/CSS + Core prototype assets, exact files locked at CP8 | Full-step accessibility/current-state review + Double Uni/Arbor responsive stress test | OPEN |
+| KG-CP5-029 | Preserve one semantic teaching hierarchy across all breakpoints, with phone as the authoritative single-column composition and no horizontal-scroll/pinch-zoom or desktop-only essential instruction. | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Phone/intermediate/desktop hierarchy + overflow/information-parity review | OPEN |
+| KG-CP5-030 | Keep Previous/Next semantics consistent at every viewport, with explicit discoverable controls, optional swipe only, predictable disabled states, and stable keyboard/touch focus behavior. | BUILD REQUIRED / VERIFY | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Keyboard/touch/focus + first/middle/final-state matrix | OPEN |
+| KG-CP5-031 | Keep intermediate/tablet stacked by default and reuse shared FCC breakpoints unless a concrete prototype defect justifies a Knot-specific exception. | BUILD TEST REQUIRED / VERIFY | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Intermediate/tablet breakpoint comparison + CSS breakpoint inventory | OPEN |
+| KG-CP5-032 | Browser-test centered stacked desktop against sufficiently wide side-by-side viewer/reference treatment; do not pre-approve two columns or add desktop-only instructional content. | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Full-desktop A/B comparison across Core prototype | OPEN |
+| KG-CP5-033 | Support orientation-flexible SVG/viewBox geometry while keeping viewer controls/visual region reasonably stable across state changes without cropping/distortion. | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | State-transition layout-stability review across four Core Knots | OPEN |
+| KG-CP5-034 | Keep the full numbered `tyingSteps[]` as normal accessible non-interactive document content for the initial prototype; test non-color current-step emphasis and explicitly stress-test Double Uni + Arbor responsive behavior. | BUILD TEST REQUIRED / VERIFY | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Full-step accessibility/current-state review + Double Uni/Arbor responsive stress test | OPEN |
 
 
 ## CP5.7 — V1 Coverage / Build Requirement
@@ -714,12 +714,12 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP5-035 | Preserve the current working Knot Detail/instructional experience as the implementation baseline and refine it against approved Guide-family structure rather than assuming wholesale replacement. | BUILD TEST REQUIRED | Knot detail renderer/CSS/instructional layout owner(s), exact files locked at CP8 | Baseline-vs-refined browser comparison across representative Knots | OPEN |
-| KG-CP5-036 | Use the four-Core prototype as an evidence test of viewer, static, hybrid, reusable/open, and FCC-authored treatments; do not require the prototype to prove one predetermined architecture. | BUILD TEST REQUIRED | Core media prototype + Knot instructional renderer/controller owner(s), exact files locked at CP8 | Four-Core technical/browser comparison with explicit treatment verdict | OPEN |
-| KG-CP5-037 | Do not assign the remaining six Knots mandatory FCC-owned media before the Core prototype verdict; any expansion or justified per-Knot variation requires evidence-based disposition. | VERIFY ONLY | Knot media scope + CP8/CP9 decision owner(s) | Scope inventory before/after Core prototype verdict | OPEN |
-| KG-CP5-038 | Protect external instruction through replacement validation, but browser-test its post-replacement placement/retention/removal rather than making permanent retention mandatory. | BUILD TEST REQUIRED | Knot instructional external-media mapping/layout owner(s), exact files locked at CP8 | Representative post-replacement teaching-flow comparison + link/value review | OPEN |
-| KG-CP5-039 | Enforce outcome-based closure: complete/technically correct/non-regressive instruction, no partial local-media sequence treated as finished, and accessible responsive validation. | VERIFY ONLY / BUILD REQUIRED IF DEFECT FOUND | Knot canonical instruction + media + renderer/CSS owner(s), exact files locked at CP8 | Technical completeness + regression + responsive/accessibility checklist | OPEN |
-| KG-CP5-040 | At CP8, separate known implementation work from explicit build-test decision gates; CP9 resolves final treatment without presuming viewer/static/hybrid/external or expansion outcomes. | DEFERRED — CP8 implementation scope lock / CP9 browser validation | Knots audit + exact production owners locked at CP8 | CP8 traceability review + CP9 disposition readback | OPEN |
+| KG-CP5-035 | Preserve the current working Knot Detail/instructional experience as the implementation baseline and refine it against approved Guide-family structure rather than assuming wholesale replacement. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Baseline-vs-refined browser comparison across representative Knots | OPEN |
+| KG-CP5-036 | Use the four-Core prototype as an evidence test of viewer, static, hybrid, reusable/open, and FCC-authored treatments; do not require the prototype to prove one predetermined architecture. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Four-Core technical/browser comparison with explicit treatment verdict | OPEN |
+| KG-CP5-037 | Do not assign the remaining six Knots mandatory FCC-owned media before the Core prototype verdict; any expansion or justified per-Knot variation requires evidence-based disposition. | VERIFY ONLY | `data/media.js` + `images/knots/instructional/` scope guard; no six-Knot expansion before verdict | Scope inventory before/after Core prototype verdict | OPEN |
+| KG-CP5-038 | Protect external instruction through replacement validation, but browser-test its post-replacement placement/retention/removal rather than making permanent retention mandatory. | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Representative post-replacement teaching-flow comparison + link/value review | OPEN |
+| KG-CP5-039 | Enforce outcome-based closure: complete/technically correct/non-regressive instruction, no partial local-media sequence treated as finished, and accessible responsive validation. | VERIFY ONLY / BUILD REQUIRED IF DEFECT FOUND | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css`, `tools/validate_repository_integrity.js` | Technical completeness + regression + responsive/accessibility checklist | OPEN |
+| KG-CP5-040 | At CP8, separate known implementation work from explicit build-test decision gates; CP9 resolves final treatment without presuming viewer/static/hybrid/external or expansion outcomes. | DEFERRED — CP8 implementation scope lock / CP9 browser validation | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | CP8 traceability review + CP9 disposition readback | OPEN |
 
 
 # KG Audit — CP6 — Get Your Reel Ready Workflow
@@ -765,16 +765,16 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP6-001 | Preserve Get Your Reel Ready as the existing first-class branching workflow rather than collapsing it into an Arbor-only or single-path flow. | VERIFY ONLY | Reel Setup workflow/state owners, exact files locked at CP8 | Branch/path inventory + browser walkthrough | OPEN |
-| KG-CP6-002 | Reserve special/workflow-card treatment for true special workflow surfaces; convert ordinary internal Reel Setup choices to normal choice-card treatment where currently overused. | BUILD REQUIRED | Reel Setup renderer/CSS owner(s), exact files locked at CP8 | Representative choice-screen visual/interaction review | OPEN |
-| KG-CP6-003 | Separate primary progression from workflow utilities; build-test one full-width primary action followed by paired Restart Setup / Exit to Knots controls with responsive stacking only when needed. | BUILD TEST REQUIRED | Reel Setup renderer/CSS/navigation owner(s), exact files locked at CP8 | Phone/intermediate/desktop control-layout + touch-target review | OPEN |
-| KG-CP6-004 | Replace ambiguous/internal user-facing copy including Start Over / Return to Knots where applicable and remove exposed Package 3 terminology. | BUILD REQUIRED | Reel Setup renderer/copy owner(s), exact files locked at CP8 | Full-workflow text/control inventory | OPEN |
-| KG-CP6-005 | Make Restart Setup reset Reel Setup selections/current phase and return to workflow start without unnecessarily clearing external origin/return context. | BUILD REQUIRED | Reel Setup state + detail-navigation-stack owner(s), exact files locked at CP8 | Entry-from-Knot → progress → Restart → origin-context regression test | OPEN |
-| KG-CP6-006 | Make Exit to Knots an explicit destructive workflow exit: discard Reel Setup state and open the Knots landing page; do not imply an automatic resume path. | BUILD REQUIRED / VERIFY | Reel Setup state/navigation owner(s), exact files locked at CP8 | Mid-workflow Exit → Knots → fresh-entry state test | OPEN |
-| KG-CP6-007 | Keep Selected Choices as a theme-based noninteractive summary while rendering selected-value text in the shared workflow accent blue, not the Knots-specific accent and not a special-card visual treatment. | BUILD REQUIRED / BUILD TEST | Reel Setup status renderer/shared workflow styling owner(s), exact files locked at CP8 | Theme + contrast + representative-state browser review | OPEN |
-| KG-CP6-008 | Combine Selected Choices and Setup Progress into one clearly partitioned workflow-status section without visually mixing choices with phase labels. | BUILD TEST REQUIRED | Reel Setup renderer/CSS owner(s), exact files locked at CP8 | Phone/intermediate/desktop hierarchy review | OPEN |
-| KG-CP6-009 | **Superseded by CP6.5:** implement the final noninteractive five-phase progress model — Reel, Line, Equipment, Spool, Ready — with current/completed/upcoming semantics that do not rely on color alone; test full-label and compact mobile treatments. | BUILD TEST REQUIRED | Reel Setup progress/state renderer + accessibility/CSS owner(s), exact files locked at CP8 | Phase-state matrix + responsive + accessibility review | OPEN |
-| KG-CP6-010 | Preserve the current responsive Reel Setup baseline unless CP9 exposes a concrete defect; specifically validate the new status section and utility controls across shared FCC breakpoints. | VERIFY ONLY / BUILD TEST REQUIRED | Reel Setup/shared responsive CSS owner(s), exact files locked at CP8 | Responsive regression comparison | OPEN |
+| KG-CP6-001 | Preserve Get Your Reel Ready as the existing first-class branching workflow rather than collapsing it into an Arbor-only or single-path flow. | VERIFY ONLY | `script.js` | Branch/path inventory + browser walkthrough | OPEN |
+| KG-CP6-002 | Reserve special/workflow-card treatment for true special workflow surfaces; convert ordinary internal Reel Setup choices to normal choice-card treatment where currently overused. | BUILD REQUIRED | `script.js`, `forest-journal.css` | Representative choice-screen visual/interaction review | OPEN |
+| KG-CP6-003 | Separate primary progression from workflow utilities; build-test one full-width primary action followed by paired Restart Setup / Exit to Knots controls with responsive stacking only when needed. | BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Phone/intermediate/desktop control-layout + touch-target review | OPEN |
+| KG-CP6-004 | Replace ambiguous/internal user-facing copy including Start Over / Return to Knots where applicable and remove exposed Package 3 terminology. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Full-workflow text/control inventory | OPEN |
+| KG-CP6-005 | Make Restart Setup reset Reel Setup selections/current phase and return to workflow start without unnecessarily clearing external origin/return context. | BUILD REQUIRED | `script.js` | Entry-from-Knot → progress → Restart → origin-context regression test | OPEN |
+| KG-CP6-006 | Make Exit to Knots an explicit destructive workflow exit: discard Reel Setup state and open the Knots landing page; do not imply an automatic resume path. | BUILD REQUIRED / VERIFY | `script.js` | Mid-workflow Exit → Knots → fresh-entry state test | OPEN |
+| KG-CP6-007 | Keep Selected Choices as a theme-based noninteractive summary while rendering selected-value text in the shared workflow accent blue, not the Knots-specific accent and not a special-card visual treatment. | BUILD REQUIRED / BUILD TEST | `script.js`, `forest-journal.css` | Theme + contrast + representative-state browser review | OPEN |
+| KG-CP6-008 | Combine Selected Choices and Setup Progress into one clearly partitioned workflow-status section without visually mixing choices with phase labels. | BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Phone/intermediate/desktop hierarchy review | OPEN |
+| KG-CP6-009 | **Superseded by CP6.5:** implement the final noninteractive five-phase progress model — Reel, Line, Equipment, Spool, Ready — with current/completed/upcoming semantics that do not rely on color alone; test full-label and compact mobile treatments. | BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Phase-state matrix + responsive + accessibility review | OPEN |
+| KG-CP6-010 | Preserve the current responsive Reel Setup baseline unless CP9 exposes a concrete defect; specifically validate the new status section and utility controls across shared FCC breakpoints. | VERIFY ONLY / BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Responsive regression comparison | OPEN |
 
 
 ## CP6.2 — Reel Identification
@@ -804,16 +804,16 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP6-011 | Keep Spinning, Spincast, and Baitcasting as the three actual selectable reel types; direct an actual reel selection straight to Line Selection. | VERIFY ONLY / BUILD REQUIRED IF CURRENT fourth choice remains | Reel Setup reel-type data/renderer/state owner(s), exact files locked at CP8 | Choice inventory + route test | OPEN |
-| KG-CP6-012 | Mark Spinning Reel with a restrained Recommended First Setup cue while clearly separating first-setup recommendation from identification of equipment the user already owns. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup reel-type card/copy/shared beginner-priority styling owner(s), exact files locked at CP8 | Beginner comprehension + visual hierarchy review | OPEN |
-| KG-CP6-013 | Refine reel descriptions around beginner-visible physical recognition cues while introducing necessary reel terminology. | BUILD REQUIRED | Reel guidance copy owner, exact files locked at CP8 | Content review + representative browser check | OPEN |
-| KG-CP6-014 | Remove the separate I'm Not Sure → Which Reel Matches Yours? workflow branch and keep identification help on the Reel Type screen. | BUILD REQUIRED | Reel Setup state/router/renderer owner(s), exact files locked at CP8 | Branch inventory + direct reel-selection route test | OPEN |
-| KG-CP6-015 | Add Not sure which reel you have? `ⓘ` using the approved Reference convention; only the `ⓘ` opens help. | BUILD REQUIRED | Reel Setup renderer + shared Reference interaction owner(s), exact files locked at CP8 | Pointer/touch/keyboard/focus-return review | OPEN |
-| KG-CP6-016 | Build-test one three-page reel-identification Reference surface: Spinning, Spincast, Baitcasting; each page supports concise description + traits and may include a representative/labeled image or illustration. | BUILD TEST REQUIRED | Shared Reference surface + Reel Setup reference content/media owner(s), exact files locked at CP8 | Three-page content/visual comparison + beginner recognition test | OPEN |
-| KG-CP6-017 | Multi-page Reference uses visible page position and explicit Previous/Next controls; swipe is optional only, no autoplay, and Reference paging does not mutate Reel Setup state/progress. | BUILD REQUIRED / BUILD TEST REQUIRED | Shared Reference navigation/accessibility owner(s), exact files locked at CP8 | Keyboard/touch/swipe/focus/state regression review | OPEN |
-| KG-CP6-018 | Remove obsolete Back to Reel Choices UI and obsolete Reel Identification Help workflow state/navigation after Reference treatment replaces the branch. | BUILD REQUIRED | Reel Setup renderer/state/navigation/data owner(s), exact files locked at CP8 | Dead-route/state inventory + browser regression | OPEN |
-| KG-CP6-019 | Preserve downstream-state clearing when an actual reel type changes and keep the reel-identification Reference surface inside the fixed Reel progress phase. | VERIFY ONLY | Reel Setup state/progress owner(s), exact files locked at CP8 | State-reset + progress-phase matrix | OPEN |
-| KG-CP6-020 | Reconcile CP6.3 line guidance to the approved Spinning Reel → All-Around Freshwater → 10 lb Monofilament beginner baseline; current All-Around easy choice remains 8 lb until implementation. | DEFERRED — CP6.3 | Reel guidance/recommendation owner(s), exact files locked at CP8 | Recommendation-baseline reconciliation + equipment-guidance review | OPEN |
+| KG-CP6-011 | Keep Spinning, Spincast, and Baitcasting as the three actual selectable reel types; direct an actual reel selection straight to Line Selection. | VERIFY ONLY / BUILD REQUIRED IF CURRENT fourth choice remains | `data/reel-guidance.js`, `script.js` | Choice inventory + route test | OPEN |
+| KG-CP6-012 | Mark Spinning Reel with a restrained Recommended First Setup cue while clearly separating first-setup recommendation from identification of equipment the user already owns. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js`, `forest-journal.css` | Beginner comprehension + visual hierarchy review | OPEN |
+| KG-CP6-013 | Refine reel descriptions around beginner-visible physical recognition cues while introducing necessary reel terminology. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Content review + representative browser check | OPEN |
+| KG-CP6-014 | Remove the separate I'm Not Sure → Which Reel Matches Yours? workflow branch and keep identification help on the Reel Type screen. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Branch inventory + direct reel-selection route test | OPEN |
+| KG-CP6-015 | Add Not sure which reel you have? `ⓘ` using the approved Reference convention; only the `ⓘ` opens help. | BUILD REQUIRED | `script.js`, `view-renderer.js`, `forest-journal.css` | Pointer/touch/keyboard/focus-return review | OPEN |
+| KG-CP6-016 | Build-test one three-page reel-identification Reference surface: Spinning, Spincast, Baitcasting; each page supports concise description + traits and may include a representative/labeled image or illustration. | BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Three-page content/visual comparison + beginner recognition test | OPEN |
+| KG-CP6-017 | Multi-page Reference uses visible page position and explicit Previous/Next controls; swipe is optional only, no autoplay, and Reference paging does not mutate Reel Setup state/progress. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/touch/swipe/focus/state regression review | OPEN |
+| KG-CP6-018 | Remove obsolete Back to Reel Choices UI and obsolete Reel Identification Help workflow state/navigation after Reference treatment replaces the branch. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Dead-route/state inventory + browser regression | OPEN |
+| KG-CP6-019 | Preserve downstream-state clearing when an actual reel type changes and keep the reel-identification Reference surface inside the fixed Reel progress phase. | VERIFY ONLY | `script.js` | State-reset + progress-phase matrix | OPEN |
+| KG-CP6-020 | Reconcile CP6.3 line guidance to the approved Spinning Reel → All-Around Freshwater → 10 lb Monofilament beginner baseline; current All-Around easy choice remains 8 lb until implementation. | DEFERRED — CP6.3 | `data/reel-guidance.js`, `script.js` | Recommendation-baseline reconciliation + equipment-guidance review | OPEN |
 
 
 ## CP6.3 — Target, Recommendation, Line Strength + Equipment Guidance
@@ -846,26 +846,26 @@ CP4 discovery is **CLOSED / APPROVED / refinement allowed**. All CP4 BUILD REQUI
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP6-021 | Derive reused Fish category titles from the canonical Fish Guide owner; correct Reel Setup Panfish - Bluegill & Crappie to canonical **Crappie & Sunfish** through derivation rather than a second authored label. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Fish category owner + Reel Setup target-card data/renderer, exact files locked at CP8 | Canonical-title mutation test + card inventory | OPEN |
-| KG-CP6-022 | Keep All-Around Freshwater first, then derive/reuse the Fish Guide canonical category order rather than maintaining a separate Reel Setup order. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Fish category owner + Reel Setup target-list composition, exact files locked at CP8 | Ordering comparison against Fish Guide | OPEN |
-| KG-CP6-023 | Review wording on every target-specific recommendation page so recommendation, rationale, and user-selected Line Weight are distinct and beginner-readable. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel guidance copy/renderer owner(s), exact files locked at CP8 | Six-target content matrix + browser review | OPEN |
-| KG-CP6-024 | Reconcile All-Around Freshwater to **10 lb Monofilament** as the preferred starting recommendation with **8 lb Monofilament** as the lighter approved alternative. | BUILD REQUIRED | Reel guidance recommendation owner, exact files locked at CP8 | Recommendation-audit reconciliation | OPEN |
-| KG-CP6-025 | Reconcile target guidance by separating target strength references from Line Type interpretation; do not mechanically reuse Monofilament numeric guidance for Fluorocarbon/Braid. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Reel guidance recommendation data, exact files locked at CP8 | Target x Line Type behavior/content matrix | OPEN |
-| KG-CP6-026 | Replace the target-page Next - Check Reel & Rod Compatibility progression card with the user's Line Weight selection/confirmation flow. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup target-guidance renderer/state owner(s), exact files locked at CP8 | Target-page interaction matrix across line types | OPEN |
-| KG-CP6-027 | Build-test a rolling Line Weight selector as the preferred starting interaction; exact selector range/geometry/mechanics remain refinement-allowed. | BUILD TEST REQUIRED | Shared selector/reel target-guidance UI owner(s), exact files locked at CP8 | Pointer/touch/keyboard/responsive comparison | OPEN |
-| KG-CP6-028 | Do not auto-advance on selector movement; use an explicit dynamic confirmation action such as Continue with <strength> lb <line type> →. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel target-guidance renderer/controller, exact files locked at CP8 | Selection/confirmation/state test | OPEN |
-| KG-CP6-029 | Add transient actual Line Weight state and include confirmed strength + Line Type in Selected Choices. | BUILD REQUIRED | Reel Setup state/status owner(s), exact files locked at CP8 | Upstream-reset + selected-choice matrix | OPEN |
-| KG-CP6-030 | Build downstream Equipment guidance from the user's actual confirmed Line Type + Line Weight rather than hard-coded/default recommendation wording. | BUILD REQUIRED | Reel Setup equipment copy/renderer owner(s), exact files locked at CP8 | Dynamic-copy state matrix | OPEN |
-| KG-CP6-031 | Replace FCC pass/fail compatibility semantics with generic best-practice equipment-reading guidance; equipment/manufacturer markings remain authoritative and progression is not blocked. | BUILD REQUIRED / VERIFY | Reel Setup Equipment phase data/renderer/controller, exact files locked at CP8 | Out-of-recommendation progression + wording review | OPEN |
-| KG-CP6-032 | Preserve How to Read Reel/Rod education and the required labeled reel/spool diagram; exact contextual Reference presentation remains BUILD TEST refinement. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel guidance/reference/media owner(s), exact files locked at CP8 | Reference content + diagram + responsive/accessibility review | OPEN |
-| KG-CP6-033 | Apply a build-time wording pass across Target → Recommendation/Selection → Equipment so the approved semantic distinctions remain clear after real UI composition. | BUILD TEST REQUIRED | Reel guidance copy + Reel Setup renderer owner(s), exact files locked at CP8 | End-to-end beginner comprehension/browser review | OPEN |
-| KG-CP6-034 | Implement the approved six-target starting-reference values, including Bass `8–12 lb` / 10 lb Mono and Catfish `15–20 lb` / 20 lb Mono. | BUILD REQUIRED | Reel target/recommendation data owner(s), exact files locked at CP8 | Six-target value/content readback + browser matrix | OPEN |
-| KG-CP6-035 | Initialize Line Weight only when an exact target + Line Type numeric recommendation is approved; otherwise begin unconfirmed. Braid/Fluorocarbon must not inherit Mono values silently. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel target-guidance state/selector owner(s), exact files locked at CP8 | Line Type × target initialization matrix | OPEN |
-| KG-CP6-036 | Remove Help Me Choose / I'm Not Sure Line workflow cards/branches and replace them with the inline Line Type Reference trigger. | BUILD REQUIRED | Reel Setup Line phase renderer/state/navigation owner(s), exact files locked at CP8 | Dead-branch/state inventory + browser navigation test | OPEN |
-| KG-CP6-037 | Build one three-page Monofilament / Fluorocarbon / Braid Reference surface with explicit Previous/Next, optional swipe, no autoplay, and no workflow-state mutation. | BUILD TEST REQUIRED / BUILD REQUIRED | Shared Reference + Reel Line guidance owner(s), exact files locked at CP8 | Keyboard/touch/focus/state + responsive review | OPEN |
-| KG-CP6-038 | Remove equipment confirmation/mismatch/completed workflow states and replace with one educational Equipment step plus normal Continue to Backing / Spool Setup. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Reel Setup Equipment state/renderer/navigation owner(s), exact files locked at CP8 | Dead-state/route inventory + forward/backward workflow test | OPEN |
-| KG-CP6-039 | Consolidate Equipment help into Read Reel / Read Rod / If Ratings Don't Match Reference pages; mismatch guidance no longer owns workflow state. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel equipment guidance/reference owner(s), exact files locked at CP8 | Reference-page content + focus/responsive review | OPEN |
-| KG-CP6-040 | Preserve Spincast + Braid as an informational manufacturer-check safeguard without FCC incompatibility declaration or blocking behavior. | BUILD REQUIRED / VERIFY | Reel Line/Equipment guidance owner(s), exact files locked at CP8 | Spincast+Braid path + wording/progression regression | OPEN |
+| KG-CP6-021 | Derive reused Fish category titles from the canonical Fish Guide owner; correct Reel Setup Panfish - Bluegill & Crappie to canonical **Crappie & Sunfish** through derivation rather than a second authored label. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | Canonical-title mutation test + card inventory | OPEN |
+| KG-CP6-022 | Keep All-Around Freshwater first, then derive/reuse the Fish Guide canonical category order rather than maintaining a separate Reel Setup order. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | Ordering comparison against Fish Guide | OPEN |
+| KG-CP6-023 | Review wording on every target-specific recommendation page so recommendation, rationale, and user-selected Line Weight are distinct and beginner-readable. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js` | Six-target content matrix + browser review | OPEN |
+| KG-CP6-024 | Reconcile All-Around Freshwater to **10 lb Monofilament** as the preferred starting recommendation with **8 lb Monofilament** as the lighter approved alternative. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Recommendation-audit reconciliation | OPEN |
+| KG-CP6-025 | Reconcile target guidance by separating target strength references from Line Type interpretation; do not mechanically reuse Monofilament numeric guidance for Fluorocarbon/Braid. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | Target x Line Type behavior/content matrix | OPEN |
+| KG-CP6-026 | Replace the target-page Next - Check Reel & Rod Compatibility progression card with the user's Line Weight selection/confirmation flow. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js`, `forest-journal.css` | Target-page interaction matrix across line types | OPEN |
+| KG-CP6-027 | Build-test a rolling Line Weight selector as the preferred starting interaction; exact selector range/geometry/mechanics remain refinement-allowed. | BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Pointer/touch/keyboard/responsive comparison | OPEN |
+| KG-CP6-028 | Do not auto-advance on selector movement; use an explicit dynamic confirmation action such as Continue with <strength> lb <line type> →. | BUILD REQUIRED / BUILD TEST REQUIRED | `script.js` | Selection/confirmation/state test | OPEN |
+| KG-CP6-029 | Add transient actual Line Weight state and include confirmed strength + Line Type in Selected Choices. | BUILD REQUIRED | `script.js` | Upstream-reset + selected-choice matrix | OPEN |
+| KG-CP6-030 | Build downstream Equipment guidance from the user's actual confirmed Line Type + Line Weight rather than hard-coded/default recommendation wording. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Dynamic-copy state matrix | OPEN |
+| KG-CP6-031 | Replace FCC pass/fail compatibility semantics with generic best-practice equipment-reading guidance; equipment/manufacturer markings remain authoritative and progression is not blocked. | BUILD REQUIRED / VERIFY | `data/reel-guidance.js`, `script.js` | Out-of-recommendation progression + wording review | OPEN |
+| KG-CP6-032 | Preserve How to Read Reel/Rod education and the required labeled reel/spool diagram; exact contextual Reference presentation remains BUILD TEST refinement. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Reference content + diagram + responsive/accessibility review | OPEN |
+| KG-CP6-033 | Apply a build-time wording pass across Target → Recommendation/Selection → Equipment so the approved semantic distinctions remain clear after real UI composition. | BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js` | End-to-end beginner comprehension/browser review | OPEN |
+| KG-CP6-034 | Implement the approved six-target starting-reference values, including Bass `8–12 lb` / 10 lb Mono and Catfish `15–20 lb` / 20 lb Mono. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Six-target value/content readback + browser matrix | OPEN |
+| KG-CP6-035 | Initialize Line Weight only when an exact target + Line Type numeric recommendation is approved; otherwise begin unconfirmed. Braid/Fluorocarbon must not inherit Mono values silently. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js` | Line Type × target initialization matrix | OPEN |
+| KG-CP6-036 | Remove Help Me Choose / I'm Not Sure Line workflow cards/branches and replace them with the inline Line Type Reference trigger. | BUILD REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js` | Dead-branch/state inventory + browser navigation test | OPEN |
+| KG-CP6-037 | Build one three-page Monofilament / Fluorocarbon / Braid Reference surface with explicit Previous/Next, optional swipe, no autoplay, and no workflow-state mutation. | BUILD TEST REQUIRED / BUILD REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/touch/focus/state + responsive review | OPEN |
+| KG-CP6-038 | Remove equipment confirmation/mismatch/completed workflow states and replace with one educational Equipment step plus normal Continue to Backing / Spool Setup. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | Dead-state/route inventory + forward/backward workflow test | OPEN |
+| KG-CP6-039 | Consolidate Equipment help into Read Reel / Read Rod / If Ratings Don't Match Reference pages; mismatch guidance no longer owns workflow state. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Reference-page content + focus/responsive review | OPEN |
+| KG-CP6-040 | Preserve Spincast + Braid as an informational manufacturer-check safeguard without FCC incompatibility declaration or blocking behavior. | BUILD REQUIRED / VERIFY | `data/reel-guidance.js`, `script.js` | Spincast+Braid path + wording/progression regression | OPEN |
 
 
 # Cross-Guide Carry-Forward Discovered During Knots Audit
@@ -890,136 +890,136 @@ This table becomes the CP8 implementation lock and CP10 closure checklist. Add e
 
 | ID | Checkpoint | Item | Disposition | Expected owner/file scope | Validation | Implementation status | Validation status |  
 |---|---|---|---|---|---|---|---|  
-| KG-CP1-001 | CP1.1 | Knots Guide naming | BUILD REQUIRED | TBD at CP8 | Browser + text check | OPEN | OPEN |  
-| KG-CP1-002 | CP1.1 | Fish-baseline compact identity | BUILD REQUIRED | TBD at CP8 | Responsive browser review | OPEN | OPEN |  
-| KG-CP1-003 | CP1.1 | Restrained Knots visual identity/flair | BUILD TEST REQUIRED | TBD at CP8 | Responsive visual review | OPEN | OPEN |  
-| KG-CP1-004 | CP1.1 | No unnecessary generic CTA | VERIFY ONLY | TBD at CP8 | Browser review | OPEN | OPEN |
-| KG-CP1-005 | CP1.2 | Preserve Knots deterministic Search scope/ranking | VERIFY ONLY | TBD at CP8 | Deterministic query suite + browser spot checks | OPEN | OPEN |  
-| KG-CP1-006 | CP1.2 | Search label/helper/placeholder | BUILD REQUIRED | TBD at CP8 | Browser text/scope review | OPEN | OPEN |  
-| KG-CP1-007 | CP1.2 | Live Search / no visible submit / clear behavior | BUILD REQUIRED | TBD at CP8 | Keyboard/mobile/browser interaction review | OPEN | OPEN |  
-| KG-CP1-008 | CP1.2 | Neutral Search styling + current clear touch/focus treatment | BUILD REQUIRED | TBD at CP8 | Responsive + keyboard/focus review | OPEN | OPEN |  
-| KG-CP1-009 | CP1.2 | Empty/status/no-match state behavior | BUILD REQUIRED | TBD at CP8 | Browser state matrix + accessibility review | OPEN | OPEN |  
-| KG-CP1-010 | CP1.2 | Search query + scroll restoration through Knot Detail | BUILD REQUIRED | TBD at CP8 | Navigation round-trip review | OPEN | OPEN |  
-| KG-CP1-011 | CP1.2 | Knots desktop Search-width experiment | BUILD TEST REQUIRED | TBD at CP8 | Responsive browser comparison | OPEN | OPEN |  
+| KG-CP1-001 | CP1.1 | Knots Guide naming | BUILD REQUIRED | `view-renderer.js` | Browser + text check | OPEN | OPEN |  
+| KG-CP1-002 | CP1.1 | Fish-baseline compact identity | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive browser review | OPEN | OPEN |  
+| KG-CP1-003 | CP1.1 | Decorative Knots identity art deferred; remove current motif | DEFERRED — FINAL UX AUDIT / CURRENT REMOVAL | `view-renderer.js`, `forest-journal.css`; `V1-DESIGN-AUDIT.md` | R4 removal + future UX review | R4 REQUIRED | DEFERRED |  
+| KG-CP1-004 | CP1.1 | No unnecessary generic CTA | VERIFY ONLY | `view-renderer.js` | Browser review | OPEN | OPEN |
+| KG-CP1-005 | CP1.2 | Preserve Knots deterministic Search scope/ranking | VERIFY ONLY | `search.js`, `script.js` | Deterministic query suite + browser spot checks | OPEN | OPEN |  
+| KG-CP1-006 | CP1.2 | Search label/helper/placeholder | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser text/scope review | OPEN | OPEN |  
+| KG-CP1-007 | CP1.2 | Live Search / no visible submit / clear behavior | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/mobile/browser interaction review | OPEN | OPEN |  
+| KG-CP1-008 | CP1.2 | Neutral Search styling + current clear touch/focus treatment | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive + keyboard/focus review | OPEN | OPEN |  
+| KG-CP1-009 | CP1.2 | Empty/status/no-match state behavior | BUILD REQUIRED | `view-renderer.js`, `script.js` | Browser state matrix + accessibility review | OPEN | OPEN |  
+| KG-CP1-010 | CP1.2 | Search query + scroll restoration through Knot Detail | BUILD REQUIRED | `script.js` | Navigation round-trip review | OPEN | OPEN |  
+| KG-CP1-011 | CP1.2 | Knots desktop Search-width experiment | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive browser comparison | OPEN | OPEN |  
 | KG-CP1-012 | CP1.2 | Search documentation supersession reconciliation | DOC UPDATE | `KNOT-GUIDE.md` + audit record | Readback | CLOSED / PASS | CLOSED / PASS |  
-| KG-CP1-013 | CP1.6 | Fish-baseline `Browse →` collection-card grammar | BUILD REQUIRED | TBD at CP8 | Responsive card + interaction review | OPEN | OPEN |  
-| KG-CP1-014 | CP1.7 | Remove Advanced Knots V1 landing card; retain Advanced taxonomy/future-record support | BUILD REQUIRED | TBD at CP8 | Config + browser + taxonomy regression review | OPEN | OPEN |
-| KG-CP1-015 | CP1.3 | Dedicated Get Your Reel Ready workflow card after Search | BUILD REQUIRED | TBD at CP8 | Workflow launch + browser review | OPEN | OPEN |  
-| KG-CP1-016 | CP1.3 | Remove duplicate Attach Line to a Reel landing workflow entry | BUILD REQUIRED | TBD at CP8 | Landing task inventory + navigation review | OPEN | OPEN |  
-| KG-CP1-017 | CP1.5 | Approved four-entry task/learning section | BUILD REQUIRED | TBD at CP8 | Task matrix + browser navigation review | OPEN | OPEN |  
-| KG-CP1-018 | CP1.4 | Remove standalone Core major landing section; preserve task + collection access | BUILD REQUIRED | TBD at CP8 | Landing hierarchy review | OPEN | OPEN |  
-| KG-CP1-019 | CP1.3 | Inherit Fish Compare workflow-card geometry/responsive behavior; verify Knots fit | VERIFY ONLY | TBD at CP8 | Responsive browser comparison | OPEN | OPEN |  
-| KG-CP1-020 | CP1.6 | All Knots `Browse →` complete-library browse card | BUILD REQUIRED | TBD at CP8 | Complete-library navigation + responsive review | OPEN | OPEN |  
-| KG-CP1-021 | CP1.8 | Whole landing hierarchy/density/accent/motif validation | BUILD TEST REQUIRED | TBD at CP8 | Whole-page responsive browser review | OPEN | OPEN |  
-| KG-CP2-001 | CP2 | Fish-baseline whole-card interaction/focus/touch/action/wrap behavior | BUILD REQUIRED / VERIFY | TBD at CP8 | Keyboard/touch + responsive browser review | OPEN | OPEN |  
-| KG-CP2-002 | CP2 | Get Your Reel Ready = Compare Similar Fish workflow-card treatment | BUILD REQUIRED | TBD at CP8 | Fish baseline comparison + workflow launch | OPEN | OPEN |  
-| KG-CP2-003 | CP2 | All Knots = All Fish-style Browse card; no separate Browse All action | BUILD REQUIRED | TBD at CP8 | Landing + complete-library navigation | OPEN | OPEN |  
-| KG-CP2-004 | CP2 | Priority styling for Core Knots + three beginner-important task cards | BUILD REQUIRED | TBD at CP8 | Whole-page hierarchy review | OPEN | OPEN |  
-| KG-CP2-005 | CP2 | Learn Core Knots uses Learn →; Core collection uses Browse → | BUILD REQUIRED | TBD at CP8 | Action semantics/navigation | OPEN | OPEN |  
-| KG-CP2-006 | CP2 | Verify inherited Fish responsive geometry; diverge only on concrete defect | VERIFY ONLY / BUILD TEST IF DEFECT FOUND | TBD at CP8 | Responsive comparison | OPEN | OPEN |  
-| KG-CP3-001 | CP3 | Shared Knot result-card architecture + approved card composition | BUILD REQUIRED | TBD at CP8 | Landing/browse/task result-card comparison | OPEN | OPEN |
-| KG-CP3-002 | CP3 | Compact classification/alias/summary content; no extra metadata/media requirement | BUILD REQUIRED / VERIFY | TBD at CP8 | All-10-Knot content inventory | OPEN | OPEN |
-| KG-CP3-003 | CP3 | Fish-baseline live scoped Search on browse/task pages | BUILD REQUIRED | TBD at CP8 | Collection/task Search state matrix | OPEN | OPEN |
-| KG-CP3-004 | CP3 | Approved collection/task ordering + relevance Search + Learn Core route | BUILD REQUIRED / VERIFY | TBD at CP8 | Ordering/query/navigation suite | OPEN | OPEN |
-| KG-CP3-005 | CP3 | 1/2-column maximum result grid + rotating standard accents/Core priority separation | BUILD REQUIRED / VERIFY | TBD at CP8 | Responsive visual review | OPEN | OPEN |
-| KG-CP3-006 | CP3 | Browse/task collection/query/scroll restoration through detail | BUILD REQUIRED | TBD at CP8 | Navigation round-trip browser test | OPEN | OPEN |
-| KG-CP3-007 | CP3 | Knot-specific result count + scoped no-match wording | BUILD REQUIRED | TBD at CP8 | Search state/accessibility review | OPEN | OPEN |
+| KG-CP1-013 | CP1.6 | Fish-baseline `Browse →` collection-card grammar | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Responsive card + interaction review | OPEN | OPEN |  
+| KG-CP1-014 | CP1.7 | Remove Advanced Knots V1 landing card; retain Advanced taxonomy/future-record support | BUILD REQUIRED | `data/knot-guidance.js`, `script.js` | Config + browser + taxonomy regression review | OPEN | OPEN |
+| KG-CP1-015 | CP1.3 | Dedicated Get Your Reel Ready workflow card after Search | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Workflow launch + browser review | OPEN | OPEN |  
+| KG-CP1-016 | CP1.3 | Remove duplicate Attach Line to a Reel landing workflow entry | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing task inventory + navigation review | OPEN | OPEN |  
+| KG-CP1-017 | CP1.5 | Approved four-entry task/learning section | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Task matrix + browser navigation review | OPEN | OPEN |  
+| KG-CP1-018 | CP1.4 | Remove standalone Core major landing section; preserve task + collection access | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Landing hierarchy review | OPEN | OPEN |  
+| KG-CP1-019 | CP1.3 | Inherit Fish Compare workflow-card geometry/responsive behavior; verify Knots fit | VERIFY ONLY | `view-renderer.js`, `forest-journal.css` | Responsive browser comparison | OPEN | OPEN |  
+| KG-CP1-020 | CP1.6 | All Knots `Browse →` complete-library browse card | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Complete-library navigation + responsive review | OPEN | OPEN |  
+| KG-CP1-021 | CP1.8 | Whole landing hierarchy/density/accent/responsive validation; motif deferred | BUILD TEST REQUIRED | `view-renderer.js`, `forest-journal.css` | Whole-page responsive browser review | OPEN | OPEN |  
+| KG-CP2-001 | CP2 | Fish-baseline whole-card interaction/focus/touch/action/wrap behavior | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Keyboard/touch + responsive browser review | OPEN | OPEN |  
+| KG-CP2-002 | CP2 | Get Your Reel Ready = Compare Similar Fish workflow-card treatment | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Fish baseline comparison + workflow launch | OPEN | OPEN |  
+| KG-CP2-003 | CP2 | All Knots = All Fish-style Browse card; no separate Browse All action | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Landing + complete-library navigation | OPEN | OPEN |  
+| KG-CP2-004 | CP2 | Priority styling for Core Knots + three beginner-important task cards | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Whole-page hierarchy review | OPEN | OPEN |  
+| KG-CP2-005 | CP2 | Learn Core Knots uses Learn →; Core collection uses Browse → | BUILD REQUIRED | `data/knot-guidance.js`, `view-renderer.js`, `script.js` | Action semantics/navigation | OPEN | OPEN |  
+| KG-CP2-006 | CP2 | Verify inherited Fish responsive geometry; diverge only on concrete defect | VERIFY ONLY / BUILD TEST IF DEFECT FOUND | `view-renderer.js`, `forest-journal.css` | Responsive comparison | OPEN | OPEN |  
+| KG-CP3-001 | CP3 | Shared Knot result-card architecture + approved card composition | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Landing/browse/task result-card comparison | OPEN | OPEN |
+| KG-CP3-002 | CP3 | Compact classification/alias/summary content; no extra metadata/media requirement | BUILD REQUIRED / VERIFY | `view-renderer.js` | All-10-Knot content inventory | OPEN | OPEN |
+| KG-CP3-003 | CP3 | Fish-baseline live scoped Search on browse/task pages | BUILD REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | Collection/task Search state matrix | OPEN | OPEN |
+| KG-CP3-004 | CP3 | Approved collection/task ordering + relevance Search + Learn Core route | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, `search.js`, `script.js` | Ordering/query/navigation suite | OPEN | OPEN |
+| KG-CP3-005 | CP3 | 1/2-column maximum result grid + rotating standard accents/Core priority separation | BUILD REQUIRED / VERIFY | `view-renderer.js`, `forest-journal.css` | Responsive visual review | OPEN | OPEN |
+| KG-CP3-006 | CP3 | Browse/task collection/query/scroll restoration through detail | BUILD REQUIRED | `script.js` | Navigation round-trip browser test | OPEN | OPEN |
+| KG-CP3-007 | CP3 | Knot-specific result count + scoped no-match wording | BUILD REQUIRED | `view-renderer.js`, `script.js` | Search state/accessibility review | OPEN | OPEN |
 
 
-| KG-CP4-001 | CP4.1 | Shared adjacent-`ⓘ` Reference convention on Knot Line Compatibility | BUILD REQUIRED / VERIFY | TBD at CP8 | Keyboard/touch + responsive interaction review | OPEN | OPEN |
-| KG-CP4-002 | CP4.1 | Line Type Reference surface browser test with preserved return context | BUILD TEST REQUIRED | TBD at CP8 | A/B browser + round-trip state/focus test | OPEN | OPEN |
-| KG-CP4-003 | CP4.2 | Approved Knot Detail identity/header order + non-interactive classification | BUILD REQUIRED | TBD at CP8 | All-10-Knot identity + responsive review | OPEN | OPEN |
-| KG-CP4-004 | CP4.3 | ABOUT THIS KNOT independent disclosure group | BUILD REQUIRED | TBD at CP8 | Disclosure state + keyboard/touch/responsive review | OPEN | OPEN |
-| KG-CP4-005 | CP4.4 | Always-visible How to Tie It + numbered tyingSteps + CP5 media slot | BUILD REQUIRED | TBD at CP8 | All-10-Knot step + instructional-flow review | OPEN | OPEN |
-| KG-CP4-006 | CP4.5 | Always-visible Check Your Knot from finalChecks | BUILD REQUIRED | TBD at CP8 | All-10-Knot verification-content review | OPEN | OPEN |
-| KG-CP4-007 | CP4.5 | More Help disclosures for commonMistakes + limitations | BUILD REQUIRED | TBD at CP8 | Content mapping + disclosure interaction review | OPEN | OPEN |
-| KG-CP4-008 | CP4.3/4.6 | Structured task/workflow/Rig navigation + Get Your Reel Ready bridge | BUILD REQUIRED / VERIFY | TBD at CP8 | Relationship + navigation matrix | OPEN | OPEN |
-| KG-CP4-009 | CP4.6 | Collapsed Sources + actual-origin parent navigation / no duplicate bottom Back action | BUILD REQUIRED / VERIFY | TBD at CP8 | Origin/source disclosure browser review | OPEN | OPEN |
-| KG-CP4-010 | CP4.6 | Post-CP5 Knot Detail instructional geometry experiment | BUILD TEST REQUIRED | TBD at CP8 | Mobile/intermediate/full-desktop comparison | OPEN | OPEN |
-| KG-CP5-001 | CP5.1 | Preserve verified external instructional-media baseline | VERIFY ONLY | TBD at CP8 | All-10-Knot media inventory + browser link verification | OPEN | OPEN |
-| KG-CP5-002 | CP5.1 | Four-Core-Knot FCC-owned static-state + step-through prototype | BUILD TEST REQUIRED | TBD at CP8 | Geometry + responsive browser review | OPEN | OPEN |
-| KG-CP5-003 | CP5.1 | Keep tyingSteps authoritative; visuals synchronize without duplicate instruction authority | BUILD TEST REQUIRED / VERIFY | TBD at CP8 | Core prototype step/visual cross-check | OPEN | OPEN |
-| KG-CP5-004 | CP5.1 | Motion optional only; user-controlled/non-autoplay/reduced-motion/static-final-state requirements if used | VERIFY ONLY / BUILD TEST IF MOTION USED | TBD at CP8 | Accessibility/motion matrix if implemented | OPEN | OPEN |
-| KG-CP5-005 | CP5.2 | Static instructional-state mapping synchronized to tyingSteps; 1:1 default, not permanent schema constraint | BUILD TEST REQUIRED | TBD at CP8 | Four-Core-Knot step/state + geometry review | OPEN | OPEN |
-| KG-CP5-006 | CP5.2 | Viewer = visual + Step N of M + canonical text + Previous/Next; full numbered text retained | BUILD TEST REQUIRED | TBD at CP8 | Keyboard/touch/fallback + responsive browser review | OPEN | OPEN |
-| KG-CP5-007 | CP5.2 | Final canonical tying step normally owns completed-Knot state; no media-only Finished Knot step | BUILD TEST REQUIRED / VERIFY | TBD at CP8 | Core final-state + Check Your Knot flow review | OPEN | OPEN |
-| KG-CP5-008 | CP5.2 | Preserve string-array tyingSteps + derived numbering; no stable step IDs/step objects/media step count without proven need | VERIFY ONLY | TBD at CP8 | Schema/data diff + prototype mapping review | OPEN | OPEN |
-| KG-CP5-009 | CP5.2 | SVG static states are candidate visual unit; packaging deferred to CP5.4 | BUILD TEST REQUIRED | TBD at CP8 | SVG fidelity/readability/maintainability review | OPEN | OPEN |
-| KG-CP5-010 | CP5.3 | Phone-first vector line grammar + continuous-line standing/tag distinction | BUILD TEST REQUIRED | TBD at CP8 | Four-Core-Knot phone readability + visual consistency | OPEN | OPEN |
-| KG-CP5-011 | CP5.3 | Colorblind-friendly instructional palette + mandatory non-color line identity cues | BUILD TEST REQUIRED | TBD at CP8 | Color-vision/grayscale + light/dark theme review | OPEN | OPEN |
-| KG-CP5-012 | CP5.3 | Unambiguous over/under crossings + loop/opening readability | BUILD TEST REQUIRED | TBD at CP8 | Crossing/loop geometry checklist | OPEN | OPEN |
-| KG-CP5-013 | CP5.3 | Restrained action cues + simplified hardware + default no-hands treatment | BUILD TEST REQUIRED | TBD at CP8 | Action-cue/hardware clarity review | OPEN | OPEN |
-| KG-CP5-014 | CP5.3 | Sparse labels; no duplicated canonical instruction text inside SVG | BUILD TEST REQUIRED / VERIFY | TBD at CP8 | SVG text inventory + step/visual cross-check | OPEN | OPEN |
-| KG-CP5-015 | CP5.3 | Theme-aware phone-first/orientation-flexible presentation + geometry accuracy validation | BUILD TEST REQUIRED | TBD at CP8 | Responsive/theme/accessibility/geometry review | OPEN | OPEN |
+| KG-CP4-001 | CP4.1 | Shared adjacent-`ⓘ` Reference convention on Knot Line Compatibility | BUILD REQUIRED / VERIFY | `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/touch + responsive interaction review | OPEN | OPEN |
+| KG-CP4-002 | CP4.1 | Line Type Reference surface browser test with preserved return context | BUILD TEST REQUIRED | `view-renderer.js`, `script.js`, `forest-journal.css` | A/B browser + round-trip state/focus test | OPEN | OPEN |
+| KG-CP4-003 | CP4.2 | Approved Knot Detail identity/header order + non-interactive classification | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | All-10-Knot identity + responsive review | OPEN | OPEN |
+| KG-CP4-004 | CP4.3 | ABOUT THIS KNOT independent disclosure group | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Disclosure state + keyboard/touch/responsive review | OPEN | OPEN |
+| KG-CP4-005 | CP4.4 | Always-visible How to Tie It + numbered tyingSteps + CP5 media slot | BUILD REQUIRED | `view-renderer.js`, `knot-media-renderer.js`, `forest-journal.css` | All-10-Knot step + instructional-flow review | OPEN | OPEN |
+| KG-CP4-006 | CP4.5 | Always-visible Check Your Knot from finalChecks | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | All-10-Knot verification-content review | OPEN | OPEN |
+| KG-CP4-007 | CP4.5 | More Help disclosures for commonMistakes + limitations | BUILD REQUIRED | `view-renderer.js`, `forest-journal.css` | Content mapping + disclosure interaction review | OPEN | OPEN |
+| KG-CP4-008 | CP4.3/4.6 | Structured task/workflow/Rig navigation + Get Your Reel Ready bridge | BUILD REQUIRED / VERIFY | `view-renderer.js`, `script.js` | Relationship + navigation matrix | OPEN | OPEN |
+| KG-CP4-009 | CP4.6 | Collapsed Sources + actual-origin parent navigation / no duplicate bottom Back action | BUILD REQUIRED / VERIFY | `view-renderer.js`, `script.js` | Origin/source disclosure browser review | OPEN | OPEN |
+| KG-CP4-010 | CP4.6 | Post-CP5 Knot Detail instructional geometry experiment | BUILD TEST REQUIRED | `view-renderer.js`, `knot-media-renderer.js`, `forest-journal.css` | Mobile/intermediate/full-desktop comparison | OPEN | OPEN |
+| KG-CP5-001 | CP5.1 | Preserve verified external instructional-media baseline | VERIFY ONLY | `data/media.js` (verify existing), `knot-media-renderer.js` | All-10-Knot media inventory + browser link verification | OPEN | OPEN |
+| KG-CP5-002 | CP5.1 | Four-Core-Knot FCC-owned static-state + step-through prototype | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Geometry + responsive browser review | OPEN | OPEN |
+| KG-CP5-003 | CP5.1 | Keep tyingSteps authoritative; visuals synchronize without duplicate instruction authority | BUILD TEST REQUIRED / VERIFY | `data/knots.js` (instruction authority), `knot-media-renderer.js`, `view-renderer.js` | Core prototype step/visual cross-check | OPEN | OPEN |
+| KG-CP5-004 | CP5.1 | Motion optional only; user-controlled/non-autoplay/reduced-motion/static-final-state requirements if used | VERIFY ONLY / BUILD TEST IF MOTION USED | `knot-media-renderer.js`, `forest-journal.css` | Accessibility/motion matrix if implemented | OPEN | OPEN |
+| KG-CP5-005 | CP5.2 | Static instructional-state mapping synchronized to tyingSteps; 1:1 default, not permanent schema constraint | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Four-Core-Knot step/state + geometry review | OPEN | OPEN |
+| KG-CP5-006 | CP5.2 | Viewer = visual + Step N of M + canonical text + Previous/Next; full numbered text retained | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Keyboard/touch/fallback + responsive browser review | OPEN | OPEN |
+| KG-CP5-007 | CP5.2 | Final canonical tying step normally owns completed-Knot state; no media-only Finished Knot step | BUILD TEST REQUIRED / VERIFY | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Core final-state + Check Your Knot flow review | OPEN | OPEN |
+| KG-CP5-008 | CP5.2 | Preserve string-array tyingSteps + derived numbering; no stable step IDs/step objects/media step count without proven need | VERIFY ONLY | `data/knots.js`, `tools/validate_repository_integrity.js` | Schema/data diff + prototype mapping review | OPEN | OPEN |
+| KG-CP5-009 | CP5.2 | SVG static states are candidate visual unit; packaging deferred to CP5.4 | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | SVG fidelity/readability/maintainability review | OPEN | OPEN |
+| KG-CP5-010 | CP5.3 | Phone-first vector line grammar + continuous-line standing/tag distinction | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Four-Core-Knot phone readability + visual consistency | OPEN | OPEN |
+| KG-CP5-011 | CP5.3 | Colorblind-friendly instructional palette + mandatory non-color line identity cues | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Color-vision/grayscale + light/dark theme review | OPEN | OPEN |
+| KG-CP5-012 | CP5.3 | Unambiguous over/under crossings + loop/opening readability | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Crossing/loop geometry checklist | OPEN | OPEN |
+| KG-CP5-013 | CP5.3 | Restrained action cues + simplified hardware + default no-hands treatment | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Action-cue/hardware clarity review | OPEN | OPEN |
+| KG-CP5-014 | CP5.3 | Sparse labels; no duplicated canonical instruction text inside SVG | BUILD TEST REQUIRED / VERIFY | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | SVG text inventory + step/visual cross-check | OPEN | OPEN |
+| KG-CP5-015 | CP5.3 | Theme-aware phone-first/orientation-flexible presentation + geometry accuracy validation | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `knot-media-renderer.js`, `forest-journal.css` | Responsive/theme/accessibility/geometry review | OPEN | OPEN |
 
 
-| KG-CP5-016 | CP5.4 | Reuse-first public-domain/open-license sourcing + asset-level rights verification | BUILD TEST REQUIRED / VERIFY | TBD at CP8 | Four-Core asset rights/provenance + suitability review | OPEN | OPEN |
-| KG-CP5-017 | CP5.4 | Reusable media must pass canonical/geometry/mobile/visual-grammar suitability; custom SVG fallback otherwise | BUILD TEST REQUIRED | TBD at CP8 | Four-Core rights + technical suitability matrix | OPEN | OPEN |
-| KG-CP5-018 | CP5.4 | Custom SVG geometry deliberately constructed/verified; generated imagery not geometry authority or trace source | BUILD TEST REQUIRED / VERIFY | TBD at CP8 | Geometry provenance + state technical review | OPEN | OPEN |
-| KG-CP5-019 | CP5.4 | One inspectable SVG per state as prototype packaging default; avoid premature dynamic media architecture | BUILD TEST REQUIRED | TBD at CP8 | File/loader simplicity + maintainability review | OPEN | OPEN |
-| KG-CP5-020 | CP5.4 | Per-state technical validation checklist | BUILD TEST REQUIRED | TBD at CP8 | Completed state checklist across Core prototype | OPEN | OPEN |
-| KG-CP5-021 | CP5.4 | Sequence + finished-Knot validation with reject/rework rule | BUILD TEST REQUIRED | TBD at CP8 | Full sequence + final-state review | OPEN | OPEN |
-| KG-CP5-022 | CP5.4 | Progressive prototype order + all-four acceptance before promotion proposal | BUILD TEST REQUIRED | TBD at CP8 | Progressive results + four-Knot acceptance summary | OPEN | OPEN |
-| KG-CP5-023 | CP5.5 | External instruction remains in HOW TO TIE IT before/after any later FCC promotion | BUILD REQUIRED / VERIFY | TBD at CP8 | All-10-Knot placement + browser review | OPEN | OPEN |
-| KG-CP5-024 | CP5.5 | Medium-specific labels/provider attribution + `↗` external / `→` internal convention | BUILD REQUIRED / VERIFY | TBD at CP8 | Label/provider/affordance review | OPEN | OPEN |
-| KG-CP5-025 | CP5.5 | Link external media; no copy/rehost/extract without separately verified reuse rights | VERIFY ONLY | TBD at CP8 | Rights/provenance + asset/link inventory | OPEN | OPEN |
-| KG-CP5-026 | CP5.5 | One preferred external instructional destination per Knot by default | VERIFY ONLY | TBD at CP8 | All-10-Knot destination-count/rationale inventory | OPEN | OPEN |
-| KG-CP5-027 | CP5.5 | External failure remains non-blocking + active link verification | VERIFY ONLY / BUILD REQUIRED IF DEFECT FOUND | TBD at CP8 | External-link + failure-state review | OPEN | OPEN |
-| KG-CP5-028 | CP5.5 | External round-trip context preservation + More visual instruction placement experiment | BUILD TEST REQUIRED | TBD at CP8 | State restoration + responsive teaching-flow review | OPEN | OPEN |
-| KG-CP5-029 | CP5.6 | One responsive teaching hierarchy; phone authoritative / no desktop-only essential instruction | BUILD TEST REQUIRED | TBD at CP8 | Hierarchy + overflow + information-parity review | OPEN | OPEN |
-| KG-CP5-030 | CP5.6 | Consistent Previous/Next semantics + accessible focus/disabled-state behavior | BUILD REQUIRED / VERIFY | TBD at CP8 | Keyboard/touch/focus state matrix | OPEN | OPEN |
-| KG-CP5-031 | CP5.6 | Intermediate stacked default + shared FCC breakpoints unless concrete defect | BUILD TEST REQUIRED / VERIFY | TBD at CP8 | Tablet/intermediate + breakpoint inventory | OPEN | OPEN |
-| KG-CP5-032 | CP5.6 | Desktop stacked-vs-side-by-side bounded layout experiment | BUILD TEST REQUIRED | TBD at CP8 | Full-desktop Core-prototype A/B review | OPEN | OPEN |
-| KG-CP5-033 | CP5.6 | Orientation-flexible SVG/viewBox + stable viewer geometry across state changes | BUILD TEST REQUIRED | TBD at CP8 | Four-Core state-transition layout review | OPEN | OPEN |
-| KG-CP5-034 | CP5.6 | Full numbered steps remain accessible/non-interactive; current-step emphasis + Double Uni/Arbor stress test | BUILD TEST REQUIRED / VERIFY | TBD at CP8 | Full-step accessibility + responsive stress test | OPEN | OPEN |
-| KG-CP5-035 | CP5.7 | Current working Knot Detail/instructional experience remains implementation baseline; refine rather than assume replacement | BUILD TEST REQUIRED | TBD at CP8 | Baseline-vs-refined representative browser comparison | OPEN | OPEN |
-| KG-CP5-036 | CP5.7 | Four-Core media prototype is an evidence test, not a predetermined viewer proof | BUILD TEST REQUIRED | TBD at CP8 | Four-Core treatment comparison + explicit verdict | OPEN | OPEN |
-| KG-CP5-037 | CP5.7 | No mandatory FCC-owned media for remaining six before prototype verdict; expansion/per-Knot variation evidence-driven | VERIFY ONLY | TBD at CP8 | Media-scope inventory before/after verdict | OPEN | OPEN |
-| KG-CP5-038 | CP5.7 | External instruction protected through replacement validation; permanent retention/placement/removal remains build-test refinement | BUILD TEST REQUIRED | TBD at CP8 | Post-replacement teaching-flow/value comparison | OPEN | OPEN |
-| KG-CP5-039 | CP5.7 | Outcome-based closure: complete/correct/non-regressive/no partial local sequence/accessible-responsive | VERIFY ONLY / BUILD REQUIRED IF DEFECT FOUND | TBD at CP8 | Technical/regression/accessibility/responsive checklist | OPEN | OPEN |
-| KG-CP5-040 | CP5.7 | CP8 separates known scope from decision gates; CP9 resolves actual final media treatment without assumed outcome | DEFERRED — CP8 implementation scope lock / CP9 browser validation | TBD at CP8 | CP8 traceability + CP9 disposition readback | OPEN | OPEN |
-| KG-CP6-001 | CP6.1 | Preserve first-class branching Reel Setup architecture | VERIFY ONLY | TBD at CP8 | Branch/path inventory + browser walkthrough | OPEN | OPEN |
-| KG-CP6-002 | CP6.1 | Reserve special workflow-card treatment for true special surfaces; ordinary internal choices use normal treatment | BUILD REQUIRED | TBD at CP8 | Representative choice-screen review | OPEN | OPEN |
-| KG-CP6-003 | CP6.1 | Full-width primary progression + separate Restart Setup / Exit to Knots utility row | BUILD TEST REQUIRED | TBD at CP8 | Responsive control-layout + touch-target review | OPEN | OPEN |
-| KG-CP6-004 | CP6.1 | Beginner-facing Restart/Exit wording; remove exposed Package 3 terminology | BUILD REQUIRED | TBD at CP8 | Full-workflow text/control inventory | OPEN | OPEN |
-| KG-CP6-005 | CP6.1 | Restart resets Reel Setup without unnecessarily destroying external origin/return context | BUILD REQUIRED | TBD at CP8 | Origin-context restart regression test | OPEN | OPEN |
-| KG-CP6-006 | CP6.1 | Exit to Knots is destructive exit to Knots landing with no implied resume session | BUILD REQUIRED / VERIFY | TBD at CP8 | Exit/fresh-entry state test | OPEN | OPEN |
-| KG-CP6-007 | CP6.1 | Selected-choice values use shared workflow blue while summary surface stays theme-based/noninteractive | BUILD REQUIRED / BUILD TEST | TBD at CP8 | Theme/contrast/browser review | OPEN | OPEN |
-| KG-CP6-008 | CP6.1 | Combined but clearly partitioned Selected Choices + Setup Progress status section | BUILD TEST REQUIRED | TBD at CP8 | Responsive hierarchy review | OPEN | OPEN |
-| KG-CP6-009 | CP6.1 / superseded by CP6.5 | Final fixed noninteractive five-phase Reel → Line → Equipment → Spool → Ready progress model | BUILD TEST REQUIRED | TBD at CP8 | Phase-state + responsive + accessibility review | OPEN | OPEN |
-| KG-CP6-010 | CP6.1 | Preserve responsive baseline and validate new status/utilities across shared breakpoints | VERIFY ONLY / BUILD TEST REQUIRED | TBD at CP8 | Responsive regression comparison | OPEN | OPEN |
-| KG-CP6-011 | CP6.2 | Three actual reel choices; direct actual selection to Line Selection | VERIFY ONLY / BUILD REQUIRED IF CURRENT fourth choice remains | TBD at CP8 | Choice inventory + route test | OPEN | OPEN |
-| KG-CP6-012 | CP6.2 | Spinning Reel carries Recommended First Setup cue without confusing identification | BUILD REQUIRED / BUILD TEST REQUIRED | TBD at CP8 | Beginner comprehension + visual hierarchy review | OPEN | OPEN |
-| KG-CP6-013 | CP6.2 | Beginner-visible physical reel-recognition copy | BUILD REQUIRED | TBD at CP8 | Content + browser review | OPEN | OPEN |
-| KG-CP6-014 | CP6.2 | Remove separate I'm Not Sure / Which Reel Matches Yours workflow branch | BUILD REQUIRED | TBD at CP8 | Branch inventory + direct-route test | OPEN | OPEN |
-| KG-CP6-015 | CP6.2 | Inline Not sure which reel you have? `ⓘ` Reference trigger | BUILD REQUIRED | TBD at CP8 | Pointer/touch/keyboard/focus review | OPEN | OPEN |
-| KG-CP6-016 | CP6.2 | Three-page reel-identification Reference surface with optional representative/labeled visual | BUILD TEST REQUIRED | TBD at CP8 | Multi-page content/visual recognition review | OPEN | OPEN |
-| KG-CP6-017 | CP6.2 | Explicit Previous/Next + position; swipe optional; no autoplay; no workflow-state mutation | BUILD REQUIRED / BUILD TEST REQUIRED | TBD at CP8 | Keyboard/touch/swipe/focus/state review | OPEN | OPEN |
-| KG-CP6-018 | CP6.2 | Remove obsolete Back to Reel Choices + obsolete identification workflow state/navigation | BUILD REQUIRED | TBD at CP8 | Dead-route/state inventory | OPEN | OPEN |
-| KG-CP6-019 | CP6.2 | Preserve downstream reset behavior + keep Reference inside Reel progress phase | VERIFY ONLY | TBD at CP8 | State-reset + phase matrix | OPEN | OPEN |
-| KG-CP6-020 | CP6.2 → CP6.3 | Reconcile beginner baseline to Spinning → All-Around Freshwater → 10 lb Monofilament | DEFERRED — CP6.3 | TBD at CP8 | Recommendation + equipment-guidance reconciliation | OPEN | OPEN |
+| KG-CP5-016 | CP5.4 | Reuse-first public-domain/open-license sourcing + asset-level rights verification | BUILD TEST REQUIRED / VERIFY | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Four-Core asset rights/provenance + suitability review | OPEN | OPEN |
+| KG-CP5-017 | CP5.4 | Reusable media must pass canonical/geometry/mobile/visual-grammar suitability; custom SVG fallback otherwise | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Four-Core rights + technical suitability matrix | OPEN | OPEN |
+| KG-CP5-018 | CP5.4 | Custom SVG geometry deliberately constructed/verified; generated imagery not geometry authority or trace source | BUILD TEST REQUIRED / VERIFY | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Geometry provenance + state technical review | OPEN | OPEN |
+| KG-CP5-019 | CP5.4 | One inspectable SVG per state as prototype packaging default; avoid premature dynamic media architecture | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | File/loader simplicity + maintainability review | OPEN | OPEN |
+| KG-CP5-020 | CP5.4 | Per-state technical validation checklist | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Completed state checklist across Core prototype | OPEN | OPEN |
+| KG-CP5-021 | CP5.4 | Sequence + finished-Knot validation with reject/rework rule | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Full sequence + final-state review | OPEN | OPEN |
+| KG-CP5-022 | CP5.4 | Progressive prototype order + all-four acceptance before promotion proposal | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `tools/validate_repository_integrity.js` | Progressive results + four-Knot acceptance summary | OPEN | OPEN |
+| KG-CP5-023 | CP5.5 | External instruction remains in HOW TO TIE IT before/after any later FCC promotion | BUILD REQUIRED / VERIFY | `data/media.js`, `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | All-10-Knot placement + browser review | OPEN | OPEN |
+| KG-CP5-024 | CP5.5 | Medium-specific labels/provider attribution + `↗` external / `→` internal convention | BUILD REQUIRED / VERIFY | `data/media.js`, `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Label/provider/affordance review | OPEN | OPEN |
+| KG-CP5-025 | CP5.5 | Link external media; no copy/rehost/extract without separately verified reuse rights | VERIFY ONLY | `data/media.js` (rights/source owner), `knot-media-renderer.js` | Rights/provenance + asset/link inventory | OPEN | OPEN |
+| KG-CP5-026 | CP5.5 | One preferred external instructional destination per Knot by default | VERIFY ONLY | `data/media.js` (rights/source owner), `knot-media-renderer.js` | All-10-Knot destination-count/rationale inventory | OPEN | OPEN |
+| KG-CP5-027 | CP5.5 | External failure remains non-blocking + active link verification | VERIFY ONLY / BUILD REQUIRED IF DEFECT FOUND | `data/media.js`, `knot-media-renderer.js`; `tools/check_external_references.js` verify-only | External-link + failure-state review | OPEN | OPEN |
+| KG-CP5-028 | CP5.5 | External round-trip context preservation + More visual instruction placement experiment | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | State restoration + responsive teaching-flow review | OPEN | OPEN |
+| KG-CP5-029 | CP5.6 | One responsive teaching hierarchy; phone authoritative / no desktop-only essential instruction | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Hierarchy + overflow + information-parity review | OPEN | OPEN |
+| KG-CP5-030 | CP5.6 | Consistent Previous/Next semantics + accessible focus/disabled-state behavior | BUILD REQUIRED / VERIFY | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Keyboard/touch/focus state matrix | OPEN | OPEN |
+| KG-CP5-031 | CP5.6 | Intermediate stacked default + shared FCC breakpoints unless concrete defect | BUILD TEST REQUIRED / VERIFY | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Tablet/intermediate + breakpoint inventory | OPEN | OPEN |
+| KG-CP5-032 | CP5.6 | Desktop stacked-vs-side-by-side bounded layout experiment | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Full-desktop Core-prototype A/B review | OPEN | OPEN |
+| KG-CP5-033 | CP5.6 | Orientation-flexible SVG/viewBox + stable viewer geometry across state changes | BUILD TEST REQUIRED | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Four-Core state-transition layout review | OPEN | OPEN |
+| KG-CP5-034 | CP5.6 | Full numbered steps remain accessible/non-interactive; current-step emphasis + Double Uni/Arbor stress test | BUILD TEST REQUIRED / VERIFY | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Full-step accessibility + responsive stress test | OPEN | OPEN |
+| KG-CP5-035 | CP5.7 | Current working Knot Detail/instructional experience remains implementation baseline; refine rather than assume replacement | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Baseline-vs-refined representative browser comparison | OPEN | OPEN |
+| KG-CP5-036 | CP5.7 | Four-Core media prototype is an evidence test, not a predetermined viewer proof | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Four-Core treatment comparison + explicit verdict | OPEN | OPEN |
+| KG-CP5-037 | CP5.7 | No mandatory FCC-owned media for remaining six before prototype verdict; expansion/per-Knot variation evidence-driven | VERIFY ONLY | `data/media.js` + `images/knots/instructional/` scope guard; no six-Knot expansion before verdict | Media-scope inventory before/after verdict | OPEN | OPEN |
+| KG-CP5-038 | CP5.7 | External instruction protected through replacement validation; permanent retention/placement/removal remains build-test refinement | BUILD TEST REQUIRED | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | Post-replacement teaching-flow/value comparison | OPEN | OPEN |
+| KG-CP5-039 | CP5.7 | Outcome-based closure: complete/correct/non-regressive/no partial local sequence/accessible-responsive | VERIFY ONLY / BUILD REQUIRED IF DEFECT FOUND | `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css`, `tools/validate_repository_integrity.js` | Technical/regression/accessibility/responsive checklist | OPEN | OPEN |
+| KG-CP5-040 | CP5.7 | CP8 separates known scope from decision gates; CP9 resolves actual final media treatment without assumed outcome | DEFERRED — CP8 implementation scope lock / CP9 browser validation | `images/knots/instructional/<knot-id>/*.svg` (conditional), `data/media.js` (conditional), `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css` | CP8 traceability + CP9 disposition readback | OPEN | OPEN |
+| KG-CP6-001 | CP6.1 | Preserve first-class branching Reel Setup architecture | VERIFY ONLY | `script.js` | Branch/path inventory + browser walkthrough | OPEN | OPEN |
+| KG-CP6-002 | CP6.1 | Reserve special workflow-card treatment for true special surfaces; ordinary internal choices use normal treatment | BUILD REQUIRED | `script.js`, `forest-journal.css` | Representative choice-screen review | OPEN | OPEN |
+| KG-CP6-003 | CP6.1 | Full-width primary progression + separate Restart Setup / Exit to Knots utility row | BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Responsive control-layout + touch-target review | OPEN | OPEN |
+| KG-CP6-004 | CP6.1 | Beginner-facing Restart/Exit wording; remove exposed Package 3 terminology | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Full-workflow text/control inventory | OPEN | OPEN |
+| KG-CP6-005 | CP6.1 | Restart resets Reel Setup without unnecessarily destroying external origin/return context | BUILD REQUIRED | `script.js` | Origin-context restart regression test | OPEN | OPEN |
+| KG-CP6-006 | CP6.1 | Exit to Knots is destructive exit to Knots landing with no implied resume session | BUILD REQUIRED / VERIFY | `script.js` | Exit/fresh-entry state test | OPEN | OPEN |
+| KG-CP6-007 | CP6.1 | Selected-choice values use shared workflow blue while summary surface stays theme-based/noninteractive | BUILD REQUIRED / BUILD TEST | `script.js`, `forest-journal.css` | Theme/contrast/browser review | OPEN | OPEN |
+| KG-CP6-008 | CP6.1 | Combined but clearly partitioned Selected Choices + Setup Progress status section | BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Responsive hierarchy review | OPEN | OPEN |
+| KG-CP6-009 | CP6.1 / superseded by CP6.5 | Final fixed noninteractive five-phase Reel → Line → Equipment → Spool → Ready progress model | BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Phase-state + responsive + accessibility review | OPEN | OPEN |
+| KG-CP6-010 | CP6.1 | Preserve responsive baseline and validate new status/utilities across shared breakpoints | VERIFY ONLY / BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Responsive regression comparison | OPEN | OPEN |
+| KG-CP6-011 | CP6.2 | Three actual reel choices; direct actual selection to Line Selection | VERIFY ONLY / BUILD REQUIRED IF CURRENT fourth choice remains | `data/reel-guidance.js`, `script.js` | Choice inventory + route test | OPEN | OPEN |
+| KG-CP6-012 | CP6.2 | Spinning Reel carries Recommended First Setup cue without confusing identification | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js`, `forest-journal.css` | Beginner comprehension + visual hierarchy review | OPEN | OPEN |
+| KG-CP6-013 | CP6.2 | Beginner-visible physical reel-recognition copy | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Content + browser review | OPEN | OPEN |
+| KG-CP6-014 | CP6.2 | Remove separate I'm Not Sure / Which Reel Matches Yours workflow branch | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Branch inventory + direct-route test | OPEN | OPEN |
+| KG-CP6-015 | CP6.2 | Inline Not sure which reel you have? `ⓘ` Reference trigger | BUILD REQUIRED | `script.js`, `view-renderer.js`, `forest-journal.css` | Pointer/touch/keyboard/focus review | OPEN | OPEN |
+| KG-CP6-016 | CP6.2 | Three-page reel-identification Reference surface with optional representative/labeled visual | BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Multi-page content/visual recognition review | OPEN | OPEN |
+| KG-CP6-017 | CP6.2 | Explicit Previous/Next + position; swipe optional; no autoplay; no workflow-state mutation | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/touch/swipe/focus/state review | OPEN | OPEN |
+| KG-CP6-018 | CP6.2 | Remove obsolete Back to Reel Choices + obsolete identification workflow state/navigation | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Dead-route/state inventory | OPEN | OPEN |
+| KG-CP6-019 | CP6.2 | Preserve downstream reset behavior + keep Reference inside Reel progress phase | VERIFY ONLY | `script.js` | State-reset + phase matrix | OPEN | OPEN |
+| KG-CP6-020 | CP6.2 → CP6.3 | Reconcile beginner baseline to Spinning → All-Around Freshwater → 10 lb Monofilament | DEFERRED — CP6.3 | `data/reel-guidance.js`, `script.js` | Recommendation + equipment-guidance reconciliation | OPEN | OPEN |
 
 
-| KG-CP6-021 | CP6.3 | Derive canonical Fish category titles; Crappie & Sunfish replaces duplicated Panfish wording | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | TBD at CP8 | Canonical-title mutation + card inventory | OPEN | OPEN |
-| KG-CP6-022 | CP6.3 | All-Around first + Fish Guide canonical category order reuse | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | TBD at CP8 | Ordering comparison | OPEN | OPEN |
-| KG-CP6-023 | CP6.3 | Target recommendation-page wording review | BUILD REQUIRED / BUILD TEST REQUIRED | TBD at CP8 | Six-target content/browser matrix | OPEN | OPEN |
-| KG-CP6-024 | CP6.3 | All-Around baseline 10 lb Mono; 8 lb lighter alternative | BUILD REQUIRED | TBD at CP8 | Recommendation reconciliation | OPEN | OPEN |
-| KG-CP6-025 | CP6.3 | Reconcile six targets x supported Line Types; no blind Mono relabel | CONTENT RECONCILIATION / BUILD REQUIRED | TBD at CP8 | Target x Line Type matrix | OPEN | OPEN |
-| KG-CP6-026 | CP6.3 | Replace target-page compatibility Next card with Line Weight selection/confirmation | BUILD REQUIRED / BUILD TEST REQUIRED | TBD at CP8 | Interaction matrix | OPEN | OPEN |
-| KG-CP6-027 | CP6.3 | Rolling Line Weight selector preferred build candidate | BUILD TEST REQUIRED | TBD at CP8 | Touch/keyboard/responsive comparison | OPEN | OPEN |
-| KG-CP6-028 | CP6.3 | Explicit dynamic Continue confirms Line Weight; no selector auto-advance | BUILD REQUIRED / BUILD TEST REQUIRED | TBD at CP8 | Confirmation/state test | OPEN | OPEN |
-| KG-CP6-029 | CP6.3 | Persist transient actual Line Weight + show in Selected Choices | BUILD REQUIRED | TBD at CP8 | State/reset/status matrix | OPEN | OPEN |
-| KG-CP6-030 | CP6.3 | Equipment copy uses actual confirmed Line Type + Line Weight | BUILD REQUIRED | TBD at CP8 | Dynamic-copy matrix | OPEN | OPEN |
-| KG-CP6-031 | CP6.3 | Equipment education only; no FCC compatibility pass/fail or blocking | BUILD REQUIRED / VERIFY | TBD at CP8 | Out-of-recommendation progression + copy review | OPEN | OPEN |
-| KG-CP6-032 | CP6.3 | Preserve Reel/Rod reading guidance + labeled reel/spool diagram | BUILD REQUIRED / BUILD TEST REQUIRED | TBD at CP8 | Reference/diagram/responsive review | OPEN | OPEN |
-| KG-CP6-033 | CP6.3 | Build-time wording pass for Target -> Recommendation/Selection -> Equipment | BUILD TEST REQUIRED | TBD at CP8 | End-to-end beginner comprehension | OPEN | OPEN |
-| KG-CP6-034 | CP6.3 | Approved six-target starting-reference values incl. Bass/Catfish corrections | BUILD REQUIRED | TBD at CP8 | Six-target value/content + browser matrix | OPEN | OPEN |
-| KG-CP6-035 | CP6.3 | Selector initializes only from exact approved target + Line Type numeric recommendation; otherwise unconfirmed | BUILD REQUIRED / BUILD TEST REQUIRED | TBD at CP8 | Line Type x target initialization matrix | OPEN | OPEN |
-| KG-CP6-036 | CP6.3 | Replace Help Me Choose / I'm Not Sure Line branches with inline Line Type Reference trigger | BUILD REQUIRED | TBD at CP8 | Dead-branch/state + navigation review | OPEN | OPEN |
-| KG-CP6-037 | CP6.3 | Three-page Line Type Reference for Mono/Fluoro/Braid | BUILD REQUIRED / BUILD TEST REQUIRED | TBD at CP8 | Keyboard/touch/focus/state/responsive review | OPEN | OPEN |
-| KG-CP6-038 | CP6.3 | Remove equipment confirmation/mismatch/completed states; educational Equipment + normal Continue | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | TBD at CP8 | Dead-state inventory + workflow regression | OPEN | OPEN |
-| KG-CP6-039 | CP6.3 | Consolidated Equipment Reference: Read Reel / Read Rod / If Ratings Don't Match | BUILD REQUIRED / BUILD TEST REQUIRED | TBD at CP8 | Reference content/focus/responsive review | OPEN | OPEN |
-| KG-CP6-040 | CP6.3 | Spincast + Braid remains informational manufacturer-check safeguard, non-blocking | BUILD REQUIRED / VERIFY | TBD at CP8 | Combination-path wording/progression test | OPEN | OPEN |
+| KG-CP6-021 | CP6.3 | Derive canonical Fish category titles; Crappie & Sunfish replaces duplicated Panfish wording | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | Canonical-title mutation + card inventory | OPEN | OPEN |
+| KG-CP6-022 | CP6.3 | All-Around first + Fish Guide canonical category order reuse | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | Ordering comparison | OPEN | OPEN |
+| KG-CP6-023 | CP6.3 | Target recommendation-page wording review | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js` | Six-target content/browser matrix | OPEN | OPEN |
+| KG-CP6-024 | CP6.3 | All-Around baseline 10 lb Mono; 8 lb lighter alternative | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Recommendation reconciliation | OPEN | OPEN |
+| KG-CP6-025 | CP6.3 | Reconcile six targets x supported Line Types; no blind Mono relabel | CONTENT RECONCILIATION / BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Target x Line Type matrix | OPEN | OPEN |
+| KG-CP6-026 | CP6.3 | Replace target-page compatibility Next card with Line Weight selection/confirmation | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js`, `forest-journal.css` | Interaction matrix | OPEN | OPEN |
+| KG-CP6-027 | CP6.3 | Rolling Line Weight selector preferred build candidate | BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Touch/keyboard/responsive comparison | OPEN | OPEN |
+| KG-CP6-028 | CP6.3 | Explicit dynamic Continue confirms Line Weight; no selector auto-advance | BUILD REQUIRED / BUILD TEST REQUIRED | `script.js` | Confirmation/state test | OPEN | OPEN |
+| KG-CP6-029 | CP6.3 | Persist transient actual Line Weight + show in Selected Choices | BUILD REQUIRED | `script.js` | State/reset/status matrix | OPEN | OPEN |
+| KG-CP6-030 | CP6.3 | Equipment copy uses actual confirmed Line Type + Line Weight | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Dynamic-copy matrix | OPEN | OPEN |
+| KG-CP6-031 | CP6.3 | Equipment education only; no FCC compatibility pass/fail or blocking | BUILD REQUIRED / VERIFY | `data/reel-guidance.js`, `script.js` | Out-of-recommendation progression + copy review | OPEN | OPEN |
+| KG-CP6-032 | CP6.3 | Preserve Reel/Rod reading guidance + labeled reel/spool diagram | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Reference/diagram/responsive review | OPEN | OPEN |
+| KG-CP6-033 | CP6.3 | Build-time wording pass for Target -> Recommendation/Selection -> Equipment | BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js` | End-to-end beginner comprehension | OPEN | OPEN |
+| KG-CP6-034 | CP6.3 | Approved six-target starting-reference values incl. Bass/Catfish corrections | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Six-target value/content + browser matrix | OPEN | OPEN |
+| KG-CP6-035 | CP6.3 | Selector initializes only from exact approved target + Line Type numeric recommendation; otherwise unconfirmed | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js` | Line Type x target initialization matrix | OPEN | OPEN |
+| KG-CP6-036 | CP6.3 | Replace Help Me Choose / I'm Not Sure Line branches with inline Line Type Reference trigger | BUILD REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js` | Dead-branch/state + navigation review | OPEN | OPEN |
+| KG-CP6-037 | CP6.3 | Three-page Line Type Reference for Mono/Fluoro/Braid | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Keyboard/touch/focus/state/responsive review | OPEN | OPEN |
+| KG-CP6-038 | CP6.3 | Remove equipment confirmation/mismatch/completed states; educational Equipment + normal Continue | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | Dead-state inventory + workflow regression | OPEN | OPEN |
+| KG-CP6-039 | CP6.3 | Consolidated Equipment Reference: Read Reel / Read Rod / If Ratings Don't Match | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Reference content/focus/responsive review | OPEN | OPEN |
+| KG-CP6-040 | CP6.3 | Spincast + Braid remains informational manufacturer-check safeguard, non-blocking | BUILD REQUIRED / VERIFY | `data/reel-guidance.js`, `script.js` | Combination-path wording/progression test | OPEN | OPEN |
 
 
 ## CP6.4 — Backing + Spool Connection
@@ -1050,19 +1050,19 @@ This table becomes the CP8 implementation lock and CP10 closure checklist. Add e
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP6-041 | Remove obsolete Equipment compatibility-complete dependency from Backing/Spool progression. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Reel Setup state/router owners, exact files locked at CP8 | State/route inventory + non-blocking progression matrix | OPEN |
-| KG-CP6-042 | Make Backing conditional on actual Line Type: Braid only; Mono/Fluoro bypass directly into Spool. | BUILD REQUIRED / VERIFY | Reel Setup backing route/data/renderer owners, exact files locked at CP8 | Three-Line-Type branch matrix | OPEN |
-| KG-CP6-043 | For Braid, present Monofilament Backing as Recommended First Setup and Direct Braid only as Manufacturer Supported. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup backing copy/choice renderer owners, exact files locked at CP8 | Braid path content + hierarchy review | OPEN |
-| KG-CP6-044 | Do not expose optional/economy backing under Mono/Fluoro in Version 1. | BUILD REQUIRED / VERIFY | Reel Setup backing choices/route owners, exact files locked at CP8 | Mono/Fluoro branch inventory | OPEN |
-| KG-CP6-045 | Make Equipment progression conditional: Braid → Decide on Backing; Mono/Fluoro → Spool; preserve Spincast+Braid as non-blocking warning. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup Equipment/Backing navigation + copy owners, exact files locked at CP8 | Reel Type x Line Type progression matrix | OPEN |
-| KG-CP6-046 | Collapse the conceptual Spool Connection Plan / Spool the Reel split into one chronological Spool-phase experience with internal substeps as needed. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Reel Setup Spool state/router/renderer owners, exact files locked at CP8 | State inventory + chronological path walkthrough | OPEN |
-| KG-CP6-047 | Implement direct Mono/Fluoro sequence: reel-specific prepare/routing → Arbor Knot → return to same Spool point → wind main line → fill check. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup Spool guidance + Knot handoff owners, exact files locked at CP8 | Reel Type x direct-line browser walkthrough | OPEN |
-| KG-CP6-048 | Implement Braid + Mono Backing sequence: Arbor → wind backing → Double Uni → wind Braid → fill check. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup Spool/backing/Knot handoff owners, exact files locked at CP8 | Braid-backing chronological walkthrough | OPEN |
-| KG-CP6-049 | Direct Braid uses exact manufacturer-supported attachment and must not receive generic Arbor guidance. | BUILD REQUIRED / VERIFY | Reel Setup direct-Braid branch/copy owners, exact files locked at CP8 | Direct-Braid path review | OPEN |
-| KG-CP6-050 | Place task-worded Arbor/Double Uni handoffs at the physical action point and restore complete Spool state, originating action, scroll where appropriate, and keyboard focus on return. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup navigation/Knot detail return owners, exact files locked at CP8 | Keyboard/touch/focus/scroll/state round-trip | OPEN |
-| KG-CP6-051 | Propagate confirmed Line Type + Line Weight through Spool guidance and build-test a simple responsive semantic line-system visualization. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup state/Spool renderer/CSS owners, exact files locked at CP8 | Dynamic-state matrix + responsive visual review | OPEN |
-| KG-CP6-052 | Do not invent universal backing pound-test or yardage when reel capacity/backing diameter/main-line length are unknown; manufacturer capacity guidance remains authoritative. | CONTENT / VERIFY | Reel Setup Spool/backing guidance owner, exact files locked at CP8 | Content review across Braid paths | OPEN |
-| KG-CP6-053 | Treat Mono/Fluoro direct-spool behavior as derived routing, not an explicit No Separate Backing user selection or Selected Choices value. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Reel Setup state/Selected Choices/backing owners, exact files locked at CP8 | State + displayed-choice inventory | OPEN |
+| KG-CP6-041 | Remove obsolete Equipment compatibility-complete dependency from Backing/Spool progression. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | State/route inventory + non-blocking progression matrix | OPEN |
+| KG-CP6-042 | Make Backing conditional on actual Line Type: Braid only; Mono/Fluoro bypass directly into Spool. | BUILD REQUIRED / VERIFY | `data/reel-guidance.js`, `script.js` | Three-Line-Type branch matrix | OPEN |
+| KG-CP6-043 | For Braid, present Monofilament Backing as Recommended First Setup and Direct Braid only as Manufacturer Supported. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js`, `forest-journal.css` | Braid path content + hierarchy review | OPEN |
+| KG-CP6-044 | Do not expose optional/economy backing under Mono/Fluoro in Version 1. | BUILD REQUIRED / VERIFY | `data/reel-guidance.js`, `script.js` | Mono/Fluoro branch inventory | OPEN |
+| KG-CP6-045 | Make Equipment progression conditional: Braid → Decide on Backing; Mono/Fluoro → Spool; preserve Spincast+Braid as non-blocking warning. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js` | Reel Type x Line Type progression matrix | OPEN |
+| KG-CP6-046 | Collapse the conceptual Spool Connection Plan / Spool the Reel split into one chronological Spool-phase experience with internal substeps as needed. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js`, `forest-journal.css` | State inventory + chronological path walkthrough | OPEN |
+| KG-CP6-047 | Implement direct Mono/Fluoro sequence: reel-specific prepare/routing → Arbor Knot → return to same Spool point → wind main line → fill check. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js` | Reel Type x direct-line browser walkthrough | OPEN |
+| KG-CP6-048 | Implement Braid + Mono Backing sequence: Arbor → wind backing → Double Uni → wind Braid → fill check. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js` | Braid-backing chronological walkthrough | OPEN |
+| KG-CP6-049 | Direct Braid uses exact manufacturer-supported attachment and must not receive generic Arbor guidance. | BUILD REQUIRED / VERIFY | `data/reel-guidance.js`, `script.js` | Direct-Braid path review | OPEN |
+| KG-CP6-050 | Place task-worded Arbor/Double Uni handoffs at the physical action point and restore complete Spool state, originating action, scroll where appropriate, and keyboard focus on return. | BUILD REQUIRED / BUILD TEST REQUIRED | `script.js` | Keyboard/touch/focus/scroll/state round-trip | OPEN |
+| KG-CP6-051 | Propagate confirmed Line Type + Line Weight through Spool guidance and build-test a simple responsive semantic line-system visualization. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `script.js`, `forest-journal.css` | Dynamic-state matrix + responsive visual review | OPEN |
+| KG-CP6-052 | Do not invent universal backing pound-test or yardage when reel capacity/backing diameter/main-line length are unknown; manufacturer capacity guidance remains authoritative. | CONTENT / VERIFY | `data/reel-guidance.js` | Content review across Braid paths | OPEN |
+| KG-CP6-053 | Treat Mono/Fluoro direct-spool behavior as derived routing, not an explicit No Separate Backing user selection or Selected Choices value. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | State + displayed-choice inventory | OPEN |
 
 
 ## CP6.5 — Leader Scope Boundary
@@ -1091,13 +1091,13 @@ This table becomes the CP8 implementation lock and CP10 closure checklist. Add e
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP6-054 | Replace the earlier six-phase tracker with final five-phase Reel → Line → Equipment → Spool → Ready progression. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup progress/state renderer/CSS owners, exact files locked at CP8 | Phase-state + responsive/accessibility matrix | OPEN |
-| KG-CP6-055 | Remove Leader Decision, Leader Material, and Leader Setup workflow states/routes and their stale prerequisite/back-navigation logic. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Reel Setup state/router/controller owners, exact files locked at CP8 | Dead-state/route inventory | OPEN |
-| KG-CP6-056 | Remove `leaderChoice` from Reel Setup state, Selected Choices, and Ready prerequisites. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Reel Setup state/status/Ready owners, exact files locked at CP8 | State/schema/display inventory | OPEN |
-| KG-CP6-057 | Remove generic leader material/length construction guidance and Double Uni handoff from Reel Setup. | BUILD REQUIRED / CONTENT RECONCILIATION | Reel guidance/controller owners, exact files locked at CP8 | Content + dead-guidance inventory | OPEN |
-| KG-CP6-058 | Provide optional non-blocking Leader Reference Knowledge where contextually useful, especially for Braid; Reference must not mutate Reel Setup state or imply incomplete reel readiness. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup Reference/copy/interaction owners, exact files locked at CP8 | Reference trigger + keyboard/touch/focus/state review | OPEN |
-| KG-CP6-059 | Defer actual leader material/strength/length/connection decisions to later Rig/presentation context. | STRUCTURAL / CONTENT VERIFY | Rig/relationship/recommendation owners as locked at CP8/related audit | Cross-Guide ownership review | OPEN |
-| KG-CP6-060 | Make Ready validate the completed reel/main-line/backing system only; CP6.6 now owns the locked completion/handoff details. | BUILD REQUIRED / DETAIL LOCKED — CP6.6 | Reel Setup Ready/handoff owners, exact files locked at CP8 | Ready-state + handoff matrix | OPEN |
+| KG-CP6-054 | Replace the earlier six-phase tracker with final five-phase Reel → Line → Equipment → Spool → Ready progression. | BUILD REQUIRED / BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Phase-state + responsive/accessibility matrix | OPEN |
+| KG-CP6-055 | Remove Leader Decision, Leader Material, and Leader Setup workflow states/routes and their stale prerequisite/back-navigation logic. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | Dead-state/route inventory | OPEN |
+| KG-CP6-056 | Remove `leaderChoice` from Reel Setup state, Selected Choices, and Ready prerequisites. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `script.js` | State/schema/display inventory | OPEN |
+| KG-CP6-057 | Remove generic leader material/length construction guidance and Double Uni handoff from Reel Setup. | BUILD REQUIRED / CONTENT RECONCILIATION | `data/reel-guidance.js`, `script.js` | Content + dead-guidance inventory | OPEN |
+| KG-CP6-058 | Provide optional non-blocking Leader Reference Knowledge where contextually useful, especially for Braid; Reference must not mutate Reel Setup state or imply incomplete reel readiness. | BUILD REQUIRED / BUILD TEST REQUIRED | `data/reel-guidance.js`, `view-renderer.js`, `script.js`, `forest-journal.css` | Reference trigger + keyboard/touch/focus/state review | OPEN |
+| KG-CP6-059 | Defer actual leader material/strength/length/connection decisions to later Rig/presentation context. | STRUCTURAL / CONTENT VERIFY | `data/rigs.js` (read-only ownership check), `script.js` (no generic Leader landing behavior) | Cross-Guide ownership review | OPEN |
+| KG-CP6-060 | Make Ready validate the completed reel/main-line/backing system only; CP6.6 now owns the locked completion/handoff details. | BUILD REQUIRED / DETAIL LOCKED — CP6.6 | `data/reel-guidance.js`, `script.js` | Ready-state + handoff matrix | OPEN |
 
 
 ## CP6.6 — Ready Check + Rig Handoff
@@ -1129,25 +1129,25 @@ This table becomes the CP8 implementation lock and CP10 closure checklist. Add e
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP6-061 | Define Ready as completed reel/main-line/backing system, not complete fishable terminal setup. | BUILD REQUIRED / CONTENT VERIFY | Reel Setup Ready copy/state owners, exact files locked at CP8 | Ready-content + prerequisite matrix | OPEN |
-| KG-CP6-062 | Remove Leader, Equipment-compatible, and unconditional Backing prerequisites from Ready; apply conditional readiness semantics for direct Mono/Fluoro and Braid paths. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Reel Setup Ready/state/router owners, exact files locked at CP8 | Ready prerequisite/state matrix | OPEN |
-| KG-CP6-063 | Replace Ready checklist with concise routing/function, spool-fill, connection, and equipment-reference checks; keep manufacturer guidance authoritative and no FCC PASS/FAIL. | BUILD REQUIRED / CONTENT VERIFY | Reel Ready guidance/data/renderer owners, exact files locked at CP8 | Four-path content + physical-check review | OPEN |
-| KG-CP6-064 | Reuse Selected Choices and semantic line-system summary on Ready; do not fabricate No Separate Backing for Mono/Fluoro. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup status/Ready/line-system renderer owners, exact files locked at CP8 | Representative Ready-state responsive review | OPEN |
-| KG-CP6-065 | Use **Choose a Rig →** as primary completion/handoff; open normal Rig Guide and do not automatically select a Rig. | BUILD REQUIRED / VERIFY | Reel Setup completion + Rig routing owners, exact files locked at CP8 | Ready → Rig Guide route test | OPEN |
-| KG-CP6-066 | Use **Done — Knots Guide** on completed Ready while preserving **Exit to Knots** on incomplete phases. | BUILD REQUIRED / VERIFY | Reel Setup Ready/navigation copy owners, exact files locked at CP8 | Complete-vs-incomplete control inventory | OPEN |
-| KG-CP6-067 | Create compact transient completed Reel Setup context: Reel Type, Target, Line Type, Line Weight, and conditional Backing only. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Shared/Reel Setup transient state owner(s), exact files locked at CP8 | State-schema/capture/reset matrix | OPEN |
-| KG-CP6-068 | Preserve completed context through Rig Guide browse/search/detail navigation for the setup journey without persistent User Knowledge/account storage or reload requirement. | BUILD REQUIRED / BUILD TEST REQUIRED | Shared routing/runtime state + Rig navigation owners, exact files locked at CP8 | Rig landing/browse/search/detail persistence regression | OPEN |
-| KG-CP6-069 | Show compact noninteractive **Your Reel Setup** summary in Rig Guide when entered from completed Reel Setup. | BUILD REQUIRED / BUILD TEST REQUIRED | Rig Guide landing/context renderer/CSS owners, exact files locked at CP8 | Context/no-context + responsive/accessibility review | OPEN |
-| KG-CP6-070 | Do not filter, rank, hide, select, or declare Rig compatibility from completed Reel Setup context without separately approved recommendation behavior. | VERIFY ONLY / GUARDRAIL | Rig Guide search/browse/recommendation boundaries, exact files locked at CP8 | Result-set/ranking/auto-selection regression | OPEN |
-| KG-CP6-071 | Preserve completed line-system context as available input for later contextual Rig/Leader guidance; do not implement generic Leader decisions at Rig landing. | STRUCTURAL / CONTENT VERIFY | Rig/relationship/recommendation owners as locked at CP8/related audits | Cross-Guide ownership + no-generic-Leader review | OPEN |
-| KG-CP6-072 | Make Ready Previous return to final Spool state and remove obsolete Leader back-navigation. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | Reel Setup previous-step/router owners, exact files locked at CP8 | Previous-route + dead-state inventory | OPEN |
-| KG-CP6-073 | Validate Ready completion and Rig handoff across Mono, Fluoro, Braid + Mono Backing, and manufacturer-supported Direct Braid paths. | BUILD TEST REQUIRED | Reel Setup/Rig handoff owners, exact files locked at CP8 | Four-path completion/handoff browser matrix | OPEN |
+| KG-CP6-061 | Define Ready as completed reel/main-line/backing system, not complete fishable terminal setup. | BUILD REQUIRED / CONTENT VERIFY | `data/reel-guidance.js`, `script.js` | Ready-content + prerequisite matrix | OPEN |
+| KG-CP6-062 | Remove Leader, Equipment-compatible, and unconditional Backing prerequisites from Ready; apply conditional readiness semantics for direct Mono/Fluoro and Braid paths. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `data/reel-guidance.js`, `script.js` | Ready prerequisite/state matrix | OPEN |
+| KG-CP6-063 | Replace Ready checklist with concise routing/function, spool-fill, connection, and equipment-reference checks; keep manufacturer guidance authoritative and no FCC PASS/FAIL. | BUILD REQUIRED / CONTENT VERIFY | `data/reel-guidance.js`, `script.js` | Four-path content + physical-check review | OPEN |
+| KG-CP6-064 | Reuse Selected Choices and semantic line-system summary on Ready; do not fabricate No Separate Backing for Mono/Fluoro. | BUILD REQUIRED / BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Representative Ready-state responsive review | OPEN |
+| KG-CP6-065 | Use **Choose a Rig →** as primary completion/handoff; open normal Rig Guide and do not automatically select a Rig. | BUILD REQUIRED / VERIFY | `script.js` | Ready → Rig Guide route test | OPEN |
+| KG-CP6-066 | Use **Done — Knots Guide** on completed Ready while preserving **Exit to Knots** on incomplete phases. | BUILD REQUIRED / VERIFY | `script.js` | Complete-vs-incomplete control inventory | OPEN |
+| KG-CP6-067 | Create compact transient completed Reel Setup context: Reel Type, Target, Line Type, Line Weight, and conditional Backing only. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `script.js` | State-schema/capture/reset matrix | OPEN |
+| KG-CP6-068 | Preserve completed context through Rig Guide browse/search/detail navigation for the setup journey without persistent User Knowledge/account storage or reload requirement. | BUILD REQUIRED / BUILD TEST REQUIRED | `script.js` | Rig landing/browse/search/detail persistence regression | OPEN |
+| KG-CP6-069 | Show compact noninteractive **Your Reel Setup** summary in Rig Guide when entered from completed Reel Setup. | BUILD REQUIRED / BUILD TEST REQUIRED | `script.js`, `forest-journal.css` | Context/no-context + responsive/accessibility review | OPEN |
+| KG-CP6-070 | Do not filter, rank, hide, select, or declare Rig compatibility from completed Reel Setup context without separately approved recommendation behavior. | VERIFY ONLY / GUARDRAIL | `script.js`, `search.js` (verify-only Rig result semantics) | Result-set/ranking/auto-selection regression | OPEN |
+| KG-CP6-071 | Preserve completed line-system context as available input for later contextual Rig/Leader guidance; do not implement generic Leader decisions at Rig landing. | STRUCTURAL / CONTENT VERIFY | `data/rigs.js` (read-only), `script.js` (guardrail) | Cross-Guide ownership + no-generic-Leader review | OPEN |
+| KG-CP6-072 | Make Ready Previous return to final Spool state and remove obsolete Leader back-navigation. | BUILD REQUIRED / CP7 STRUCTURAL VERIFY | `script.js` | Previous-route + dead-state inventory | OPEN |
+| KG-CP6-073 | Validate Ready completion and Rig handoff across Mono, Fluoro, Braid + Mono Backing, and manufacturer-supported Direct Braid paths. | BUILD TEST REQUIRED | `script.js` | Four-path completion/handoff browser matrix | OPEN |
 
 
 # KG Audit — CP7 — JavaScript / Data Structural Audit
 
 
-**Status:** IN PROGRESS — CP7.1-CP7.3 CLOSED / APPROVED / REFINEMENT ALLOWED
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED
 
 
 ## CP7.1 — `script.js` Ownership + Reel Setup State Structure
@@ -1193,17 +1193,17 @@ CP7 is segmented by Guide/feature ownership. It does **not** authorize a whole-f
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP7-001 | Create explicit Knots + nested Get Your Reel Ready ownership boundaries in `script.js`; keep unrelated Guide sections untouched. | BUILD REQUIRED | `script.js`; exact implementation range locked at CP8 | Source-boundary inventory + regression review | OPEN |
-| KG-CP7-002 | Keep route registry, renderer registry, `showView()`, and generic detail-navigation infrastructure in clearly marked shared ownership. | VERIFY ONLY | `script.js` shared app boundary | Shared-vs-Guide ownership review | OPEN |
+| KG-CP7-001 | Create explicit Knots + nested Get Your Reel Ready ownership boundaries in `script.js`; keep unrelated Guide sections untouched. | BUILD REQUIRED | `script.js` | Source-boundary inventory + regression review | OPEN |
+| KG-CP7-002 | Keep route registry, renderer registry, `showView()`, and generic detail-navigation infrastructure in clearly marked shared ownership. | VERIFY ONLY | `script.js` | Shared-vs-Guide ownership review | OPEN |
 | KG-CP7-003 | Move Knot/Reel-specific runtime state from shared runtime state into the Knots boundary. | BUILD REQUIRED | `script.js` | State-owner inventory | OPEN |
-| KG-CP7-004 | Own cross-Guide handoff helpers by the originating Guide; relocate Knot-originated Rig handoff behavior accordingly. | BUILD REQUIRED / ARCHITECTURE RULE | `script.js` + `ARCHITECTURE.md` | Origin/destination handoff inventory | OPEN |
-| KG-CP7-005 | Separate Reel Setup internal screen identity from derived five-phase progress state. Reference/help surfaces must not become workflow-state IDs. | BUILD REQUIRED | Reel Setup controller/state + `data/reel-guidance.js` as applicable | Screen-to-phase matrix + reference-state audit | OPEN |
-| KG-CP7-006 | Remove obsolete CP6 Reel/Line/Equipment/Leader states, routes, prerequisites, and stale navigation; add confirmed Line Weight state. | BUILD REQUIRED | Reel Setup state/router/controller + guidance owners; exact file set at CP8 | Dead-state inventory + workflow regression | OPEN |
-| KG-CP7-007 | Make Backing state Braid-only; Mono/Fluoro direct-spool behavior is derived and stores no fake backing choice. | BUILD REQUIRED | Reel Setup state/router/status owners | Line Type x Backing state matrix | OPEN |
-| KG-CP7-008 | Separate fresh launch, Restart Setup, and Exit to Knots semantics so Restart does not destroy legitimate external origin context. | BUILD REQUIRED | Reel Setup entry/reset/navigation owners | Launch/restart/exit context matrix | OPEN |
-| KG-CP7-009 | Add Reel-specific capture/restore for Knot excursions, including physical Spool point, origin action, applicable scroll, and focus. | BUILD REQUIRED / BUILD TEST REQUIRED | Reel Setup navigation + Knot Detail return owners | Keyboard/touch/state/scroll/focus round-trip | OPEN |
-| KG-CP7-010 | Store completed Reel Setup context separately from live workflow state and preserve only the CP6.6-approved transient fields. | BUILD REQUIRED | shared runtime handoff + Reel Setup completion owners | Capture/reset/persistence schema matrix | OPEN |
-| KG-CP7-011 | Keep CP7 implementation targeted; do not rewrite/split the whole shared JS file without a separately approved architecture gate. | VERIFY ONLY / GUARDRAIL | CP8 implementation scope | Changed-range/file-scope review | OPEN |
+| KG-CP7-004 | Own cross-Guide handoff helpers by the originating Guide; relocate Knot-originated Rig handoff behavior accordingly. | BUILD REQUIRED / ARCHITECTURE RULE | `script.js` | Origin/destination handoff inventory | OPEN |
+| KG-CP7-005 | Separate Reel Setup internal screen identity from derived five-phase progress state. Reference/help surfaces must not become workflow-state IDs. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Screen-to-phase matrix + reference-state audit | OPEN |
+| KG-CP7-006 | Remove obsolete CP6 Reel/Line/Equipment/Leader states, routes, prerequisites, and stale navigation; add confirmed Line Weight state. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Dead-state inventory + workflow regression | OPEN |
+| KG-CP7-007 | Make Backing state Braid-only; Mono/Fluoro direct-spool behavior is derived and stores no fake backing choice. | BUILD REQUIRED | `data/reel-guidance.js`, `script.js` | Line Type x Backing state matrix | OPEN |
+| KG-CP7-008 | Separate fresh launch, Restart Setup, and Exit to Knots semantics so Restart does not destroy legitimate external origin context. | BUILD REQUIRED | `script.js` | Launch/restart/exit context matrix | OPEN |
+| KG-CP7-009 | Add Reel-specific capture/restore for Knot excursions, including physical Spool point, origin action, applicable scroll, and focus. | BUILD REQUIRED / BUILD TEST REQUIRED | `script.js` | Keyboard/touch/state/scroll/focus round-trip | OPEN |
+| KG-CP7-010 | Store completed Reel Setup context separately from live workflow state and preserve only the CP6.6-approved transient fields. | BUILD REQUIRED | `script.js` | Capture/reset/persistence schema matrix | OPEN |
+| KG-CP7-011 | Keep CP7 implementation targeted; do not rewrite/split the whole shared JS file without a separately approved architecture gate. | VERIFY ONLY / GUARDRAIL | CP8 locked file/range scope; verify changed-file/range boundaries only | Changed-range/file-scope review | OPEN |
 
 
 ### CP7.1 Close
@@ -1256,12 +1256,12 @@ CP7.2 is limited to Knots-owned rendering, the adjacent Rig ownership seam requi
 |---|---|---|---|---|---|
 | KG-CP7-012 | Close the Knots rendering boundary in `view-renderer.js` and establish the adjacent Rig-owned region without broad Rig/Regulations refactoring. | BUILD REQUIRED | `view-renderer.js` | Source-boundary inventory + changed-range review | OPEN |
 | KG-CP7-013 | Relocate Rig-only Knot lookup/presentation helpers, including `getKnotRecord()` and `buildRigKnotApplications()`, into Rig rendering ownership. | BUILD REQUIRED | `view-renderer.js` | Function ownership + Rig Detail regression review | OPEN |
-| KG-CP7-014 | Remove the `renderKnotInstructionDetail()` monkey patch and replace it with an explicit Knot instructional-media integration point. | BUILD REQUIRED / ARCHITECTURE RULE | `view-renderer.js`, `knot-media-renderer.js`, `ARCHITECTURE.md` | Load-order independence + Knot Detail renderer regression | OPEN |
-| KG-CP7-015 | Keep Knot instructional media structurally inside **HOW TO TIE IT** while leaving exact viewer/static/external/hybrid ordering to CP9 build testing. | BUILD REQUIRED / BUILD TEST REQUIRED | Knot Detail + media renderer/CSS owners | Teaching-flow browser matrix across breakpoints | OPEN |
+| KG-CP7-014 | Remove the `renderKnotInstructionDetail()` monkey patch and replace it with an explicit Knot instructional-media integration point. | BUILD REQUIRED / ARCHITECTURE RULE | `view-renderer.js`, `knot-media-renderer.js` | Load-order independence + Knot Detail renderer regression | OPEN |
+| KG-CP7-015 | Keep Knot instructional media structurally inside **HOW TO TIE IT** while leaving exact viewer/static/external/hybrid ordering to CP9 build testing. | BUILD REQUIRED / BUILD TEST REQUIRED | `view-renderer.js`, `knot-media-renderer.js`, `forest-journal.css` | Teaching-flow browser matrix across breakpoints | OPEN |
 | KG-CP7-016 | Broaden `knot-media-renderer.js` to the dedicated instructional-media presentation owner and remove stale Package 4 labeling without moving canonical facts into the renderer. | BUILD REQUIRED | `knot-media-renderer.js` | Header/owner inventory + data-ownership check | OPEN |
-| KG-CP7-017 | Preserve the existing verified external instructional baseline until CP5 prototype evidence supports an explicitly approved replacement/refinement. | VERIFY ONLY | Knot media renderer + canonical Media mapping | All-10-Knot instructional baseline regression | OPEN |
-| KG-CP7-018 | Keep canonical Knot instructions in `data/knots.js` and Media records/provenance in `data/media.js`; renderer owns presentation only. | VERIFY ONLY / GUARDRAIL | data + renderer ownership | Source/data ownership inventory | OPEN |
-| KG-CP7-019 | Keep CP7.2 targeted; do not expand this boundary cleanup into unrelated Rig/Regulations rendering work. | VERIFY ONLY / GUARDRAIL | CP8 implementation scope | Changed-range/file-scope review | OPEN |
+| KG-CP7-017 | Preserve the existing verified external instructional baseline until CP5 prototype evidence supports an explicitly approved replacement/refinement. | VERIFY ONLY | `data/media.js`, `knot-media-renderer.js` | All-10-Knot instructional baseline regression | OPEN |
+| KG-CP7-018 | Keep canonical Knot instructions in `data/knots.js` and Media records/provenance in `data/media.js`; renderer owns presentation only. | VERIFY ONLY / GUARDRAIL | `data/knots.js`, `data/media.js`, `knot-media-renderer.js` | Source/data ownership inventory | OPEN |
+| KG-CP7-019 | Keep CP7.2 targeted; do not expand this boundary cleanup into unrelated Rig/Regulations rendering work. | VERIFY ONLY / GUARDRAIL | CP8 locked file/range scope; verify changed-file/range boundaries only | Changed-range/file-scope review | OPEN |
 
 
 ### CP7.2 Close
@@ -1311,16 +1311,16 @@ CP7.3 is limited to ownership of canonical Knot records versus Knots Guide curat
 
 | ID | Requirement | Disposition | Source owner(s) | Validation | Status |
 |---|---|---|---|---|---|
-| KG-CP7-020 | Move `CORE_KNOT_IDS` from canonical Knot data to Knots Guide guidance without changing the approved four-Knot membership/order. | BUILD REQUIRED | `data/knots.js`, `data/knot-guidance.js`, direct Core consumers | Core membership/order regression + source ownership review | OPEN |
-| KG-CP7-021 | Remove Search-only `keywords[]` from canonical Knot records and place maintained search intent/vocabulary in Guide guidance. | BUILD REQUIRED | `data/knots.js`, `data/knot-guidance.js`, `search.js` direct seam | Query regression suite + duplicate vocabulary audit | OPEN |
-| KG-CP7-022 | Separate practical task definitions, visible landing tasks, and search-intent vocabulary into distinct guidance concepts. | BUILD REQUIRED | `data/knot-guidance.js`, direct consumers | Landing/task/detail/search matrix | OPEN |
-| KG-CP7-023 | Preserve `Attach Line to a Reel` as practical/search/detail context while preventing it from returning as a peer landing task. | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, Knots landing/detail controllers | Landing hierarchy + detail handoff + reel/spool Search review | OPEN |
-| KG-CP7-024 | Add/retain **Learn Core Knots** as the visible learning task and derive membership from the single Core registry. | BUILD REQUIRED | `data/knot-guidance.js`, Knots landing/browse controller | Core task → Core collection navigation | OPEN |
-| KG-CP7-025 | Preserve Arbor Knot + Uni Knot reel/spool Search discovery after task/search data separation. | VERIFY ONLY / REGRESSION GUARD | `data/knot-guidance.js`, `search.js` | Deterministic reel/spool query suite | OPEN |
-| KG-CP7-026 | Move `KNOT_COLLECTIONS` out of `script.js` into Guide guidance and remove the superseded active V1 Advanced placeholder configuration. | BUILD REQUIRED | `script.js`, `data/knot-guidance.js` | Collection inventory + landing/browse regression | OPEN |
-| KG-CP7-027 | Keep Search normalization/scoring/ranking algorithms in `search.js`; data migration must not alter approved deterministic relevance semantics. | VERIFY ONLY / GUARDRAIL | `search.js` | Search algorithm diff + query suite | OPEN |
-| KG-CP7-028 | Keep stable per-Knot metadata such as difficulty on canonical Knot records rather than over-normalizing the schema. | VERIFY ONLY / GUARDRAIL | `data/knots.js` | Canonical schema inventory | OPEN |
-| KG-CP7-029 | Keep CP7.3 implementation targeted to Knots-owned data and direct consumers; do not broaden into unrelated Guide/data refactors. | VERIFY ONLY / GUARDRAIL | CP8 implementation scope | Changed-file/range review | OPEN |
+| KG-CP7-020 | Move `CORE_KNOT_IDS` from canonical Knot data to Knots Guide guidance without changing the approved four-Knot membership/order. | BUILD REQUIRED | `data/knots.js`, `data/knot-guidance.js`, `script.js`, `view-renderer.js`, `tools/validate_repository_integrity.js` | Core membership/order regression + source ownership review | CP9.1 CLOSED / PASS |
+| KG-CP7-021 | Remove Search-only `keywords[]` from canonical Knot records and place maintained search intent/vocabulary in Guide guidance. | BUILD REQUIRED | `data/knots.js`, `data/knot-guidance.js`, `search.js`, `tools/validate_repository_integrity.js` | Query regression suite + duplicate vocabulary audit | CP9.1 CLOSED / PASS |
+| KG-CP7-022 | Separate practical task definitions, visible landing tasks, and search-intent vocabulary into distinct guidance concepts. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js`, `search.js` | Landing/task/detail/search matrix | CP9.1 CLOSED / PASS |
+| KG-CP7-023 | Preserve `Attach Line to a Reel` as practical/search/detail context while preventing it from returning as a peer landing task. | BUILD REQUIRED / VERIFY | `data/knot-guidance.js`, `script.js`, `search.js` | Landing hierarchy + detail handoff + reel/spool Search review | CP9.1 FOUNDATION COMPLETE / CP9.2 UI VALIDATION PENDING |
+| KG-CP7-024 | Add/retain **Learn Core Knots** as the visible learning task and derive membership from the single Core registry. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js`, `view-renderer.js` | Core task → Core collection navigation | CP9.1 FOUNDATION COMPLETE / CP9.2 UI VALIDATION PENDING |
+| KG-CP7-025 | Preserve Arbor Knot + Uni Knot reel/spool Search discovery after task/search data separation. | VERIFY ONLY / REGRESSION GUARD | `data/knot-guidance.js`, `search.js` | Deterministic reel/spool query suite | CP9.1 CLOSED / PASS |
+| KG-CP7-026 | Move `KNOT_COLLECTIONS` out of `script.js` into Guide guidance and remove the superseded active V1 Advanced placeholder configuration. | BUILD REQUIRED | `data/knot-guidance.js`, `script.js` | Collection inventory + landing/browse regression | CP9.1 CLOSED / PASS |
+| KG-CP7-027 | Keep Search normalization/scoring/ranking algorithms in `search.js`; data migration must not alter approved deterministic relevance semantics. | VERIFY ONLY / GUARDRAIL | `search.js` | Search algorithm diff + query suite | CP9.1 CLOSED / PASS |
+| KG-CP7-028 | Keep stable per-Knot metadata such as difficulty on canonical Knot records rather than over-normalizing the schema. | VERIFY ONLY / GUARDRAIL | `data/knots.js` | Canonical schema inventory | CP9.1 CLOSED / PASS |
+| KG-CP7-029 | Keep CP7.3 implementation targeted to Knots-owned data and direct consumers; do not broaden into unrelated Guide/data refactors. | VERIFY ONLY / GUARDRAIL | CP8 locked file/range scope; verify changed-file/range boundaries only | Changed-file/range review | CP9.1 CLOSED / PASS |
 
 
 ### CP7.3 Close
@@ -1329,7 +1329,288 @@ CP7.3 is limited to ownership of canonical Knot records versus Knots Guide curat
 CP7.3 is **CLOSED / APPROVED / refinement allowed**. No production JavaScript/data was changed by this approval gate. **Next: CP7.4 — `search.js` ownership + Knot Search structure.**
 
 
+## CP7.4 — `search.js` Ownership + Knot Search Structure
+
+
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-25
+
+
+### Audit Boundary
+
+
+CP7.4 is limited to `search.js` ownership, Knot Search structure, the post-CP7.3 guidance/data consumer seam, and directly relevant controller calls. It does **not** authorize Fish Search or Rig Search redesign, fuzzy/global Search, or a whole-file Search rewrite.
+
+
+### Locked / Approved Structural Decisions
+
+
+- Keep the existing explicit `search.js` regions for shared generic lookup/ranking, Fish scoped Search, Knot deterministic scoped Search, and shared sort/lookup support. The file already has a viable ownership shape and does not need a broad rewrite.
+- `search.js` owns Knot query normalization, matching, scoring, and deterministic relevance ordering. `data/knot-guidance.js` owns maintained Search-intent vocabulary.
+- Replace direct `KNOT_TASK_DEFINITIONS` coupling inside Knot Search with a dedicated Guide-owned Search-intent input. Practical task definitions, visible landing-task curation, and Search vocabulary remain distinct guidance concepts.
+- Remove Knot Search dependence on canonical `record.keywords`; canonical Knot names, genuine aliases, compatible line types, and difficulty remain valid canonical Search signals.
+- Preserve the existing relevance intent: canonical identity outranks Guide-owned intent; specific Knot intent outranks broader practical/task intent; broader partial identity/intent remains below exact intent; compatible line type/difficulty remain lower-strength metadata signals.
+- `data/knot-guidance.js` may distinguish specific Knot Search intent from broader practical/task Search intent so the relevance hierarchy can be preserved, but numeric scores/weights remain algorithm-owned in `search.js`.
+- Replace task-specific tie-break metadata with Search-intent ordering plus Knot ordering inside the matched intent and final eligible-record order. Search does not need to know whether an intent also corresponds to a visible/practical task.
+- Preserve **Attach Line to a Reel** reel/spool Search discovery for Arbor Knot + Uni Knot independently of landing-task visibility. Search vocabulary must not be structurally coupled to whether a task is shown as a peer landing action.
+- Callers establish the eligible record universe before Search. `search.js` ranks only the records supplied to it and must not reach into global Knot data, collections, or landing state to silently widen scoped results.
+- Keep Knot query-interpretation mechanics in the Knot Search boundary: common replacements such as `mono` → `monofilament`, `fluoro` → `fluorocarbon`, plural normalization, apostrophe/punctuation cleanup, and filler-word handling are algorithmic normalization rather than curated Search content.
+- Keep genuinely shared `normalizeSearchText()`, `findRecordById()`, generic `searchRecords()`, its scoring internals, and `sortRecordsAlphabetically()` in shared ownership.
+- `filterRecordsByValue()` currently has no identified runtime caller in the root loaded JavaScript/HTML inventory; remove it during CP8/implementation after final zero-caller verification rather than retaining dead shared code.
+- Current script load order already supports the desired dependency direction (`data/knots.js` + `data/knot-guidance.js` → `search.js` → `script.js`) and requires no load-order redesign.
+- Keep CP7.4 targeted. Fish Search, Rig Search semantics, Regulations Search/filter behavior, global cross-domain Search, fuzzy Search, and unrelated helpers remain outside scope.
+
+
+### Confirmed Source Findings
+
+
+- `search.js` already has explicit **SHARED SEARCH**, **FISH GUIDE**, and **KNOT GUIDE** ownership boundaries, so a whole-file structural rewrite would add churn without solving the actual Knot coupling.
+- Current Knot Search consumes `KNOT_TASK_DEFINITIONS` directly through `getKnotTaskDefinitions()`, `getKnotTaskSearchTerms()`, and `getKnotTaskMatch()`.
+- Current `getKnotSearchMatch()` reads canonical `record.keywords`, then filters task-duplicated terms at runtime. CP7.3 makes that compensation obsolete because Search-only vocabulary moves out of canonical records.
+- Current deterministic ordering uses `taskIndex` and `knotIndex`, coupling ranking metadata to task objects even when Search intent should exist independently from landing-task visibility.
+- `script.js` currently passes `KNOT_TASK_DEFINITIONS` into landing and scoped Knot Search; those direct consumers must switch to the dedicated Search-intent owner while preserving the existing eligible scope.
+- The existing load sequence places Knot canonical/guidance data before `search.js` and `search.js` before `script.js`, which already supports the approved dependency model.
+- `filterRecordsByValue()` has no identified caller in the inspected loaded root runtime JavaScript or `index.html`.
+
+
+### Action Items
+
+
+| ID | Requirement | Disposition | Source owner(s) | Validation | Status |
+|---|---|---|---|---|---|
+| KG-CP7-030 | Preserve the existing explicit shared/Fish/Knot/shared-helper source boundaries in `search.js`; do not perform a broad Search rewrite. | VERIFY ONLY / GUARDRAIL | `search.js` | Source-boundary + changed-range review | CP9.1 CLOSED / PASS |
+| KG-CP7-031 | Keep Knot normalization, matching, scoring, and deterministic relevance ordering in `search.js`. | VERIFY ONLY / GUARDRAIL | `search.js` | Algorithm ownership diff + query regression | CP9.1 CLOSED / PASS |
+| KG-CP7-032 | Replace Knot Search dependence on practical task definitions with dedicated Guide-owned Search-intent data from `data/knot-guidance.js`. | BUILD REQUIRED | `data/knot-guidance.js`, `search.js`, `script.js` | Data-consumer seam inventory + query suite | CP9.1 CLOSED / PASS |
+| KG-CP7-033 | Remove `record.keywords` dependence from Knot Search while retaining canonical name, alias, line-type, and difficulty signals. | BUILD REQUIRED | `data/knots.js`, `data/knot-guidance.js`, `search.js` | Canonical schema + Search-signal regression | CP9.1 CLOSED / PASS |
+| KG-CP7-034 | Preserve specific-Knot-intent versus broader practical-intent relevance tiers without moving numeric Search weights into guidance data. | BUILD REQUIRED / REGRESSION GUARD | `data/knot-guidance.js`, `search.js` | Representative exact/phrase/broad-intent ordering matrix | CP9.1 CLOSED / PASS |
+| KG-CP7-035 | Replace task-specific tie-break fields with deterministic Search-intent order, Knot order within intent, then original eligible-record order. | BUILD REQUIRED | `data/knot-guidance.js`, `search.js` | Equal-score deterministic-order regression | CP9.1 CLOSED / PASS |
+| KG-CP7-036 | Preserve Arbor Knot + Uni Knot reel/spool discovery through **Attach Line to a Reel** Search intent independent of peer landing-task visibility. | VERIFY ONLY / REGRESSION GUARD | `data/knot-guidance.js`, `search.js` | Reel/spool query suite | CP9.1 CLOSED / PASS |
+| KG-CP7-037 | Keep eligible Knot scope controller-owned; Search may rank only caller-supplied records and must not silently widen collection/task scope. | VERIFY ONLY / ARCHITECTURE GUARDRAIL | `script.js`, `search.js` | All/Core/Beginner/Intermediate/task scoped-query matrix | CP9.1 CLOSED / PASS |
+| KG-CP7-038 | Keep Knot query-normalization replacements/filler handling in the Knot Search algorithm boundary rather than guidance data. | VERIFY ONLY / GUARDRAIL | `search.js` | Normalization regression (`mono`, `fluoro`, plural/reel/spool terms) | CP9.1 CLOSED / PASS |
+| KG-CP7-039 | Remove dead `filterRecordsByValue()` only after final CP8/implementation zero-caller verification. | BUILD REQUIRED / VERIFY | `search.js` | Repository caller search + changed-range review | CP9.1 CLOSED / PASS |
+| KG-CP7-040 | Keep Fish/Rig/Regulations/global/fuzzy Search changes outside this targeted Knots implementation unless CP8 finds a concrete shared dependency. | VERIFY ONLY / GUARDRAIL | CP8 locked file/range scope; verify changed-file/range boundaries only | Changed-file/range + regression-scope review | CP9.1 CLOSED / PASS |
+
+
+### CP7.4 Close
+
+
+CP7.4 is **CLOSED / APPROVED / refinement allowed**. The JavaScript/data structural audit CP7 is therefore **CLOSED / APPROVED / refinement allowed** with implementation actions retained for CP8 scope lock and CP9 build/validation. No production JavaScript/data was changed by this approval gate. **Next: CP8 — Implementation Scope Lock.**
+
+
+# KG Audit — CP8 — Implementation Scope Lock
+
+
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-25
+
+
+## Audit Boundary
+
+
+CP8 is the hard planning-to-build traceability gate. It does not implement production changes. It resolves every retained OPEN Knots audit action to concrete source ownership, locks the build sequence and validation, and separates mandatory production scope from conditional prototype scope and read-only dependencies.
+
+
+## Locked Mandatory Production Files
+
+
+| File | CP9 responsibility |
+|---|---|
+| `data/knots.js` | Remove Search-only `keywords[]`; move `CORE_KNOT_IDS` ownership out; preserve approved canonical Knot facts/content. |
+| `data/knot-guidance.js` | Own Core registry, static collections, practical task mappings, visible landing tasks, and maintained Search-intent vocabulary. |
+| `data/reel-guidance.js` | Own approved Reel Setup decision knowledge, Line Weight/target guidance, Braid-only Backing, Spool, optional Leader Reference, and Ready guidance. |
+| `search.js` | Preserve Knot normalization/matching/scoring/deterministic ranking while consuming dedicated Guide-owned Search intent; remove `filterRecordsByValue()` after final zero-caller verification. |
+| `script.js` | Own Knots/Reel state/controllers, state restoration, workflow migration, Knot excursions, Ready/Rig handoff, and bounded Rig landing context consumption. |
+| `view-renderer.js` | Own Knots landing/results/detail structure, disclosures, shared/paged Reference presentation, explicit Knot-media mount point, and truthful adjacent ownership boundaries. |
+| `knot-media-renderer.js` | Own Knot instructional-media presentation through the explicit Knot Detail integration point; no monkey patch. |
+| `forest-journal.css` | Own required Knots visual upgrade, interaction states, responsive behavior, Reel workflow/status/Reference visuals, and instructional layouts. |
+| `tools/validate_repository_integrity.js` | Reconcile validator expectations to approved Knot/guidance/Reel ownership and schema. |
+
+
+## Conditional Prototype Write Scope
+
+
+Only the bounded four-Core instructional prototype may additionally write:
+
+
+- `data/media.js`; and
+- `images/knots/instructional/<knot-id>/*.svg`.
+
+
+These are conditional on a reusable/open or FCC-authored state actually being accepted into the prototype. No placeholder assets and no six-Knot expansion are authorized before the explicit Core prototype verdict. Default prototype execution remains **Improved Clinch → Palomar → Double Uni → Arbor**.
+
+
+When an accepted local state is registered, Media remains the attachment owner using `ownerType: "knot"`, canonical Knot `ownerId`, an instructional-state role/type, and a zero-based index back to the canonical `tyingSteps[]` step. Canonical text remains authoritative.
+
+
+## Read-Only Dependencies
+
+
+`data/fish-categories.js`, `data/rigs.js`, `index.html`, and `tools/check_external_references.js` are directly relevant verification dependencies. The approved load order already supports canonical/guidance data → Search → renderers/controllers and is not redesigned.
+
+
+## Visual + Interaction Scope Lock
+
+
+The CP9 implementation must treat upgraded visuals and interaction effects as required deliverables, not optional cleanup. Required build/browser-test scope includes:
+
+
+- no decorative Knot identity motif in the current Knots build; Dashboard/Guide imagery is deferred to the final UX Audit;
+- rotating standard accents from the shared palette;
+- reserved workflow treatment for **Get Your Reel Ready**;
+- Core/beginner priority hierarchy independent of accent identity;
+- lighter non-pill actions and whole-card hover/focus-visible/pressed/touch/wrap behavior;
+- live Search/control/result-card visual refinement;
+- upgraded Knot Detail hierarchy, disclosures, adjacent-`ⓘ` References, and instructional-media presentation;
+- upgraded Reel Setup Selected Choices/Progress, Reference, five-phase state, and semantic line-system visuals; and
+- phone/intermediate/full-desktop browser validation.
+
+
+Instructional media uses restrained, technically meaningful visual cues only. Decorative effects do not override line geometry/clarity. Any later motion must be user-controlled, non-autoplay, reduced-motion safe, and understandable from static states.
+
+
+## Exact CP9 Sequence
+
+
+1. **CP9.1 — Structural / Data / Search Foundation:** `data/knots.js` → `data/knot-guidance.js` → `search.js` → direct Knots `script.js` consumers → `tools/validate_repository_integrity.js`.
+2. **CP9.2 — Landing / Browse / Visual Treatment + Interaction Effects:** landing hierarchy, Search, browse/results, card accents, workflow/priority treatments, interaction states, responsive visual density, and query/scroll restoration; decorative Guide imagery is deferred to the final UX Audit.
+3. **CP9.3 — Knot Detail + Reference + Media Integration:** detail structure, disclosures, adjacent-`ⓘ` Reference behavior, explicit media integration, and protected external baseline.
+4. **CP9.4 — Get Your Reel Ready Migration:** coordinated guidance/controller migration, Line Weight, References, Equipment, Backing, Spool, five-phase status, Ready, and responsive semantic visuals.
+5. **CP9.5 — Ready → Rig Guide Handoff:** transient completed Reel context and noninteractive **Your Reel Setup** summary without recommendation side effects.
+6. **CP9.6 — Four-Core Instructional Prototype:** reuse-first/custom-build progressive prototype and explicit treatment verdict.
+7. **CP9.7 — Full Validation + Review Package:** browser/accessibility/regression validation, documentation reconciliation, and cumulative review-package preparation.
+
+
+## Validation Lock
+
+
+CP9 cannot close on render success alone. Required validation includes deterministic Knot Search/scope regression; exact 10-Knot and four-Core inventory; zero canonical Search-only `keywords[]`; landing task/collection inventory; Reel Type × Line Type × target/path matrices; all four Ready completion paths; Restart/Exit/Knot-excursion state/focus restoration; Ready → Rig context persistence without filtering/ranking/auto-selection; mobile/intermediate/full-desktop visual review; keyboard/touch/focus/accessibility review; external instructional-link verification; local Core geometry/sequence/final-state review if produced; repository-integrity validation; and targeted regression of shared Fish/Rig/Search behavior touched by shared files.
+
+
+## Planning-to-Build Reconciliation
+
+
+- `KNOT-GUIDE.md` — UPDATE REQUIRED / reconciled at CP8 gate.
+- `KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md` — UPDATE REQUIRED / CP8 traceability owner.
+- `docs/data-model/04-KNOTS.md` — UPDATE REQUIRED / stale canonical `keywords[]` and Core-owner wording reconciled.
+- `ARCHITECTURE.md` — VERIFIED NO CHANGE; existing ownership rules already state the approved model.
+- `docs/data-model/09-RELATIONSHIPS.md` — VERIFIED NO CHANGE; current `Rig.knotApplications[]` ownership is already correct.
+- `docs/UI_STANDARD.md` — VERIFIED NO CHANGE; existing visual/Reference/interaction standards already cover CP8 requirements.
+- `docs/MEDIA_GUIDE.md` — VERIFIED NO CHANGE; current Knot instructional-media standards already support the prototype contract.
+- `docs/KNOT_REFERENCE_SOURCES.md` — VERIFIED NO CHANGE; research standard and current 10-Knot provenance are already settled.
+- `docs/PROJECT-RULES.md` — VERIFIED NO CHANGE; current governance and chat-presentation rules remain controlling.
+
+
+No production source/data/media/config write, GitHub commit/push, or CI run occurs at this documentation gate.
+
+
+## CP8 Close
+
+
+CP8 is **CLOSED / APPROVED / refinement allowed**. Exact first production action is **CP9.1 — Structural / Data / Search Foundation** from fresh Drive Current source versions. The user has chosen a new chat at the implementation gate.
+
+
+# KG Audit — CP9.1 — Structural / Data / Search Foundation
+
+
+**Status:** CLOSED / PASS / refinement allowed — 2026-09-25
+
+
+## Implemented Scope
+
+
+- `data/knots.js` — removed canonical `CORE_KNOT_IDS` ownership and all Search-only `keywords[]`; retained the approved 10-Knot canonical inventory and stable per-Knot metadata/content.
+- `data/knot-guidance.js` — now owns the single four-Knot Core registry, V1 static collections, practical task definitions, visible landing-task definitions, and dedicated maintained Search-intent vocabulary.
+- `search.js` — now consumes dedicated Knot Search intents while preserving normalization/matching/scoring ownership and deterministic scoped ranking; dead zero-caller `filterRecordsByValue()` was removed.
+- `script.js` — removed local `KNOT_COLLECTIONS` ownership and direct task/search coupling; direct Knots consumers now use Guide-owned collections, landing-task curation, and Search intents.
+- `tools/validate_repository_integrity.js` — reconciled Knot ownership/schema expectations to the approved CP7/CP8 model.
+
+
+## CP9.1 Validation
+
+
+- All five production files were written in place to their original Drive Current IDs using the documented Sediment procedure, then raw-read back and verified byte-for-byte against the prepared edit set. Temporary transport objects were deleted after each completed write.
+- JavaScript syntax checks passed for all five files.
+- Search regression reproduced the preserved baseline across **256 queries × 5 scopes = 1,280 cases with zero differences**.
+- Core membership/order remains exactly `arbor-knot` → `improved-clinch-knot` → `palomar-knot` → `double-uni-knot`.
+- V1 collections are exactly All / Core / Beginner / Intermediate; the superseded Advanced placeholder is absent.
+- Canonical Knot records contain zero `keywords[]`; `CORE_KNOT_IDS` is absent from `data/knots.js`.
+- Changed-range review confirms the Search refactor is confined to the Knots Search boundary plus the approved dead shared-helper removal; Fish/Rig/Regulations/global/fuzzy Search behavior was not redesigned.
+- `KG-CP7-023` and `KG-CP7-024` retain final UI/browser validation in CP9.2 because peer landing visibility and Core-task navigation are user-facing interaction requirements, even though their CP9.1 data/controller foundation is implemented.
+- Full repository-integrity/browser/accessibility validation remains part of the locked later CP9 validation sequence and is not falsely claimed at this foundation checkpoint.
+
+
+## CP9.1 Close
+
+
+CP9.1 is **CLOSED / PASS / refinement allowed**. Drive Current is authoritative for the five approved uncommitted production changes. GitHub `main` remains `9476bb6812002cb7931e48fb3cd9f89d703d0a4b`; no commit, push, or CI run is authorized or performed at this checkpoint.
+
+
+# KG Audit — CP9.2 — Landing / Browse / Visual Treatment + Interaction Effects
+
+**Status:** IN REVIEW / R3 USER REVIEW — 2026-09-25
+
+## Review-Cycle Baseline
+
+- Immutable R1 review baseline: `FCC-49I-Knots-Guide-CP9.2-Cumulative-Review.zip`.
+- R1 SHA-256: `78fe1e646fb4b4c56005527c215726b59ace26336fc811b864fd55b1d2b31331`.
+- Starting GitHub `main`: `9476bb6812002cb7931e48fb3cd9f89d703d0a4b`.
+- Under the approved FCC review-cycle procedure, later CP9.2 candidates are rebuilt from immutable R1 plus the cumulative findings/corrections recorded below. Intermediate candidate ZIPs are disposable; Drive promotion occurs only after explicit candidate approval.
+
+## R1 Browser Findings
+
+| ID | Finding | Disposition / required correction | Source owner(s) | Validation | Status |
+|---|---|---|---|---|---|
+| KG-CP9.2-R1-001 | **Core Knots** / beginner-priority treatment does not read with sufficient visual emphasis in browser review. | Strengthen priority hierarchy independently of rotating accent identity; preserve ordinary browse-card semantics and avoid turning Core into a workflow card. | `view-renderer.js`, `forest-journal.css` | Desktop/mobile visual hierarchy + interaction regression | R2 BUILD REQUIRED |
+| KG-CP9.2-R1-002 | First Knot identity motif is visually unclear and was rejected in browser review. | Replace the overlapping-loop motif with a clearer restrained fishing-knot/terminal-eye line-art treatment; preserve responsive scale and subordinate visual weight. | `view-renderer.js`, `forest-journal.css` | Desktop/mobile identity review | R2 BUILD REQUIRED |
+
+## Review Traceability Rule
+
+For each CP9.2 candidate revision, record only the material finding, applied correction, affected files, validation state, and resulting review revision. Do not preserve unnecessary design-conversation detail. R1 remains the immutable baseline; R2+ are cumulative candidate deltas.
+
+## R2 Candidate
+
+- Resulting revision: `FCC-49I-Knots-Guide-CP9.2-R2-Cumulative-Review.zip`.
+- R2 SHA-256: `3e9da739169767e6f15e5b329e5222db617f4f2c21120ef2113d177929d1061f`.
+- `KG-CP9.2-R1-001` — strengthened Core/beginner-priority hierarchy with a neutral **Recommended First** cue on Core entry points, stronger priority surface/border hierarchy on the three beginner-important task cards, and retained rotating card accents; Core result emphasis is also strengthened without consuming the workflow treatment.
+- `KG-CP9.2-R1-002` — replaced the rejected overlapping-loop motif with restrained inline terminal-eye/fishing-line SVG line art; responsive scale remains subordinate to the Guide identity.
+- Affected candidate source: `view-renderer.js`, `forest-journal.css`.
+- Targeted validation: JavaScript syntax PASS; static source assertions PASS; CSS brace/integrity checks PASS. Desktop/mobile visual acceptance remains PENDING USER REVIEW.
+- R2 remains an unapproved review candidate and is not promoted to Drive Current.
+
+## R2 Browser Findings / R3 Corrections
+
+| ID | Finding | Disposition / applied correction | Source owner(s) | Validation | Status |
+|---|---|---|---|---|---|
+| KG-CP9.2-R2-001 | Core/important-card emphasis improved but remained visually ambiguous. | Replaced the neutral surface treatment with the established Dashboard primary-card bookend accent grammar: 6px leading accent + 2px trailing accent while preserving each card's rotating accent. `Recommended First` remains only on **Learn Core Knots**. Core Knot result cards receive matching two-sided accent emphasis. | `view-renderer.js`, `forest-journal.css` | Source assertions + desktop/mobile hierarchy review | R3 ACCEPTED / R4 RETAIN |
+| KG-CP9.2-R2-002 | `Learn →` / `View Knots →` wrapped inconsistently beside task titles on phone widths. | At <=639px, all task-card actions are forced beneath the task title for consistent vertical rhythm. | `forest-journal.css` | Mobile-width layout review | R3 ACCEPTED / R4 RETAIN |
+| KG-CP9.2-R2-003 | R2 Knot motif was clearer but still not satisfactory. | R3 tested **7B — Narrow Vertical Loop**, but the user rejected decorative Guide imagery for the current Knots build. R4 removes the motif entirely; future Dashboard imagery discussion moves to the final UX Audit, with Reference Knowledge cards left undecorated by default. | `view-renderer.js`, `forest-journal.css`; `V1-DESIGN-AUDIT.md` | R4 no-motif source/browser check + future UX review | R3 REJECTED / R4 REMOVE / DEFERRED UX |
+| KG-CP9.2-R2-004 | Dashboard still displayed **Knots** despite the approved user-facing **Knots Guide** rename. | Change the Dashboard card title to **Knots Guide**. No other Dashboard copy/structure is changed. | `index.html` | Text check + Dashboard regression review | R3 ACCEPTED / R4 RETAIN |
+
+## R3 Candidate
+
+- Resulting revision: `FCC-49I-Knots-Guide-CP9.2-R3-Cumulative-Review.zip`.
+- R3 SHA-256: `a365b1ac08aa3a06804d570e83bf7edba617a8f7888a957c459eb2ac9246d5d7`.
+- R3 is rebuilt from immutable R1 plus all cumulative CP9.2 corrections; R2 source bytes are not used as reconstruction authority.
+- Candidate-only changed source relative to R1: `view-renderer.js`, `forest-journal.css`, plus newly affected `index.html`; the temporary audit carries cumulative revision traceability.
+- Targeted validation PASS: JavaScript syntax; source assertions; CSS brace balance; Dashboard rename check; package path/inclusion review. The pre-existing three-blank-line run in `forest-journal.css` is inherited unchanged from R1 and was not expanded by R3. Browser visual acceptance remains PENDING USER REVIEW.
+- R3 browser verdict: Dashboard rename, Core/important emphasis, phone task-action placement, and regressions reviewed are accepted; the 7B motif is rejected. R3 remains unapproved as a whole and is not promoted to Drive Current.
+
+## R3 Browser Finding / R4 Correction
+
+| ID | Finding | Disposition / required correction | Source owner(s) | Validation | Status |
+|---|---|---|---|---|---|
+| KG-CP9.2-R3-001 | Decorative Knot identity art remains unsatisfactory and is no longer desired on the current Knowledge surface. | Remove the motif from the Knots Guide identity. Carry the broader visual-flair discussion to the final UX Audit, focused first on restrained Dashboard Guide-card imagery; leave Reference Knowledge cards/Guide content undecorated unless separately approved later. | `view-renderer.js`, `forest-journal.css`; `V1-DESIGN-AUDIT.md` | No-motif source/browser check + UX owner readback | R4 BUILD REQUIRED / UX DEFERRED |
+
+R4 must retain all other accepted R3 corrections and remove only the decorative identity motif from the cumulative CP9.2 candidate.
+
+## R4 Candidate
+
+- Resulting revision: `FCC-49I-Knots-Guide-CP9.2-R4-Cumulative-Review.zip`.
+- R4 is rebuilt from immutable R1 plus all cumulative accepted CP9.2 corrections; R2/R3 source bytes are not reconstruction authority.
+- Accepted R3 corrections retained: Dashboard **Knots Guide** rename, Dashboard-style Core/important two-sided accent emphasis, `Recommended First` only on **Learn Core Knots**, and consistent phone task-action placement.
+- `KG-CP9.2-R3-001` correction applied: decorative Knot identity motif removed entirely from `view-renderer.js` and its motif-only CSS removed from `forest-journal.css`.
+- `docs/V1-DESIGN-AUDIT.md` carries the approved future owner/disposition: prototype Dashboard Guide-card imagery in the final UX Audit; Reference Knowledge cards remain undecorated by default.
+- Targeted validation required before handoff: JavaScript syntax, motif-absence/source assertions, CSS brace/integrity, Dashboard rename, unchanged-file hash comparison to R1, and package-path review. Browser visual acceptance remains PENDING USER REVIEW.
+- R4 remains an unapproved review candidate and is not promoted to Drive Current.
+
 # Current Exact Resume
 
-
-**KG Audit — CP7 is IN PROGRESS; CP7.1 through CP7.3 are CLOSED / APPROVED / refinement allowed.** CP7.1 locks targeted Knots/Reel controller/state ownership. CP7.2 locks truthful renderer/media boundaries. CP7.3 locks canonical Knot-vs-Guide ownership: Core membership, collections, landing-task curation, and search intent belong to `data/knot-guidance.js`; canonical per-Knot facts remain in `data/knots.js`; search algorithms remain in `search.js`. **Exact next work: KG Audit — CP7.4 — `search.js` ownership + Knot Search structure**, including Guide-owned versus genuinely shared Search helpers, deterministic ranking boundaries, and the post-CP7.3 data-consumer seam. Continue read-only structural discovery; do not implement production changes. CP8 remains the exact source-scope lock and CP9 the build/browser validation gate.
+**CP9.2 remains OPEN / IN REVIEW — R4 NEXT.** Build R4 from immutable R1 plus cumulative accepted corrections: retain Dashboard **Knots Guide** rename, Dashboard-style Core/important accent emphasis, consistent phone task-action placement, and all prior CP9.2 behavior; remove the decorative Knot identity motif entirely. Run targeted source/CSS/browser checks and hand off R4 ZIP + exact review areas. Decorative Dashboard imagery is deferred to the final UX Audit; do not add imagery to Reference Knowledge cards in this Knots cycle. Do not begin CP9.3+ scope. Commit/push remains separately authorized after candidate approval/promotion.

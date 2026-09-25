@@ -2,10 +2,10 @@
 
 
 **Document:** KNOT-GUIDE.md  
-**Document Revision:** 0.3.25  
+**Document Revision:** 0.3.27  
 **Document Status:** Approved Planning / In Progress  
 **Milestone:** Knots  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-25
 
 
 # Purpose
@@ -622,7 +622,7 @@ Approved changes:
 - remove `relatedRigIds`,
 - remove `relatedTechniqueIds` for Version 1,
 - add `aliases[]`,
-- add `keywords[]`,
+- keep Search-only intent vocabulary out of canonical Knot records and own it in `data/knot-guidance.js`,
 - add `bestFor[]`,
 - add `limitations[]`,
 - add authoritative ordered `tyingSteps[]`,
@@ -631,7 +631,7 @@ Approved changes:
 - add `referenceLinks[]`.
 
 
-No production Knot data exists yet, so these are planning/schema corrections rather than migrations.
+These are canonical ownership/schema corrections. Production reconciliation remains implementation work for CP8/CP9 and must preserve the approved current Knot library while removing Search-only vocabulary from canonical records.
 
 
 # Approved Controlled Vocabularies
@@ -712,22 +712,13 @@ A separate machine-readable line-pairing matrix is not part of Version 1 unless 
 Task phrases do not belong in aliases.
 
 
-## keywords[]
+## Guide-owned Search intent
 
 
-`keywords[]` contains deliberate beginner/task search-intent terms such as:
+Beginner/task Search phrases such as `tie hook`, `connect two lines`, `braid to leader`, `backing to braid`, and `add a leader` are maintained as Knots Guide Search-intent vocabulary in `data/knot-guidance.js`, not as `keywords[]` on canonical Knot records.
 
 
-```text
-tie hook
-connect two lines
-braid to leader
-backing to braid
-add a leader
-```
-
-
-The approved field name is `keywords[]`, not the earlier working name `searchTerms[]`, so the Knot model follows the Foundation Search Metadata Standard.
+`search.js` owns query normalization, matching, scoring, and deterministic relevance ordering. Canonical Knot name, genuine aliases, compatible line type, and difficulty remain valid canonical Search signals; Guide-owned Search intent supplies curated task/discovery vocabulary without duplicating it into `data/knots.js`.
 
 
 # Approved Instructional Context Fields
@@ -1403,7 +1394,116 @@ Approved CP7.3 ownership model:
 - stable per-Knot metadata such as difficulty stays on canonical Knot records rather than being fragmented into unnecessary joins.
 
 
-This is a targeted data-ownership cleanup. It does not change the 10-Knot library, the four Core Knot choices/order, or the approved Search relevance behavior. No production JavaScript/data changed at CP7.3. **Next: CP7.4 — `search.js` ownership + Knot Search structure.**
+This is a targeted data-ownership cleanup. It does not change the 10-Knot library, the four Core Knot choices/order, or the approved Search relevance behavior. No production JavaScript/data changed at CP7.3.
+
+
+## KG Audit — CP7.4 — `search.js` Ownership + Knot Search Structure
+
+
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-25
+
+
+Approved CP7.4 Search structure:
+
+
+- retain the existing explicit `search.js` ownership regions for shared Search primitives, Fish scoped Search, Knot deterministic scoped Search, and shared sort/lookup support rather than rewriting the whole file;
+- `search.js` owns Knot query normalization, matching, scoring, and deterministic relevance ordering, while `data/knot-guidance.js` owns maintained Knot Search-intent vocabulary;
+- Knot Search no longer derives its vocabulary directly from practical task objects and no longer consumes Search-only `keywords[]` from canonical Knot records;
+- `data/knot-guidance.js` separates specific Knot Search intent from broader practical/task intent as needed for relevance, while numeric scoring remains algorithm-owned in `search.js`;
+- deterministic tie-breaking is preserved using Search-intent ordering, Knot ordering within the matched intent, and original eligible-record order rather than task-specific algorithm knowledge;
+- `Attach Line to a Reel` remains valid Search intent for Arbor Knot + Uni Knot independent of whether that concept is exposed as a peer landing task;
+- callers establish the eligible Knot scope before invoking Search, and `search.js` must not broaden a collection/task scope by reaching into global Knot data or landing state;
+- Knot-specific normalization rules such as common line/reel/plural replacements remain in the Knot Search boundary because they define how queries are interpreted, not what curated phrases map to which Knots;
+- genuinely shared lookup/ranking/sort helpers remain shared, while the currently unused `filterRecordsByValue()` helper is removed during the targeted implementation after final zero-caller verification;
+- current script load order already supports the approved dependency direction of canonical/Guide data → Search algorithms → controllers and requires no redesign; and
+- Fish Search, Rig Search semantics, fuzzy/global Search, and unrelated Guide Search behavior are outside CP7.4 scope.
+
+
+CP7.4 closes the JavaScript/data structural audit. No production JavaScript/data changed at this approval gate. **Next: CP8 — Implementation Scope Lock.**
+
+## KG Audit — CP8 — Implementation Scope Lock
+
+
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-25
+
+
+CP8 closes the planning-to-build traceability gate. It adds no new product architecture; it resolves every retained Knots audit action to concrete source ownership, locks the implementation sequence, and defines the validation required before the Knots workstream can close.
+
+
+### Locked Production Source Scope
+
+
+Mandatory CP9 production owners are limited to:
+
+
+- `data/knots.js` — canonical Knot schema cleanup only: remove Search-only `keywords[]`, move `CORE_KNOT_IDS` ownership out, and preserve the approved 10-Knot facts/content;
+- `data/knot-guidance.js` — Core registry, static Knots collections, practical task mappings, visible landing tasks, and maintained Search-intent vocabulary;
+- `data/reel-guidance.js` — approved Get Your Reel Ready decision knowledge, five-phase workflow guidance, confirmed Line Weight support, Braid-only Backing, Spool guidance, non-blocking Leader Reference, and Ready guidance;
+- `search.js` — Knot normalization/matching/scoring/deterministic ranking plus the dedicated Search-intent consumer seam;
+- `script.js` — Knots/Reel state, controllers, navigation restoration, Reel Setup migration, completed Reel Setup transient context, and bounded Rig Guide handoff consumption;
+- `view-renderer.js` — Knots landing/results/detail structure, disclosure/Reference presentation, shared paged Reference support, explicit instructional-media mount point, and truthful adjacent Guide ownership boundaries;
+- `knot-media-renderer.js` — dedicated Knot instructional-media presentation through the explicit Knot Detail integration point;
+- `forest-journal.css` — approved Guide-family Knots visuals, interaction states, responsive behavior, Reel workflow/status treatment, References, disclosures, and instructional-media layouts; and
+- `tools/validate_repository_integrity.js` — validator reconciliation for the approved Knot/guidance/Reel ownership and schema changes.
+
+
+Conditional CP9 prototype write scope is limited to `data/media.js` plus `images/knots/instructional/<knot-id>/*.svg` when a reusable/open or FCC-authored instructional state is actually accepted into the bounded four-Core-Knot prototype. No placeholder SVG inventory is authorized.
+
+
+Read-only dependencies include `data/fish-categories.js`, `data/rigs.js`, `index.html`, `tools/check_external_references.js`, and the directly relevant canonical documentation owners. Current script load order already supports the approved dependency direction and is not redesigned.
+
+
+### Visual + Interaction Implementation Requirement
+
+
+Visual refinement is a required CP9 deliverable rather than optional CSS polish. The implementation must browser-test and deliver:
+
+
+- restrained Knot-specific visual motif/flair without a fixed Knots Guide color or graphic-heavy presentation;
+- rotating standard-card accents from the shared palette;
+- reserved workflow treatment for **Get Your Reel Ready**;
+- clear Core/beginner-priority hierarchy independent of any one accent color;
+- lighter non-pill action treatment plus whole-card hover, focus-visible, pressed/touch, keyboard, and responsive-wrap behavior;
+- live Search/control/result-card visual refinement;
+- upgraded Knot Detail hierarchy, disclosures, adjacent-`ⓘ` Reference interaction, and instructional-media integration;
+- upgraded Get Your Reel Ready status/progress/Reference/semantic line-system visuals; and
+- phone, intermediate/tablet, and full-desktop visual validation.
+
+
+Instructional diagrams remain instructional rather than decorative: clean phone-first geometry, useful direction/emphasis cues, accessible color/non-color distinctions, no gratuitous effects, no autoplay, and reduced-motion-safe behavior if motion is later justified.
+
+
+### Four-Core Instructional Prototype Scope
+
+
+The bounded prototype remains **Improved Clinch → Palomar → Double Uni → Arbor**. The default candidate is one inspectable SVG state per canonical `tyingSteps[]` step, with the canonical text remaining authoritative. If a local instructional state is accepted into production, Media owns the attachment using the approved Knot owner plus an instructional-state role and a zero-based canonical step index. The existing verified external instructional baseline for all 10 Knots remains protected through the prototype verdict.
+
+
+### CP9 Implementation Sequence
+
+
+1. **CP9.1 — Structural / Data / Search Foundation:** `data/knots.js` → `data/knot-guidance.js` → `search.js` → direct Knots `script.js` consumers → `tools/validate_repository_integrity.js`.
+2. **CP9.2 — Landing / Browse / Visual Treatment + Interaction Effects:** landing hierarchy, Search, browse/results, Knot-specific motif/flair, card accents, workflow/priority treatments, interaction states, responsive visual density, and query/scroll restoration.
+3. **CP9.3 — Knot Detail + Reference + Media Integration:** detail structure, disclosures, adjacent-`ⓘ` Reference behavior, explicit instructional-media mount point, and protected external baseline.
+4. **CP9.4 — Get Your Reel Ready Migration:** coordinated `data/reel-guidance.js` + `script.js` workflow migration, References, Line Weight, Equipment, Braid Backing, Spool, five-phase progress, Ready, and responsive status/semantic visuals.
+5. **CP9.5 — Ready → Rig Guide Handoff:** transient completed Reel Setup context and noninteractive **Your Reel Setup** Rig landing summary without filtering/ranking/auto-selection.
+6. **CP9.6 — Four-Core Instructional Prototype:** progressive reuse-first/custom-build evaluation and explicit treatment verdict.
+7. **CP9.7 — Full Validation + Review Package:** browser/accessibility/regression validation, documentation reconciliation, and cumulative review-package preparation.
+
+
+### Validation Lock
+
+
+CP9 closure requires, at minimum, deterministic Knot Search regression and scoped-result isolation; exact 10-Knot/4-Core inventory; zero canonical Search-only `keywords[]`; exact landing task/collection inventory; Reel Type × Line Type × target/path matrices; all four Ready completion paths; Restart/Exit and Knot-excursion state/focus restoration; Ready → Rig context persistence without recommendation side effects; phone/intermediate/full-desktop browser review; keyboard/touch/focus/accessibility review; external instructional-link verification; technical geometry/sequence/final-state validation for any local Core media; and the repository integrity validator.
+
+
+Commit/push remains separately authorized after user review.
+
+
+### Planning-to-Build Result
+
+
+CP8 approval closes planning/discovery scope, but this gate does not itself perform production writes. Exact first production action is CP9.1 from fresh Drive Current source versions. The user has chosen a new chat for the implementation gate.
 
 
 # Beginner Line Guidance Boundary
@@ -1480,39 +1580,22 @@ FCC intentionally does not surface optional/economy backing under Monofilament o
 The line system should still be taught visually as appropriate to the chosen path, and the **Spincast + Braid** warning remains informational and non-blocking.
 
 
-# Relationship Direction Still to Finalize
+# Rig → Knot Relationship Ownership — Settled
 
 
-The current recommended architecture is that Knot records do **not** manually store inverse Rig relationships.
+Rig owns contextual Rig-to-Knot recommendations through `Rig.knotApplications[]`. Knot does not store inverse Rig relationship arrays. Knot Detail **Where You'll Use It** derives reverse usage from active Rig Knot applications. Canonical Knot tying instructions remain Knot-owned; Rig notes contain only connection-specific context.
 
 
-A Rig should own the contextual connection recommendation required by that Rig, and Knot → Used With should be derived from those Rig-owned references.
+The current production relationship contract and research/source-validation standard are already approved and validated. They are not open Knots planning decisions.
 
 
-The exact production field name and schema are not yet approved.
+# Planning-to-Build Gate
 
 
-A 20-Rig connection audit is expected during this milestone so existing generic `Tie...` assembly instructions can be associated with appropriate canonical Knot recommendations without embedding IDs into instructional strings.
+**CP8 is CLOSED / APPROVED / REFINEMENT ALLOWED.** Exact production ownership, validation, visual/interaction requirements, conditional instructional-media prototype scope, and the CP9 implementation sequence are locked above.
 
 
-# Remaining Planning Decisions Before Production
-
-
-The following still require explicit approval before implementation begins:
-
-
-1. exact Rig → Knot relationship field/schema and 20-Rig audit rules,
-2. research/source-validation standard for canonical Knot instructions,
-3. final milestone validation checklist and implementation sequence.
-
-
-Knot Detail information hierarchy is settled by CP4, and the instructional-media production/technical-validation workflow is settled by CP5.4 with refinement allowed.
-
-
-# Production Gate
-
-
-No production Knot data, JavaScript, CSS, HTML, or instructional media should be implemented until the planning decisions above are settled sufficiently to avoid redesigning the feature during implementation.
+No production source/data/media/config change occurred during CP8 documentation closeout. Production implementation resumes at **CP9.1 — Structural / Data / Search Foundation** from fresh Drive Current source versions in a new implementation chat. Commit/push remains separately authorized after review.
 
 
 # Related Documents

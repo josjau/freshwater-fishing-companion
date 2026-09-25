@@ -5,7 +5,7 @@
 **Document Status:** Approved  
 **Role:** Canonical durable decision bodies for this ownership domain  
 **Migration Baseline:** `af3bffb9995d56f8b9e47236bbadfa481d88cc34`  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-25
 
 
 # Purpose
@@ -26,7 +26,7 @@ For user-facing application work, the local checkout must be verified against th
 All intended repository changes—including documentation-only changes—must first exist in the authoritative Drive working state before GitHub commit. Documentation-only work retains standing commit authority and does not require local browser/user validation, but it no longer bypasses Drive. When local browser/device validation is useful or required, the local checkout is a validation target rather than the authoritative uncommitted owner.
 
 
-Production source/data/media/configuration writes require explicit authorization for the specific scope, and production/user-facing commit/push requires explicit authorization. Under D068, Drive owns the complete authoritative uncommitted working tree; review ZIPs/checkpoint artifacts are generated from that tree when transport, review, local validation, or recovery requires them, and never contain `.git`. Documentation-only commits are standing-authorized when required to keep durable project state current.
+Production source/data/media/configuration writes require explicit authorization for the specific scope, and production/user-facing commit/push requires explicit authorization. Under D068, Drive owns the complete authoritative approved-uncommitted working tree. The first review ZIP for a cycle is compiled from verified GitHub/Drive authority; bounded later candidate revisions may follow the immutable-R1 procedure in `../PROJECT-RULES.md` until user approval triggers promotion back into Drive. Review ZIPs never contain `.git`. Documentation-only commits are standing-authorized when required to keep durable project state current.
 
 
 Commit economy is required: use as few commits as practical while preserving reviewability, validation boundaries, rollback safety, and current documentation. Fewer commits never justify stale documentation or an overbroad unreviewable commit.
@@ -249,13 +249,13 @@ Live Working State is the **sole operational continuity/exact-resume surface** f
 Approval/disposition closure requires an explicit user-facing gate receipt. The current receipt fields and stop/progression mechanics are owned by `../PROJECT-RULES.md`.
 
 
-Review ZIPs remain transport/review artifacts generated from verified Drive Current when needed; they are never working truth. Exact inclusion/exclusion, deletion, and handoff mechanics are owned by `../PROJECT-RULES.md`.
+Review ZIPs remain bounded transport/review artifacts rather than general repository authority. R1 is compiled from verified GitHub/Drive authority and becomes the immutable baseline for that active review cycle. Within an unchanged cycle, later candidate revisions may be built from R1 plus the cumulative audit-recorded corrections instead of promoting every unapproved visual/browser correction into Drive Current. Exact lineage, retention, invalidation, promotion, inclusion/exclusion, deletion, and handoff mechanics are owned by `../PROJECT-RULES.md`.
 
 
-The user's local Git repository remains the review/validation/final-commit surface while Drive Current owns approved uncommitted work. Current review, correction, commit, and closeout mechanics are owned by `../PROJECT-RULES.md`.
+The user's local Git repository remains the review/validation/final-commit surface while Drive Current owns approved uncommitted work. An active review candidate may temporarily advance through R2+ without each unapproved revision being written back to Drive. Explicit user approval freezes the candidate; that exact approved state must then be promoted to Drive Current, read back, reconciled, and validated before dependent work or commit staging. Current review, correction, promotion, commit, and closeout mechanics are owned by `../PROJECT-RULES.md`.
 
 
-Review-cycle lineage must remain deterministic enough to prove starting authority, changed/deleted scope, approval/validation state, and final landed GitHub identity; exact operational tracking belongs to `../PROJECT-RULES.md` and Live Working State.
+Review-cycle lineage must remain deterministic enough to prove starting authority, immutable R1 identity/hash, cumulative candidate corrections, changed/deleted scope, approval/validation state, approved-candidate promotion, and final landed GitHub identity; exact operational tracking belongs to `../PROJECT-RULES.md`, Live Working State, and the active temporary Guide audit/workstream traceability owner.
 
 
 Routine safety comes from stable authority, complete Drive working state, bounded ownership, targeted validation, exact package identity, changed/deletion-set comparison, and post-write verification. Full-tree reconstruction is reserved for real drift/invalidation.
@@ -264,10 +264,10 @@ Routine safety comes from stable authority, complete Drive working state, bounde
 Documentation structure is deliberately lean: `DECISIONS.md` indexes six domain decision-body files; `../PROJECT-RULES.md` is the single canonical current repository procedural owner; UI standards consolidate into `UI_STANDARD.md`; redundant procedural, continuity, historical, or deferred placeholder documents are retired only after no-loss migration.
 
 
-**Reason:** The prior workflow accumulated separate documentation paths, ZIP-as-working-state overhead, repeated reconstruction, broad rereads, and temporary automation. A later baseline+delta attempt also departed from the user's intended complete Drive working-copy model. The complete Drive tree plus lean single-owner documentation is easier to reason about and faster to operate.
+**Reason:** The prior workflow accumulated separate documentation paths, ZIP-as-working-state overhead, repeated reconstruction, broad rereads, and temporary automation. The complete Drive tree remains the simpler authority model for approved uncommitted work. Runtime/browser review demonstrated, however, that forcing every unapproved R2/R3 visual correction through Drive promotion adds avoidable connector and documentation latency. An immutable R1 plus cumulative candidate-delta loop preserves deterministic lineage while keeping Drive promotion at the meaningful approval boundary.
 
 
-**Tradeoff / risk:** Maintaining a complete Drive tree can make initial population/large refreshes more expensive with current connector capabilities. That cost is accepted for simpler authority/review semantics. Drift is controlled through starting-SHA/package/changed/deletion-set checks.
+**Tradeoff / risk:** Maintaining a complete Drive tree can make initial population/large refreshes more expensive with current connector capabilities. Candidate-package iteration adds a temporary second state, so it is tightly bounded to one active review cycle: R1 is immutable, cumulative corrections are recorded, obsolete candidates are disposable, and any authority/scope drift invalidates the cycle. Drive remains the approved-uncommitted owner, and approved candidates must be promoted/read back before progression.
 
 
 **Implementation history:** D068 was implemented and validated during the workflow consolidation that landed at GitHub commit `4e982d84ab6207efacfafe4fa92682046c6240cb`. Current operational workstream/resume status belongs to Live Working State and the active workstream; `ROADMAP.md` owns product order/future direction. This decision records the durable authority model rather than acting as a mutable status owner.

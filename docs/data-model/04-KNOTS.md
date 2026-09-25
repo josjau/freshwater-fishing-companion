@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 04-KNOTS.md  
-**Document Revision:** 0.3.0  
+**Document Revision:** 0.3.2  
 **Document Status:** Approved  
-**Implementation Status:** Validated — Knot Packages 1–4 and Reel & Line Setup integration  
+**Implementation Status:** CP9.1 structural/data/search foundation implemented and validated in Drive Current; CP9.2+ implementation pending  
 **Decision Baseline:** D037, D044, D056
 
 ---
@@ -18,16 +18,15 @@ Rigs and Decision Knowledge workflows reference canonical Knot IDs rather than d
 
 ---
 
-# Current Production Schema
+# Approved Canonical Schema
 
-Every current Knot contains Foundation fields plus:
+The approved canonical Knot entity contains Foundation fields plus:
 
 ```text
 difficulty
 connectionTypes[]
 compatibleLineTypes[]
 aliases[]
-keywords[]
 bestFor[]
 limitations[]
 tyingSteps[]
@@ -86,9 +85,9 @@ This does not imply every pairing/application is equally recommended.
 
 Legitimate alternate names or accepted naming/spelling variants. Task phrases are not aliases.
 
-## keywords[]
+## Search discovery ownership
 
-Deliberate Knot-specific discovery vocabulary. Broad shared task phrases belong to task-first Decision Knowledge rather than being copied into every Knot.
+Search-only discovery vocabulary is not canonical Knot data. Maintained Knot Search intent belongs to `data/knot-guidance.js`; `search.js` owns normalization, matching, scoring, and deterministic ranking. Canonical Knot names, genuine aliases, compatible line types, and difficulty remain valid canonical Search signals.
 
 ## bestFor[]
 
@@ -120,7 +119,7 @@ User-facing credible technical references. Research provenance is maintained sep
 
 # Core Knot Membership
 
-Core membership and teaching order are owned once by `CORE_KNOT_IDS` in `data/knots.js`.
+Core membership and teaching order are owned once by `CORE_KNOT_IDS` in `data/knot-guidance.js`.
 
 Current order:
 
@@ -172,7 +171,7 @@ Current Knot-related Decision Knowledge is implemented separately from canonical
 
 ## Knot task guidance
 
-`data/knot-guidance.js` owns task-first discovery vocabulary and curated task-to-Knot ordering. Its workflow fields are not canonical Knot fields.
+`data/knot-guidance.js` owns Guide curation and discovery: `CORE_KNOT_IDS`, static Knots collections, practical task-to-Knot mappings, visible landing-task definitions, and maintained Search-intent vocabulary. These Guide/workflow fields are not canonical Knot fields.
 
 ## Reel & Line Setup guidance
 
@@ -213,6 +212,7 @@ Do not store these on canonical Knot records without a later demonstrated and ap
 
 ```text
 isCore
+keywords
 stepCount
 strengthRating
 relatedRigIds
@@ -241,6 +241,8 @@ Current integrated state includes:
 - Media-owned instructional/reference relationships where present.
 
 Canonical Knot schema remains separate from those Decision Knowledge and navigation layers.
+
+CP9.1 completed the approved targeted source migration in Drive Current: `CORE_KNOT_IDS`, static collections, practical tasks, visible landing-task curation, and maintained Search-intent vocabulary now live in `data/knot-guidance.js`; canonical Knot records no longer carry Search-only `keywords[]`; `search.js` consumes dedicated Search intent while retaining algorithm ownership; and direct Knots `script.js` consumers plus Repository Integrity expectations were reconciled. GitHub `main` remains unchanged until the later separately authorized review/commit gate.
 
 ---
 

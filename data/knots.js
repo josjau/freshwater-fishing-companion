@@ -1,8 +1,7 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/knots.js
-   PURPOSE: Provides canonical Knot records and the curated
-   Core Knot learning-path registry.
+   PURPOSE: Provides canonical Knot records and stable Knot metadata/content.
    ========================================================== */
 
 "use strict";
@@ -12,12 +11,6 @@ const KNOT_DATA_BUILD_INFO = Object.freeze({
     milestone: "Knot Guide — Production Package 1"
 });
 
-const CORE_KNOT_IDS = Object.freeze([
-    "arbor-knot",
-    "improved-clinch-knot",
-    "palomar-knot",
-    "double-uni-knot"
-]);
 
 const KNOT_DATA = Object.freeze([
     {
@@ -36,13 +29,6 @@ const KNOT_DATA = Object.freeze([
             "fluorocarbon"
         ],
         aliases: [],
-        keywords: [
-            "attach line to reel",
-            "tie line to spool",
-            "reel spool",
-            "spool fishing line",
-            "backing to reel"
-        ],
         bestFor: [
             "Securing monofilament or fluorocarbon to a reel spool before filling the reel.",
             "Securing suitable backing material to a reel spool before adding the main line."
@@ -93,13 +79,6 @@ const KNOT_DATA = Object.freeze([
             "fluorocarbon"
         ],
         aliases: [],
-        keywords: [
-            "tie hook",
-            "tie lure",
-            "tie swivel",
-            "terminal knot",
-            "clinch knot"
-        ],
         bestFor: [
             "A general-purpose snug connection for monofilament or fluorocarbon line to hooks, swivels, clips, and many lures.",
             "Beginner setups where a compact knot seated directly against the terminal eye is appropriate."
@@ -153,14 +132,6 @@ const KNOT_DATA = Object.freeze([
             "braid"
         ],
         aliases: [],
-        keywords: [
-            "tie hook",
-            "tie lure",
-            "tie swivel",
-            "braid knot",
-            "drop shot knot",
-            "terminal knot"
-        ],
         bestFor: [
             "A simple terminal connection that works across monofilament, fluorocarbon, and braided line.",
             "Braid-capable freshwater setups where a compact doubled-line connection is useful.",
@@ -216,15 +187,6 @@ const KNOT_DATA = Object.freeze([
         ],
         aliases: [
             "Uni-to-Uni Knot"
-        ],
-        keywords: [
-            "connect two lines",
-            "add a leader",
-            "braid to leader",
-            "braid to fluorocarbon",
-            "backing to braid",
-            "line joining knot",
-            "uni to uni"
         ],
         bestFor: [
             "Joining lines of similar or moderately different diameters.",
@@ -283,15 +245,6 @@ const KNOT_DATA = Object.freeze([
         aliases: [
             "Duncan Knot"
         ],
-        keywords: [
-            "tie hook",
-            "tie lure",
-            "tie swivel",
-            "attach line to reel",
-            "tie line to spool",
-            "duncan knot",
-            "terminal knot"
-        ],
         bestFor: [
             "A versatile terminal connection for hooks, lures, and swivels.",
             "A reel-spool attachment option when the selected line and spool design provide an appropriate grip.",
@@ -346,14 +299,6 @@ const KNOT_DATA = Object.freeze([
         ],
         aliases: [
             "Surgeon's Knot"
-        ],
-        keywords: [
-            "connect two lines",
-            "add a leader",
-            "leader knot",
-            "surgeons knot",
-            "surgeon's knot",
-            "line joining knot"
         ],
         bestFor: [
             "A quick beginner line-to-line connection using monofilament or fluorocarbon.",
@@ -410,14 +355,6 @@ const KNOT_DATA = Object.freeze([
             "Non-Slip Mono Loop",
             "Kreh End Loop Knot"
         ],
-        keywords: [
-            "loop knot",
-            "lure loop",
-            "free moving lure",
-            "non slip loop",
-            "kreh loop",
-            "terminal loop"
-        ],
         bestFor: [
             "Lures, jigs, and flies that benefit from a fixed open loop at the terminal eye.",
             "Presentations where a snug terminal knot would unnecessarily restrict lure or bait movement."
@@ -470,14 +407,6 @@ const KNOT_DATA = Object.freeze([
             "monofilament"
         ],
         aliases: [],
-        keywords: [
-            "dropper loop",
-            "branch loop",
-            "two hook rig",
-            "two jig rig",
-            "multi hook rig",
-            "bottom rig loop"
-        ],
         bestFor: [
             "Creating a branch loop in monofilament leader for multi-hook, multi-jig, or bottom-fishing rigs.",
             "Building an in-line attachment point that stands away from the main leader."
@@ -530,14 +459,6 @@ const KNOT_DATA = Object.freeze([
             "braid"
         ],
         aliases: [],
-        keywords: [
-            "snell hook",
-            "snelled hook",
-            "tie hook shank",
-            "circle hook knot",
-            "flipping hook knot",
-            "hook knot"
-        ],
         bestFor: [
             "Hooks and presentations designed to benefit from a line connection aligned with the hook shank.",
             "Circle, octopus, flipping, tandem-hook, and other hook-specific applications where a snelled connection is appropriate."
@@ -594,15 +515,6 @@ const KNOT_DATA = Object.freeze([
         ],
         aliases: [
             "Crazy Alberto Knot"
-        ],
-        keywords: [
-            "alberto knot",
-            "crazy alberto",
-            "braid to leader",
-            "braid to fluorocarbon",
-            "braid to mono",
-            "connect different diameter lines",
-            "leader knot"
         ],
         bestFor: [
             "Connecting braided main line to a monofilament or fluorocarbon leader.",

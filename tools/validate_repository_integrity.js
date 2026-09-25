@@ -418,6 +418,209 @@ function validateCoreRegistry(coreIds, registry, label) {
 }
 
 
+function validateKnotGuidance(coreIds, collections, tasks, landingTasks, searchIntents, knots) {
+    recordCheck("Knots Guide guidance ownership + Search intent");
+
+    const expectedKnotIds = [
+        "arbor-knot",
+        "improved-clinch-knot",
+        "palomar-knot",
+        "double-uni-knot",
+        "uni-knot",
+        "double-surgeons-knot",
+        "non-slip-loop-knot",
+        "dropper-loop-knot",
+        "snell-knot",
+        "alberto-knot"
+    ];
+    const actualKnotIds = knots
+        .filter((knot) => isPlainObject(knot) && typeof knot.id === "string")
+        .map((knot) => knot.id);
+    if (
+        actualKnotIds.length !== expectedKnotIds.length ||
+        expectedKnotIds.some((id) => !actualKnotIds.includes(id))
+    ) {
+        fail("Knot guidance", `canonical Knot inventory must be exactly ${expectedKnotIds.join(", ")}`);
+    }
+
+    const expectedCoreIds = [
+        "arbor-knot",
+        "improved-clinch-knot",
+        "palomar-knot",
+        "double-uni-knot"
+    ];
+    if (JSON.stringify(coreIds) !== JSON.stringify(expectedCoreIds)) {
+        fail("Knot guidance", `Core Knot registry/order must be exactly ${expectedCoreIds.join(" -> ")}`);
+    }
+
+    const expectedCollectionKeys = ["all", "core", "beginner", "intermediate"];
+    if (!isPlainObject(collections)) {
+        fail("Knot guidance", "KNOT_COLLECTIONS must be an object registry");
+    } else {
+        const collectionKeys = Object.keys(collections);
+        if (JSON.stringify(collectionKeys) !== JSON.stringify(expectedCollectionKeys)) {
+            fail("Knot guidance", `Version 1 collections must be exactly ${expectedCollectionKeys.join(", ")}`);
+        }
+        for (const key of expectedCollectionKeys) {
+            const collection = collections[key];
+            if (!isPlainObject(collection)) {
+                fail("Knot guidance", `collection ${key} must be an object`);
+                continue;
+            }
+            if (typeof collection.title !== "string" || collection.title.trim() === "") {
+                fail("Knot guidance", `collection ${key} requires a title`);
+            }
+            if (typeof collection.description !== "string" || collection.description.trim() === "") {
+                fail("Knot guidance", `collection ${key} requires a description`);
+            }
+            if (collection.isAvailable !== true) {
+                fail("Knot guidance", `collection ${key} must be available in Version 1`);
+            }
+        }
+    }
+
+    const knotById = indexById(knots);
+    const expectedTaskIds = [
+        "attach-line-to-reel",
+        "terminal-attachment",
+        "line-to-line",
+        "loop-connection"
+    ];
+    validateUniqueIds(tasks, "Knot task guidance");
+    if (JSON.stringify(tasks.map((task) => task?.id)) !== JSON.stringify(expectedTaskIds)) {
+        fail("Knot task guidance", `practical task order must be exactly ${expectedTaskIds.join(" -> ")}`);
+    }
+    for (const task of tasks) {
+        if (!isPlainObject(task)) continue;
+        if (Object.prototype.hasOwnProperty.call(task, "searchTerms")) {
+            fail("Knot task guidance", `${task.id}: Search vocabulary must live in KNOT_SEARCH_INTENTS`);
+        }
+        if (typeof task.title !== "string" || task.title.trim() === "") {
+            fail("Knot task guidance", `${task.id}: task requires a title`);
+        }
+        if (typeof task.description !== "string" || task.description.trim() === "") {
+            fail("Knot task guidance", `${task.id}: task requires a description`);
+        }
+        const ids = requireArray(task.knotIds, `Knot task ${task.id} knotIds`);
+        if (ids.length === 0) {
+            fail("Knot task guidance", `${task.id}: task has no Knot IDs`);
+        }
+        const seen = new Set();
+        for (const knotId of ids) {
+            if (seen.has(knotId)) {
+                fail("Knot task guidance", `${task.id}: duplicate Knot ID ${knotId}`);
+            }
+            seen.add(knotId);
+            const knot = knotById.get(knotId);
+            if (!knot) {
+                fail("Knot task guidance", `${task.id}: unresolved Knot ID ${knotId}`);
+            } else if (knot.isActive !== true) {
+                fail("Knot task guidance", `${task.id}: references inactive Knot ${knotId}`);
+            }
+        }
+    }
+
+    const expectedLandingTargets = [
+        ["learn-core-knots", "collection", "core"],
+        ["terminal-attachment", "task", "terminal-attachment"],
+        ["line-to-line", "task", "line-to-line"],
+        ["loop-connection", "task", "loop-connection"]
+    ];
+    validateUniqueIds(landingTasks, "Knot landing task guidance");
+    if (
+        JSON.stringify(landingTasks.map((task) => [task?.id, task?.targetType, task?.targetId])) !==
+        JSON.stringify(expectedLandingTargets)
+    ) {
+        fail("Knot landing task guidance", "landing task order/targets do not match the approved four-entry hierarchy");
+    }
+    for (const task of landingTasks) {
+        if (!isPlainObject(task)) continue;
+        if (typeof task.title !== "string" || task.title.trim() === "") {
+            fail("Knot landing task guidance", `${task.id}: landing task requires a title`);
+        }
+        if (typeof task.description !== "string" || task.description.trim() === "") {
+            fail("Knot landing task guidance", `${task.id}: landing task requires a description`);
+        }
+        if (task.targetType === "collection") {
+            if (!isPlainObject(collections) || !collections[task.targetId]) {
+                fail("Knot landing task guidance", `${task.id}: unresolved collection target ${task.targetId}`);
+            }
+        } else if (task.targetType === "task") {
+            if (!tasks.some((practicalTask) => practicalTask?.id === task.targetId)) {
+                fail("Knot landing task guidance", `${task.id}: unresolved practical task target ${task.targetId}`);
+            }
+        } else {
+            fail("Knot landing task guidance", `${task.id}: targetType must be collection or task`);
+        }
+    }
+
+    validateUniqueIds(searchIntents, "Knot Search intent guidance");
+    const allowedIntentKinds = new Set(["specific", "practical"]);
+    const seenTerms = new Map();
+    const practicalIntentByTaskId = new Map();
+    for (const intent of searchIntents) {
+        if (!isPlainObject(intent)) continue;
+        if (!allowedIntentKinds.has(intent.kind)) {
+            fail("Knot Search intent guidance", `${intent.id}: kind must be specific or practical`);
+        }
+        const terms = requireArray(intent.terms, `Knot Search intent ${intent.id} terms`);
+        if (terms.length === 0) {
+            fail("Knot Search intent guidance", `${intent.id}: intent has no Search terms`);
+        }
+        for (const term of terms) {
+            if (typeof term !== "string" || term.trim() === "") {
+                fail("Knot Search intent guidance", `${intent.id}: Search terms must be non-empty text`);
+                continue;
+            }
+            const normalizedTerm = term
+                .trim()
+                .toLocaleLowerCase()
+                .replace(/[’']/g, "")
+                .replace(/[^a-z0-9]+/g, " ")
+                .trim();
+            const previousOwner = seenTerms.get(normalizedTerm);
+            if (previousOwner) {
+                fail("Knot Search intent guidance", `${intent.id}: duplicate Search term ${JSON.stringify(term)} already owned by ${previousOwner}`);
+            } else {
+                seenTerms.set(normalizedTerm, intent.id);
+            }
+        }
+
+        const ids = requireArray(intent.knotIds, `Knot Search intent ${intent.id} knotIds`);
+        if (ids.length === 0) {
+            fail("Knot Search intent guidance", `${intent.id}: intent has no Knot IDs`);
+        }
+        const seenKnotIds = new Set();
+        for (const knotId of ids) {
+            if (seenKnotIds.has(knotId)) {
+                fail("Knot Search intent guidance", `${intent.id}: duplicate Knot ID ${knotId}`);
+            }
+            seenKnotIds.add(knotId);
+            const knot = knotById.get(knotId);
+            if (!knot) {
+                fail("Knot Search intent guidance", `${intent.id}: unresolved Knot ID ${knotId}`);
+            } else if (knot.isActive !== true) {
+                fail("Knot Search intent guidance", `${intent.id}: references inactive Knot ${knotId}`);
+            }
+        }
+
+        if (intent.kind === "practical" && intent.id.startsWith("practical-")) {
+            practicalIntentByTaskId.set(intent.id.slice("practical-".length), intent);
+        }
+    }
+
+    for (const task of tasks) {
+        const intent = practicalIntentByTaskId.get(task.id);
+        if (!intent) {
+            fail("Knot Search intent guidance", `${task.id}: missing dedicated practical Search intent`);
+            continue;
+        }
+        if (JSON.stringify(intent.knotIds) !== JSON.stringify(task.knotIds)) {
+            fail("Knot Search intent guidance", `${task.id}: practical Search intent Knot order must match practical task guidance`);
+        }
+    }
+}
+
 function validateNoForbiddenFields(records, fields, label) {
     for (const record of records) {
         if (!isPlainObject(record)) {
@@ -3379,9 +3582,18 @@ function validateCanonicalData() {
         "data/canonical-requirement-satisfaction.js",
         ["CANONICAL_REQUIREMENT_SATISFACTION_RELATIONSHIPS"]
     );
-    const knotBindings = loadBindings("data/knots.js", ["KNOT_DATA", "CORE_KNOT_IDS"]);
+    const knotBindings = loadBindings("data/knots.js", ["KNOT_DATA"]);
     const tackleBindings = loadBindings("data/tackle.js", ["TACKLE_DATA"]);
-    const guidanceBindings = loadBindings("data/knot-guidance.js", ["KNOT_TASK_DEFINITIONS"]);
+    const guidanceBindings = loadBindings(
+        "data/knot-guidance.js",
+        [
+            "CORE_KNOT_IDS",
+            "KNOT_COLLECTIONS",
+            "KNOT_TASK_DEFINITIONS",
+            "KNOT_LANDING_TASK_DEFINITIONS",
+            "KNOT_SEARCH_INTENTS"
+        ]
+    );
     const regulationsBindings = loadBindings("data/regulations.js", ["REGULATIONS_DATA_BUILD_INFO", "STATE_DATA", "STATE_RESOURCE_DATA", "STATE_NOTICE_DATA"]);
 
 
@@ -3410,7 +3622,17 @@ function validateCanonicalData() {
     );
     const knots = requireArray(knotBindings.KNOT_DATA, "Knot registry");
     const tackle = requireArray(tackleBindings.TACKLE_DATA, "Tackle registry");
+    const coreKnotIds = requireArray(guidanceBindings.CORE_KNOT_IDS, "Core Knot registry");
+    const knotCollections = guidanceBindings.KNOT_COLLECTIONS;
     const knotTasks = requireArray(guidanceBindings.KNOT_TASK_DEFINITIONS, "Knot task guidance");
+    const knotLandingTasks = requireArray(
+        guidanceBindings.KNOT_LANDING_TASK_DEFINITIONS,
+        "Knot landing task guidance"
+    );
+    const knotSearchIntents = requireArray(
+        guidanceBindings.KNOT_SEARCH_INTENTS,
+        "Knot Search intent guidance"
+    );
     const states = requireArray(regulationsBindings.STATE_DATA, "State registry");
     const stateResources = requireArray(regulationsBindings.STATE_RESOURCE_DATA, "StateResource registry");
     const stateNotices = requireArray(regulationsBindings.STATE_NOTICE_DATA, "StateNotice registry");
@@ -3426,7 +3648,15 @@ function validateCanonicalData() {
 
 
     validateCoreRegistry(rigBindings.CORE_RIG_IDS, rigs, "Core Rig registry");
-    validateCoreRegistry(knotBindings.CORE_KNOT_IDS, knots, "Core Knot registry");
+    validateCoreRegistry(coreKnotIds, knots, "Core Knot registry");
+    validateKnotGuidance(
+        coreKnotIds,
+        knotCollections,
+        knotTasks,
+        knotLandingTasks,
+        knotSearchIntents,
+        knots
+    );
     validateFishProductionData(fish, categories, fishIdentification, fishRigGuidance, rigs, legacyCategoryMap);
     validateFishSpecializedGuidance(fishSpecializedGuidance, fish);
     validateRegulationsData(regulationsBindings.REGULATIONS_DATA_BUILD_INFO, states, stateResources, stateNotices);
@@ -3458,7 +3688,8 @@ function validateCanonicalData() {
             "isCore",
             "coreOrder",
             "stepCount",
-            "strengthRating"
+            "strengthRating",
+            "keywords"
         ],
         "Knot ownership"
     );
@@ -3640,31 +3871,6 @@ function validateCanonicalData() {
             const target = tackleById.get(relatedId);
             if (!target) {
                 fail("Tackle relationships", `${item.id}: unresolved related Tackle ID ${relatedId}`);
-            }
-        }
-    }
-
-
-    validateUniqueIds(knotTasks, "Knot task guidance");
-    for (const task of knotTasks) {
-        if (!isPlainObject(task)) {
-            continue;
-        }
-        const ids = requireArray(task.knotIds, `Knot task ${task.id} knotIds`);
-        if (ids.length === 0) {
-            fail("Knot task guidance", `${task.id}: task has no Knot IDs`);
-        }
-        const seen = new Set();
-        for (const knotId of ids) {
-            if (seen.has(knotId)) {
-                fail("Knot task guidance", `${task.id}: duplicate Knot ID ${knotId}`);
-            }
-            seen.add(knotId);
-            const knot = knotById.get(knotId);
-            if (!knot) {
-                fail("Knot task guidance", `${task.id}: unresolved Knot ID ${knotId}`);
-            } else if (knot.isActive !== true) {
-                fail("Knot task guidance", `${task.id}: references inactive Knot ${knotId}`);
             }
         }
     }

@@ -201,27 +201,20 @@ function normalizeKnotSearchText(value) {
         .join(" ");
 }
 
-function getKnotTaskDefinitions(taskDefinitions) {
-    return Array.isArray(taskDefinitions) ? taskDefinitions : [];
+function getKnotSearchIntents(searchIntents) {
+    return Array.isArray(searchIntents) ? searchIntents : [];
 }
 
-function getKnotTaskSearchTerms(taskDefinitions) {
-    return new Set(
-        getKnotTaskDefinitions(taskDefinitions)
-            .flatMap((task) => [task.title, ...(task.searchTerms ?? [])])
-            .map(normalizeKnotSearchText)
-            .filter(Boolean)
-    );
-}
-
-function getKnotTaskMatch(recordId, normalizedQuery, taskDefinitions) {
+function getKnotIntentMatch(recordId, normalizedQuery, searchIntents, kind) {
     let bestMatch = null;
 
-    getKnotTaskDefinitions(taskDefinitions).forEach((task, taskIndex) => {
-        const knotIndex = task.knotIds?.indexOf(recordId) ?? -1;
+    getKnotSearchIntents(searchIntents).forEach((intent, intentIndex) => {
+        if (intent.kind !== kind) return;
+
+        const knotIndex = intent.knotIds?.indexOf(recordId) ?? -1;
         if (knotIndex < 0) return;
 
-        const terms = [task.title, ...(task.searchTerms ?? [])]
+        const terms = (intent.terms ?? [])
             .map(normalizeKnotSearchText)
             .filter(Boolean);
         const exactMatch = terms.some((term) => term === normalizedQuery);
@@ -230,9 +223,24 @@ function getKnotTaskMatch(recordId, normalizedQuery, taskDefinitions) {
         );
         if (!exactMatch && !phraseMatch) return;
 
-        const score = exactMatch ? 700 : 650;
-        const candidate = { score, taskIndex, knotIndex };
-        if (!bestMatch || candidate.score > bestMatch.score) {
+        const score = kind === "specific"
+            ? (exactMatch ? 800 : 600)
+            : (exactMatch ? 700 : 650);
+        const candidate = { score, intentIndex, knotIndex };
+        if (
+            !bestMatch ||
+            candidate.score > bestMatch.score ||
+            (
+                candidate.score === bestMatch.score &&
+                (
+                    candidate.intentIndex < bestMatch.intentIndex ||
+                    (
+                        candidate.intentIndex === bestMatch.intentIndex &&
+                        candidate.knotIndex < bestMatch.knotIndex
+                    )
+                )
+            )
+        ) {
             bestMatch = candidate;
         }
     });
@@ -240,41 +248,49 @@ function getKnotTaskMatch(recordId, normalizedQuery, taskDefinitions) {
     return bestMatch;
 }
 
-function getKnotSearchMatch(record, normalizedQuery, taskDefinitions) {
+function getKnotSearchMatch(record, normalizedQuery, searchIntents) {
     const normalizedName = normalizeKnotSearchText(record.name);
     const normalizedAliases = (record.aliases ?? []).map(normalizeKnotSearchText);
-    const sharedTaskTerms = getKnotTaskSearchTerms(taskDefinitions);
-    const normalizedKeywords = (record.keywords ?? [])
-        .map(normalizeKnotSearchText)
-        .filter((keyword) => keyword && !sharedTaskTerms.has(keyword));
 
-    if (normalizedName === normalizedQuery) return { score: 1000, taskIndex: 999, knotIndex: 999 };
-    if (normalizedAliases.includes(normalizedQuery)) return { score: 950, taskIndex: 999, knotIndex: 999 };
-    if (normalizedName.startsWith(normalizedQuery)) return { score: 900, taskIndex: 999, knotIndex: 999 };
-    if (normalizedAliases.some((alias) => alias.startsWith(normalizedQuery))) return { score: 850, taskIndex: 999, knotIndex: 999 };
-    if (normalizedKeywords.includes(normalizedQuery)) return { score: 800, taskIndex: 999, knotIndex: 999 };
+    if (normalizedName === normalizedQuery) return { score: 1000, intentIndex: 999, knotIndex: 999 };
+    if (normalizedAliases.includes(normalizedQuery)) return { score: 950, intentIndex: 999, knotIndex: 999 };
+    if (normalizedName.startsWith(normalizedQuery)) return { score: 900, intentIndex: 999, knotIndex: 999 };
+    if (normalizedAliases.some((alias) => alias.startsWith(normalizedQuery))) return { score: 850, intentIndex: 999, knotIndex: 999 };
 
-    const taskMatch = getKnotTaskMatch(record.id, normalizedQuery, taskDefinitions);
-    if (taskMatch) return taskMatch;
+    const specificIntentMatch = getKnotIntentMatch(
+        record.id,
+        normalizedQuery,
+        searchIntents,
+        "specific"
+    );
+    if (specificIntentMatch?.score === 800) return specificIntentMatch;
+
+    const practicalIntentMatch = getKnotIntentMatch(
+        record.id,
+        normalizedQuery,
+        searchIntents,
+        "practical"
+    );
+    if (practicalIntentMatch) return practicalIntentMatch;
 
     if (
         normalizedName.includes(normalizedQuery) ||
-        normalizedAliases.some((alias) => alias.includes(normalizedQuery)) ||
-        normalizedKeywords.some((keyword) => keyword.includes(normalizedQuery) || normalizedQuery.includes(keyword))
+        normalizedAliases.some((alias) => alias.includes(normalizedQuery))
     ) {
-        return { score: 600, taskIndex: 999, knotIndex: 999 };
+        return { score: 600, intentIndex: -1, knotIndex: -1 };
     }
+    if (specificIntentMatch) return specificIntentMatch;
 
     const lineMatch = (record.compatibleLineTypes ?? []).some(
         (lineType) => normalizeKnotSearchText(lineType) === normalizedQuery
     );
     const difficultyMatch = normalizeKnotSearchText(record.difficulty) === normalizedQuery;
-    if (lineMatch || difficultyMatch) return { score: 400, taskIndex: 999, knotIndex: 999 };
+    if (lineMatch || difficultyMatch) return { score: 400, intentIndex: 999, knotIndex: 999 };
 
-    return { score: 0, taskIndex: 999, knotIndex: 999 };
+    return { score: 0, intentIndex: 999, knotIndex: 999 };
 }
 
-function searchKnotRecords(records, query, taskDefinitions = []) {
+function searchKnotRecords(records, query, searchIntents = []) {
     if (!Array.isArray(records)) return [];
 
     const normalizedQuery = normalizeKnotSearchText(query);
@@ -284,12 +300,12 @@ function searchKnotRecords(records, query, taskDefinitions = []) {
         .map((record, originalIndex) => ({
             record,
             originalIndex,
-            ...getKnotSearchMatch(record, normalizedQuery, taskDefinitions)
+            ...getKnotSearchMatch(record, normalizedQuery, searchIntents)
         }))
         .filter((match) => match.score > 0)
         .sort((first, second) =>
             second.score - first.score ||
-            first.taskIndex - second.taskIndex ||
+            first.intentIndex - second.intentIndex ||
             first.knotIndex - second.knotIndex ||
             first.originalIndex - second.originalIndex
         )
@@ -299,32 +315,6 @@ function searchKnotRecords(records, query, taskDefinitions = []) {
 /* ==========================================================
    SHARED SEARCH — GENERIC FILTER + SORT HELPERS
    ========================================================== */
-
-function filterRecordsByValue(records, field, expectedValue) {
-    if (!Array.isArray(records)) {
-        return [];
-    }
-
-    const normalizedExpectedValue =
-        normalizeSearchText(expectedValue);
-
-    return records.filter((record) => {
-        const fieldValue = record[field];
-
-        if (Array.isArray(fieldValue)) {
-            return fieldValue.some(
-                (value) =>
-                    normalizeSearchText(value) ===
-                    normalizedExpectedValue
-            );
-        }
-
-        return (
-            normalizeSearchText(fieldValue) ===
-            normalizedExpectedValue
-        );
-    });
-}
 
 function sortRecordsAlphabetically(records, field = "name") {
     if (!Array.isArray(records)) {

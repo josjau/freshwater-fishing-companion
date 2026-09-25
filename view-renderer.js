@@ -1157,13 +1157,23 @@ function isCoreKnotRecord(record) {
 
 function buildKnotResultCardMarkup(knot) {
     const isCore = isCoreKnotRecord(knot);
+    const classification = `${isCore ? "Core Knot • " : ""}${knot.difficulty}`;
+    const aliases = Array.isArray(knot.aliases)
+        ? knot.aliases.filter((alias) => typeof alias === "string" && alias.trim())
+        : [];
+    const aliasMarkup = aliases.length > 0
+        ? `<span class="knot-result-card__aliases"><strong>Also called:</strong> ${aliases.join(", ")}</span>`
+        : "";
+
     return `
         <button class="search-result-card search-result-card--knot${isCore ? " search-result-card--core" : ""}" type="button" data-result-id="${knot.id}">
-            ${isCore ? '<span class="search-result-card__badge">Core Knot</span>' : ""}
-            <span class="search-result-card__title">${knot.name}</span>
-            <span class="search-result-card__meta">${knot.difficulty}</span>
+            <span class="knot-result-card__classification">${classification}</span>
+            <span class="knot-result-card__heading-row">
+                <span class="search-result-card__title">${knot.name}</span>
+                <span class="search-result-card__action">View Knot <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+            </span>
+            ${aliasMarkup}
             <span class="search-result-card__summary">${knot.summary}</span>
-            <span class="search-result-card__action">View instructions <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
         </button>
     `;
 }
@@ -1174,21 +1184,26 @@ function renderKnotGuideLanding(appMain, config) {
         return;
     }
 
+    const priorityTaskIds = new Set(["learn-core-knots", "terminal-attachment", "line-to-line"]);
     const taskMarkup = config.tasks.map((task) => {
-        const actionLabel = task.id === "attach-line-to-reel"
-            ? 'Get your reel ready <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>'
-            : 'Choose this task <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>';
-        const isImportantTask = ["attach-line-to-reel", "terminal-attachment"].includes(task.id);
+        const actionText = task.id === "learn-core-knots" ? "Learn" : "View Knots";
+        const isPriorityTask = priorityTaskIds.has(task.id);
         const taskClassName = [
             "dashboard-card",
             "knot-task-card",
-            isImportantTask ? "dashboard-card--primary knot-task-card--important" : ""
+            isPriorityTask ? "knot-task-card--priority" : ""
         ].filter(Boolean).join(" ");
+        const priorityLabelMarkup = task.id === "learn-core-knots"
+            ? '<span class="knot-priority-label">Recommended First</span>'
+            : "";
         return `
             <button class="${taskClassName}" type="button" data-knot-task-id="${task.id}">
-                <span class="dashboard-card__title">${task.title}</span>
+                ${priorityLabelMarkup}
+                <span class="guide-card__heading-row">
+                    <span class="dashboard-card__title">${task.title}</span>
+                    <span class="dashboard-card__action dashboard-card__action--link">${actionText} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                </span>
                 <span class="dashboard-card__description">${task.description}</span>
-                <span class="dashboard-card__action">${actionLabel}</span>
             </button>
         `;
     }).join("");
@@ -1197,23 +1212,29 @@ function renderKnotGuideLanding(appMain, config) {
         const isCoreCollection = collection.key === "core";
         const collectionClassName = [
             "dashboard-card",
+            "guide-browse-card",
             "knot-collection-card",
-            isCoreCollection ? "dashboard-card--primary knot-guide-core-card" : ""
+            isCoreCollection ? "knot-guide-core-card" : ""
         ].filter(Boolean).join(" ");
 
         if (collection.isAvailable !== true) {
             return `
                 <div class="${collectionClassName} dashboard-card--unavailable" aria-disabled="true">
-                    <span class="dashboard-card__title">${collection.title}</span>
+                    <span class="guide-card__heading-row">
+                        <span class="dashboard-card__title">${collection.title}</span>
+                        <span class="dashboard-card__action dashboard-card__action--link">Coming Soon</span>
+                    </span>
                     <span class="dashboard-card__description">${collection.description}</span>
-                    <span class="dashboard-card__action">Coming Soon</span>
                 </div>
             `;
         }
 
         return `
             <button class="${collectionClassName}" type="button" data-knot-collection-key="${collection.key}">
-                <span class="dashboard-card__title">${collection.title}</span>
+                <span class="guide-card__heading-row">
+                    <span class="dashboard-card__title">${collection.title}</span>
+                    <span class="dashboard-card__action dashboard-card__action--link">Browse <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                </span>
                 <span class="dashboard-card__description">${collection.description}</span>
             </button>
         `;
@@ -1222,23 +1243,44 @@ function renderKnotGuideLanding(appMain, config) {
     appMain.innerHTML = `
         <section class="content-view knot-guide-view" aria-labelledby="knots-title">
             ${buildPageNavigationMarkup()}
-            <h2 id="knots-title">Knots</h2>
-            <p>Start with the connection you need, search by name, or browse a Knot collection.</p>
-            <form class="search-form section-search-form" data-knot-search-form>
-                <label class="search-label" for="knot-guide-search-input">Search all Knots</label>
-                ${buildSearchControlsMarkup("knot-guide-search-input", "Try Palomar, tie hook, add leader, braid, or beginner")}
+            <header class="knot-guide-identity">
+                <div class="knot-guide-identity__copy">
+                    <h2 id="knots-title">Knots Guide</h2>
+                    <p>Learn the essential fishing knots for attaching line to your reel, tying on hooks and lures, connecting lines, and making loop connections.</p>
+                </div>
+            </header>
+            <form class="search-form section-search-form knot-guide-search-form" data-knot-search-form>
+                <label class="search-label" for="knot-guide-search-input">Search Knots</label>
+                <p class="search-help" id="knot-guide-search-help">Search by Knot name, task, line type, or difficulty.</p>
+                ${buildSearchControlsMarkup("knot-guide-search-input", "Try Palomar, tie hook, braid, or beginner", {
+                    showSubmitButton: false,
+                    inputDescriptionId: "knot-guide-search-help"
+                })}
             </form>
             <div class="section-search-results" data-knot-search-region hidden>
                 <p class="search-status" data-search-status aria-live="polite"></p>
                 <div class="search-results" data-search-results></div>
             </div>
             <div class="knot-guide-content" data-knot-guide-content>
+                <section class="knot-guide-section knot-guide-workflow-section" aria-label="Reel setup workflow">
+                    <div class="dashboard-grid knot-guide-workflow-grid">
+                        <button class="dashboard-card dashboard-card--workflow knot-reel-ready-card" type="button" data-knot-reel-setup>
+                            <span class="guide-workflow-eyebrow">Guided Setup</span>
+                            <span class="guide-card__heading-row">
+                                <span class="dashboard-card__title">Get Your Reel Ready</span>
+                                <span class="dashboard-card__action dashboard-card__action--link">Start Setup <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                            </span>
+                            <span class="dashboard-card__description">Walk through reel type, line choice, compatibility, and spool setup step by step.</span>
+                        </button>
+                    </div>
+                </section>
                 <section class="knot-guide-section knot-guide-section--tasks" aria-labelledby="knot-task-title">
-                    <h3 id="knot-task-title">What are you trying to do?</h3>
-                    <p>Choose the connection you need. Reel setup starts with <strong>Attach Line to a Reel</strong>.</p>
+                    <h3 id="knot-task-title">What Are You Trying to Do?</h3>
+                    <p>Choose the connection or learning path that matches what you need right now.</p>
                     <div class="dashboard-grid knot-task-grid">${taskMarkup}</div>
                 </section>
-                <section class="knot-guide-section knot-guide-section--collections" aria-label="Browse Knot collections">
+                <section class="knot-guide-section knot-guide-section--collections" aria-labelledby="knot-collection-title">
+                    <h3 id="knot-collection-title">All Knots</h3>
                     <div class="dashboard-grid knot-collection-grid">${collectionMarkup}</div>
                 </section>
             </div>
@@ -1252,8 +1294,11 @@ function renderKnotGuideLanding(appMain, config) {
     const clearButton = appMain.querySelector("[data-search-clear]");
     const searchRegion = appMain.querySelector("[data-knot-search-region]");
     const landingContent = appMain.querySelector("[data-knot-guide-content]");
+    if (searchInput && typeof config.initialQuery === "string") searchInput.value = config.initialQuery;
+
     const updateSearch = () => {
         const query = searchInput?.value?.trim() ?? "";
+        config.onQueryChange?.(query);
         const hasQuery = query.length > 0;
         if (searchRegion) searchRegion.hidden = !hasQuery;
         if (landingContent) landingContent.hidden = hasQuery;
@@ -1269,7 +1314,11 @@ function renderKnotGuideLanding(appMain, config) {
         config.onSearch?.(query);
     };
     initializeSearchControls(searchForm, searchInput, clearButton, updateSearch);
+    updateSearch();
 
+    appMain.querySelector("[data-knot-reel-setup]")?.addEventListener("click", () => {
+        config.onWorkflowSelect?.();
+    });
     appMain.querySelectorAll("[data-knot-task-id]").forEach((card) => {
         card.addEventListener("click", () => config.onTaskSelect?.(card.dataset.knotTaskId));
     });
