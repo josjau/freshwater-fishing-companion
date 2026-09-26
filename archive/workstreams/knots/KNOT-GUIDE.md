@@ -2,7 +2,7 @@
 
 
 **Document:** KNOT-GUIDE.md  
-**Document Revision:** 0.3.29  
+**Document Revision:** 0.3.30
 **Document Status:** Approved Planning / In Progress  
 **Milestone:** Knots  
 **Last Updated:** 2026-09-25
@@ -1509,7 +1509,17 @@ CP9.3A establishes the approved Knot Detail teaching hierarchy and state-preserv
 
 The approved CP9.3B R2 candidate is `FCC-49J-B-Knots-Guide-CP9.3B-R2-Cumulative-Review.zip`, SHA-256 `029c09529447195bfbf4adb5335dbc125acb36d5d3a8e9bb5f866c8c17e593f0`. Approved production hashes are `view-renderer.js` `d4a6f813b9aff57b250bd77ca9aacbfd115ec62825183bd919c425db73dd7501`, `script.js` `160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`, and `forest-journal.css` `55cdae1143eb8087784875bc6a1cbdffb4a54b46a59f5e9297d306bdeb3bb387`.
 
-Final repository closeout landed the bounded four-file convergence commit `08cb6f700f33d6bb947bf711d683d584914d25c1` (`FCC 49J - CP9.3B closeout convergence`) exactly one commit after `8f4c90c62150cfbb575ae50602306b0b9ca0bf25`. Its scope is only `data/regulations.js`, this workstream file, `docs/UI_STANDARD.md`, and the active Knots audit. Repository Integrity run `36213834459` PASS and Pages run `36213833502` PASS. CP9.3B is therefore repository-validated and closed; CP9.3C is the next implementation segment.
+Final repository closeout landed the bounded four-file convergence commit `08cb6f700f33d6bb947bf711d683d584914d25c1` (`FCC 49J - CP9.3B closeout convergence`) exactly one commit after `8f4c90c62150cfbb575ae50602306b0b9ca0bf25`. Its scope is only `data/regulations.js`, this workstream file, `docs/UI_STANDARD.md`, and the active Knots audit. Repository Integrity run `36213834459` PASS and Pages run `36213833502` PASS. CP9.3B is therefore repository-validated and closed.
+
+### CP9.3C Implementation Result
+
+**Status:** USER APPROVED / PROMOTED / VALIDATED — REPOSITORY COMMIT/PUSH + CI PENDING — 2026-09-25
+
+CP9.3C converts the protected external instructional baseline into an explicit renderer-owned integration inside **HOW TO TIE IT**. `view-renderer.js` owns the media mount and teaching structure; `knot-media-renderer.js` owns only instructional-media presentation and no longer wraps or reassigns the Knot Detail renderer.
+
+The approved R3 treatment keeps **Visual Guide**, the medium chip, restrained provider attribution, and the neutral external action together inside one bordered instructional container. **Numbered Tying Steps** remains outside that container as the handoff into canonical `tyingSteps[]`. External actions retain the medium-specific labels owned by `data/media.js` and use `↗`; the verbose external-instruction explanatory note is not used. The normal sticky breadcrumb surface is preserved for ordinary Knot origins, while Task-origin Knot Detail navigation receives the approved compact stacked panel only at narrow widths so long Task labels remain readable without changing return behavior.
+
+The approved R3 candidate is `FCC-49J-C-Knots-Guide-CP9.3C-R3-Cumulative-Review.zip`, SHA-256 `15de41068ff4f948151fb9242b092f5b21c54d6b9faded73ed242d3b20e0ea89`. Approved/promoted production hashes are `view-renderer.js` `4440a8f356773cc7881788329a1208fc33ac3992ff75af6310b38a39ef930423`, `knot-media-renderer.js` `2cfef62675b3ae0544365b8a02cc624c17966e2d1f0502daba2afc5e2c702417`, and `forest-journal.css` `4f7e087b984774d44d298cb3fd5d9234cb4ac265fd44f3e3ea837437b64cc335`. `data/media.js` remains unchanged. The four-Core FCC-owned instructional prototype remains CP9.6. Repository closeout for CP9.3C remains open until the approved five-path convergence is committed/pushed and GitHub SHA/scope, required CI/Pages, and Drive/Git convergence are verified. CP9.4 must not begin before that closeout passes.
 
 ### Validation Lock
 

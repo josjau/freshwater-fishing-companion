@@ -1,7 +1,7 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: knot-media-renderer.js
-   PURPOSE: Adds verified external instructional media to
+   PURPOSE: Renders verified external instructional media for
    canonical Knot detail pages.
    ========================================================== */
 
@@ -9,7 +9,7 @@
 
 const KNOT_MEDIA_RENDERER_BUILD_INFO = Object.freeze({
     file: "knot-media-renderer.js",
-    milestone: "Knot Guide — Production Package 4"
+    milestone: "Knot Guide — Instructional Media Rendering"
 });
 
 function getKnotInstructionMedia(knotId) {
@@ -31,22 +31,24 @@ function buildKnotInstructionMediaMarkup(record) {
     const provider = media.provider || "Verified external source";
     const title = media.title || `${record.name} visual instructions`;
     const actionLabel = media.actionLabel || "View visual instructions";
+    const typeLabel = getKnotMediaTypeLabel(media.type);
 
     return `
-        <section class="detail-section knot-media-section" aria-labelledby="knot-media-title">
-            <div class="knot-media-section__header">
-                <div>
-                    <p class="knot-media-section__eyebrow">Visual Guide</p>
-                    <h3 id="knot-media-title">${title}</h3>
-                    <p>Verified external instruction from ${provider}. Use the numbered steps on this page as the primary tying method.</p>
-                </div>
-                <span class="knot-media-section__type">${getKnotMediaTypeLabel(media.type)}</span>
-            </div>
-            <a class="knot-media-link" href="${media.externalUrl}" target="_blank" rel="noopener noreferrer">
+        <aside class="knot-instruction-media" aria-label="Visual Guide">
+            <p class="knot-instruction-media__title">Visual Guide</p>
+            <span class="knot-instruction-media__type">${typeLabel}</span>
+            <p class="knot-instruction-media__description">Visual instruction from <strong>${provider}</strong>.</p>
+            <a
+                class="knot-instruction-media__link"
+                href="${media.externalUrl}"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="${actionLabel}: ${title}"
+            >
                 <span>${actionLabel}</span>
                 <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span>
             </a>
-        </section>
+        </aside>
     `;
 }
 
@@ -54,23 +56,8 @@ function getKnotMediaTypeLabel(type) {
     if (type === "external-animation") return "Animation";
     if (type === "external-diagram") return "Diagram";
     if (type === "external-3d-instruction") return "Interactive 3D";
-    return "Visual instructions";
+    return "Visual Guide";
 }
-
-const renderKnotInstructionDetailWithoutMedia = renderKnotInstructionDetail;
-
-renderKnotInstructionDetail = function renderKnotInstructionDetailWithMedia(appMain, detailConfig) {
-    renderKnotInstructionDetailWithoutMedia(appMain, detailConfig);
-
-    const record = detailConfig?.record;
-    const tyingSection = appMain?.querySelector(".knot-tying-section");
-    if (!record || !tyingSection) return;
-
-    const mediaMarkup = buildKnotInstructionMediaMarkup(record);
-    if (!mediaMarkup) return;
-
-    tyingSection.insertAdjacentHTML("afterend", mediaMarkup);
-};
 
 console.info(
     `[Loaded] ${KNOT_MEDIA_RENDERER_BUILD_INFO.file} | ` +

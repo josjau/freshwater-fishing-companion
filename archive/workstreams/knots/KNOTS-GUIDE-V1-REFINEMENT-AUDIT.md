@@ -48,7 +48,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C NEXT |  
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C APPROVED / PROMOTED / VALIDATED — REPOSITORY CLOSEOUT OPEN; CP9.4 BLOCKED |
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -1819,6 +1819,95 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 - **Owner classification:** UPDATE REQUIRED / completed in Drive — `view-renderer.js`, `script.js`, `forest-journal.css`, `KNOT-GUIDE.md`, `UI_STANDARD.md`, this active audit, Live Working State, and the bounded `data/regulations.js` freshness repair. VERIFIED — NO CHANGE REQUIRED — `docs/PROJECT-RULES.md`, `docs/V1-DESIGN-AUDIT.md`, Knot canonical compatibility data, `data/reel-guidance.js`, `MEDIA_GUIDE.md`, `data/media.js`, and `knot-media-renderer.js`.
 - The bounded repository freshness repair and closeout documentation landed in GitHub `main` as `08cb6f700f33d6bb947bf711d683d584914d25c1` (`FCC 49J - CP9.3B closeout convergence`), exactly one commit after `8f4c90c62150cfbb575ae50602306b0b9ca0bf25`. The commit changes exactly four paths: `data/regulations.js`, `archive/workstreams/knots/KNOT-GUIDE.md`, `docs/UI_STANDARD.md`, and this active audit. Repository Integrity run `36213834459` PASS and Pages run `36213833502` PASS. CP9.3B is CLOSED / PASS; CP9.3C is unblocked and is the next implementation segment.
 
+# KG Audit — CP9.3C — External Visual Guide / Instructional-Media Integration
+
+**Status:** IN REVIEW — R1 CANDIDATE / DRIVE CURRENT UNCHANGED
+
+## CP9.3C Baseline + Scope
+
+- Starting GitHub `main`: `ab100b74494a2656ae1e8ee58111797b622f8edd` (`FCC 49J - CP9.3B final documentation closeout`), with CP9.3B CLOSED / PASS and no open material gate.
+- Matching Drive Current source was fresh-read before candidate construction. Baseline SHA-256: `view-renderer.js` `d4a6f813b9aff57b250bd77ca9aacbfd115ec62825183bd919c425db73dd7501`; `knot-media-renderer.js` `be9774cfa9bd7dc0550cd83aed614913e2f96128b15654ee8f8ec24dfd4d3d1f`; `forest-journal.css` `55cdae1143eb8087784875bc6a1cbdffb4a54b46a59f5e9297d306bdeb3bb387`; `data/media.js` `8154032f9ae8319b3675b15df510d9b711881156a085d4ff268fa62ef6944c51`.
+- R1 production candidate scope is intentionally limited to `view-renderer.js`, `knot-media-renderer.js`, and `forest-journal.css`; this active audit is carried in the review package. No deletions.
+- `data/media.js` is VERIFIED NO CHANGE for CP9.3C. Its 10 active Knot-owned external instructional records remain one preferred destination per active V1 Knot with medium-specific action labels, provider attribution, external URLs, and protected rights/provenance metadata.
+- All 10 protected external destinations were rechecked on 2026-09-25 and resolved to their intended instructional pages. No replacement, rehosting, preview extraction, or rights change is introduced.
+- The four-Core FCC-owned SVG/viewer prototype remains CP9.6. CP9.3C creates no `images/knots/instructional/*` assets and makes no local-instructional-state media records.
+
+## R1 Implementation
+
+- `knot-media-renderer.js` is converted from the legacy Package 4 monkey-patch model into the dedicated **Knot Guide — Instructional Media Rendering** presentation owner required by CP7.2. It now exposes the external instructional markup only; it does not reassign or wrap `renderKnotInstructionDetail()`.
+- `view-renderer.js` owns the explicit media integration point inside **HOW TO TIE IT**. R1 places the protected external **Visual Guide** immediately before the canonical numbered `tyingSteps[]`, so the established visual-learning option remains prominent while the FCC steps remain visible and authoritative directly below it.
+- The external block keeps the approved medium-specific action label and `↗` semantics, shows restrained provider attribution, and identifies the medium as Animation / Illustrated guide / Interactive 3D guide without duplicating the source title as another heading.
+- `forest-journal.css` replaces the stale Package 4 standalone-card treatment with a neutral inset instructional surface inside the existing HOW TO TIE IT section. The old Knot-specific gradient, fixed Knot accent treatment, and media-type pill are removed; focus/touch behavior remains explicit and the external action uses the shared accent rather than a Guide-fixed color.
+- The protected external instruction remains linked only. Canonical Knot text continues to come from `data/knots.js`; media/provenance continues to come from `data/media.js`; page structure stays in `view-renderer.js`; media presentation stays in `knot-media-renderer.js`.
+
+## R1 Validation
+
+- JavaScript syntax: PASS for candidate `view-renderer.js` and `knot-media-renderer.js`.
+- Explicit-integration assertions: PASS — exactly one `buildKnotInstructionMediaMarkup(record)` mount inside `.knot-tying-section`; zero `renderKnotInstructionDetail` reassignment and zero post-render DOM injection in `knot-media-renderer.js`.
+- 10-Knot external-media inventory and medium/action/provider mapping: PASS against canonical `data/knots.js` + unchanged `data/media.js` — 10 active Knots / 10 active external Knot media records / exactly one matching destination per Knot.
+- CSS integrity / stale Package 4 media-class absence / no new repeated-blank-line defect: PASS. CSS braces balance; legacy `.knot-media-section*` / `.knot-media-link` styling is absent; the inherited maximum blank-line run remains unchanged at 3.
+- Candidate production SHA-256: `view-renderer.js` `134819fd0d18b47efe12abdc509e9f8294b7befecdd99bb36b28e12daad79d07`; `knot-media-renderer.js` `7d5ecbe7f4145f38d5e03271232c6a08df57ef08f544a5fdf44f6a23b6138bb9`; `forest-journal.css` `dad177565645f4032ba5ed6bfc4812baeedc61f309e41c0eed174904f02fd6ba`.
+- `knot-media-renderer.js` preserves its inherited CRLF line-ending convention; no line-ending normalization/churn was introduced.
+- Browser/device/accessibility verdict: PENDING USER REVIEW. Source validation does not substitute for the required visual/touch/keyboard review.
+
+## R1 Browser Review Areas
+
+1. Open several Knot Detail pages and confirm **Visual Guide** is visibly part of **HOW TO TIE IT**, not a separate peer section between HOW TO TIE IT and CHECK YOUR KNOT.
+2. Confirm the R1 order reads naturally on phone and desktop: HOW TO TIE IT heading → Visual Guide → canonical numbered FCC steps → CHECK YOUR KNOT.
+3. Check Animation, Illustrated guide, and Interactive 3D examples. Confirm provider attribution is clear but restrained and the action label matches the medium.
+4. Confirm the external action uses `↗`, opens in a new tab/window as expected, has a usable touch target, visible keyboard focus, and does not look like FCC-internal `→` navigation.
+5. Confirm the Visual Guide surface reads as instructional support rather than a second full detail card: no old Knot-color gradient, no media-type pill, no duplicated Knot/source heading, and no horizontal overflow.
+6. Check narrow phone, intermediate, and full desktop widths for wrapping of long provider/action text and comfortable spacing before the numbered steps.
+7. Regression-check **CHECK YOUR KNOT**, ABOUT THIS KNOT disclosures, Line Compatibility `ⓘ`, MORE HELP, Sources & References, and CP9.3A/CP9.3B return-state behavior. CP9.6 local diagrams/viewer are intentionally absent from this review.
+
+## R1 Browser Findings / R2 Corrections
+
+| Finding | Correction / disposition | Affected path(s) | Status |
+|---|---|---|---|
+| `KG-CP9.3C-R1-001` — R1 changed the established Visual Guide hierarchy too far: the Visual Guide title lost the intended Common Tasks-style heading language, media type became prose, the external action took the accent color, and the explanatory note was visually/verbally excessive. | Restore a compact instructional hierarchy: **Visual Guide** uses small uppercase heading language; medium is a neutral non-interactive chip (`Animation`, `Diagram`, `Interactive 3D`); restrained provider attribution is retained; the external action returns to neutral text color; the verbose “Opens verified external instruction…” note is removed. | `knot-media-renderer.js`, `forest-journal.css` | R2 CORRECTED / R3 REFINED |
+| `KG-CP9.3C-R1-002` — the distinction between external Visual Guide help and the canonical local numbered instructions needs a cleaner handoff without explanatory prose. | Add the compact **Numbered Tying Steps** label immediately after the Visual Guide block and before `tyingSteps[]`. | `view-renderer.js`, `forest-journal.css` | R2 CORRECTED / R3 RETAIN |
+| `KG-CP9.3C-R1-003` — on narrow screens, Task-based Knot Detail origin navigation produces an oversized outer breadcrumb capsule around the long task parent button plus Home. | R2 removed the outer capsule at narrow widths. Browser review showed that this over-corrected the problem because the sticky navigation lost its readable background while scrolling. R3 supersedes the R2 CSS-only treatment with a task-origin-specific compact sticky panel. | `view-renderer.js`, `forest-journal.css` | R2 SUPERSEDED / R3 CORRECTED |
+
+## R2 Browser Findings / R3 Corrections
+
+| Finding | Correction / disposition | Affected path(s) | Status |
+|---|---|---|---|
+| `KG-CP9.3C-R2-001` — the Visual Guide still fragmented its content: only the provider description was boxed, while the medium chip and external action remained outside. The heading also used an unnecessary divider rule. | Put **Visual Guide**, the non-interactive medium chip, provider attribution, and the external action together inside one neutral bordered instructional container. Match the **Visual Guide** title coloration/typography to Common Tasks, remove its divider rule, and keep the external action neutral at rest. **Numbered Tying Steps** remains outside the container as the handoff to canonical FCC steps. | `knot-media-renderer.js`, `forest-journal.css` | R3 CORRECTED / BROWSER TEST |
+| `KG-CP9.3C-R2-002` — removing the narrow-screen outer breadcrumb surface for every Knot contextual parent made sticky breadcrumbs hard to read over scrolled Knot content and changed non-task Knot breadcrumbs unnecessarily. | Restore the normal sticky breadcrumb surface globally. Mark only Task-origin Knot Detail navigation with a renderer-owned modifier derived from canonical `KNOT_TASK_DEFINITIONS`; at narrow widths that task-only surface becomes a compact rounded stacked panel instead of a giant pill. Parent/Home controls and exact return behavior are unchanged. | `view-renderer.js`, `forest-journal.css` | R3 CORRECTED / BROWSER TEST |
+
+## R3 Candidate
+
+- R3 is reconstructed from immutable CP9.3C R1 plus all cumulative documented R2/R3 corrections; R2 source bytes are not reconstruction authority.
+- Production candidate scope remains `view-renderer.js`, `knot-media-renderer.js`, and `forest-journal.css`; this active audit is carried for traceability. No deletions.
+- `data/media.js` remains VERIFIED NO CHANGE; all 10 protected external destinations, provider identities, rights metadata, and medium-specific action labels are retained unchanged.
+- Task-origin detection is presentation-only and derives from canonical `KNOT_TASK_DEFINITIONS`; no route/state semantics are changed.
+- The four-Core FCC-owned instructional prototype remains CP9.6 and is not introduced here.
+- Browser/device/accessibility verdict remains PENDING USER REVIEW.
+
+## R3 Validation
+
+- JavaScript syntax: PASS for cumulative candidate `view-renderer.js` and `knot-media-renderer.js`.
+- Immutable-R1 cumulative reconstruction / targeted diff: PASS — R3 was rebuilt from R1 and only the documented CP9.3C renderer/media/CSS/audit paths differ.
+- Visual Guide structure assertions: PASS — title, medium chip, provider attribution, and external action are all inside the single `.knot-instruction-media` container; the title has no divider rule; the title uses the Common Tasks accent treatment; the link is neutral at rest; the verbose external-instruction note is absent; **Numbered Tying Steps** remains outside the container immediately before canonical `tyingSteps[]`.
+- Task-origin breadcrumb assertions: PASS — normal shared breadcrumb surface CSS is byte-identical to R1; only the renderer-marked `.page-navigation-group--knot-task-origin` gets the narrow compact stacked-panel geometry; the R2 broad contextual-parent removal rule is absent.
+- 10-Knot media inventory: PASS — 10 active Knots / 10 active external Knot media records / exactly one matching external destination per Knot; `data/media.js` unchanged.
+- CSS integrity: PASS — braces balanced; inherited maximum repeated-blank-line run remains 3 and was not expanded.
+- `knot-media-renderer.js` line endings remain CRLF; no line-ending churn introduced.
+- Candidate production SHA-256: `view-renderer.js` `4440a8f356773cc7881788329a1208fc33ac3992ff75af6310b38a39ef930423`; `knot-media-renderer.js` `2cfef62675b3ae0544365b8a02cc624c17966e2d1f0502daba2afc5e2c702417`; `forest-journal.css` `4f7e087b984774d44d298cb3fd5d9234cb4ac265fd44f3e3ea837437b64cc335`.
+- Browser/device/accessibility verdict: PENDING USER REVIEW.
+- R3 ZIP SHA-256 is recorded in Live Working State / the active Drive audit immediately after package freeze; the packaged audit copy intentionally does not self-embed the final ZIP hash.
+
+## R3 Approval + Promotion / Repository Closeout Pending
+
+- **Final verdict:** USER APPROVED / FROZEN / PROMOTED. R3 remains `FCC-49J-C-Knots-Guide-CP9.3C-R3-Cumulative-Review.zip`, SHA-256 `15de41068ff4f948151fb9242b092f5b21c54d6b9faded73ed242d3b20e0ea89`.
+- The exact approved production bytes were promoted to Drive Current and read back byte-for-byte: `view-renderer.js` SHA-256 `4440a8f356773cc7881788329a1208fc33ac3992ff75af6310b38a39ef930423`; `knot-media-renderer.js` SHA-256 `2cfef62675b3ae0544365b8a02cc624c17966e2d1f0502daba2afc5e2c702417`; `forest-journal.css` SHA-256 `4f7e087b984774d44d298cb3fd5d9234cb4ac265fd44f3e3ea837437b64cc335`.
+- Browser/device acceptance is PASS by explicit user approval for the bounded CP9.3C areas: single-container Visual Guide hierarchy; medium chip; restrained provider attribution; neutral external action; **Numbered Tying Steps** handoff; restored readable sticky breadcrumb surface for non-task origins; and task-only compact narrow-screen breadcrumb panel.
+- Post-promotion source validation PASS: `node --check` for `view-renderer.js` and `knot-media-renderer.js`; CSS brace balance; explicit in-flow media mount; no media-renderer monkey patch; task-only breadcrumb modifier; and no new whitespace/line-ending churn in the approved paths.
+- `data/media.js` remains VERIFIED — NO CHANGE REQUIRED. All 10 protected external Knot instructional destinations, provider identities, rights/provenance metadata, and medium-specific action labels remain unchanged. CP9.6 remains the owner of the four-Core FCC-owned instructional prototype.
+- **Owner classification:** UPDATE REQUIRED — `view-renderer.js`, `knot-media-renderer.js`, `forest-journal.css`, `KNOT-GUIDE.md`, this active audit, Live Working State. VERIFIED — NO CHANGE REQUIRED — `data/media.js`, `docs/MEDIA_GUIDE.md`, `docs/UI_STANDARD.md`, `docs/PROJECT-RULES.md`. NOT APPLICABLE TO CP9.3C — `images/knots/instructional/*` / local instructional-state records; those remain CP9.6.
+- GitHub `main` remains the committed pre-CP9.3C authority until the approved production scope is explicitly committed/pushed. Production commit/push is separately authorized and has not yet occurred.
+- CP9.3C implementation is USER APPROVED / PROMOTED / VALIDATED, but repository closeout remains OPEN until the approved five-path convergence is committed/pushed and required CI/Pages plus Drive/Git convergence pass. CP9.4 remains blocked until that closeout completes.
+
 # Current Exact Resume
 
-**Exact resume: CP9.3B is CLOSED / PASS. Resume at CP9.3C — external Visual Guide / instructional-media integration — from GitHub `main` `08cb6f700f33d6bb947bf711d683d584914d25c1` plus matching Drive Current.** Do not reopen CP9.3B unless new evidence invalidates the closed baseline.
+**Exact resume: CP9.3C USER APPROVED / PROMOTED / VALIDATED at R3; repository closeout is OPEN. Apply `FCC-49J-C-Knots-Guide-CP9.3C-Approved-Commit-Transfer.zip` to verified GitHub `main` `ab100b74494a2656ae1e8ee58111797b622f8edd`, verify exactly five modified paths, commit/push, then verify GitHub SHA/scope, required CI/Pages, and Drive/Git convergence. Only after that PASS may CP9.4 — Get Your Reel Ready Migration begin. CP9.6 local instructional media remains out of scope.**

@@ -35,15 +35,16 @@ function buildSearchControlsMarkup(inputId, placeholder, options = {}) {
     `;
 }
 
-function buildPageNavigationMarkup(parentLabel = null) {
+function buildPageNavigationMarkup(parentLabel = null, groupClassName = "") {
     const backArrowMarkup = '<span class="link-arrow link-arrow--back" aria-hidden="true">←</span>';
     const parentMarkup = parentLabel
         ? `<button class="page-navigation" type="button" data-parent-navigation>${backArrowMarkup} ${parentLabel}</button>`
         : "";
     const homeLabel = parentLabel ? "Home" : `${backArrowMarkup} Home`;
+    const groupClass = groupClassName ? ` ${groupClassName}` : "";
 
     return `
-        <div class="page-navigation-group">
+        <div class="page-navigation-group${groupClass}">
             ${parentMarkup}
             <button class="page-navigation" type="button" data-home-navigation>${homeLabel}</button>
         </div>
@@ -1595,6 +1596,18 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
             </div>
         `
         : "";
+    const instructionMediaMarkup = typeof buildKnotInstructionMediaMarkup === "function"
+        ? buildKnotInstructionMediaMarkup(record)
+        : "";
+    const tyingStepsLabelMarkup = instructionMediaMarkup
+        ? '<p class="knot-tying-steps__label">Numbered Tying Steps</p>'
+        : "";
+    const isTaskOriginNavigation = Boolean(detailConfig.parentLabel) &&
+        typeof KNOT_TASK_DEFINITIONS !== "undefined" &&
+        KNOT_TASK_DEFINITIONS.some((task) => task?.title === detailConfig.parentLabel);
+    const navigationClassName = isTaskOriginNavigation
+        ? "page-navigation-group--knot-task-origin"
+        : "";
 
     const aboutMarkup = [
         buildKnotDetailDisclosureMarkup(
@@ -1634,7 +1647,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--knot" aria-labelledby="knot-detail-title">
-            ${buildPageNavigationMarkup(detailConfig.parentLabel)}
+            ${buildPageNavigationMarkup(detailConfig.parentLabel, navigationClassName)}
             <header class="detail-header knot-detail-header${isCore ? " knot-detail-header--core" : ""}">
                 <p class="detail-eyebrow knot-detail-classification">${classification}</p>
                 <h2 id="knot-detail-title">${record.name}</h2>
@@ -1643,6 +1656,8 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
             </header>
             <section class="detail-section detail-section--build knot-tying-section" aria-labelledby="knot-tying-title">
                 <h3 id="knot-tying-title">How to Tie It</h3>
+                ${instructionMediaMarkup}
+                ${tyingStepsLabelMarkup}
                 <ol class="detail-steps knot-tying-steps">${record.tyingSteps.map((step) => `<li>${step}</li>`).join("")}</ol>
             </section>
             <section class="detail-section detail-section--supporting knot-check-section" aria-labelledby="knot-check-title">
