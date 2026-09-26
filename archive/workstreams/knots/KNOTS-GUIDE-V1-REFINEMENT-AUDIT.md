@@ -48,7 +48,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B USER APPROVED / PROMOTED; REPOSITORY CI CLOSEOUT PENDING |  
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C NEXT |  
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -1735,7 +1735,7 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 
 # KG Audit — CP9.3B — adjacent-`ⓘ` Reference + Detail Navigation
 
-**Status:** USER APPROVED / FROZEN / PROMOTED — REPOSITORY CI CLOSEOUT PENDING — 2026-09-25
+**Status:** CLOSED / PASS — USER APPROVED / PROMOTED / REPOSITORY VALIDATED — 2026-09-25
 
 ## R1 Review-Cycle Baseline
 
@@ -1817,8 +1817,8 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 - Drive Current `data/regulations.js` has been repaired only by changing those two notice verification dates to `2026-09-25`; no notice wording, URL, active state, or validator rule changed. Readback SHA-256: `b29900740ef4da758e1b5dcf57b96e6feda554c00705e973e795d3cfa7140770`. A GitHub-Pages-artifact validation snapshot for `8f4c90c6…`, overlaid only with the exact pending Drive closeout delta and reconstructed as a local Git checkout for validator mechanics, passes `tools/validate_repository_integrity.js`: **20 validation groups PASS / no repository content modified**. Because the freshness repair is a production data change, GitHub commit/push still requires separate explicit authorization.
 - Documentation readback hashes after reconciliation: `KNOT-GUIDE.md` `c7be88ee8ae4498145bbaa574f234774c61db19140d2bece6ae107d4e8554672`; `UI_STANDARD.md` `2d8a898dc6a1ef9def6bb0f23c87f2c0fd7cf6274ff6d7d2646c29fada3b8e25`.
 - **Owner classification:** UPDATE REQUIRED / completed in Drive — `view-renderer.js`, `script.js`, `forest-journal.css`, `KNOT-GUIDE.md`, `UI_STANDARD.md`, this active audit, Live Working State, and the bounded `data/regulations.js` freshness repair. VERIFIED — NO CHANGE REQUIRED — `docs/PROJECT-RULES.md`, `docs/V1-DESIGN-AUDIT.md`, Knot canonical compatibility data, `data/reel-guidance.js`, `MEDIA_GUIDE.md`, `data/media.js`, and `knot-media-renderer.js`.
-- CP9.3C and CP9.4+ remain blocked until the repository-wide freshness repair is landed and Repository Integrity returns PASS.
+- The bounded repository freshness repair and closeout documentation landed in GitHub `main` as `08cb6f700f33d6bb947bf711d683d584914d25c1` (`FCC 49J - CP9.3B closeout convergence`), exactly one commit after `8f4c90c62150cfbb575ae50602306b0b9ca0bf25`. The commit changes exactly four paths: `data/regulations.js`, `archive/workstreams/knots/KNOT-GUIDE.md`, `docs/UI_STANDARD.md`, and this active audit. Repository Integrity run `36213834459` PASS and Pages run `36213833502` PASS. CP9.3B is CLOSED / PASS; CP9.3C is unblocked and is the next implementation segment.
 
 # Current Exact Resume
 
-**Exact resume: CP9.3B closeout is functionally complete in Drive and the approved Knot production bytes are already on GitHub `main`, but final repository closeout is OPEN pending explicit production commit/push authorization for the two-date `data/regulations.js` freshness repair plus the reconciled closeout documentation.** After authorization, land the bounded Drive Current delta, verify GitHub SHA/scope, Repository Integrity PASS, Pages as applicable, and Git/Drive convergence; then mark CP9.3B CLOSED / PASS and resume at CP9.3C.
+**Exact resume: CP9.3B is CLOSED / PASS. Resume at CP9.3C — external Visual Guide / instructional-media integration — from GitHub `main` `08cb6f700f33d6bb947bf711d683d584914d25c1` plus matching Drive Current.** Do not reopen CP9.3B unless new evidence invalidates the closed baseline.

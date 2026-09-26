@@ -1503,11 +1503,13 @@ The approved CP9.2 result is the R4 candidate (`FCC-49I-Knots-Guide-CP9.2-R4-Cum
 
 ### CP9.3A / CP9.3B Implementation Result
 
-**Status:** CP9.3A CLOSED / PASS; CP9.3B USER-APPROVED / PROMOTED — 2026-09-25
+**Status:** CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS — 2026-09-25
 
 CP9.3A establishes the approved Knot Detail teaching hierarchy and state-preserving related-navigation behavior. CP9.3B completes the adjacent-`ⓘ` Line Compatibility Reference treatment: canonical compatible line types are stacked one per row, each `ⓘ` is the only Reference trigger and opens only its exact line type, the line label remains static, and the contextual Reference surface closes back to the same trigger without disturbing Knot Detail state. The R1 three-page Line Type experiment proved that multi-page contextual Reference is technically viable, but that pager was removed from this exact-term context because it diluted the adjacent-Reference semantics.
 
 The approved CP9.3B R2 candidate is `FCC-49J-B-Knots-Guide-CP9.3B-R2-Cumulative-Review.zip`, SHA-256 `029c09529447195bfbf4adb5335dbc125acb36d5d3a8e9bb5f866c8c17e593f0`. Approved production hashes are `view-renderer.js` `d4a6f813b9aff57b250bd77ca9aacbfd115ec62825183bd919c425db73dd7501`, `script.js` `160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`, and `forest-journal.css` `55cdae1143eb8087784875bc6a1cbdffb4a54b46a59f5e9297d306bdeb3bb387`.
+
+Final repository closeout landed the bounded four-file convergence commit `08cb6f700f33d6bb947bf711d683d584914d25c1` (`FCC 49J - CP9.3B closeout convergence`) exactly one commit after `8f4c90c62150cfbb575ae50602306b0b9ca0bf25`. Its scope is only `data/regulations.js`, this workstream file, `docs/UI_STANDARD.md`, and the active Knots audit. Repository Integrity run `36213834459` PASS and Pages run `36213833502` PASS. CP9.3B is therefore repository-validated and closed; CP9.3C is the next implementation segment.
 
 ### Validation Lock
 
