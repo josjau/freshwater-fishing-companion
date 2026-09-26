@@ -48,7 +48,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3 NEXT |  
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B R1 REVIEW PENDING |  
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -1622,6 +1622,202 @@ R4 must retain all other accepted R3 corrections and remove only the decorative 
 - Temporary audit remains active for later CP9/CP10 work; R1/R2/R3/R4 revision traceability is retained here while review ZIPs remain non-authoritative transport artifacts.
 - The cumulative CP9.1 + CP9.2 production/documentation scope was subsequently committed and pushed as GitHub `main` `0fa323bb24929fbdcbe74abb0d46f6f4723322dc` (`Knot Guide - Dashboard and Landing`). Repository Integrity run `36189763625` and Pages run `36189763447` both PASS. This audit and `KNOT-GUIDE.md` are the bounded documentation-only convergence follow-up required because their post-approval Drive Current revisions were newer than the copies included in that commit.
 
+# KG Audit — CP9.3A — Knot Detail Structure
+
+**Status:** CLOSED / PASS — USER APPROVED / R5 PROMOTED
+
+- Immutable R1 review baseline: `FCC-49J-Knots-Guide-CP9.3A-R1-Cumulative-Review.zip`.
+- R1 SHA-256: `24e324f2378c996ed8a6adbed2bc7455f9a2d9b82bd5da0f32bc977febe5abb9`.
+- Baseline: GitHub `main` `4a4f32d6d464f0414d7e21deb587cf10ba668ffe`; matching Drive Current `view-renderer.js`, `forest-journal.css`, and `script.js` verified before candidate construction (`script.js` Git blob `a914deb56e4d7c701f41fed4842cba22db3b7d73`).
+- Candidate production scope was three repository paths: `view-renderer.js`, `forest-journal.css`, and `script.js`; the active Knots audit was also carried in the review ZIP. The user approved R5 and those exact production bytes were promoted to Drive Current before CP9.3A closure.
+- CP9.3A implements the approved Knot Detail identity order, compact **ABOUT THIS KNOT** disclosures, always-visible **HOW TO TIE IT**, always-visible **CHECK YOUR KNOT**, compact **MORE HELP** disclosures, and collapsed **Sources & References**.
+- Existing Line Compatibility navigation is intentionally preserved for CP9.3B Reference conversion; the existing `knot-media-renderer.js` hook remains functional and unchanged for CP9.3C explicit media integration.
+- Targeted validation PASS: JavaScript syntax; 10-Knot required-field inventory; all-10-Knot render-structure assertions; collapsed initial disclosure state; four-Core classification assertions; CSS brace/integrity and repeated-blank-line checks; stale retired Detail-class scan; media-hook target compatibility.
+- Browser review areas are explicitly bounded per R4 below. CP9.3B Reference treatment and CP9.3C/CP9.6 media treatment are not CP9.3A review targets.
+
+## R1 Findings / R2 Corrections
+
+| Finding | Correction | Affected path(s) | Status |
+|---|---|---|---|
+| `KG-CP9.3A-R1-001` — R1 unintentionally replaced existing Line Compatibility navigation with static text, crossing into CP9.3B scope. | Restore the existing line-type navigation buttons unchanged so CP9.3B owns the adjacent-`ⓘ` Reference conversion. | `view-renderer.js` | R2 CORRECTED |
+| `KG-CP9.3A-R1-002` — R1 retained a fallback selector for retired `.knot-at-a-glance__group` structure. | Remove the stale fallback; the usage-control scroll anchor now resolves only against the new Knot Detail disclosure panel. | `view-renderer.js` | R2 CORRECTED |
+| `KG-CP9.3A-R1-003` — the initial R1 ZIP omitted the active Knots audit repository path even though review packages must carry changed repository documentation. | R2 package includes `archive/workstreams/knots/KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md` in addition to the two production candidate paths. R1 remains immutable. | review package / audit | R2 CORRECTED |
+
+## R2 Candidate
+
+- Resulting revision: `FCC-49J-Knots-Guide-CP9.3A-R2-Cumulative-Review.zip`.
+- R2 SHA-256: `0f350d5980a956bda6f98e4ee6077fe4a40063688540b1b0c9744a6fcf607735`.
+- R2 is rebuilt from immutable R1 plus the cumulative R1 corrections above; R1 is not overwritten.
+- R2 package scope: `view-renderer.js`, `forest-journal.css`, and `archive/workstreams/knots/KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md`.
+- Production source remains candidate-only: Drive Current `view-renderer.js` and `forest-journal.css` are not promoted before user approval.
+- Targeted validation remains PASS after R2 corrections: JavaScript syntax, 10-Knot render inventory, initial collapsed state, Core classification, CSS integrity, stale-selector absence, and existing external-media hook compatibility.
+- The R2 ZIP hash is recorded in the active audit immediately after package freeze; it is intentionally not self-embedded in the packaged audit copy.
+
+## R2 Browser Findings / R3 Corrections
+
+| Finding | Correction / disposition | Affected path(s) | Status |
+|---|---|---|---|
+| `KG-CP9.3A-R2-001` — **HOW TO TIE IT** was visually secondary because ABOUT THIS KNOT appeared first. | Move **HOW TO TIE IT** directly below the Knot identity/description, keep **CHECK YOUR KNOT** immediately after it, then place ABOUT THIS KNOT and MORE HELP below the primary teaching flow. Existing media hook remains intact; final media ordering/treatment remains later scope. | `view-renderer.js` | R3 CORRECTED |
+| `KG-CP9.3A-R2-002` — Common Tasks used chip/pill styling that looked too much like metadata rather than navigation. | Keep the approved wording and internal `→` iconography but render Common Tasks as lightweight text links without pill/chip chrome. | `view-renderer.js`, `forest-journal.css` | R3 CORRECTED |
+| `KG-CP9.3A-R2-003` — Rig links used a chevron-style `>` cue instead of the Guide's normal internal-navigation arrow. | Keep existing Rig link-row treatment but replace the chevron with the standard internal `→` iconography. | `view-renderer.js` | R3 CORRECTED |
+| `KG-CP9.3A-R2-004` — Returning from a related Rig to Knot Detail lost the Knot browsing state; open disclosures collapsed. | Add Knot Detail state capture/restore for expanded disclosures, nested Rig-list expansion, scroll position, and originating control focus. Use the same state capture for current task/line-type round trips without changing CP9.3B Reference semantics. | `script.js`, `view-renderer.js` | R3 CORRECTED |
+| `KG-CP9.3A-R2-005` — Line Compatibility chip/pill treatment was visually rejected during R2 review. | **DEFERRED — CP9.3B.** R3 intentionally leaves the existing Line Compatibility control appearance/behavior unchanged so CP9.3B can implement the approved adjacent-`ⓘ` Reference convention as one coherent change. Do not judge the retained R3 Line Compatibility pill/arrow as final. | `view-renderer.js`, `script.js`, `forest-journal.css` future CP9.3B scope | DEFERRED — CP9.3B |
+
+## R3 Candidate
+
+- Resulting revision: `FCC-49J-Knots-Guide-CP9.3A-R3-Cumulative-Review.zip`.
+- R3 SHA-256: `f133916f5e26037f651802125f1339448595f474bdc436b260e703566db7c484`.
+- R3 is rebuilt from immutable R1 plus all cumulative documented CP9.3A corrections; R2 source bytes are not reconstruction authority.
+- R3 package scope: `view-renderer.js`, `forest-journal.css`, `script.js`, and `archive/workstreams/knots/KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md`.
+- Drive Current production source remains unchanged; R3 is candidate-only pending explicit user approval.
+- **Review now:** teaching hierarchy/order; Common Tasks link treatment; Rig `→` iconography; ABOUT THIS KNOT / MORE HELP disclosure operation; Knot → Rig/task/current-Line-Type → Knot round-trip restoration of open disclosures, nested Rig expansion, scroll, and focus; basic phone/desktop structure.
+- **Do not review as final in R3:** Line Compatibility pill/chip appearance, its current `→` action, or the final Reference surface (`ⓘ`) — CP9.3B owns those; current external Visual Guide styling/provider/action placement — CP9.3C owns that integration; absence of FCC-owned step diagrams/viewer — the four-Core prototype remains CP9.6 scope; final media/steps desktop geometry remains later browser-test scope.
+- The R3 ZIP hash is recorded in the active Drive audit immediately after package freeze; it is intentionally not self-embedded in the packaged audit copy.
+
+## R3 Browser Findings / R4 Corrections
+
+| Finding | Correction / disposition | Affected path(s) | Status |
+|---|---|---|---|
+| `KG-CP9.3A-R3-001` — Common Tasks and Rigs That Use This Knot needed clearer subsection separation without returning to pill/chip styling. | Match the subgroup-label coloration to the existing **Visual Guide** eyebrow, add a restrained matching accent rule beneath each subgroup label, keep the relationship links as lightweight rows, and add neutral separators between multiple Common Tasks. Existing Rig-row separators remain. | `forest-journal.css` | R4 CORRECTED / BROWSER TEST |
+| `KG-CP9.3A-R3-002` — the internal `→` cue in Knot usage links was too visually quiet. | Strengthen only the Knot-usage internal arrows with the subgroup accent, `1.3em` size, `900` weight, and slightly increased left spacing. Do not globally change Guide-family arrow treatment. | `forest-journal.css` | R4 CORRECTED / BROWSER TEST |
+| `KG-CP9.3A-R3-003` — Knot → related Rig → Knot state-restoration browser test. | R3 behavior preserves the open disclosures and browsing state on return. Retain unchanged in R4. | `script.js`, `view-renderer.js` | R3 PASS / R4 RETAIN |
+
+R4 deliberately retains the compact relationship-list model rather than copying Fish **Rigs to Start With** recommendation cards. Fish remains the interaction baseline; Knot usage entries are simpler relationship destinations and do not carry Fish-style recommendation priority/reason content. Browser review will determine whether the lighter separation is sufficient.
+
+## R4 Candidate
+
+- Resulting revision: `FCC-49J-Knots-Guide-CP9.3A-R4-Cumulative-Review.zip`.
+- R4 SHA-256: `83e66006a69b0ee9c8ea8a500e5c593e94c29f73f29c04bcf15821367e09963c`.
+- R4 is rebuilt from immutable R1 plus all cumulative documented CP9.3A corrections; R2/R3 source bytes are not reconstruction authority.
+- R4 package scope: `view-renderer.js`, `forest-journal.css`, `script.js`, and `archive/workstreams/knots/KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md`.
+- Drive Current production source remains unchanged; R4 is candidate-only pending explicit user approval.
+- **Review now:** all prior CP9.3A review-now areas, plus subgroup-label color/rules, Common Tasks row separators, Rig-row visual consistency, and the stronger scoped internal `→` cue. Confirm the retained Knot → Rig → Knot state restoration remains correct.
+- **Do not review as final in R4:** Line Compatibility pill/chip appearance/current `→`/Reference surface (`ⓘ`) — CP9.3B; current external Visual Guide styling/provider/action placement — CP9.3C; absence of FCC-owned step diagrams/viewer — CP9.6; final media/steps desktop geometry — later browser-test scope.
+- Targeted R4 validation PASS: JavaScript syntax; 10-active-Knot required-field inventory; teaching-order/source assertions; R1-based cumulative reconstruction check against accepted R3 `view-renderer.js`/`script.js`; CSS brace balance and no increase in inherited repeated-blank-line runs; bounded package-path/inclusion and ZIP integrity checks. Browser visual verdict remains pending user review.
+- R4 ZIP SHA-256 is recorded here after package freeze; the packaged audit copy intentionally does not self-embed the final ZIP hash.
+
+## R4 Browser Findings / R5 Corrections
+
+| Finding | Correction / disposition | Affected path(s) | Status |
+|---|---|---|---|
+| `KG-CP9.3A-R4-001` — informational bulleted lists on Knot Detail did not yet use the same marker language as Fish **Key Identification Traits** and the numbered **HOW TO TIE IT** steps. | Apply the Fish-baseline accent marker treatment to Knot Detail `.detail-list` bullets while retaining the existing Knot spacing/density. Navigation-link lists remain navigation rows, not bullet lists. | `forest-journal.css` | CLOSED / PASS — R5 APPROVED |
+| `KG-CP9.3A-R4-002` — internal `→` cues must stay immediately adjacent to the destination text they describe, rather than being pushed to the far edge of a row; the arrow must also use the same color as its associated link text. | Keep Common Tasks text + `→` as one visual unit; change Rig rows so Rig name + `→` are one adjacent unit; make the arrow inherit link color. This is identified as a Guide-family internal-navigation principle. R5 applies it only to the current Knot Detail candidate to preserve the bounded CP9.3A source scope; durable cross-Guide reconciliation is required when this treatment is approved. | `view-renderer.js`, `forest-journal.css`; durable Guide-family owner at approval | CLOSED / PASS — R5 APPROVED / UI_STANDARD RECONCILED |
+| `KG-CP9.3A-R4-003` — the right-arrow cue should have visual presence comparable to the existing external `↗` cue. | Retain/use `1.3em` internal-arrow sizing with `900` weight inside the tested Knot usage links, matching the external-arrow size baseline while preserving the distinct right-arrow symbol. | `forest-journal.css` | CLOSED / PASS — R5 APPROVED |
+| `KG-CP9.3A-R4-004` — Knot → related Rig → Knot state-restoration retest. | User confirmed the R4 round trip restores Knot browsing state correctly. Retain the existing R3/R4 state implementation unchanged in R5. | `script.js`, `view-renderer.js` | CLOSED / PASS — R5 APPROVED |
+
+R5 continues to use the compact Knot relationship-list model rather than Fish **Rigs to Start With** recommendation cards. Fish remains the Guide-family baseline: informational bullets now inherit Fish marker language, while Knot usage destinations remain lighter navigation rows because they do not carry recommendation-priority/reason content.
+
+## R5 Candidate
+
+- Resulting revision: `FCC-49J-Knots-Guide-CP9.3A-R5-Cumulative-Review.zip`.
+- R5 SHA-256: `95864eb7a1e5d6da483bf43dfd2e5eafd5485646f9e03eef553792fe7d2c4615`.
+- R5 is rebuilt from immutable R1 plus all cumulative documented CP9.3A corrections; R2/R3/R4 source bytes are not reconstruction authority.
+- R5 package scope: `view-renderer.js`, `forest-journal.css`, `script.js`, and `archive/workstreams/knots/KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md`.
+- Drive Current production source remains unchanged; R5 is candidate-only pending explicit user approval.
+- **Review now:** all prior CP9.3A review-now areas, plus Fish-baseline bullet-marker parity on Knot informational lists; Common Tasks and Rig `→` adjacency; arrow/text color unity; right-arrow prominence relative to `↗`; retained subgroup-label/rule treatment; and the already-working Knot → Rig → Knot state restoration.
+- **Do not review as final in R5:** Line Compatibility pill/chip appearance/current `→`/Reference surface (`ⓘ`) — CP9.3B; current external Visual Guide styling/provider/action placement — CP9.3C; absence of FCC-owned step diagrams/viewer — CP9.6; final media/steps desktop geometry — later browser-test scope. Also do not audit unrelated Guide pages for the newly identified universal arrow-placement principle in this bounded R5 candidate; cross-Guide source reconciliation follows approval through the proper durable owner rather than silently expanding CP9.3A.
+- Targeted R5 validation PASS before handoff: JavaScript syntax; 10-active-Knot required-field inventory; teaching-order assertions; R1-based cumulative reconstruction; bullet-marker parity assertion; Rig-arrow adjacency assertion; inherited arrow-color assertion; `1.3em` internal/external size parity; retained state-restoration source assertions; CSS brace balance; bounded R4→R5 diff review; package-path/inclusion and ZIP integrity checks. Browser visual verdict remains pending user review.
+- R5 ZIP SHA-256 is recorded in Live Working State / the active Drive audit immediately after package freeze; the packaged audit copy intentionally does not self-embed the final ZIP hash.
+
+## R5 Approval + Promotion Close
+
+- **Final verdict:** USER APPROVED / FROZEN / PROMOTED. R5 ZIP SHA-256 remains `95864eb7a1e5d6da483bf43dfd2e5eafd5485646f9e03eef553792fe7d2c4615`.
+- Approved R5 production bytes were promoted exactly to Drive Current and read back byte-for-byte: `view-renderer.js` SHA-256 `1240dc787b3f244a10f39113c7631647feaeb9b68bb3edd8b830077b00a7d6b2`; `forest-journal.css` SHA-256 `155fb4587043b4f5c5046bc770b8a7f568f65cdaed4f69745da4b657b0779928`; `script.js` SHA-256 `42782c477f40884832c6763eda59ab773a47a0df909d3c15381a3ffdd0521db9`.
+- Post-promotion proportional validation **PASS**: `node --check` for promoted `view-renderer.js` and `script.js`; CSS brace balance; required Knot Detail teaching/disclosure headings; Knot Detail state-capture/scroll-restore source assertions; documentation repeated-blank-line integrity; and exact source/document SHA-256 verification. The approved R5 source bytes match the promoted/read-back Drive Current bytes.
+- GitHub `main` was reverified after promotion and remains unchanged at `4a4f32d6d464f0414d7e21deb587cf10ba668ffe`; the Drive-first approved work is therefore intentionally uncommitted.
+- Browser acceptance is **PASS by explicit user approval** for the bounded CP9.3A review areas, including teaching order, disclosure structure, lightweight Common Tasks/Rig relationship links, Fish-baseline informational bullet markers, internal-arrow adjacency/color unity, and Knot → related destination → Knot state restoration.
+- The user noted that the R5 `→` size increase was not visually obvious. R5 remains the approved frozen candidate; no post-approval production mutation was made. The optical-size observation is non-blocking and is reconciled durably in `UI_STANDARD.md`: numeric `em` parity between different glyphs does not guarantee equal perceived prominence, and exact optical size/weight remains browser-refinement allowed.
+- **Owner classification:** UPDATE REQUIRED — approved production `view-renderer.js` / `forest-journal.css` / `script.js`; `KNOT-GUIDE.md`; `UI_STANDARD.md`; this active audit; Live Working State. VERIFIED NO CHANGE — `docs/V1-DESIGN-AUDIT.md` (cross-Guide arrow semantics now belong in `UI_STANDARD.md`), `docs/PROJECT-RULES.md` (procedure unchanged). N/A FOR CP9.3A — `MEDIA_GUIDE.md`, `data/media.js`, `knot-media-renderer.js`, and FCC-owned instructional SVG assets; their work remains CP9.3C / CP9.6.
+- `KNOT-GUIDE.md` was reconciled to the approved visible teaching hierarchy, lightweight usage-link treatment, Guide-family bullet-marker parity, and round-trip state-restoration requirement. Readback SHA-256: `9600aac6a8db34195fb4ce0357a517ca2299b39cf912166507a2711171cc7791`.
+- `UI_STANDARD.md` was reconciled to the approved Guide-family rule that directional glyphs remain adjacent to and the same color as destination text, while exact optical arrow size/weight remains refinement-allowed. Readback SHA-256: `82b3bcd26b5989ea33680645ffdfd1844b5fb5d6d3a2412ea58202a1c21a6540`.
+- Deferred boundaries remain intact: Line Compatibility adjacent-`ⓘ` Reference behavior is CP9.3B; current external Visual Guide treatment is CP9.3C; FCC-owned four-Core instructional prototype is CP9.6; final media/steps desktop geometry remains later browser-test scope.
+- No production commit/push was authorized by this approval. No GitHub commit, push, CI, or Pages run was performed for CP9.3A.
+
+# KG Audit — CP9.3B — adjacent-`ⓘ` Reference + Detail Navigation
+
+**Status:** R2 CANDIDATE / USER BROWSER REVIEW PENDING — 2026-09-25
+
+## R1 Review-Cycle Baseline
+
+- Starting GitHub `main`: `4a4f32d6d464f0414d7e21deb587cf10ba668ffe`.
+- Authoritative uncommitted source baseline: the exact promoted CP9.3A Drive Current bytes — `view-renderer.js` SHA-256 `1240dc787b3f244a10f39113c7631647feaeb9b68bb3edd8b830077b00a7d6b2`; `forest-journal.css` SHA-256 `155fb4587043b4f5c5046bc770b8a7f568f65cdaed4f69745da4b657b0779928`; `script.js` SHA-256 `42782c477f40884832c6763eda59ab773a47a0df909d3c15381a3ffdd0521db9`.
+- R1 candidate filename: `FCC-49J-B-Knots-Guide-CP9.3B-R1-Cumulative-Review.zip`; SHA-256 `d4d8ac4c534d6fd212c0f0a076e9e3daa4ad16be956b97d6b9e9db858c2c9ce4`. R1 remains the immutable baseline for CP9.3B R2+ reconstruction.
+- R1 package scope: `view-renderer.js`, `script.js`, `forest-journal.css`, and `archive/workstreams/knots/KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md`. No deletions.
+- CP9.3B remains candidate-only. Drive Current production source is not changed before explicit user approval; no GitHub commit/push/CI/Pages action is authorized.
+
+## R1 Implemented Build Test
+
+- Replaces the temporary Line Compatibility pill/`→` controls with plain line-type text followed immediately by an independent `ⓘ` button. Only `ⓘ` opens Reference; line-type text remains static.
+- Uses an independent 40 px touch/focus target whose visible glyph remains adjacent to the referenced term; the target extends away from the label rather than overlapping it.
+- Tests the approved contextual Reference model instead of retaining the temporary dedicated Line Type route. The Reference opens in the existing modal/bottom-sheet-capable `dialog.reference-popover` system without leaving Knot Detail.
+- Uses one three-page Line Type Reference derived from `REEL_LINE_TYPE_GUIDANCE` in canonical object order: Monofilament → Fluorocarbon → Braid. Each page includes the existing selection summary, How to Recognize It, Beginner Guidance, and Tradeoff content.
+- Provides a visible `1 of 3`-style position cue and explicit Previous / Next controls; boundary controls remain visible and disabled. No autoplay or swipe-only behavior is introduced.
+- Closing by the close control, backdrop, or native Escape returns focus to the exact originating `ⓘ`; the Knot Detail view, disclosures, and scroll state remain in place because opening Reference does not push or mutate application-detail navigation state.
+- Removes the now-unneeded Knot-only `line-type-detail` route/state/renderer callback and its dead dedicated-detail CSS rather than leaving a competing navigation model.
+- Retains CP9.3A Rig/task detail-navigation state capture, Parent restoration, disclosure state, nested Rig expansion, scroll restoration, and originating-control focus behavior unchanged.
+- Does not implement CP9.3C external Visual Guide changes, CP9.4 Reel Setup migration, or CP9.6 instructional prototype work.
+
+## R1 Targeted Validation
+
+- JavaScript syntax: PASS for candidate `view-renderer.js` and `script.js`.
+- CSS brace balance: PASS.
+- Active Knot / line-type inventory: PASS — 10 active Knots; every `compatibleLineTypes[]` value resolves to the existing three Line Type guidance records; Reference page order is Monofilament → Fluorocarbon → Braid.
+- Stale dedicated-route inventory: PASS — no candidate `LINE_TYPE_DETAIL`, `selectedLineTypeId`, `openLineTypeDetailFromKnot`, `renderLineTypeDetailView`, `renderLineTypeReferenceDetail`, or `data-line-type-id` remains.
+- Adjacent Reference source assertions: PASS — `data-line-type-reference-id`, visible position cue, explicit Previous/Next, background lock/unlock, close-focus return, bounded 40 px trigger target, and plain non-pill Line Compatibility list are present.
+- Detail-navigation regression source assertions: PASS — CP9.3A Rig/task state capture, scroll restoration, and focus restoration remain present.
+- Candidate production hashes: `view-renderer.js` `f023c23ea9e4282dddffcf9fa3123ad23ecd721c6555315f7088df2e95f0cb39`; `script.js` `160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`; `forest-journal.css` `d89c649cf3e097be07259d5823414faf8204d2abcf90e562cefa90f17932e51f`.
+- Browser/device/accessibility verdict: PENDING user review; source validation does not substitute for the required visual/touch/keyboard build test.
+
+## R1 User Review Areas
+
+1. Expand **ABOUT THIS KNOT → Line Compatibility** on several Knots. Confirm each line type reads as normal text with a nearby `ⓘ`, not a pill/chip or navigation row.
+2. Confirm only the `ⓘ` opens Reference and that its touch target feels usable without making the glyph look oversized or detached.
+3. Open Reference from Monofilament, Fluorocarbon, and Braid. Confirm it opens contextually over Knot Detail, starts on the selected line type, shows a clear page position, and Previous/Next moves through the three line types in the expected order.
+4. Close Reference with the close control and Escape; confirm Knot Detail remains where it was and keyboard focus returns to the same `ⓘ`. Backdrop close may also be checked with a pointer/touch interaction.
+5. Confirm opening/closing Reference does not collapse Line Compatibility or other already-open disclosures and does not change Knot Detail scroll position.
+6. Regression-check Knot → related Rig/task → Parent → Knot. Confirm the previously approved disclosure/scroll/focus restoration still works.
+7. Check narrow phone and normal desktop widths for line-term wrapping, `ⓘ` adjacency, modal/bottom-sheet geometry, pager controls, and absence of horizontal scrolling.
+
+
+## R1 Findings / R2 Corrections
+
+| Finding | R2 correction / disposition | Affected files | Status |
+|---|---|---|---|
+| `KG-CP9.3B-R1-001` — When three compatible line types were present, the wrapping layout could produce an awkward two-row arrangement such as Monofilament on one row and Fluorocarbon/Braid on the next. | Present compatible line types as a consistent vertical list, one line type per row, at all widths. | `view-renderer.js`, `forest-journal.css` | R2 CORRECTED |
+| `KG-CP9.3B-R1-002` — The adjacent `ⓘ` semantics were diluted because each line-specific trigger opened the same three-page Line Type Reference and exposed line types unrelated to the current Knot. | Keep only the current Knot's canonical `compatibleLineTypes[]` in Line Compatibility. Each adjacent `ⓘ` opens only the Reference content for the exact line type it accompanies; remove cross-line Previous/Next paging from this context. | `view-renderer.js`, `forest-journal.css` | R2 CORRECTED |
+| `KG-CP9.3B-R1-003` — The R1 build test positively confirmed that multiple pages inside a popover with user-controlled navigation are technically viable. | Preserve this as a reusable future UI finding rather than retaining unused Knot-specific pager code. When a future Reference surface genuinely needs multi-page navigation, test a floating breadcrumb-style navigation control centered at the top or bottom of the description pane; final orientation is BUILD TEST REQUIRED in the actual use context. | active audit now; durable shared UI owner at later approval/reconciliation when a concrete use is adopted | VERIFIED CAPABILITY / FUTURE BUILD-TEST PATTERN |
+
+## R2 Candidate Notes
+
+- R2 is rebuilt from immutable CP9.3B R1 plus the cumulative documented corrections above; Drive Current production source remains unchanged.
+- R2 candidate filename: `FCC-49J-B-Knots-Guide-CP9.3B-R2-Cumulative-Review.zip`. The final R2 ZIP SHA-256 is recorded in Live Working State and the active Drive audit after package freeze; the packaged audit copy intentionally does not self-embed its own final ZIP hash.
+- Line Compatibility continues to render only canonical line types present in the current Knot's `compatibleLineTypes[]`; R2 changes presentation and Reference scope, not Knot compatibility data.
+- Compatible line types are vertically stacked at every viewport width so responsive wrapping cannot create a visually unbalanced mixed row layout.
+- Each `ⓘ` remains immediately adjacent to its exact line-type term and now opens only that term's Reference information. The line text itself remains non-interactive.
+- The successful multi-page-popover experiment is retained as design evidence, but its R1 position cue / Previous / Next implementation is removed from the Knot Line Compatibility candidate because it is not semantically appropriate here.
+- CP9.3A Rig/task detail-navigation state capture, Parent restoration, disclosure state, nested Rig expansion, scroll restoration, and originating-control focus behavior remain unchanged.
+- R2 does not begin CP9.3C or CP9.4+.
+
+## R2 Targeted Validation
+
+- JavaScript syntax: PASS for candidate `view-renderer.js` and unchanged cumulative `script.js`.
+- CSS brace balance: PASS. The inherited repeated-blank-line run in `forest-journal.css` is unchanged from R1 and was not expanded.
+- Line Compatibility source assertions: PASS — the list is a vertical grid; markup is still derived only from the current Knot's `compatibleLineTypes[]`; one independent `ⓘ` is rendered per displayed line type; the line text remains static.
+- Line-specific Reference assertions: PASS — the clicked `lineTypeId` resolves directly to `REEL_LINE_TYPE_GUIDANCE[lineTypeId]`; no line-type page-position, Previous, Next, or pager CSS remains.
+- Popover state/focus source assertions: PASS — background lock/unlock and exact originating-trigger focus return remain present; opening the popover still does not push application detail-navigation state.
+- CP9.3A detail-navigation regression assertions: PASS — cumulative `script.js` is byte-identical to R1 (`160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`).
+- Candidate production hashes before package freeze: `view-renderer.js` `d4a6f813b9aff57b250bd77ca9aacbfd115ec62825183bd919c425db73dd7501`; `script.js` `160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`; `forest-journal.css` `55cdae1143eb8087784875bc6a1cbdffb4a54b46a59f5e9297d306bdeb3bb387`.
+- Browser/device/accessibility verdict: PENDING user review; source validation does not substitute for the required visual/touch/keyboard build test.
+
+## R2 User Review Areas
+
+1. Expand **ABOUT THIS KNOT → Line Compatibility** on a one-line, two-line, and three-line Knot. Confirm each compatible line type occupies its own row and no unrelated line type is added.
+2. Confirm each displayed line type has one adjacent `ⓘ`, and only that icon is interactive.
+3. Open each `ⓘ`. Confirm the popover contains only the selected line type's Reference information and no Previous/Next/page-position controls.
+4. Close with the close control and Escape; confirm focus returns to the exact originating `ⓘ` and Knot Detail disclosure/scroll state remains unchanged.
+5. Check phone and desktop widths for consistent vertical alignment, icon adjacency, touch target, and absence of horizontal scrolling.
+6. Regression-check Knot → related Rig/task → Parent → Knot for the CP9.3A disclosure/scroll/focus restoration behavior.
+
 # Current Exact Resume
 
-**CP9.2 is CLOSED / PASS. Exact resume after the bounded documentation-convergence commit: CP9.3 — Knot Detail + Reference + Media Integration.** The approved CP9.1 + CP9.2 production scope landed at GitHub `main` `0fa323bb24929fbdcbe74abb0d46f6f4723322dc` with Repository Integrity and Pages PASS. This audit and `KNOT-GUIDE.md` are the only documentation-convergence paths carried into the closeout commit. After that commit is verified for exact two-file scope and CI/Pages PASS, begin CP9.3 from the converged GitHub/Drive baseline. CP9.3 owns Knot Detail structure, disclosures, adjacent-`ⓘ` Reference behavior, explicit instructional-media integration, and the protected external instructional baseline. Do not start CP9.4+ until CP9.3 is finalized or explicitly parked.
+**Exact resume: CP9.3B R2 user browser review of `FCC-49J-B-Knots-Guide-CP9.3B-R2-Cumulative-Review.zip`.** Review the corrected vertical Line Compatibility presentation, line-specific `ⓘ` Reference scope, close/focus/state behavior, and CP9.3A Rig/task round-trip regression. The successful multi-page-popover capability is retained as a future build-test pattern, not used in this Knot context. CP9.3C and CP9.4+ remain blocked until CP9.3B is approved/promoted or explicitly parked.

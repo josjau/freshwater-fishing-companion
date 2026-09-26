@@ -1336,9 +1336,9 @@ function buildKnotUsageMarkup(record, usageContexts) {
         ? `
             <div class="knot-usage-group">
                 <span class="knot-usage-group__label">Common tasks</span>
-                <div class="internal-knowledge-link-list">
+                <div class="knot-usage-link-list">
                     ${taskContexts.map((task) => `
-                        <button class="internal-knowledge-link" type="button" data-knot-task-link-id="${task.taskId}">
+                        <button class="knot-usage-link" type="button" data-knot-task-link-id="${task.taskId}">
                             ${task.title} <span class="link-arrow link-arrow--internal" aria-hidden="true">&rarr;</span>
                         </button>
                     `).join("")}
@@ -1353,16 +1353,16 @@ function buildKnotUsageMarkup(record, usageContexts) {
 
     const rigListId = `knot-rig-usage-${record.id}`;
     const rigItems = rigContexts.map((usage, index) => {
-        const isInitiallyHidden = index >= KNOT_USAGE_VISIBLE_RIG_LIMIT;
+        const isInitiallyHidden = index >= KNOT_USAGE_VISIBLE_RIG_LIMIT && usageContexts?.rigsExpanded !== true;
         return `
             <li${isInitiallyHidden ? ' data-knot-rig-usage-extra hidden' : ""}>
                 <button class="compact-link-row compact-link-row--knot" type="button" data-knot-rig-id="${usage.rigId}">
-                    <span>${usage.title}</span>
-                    <span class="link-arrow link-arrow--chevron" aria-hidden="true">&rsaquo;</span>
+                    <span class="knot-usage-link__content">${usage.title}<span class="link-arrow link-arrow--internal" aria-hidden="true">&rarr;</span></span>
                 </button>
             </li>
         `;
     }).join("");
+    const usageExpanded = usageContexts?.rigsExpanded === true;
     const toggleMarkup = rigContexts.length > KNOT_USAGE_VISIBLE_RIG_LIMIT
         ? `
             <button
@@ -1370,9 +1370,9 @@ function buildKnotUsageMarkup(record, usageContexts) {
                 type="button"
                 data-knot-usage-toggle
                 data-knot-usage-count="${rigContexts.length}"
-                aria-expanded="false"
+                aria-expanded="${usageExpanded ? "true" : "false"}"
                 aria-controls="${rigListId}"
-            >See all ${rigContexts.length} rigs</button>
+            >${usageExpanded ? "Show fewer" : `See all ${rigContexts.length} rigs`}</button>
         `
         : "";
 
@@ -1397,17 +1397,11 @@ function initializeKnotUsageControls(appMain, detailConfig) {
             detailConfig.onTaskSelect?.(button.dataset.knotTaskLinkId);
         });
     });
-    appMain.querySelectorAll("[data-line-type-id]").forEach((button) => {
-        button.addEventListener("click", () => {
-            detailConfig.onLineTypeSelect?.(button.dataset.lineTypeId);
-        });
-    });
-
     const toggle = appMain.querySelector("[data-knot-usage-toggle]");
     if (!toggle) return;
 
     const hiddenItems = Array.from(appMain.querySelectorAll("[data-knot-rig-usage-extra]"));
-    const usageGroup = toggle.closest(".knot-at-a-glance__group");
+    const usageGroup = toggle.closest(".knot-detail-row__panel");
     toggle.addEventListener("click", () => {
         const willExpand = toggle.getAttribute("aria-expanded") !== "true";
         hiddenItems.forEach((item) => {
@@ -1417,6 +1411,7 @@ function initializeKnotUsageControls(appMain, detailConfig) {
         toggle.textContent = willExpand
             ? "Show fewer"
             : `See all ${toggle.dataset.knotUsageCount} rigs`;
+        detailConfig.onUsageStateChange?.(willExpand);
 
         if (!willExpand && usageGroup) {
             const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
@@ -1514,6 +1509,42 @@ function buildRigKnotApplications(record) {
     `;
 }
 
+function buildKnotDetailDisclosureMarkup(disclosureId, title, bodyMarkup, expanded = false) {
+    const panelId = `knot-detail-${disclosureId}-panel`;
+    return `
+        <div class="knot-detail-row knot-detail-row--disclosure">
+            <button class="knot-detail-row__trigger" type="button"
+                data-knot-disclosure-id="${disclosureId}"
+                aria-expanded="${expanded ? "true" : "false"}"
+                aria-controls="${panelId}">
+                <span>${title}</span>
+                <span class="knot-detail-row__state" aria-hidden="true">${expanded ? "▴" : "▾"}</span>
+            </button>
+            <div class="knot-detail-row__panel" id="${panelId}" data-knot-disclosure-panel="${disclosureId}"${expanded ? "" : " hidden"}>
+                ${bodyMarkup}
+            </div>
+        </div>
+    `;
+}
+
+function initializeKnotDetailDisclosures(appMain, detailConfig, expandedDisclosureIds = []) {
+    const expanded = new Set(expandedDisclosureIds);
+    appMain.querySelectorAll("[data-knot-disclosure-id]").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+            const disclosureId = trigger.dataset.knotDisclosureId;
+            const panel = appMain.querySelector(`[data-knot-disclosure-panel="${disclosureId}"]`);
+            const nextExpanded = trigger.getAttribute("aria-expanded") !== "true";
+            trigger.setAttribute("aria-expanded", String(nextExpanded));
+            if (panel) panel.hidden = !nextExpanded;
+            const stateCue = trigger.querySelector(".knot-detail-row__state");
+            if (stateCue) stateCue.textContent = nextExpanded ? "▴" : "▾";
+            if (nextExpanded) expanded.add(disclosureId);
+            else expanded.delete(disclosureId);
+            detailConfig.onDisclosureStateChange?.([...expanded]);
+        });
+    });
+}
+
 function renderKnotInstructionDetail(appMain, detailConfig) {
     if (!appMain || !detailConfig?.record) {
         console.error("A valid Knot detail record is required.");
@@ -1523,121 +1554,202 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
     const record = detailConfig.record;
     const isCore = isCoreKnotRecord(record);
     const usageContexts = detailConfig.usageContexts ?? {};
+    const expandedDisclosureIds = Array.isArray(detailConfig.expandedDisclosureIds)
+        ? detailConfig.expandedDisclosureIds
+        : [];
+    const expanded = new Set(expandedDisclosureIds);
+    const classification = isCore ? `Core Knot • ${record.difficulty}` : record.difficulty;
     const aliasesMarkup = record.aliases?.length
         ? `<p class="knot-aliases"><strong>Also called:</strong> ${record.aliases.join(", ")}</p>`
         : "";
-    const lineTypeLinksMarkup = (record.compatibleLineTypes ?? []).length
+    const lineCompatibilityMarkup = (record.compatibleLineTypes ?? []).length
         ? `
-            <div class="internal-knowledge-link-list">
+            <ul class="knot-line-compatibility-list">
                 ${(record.compatibleLineTypes ?? []).map((lineTypeId) => {
                     const lineType = typeof REEL_LINE_TYPE_GUIDANCE !== "undefined"
                         ? REEL_LINE_TYPE_GUIDANCE[lineTypeId]
                         : null;
                     const label = lineType?.title ?? lineTypeId;
                     return `
-                        <button class="internal-knowledge-link" type="button" data-line-type-id="${lineTypeId}">
-                            ${label} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
-                        </button>
+                        <li class="knot-line-compatibility-item">
+                            <span class="knot-line-compatibility__label">${label}</span>
+                            <button
+                                class="reference-info-button knot-line-reference-button"
+                                type="button"
+                                data-line-type-reference-id="${lineTypeId}"
+                                aria-label="Learn about ${label} fishing line"
+                            ><span aria-hidden="true">ⓘ</span></button>
+                        </li>
                     `;
                 }).join("")}
+            </ul>
+        `
+        : `<p class="knot-empty-context">No line compatibility guidance is currently available.</p>`;
+    const usageMarkup = buildKnotUsageMarkup(record, usageContexts);
+    const referencesBodyMarkup = record.referenceLinks?.length
+        ? `
+            <div class="rig-reference-links knot-reference-links">
+                ${record.referenceLinks.map((reference) => `
+                    <a class="rig-reference-link knot-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
+                `).join("")}
             </div>
         `
         : "";
-    const usageMarkup = buildKnotUsageMarkup(record, usageContexts);
-    const referencesMarkup = record.referenceLinks?.length
-        ? `
-            <details class="detail-section detail-section--supporting knot-sources-section">
-                <summary>Sources & References</summary>
-                <div class="rig-reference-links knot-reference-links">
-                    ${record.referenceLinks.map((reference) => `
-                        <a class="rig-reference-link knot-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
-                    `).join("")}
-                </div>
-            </details>
-        `
-        : "";
+
+    const aboutMarkup = [
+        buildKnotDetailDisclosureMarkup(
+            "best-for",
+            "Best For",
+            `<ul class="detail-list">${record.bestFor.map((item) => `<li>${item}</li>`).join("")}</ul>`,
+            expanded.has("best-for")
+        ),
+        buildKnotDetailDisclosureMarkup(
+            "line-compatibility",
+            "Line Compatibility",
+            lineCompatibilityMarkup,
+            expanded.has("line-compatibility")
+        ),
+        buildKnotDetailDisclosureMarkup(
+            "where-used",
+            "Where You'll Use It",
+            usageMarkup,
+            expanded.has("where-used")
+        )
+    ].join("");
+
+    const moreHelpMarkup = [
+        buildKnotDetailDisclosureMarkup(
+            "common-mistakes",
+            "Common Mistakes",
+            `<ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>`,
+            expanded.has("common-mistakes")
+        ),
+        buildKnotDetailDisclosureMarkup(
+            "choose-another",
+            "When to Choose Another Knot",
+            `<ul class="detail-list">${record.limitations.map((limitation) => `<li>${limitation}</li>`).join("")}</ul>`,
+            expanded.has("choose-another")
+        )
+    ].join("");
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--knot" aria-labelledby="knot-detail-title">
             ${buildPageNavigationMarkup(detailConfig.parentLabel)}
-            <header class="detail-header knot-detail-header${isCore ? " detail-header--core knot-detail-header--core" : ""}">
-                ${isCore ? '<p class="detail-core-badge">Core Knot</p>' : ""}
-                <p class="detail-eyebrow">${record.difficulty}</p>
+            <header class="detail-header knot-detail-header${isCore ? " knot-detail-header--core" : ""}">
+                <p class="detail-eyebrow knot-detail-classification">${classification}</p>
                 <h2 id="knot-detail-title">${record.name}</h2>
                 <p>${record.summary}</p>
                 ${aliasesMarkup}
             </header>
-            <section class="detail-section knot-at-a-glance">
-                <div class="knot-at-a-glance__group">
-                    <h3>Best For</h3>
-                    <ul class="detail-list">${record.bestFor.map((item) => `<li>${item}</li>`).join("")}</ul>
-                    <div class="knot-line-types">
-                        <span class="knot-line-types__label">Line compatibility</span>
-                        ${lineTypeLinksMarkup}
-                    </div>
-                </div>
-                <div class="knot-at-a-glance__group">
-                    <h3>Where You'll Use It</h3>
-                    ${usageMarkup}
-                </div>
-            </section>
-            <section class="detail-section detail-section--build knot-tying-section">
-                <h3>How to Tie It</h3>
+            <section class="detail-section detail-section--build knot-tying-section" aria-labelledby="knot-tying-title">
+                <h3 id="knot-tying-title">How to Tie It</h3>
                 <ol class="detail-steps knot-tying-steps">${record.tyingSteps.map((step) => `<li>${step}</li>`).join("")}</ol>
             </section>
-            <section class="detail-section detail-section--supporting knot-check-section">
-                <h3>Check Your Knot</h3>
+            <section class="detail-section detail-section--supporting knot-check-section" aria-labelledby="knot-check-title">
+                <h3 id="knot-check-title">Check Your Knot</h3>
                 <ul class="detail-list">${record.finalChecks.map((check) => `<li>${check}</li>`).join("")}</ul>
             </section>
-            <section class="detail-section detail-section--supporting">
-                <h3>Common Mistakes</h3>
-                <ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>
+            <section class="knot-detail-group knot-detail-group--about" aria-labelledby="knot-about-title">
+                <h3 class="knot-detail-group__title" id="knot-about-title">About This Knot</h3>
+                <div class="knot-detail-group__shell">${aboutMarkup}</div>
             </section>
-            <section class="detail-section detail-section--supporting">
-                <h3>When to Choose Another Knot</h3>
-                <ul class="detail-list">${record.limitations.map((limitation) => `<li>${limitation}</li>`).join("")}</ul>
+            <section class="knot-detail-group knot-detail-group--more-help" aria-labelledby="knot-more-help-title">
+                <h3 class="knot-detail-group__title" id="knot-more-help-title">More Help</h3>
+                <div class="knot-detail-group__shell">${moreHelpMarkup}</div>
             </section>
-            ${referencesMarkup}
+            ${referencesBodyMarkup ? `
+                <section class="knot-detail-group knot-detail-group--sources" aria-label="Sources and references">
+                    <div class="knot-detail-group__shell">
+                        ${buildKnotDetailDisclosureMarkup(
+                            "sources",
+                            "Sources & References",
+                            referencesBodyMarkup,
+                            expanded.has("sources")
+                        )}
+                    </div>
+                </section>
+            ` : ""}
         </article>
     `;
 
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
+    initializeKnotDetailDisclosures(appMain, detailConfig, expandedDisclosureIds);
     initializeKnotUsageControls(appMain, detailConfig);
+    initializeLineTypeReferenceLinks(appMain);
     initializeHomeNavigation(appMain);
 }
 
-function renderLineTypeReferenceDetail(appMain, detailConfig) {
-    if (!appMain || !detailConfig?.record) {
-        console.error("A valid Line Type reference record is required.");
+function renderLineTypeReferencePopover(lineTypeId, triggerElement) {
+    if (typeof REEL_LINE_TYPE_GUIDANCE === "undefined") {
+        console.error("Line Type reference data is not available.");
         return;
     }
 
-    const record = detailConfig.record;
-    appMain.innerHTML = `
-        <article class="detail-view detail-view--line-type" aria-labelledby="line-type-detail-title">
-            ${buildPageNavigationMarkup(detailConfig.parentLabel)}
-            <header class="detail-header line-type-detail-header">
-                <p class="detail-eyebrow">Fishing Line</p>
-                <h2 id="line-type-detail-title">${record.title}</h2>
-                <p>${record.selectionDescription}</p>
+    const record = REEL_LINE_TYPE_GUIDANCE[lineTypeId] ?? null;
+    if (!record?.id || !record?.title) {
+        console.warn(`Line Type reference was not found: ${lineTypeId}`);
+        return;
+    }
+
+    removeOpenReferencePopovers();
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "reference-popover line-type-reference-popover";
+    dialog.dataset.lineTypeReferencePopover = "";
+    dialog.setAttribute("aria-labelledby", "line-type-reference-title");
+
+    const closeDialog = () => {
+        if (dialog.open) dialog.close();
+    };
+
+    dialog.innerHTML = `
+        <div class="reference-popover__shell">
+            <header class="reference-popover__header">
+                <div class="reference-popover__header-main">
+                    <p class="reference-popover__eyebrow">Fishing Line</p>
+                    <h2 id="line-type-reference-title">${record.title}</h2>
+                </div>
+                <button class="reference-popover__close" type="button" data-line-type-reference-close aria-label="Close ${record.title} information">&times;</button>
             </header>
-            <section class="detail-section">
-                <h3>How to Recognize It</h3>
-                <p>${record.identificationCue}</p>
-            </section>
-            <section class="detail-section">
-                <h3>Beginner Guidance</h3>
-                <p>${record.beginnerGuidance}</p>
-            </section>
-            <section class="detail-section detail-section--supporting">
-                <h3>Tradeoff</h3>
-                <p>${record.tradeoff}</p>
-            </section>
-        </article>
+            <div class="reference-popover__body">
+                <p class="reference-popover__summary">${record.selectionDescription}</p>
+                <section class="reference-popover__section">
+                    <h3>How to Recognize It</h3>
+                    <p>${record.identificationCue}</p>
+                </section>
+                <section class="reference-popover__section">
+                    <h3>Beginner Guidance</h3>
+                    <p>${record.beginnerGuidance}</p>
+                </section>
+                <section class="reference-popover__section">
+                    <h3>Tradeoff</h3>
+                    <p>${record.tradeoff}</p>
+                </section>
+            </div>
+        </div>
     `;
 
-    appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
-    initializeHomeNavigation(appMain);
+    dialog.querySelector("[data-line-type-reference-close]")?.addEventListener("click", closeDialog);
+    dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeDialog();
+    });
+    dialog.addEventListener("close", () => {
+        dialog.remove();
+        unlockReferencePopoverBackground();
+        triggerElement?.focus({ preventScroll: true });
+    });
+
+    document.body.append(dialog);
+    lockReferencePopoverBackground();
+    dialog.showModal();
+}
+
+function initializeLineTypeReferenceLinks(appMain) {
+    appMain.querySelectorAll("[data-line-type-reference-id]").forEach((referenceButton) => {
+        referenceButton.addEventListener("click", () => {
+            renderLineTypeReferencePopover(referenceButton.dataset.lineTypeReferenceId, referenceButton);
+        });
+    });
 }
 
 function isCoreRigRecord(record) {
@@ -1757,6 +1869,7 @@ function unlockReferencePopoverBackground() {
 function removeOpenReferencePopovers() {
     document.querySelectorAll([
         "[data-reference-popover]",
+        "[data-line-type-reference-popover]",
         "[data-condition-popover]",
         "[data-fish-habitat-popover]",
         "[data-lure-bait-popover]",

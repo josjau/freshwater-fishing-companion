@@ -37,7 +37,6 @@ const ROUTES = Object.freeze({
     KNOTS: "knots",
     KNOT_BROWSE: "knot-browse",
     KNOT_DETAIL: "knot-detail",
-    LINE_TYPE_DETAIL: "line-type-detail",
     REEL_SETUP: "reel-setup",
     CATCH_LOG: "catch-log",
     FAVORITES: "favorites",
@@ -105,7 +104,6 @@ let selectedKnotId = null;
 let selectedKnotBrowseKey = "all";
 let selectedKnotTaskId = null;
 let selectedKnotDetailSource = "guide";
-let selectedLineTypeId = null;
 let selectedRegulationStateId = null;
 let regulationsGatewayState = { query: "" };
 let reelSetupState = createInitialReelSetupState();
@@ -185,6 +183,12 @@ function returnToDetailNavigationContext() {
         selectedKnotBrowseKey = context.state.selectedKnotBrowseKey;
         selectedKnotTaskId = context.state.selectedKnotTaskId;
         selectedKnotDetailSource = context.state.selectedKnotDetailSource;
+        knotDetailState = context.state.knotDetailState
+            ? {
+                ...context.state.knotDetailState,
+                expandedDisclosureIds: [...(context.state.knotDetailState.expandedDisclosureIds ?? [])]
+            }
+            : createInitialKnotDetailState(selectedKnotId);
         showView(ROUTES.KNOT_DETAIL);
         return true;
     }
@@ -215,7 +219,6 @@ const VIEW_RENDERERS = Object.freeze({
     [ROUTES.KNOTS]: renderKnotsView,
     [ROUTES.KNOT_BROWSE]: renderKnotBrowseView,
     [ROUTES.KNOT_DETAIL]: renderKnotDetailView,
-    [ROUTES.LINE_TYPE_DETAIL]: renderLineTypeDetailView,
     [ROUTES.REEL_SETUP]: renderReelSetupView,
     [ROUTES.CATCH_LOG]: renderCatchLogView,
     [ROUTES.FAVORITES]: renderFavoritesView,
@@ -1067,12 +1070,7 @@ function openRigDetailFromKnot(rigId) {
     pushDetailNavigationContext({
         route: ROUTES.KNOT_DETAIL,
         label: knot.name,
-        state: {
-            selectedKnotId,
-            selectedKnotBrowseKey,
-            selectedKnotTaskId,
-            selectedKnotDetailSource
-        }
+        state: captureKnotDetailNavigationState(`rig:${rigId}`)
     });
 
     selectedRigId = rigId;
@@ -1125,6 +1123,7 @@ function openKnotDetailFromRig(knotId) {
 
     selectedKnotId = knotId;
     selectedKnotDetailSource = "related-rig";
+    resetKnotDetailState(knotId);
     showView(ROUTES.KNOT_DETAIL);
 }
 
@@ -2624,6 +2623,7 @@ function openKnotDetailFromReelSetup(knotId, returnLabel = "Spool Connection Pla
 
     selectedKnotId = knotId;
     selectedKnotDetailSource = "reel-setup";
+    resetKnotDetailState(knotId);
     showView(ROUTES.KNOT_DETAIL);
 }
 
@@ -3065,6 +3065,74 @@ function renderReelSetupReelReadyCheckStep(appMain) {
 let knotGuideState = { query: "", scrollY: 0 };
 let knotBrowseState = { query: "", scrollY: 0 };
 
+function createInitialKnotDetailState(knotId) {
+    return {
+        knotId,
+        expandedDisclosureIds: [],
+        rigsExpanded: false,
+        scrollY: 0,
+        restoreScroll: false,
+        restoreFocusTarget: null
+    };
+}
+
+let knotDetailState = createInitialKnotDetailState(null);
+
+function resetKnotDetailState(knotId) {
+    knotDetailState = createInitialKnotDetailState(knotId);
+}
+
+function captureKnotDetailNavigationState(restoreFocusTarget = null) {
+    return {
+        selectedKnotId,
+        selectedKnotBrowseKey,
+        selectedKnotTaskId,
+        selectedKnotDetailSource,
+        knotDetailState: {
+            knotId: selectedKnotId,
+            expandedDisclosureIds: [...(knotDetailState.expandedDisclosureIds ?? [])],
+            rigsExpanded: knotDetailState.rigsExpanded === true,
+            scrollY: window.scrollY,
+            restoreScroll: true,
+            restoreFocusTarget
+        }
+    };
+}
+
+function restoreKnotDetailScroll() {
+    if (knotDetailState.knotId !== selectedKnotId || knotDetailState.restoreScroll !== true) return;
+    const scrollY = Number(knotDetailState.scrollY ?? 0);
+    window.requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+        knotDetailState = { ...knotDetailState, restoreScroll: false };
+    });
+}
+
+function restoreKnotDetailFocus(appMain) {
+    if (!appMain || knotDetailState.knotId !== selectedKnotId || !knotDetailState.restoreFocusTarget) return;
+
+    const focusTarget = knotDetailState.restoreFocusTarget;
+    knotDetailState = { ...knotDetailState, restoreFocusTarget: null };
+    window.requestAnimationFrame(() => {
+        const [kind, id] = focusTarget.split(":", 2);
+        const selectorByKind = {
+            rig: "[data-knot-rig-id]",
+            task: "[data-knot-task-link-id]"
+        };
+        const selector = selectorByKind[kind];
+        if (!selector || !id) return;
+        const datasetKeyByKind = {
+            rig: "knotRigId",
+            task: "knotTaskLinkId"
+        };
+        const datasetKey = datasetKeyByKind[kind];
+        const target = Array.from(appMain.querySelectorAll(selector)).find((element) =>
+            element.dataset[datasetKey] === id
+        );
+        target?.focus({ preventScroll: true });
+    });
+}
+
 function restoreKnotScroll(scrollY) {
     if (!Number.isFinite(scrollY) || scrollY <= 0) return;
     window.requestAnimationFrame(() => {
@@ -3108,29 +3176,25 @@ function openKnotDetail(knotId, source = "guide") {
     else knotGuideState.scrollY = window.scrollY;
     selectedKnotId = knotId;
     selectedKnotDetailSource = source;
+    resetKnotDetailState(knotId);
     showView(ROUTES.KNOT_DETAIL);
 }
 
-function pushCurrentKnotDetailContext() {
+function pushCurrentKnotDetailContext(restoreFocusTarget = null) {
     const knot = findRecordById(KNOT_DATA, selectedKnotId);
     if (!knot || knot.isActive !== true) return false;
 
     pushDetailNavigationContext({
         route: ROUTES.KNOT_DETAIL,
         label: knot.name,
-        state: {
-            selectedKnotId,
-            selectedKnotBrowseKey,
-            selectedKnotTaskId,
-            selectedKnotDetailSource
-        }
+        state: captureKnotDetailNavigationState(restoreFocusTarget)
     });
     return true;
 }
 
 function openKnotTaskFromDetail(taskId) {
     const task = getKnotTask(taskId);
-    if (!task || !pushCurrentKnotDetailContext()) return;
+    if (!task || !pushCurrentKnotDetailContext(`task:${taskId}`)) return;
 
     if (taskId === "attach-line-to-reel") {
         resetReelSetupState();
@@ -3141,35 +3205,6 @@ function openKnotTaskFromDetail(taskId) {
     selectedKnotBrowseKey = "task";
     selectedKnotTaskId = taskId;
     showView(ROUTES.KNOT_BROWSE);
-}
-
-function openLineTypeDetailFromKnot(lineTypeId) {
-    const lineType = getReelLineType(lineTypeId);
-    if (!lineType || !pushCurrentKnotDetailContext()) return;
-
-    selectedLineTypeId = lineTypeId;
-    showView(ROUTES.LINE_TYPE_DETAIL);
-}
-
-function renderLineTypeDetailView(appMain) {
-    const lineType = getReelLineType(selectedLineTypeId);
-    const returnContext = peekDetailNavigationContext();
-    const fromKnotDetail = returnContext?.route === ROUTES.KNOT_DETAIL;
-
-    if (!lineType) {
-        console.warn(`Line Type was not found: ${selectedLineTypeId}`);
-        if (fromKnotDetail && returnToDetailNavigationContext()) return;
-        showView(ROUTES.TACKLE);
-        return;
-    }
-
-    renderLineTypeReferenceDetail(appMain, {
-        record: lineType,
-        parentLabel: fromKnotDetail ? returnContext.label : "Tackle",
-        onParent: fromKnotDetail
-            ? returnToDetailNavigationContext
-            : () => showView(ROUTES.TACKLE)
-    });
 }
 
 function openKnotBrowse(collectionKey, taskId = null) {
@@ -3387,21 +3422,44 @@ function renderKnotDetailView(appMain) {
         return;
     }
 
+    if (knotDetailState.knotId !== knot.id) resetKnotDetailState(knot.id);
+
     const fromBrowse = selectedKnotDetailSource === "browse";
     const browseConfig = getKnotBrowseConfig();
+    const usageContexts = getKnotUsageContexts(knot.id);
     renderKnotInstructionDetail(appMain, {
         record: knot,
-        usageContexts: getKnotUsageContexts(knot.id),
+        usageContexts: {
+            ...usageContexts,
+            rigsExpanded: knotDetailState.rigsExpanded === true
+        },
+        expandedDisclosureIds: knotDetailState.expandedDisclosureIds,
         parentLabel: hasReturnContext
             ? returnContext.label
             : (fromBrowse ? browseConfig.title : "Knots Guide"),
         onParent: hasReturnContext
             ? returnToDetailNavigationContext
             : () => showView(fromBrowse ? ROUTES.KNOT_BROWSE : ROUTES.KNOTS),
+        onDisclosureStateChange: (expandedDisclosureIds) => {
+            knotDetailState = {
+                ...knotDetailState,
+                knotId: knot.id,
+                expandedDisclosureIds: [...expandedDisclosureIds]
+            };
+        },
+        onUsageStateChange: (rigsExpanded) => {
+            knotDetailState = {
+                ...knotDetailState,
+                knotId: knot.id,
+                rigsExpanded: rigsExpanded === true
+            };
+        },
         onRigSelect: openRigDetailFromKnot,
-        onTaskSelect: openKnotTaskFromDetail,
-        onLineTypeSelect: openLineTypeDetailFromKnot
+        onTaskSelect: openKnotTaskFromDetail
     });
+
+    restoreKnotDetailScroll();
+    restoreKnotDetailFocus(appMain);
 }
 
 
