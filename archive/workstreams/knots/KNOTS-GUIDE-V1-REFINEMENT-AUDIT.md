@@ -48,7 +48,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C APPROVED / PROMOTED / VALIDATED — REPOSITORY CLOSEOUT OPEN; CP9.4 BLOCKED |
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C CLOSED / PASS; CP9.4 NEXT |
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -1821,7 +1821,7 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 
 # KG Audit — CP9.3C — External Visual Guide / Instructional-Media Integration
 
-**Status:** IN REVIEW — R1 CANDIDATE / DRIVE CURRENT UNCHANGED
+**Status:** CLOSED / PASS — R3 USER APPROVED / PROMOTED / REPOSITORY VALIDATED
 
 ## CP9.3C Baseline + Scope
 
@@ -1897,7 +1897,7 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 - Browser/device/accessibility verdict: PENDING USER REVIEW.
 - R3 ZIP SHA-256 is recorded in Live Working State / the active Drive audit immediately after package freeze; the packaged audit copy intentionally does not self-embed the final ZIP hash.
 
-## R3 Approval + Promotion / Repository Closeout Pending
+## R3 Approval + Promotion / Repository Closeout
 
 - **Final verdict:** USER APPROVED / FROZEN / PROMOTED. R3 remains `FCC-49J-C-Knots-Guide-CP9.3C-R3-Cumulative-Review.zip`, SHA-256 `15de41068ff4f948151fb9242b092f5b21c54d6b9faded73ed242d3b20e0ea89`.
 - The exact approved production bytes were promoted to Drive Current and read back byte-for-byte: `view-renderer.js` SHA-256 `4440a8f356773cc7881788329a1208fc33ac3992ff75af6310b38a39ef930423`; `knot-media-renderer.js` SHA-256 `2cfef62675b3ae0544365b8a02cc624c17966e2d1f0502daba2afc5e2c702417`; `forest-journal.css` SHA-256 `4f7e087b984774d44d298cb3fd5d9234cb4ac265fd44f3e3ea837437b64cc335`.
@@ -1905,9 +1905,9 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 - Post-promotion source validation PASS: `node --check` for `view-renderer.js` and `knot-media-renderer.js`; CSS brace balance; explicit in-flow media mount; no media-renderer monkey patch; task-only breadcrumb modifier; and no new whitespace/line-ending churn in the approved paths.
 - `data/media.js` remains VERIFIED — NO CHANGE REQUIRED. All 10 protected external Knot instructional destinations, provider identities, rights/provenance metadata, and medium-specific action labels remain unchanged. CP9.6 remains the owner of the four-Core FCC-owned instructional prototype.
 - **Owner classification:** UPDATE REQUIRED — `view-renderer.js`, `knot-media-renderer.js`, `forest-journal.css`, `KNOT-GUIDE.md`, this active audit, Live Working State. VERIFIED — NO CHANGE REQUIRED — `data/media.js`, `docs/MEDIA_GUIDE.md`, `docs/UI_STANDARD.md`, `docs/PROJECT-RULES.md`. NOT APPLICABLE TO CP9.3C — `images/knots/instructional/*` / local instructional-state records; those remain CP9.6.
-- GitHub `main` remains the committed pre-CP9.3C authority until the approved production scope is explicitly committed/pushed. Production commit/push is separately authorized and has not yet occurred.
-- CP9.3C implementation is USER APPROVED / PROMOTED / VALIDATED, but repository closeout remains OPEN until the approved five-path convergence is committed/pushed and required CI/Pages plus Drive/Git convergence pass. CP9.4 remains blocked until that closeout completes.
+- Repository closeout landed as GitHub `main` commit `875afc088fe787e4d6954bd6f7f39da65ee3e226` (`FCC 49J-C - CP9.3C external Visual Guide integration`), exactly one commit after `ab100b74494a2656ae1e8ee58111797b622f8edd`. The commit changes exactly five paths: `archive/workstreams/knots/KNOT-GUIDE.md`, this active audit, `forest-journal.css`, `knot-media-renderer.js`, and `view-renderer.js`; no deletions.
+- Repository Integrity run `36219415290` PASS and Pages run `36219415012` PASS for `875afc088fe787e4d6954bd6f7f39da65ee3e226`. GitHub/Drive convergence PASS across all five paths; four paths are byte-identical and `knot-media-renderer.js` is normalized-content identical with only Git LF normalization versus the approved/promoted Drive CRLF bytes. CP9.3C is CLOSED / PASS. CP9.4 — Get Your Reel Ready Migration is unblocked and is the next implementation segment.
 
 # Current Exact Resume
 
-**Exact resume: CP9.3C USER APPROVED / PROMOTED / VALIDATED at R3; repository closeout is OPEN. Apply `FCC-49J-C-Knots-Guide-CP9.3C-Approved-Commit-Transfer.zip` to verified GitHub `main` `ab100b74494a2656ae1e8ee58111797b622f8edd`, verify exactly five modified paths, commit/push, then verify GitHub SHA/scope, required CI/Pages, and Drive/Git convergence. Only after that PASS may CP9.4 — Get Your Reel Ready Migration begin. CP9.6 local instructional media remains out of scope.**
+**Exact resume: CP9.3C is CLOSED / PASS at GitHub `main` `875afc088fe787e4d6954bd6f7f39da65ee3e226`; Repository Integrity `36219415290` PASS, Pages `36219415012` PASS, and Drive/Git convergence PASS. Next: begin CP9.4 — Get Your Reel Ready Migration from verified GitHub main + current Drive authority. CP9.6 local instructional media remains out of scope until its scheduled gate.**
