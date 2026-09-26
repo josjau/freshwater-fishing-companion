@@ -2,7 +2,7 @@
 
 
 **Document:** KNOT-GUIDE.md  
-**Document Revision:** 0.3.28  
+**Document Revision:** 0.3.29  
 **Document Status:** Approved Planning / In Progress  
 **Milestone:** Knots  
 **Last Updated:** 2026-09-25
@@ -349,7 +349,7 @@ Approved FCC Reference behavior:
 - Reference affordance relies primarily on the persistent `ⓘ` cue rather than requiring a dedicated colored Reference chip/accent. Exact hover/focus/pressed treatment remains refinement-allowed for browser validation.
 
 
-On Knot Detail, **Line Compatibility** (`Monofilament`, `Fluorocarbon`, `Braid` where applicable) uses this convention. The line-type text remains non-Reference-interactive; the adjacent `ⓘ` opens the contextual Line Type reference. Exact Reference-surface presentation remains **BUILD TEST REQUIRED** and may compare a contextual surface against the current dedicated Line Type route, but full return context/focus must be preserved either way.
+On Knot Detail, **Line Compatibility** (`Monofilament`, `Fluorocarbon`, `Braid` where applicable) uses this convention. Compatible line types render as a consistent vertical list, one canonical line type per row. The line-type text remains non-Reference-interactive; each adjacent `ⓘ` opens only that exact line type's contextual Reference information in the shared modal/bottom-sheet-capable Reference surface. Opening/closing Reference does not leave Knot Detail, mutate disclosure/scroll state, or expose unrelated line-type pages, and closing restores focus to the originating `ⓘ`. The former dedicated Line Type detail route is retired from this Knot context.
 
 
 ### CP4.2 — Detail Identity / Header
@@ -384,6 +384,7 @@ Each disclosure starts collapsed on initial Knot-detail entry, uses the complete
 
 **Best For** renders curated `bestFor[]` beginner guidance. **Line Compatibility** renders applicable line types using the approved adjacent-`ⓘ` Reference convention. **Where You'll Use It** contains navigation rather than Reference chips: task/workflow and Rig destinations use **`→`** navigation cues.
 
+CP9.3A browser approval refines the usage presentation without changing those semantics: **Common Tasks** and **Rigs That Use This Knot** use lightweight non-chip link rows, subgroup labels may use the restrained instructional accent/rule treatment, and neutral separators may divide peer links. Internal `→` cues stay immediately adjacent to the destination wording and use the same text color as that destination. Knot usage relationships do not copy the heavier Fish **Rigs to Start With** recommendation-card treatment because these rows are relationship navigation rather than recommendation-priority/reason content.
 
 For Arbor Knot and other legitimate reel-spool contexts, use **Get Your Reel Ready →** as the contextual workflow bridge rather than reintroducing **Attach Line to a Reel** as a competing landing/task concept.
 
@@ -399,7 +400,7 @@ For Arbor Knot and other legitimate reel-spool contexts, use **Get Your Reel Rea
 - visible numbering derived from array order.
 
 
-The primary user path is therefore **open Knot → see how to tie it** without another expansion action. CP5 owns the exact diagram/animation treatment and may affect final desktop geometry.
+The primary user path is therefore **open Knot → see how to tie it** without another expansion action. In the approved CP9.3A implementation, **HOW TO TIE IT** sits directly below the Knot identity/description and **CHECK YOUR KNOT** follows the tying sequence before the secondary ABOUT THIS KNOT / MORE HELP material. This visible teaching order governs even though the documentation subsections above are organized by audit topic. CP5 owns the exact diagram/animation treatment and may affect final desktop geometry.
 
 
 ### CP4.5 — Verification + More Help
@@ -415,7 +416,7 @@ A separate **MORE HELP** group contains independent disclosures:
 - **When to Choose Another Knot** → `limitations[]`.
 
 
-Both start collapsed and use the shared disclosure grammar. The beginner-facing label **When to Choose Another Knot** is preferred over exposing the internal `limitations[]` field name.
+Both start collapsed and use the shared disclosure grammar. The beginner-facing label **When to Choose Another Knot** is preferred over exposing the internal `limitations[]` field name. Informational bullet lists on Knot Detail use the shared Guide-family accented marker language already validated by Fish **Key Identification Traits** and the numbered tying-step emphasis; navigation-link lists remain navigation rows rather than bullet lists.
 
 
 ### CP4.6 — Related Knowledge, Sources, Navigation, and Responsive Refinement
@@ -427,7 +428,7 @@ Both start collapsed and use the shared disclosure grammar. The beginner-facing 
 **Sources & References** remains available at the bottom of the detail page as a collapsed disclosure by default.
 
 
-Do not add a generic duplicate bottom **Back to Knots** action. Parent navigation must reflect and restore the actual originating context already required by CP1/CP3, including landing Search, scoped collection/task browse, applicable Rig context, or Reel Setup handoff.
+Do not add a generic duplicate bottom **Back to Knots** action. Parent navigation must reflect and restore the actual originating context already required by CP1/CP3, including landing Search, scoped collection/task browse, applicable Rig context, or Reel Setup handoff. When a user leaves Knot Detail for a related internal destination and returns, restore the Knot Detail browsing state, including open disclosures, the nested Rig-list expansion state when applicable, scroll position, and focus to the originating control.
 
 
 Do not lock Knot Detail to a two-column desktop teaching layout during discovery. Exact media/instruction arrangement, comfortable reading width, and whether desktop uses stacked or side-by-side instructional presentation remain **BUILD TEST REQUIRED** after CP5 establishes the actual instructional-media treatment. Mobile must preserve a clear single-flow teaching order without horizontal scrolling.
@@ -1499,6 +1500,14 @@ The bounded prototype remains **Improved Clinch → Palomar → Double Uni → A
 
 The approved CP9.2 result is the R4 candidate (`FCC-49I-Knots-Guide-CP9.2-R4-Cumulative-Review.zip`, SHA-256 `c23ff1f233314ebe8de39d9eea6468f7f150c0ed26edd524faa325ba84b44e97`). The approved production state includes the **Knots Guide** Dashboard rename, Dashboard-derived two-sided Core/important accent treatment while preserving rotating standard accents, consistent phone placement of task actions beneath titles, the approved landing/Search/browse/result interaction behavior, and removal of decorative Knot identity art. Decorative Dashboard Guide-card imagery remains deferred to the final UX Audit; Reference Knowledge cards remain undecorated by default unless separately approved later.
 
+
+### CP9.3A / CP9.3B Implementation Result
+
+**Status:** CP9.3A CLOSED / PASS; CP9.3B USER-APPROVED / PROMOTED — 2026-09-25
+
+CP9.3A establishes the approved Knot Detail teaching hierarchy and state-preserving related-navigation behavior. CP9.3B completes the adjacent-`ⓘ` Line Compatibility Reference treatment: canonical compatible line types are stacked one per row, each `ⓘ` is the only Reference trigger and opens only its exact line type, the line label remains static, and the contextual Reference surface closes back to the same trigger without disturbing Knot Detail state. The R1 three-page Line Type experiment proved that multi-page contextual Reference is technically viable, but that pager was removed from this exact-term context because it diluted the adjacent-Reference semantics.
+
+The approved CP9.3B R2 candidate is `FCC-49J-B-Knots-Guide-CP9.3B-R2-Cumulative-Review.zip`, SHA-256 `029c09529447195bfbf4adb5335dbc125acb36d5d3a8e9bb5f866c8c17e593f0`. Approved production hashes are `view-renderer.js` `d4a6f813b9aff57b250bd77ca9aacbfd115ec62825183bd919c425db73dd7501`, `script.js` `160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`, and `forest-journal.css` `55cdae1143eb8087784875bc6a1cbdffb4a54b46a59f5e9297d306bdeb3bb387`.
 
 ### Validation Lock
 

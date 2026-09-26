@@ -48,7 +48,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B R1 REVIEW PENDING |  
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B USER APPROVED / PROMOTED; REPOSITORY CI CLOSEOUT PENDING |  
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -1735,13 +1735,15 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 
 # KG Audit — CP9.3B — adjacent-`ⓘ` Reference + Detail Navigation
 
-**Status:** R2 CANDIDATE / USER BROWSER REVIEW PENDING — 2026-09-25
+**Status:** USER APPROVED / FROZEN / PROMOTED — REPOSITORY CI CLOSEOUT PENDING — 2026-09-25
 
 ## R1 Review-Cycle Baseline
 
 - Starting GitHub `main`: `4a4f32d6d464f0414d7e21deb587cf10ba668ffe`.
 - Authoritative uncommitted source baseline: the exact promoted CP9.3A Drive Current bytes — `view-renderer.js` SHA-256 `1240dc787b3f244a10f39113c7631647feaeb9b68bb3edd8b830077b00a7d6b2`; `forest-journal.css` SHA-256 `155fb4587043b4f5c5046bc770b8a7f568f65cdaed4f69745da4b657b0779928`; `script.js` SHA-256 `42782c477f40884832c6763eda59ab773a47a0df909d3c15381a3ffdd0521db9`.
-- R1 candidate filename: `FCC-49J-B-Knots-Guide-CP9.3B-R1-Cumulative-Review.zip`; SHA-256 `d4d8ac4c534d6fd212c0f0a076e9e3daa4ad16be956b97d6b9e9db858c2c9ce4`. R1 remains the immutable baseline for CP9.3B R2+ reconstruction.
+- R1 candidate filename: `FCC-49J-B-Knots-Guide-CP9.3B-R1-Cumulative-Review.zip`.
+- R1 ZIP SHA-256: `d4d8ac4c534d6fd212c0f0a076e9e3daa4ad16be956b97d6b9e9db858c2c9ce4`. The packaged R1 audit copy intentionally does not self-embed this final ZIP hash.
+- R1 remains the immutable reconstruction baseline for CP9.3B R2+ candidate revisions.
 - R1 package scope: `view-renderer.js`, `script.js`, `forest-journal.css`, and `archive/workstreams/knots/KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md`. No deletions.
 - CP9.3B remains candidate-only. Drive Current production source is not changed before explicit user approval; no GitHub commit/push/CI/Pages action is authorized.
 
@@ -1787,37 +1789,36 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 | `KG-CP9.3B-R1-002` — The adjacent `ⓘ` semantics were diluted because each line-specific trigger opened the same three-page Line Type Reference and exposed line types unrelated to the current Knot. | Keep only the current Knot's canonical `compatibleLineTypes[]` in Line Compatibility. Each adjacent `ⓘ` opens only the Reference content for the exact line type it accompanies; remove cross-line Previous/Next paging from this context. | `view-renderer.js`, `forest-journal.css` | R2 CORRECTED |
 | `KG-CP9.3B-R1-003` — The R1 build test positively confirmed that multiple pages inside a popover with user-controlled navigation are technically viable. | Preserve this as a reusable future UI finding rather than retaining unused Knot-specific pager code. When a future Reference surface genuinely needs multi-page navigation, test a floating breadcrumb-style navigation control centered at the top or bottom of the description pane; final orientation is BUILD TEST REQUIRED in the actual use context. | active audit now; durable shared UI owner at later approval/reconciliation when a concrete use is adopted | VERIFIED CAPABILITY / FUTURE BUILD-TEST PATTERN |
 
-## R2 Candidate Notes
+## R2 Candidate / Validation Record
 
 - R2 is rebuilt from immutable CP9.3B R1 plus the cumulative documented corrections above; Drive Current production source remains unchanged.
-- R2 candidate filename: `FCC-49J-B-Knots-Guide-CP9.3B-R2-Cumulative-Review.zip`. The final R2 ZIP SHA-256 is recorded in Live Working State and the active Drive audit after package freeze; the packaged audit copy intentionally does not self-embed its own final ZIP hash.
+- R2 candidate filename: `FCC-49J-B-Knots-Guide-CP9.3B-R2-Cumulative-Review.zip`; SHA-256 `029c09529447195bfbf4adb5335dbc125acb36d5d3a8e9bb5f866c8c17e593f0`.
+- R2 package scope remains `view-renderer.js`, `script.js`, `forest-journal.css`, and `archive/workstreams/knots/KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md`. No deletions. `script.js` is cumulative and byte-identical to R1.
 - Line Compatibility continues to render only canonical line types present in the current Knot's `compatibleLineTypes[]`; R2 changes presentation and Reference scope, not Knot compatibility data.
-- Compatible line types are vertically stacked at every viewport width so responsive wrapping cannot create a visually unbalanced mixed row layout.
-- Each `ⓘ` remains immediately adjacent to its exact line-type term and now opens only that term's Reference information. The line text itself remains non-interactive.
-- The successful multi-page-popover experiment is retained as design evidence, but its R1 position cue / Previous / Next implementation is removed from the Knot Line Compatibility candidate because it is not semantically appropriate here.
-- CP9.3A Rig/task detail-navigation state capture, Parent restoration, disclosure state, nested Rig expansion, scroll restoration, and originating-control focus behavior remain unchanged.
-- R2 does not begin CP9.3C or CP9.4+.
-
-## R2 Targeted Validation
-
-- JavaScript syntax: PASS for candidate `view-renderer.js` and unchanged cumulative `script.js`.
+- Compatible line types are vertically stacked at every viewport width. Each `ⓘ` remains immediately adjacent to its exact line-type term and opens only that line type's Reference information; the line text remains non-interactive.
+- The successful multi-page-popover experiment is retained as design evidence, but its R1 page-position / Previous / Next implementation is removed from the Knot Line Compatibility candidate because it is not semantically appropriate here.
+- JavaScript syntax: PASS for candidate `view-renderer.js` and cumulative `script.js`.
 - CSS brace balance: PASS. The inherited repeated-blank-line run in `forest-journal.css` is unchanged from R1 and was not expanded.
-- Line Compatibility source assertions: PASS — the list is a vertical grid; markup is still derived only from the current Knot's `compatibleLineTypes[]`; one independent `ⓘ` is rendered per displayed line type; the line text remains static.
-- Line-specific Reference assertions: PASS — the clicked `lineTypeId` resolves directly to `REEL_LINE_TYPE_GUIDANCE[lineTypeId]`; no line-type page-position, Previous, Next, or pager CSS remains.
-- Popover state/focus source assertions: PASS — background lock/unlock and exact originating-trigger focus return remain present; opening the popover still does not push application detail-navigation state.
-- CP9.3A detail-navigation regression assertions: PASS — cumulative `script.js` is byte-identical to R1 (`160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`).
-- Candidate production hashes before package freeze: `view-renderer.js` `d4a6f813b9aff57b250bd77ca9aacbfd115ec62825183bd919c425db73dd7501`; `script.js` `160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`; `forest-journal.css` `55cdae1143eb8087784875bc6a1cbdffb4a54b46a59f5e9297d306bdeb3bb387`.
+- Line Compatibility / Reference source assertions: PASS — vertical grid; exact Knot compatibility scope; one line-specific `ⓘ` per displayed line type; direct `REEL_LINE_TYPE_GUIDANCE[lineTypeId]` lookup; no line-type page-position, Previous, Next, or pager CSS; background lock/unlock and exact originating-trigger focus return retained.
+- CP9.3A detail-navigation regression source assertions: PASS — cumulative `script.js` remains byte-identical to R1 (`160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`).
+- Candidate production hashes: `view-renderer.js` `d4a6f813b9aff57b250bd77ca9aacbfd115ec62825183bd919c425db73dd7501`; `script.js` `160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`; `forest-journal.css` `55cdae1143eb8087784875bc6a1cbdffb4a54b46a59f5e9297d306bdeb3bb387`.
 - Browser/device/accessibility verdict: PENDING user review; source validation does not substitute for the required visual/touch/keyboard build test.
+- CP9.3C and CP9.4+ remain blocked.
 
-## R2 User Review Areas
+## R2 Approval + Promotion / Closeout Record
 
-1. Expand **ABOUT THIS KNOT → Line Compatibility** on a one-line, two-line, and three-line Knot. Confirm each compatible line type occupies its own row and no unrelated line type is added.
-2. Confirm each displayed line type has one adjacent `ⓘ`, and only that icon is interactive.
-3. Open each `ⓘ`. Confirm the popover contains only the selected line type's Reference information and no Previous/Next/page-position controls.
-4. Close with the close control and Escape; confirm focus returns to the exact originating `ⓘ` and Knot Detail disclosure/scroll state remains unchanged.
-5. Check phone and desktop widths for consistent vertical alignment, icon adjacency, touch target, and absence of horizontal scrolling.
-6. Regression-check Knot → related Rig/task → Parent → Knot for the CP9.3A disclosure/scroll/focus restoration behavior.
+- **User verdict:** APPROVED. R2 is frozen as the accepted CP9.3B candidate: `FCC-49J-B-Knots-Guide-CP9.3B-R2-Cumulative-Review.zip`, SHA-256 `029c09529447195bfbf4adb5335dbc125acb36d5d3a8e9bb5f866c8c17e593f0`.
+- The user committed the cumulative CP9.3A + CP9.3B production scope as GitHub `main` `8f4c90c62150cfbb575ae50602306b0b9ca0bf25` (`Knot Guide Build - Knot Detail + Reference + Media Integration`). The commit contains the active Knots audit plus `view-renderer.js`, `script.js`, and `forest-journal.css`.
+- GitHub production hashes exactly match the approved R2 candidate: `view-renderer.js` `d4a6f813b9aff57b250bd77ca9aacbfd115ec62825183bd919c425db73dd7501`; `script.js` `160d7aece45b3c3d86531a5900019924b2f1dd113b7beb1350c08ecf0c6d3a70`; `forest-journal.css` `55cdae1143eb8087784875bc6a1cbdffb4a54b46a59f5e9297d306bdeb3bb387`.
+- The exact approved production bytes were subsequently promoted to Drive Current and read back byte-for-byte at those same hashes. `node --check` passes for promoted `view-renderer.js` and `script.js`; CSS braces are balanced. Existing inherited repeated-blank-line runs were not expanded by the approved candidate.
+- Browser/device/accessibility acceptance for the bounded CP9.3B review areas is PASS by explicit user approval: vertical one-line-type-per-row Line Compatibility; exact-term `ⓘ` scope; modal/bottom-sheet contextual Reference behavior; close/focus/state preservation; and CP9.3A Rig/task round-trip regression.
+- `KNOT-GUIDE.md` is reconciled to the accepted exact-term Line Type Reference implementation and approved R2 production hashes. `UI_STANDARD.md` is reconciled to the exact-term Reference-scope rule plus the retained future multi-page Reference build-test pattern.
+- GitHub Pages run `36212656030` for `8f4c90c6…` PASS. Repository Integrity run `36212656721` FAIL is unrelated to the Knot change set: `data/regulations.js` was unchanged in that commit, while active Arkansas and Colorado notices still carried `verifiedDate: 2026-08-26` and crossed the validator's 30-day freshness gate. Both official notices were reverified on 2026-09-25 and remain active.
+- Drive Current `data/regulations.js` has been repaired only by changing those two notice verification dates to `2026-09-25`; no notice wording, URL, active state, or validator rule changed. Readback SHA-256: `b29900740ef4da758e1b5dcf57b96e6feda554c00705e973e795d3cfa7140770`. A GitHub-Pages-artifact validation snapshot for `8f4c90c6…`, overlaid only with the exact pending Drive closeout delta and reconstructed as a local Git checkout for validator mechanics, passes `tools/validate_repository_integrity.js`: **20 validation groups PASS / no repository content modified**. Because the freshness repair is a production data change, GitHub commit/push still requires separate explicit authorization.
+- Documentation readback hashes after reconciliation: `KNOT-GUIDE.md` `c7be88ee8ae4498145bbaa574f234774c61db19140d2bece6ae107d4e8554672`; `UI_STANDARD.md` `2d8a898dc6a1ef9def6bb0f23c87f2c0fd7cf6274ff6d7d2646c29fada3b8e25`.
+- **Owner classification:** UPDATE REQUIRED / completed in Drive — `view-renderer.js`, `script.js`, `forest-journal.css`, `KNOT-GUIDE.md`, `UI_STANDARD.md`, this active audit, Live Working State, and the bounded `data/regulations.js` freshness repair. VERIFIED — NO CHANGE REQUIRED — `docs/PROJECT-RULES.md`, `docs/V1-DESIGN-AUDIT.md`, Knot canonical compatibility data, `data/reel-guidance.js`, `MEDIA_GUIDE.md`, `data/media.js`, and `knot-media-renderer.js`.
+- CP9.3C and CP9.4+ remain blocked until the repository-wide freshness repair is landed and Repository Integrity returns PASS.
 
 # Current Exact Resume
 
-**Exact resume: CP9.3B R2 user browser review of `FCC-49J-B-Knots-Guide-CP9.3B-R2-Cumulative-Review.zip`.** Review the corrected vertical Line Compatibility presentation, line-specific `ⓘ` Reference scope, close/focus/state behavior, and CP9.3A Rig/task round-trip regression. The successful multi-page-popover capability is retained as a future build-test pattern, not used in this Knot context. CP9.3C and CP9.4+ remain blocked until CP9.3B is approved/promoted or explicitly parked.
+**Exact resume: CP9.3B closeout is functionally complete in Drive and the approved Knot production bytes are already on GitHub `main`, but final repository closeout is OPEN pending explicit production commit/push authorization for the two-date `data/regulations.js` freshness repair plus the reconciled closeout documentation.** After authorization, land the bounded Drive Current delta, verify GitHub SHA/scope, Repository Integrity PASS, Pages as applicable, and Git/Drive convergence; then mark CP9.3B CLOSED / PASS and resume at CP9.3C.

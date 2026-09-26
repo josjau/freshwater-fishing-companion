@@ -2,7 +2,7 @@
 
 
 **Document:** UI_STANDARD.md  
-**Document Revision:** 1.3.22  
+**Document Revision:** 1.3.23  
 **Document Status:** Approved  
 **Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard  
 **Decision Baseline:** D015, D020-D022, D030-D032, D035, D042, D046-D048, D050-D052, D061, D063  
@@ -676,6 +676,8 @@ Name ⓘ
 
 This opens information without leaving the current page; desktop may use a centered modal and mobile may use a bottom sheet. Closing restores focus to the original trigger.
 
+An adjacent `ⓘ` attached to one specific referenced term opens information for that exact term by default. Do not silently broaden that trigger into sibling topics merely because those topics share a data family. A multi-page surface is appropriate only when the Reference interaction is deliberately framed as one sibling/comparison topic rather than as exact-term help.
+
 When one Reference topic naturally contains multiple comparable sibling subjects, one Reference surface may contain multiple internal pages. Multi-page Reference surfaces must:
 
 - remain one contextual Reference interaction rather than becoming application/workflow navigation;
@@ -686,6 +688,8 @@ When one Reference topic naturally contains multiple comparable sibling subjects
 - preserve the parent page's workflow/selection state while paging;
 - restore focus to the originating `ⓘ` when the Reference surface closes;
 - keep essential identification/explanation available in text even when a representative image or labeled illustration is included.
+
+A successful Knots build test confirmed that user-controlled multi-page content inside the shared Reference popover is viable. For a future context that genuinely needs sibling-page navigation, a centered floating breadcrumb-style control at the top or bottom of the description pane may be build-tested; exact placement/orientation is context-specific and does not replace the requirements for a visible position cue, explicit accessible navigation, no autoplay, preserved parent state, and focus return.
 
 
 Directional/navigation semantics:
@@ -698,9 +702,10 @@ Directional/navigation semantics:
 - keep the visible `ⓘ` close to the exact term it explains rather than detached at the row edge; enlarge its independent touch/focus hit area when needed without letting the invisible hit area overlap the referenced text or neighboring controls;
 - referenced text retains its existing semantics: static text remains static, checkbox labels keep their selection behavior, navigation text keeps navigation behavior, and disclosure labels keep expand/collapse behavior;
 - Reference affordance is defined by the persistent `ⓘ` cue rather than by a mandatory chip/pill container or dedicated persistent Reference color. Exact neutral resting, hover, focus-visible, and pressed styling may be browser-refined, but color is supplementary and may not be the sole cue;
-- directional glyphs remain immediately adjacent to destination text rather than detached at row edge;
+- directional glyphs remain immediately adjacent to destination text rather than detached at row edge; treat destination wording + glyph as one visual unit;
+- directional glyphs normally inherit the same visible text color as their associated destination rather than using a separate arrow-only accent; hover/focus may change the destination and glyph together;
 - use native Unicode glyphs rather than CSS-drawn arrows;
-- navigation-arrow glyph weight is `800` for established `←`, `→`, `↗`, and compact-row `›`; wrap glyphs separately so label weight need not change.
+- navigation-arrow glyph weight starts from the established `800` baseline for `←`, `→`, `↗`, and compact-row `›`; bounded components may increase weight when browser testing shows the cue needs stronger optical presence. Exact optical size/weight is refinement-allowed: equal numeric `em` sizing across different arrow glyphs does not guarantee equal perceived prominence. Wrap glyphs separately so label weight need not change.
 
 
 Current production Dashboard **Regulations** is internal navigation to the state gateway. Official state-resource destinations remain external `↗` actions.
