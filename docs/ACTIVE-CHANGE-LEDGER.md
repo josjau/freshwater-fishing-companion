@@ -2,11 +2,11 @@
 
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.147  
+**Document Revision:** 1.10.148  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** GitHub `main` commit `db5d664c918fe83ce8c9142440573de85395c4c0`  
-**Last Updated:** 2026-09-26
+**Last Updated:** 2026-09-27
 
 
 # Purpose
@@ -327,7 +327,7 @@ These items are not current blockers and must not be promoted merely because the
 - **Approved Phase 1 order:** Fish Guide targeted baseline/UX review → Knots Guide → Tackle Guide → Technique Guide → Rig Guide → Reference Knowledge cohesion review.
 - **Top-level Guide decisions:** Tackle Guide and Technique Guide are approved top-level Dashboard Guide surfaces. Conditions remains contextual/supporting Reference Knowledge rather than a standalone Conditions Guide.
 - **Shared Guide rule:** equivalent elements across Guides should match in appearance/behavior; domain-specific information may use intentionally different presentation where semantics require it. Fish Guide is the starting baseline.
-- **Knots Guide media:** internal instructional media is the preferred V1 outcome. Attempt accurate FCC-owned media first; if that quality gate cannot be met, seek public-domain or otherwise rights-compatible internally stored media. External tutorials remain supplemental.
+- **Knots Guide media:** Version 1 production uses FCC canonical numbered tying steps plus standardized external **101Knots Visual Guide** destinations for all 10 canonical Knots. The external artwork is link-only under the approved rights contract. Local/offline Knot instructional media is not required for Knots closure; it remains the conditional UX-009 evaluation already recorded above and is implemented only if accuracy, rights/provenance, mobile readability, accessibility, and instructional-quality gates pass.
 - **UX-009 carry-forward:** explicitly includes restrained Reference Knowledge visual identity/flair, favicon/compact brand mark, heading graphic/wordmark and header-size correction, modest Dashboard-card graphics, Guide-specific lightweight motifs, and final full-size desktop-browser plus actual-mobile-device validation with cross-breakpoint regression protection.
 - **Post-Reference sequence:** authentication-independent user tools → minimum User Knowledge Platform → persistent personal capabilities → remaining independent/completion work.
 - **No production effect:** no source/data/media/configuration change, GitHub commit/push, or new CI run occurred. GitHub `main` remains `c9189555651cb13f738f00cd6ad2e5799ad0b90c`; approved documentation is in Drive Current.

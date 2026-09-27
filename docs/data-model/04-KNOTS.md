@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 04-KNOTS.md  
-**Document Revision:** 0.3.2  
+**Document Revision:** 0.3.4  
 **Document Status:** Approved  
-**Implementation Status:** CP9.1 structural/data/search foundation implemented and validated in Drive Current; CP9.2+ implementation pending  
+**Implementation Status:** Knots Guide CP10 CLOSED / PASS; R2 approved, promoted, pushed, and Repository Integrity/Pages validated  
 **Decision Baseline:** D037, D044, D056
 
 ---
@@ -12,7 +12,7 @@
 
 This document defines the current canonical Knot entity for Freshwater Fishing Companion.
 
-A Knot represents one reusable fishing-line connection method. Knot owns identity, practical compatibility, authoritative tying instructions, limitations, mistakes, completion checks, and user-facing technical references.
+A Knot represents one reusable fishing-line connection method. Knot owns identity, practical compatibility, authoritative tying instructions, alternative-selection guidance, mistakes, completion checks, and user-facing technical references.
 
 Rigs and Decision Knowledge workflows reference canonical Knot IDs rather than duplicating general tying instructions.
 
@@ -26,9 +26,10 @@ The approved canonical Knot entity contains Foundation fields plus:
 difficulty
 connectionTypes[]
 compatibleLineTypes[]
+linePairings[] (optional)
 aliases[]
 bestFor[]
-limitations[]
+chooseAnotherKnot[]
 tyingSteps[]
 commonMistakes[]
 finalChecks[]
@@ -79,7 +80,21 @@ fluorocarbon
 braid
 ```
 
-This does not imply every pairing/application is equally recommended.
+This does not imply every pairing/application is equally recommended. When a Knot supports only a specific relationship between listed materials, `linePairings[]` makes that relationship explicit.
+
+## linePairings[]
+
+Optional machine-readable material relationships used when independent compatibility tokens would be misleading. Each entry identifies `from`, `to`, and an optional `toRole`. Version 1 uses this for the Alberto Knot to model braid to monofilament/fluorocarbon leader pairings.
+
+Current supported shape:
+
+```text
+from: monofilament | fluorocarbon | braid
+to: monofilament | fluorocarbon | braid
+toRole: leader (optional)
+```
+
+Pairing materials must also appear in `compatibleLineTypes[]`.
 
 ## aliases[]
 
@@ -93,9 +108,11 @@ Search-only discovery vocabulary is not canonical Knot data. Maintained Knot Sea
 
 Beginner-oriented situations where the Knot is particularly useful.
 
-## limitations[]
+## chooseAnotherKnot[]
 
-Technically supported constraints or situations where another Knot/workflow may be preferable.
+Beginner-facing decision guidance for circumstances where selecting a different Knot is useful or appropriate. Items must describe a real alternate-selection condition rather than tying technique, material compatibility, equipment setup, or generic limitations. The presentation may omit the disclosure when this array is empty.
+
+The obsolete `limitations[]` field is not part of the current canonical schema.
 
 ## tyingSteps[]
 
@@ -200,7 +217,7 @@ Current production includes Media-owned Knot instructional/reference records whe
 
 # Research Standard
 
-Every production Knot requires credible technical sourcing. Specialized compatibility, applications, limitations, or disputed variations require claim-specific support when general sources are insufficient.
+Every production Knot requires credible technical sourcing. Specialized compatibility, applications, alternative-selection guidance, or disputed variations require claim-specific support when general sources are insufficient.
 
 Canonical wording is original Freshwater Fishing Companion editorial synthesis verified against approved sources.
 
@@ -242,7 +259,9 @@ Current integrated state includes:
 
 Canonical Knot schema remains separate from those Decision Knowledge and navigation layers.
 
-CP9.1 completed the approved targeted source migration in Drive Current: `CORE_KNOT_IDS`, static collections, practical tasks, visible landing-task curation, and maintained Search-intent vocabulary now live in `data/knot-guidance.js`; canonical Knot records no longer carry Search-only `keywords[]`; `search.js` consumes dedicated Search intent while retaining algorithm ownership; and direct Knots `script.js` consumers plus Repository Integrity expectations were reconciled. GitHub `main` remains unchanged until the later separately authorized review/commit gate.
+CP9.1 completed the approved targeted source migration: `CORE_KNOT_IDS`, static collections, practical tasks, visible landing-task curation, and maintained Search-intent vocabulary live in `data/knot-guidance.js`; canonical Knot records do not carry Search-only `keywords[]`; `search.js` consumes dedicated Search intent while retaining algorithm ownership.
+
+CP10 R2 replaces the generic `limitations[]` contract with `chooseAnotherKnot[]`, adds optional `linePairings[]` for relationship-specific compatibility such as Alberto braid-to-leader use, and reconciles Repository Integrity expectations with those contracts. The approved R2 production state is promoted to Drive Current and landed on GitHub `main`; FCC 49J-K completed the final documentation/action closure with no production reopening.
 
 ---
 

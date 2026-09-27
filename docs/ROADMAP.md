@@ -2,10 +2,10 @@
 
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.12.3  
+**Document Revision:** 0.12.4  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-27
 
 
 # Purpose
@@ -99,7 +99,7 @@ Complete the following in this order:
 
 
 1. **Fish Guide** — targeted baseline/UX review. Preserve approved Fish facts, media, relationships, and identification guidance unless a real defect is found. Establish the shared Guide-family baseline through a component-by-component and element-by-element Fish review rather than treating current Fish presentation as automatically final. Approve and validate bounded Fish surfaces before their equivalent-element rules are carried forward into later Guides.
-2. **Knots Guide** — user-facing rename from Knots; complete the known relationship/card/detail refinements and the internal instructional-media quality gate. The desired Version 1 outcome is instructional media stored inside FCC: prefer accurate FCC-owned media first; if acceptable FCC-owned media cannot be produced, seek public-domain or otherwise rights-compatible media that can be stored internally. External tutorials remain supplemental rather than the required instructional path.
+2. **Knots Guide** — user-facing rename from Knots; complete the known relationship/card/detail refinements and validated visual-instruction path. The approved Version 1 baseline pairs FCC canonical numbered `tyingSteps[]` with one standardized external **101Knots Visual Guide** destination for each of the 10 canonical Knots. 101Knots remains external-link-only under the approved rights contract. Locally hosted/project-owned Knot instructional media is not a Knots Version 1 closure requirement and may be reconsidered only through the later UX-009 quality/rights/mobile/accessibility gate.
 3. **Tackle Guide** — top-level Dashboard Guide for the canonical Tackle Reference domain. It remains distinct from My Tackle and from commercial shopping/catalog scope.
 4. **Technique Guide** — top-level Dashboard Guide for the canonical Technique domain and reusable How to Fish It knowledge.
 5. **Rig Guide** — targeted complete-library refinement after the Knot, Tackle, and Technique destinations are established. Include known What You Need, relationship/navigation, Knot/Technique presentation, semantic-ownership, information-hierarchy, and mobile/detail-density findings.
@@ -154,7 +154,7 @@ The completed core Knots milestone established the canonical Knot library, task-
 Version 1 canonical scope includes 10 Knots, four Core IDs, and Reel & Line Setup for Spinning, Spincast, and Baitcasting.
 
 
-Version 1 now explicitly prefers **internal instructional media** for tying guidance. Attempt accurate FCC-owned stepped diagrams/illustrations or controlled animation first; if that quality gate cannot be met, seek public-domain or otherwise rights-compatible media that FCC can store internally. External tutorial links may remain supplemental. If neither internal path can meet accuracy, rights, accessibility, and instructional-quality requirements, retain the approved written instructions rather than ship misleading media.
+Version 1 Knot tying guidance now uses FCC canonical numbered instructions plus the approved standardized external **101Knots Visual Guide** destinations. Those third-party visuals are linked rather than copied or rehosted. Locally hosted/project-owned Knot visuals remain a future conditional UX-009 evaluation: search for rights-compatible reuse and/or prototype project-owned media only if accuracy, rights, accessibility, phone readability, and instructional quality can all be satisfied. Failure to qualify local media does not reopen or block the completed Knots Version 1 milestone.
 
 
 Fly reels/fly-line-specific setup and advanced baitcaster tuning/casting remain outside the completed workflow unless later approved.

@@ -2,8 +2,8 @@
 
 
 **Document:** KNOT-GUIDE.md  
-**Document Revision:** 0.3.34
-**Document Status:** Approved Planning / In Progress  
+**Document Revision:** 0.3.37
+**Document Status:** Approved / Closed / Refinement Allowed  
 **Milestone:** Knots  
 **Last Updated:** 2026-09-27
 
@@ -413,10 +413,10 @@ A separate **MORE HELP** group contains independent disclosures:
 
 
 - **Common Mistakes** → `commonMistakes[]`,
-- **When to Choose Another Knot** → `limitations[]`.
+- **When to Choose Another Knot** → `chooseAnotherKnot[]`.
 
 
-Both start collapsed and use the shared disclosure grammar. The beginner-facing label **When to Choose Another Knot** is preferred over exposing the internal `limitations[]` field name. Informational bullet lists on Knot Detail use the shared Guide-family accented marker language already validated by Fish **Key Identification Traits** and the numbered tying-step emphasis; navigation-link lists remain navigation rows rather than bullet lists.
+Both start collapsed when present and use the shared disclosure grammar. **When to Choose Another Knot** renders only real alternate-selection conditions from `chooseAnotherKnot[]`; if no useful alternate-selection guidance exists, the disclosure is omitted rather than filled with generic limitations. Informational bullet lists on Knot Detail use the shared Guide-family accented marker language already validated by Fish **Key Identification Traits** and the numbered tying-step emphasis; navigation-link lists remain navigation rows rather than bullet lists.
 
 
 ### CP4.6 — Related Knowledge, Sources, Navigation, and Responsive Refinement
@@ -567,13 +567,14 @@ isActive
 difficulty
 connectionTypes[]
 compatibleLineTypes[]
+linePairings[] (optional)
 
 
 aliases[]
 
 
 bestFor[]
-limitations[]
+chooseAnotherKnot[]
 
 
 tyingSteps[]
@@ -625,7 +626,8 @@ Approved changes:
 - add `aliases[]`,
 - keep Search-only intent vocabulary out of canonical Knot records and own it in `data/knot-guidance.js`,
 - add `bestFor[]`,
-- add `limitations[]`,
+- replace obsolete generic `limitations[]` with decision-oriented `chooseAnotherKnot[]`,
+- add optional `linePairings[]` when independent compatibility tokens would misstate a specific material relationship,
 - add authoritative ordered `tyingSteps[]`,
 - add `commonMistakes[]`,
 - add `finalChecks[]`,
@@ -698,7 +700,7 @@ braid
 The field identifies line materials for which the Knot is reasonably appropriate in supported applications. It does not imply that every possible pairing of listed materials is equally recommended.
 
 
-A separate machine-readable line-pairing matrix is not part of Version 1 unless implementation demonstrates a concrete need for it.
+When independent material tokens would be misleading, optional `linePairings[]` records the supported material relationship. Version 1 uses this for the Alberto Knot to express **Braid → Monofilament leader** and **Braid → Fluorocarbon leader** while retaining `compatibleLineTypes[]` as the allowed material inventory.
 
 
 # Approved Search Metadata Semantics
@@ -734,13 +736,13 @@ Curated beginner-oriented statements explaining situations in which the Knot is 
 This field may also support comparison when a task returns several candidate Knots.
 
 
-## limitations[]
+## chooseAnotherKnot[]
 
 
-Curated statements explaining practical drawbacks, constraints, or situations where another Knot may be a better choice.
+Curated beginner-facing decision statements that identify a concrete circumstance where selecting a different Knot is useful or appropriate. This field does not store tying mistakes, wrap counts, equipment setup warnings, material-compatibility notes, or generic limitations.
 
 
-This field should use neutral instructional language rather than labels such as `cons`, `weaknesses`, or `avoidWhen`.
+The Knot Detail **When to Choose Another Knot** disclosure renders this field and is omitted when the array is empty. The former `limitations[]` field is obsolete in the current canonical schema.
 
 
 # Approved Tying-Step Model
@@ -981,13 +983,13 @@ No local asset download/adaptation, `data/media.js` local-media registration, vi
 External instructional destinations remain part of **HOW TO TIE IT** because they are teaching resources rather than mere citations. FCC canonical `tyingSteps[]` remain the authoritative instruction and must remain complete and usable even when an external resource is unavailable.
 
 
-For Version 1, **101Knots is the approved preferred external Visual Guide provider for all 10 canonical Knots**. The provider sweep found a dedicated diagram-based instructional page for every canonical Knot and no method mismatch that requires changing FCC canonical tying geometry. The current mixed Grog / Bass Pro-Pro-Knot / Knots 3D production records remain live until a separate exact-scope production authorization updates `data/media.js` and the resulting links pass browser validation.
+For Version 1, **101Knots is the approved preferred external Visual Guide provider for all 10 canonical Knots**. The provider sweep found a dedicated diagram-based instructional page for every canonical Knot and no method mismatch that requires changing FCC canonical tying geometry. Production is standardized on **101Knots** across all 10 canonical Knots. The approved `data/media.js` records were promoted and the resulting external links/provider treatment passed local review, true mobile browser validation, Repository Integrity, and Pages deployment validation.
 
 
 101Knots is approved for **external linking only**. Its diagrams are not copied, bundled, downloaded into the repository, extracted, modified, embedded, traced, or rehosted without separate permission establishing local reuse rights.
 
 
-After the approved standardization is implemented, the normal medium-specific external action is **View illustrated instructions ↗** with restrained provider attribution to **101Knots**. `↗` denotes external navigation while `→` remains the FCC-internal navigation cue.
+The normal external action is **View illustrated instructions ↗** with restrained provider attribution to **101Knots**. `↗` denotes external navigation while `→` remains the FCC-internal navigation cue.
 
 
 Version 1 defaults to one preferred supplemental external instructional destination per Knot. Additional destinations require a materially distinct teaching benefit and separate approval. Returning from external instruction should preserve the user's Knot/detail context where practical.
@@ -1029,7 +1031,7 @@ The full numbered `tyingSteps[]` remains ordinary accessible flowing document co
 Version 1 does **not** require locally hosted Knot instructional images, a local step-through viewer, or a four-Core local-media prototype. Internal/local Knot diagrams remain a future project goal and may be reopened only through a later explicit scope decision.
 
 
-The approved Version 1 visual-learning baseline is one preferred external **101Knots Visual Guide** destination for each of the 10 canonical Knots, paired with FCC's complete canonical numbered `tyingSteps[]`. Provider standardization still requires the separate authorized production edit and browser validation; until that occurs, the existing mixed external destinations remain the live production state.
+The approved Version 1 visual-learning baseline is one preferred external **101Knots Visual Guide** destination for each of the 10 canonical Knots, paired with FCC's complete canonical numbered `tyingSteps[]`. Provider standardization is complete for Version 1: all 10 canonical Knots use the approved 101Knots external Visual Guide destinations, and the standardized production records have passed local review, true mobile validation, Repository Integrity, and Pages deployment validation.
 
 
 Consistency is required at the experience and quality level: every Knot keeps the same Visual Guide hierarchy, truthful external-provider labeling, complete FCC text instruction, and usable responsive behavior. No local-media state count or viewer mechanic is required for V1.
@@ -1397,7 +1399,7 @@ Mandatory CP9 production owners are limited to:
 - `tools/validate_repository_integrity.js` — validator reconciliation for the approved Knot/guidance/Reel ownership and schema changes.
 
 
-The former conditional four-Core local-media write scope is no longer active for Version 1. `images/knots/instructional/<knot-id>/*` and local instructional-state/viewer records are deferred as a future goal. The remaining CP9.6 production target is the approved 10-record external Visual Guide standardization in `data/media.js`; that source edit still requires explicit exact-scope production authorization before implementation. Validator or renderer changes are included only if the actual implementation proves they are required and they receive the applicable authorization.
+The former conditional four-Core local-media write scope is no longer active for Version 1. `images/knots/instructional/<knot-id>/*` and local instructional-state/viewer records are deferred as a future goal. CP9.6 external Visual Guide standardization is complete: all 10 canonical Knots use the approved 101Knots destinations in production, with true-mobile, Repository Integrity, and Pages validation passed. No additional CP9.6 source change remains open.
 
 
 Read-only dependencies include `data/fish-categories.js`, `data/rigs.js`, `index.html`, `tools/check_external_references.js`, and the directly relevant canonical documentation owners. Current script load order already supports the approved dependency direction and is not redesigned.
@@ -1429,7 +1431,7 @@ Instructional visuals remain instructional rather than decorative: phone-readabl
 The former four-Core local instructional prototype is deferred from Version 1. Locally hosted Knot images remain a future project goal and no local asset, local viewer, or six-Knot local-media expansion is required for the current Knots milestone.
 
 
-The approved CP9.6 Version 1 direction is to standardize all 10 canonical Knots on **101Knots** as the preferred linked external **Visual Guide** provider while keeping FCC canonical `tyingSteps[]` authoritative. The provider change is approved in direction but remains a pending production source edit until exact-scope authorization is given.
+The approved CP9.6 Version 1 direction is implemented and validated: all 10 canonical Knots use **101Knots** as the preferred linked external **Visual Guide** provider while FCC canonical `tyingSteps[]` remain authoritative. Locally hosted Knot instructional media remains a future goal rather than a Version 1 blocker.
 
 
 ### CP9 Implementation Sequence
@@ -1440,7 +1442,7 @@ The approved CP9.6 Version 1 direction is to standardize all 10 canonical Knots 
 3. **CP9.3 — Knot Detail + Reference + Media Integration:** detail structure, disclosures, adjacent-`ⓘ` Reference behavior, explicit instructional-media mount point, and protected external baseline.
 4. **CP9.4 — Get Your Reel Ready Migration:** coordinated `data/reel-guidance.js` + `script.js` workflow migration, References, Line Weight, Equipment, Braid Backing, Spool, five-phase progress, Ready, and responsive status/semantic visuals.
 5. **CP9.5 — Ready → Rig Guide Handoff:** transient completed Reel Setup context and noninteractive **Your Reel Setup** Rig landing summary without filtering/ranking/auto-selection.
-6. **CP9.6 — External Visual Guide Standardization / Local-Media Deferral:** implement and validate the approved 10-Knot 101Knots external Visual Guide map after exact-scope production authorization; locally hosted Knot instructional media remains a future goal.
+6. **CP9.6 — External Visual Guide Standardization / Local-Media Deferral:** validated 10-Knot 101Knots external Visual Guide standardization; locally hosted Knot instructional media remains a future goal.
 7. **CP9.7 — Full Validation + Review Package:** browser/accessibility/regression validation, documentation reconciliation, and cumulative review-package preparation.
 
 
@@ -1473,19 +1475,32 @@ The approved R3 treatment keeps **Visual Guide**, the medium chip, restrained pr
 
 The approved R3 candidate is `FCC-49J-C-Knots-Guide-CP9.3C-R3-Cumulative-Review.zip`, SHA-256 `15de41068ff4f948151fb9242b092f5b21c54d6b9faded73ed242d3b20e0ea89`. Approved/promoted production hashes are `view-renderer.js` `4440a8f356773cc7881788329a1208fc33ac3992ff75af6310b38a39ef930423`, `knot-media-renderer.js` `2cfef62675b3ae0544365b8a02cc624c17966e2d1f0502daba2afc5e2c702417`, and `forest-journal.css` `4f7e087b984774d44d298cb3fd5d9234cb4ac265fd44f3e3ea837437b64cc335`. `data/media.js` remains unchanged. The four-Core FCC-owned instructional prototype remains CP9.6. Repository closeout landed as GitHub `main` commit `875afc088fe787e4d6954bd6f7f39da65ee3e226` (`FCC 49J-C - CP9.3C external Visual Guide integration`), exactly one commit after `ab100b74494a2656ae1e8ee58111797b622f8edd`, with exactly the approved five modified paths and no deletions. Repository Integrity run `36219415290` PASS and Pages run `36219415012` PASS. GitHub/Drive convergence PASS for all five paths; `knot-media-renderer.js` differs only by Git LF normalization versus Drive CRLF and is normalized-content identical. CP9.3C is CLOSED / PASS and CP9.4 — Get Your Reel Ready Migration is unblocked.
 
-### Validation Lock
+
+### CP10 R2 Implementation Result
+
+**Status:** CLOSED / PASS — R2 USER-APPROVED / PROMOTED / GITHUB + CI VALIDATED — 2026-09-27
+
+The approved cumulative candidate is `FCC-49J-I-Knots-Guide-CP10-R2-Cumulative-Review.zip`, SHA-256 `d889920600bac41f6a3109d448e4260f9429349e8ccf573b944679909abc0802`. CP10 performs the bounded final Description / Helper Copy semantic review plus source-boundary correction without reopening the approved Guide architecture.
+
+Production changes replace generic `limitations[]` with `chooseAnotherKnot[]`; add optional `linePairings[]` for relationship-specific compatibility such as Alberto braid-to-leader use; correct maintained Knot Search intents; surface target-specific Reel Setup cautions; split reel-spooling guidance into stage-specific domain guidance; remove stale/internal helper wording; and make the previously approved Knots/Reel/Rig source ownership boundaries explicit in shared JavaScript files. Canonical fishing facts remain in their `data/*.js` owners rather than being scattered through controller or renderer fix blocks.
+
+The exact approved seven production files were promoted to Drive Current and read back byte-for-byte against R2. GitHub `main` is `c861960fa24c2779f52b96634fb9e4510072956f` (`Knots Guide Build - Final Fixes`), two commits after the CP9.6 baseline, with exactly the R2 eight-path package scope across those two commits. GitHub production blobs match the approved R2 bytes; `data/knot-guidance.js` is Git-normalized from CRLF to LF with normalized content unchanged. Repository Integrity run `36355933573` PASS and Pages run `36355933126` PASS.
+
+CP10 R1 finding `KG-CP10-R1-001` is resolved in R2: the non-interactive Alberto **Braid → leader** relationship arrow now matches the established internal-knowledge arrow scale/weight/alignment while remaining non-navigational. FCC 49J-K completed the final line-by-line closure/disposition scan and canonical-document reconciliation. Historical OPEN rows in the temporary audit are explicitly superseded by the final closeout map; no production defect remains open.
+
+### Historical Validation Lock
 
 
-CP9 closure requires, at minimum, deterministic Knot Search regression and scoped-result isolation; exact 10-Knot/4-Core inventory; zero canonical Search-only `keywords[]`; exact landing task/collection inventory; Reel Type × Line Type × target/path matrices; all four Ready completion paths; Restart/Exit and Knot-excursion state/focus restoration; Ready → Rig context persistence without recommendation side effects; phone/intermediate/full-desktop browser review; keyboard/touch/focus/accessibility review; external instructional-link verification; technical geometry/sequence/final-state validation for any local Core media; and the repository integrity validator.
+CP9 closure required, at minimum, deterministic Knot Search regression and scoped-result isolation; exact 10-Knot/4-Core inventory; zero canonical Search-only `keywords[]`; exact landing task/collection inventory; Reel Type × Line Type × target/path matrices; all four Ready completion paths; Restart/Exit and Knot-excursion state/focus restoration; Ready → Rig context persistence without recommendation side effects; phone/intermediate/full-desktop browser review; keyboard/touch/focus/accessibility review; external instructional-link verification; technical geometry/sequence/final-state validation for any local Core media; and the repository integrity validator. These required validation areas were satisfied through the approved CP9 review gates, CP9.6 true-mobile validation, and CP10 cumulative validation.
 
 
-Commit/push remains separately authorized after user review.
+Production commit/push authorization remained separate during implementation; the approved CP10 R2 production baseline is already landed and validated. FCC 49J-K adds documentation convergence only.
 
 
-### Planning-to-Build Result
+### Historical Planning-to-Build Result
 
 
-CP8 approval closes planning/discovery scope, but this gate does not itself perform production writes. Exact first production action is CP9.1 from fresh Drive Current source versions. The user has chosen a new chat for the implementation gate.
+CP8 closed the planning/discovery scope and originally handed implementation to CP9.1. That resume instruction is historical: CP9.1 through CP9.6 are complete, CP9.7 is satisfied by the distributed CP9 validation/review gates plus CP10 cumulative validation, and CP10 is closed. No current Knots implementation resume action is owned by this historical gate.
 
 
 # Beginner Line Guidance Boundary
@@ -1571,13 +1586,19 @@ Rig owns contextual Rig-to-Knot recommendations through `Rig.knotApplications[]`
 The current production relationship contract and research/source-validation standard are already approved and validated. They are not open Knots planning decisions.
 
 
-# Planning-to-Build Gate
+# Final Knots Closeout Gate
 
 
-**CP8 is CLOSED / APPROVED / REFINEMENT ALLOWED.** Exact production ownership, validation, visual/interaction requirements, conditional instructional-media prototype scope, and the CP9 implementation sequence are locked above.
+**Status:** CLOSED / PASS / REFINEMENT ALLOWED — 2026-09-27
 
 
-No production source/data/media/config change occurred during CP8 documentation closeout. Production implementation resumes at **CP9.1 — Structural / Data / Search Foundation** from fresh Drive Current source versions in a new implementation chat. Commit/push remains separately authorized after review.
+The Knots Guide Version 1 refinement/build cycle is complete. CP9.1-CP9.6 are closed/pass; the originally named CP9.7 validation/review-package requirement is **CLOSED / SATISFIED BY DISTRIBUTED VALIDATION + CP10** rather than a missing production segment; and CP10 R2 is approved, promoted, pushed, and validated by Repository Integrity and Pages. FCC 49J-K performed the required final audit-line closure scan and found no production defect requiring reopening.
+
+
+Durable non-closed carry-forward is owned outside this completed milestone: locally hosted/project-owned Knot tying media is a conditional **UX-009** evaluation rather than a Version 1 Knots requirement; material use of completed Reel Setup context inside Rig guidance is deferred to the **Rig Guide audit / RIG-001**; and broader Reference Knowledge visual-flair work remains owned by `V1-DESIGN-AUDIT.md`. The immediate post-Knots sequencing item is **UX-011** in `ACTIVE-CHANGE-LEDGER.md`; exact operational resume remains owned by the external Live Working State.
+
+
+This final closeout is documentation-only. It does not alter the approved CP10 R2 production baseline or authorize new Knots production work absent a concrete defect.
 
 
 # Related Documents

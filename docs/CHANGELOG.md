@@ -1,14 +1,25 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.8.3  
+**Document Revision:** 3.8.4  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-27
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, current-state/resume surface, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to the external Live Working State; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-09-27 — FCC 49 Knots Guide V1 Refinement + Build — Closed
+
+Production implementation baseline at closeout: `c861960fa24c2779f52b96634fb9e4510072956f` — `Knots Guide Build - Final Fixes`
+
+- Closed the targeted Knots Guide Version 1 audit/build through CP10: Guide-family landing/browse/detail refinement, deterministic scoped Search, adjacent exact-term References, canonical Knot teaching hierarchy, Get Your Reel Ready migration, Ready → Rig handoff, source-boundary cleanup, and final semantic/helper-copy refinement.
+- Standardized the visual-learning path across all 10 canonical Knots on FCC authoritative numbered `tyingSteps[]` plus one external **101Knots Visual Guide** destination per Knot. Third-party artwork remains external-link-only; locally hosted/project-owned Knot instructional media is deferred to conditional UX-009 evaluation and is not a Version 1 Knots closure blocker.
+- Validated the completed Reel Setup/Rig handoff without introducing Rig recommendation side effects. Future material use of the retained completed Reel Setup context inside Rig guidance remains owned by the Rig Guide audit / `RIG-001`.
+- CP10 R2 production is approved/promoted and landed through commits `286846d172b1b2fbc691ea5f33160ff7e2334581` and `c861960fa24c2779f52b96634fb9e4510072956f`; Repository Integrity run `36355933573` and Pages run `36355933126` passed. Final FCC 49J-K is documentation-only and does not reopen that production baseline.
+- Final documentation convergence updates the Knots workstream/data-model closeout state, reconciles Roadmap/Ledger media wording to the approved CP9.6 direction, and retires the temporary Knots refinement audit after all non-closed carry-forward is confirmed in permanent owners.
+- Immediate post-Knots sequencing is the bounded **UX-011 Fish post-Knots correction** before substantive Tackle Guide work; exact resume remains in the external Live Working State.
 
 # 2026-09-21 — FCC 48 Fish Guide Baseline/UX + Compare Similar Fish — Closed
 
