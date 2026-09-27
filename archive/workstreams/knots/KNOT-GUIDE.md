@@ -2,10 +2,10 @@
 
 
 **Document:** KNOT-GUIDE.md  
-**Document Revision:** 0.3.32
+**Document Revision:** 0.3.34
 **Document Status:** Approved Planning / In Progress  
 **Milestone:** Knots  
-**Last Updated:** 2026-09-26
+**Last Updated:** 2026-09-27
 
 
 # Purpose
@@ -861,238 +861,187 @@ Knot records describe the connection itself. Rig, Technique, Reel Setup, and fut
 ## CP5.1 — Instructional Media Role / Safety Gate
 
 
-**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-22
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — revised 2026-09-27
 
 
-The current verified external instructional-media coverage for all 10 active Version 1 Knots is the **known-working baseline** and remains approved/retained. CP5 does not demote, delete, replace, or redesign away from those sources merely because a first-party FCC treatment is preferred conceptually.
+The current verified external instructional-media coverage for all 10 active Version 1 Knots is the **known-working baseline** and remains protected until a replacement treatment is technically validated, browser-tested, and explicitly approved.
 
 
-FCC-owned step-through instructional diagrams are the **preferred candidate enhancement**, not an approved replacement. They may become the primary Knot teaching treatment only after a bounded prototype proves that the approach can be produced accurately and maintained without weakening the current instruction path. Existing external instructional media must remain available unless and until a replacement treatment is explicitly validated and approved.
+Rights-qualified locally incorporated instructional visuals are the preferred candidate enhancement. A qualifying visual may be **one complete or finished geometry diagram, a partial set of useful instructional views, or a complete stepped sequence**. The visual exists to help a beginner understand line alignment, loops, wraps, crossings, threading, hardware relationship, tightening/seating, and final Knot geometry. Visual count does not need to equal the number of FCC text steps.
 
 
-The prototype set is the four current Core Knots because together they exercise materially different instructional geometry:
+The bounded prototype remains the four current Core Knots:
 
 
-- **Arbor Knot** — reel-spool attachment,
-- **Improved Clinch Knot** — wrapping, threading, and tightening,
-- **Palomar Knot** — doubled line and loop-over-terminal geometry,
-- **Double Uni Knot** — two-line geometry and opposing knots.
+- **Arbor Knot** - reel-spool attachment,
+- **Improved Clinch Knot** - wrapping, threading, and tightening,
+- **Palomar Knot** - doubled line and loop-over-terminal geometry,
+- **Double Uni Knot** - two-line geometry and opposing knots.
 
 
-The prototype is **BUILD TEST REQUIRED** and must prove, at minimum:
+Changing that four-Knot prototype membership, including substituting Uni Knot for Double Uni Knot, requires a separate explicit decision.
 
 
-- technically correct Knot geometry and sequence,
-- beginner clarity without relying on prior Knot knowledge,
-- realistic phone readability,
-- natural synchronization with authoritative `tyingSteps[]`,
-- usable previous/next or equivalent user-controlled step navigation,
-- acceptable code/media complexity and maintenance cost,
-- a visual/technical system that can plausibly scale beyond the prototype set.
+`tyingSteps[]` remains the authoritative **current** in-app instruction. Candidate visuals do not become a second source of tying facts. If a complete stepped source is independently proven to tie the intended Knot correctly, FCC may separately propose revising `tyingSteps[]` wording, segmentation, or ordering so the canonical text aligns naturally with that validated sequence. Any such `data/knots.js` content change requires separate explicit approval, and FCC never changes the Knot method merely to fit available artwork.
 
 
-`tyingSteps[]` remains the authoritative in-app instruction. Candidate FCC visuals illustrate those canonical steps; they do not become a second independent source of tying facts.
+A step-through viewer and transition animation are **not Version 1 dependencies**. First prove useful static visual guidance. Multi-state navigation is used only when a qualified source actually contains multiple useful states and the viewer materially improves understanding. Any later motion must remain user-controlled, non-autoplay, reduced-motion safe, and understandable from static guidance.
 
 
-Actual transition animation is **not a Version 1 dependency at this gate**. The validation sequence is: prove accurate static instructional states → prove the user-controlled step-through presentation → add motion only if it materially improves understanding. Any later motion must remain user-controlled, must not autoplay, must support reduced-motion preferences, and must preserve a clear static final-Knot state.
+Prototype failure is non-destructive: FCC may use useful static local visuals without a viewer, or retain the verified external instructional model if the local treatment does not meet the validation bar.
 
 
-Prototype outcomes are intentionally non-destructive:
+## CP5.2 — FCC Visual Guide / Optional Step-Through Model
 
 
-- if the full step-through approach passes, it may be proposed for promotion to the primary FCC Knot teaching treatment;
-- if static FCC diagrams work but the step-through viewer does not justify its complexity, static diagrams plus canonical numbered text may be retained as the candidate improvement;
-- if the FCC-owned approach does not meet the validation bar, Version 1 retains the existing verified external instructional-media model with authoritative in-app `tyingSteps[]`.
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — revised 2026-09-27
 
 
-This safety gate supersedes any interpretation of earlier media-planning language that would require replacing the existing external instructional baseline before the FCC-owned treatment is proven.
+The accepted visual role is broader than a step-mapped viewer. A qualified Knot may use one complete/finished geometry diagram, a partial set of useful instructional views, or a complete stepped sequence. The canonical FCC text teaches the Knot; the visual helps the user understand the geometry.
 
 
-## CP5.2 — FCC Diagram / Step-Through Model
+**There is no default 1:1 requirement between `tyingSteps[]` and visual states.** A technically correct single or partial visual does not fail because it depicts fewer states than the FCC text, and a complete stepped source does not fail because its visual boundaries differ from the current FCC wording.
 
 
-**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-23
+When a complete stepped source is considered, validate the depicted tying method independently from the current FCC step wording. Confirm that following the full sequence successfully ties the intended Knot and that material method facts - routing, wrap count where significant, crossings, loop identity, tightening/seating, and final geometry - are technically correct. Only after that validation may FCC propose aligning canonical step wording/segmentation/order to the depicted sequence, and the revised text must still be complete enough to tie the Knot without the image.
 
 
-CP5.2 defines the candidate first-party teaching model only. It does **not** create actual Knot images, change production source, or choose final media-file packaging.
+If a multi-state viewer is useful, its navigation follows the **visual sequence**, not an assumed text-step count. A visible cue may use **Visual N of M** or another truthful label. **Step N of M** is used only when an explicitly validated and approved visual/text mapping is genuinely step-aligned.
 
 
-The approved candidate model is a user-controlled **static instructional-state viewer** synchronized to the authoritative `tyingSteps[]`. `tyingSteps[]` teaches the Knot; FCC-owned visuals illustrate those canonical instructions and do not create an independent instructional sequence.
+The complete normal numbered `tyingSteps[]` sequence remains available as the dependable textual teaching/reference path and failure-safe baseline. A completed-Knot visual may stand alone or appear within a sequence; it does not need to be artificially assigned to the final numbered text step. **CHECK YOUR KNOT** continues to own verification of the completed connection.
 
 
-The default prototype relationship is **one canonical tying step → one visual instructional state**. This is a prototype default rather than a permanent schema constraint. If a canonical step cannot be illustrated clearly in one state, the prototype must first challenge whether the canonical written step itself should be improved or split. Multiple visual states for one canonical step require demonstrated instructional need rather than preemptive architecture.
+The current string-array `tyingSteps[]` schema and derived numbering remain unchanged unless a separate approved implementation need proves otherwise. Media item/state count may be independent of text-step count. Do not add stable step IDs merely to force visual alignment.
 
 
-The candidate viewer presents:
-
-
-- the current instructional visual state,
-- **Step N of M** derived from canonical array position/length,
-- the corresponding canonical `tyingSteps[]` instruction,
-- user-controlled **Previous** / **Next** navigation or an equivalent accessible control,
-- the complete normal numbered `tyingSteps[]` sequence outside the viewer as the dependable text/reference path.
-
-
-The viewer therefore enhances the normal teaching path without becoming a dependency for reading the instructions. If the viewer, JavaScript, or candidate FCC visual is unavailable or rejected, the complete authoritative numbered text remains usable.
-
-
-The final canonical tying step normally produces the completed-Knot visual state. Do not add an artificial extra **Finished Knot** numbered step solely to satisfy the media system. **CHECK YOUR KNOT** remains the next primary section and owns the user's verification of the completed Knot.
-
-
-CP5.2 does **not** convert `tyingSteps[]` from strings to step objects, add stable step IDs, or add a separate media-authored step count. Any such schema change requires demonstrated prototype need such as durable multi-state-per-step relationships, step-specific deep linking, or another proven requirement. Visible numbering remains derived.
-
-
-The candidate instructional unit is an accurate **static SVG-based instructional state**. CP5.2 does not decide whether production ultimately uses separate SVGs, one multi-state SVG, grouped SVG layers, or another maintainable packaging method; CP5.4 owns that technical production decision after the visual grammar is settled. Transition animation remains optional under CP5.1.
-
-
-The four-Core-Knot prototype continues to challenge whether this same model remains understandable across materially different geometry: Arbor Knot, Improved Clinch Knot, Palomar Knot, and Double Uni Knot. The prototype must validate the shared teaching model rather than merely prove that four attractive diagrams can be drawn.
+Candidate asset format remains source-driven for any future locally hosted Knot-media work. Rights-qualified raster or vector artwork may be used when it passes technical, readability, accessibility, and rights review. Locally hosted Knot diagrams remain a future enhancement goal rather than a Version 1 build requirement, and no future treatment needs to force every Knot into one identical media mechanic.
 
 
 ## CP5.3 — Visual Grammar
 
 
-**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-23
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — revised 2026-09-27
 
 
-CP5.3 defines the shared visual language for the candidate FCC-owned static instructional states. It remains parameter/design work only; **no actual Knot prototype images are produced at this gate**.
+Visual treatment is phone-first and centered on unambiguous fishing-line geometry rather than decoration. A rights-qualified reused asset may retain its source style when it is accurate, readable, accessible, and technically suitable. The more prescriptive FCC vector grammar below applies when FCC authors or materially adapts artwork rather than requiring a reusable source to be redrawn merely for stylistic uniformity.
 
 
-The approved grammar is phone-first, vector-based, and centered on unambiguous fishing-line geometry rather than decorative realism. Fishing line should use clean solid strokes, rounded joins/ends, adequate separation between wraps, and enough visual weight to remain readable on a phone without pinch-zoom. Photorealistic texture, unnecessary shadowing, and decorative effects are not part of the instructional grammar.
+For FCC-authored or materially adapted diagrams:
 
 
-For one continuous piece of line, standing line and tag end retain the same underlying line treatment so the diagram does not falsely imply different materials. Where distinction is needed, use concise labels such as **Standing line** and **Tag end** and/or compatible endpoint cues.
+- continuous line should not be styled as different materials merely to distinguish standing line from tag end; use concise labels or endpoint cues when needed;
+- two independent lines may use a colorblind-friendly palette, but labels, markers, geometry, position, or another non-color cue must preserve identity without color;
+- meaningful crossings must make over/under geometry unambiguous at phone size;
+- loops/openings must remain visually distinct and unobstructed;
+- direction, threading, pull, and tightening cues should be restrained and non-ambiguous;
+- hardware should be simplified but recognizable, with enough geometry to make the tying method correct;
+- labels remain sparse and do not duplicate the full canonical instruction; and
+- the same geometry must remain legible across supported FCC themes/contrast conditions.
 
 
-When a Knot genuinely uses two independent lines, the lines may use different colors, but those colors must come from a **colorblind-friendly instructional palette**. Color is always secondary reinforcement: labels, endpoint markers, geometry, position, or another non-color cue must preserve the distinction in grayscale and for users with color-vision deficiency. Dashed line treatment is not used merely to distinguish lines because it can imply hidden geometry or motion. Instructional colors remain semantically separate from rotating Guide-card accents or other decorative theme colors.
-
-
-Every meaningful crossing must unambiguously communicate which segment passes over and which passes under. The preferred visual treatment keeps the upper segment continuous and gives the lower segment a small visual break/knockout at the crossing. If over/under geometry cannot be read confidently at phone size, the instructional state fails validation. Relevant loops/openings must likewise remain visually distinct, adequately spaced, and unobstructed by labels.
-
-
-Each state distinguishes **completed/current geometry** from **the action the user should perform**. Restrained direction arrows, short ghosted paths, or local emphasis may show where a tag end travels. Pull/tighten cues should be distinguishable from threading/direction cues. Repeated wraps normally use one dominant directional cue plus the visible completed wraps rather than a clutter of redundant arrows. If a state requires many competing action cues, the prototype must challenge the step wording or composition before adding visual complexity.
-
-
-Hooks, swivels, lure eyes, and reel spools use simplified recognizable geometry showing only the hardware needed to understand the Knot. Accuracy controls the amount of detail: if hardware shape materially affects the tying action, enough geometry must be shown to make the instruction correct. Hands/fingers are excluded from the default grammar; they may be considered only if a specific tying action later demonstrates a real need that cannot be explained clearly through line/hardware geometry or supplemental instruction.
-
-
-Labels remain sparse. Appropriate labels include standing line, tag end, Line A/Line B where genuinely useful, or a specific loop/opening when otherwise ambiguous. The SVG does **not** duplicate the full canonical tying instruction; `tyingSteps[]` remains the textual teaching authority outside the visual.
-
-
-The diagram system should be theme-aware through semantic visual roles such as instructional line, secondary line, hardware, direction cue, annotation, and diagram surface/background rather than separate independently authored light/dark geometry. Exact implementation is deferred, but the same geometry must remain legible across supported FCC themes and contrast conditions.
-
-
-Composition is phone-first but Knot orientation is flexible. Improved Clinch may read best vertically, Double Uni may require opposing horizontal geometry, and Arbor may be dominated by spool shape. The viewer component stays consistent while each Knot uses the orientation that best preserves instructional clarity. Desktop may enlarge/reflow the presentation but must not expose essential information unavailable on mobile.
-
-
-Technical correctness outranks visual polish. Prototype validation must inspect wrap count, threading path, every over/under crossing, loop identity, action direction, hardware relationship, tightening/final geometry, and agreement with canonical `tyingSteps[]`. A visually attractive but ambiguous or incorrect state is a failed instructional state.
+Technical correctness outranks polish. Validate wrap count where material, threading path, crossings, loop identity, line relationship, hardware relationship, tightening/seating, and final structure against the independently verified Knot method. A visually attractive but technically ambiguous or incorrect asset fails.
 
 
 ## CP5.4 — Production + Technical Validation Workflow
 
 
-**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-23
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — revised 2026-09-27
 
 
-CP5.4 defines how the bounded four-Core-Knot prototype is sourced, constructed, validated, rejected/reworked, and evaluated. It does **not** yet produce the prototype assets, promote FCC-owned media over the retained external baseline, or make one prototype packaging choice permanent for all Version 1 Knots.
+Locally hosted Knot instructional media is a **future enhancement goal**, not a Version 1 closure requirement. If that work is reopened later, use a reuse-first source-qualification path: search for technically suitable public-domain or clearly open-licensed instructional artwork and verify rights at the exact asset/source level. Site-wide copyright assumptions, reposts, or government hosting alone are not enough to establish local reuse/adaptation rights.
 
 
-Prototype production uses a **reuse-first, custom-build fallback** sequence. For each of Arbor Knot, Improved Clinch Knot, Palomar Knot, and Double Uni Knot, first search for technically suitable instructional material with clear reuse rights, preferring public-domain or clearly open-licensed assets. Rights must be verified at the actual asset/source level. A reusable asset may be used directly when it already satisfies FCC requirements, or adapted only when its license explicitly permits modification. Unclear/restrictive rights are treated as reference-only and do not authorize reuse, tracing, frame extraction, close redrawing, or derivative FCC artwork.
+A reusable asset may be incorporated directly when its rights and technical fit are clear, or cropped/adapted only when its license permits the intended modification. Unclear or restrictive rights remain reference/external-link only and do not authorize tracing, frame extraction, close redrawing, or derivative reuse.
 
 
-Reusable media is not accepted merely because it is legally available. It must also match the approved canonical tying method, align naturally with authoritative `tyingSteps[]`, preserve correct wrap/crossing/threading/hardware geometry, remain readable at phone size, and fit the CP5.3 visual/accessibility grammar. If a reusable source fails any of those requirements, FCC falls back to independently constructed SVG instructional states rather than weakening the instruction model or forcing inconsistent media.
+The rejected custom-drawn CP9.6 R1 is immutable review history and is not revised, traced, promoted, or used as the visual basis for another candidate. Reconsidering FCC-authored custom Knot diagrams later requires a separate explicit decision.
 
 
-Custom FCC states may be AI-assisted in the sense that tooling may help author SVG paths/shapes, but **AI-generated imagery is not an authority for Knot geometry**. Generated images cannot establish or validate line paths, crossings, wrap counts, loop identity, or final Knot structure and are not traced into production SVGs. Custom geometry is deliberately constructed from verified Knot instructions/reference facts and then technically validated. Third-party instructional art may inform factual understanding where permitted, but FCC does not trace or reproduce the source's expressive artwork/layout.
+Future local source qualification validates three things independently:
 
 
-For the four-Knot prototype, the default packaging is **one independently inspectable SVG per instructional state**. This keeps each state easy to review, replace, diff, render, and test without dynamic SVG scripting, canvas drawing, generated path JSON, hidden-layer animation systems, or another premature media architecture. One-SVG-per-state is a prototype packaging choice, not a permanent ten-Knot architecture lock; CP8 may retain or refine it after evidence from the prototype.
+1. **Rights/provenance** - exact asset, creator/source, license/public-domain status, attribution obligations, and whether adaptation/cropping is permitted.
+2. **Technical geometry** - the visual represents the intended Knot/method correctly and clearly enough to help a beginner at phone size.
+3. **Sequence integrity when applicable** - if the source claims a complete stepped sequence, a beginner can follow the depicted sequence to the correct finished Knot without an unexplained or technically wrong operation.
 
 
-Technical validation occurs at three levels. **State validation** checks source alignment, canonical-step alignment, every meaningful over/under crossing, wrap count where significant, threading path/opening, line identity, direction/pull cue, hardware relationship, phone readability, color independence, and final-state accuracy. **Sequence validation** confirms a beginner can move from State N to State N+1 using the corresponding canonical instruction without an unexplained geometric operation. **Finished-Knot validation** compares the final state against the verified method for correct structure, exits, wraps, hardware relationship, dressing, and seating.
+A single or partial geometry visual is not rejected merely because it does not depict the entire tying sequence; it must instead be truthfully presented as visual guidance for the geometry it actually shows. A partial set must not be misrepresented as a complete sequence.
 
 
-A state is rejected/reworked when geometry is wrong or ambiguous, wraps visually merge, the relevant opening is unclear, motion/direction cues can be misread, mobile rendering loses instructional information, color carries meaning alone, the state conflicts with `tyingSteps[]`, or the transition from the prior state silently requires expert inference. Technical correctness and beginner clarity outrank sunk production effort or visual polish.
-
-
-Prototype execution is progressive: **Improved Clinch → Palomar → Double Uni → Arbor**. Improved Clinch first tests the basic line/hardware/wrap/thread model; Palomar adds doubled-line/loop-over-terminal geometry; Double Uni stresses two independent lines and opposing knots; Arbor then challenges reel-spool geometry. The candidate FCC-owned treatment is not promoted because one easy Knot succeeds. Promotion requires successful validation across the complete four-Knot prototype and a later explicit approval. Partial success may justify static FCC diagrams without the viewer; failure retains the known-working external instructional model.
+No local asset download/adaptation, `data/media.js` local-media registration, viewer integration, or local production promotion is active for Version 1 after the approved CP9.6 media-direction decision. Any future local-media implementation requires its own explicit production scope and validation.
 
 
 ## CP5.5 — External Supplemental Instruction
 
 
-**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-23
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — revised 2026-09-27
 
 
-Verified external instructional destinations remain part of **HOW TO TIE IT** because they are teaching resources rather than mere citations. They are not moved into **MORE HELP** or **Sources & References** merely because FCC-owned instruction is being evaluated. Before an FCC-owned treatment is validated and explicitly promoted, the current verified external destination remains the established visual-learning option and must not be visually demoted.
+External instructional destinations remain part of **HOW TO TIE IT** because they are teaching resources rather than mere citations. FCC canonical `tyingSteps[]` remain the authoritative instruction and must remain complete and usable even when an external resource is unavailable.
 
 
-If the four-Knot FCC prototype later passes and a subsequent explicit approval promotes FCC-owned instruction, the external resource may become secondary **More visual instruction** and remains protected through the prototype/replacement evaluation. CP5.7 refines this point: permanent retention is not mandatory when later browser evidence shows the replacement is complete and the external destination adds no material teaching value. The exact placement, retention, or removal of the supplemental action after a proven replacement remains **BUILD TEST REQUIRED** rather than a pre-implementation mandate.
+For Version 1, **101Knots is the approved preferred external Visual Guide provider for all 10 canonical Knots**. The provider sweep found a dedicated diagram-based instructional page for every canonical Knot and no method mismatch that requires changing FCC canonical tying geometry. The current mixed Grog / Bass Pro-Pro-Knot / Knots 3D production records remain live until a separate exact-scope production authorization updates `data/media.js` and the resulting links pass browser validation.
 
 
-External actions use medium-specific beginner-facing labels rather than generic **Learn More** wording. Approved examples include **View step-by-step animation ↗**, **View illustrated instructions ↗**, and **View interactive 3D instructions ↗**, with restrained provider attribution. The Guide uses `↗` for external destinations and preserves `→` for FCC-internal navigation.
+101Knots is approved for **external linking only**. Its diagrams are not copied, bundled, downloaded into the repository, extracted, modified, embedded, traced, or rehosted without separate permission establishing local reuse rights.
 
 
-Third-party supplemental instruction remains linked rather than copied, scraped, rehosted, frame-extracted, or reproduced inside FCC unless separate CP5.4 rights/provenance review establishes that a particular asset may legally and technically be incorporated into the FCC-owned treatment. A public-domain/open-license asset actually incorporated under CP5.4 is treated as part of the local FCC instructional treatment, not as an external supplemental link.
+After the approved standardization is implemented, the normal medium-specific external action is **View illustrated instructions ↗** with restrained provider attribution to **101Knots**. `↗` denotes external navigation while `→` remains the FCC-internal navigation cue.
 
 
-Version 1 defaults to **one preferred supplemental external instructional destination per Knot**. Additional destinations require a materially distinct instructional benefit rather than simple resource abundance. Supporting/research sources that are not the selected teaching destination remain available through **Sources & References** as appropriate.
+Version 1 defaults to one preferred supplemental external instructional destination per Knot. Additional destinations require a materially distinct teaching benefit and separate approval. Returning from external instruction should preserve the user's Knot/detail context where practical.
 
 
-External-resource failure must never make the canonical Knot instruction unusable. `tyingSteps[]` remains readable, any valid FCC-owned media remains available, and active external destinations are verified during implementation/browser validation. External navigation should preserve the user's FCC Knot/detail context so returning does not require rediscovering the Knot; if a step-through viewer is active, current viewer state should also be preserved where practical.
+If locally hosted Knot media is developed in a future phase and passes the separate rights/technical/production gates, its relationship to the external Visual Guide may then be retested. The future local-media goal does not block Version 1 and does not reduce the external provider's role until a later approved replacement exists.
 
 
 ## CP5.6 — Responsive Instructional Presentation
 
 
-**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-23
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — revised 2026-09-27
 
 
-FCC Knot instruction uses one semantic teaching hierarchy across phone, intermediate/tablet, and desktop. Screen size may change spatial arrangement, but it does not change instructional priority, control meaning, or the information available to the user. No essential instruction may become desktop-only.
+FCC Knot instruction keeps one semantic teaching hierarchy across phone, intermediate/tablet, and desktop. Phone is authoritative. Screen width may rearrange space but may not make essential instruction desktop-only.
 
 
-Phone is the authoritative composition. The default single-column flow is instructional visual → **Step N of M** → corresponding canonical current-step text → visible **Previous / Next** controls → complete normal numbered `tyingSteps[]` → retained supplemental external instruction → **CHECK YOUR KNOT**. The exact position of supplemental external instruction relative to the complete numbered steps remains the CP5.5 **BUILD TEST REQUIRED** placement experiment. Phone presentation must not require horizontal scrolling, pinch-zoom, or side-by-side reading to understand the Knot.
+The phone flow keeps the approved external **Visual Guide** inside **HOW TO TIE IT**, followed by the complete normal numbered `tyingSteps[]` and **CHECK YOUR KNOT**, subject to browser testing of exact placement. Any future locally hosted visual treatment must integrate without making essential instruction desktop-only or requiring horizontal scrolling or pinch-zoom.
 
 
-Viewer controls retain the same meaning at every viewport. Previous/Next remain explicit discoverable controls; swipe may be added only as an optional enhancement. Previous is unavailable at the first state and Next is unavailable at the final state rather than changing into unrelated page navigation. `Step N of M` remains visibly associated with the current visual/instruction. Keyboard/touch focus must remain predictable, and a state change must not unexpectedly move focus.
+When a multi-state viewer is used, its truthful visual-position cue and explicit Previous/Next controls stay with the visual. Previous/Next remain discoverable at every viewport; swipe may be an optional enhancement only. Single-image treatments do not add artificial viewer controls.
 
 
-Intermediate/tablet layouts remain stacked by default and gain usable visual/text space before gaining columns. Do not introduce a two-column treatment merely because width permits it. Use the shared FCC responsive breakpoint system unless prototype evidence demonstrates a concrete Knot-specific failure.
+Intermediate/tablet stays stacked by default and gains usable space before gaining columns. Desktop browser-tests centered stacked versus sufficiently wide side-by-side treatments; no two-column layout is pre-approved. Desktop cannot introduce essential labels, arrows, or explanations absent from phone.
 
 
-Desktop must browser-test at least two treatments: a centered stacked teaching flow and a sufficiently wide side-by-side viewer/reference treatment. A two-column desktop layout is not pre-approved. Whichever treatment wins must preserve the same teaching hierarchy as phone, avoid desktop-only labels/arrows/explanation, keep the instructional visual within sensible maximum bounds, and remain comfortable for materially different Knot orientations.
+Media geometry supports the source's appropriate orientation/aspect ratio without misleading cropping or distortion. When multiple states are used, keep controls and the visual region reasonably stable without forcing identical dimensions at the expense of accuracy.
 
 
-Knot orientation remains flexible under CP5.3, so the viewer cannot depend on one fixed image aspect ratio. SVG states use their own `viewBox` within a consistent instructional surface. The component should maintain reasonably stable visual/control geometry across a Knot sequence so state changes do not create disruptive page jumps, while avoiding cropping or distortion merely to force identical dimensions.
-
-
-The complete numbered `tyingSteps[]` remains ordinary accessible document content: vertically flowing, readable, selectable/copyable, and not hidden behind a carousel/accordion or made horizontally scrollable because the viewer exists. The current viewer step may receive subtle non-color-only emphasis in the full list, but the list remains non-interactive for the initial prototype unless later evidence justifies click-to-jump behavior.
-
-
-Responsive validation must explicitly stress-test **Double Uni Knot** and **Arbor Knot** in addition to the basic Improved Clinch flow because their opposing-line and reel-spool geometry are most likely to expose layout failures. Exact breakpoint values, maximum visual dimensions, desktop winner, and supplemental-link placement remain CP9 browser-validation decisions rather than discovery locks.
+The full numbered `tyingSteps[]` remains ordinary accessible flowing document content. Visual-to-step highlighting is optional and is tested only when an approved visual/text mapping genuinely exists. Responsive validation continues to stress-test Double Uni and Arbor because opposing-line and reel-spool geometry are likely failure cases.
 
 
 ## CP5.7 — V1 Coverage / Build Requirement
 
 
-**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — 2026-09-23
+**Status:** CLOSED / APPROVED / REFINEMENT ALLOWED — revised 2026-09-27
 
 
-CP5.7 deliberately does **not** predeclare one final instructional-media treatment as mandatory across all 10 active Version 1 Knots. The current working Knot Detail/instructional experience is the implementation starting baseline and should be refined against the approved Guide-family structure rather than replaced simply because CP5 explored a new media concept.
+Version 1 does **not** require locally hosted Knot instructional images, a local step-through viewer, or a four-Core local-media prototype. Internal/local Knot diagrams remain a future project goal and may be reopened only through a later explicit scope decision.
 
 
-The four Core Knots remain the bounded implementation prototype for reusable/open media discovery, FCC-authored SVG states, static instructional presentation, and the user-controlled step-through concept. The prototype is an evidence test, not a requirement to prove the viewer architecture. Browser/technical review may conclude that the viewer works well, that static diagrams are clearer, that a hybrid with external instruction is preferable, that different Knot geometries justify different treatments, or that the current layout needs only modest refinement.
+The approved Version 1 visual-learning baseline is one preferred external **101Knots Visual Guide** destination for each of the 10 canonical Knots, paired with FCC's complete canonical numbered `tyingSteps[]`. Provider standardization still requires the separate authorized production edit and browser validation; until that occurs, the existing mixed external destinations remain the live production state.
 
 
-The remaining six Knots do not receive a mandatory FCC-owned media requirement before the Core prototype verdict. If prototype evidence establishes a reusable treatment that materially improves instruction, expansion may be proposed and approved. If different Knot geometries are better served by different media treatments, that variation is allowed so long as the overall **HOW TO TIE IT** experience remains coherent, complete, technically correct, accessible, and responsive.
+Consistency is required at the experience and quality level: every Knot keeps the same Visual Guide hierarchy, truthful external-provider labeling, complete FCC text instruction, and usable responsive behavior. No local-media state count or viewer mechanic is required for V1.
 
 
-The verified external instructional baseline remains protected during testing so FCC does not regress from a known-working experience. CP5.7 refines CP5.5: permanent retention of every external instructional destination is **not** mandatory regardless of outcome. After a replacement has actually been implemented and validated, placement, continued retention, or removal of an external destination remains refinement-allowed and evidence-driven. Until then, it remains available as the safe baseline/supplemental instruction.
+Hard closure requirements are outcome-based: canonical instruction is complete and technically correct; all 10 approved external destinations resolve to the intended Knot; provider/action labels are truthful; external-resource failure does not make FCC instruction unusable; presentation remains accessible/responsive; and applicable technical/browser validation passes.
 
 
-Hard closure requirements are limited to outcome quality rather than one predetermined media architecture: instruction must be complete and technically correct; implementation must not regress from the known-working baseline; incomplete/partial local media sequences are not treated as finished; phone/desktop presentation must be accessible and responsive; and the final treatment must pass the applicable technical/browser validation. `tyingSteps[]` remains the authoritative textual instruction unless implementation evidence demonstrates a separate approved need to revise the canonical steps themselves.
+`tyingSteps[]` remains the authoritative current textual instruction. An external provider's wording, segmentation, ancillary advice, or line-compatibility statements do not silently modify FCC canonical content. Any future canonical text revision still requires independent validation and explicit approval.
 
 
-CP8 must therefore lock **known implementation work plus explicit build-test decision gates**, not assume their results. Known scope includes Guide-baseline Knot Detail refinement, preservation/verification of the existing instructional path, the four-Core prototype, and responsive/technical validation. CP9 resolves viewer vs static vs hybrid treatment, exact media/layout behavior, external-media placement/retention, whether the treatment should expand beyond Core, and any justified per-Knot variation. No production implementation begins before CP8 locks exact source ownership and validation methods.
+Future locally hosted instructional media may later supplement or replace part of the external visual layer if it meets FCC rights, correctness, phone-readability, accessibility, and approval requirements. That future goal does not block Version 1 closeout.
 
 
 # Approved Reel & Line Setup Direction
@@ -1448,7 +1397,7 @@ Mandatory CP9 production owners are limited to:
 - `tools/validate_repository_integrity.js` — validator reconciliation for the approved Knot/guidance/Reel ownership and schema changes.
 
 
-Conditional CP9 prototype write scope is limited to `data/media.js` plus `images/knots/instructional/<knot-id>/*.svg` when a reusable/open or FCC-authored instructional state is actually accepted into the bounded four-Core-Knot prototype. No placeholder SVG inventory is authorized.
+The former conditional four-Core local-media write scope is no longer active for Version 1. `images/knots/instructional/<knot-id>/*` and local instructional-state/viewer records are deferred as a future goal. The remaining CP9.6 production target is the approved 10-record external Visual Guide standardization in `data/media.js`; that source edit still requires explicit exact-scope production authorization before implementation. Validator or renderer changes are included only if the actual implementation proves they are required and they receive the applicable authorization.
 
 
 Read-only dependencies include `data/fish-categories.js`, `data/rigs.js`, `index.html`, `tools/check_external_references.js`, and the directly relevant canonical documentation owners. Current script load order already supports the approved dependency direction and is not redesigned.
@@ -1471,13 +1420,16 @@ Visual refinement is a required CP9 deliverable rather than optional CSS polish.
 - phone, intermediate/tablet, and full-desktop visual validation.
 
 
-Instructional diagrams remain instructional rather than decorative: clean phone-first geometry, useful direction/emphasis cues, accessible color/non-color distinctions, no gratuitous effects, no autoplay, and reduced-motion-safe behavior if motion is later justified.
+Instructional visuals remain instructional rather than decorative: phone-readable and technically unambiguous geometry, accessible color/non-color distinctions when identity depends on styling, no gratuitous effects, no autoplay, and reduced-motion-safe behavior if motion is later justified. Rights-qualified reused assets may retain their source style when they satisfy the approved technical/readability standard.
 
 
-### Four-Core Instructional Prototype Scope
+### CP9.6 Instructional-Media Direction
 
 
-The bounded prototype remains **Improved Clinch → Palomar → Double Uni → Arbor**. The default candidate is one inspectable SVG state per canonical `tyingSteps[]` step, with the canonical text remaining authoritative. If a local instructional state is accepted into production, Media owns the attachment using the approved Knot owner plus an instructional-state role and a zero-based canonical step index. The existing verified external instructional baseline for all 10 Knots remains protected through the prototype verdict.
+The former four-Core local instructional prototype is deferred from Version 1. Locally hosted Knot images remain a future project goal and no local asset, local viewer, or six-Knot local-media expansion is required for the current Knots milestone.
+
+
+The approved CP9.6 Version 1 direction is to standardize all 10 canonical Knots on **101Knots** as the preferred linked external **Visual Guide** provider while keeping FCC canonical `tyingSteps[]` authoritative. The provider change is approved in direction but remains a pending production source edit until exact-scope authorization is given.
 
 
 ### CP9 Implementation Sequence
@@ -1488,7 +1440,7 @@ The bounded prototype remains **Improved Clinch → Palomar → Double Uni → A
 3. **CP9.3 — Knot Detail + Reference + Media Integration:** detail structure, disclosures, adjacent-`ⓘ` Reference behavior, explicit instructional-media mount point, and protected external baseline.
 4. **CP9.4 — Get Your Reel Ready Migration:** coordinated `data/reel-guidance.js` + `script.js` workflow migration, References, Line Weight, Equipment, Braid Backing, Spool, five-phase progress, Ready, and responsive status/semantic visuals.
 5. **CP9.5 — Ready → Rig Guide Handoff:** transient completed Reel Setup context and noninteractive **Your Reel Setup** Rig landing summary without filtering/ranking/auto-selection.
-6. **CP9.6 — Four-Core Instructional Prototype:** progressive reuse-first/custom-build evaluation and explicit treatment verdict.
+6. **CP9.6 — External Visual Guide Standardization / Local-Media Deferral:** implement and validate the approved 10-Knot 101Knots external Visual Guide map after exact-scope production authorization; locally hosted Knot instructional media remains a future goal.
 7. **CP9.7 — Full Validation + Review Package:** browser/accessibility/regression validation, documentation reconciliation, and cumulative review-package preparation.
 
 

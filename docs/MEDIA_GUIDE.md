@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.13  
+**Document Revision:** 1.0.14  
 **Document Status:** Approved  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-27
 
 # Purpose
 
@@ -372,34 +372,33 @@ For standalone standard fishing hooks, Wacky/finesse hooks, offset worm hooks, a
 
 # Knot Media
 
-The Version 1 Knot library contains 10 canonical Knots and has approved instructional-media coverage for all 10.
+The Version 1 Knot library contains 10 canonical Knots and requires complete instructional coverage for all 10.
 
-Each current Knot instructional Media record attaches through:
+Each Knot instructional Media record attaches through:
 
 ```text
 ownerType: "knot"
 ownerId: canonical Knot ID
 ```
 
-Current production instructional destinations include external step-by-step animation, illustrated instruction, and interactive 3D instruction where the source passed the method-match and rights review.
-
 Canonical in-app `tyingSteps[]` remain authoritative. External instructional Media supplements those instructions; it does not replace or own canonical Knot tying facts.
 
-Third-party artwork, animation sequences, video, or 3D assets are not copied, bundled, rehosted, extracted, or redistributed unless explicit reuse rights exist.
+For Version 1, **101Knots is the approved preferred external Visual Guide provider for all 10 canonical Knots**. The approved direction is one linked diagram-based 101Knots instructional page per Knot, presented through the existing Knot Visual Guide hierarchy. Production records remain on the current mixed provider set until the separately authorized `data/media.js` implementation and browser validation are complete.
 
-Current Version 1 uses verified external instructional destinations. Future project-owned diagrams or user-controlled animations remain preferred where they materially improve clarity and can be produced accurately.
+101Knots artwork is **external-link-only** under the current approval. Its diagrams are not copied, bundled, downloaded into the repository, extracted, modified, embedded, traced, or rehosted unless separate permission establishes the required local reuse rights. The external Media record must therefore describe linking/provenance accurately and must not imply local redistribution permission.
 
-For future project-owned Knot diagrams/animations, prefer mobile-readable step-by-step presentation using:
+Locally hosted/project-owned Knot diagrams remain a **future project goal**, not a Version 1 requirement. Future local media may be reconsidered when it can meet FCC's technical correctness, rights, phone-readability, accessibility, and review standards. The rejected CP9.6 custom-diagram R1 is not a reusable visual basis for future work.
 
-- Numbered steps
+For any future project-owned Knot diagrams/animations, prefer mobile-readable instruction using:
+
 - Clear line paths
-- Direction arrows
-- Short in-image instructions
-- Final knot state
-- Clear distinction between standing line, tag end, hook/eye, and loops
+- Direction arrows where needed
+- Sparse, useful labels
+- Final knot state where it materially helps
+- Clear distinction between standing line, tag end, hook/eye/hardware, loops, and independent lines
 - Color coding only when useful and accessible
 
-Static instruction must remain sufficient even if animation is added later.
+A future local visual does not need a 1:1 image-to-`tyingSteps[]` mapping. It may be a finished diagram, partial set of useful geometry views, or a complete stepped sequence when truthfully labeled and independently validated. Static FCC text instruction must remain sufficient even if local visual media or animation is added later.
 
 Reusable Knot instructional assets should support connected knowledge without duplicating the full tying sequence inside every Rig.
 
