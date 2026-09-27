@@ -48,7 +48,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C CLOSED / PASS; CP9.4 CLOSED / PASS; CP9.5 R3 LOCAL APPROVED / PROMOTED / MOBILE REVIEW PENDING |
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C CLOSED / PASS; CP9.4 CLOSED / PASS; CP9.5 CLOSED / PASS |
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -2066,7 +2066,7 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 
 # KG Audit — CP9.5 — Ready → Rig Guide Handoff
 
-**Status:** R3 LOCAL APPROVED / PROMOTED / MOBILE REVIEW PENDING
+**Status:** CLOSED / PASS - R3 USER APPROVED / PROMOTED / REPOSITORY + MOBILE VALIDATED - 2026-09-27
 
 ## R1 Implementation
 
@@ -2116,10 +2116,24 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 - **User local approval:** APPROVED — R3 local review accepted.
 - **Owner classification:** UPDATE REQUIRED — `script.js`, `forest-journal.css`, `tools/validate_repository_integrity.js`, this active audit, and Live Working State. VERIFIED NO CHANGE — `KNOT-GUIDE.md` (approved CP9.5 behavior already current) and `ACTIVE-CHANGE-LEDGER.md` (`RIG-001` already owns the future Rig-audit carry-forward). N/A — `search.js`, `data/rigs.js`, CP9.6 production scope.
 - **Drive promotion/readback:** PASS — exact approved R3 source hashes are `script.js` `0ca121cabac4da297820aecf73e0a6cf5460a3b0fbee7d3a791160ef0f060f84`, `forest-journal.css` `1fbe1563760596a34d54273e27ab9e645fe2b6f3d91dc1e53c9a965f73807a36`, and `tools/validate_repository_integrity.js` `a608ec3c9be47190e9a5764e12177e2694c205aa2c06effe003277b65f8f544a`; Drive raw readback matches all three.
-- **Validation:** full Repository Integrity remains PASS — 20 validation groups / no repository content modified — against the approved R3 candidate. Local browser review is PASS. Final actual-mobile review is still required.
-- **Commit/push/mobile state:** the user explicitly requested the approved R3 state be pushed for mobile review. This authorizes the user-local production commit/push of the exact promoted R3 state plus this approval-state documentation reconciliation. The assistant does not write production source directly to GitHub. GitHub `main` remains `61b035f7c4eb9274562d35c5e94127d9df713eca` until the user-local push occurs.
-- **Closure:** **OPEN** — CP9.5 cannot close until the pushed GitHub SHA/scope, Repository Integrity, Pages deployment, Drive/Git convergence, and actual-mobile review all PASS.
+- **Validation:** full Repository Integrity PASS - 20 validation groups / no repository content modified - against the approved R3 candidate. Local browser review PASS. Final actual-mobile review PASS by explicit user approval of the deployed build.
+- **Commit/push/mobile state:** COMPLETE. The user-local production push landed the approved CP9.5 source state, the pull/conflict correction was bounded to documentation, and the follow-up audit-only correction landed on GitHub `main` `481f48306d909959da2b8f789e3ec0787b1d4c36`. Compared with the CP9.5 starting authority `61b035f7c4eb9274562d35c5e94127d9df713eca`, the effective repository diff is exactly the expected six modified paths and no deletions.
+- **Closure:** **CLOSED / PASS.** GitHub scope, Repository Integrity, Pages, Drive/Git convergence, local browser review, and actual-mobile review all PASS. Final documentation-only closure convergence is recorded below.
+
+## R3 Final Mobile / Repository Closeout
+
+- **Final user approval:** PASS - the deployed R3 handoff passed the user's actual-mobile review.
+- **Frozen approved candidate:** `FCC-49J-E-Knots-Guide-CP9.5-R3-Cumulative-Review.zip`; SHA-256 `987163ec4d9dd2e708f880da2e1b6766fd7588bcffd8b0343415a00b2f0f209f`.
+- **Production source convergence:** PASS - `script.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js` are byte-identical between Drive Current and GitHub.
+- **Durable documentation convergence before final closure write:** PASS - `KNOT-GUIDE.md` revision 0.3.32 and `ACTIVE-CHANGE-LEDGER.md` revision 1.10.147 are byte-identical between Drive Current and GitHub; `RIG-001` retains the future Rig Guide audit evaluation of material Reel Setup-context use, including Direct-Tie component/lure sizing.
+- **User-local production repository validation:** PASS - current GitHub `main` before this final closure-only audit write is `481f48306d909959da2b8f789e3ec0787b1d4c36`; compared with starting CP9.5 authority `61b035f7c4eb9274562d35c5e94127d9df713eca`, the effective diff is exactly the expected six modified paths and no deletions.
+- **Repository Integrity:** PASS - run `36297101595`.
+- **Pages:** PASS - run `36297101279`.
+- **Actual-mobile acceptance:** PASS - four approved line-system paths, compact factual `Your Reel Setup` landing summary, correct conditional Backing display, landing return persistence, no Rig Detail summary, unrestricted Rig browse/search/detail behavior, and deliberate restart clearing accepted by the user.
+- **Owner classification at final CP9.5 closure:** UPDATE REQUIRED - this active audit and Live Working State. VERIFIED NO CHANGE - `script.js`, `forest-journal.css`, `tools/validate_repository_integrity.js`, `KNOT-GUIDE.md`, and `ACTIVE-CHANGE-LEDGER.md` / `RIG-001`. N/A - `search.js`, `data/rigs.js`, CP9.6 production scope.
+- **Final documentation convergence rule:** this closure update is documentation-only and uses standing documentation commit authority. The resulting final repository SHA is recorded in Live Working State rather than self-embedded here so Drive/Git can converge on this exact audit content without recursive self-reference.
+- **Closure state:** **CP9.5 CLOSED / PASS.** CP9.6 - Four-Core Instructional Prototype is the next implementation segment. CP10 still requires the recorded Description / Helper Copy Review before Knots final closeout.
 
 # Current Exact Resume
 
-**Exact resume: CP9.5 — Ready → Rig Guide Handoff is R3 LOCAL APPROVED / PROMOTED / MOBILE REVIEW PENDING. Apply the approved mobile-staging package to a verified local checkout at GitHub `main` `61b035f7c4eb9274562d35c5e94127d9df713eca`, verify the expected six-path diff, commit/push that exact state, then verify the resulting GitHub SHA/scope, Repository Integrity and Pages deployment. Perform the final actual-mobile review of the full CP9.5 handoff: complete Reel Ready through the four approved line-system paths, confirm the compact factual `Your Reel Setup` landing summary and return behavior, confirm no summary on Rig Detail, confirm normal unrestricted Rig browse/search/detail behavior, and verify restart clearing. Report findings or give final CP9.5 approval. CP9.6 local instructional media remains later/out of scope. CP10 still requires the recorded Description / Helper Copy Review before Knots final closeout.**
+**Exact resume: CP9.5 - Ready to Rig Guide Handoff is CLOSED / PASS. Begin CP9.6 - Four-Core Instructional Prototype only after normal startup verification against current GitHub main, Drive Current, Live Working State, PROJECT-RULES, and the active Knots audit. Preserve `RIG-001` for the later Rig Guide audit; CP9.6 must not reinterpret that deferred Rig-context work. CP10 still requires the recorded Description / Helper Copy Review before Knots final closeout.**
