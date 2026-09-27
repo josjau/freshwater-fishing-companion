@@ -1429,89 +1429,6 @@ function initializeKnotUsageControls(appMain, detailConfig) {
     });
 }
 
-function getKnotRecord(knotId) {
-    if (!knotId || typeof KNOT_DATA === "undefined") return null;
-    const record = findRecordById(KNOT_DATA, knotId);
-    return record?.isActive === true ? record : null;
-}
-
-function buildRigKnotApplications(record) {
-    if (!Array.isArray(record?.knotApplications) || record.knotApplications.length === 0) return "";
-
-    const groupedApplications = [];
-    const groupByKnotSet = new Map();
-
-    record.knotApplications.forEach((application) => {
-        const recommendedKnotIds = Array.isArray(application.recommendedKnotIds)
-            ? application.recommendedKnotIds
-            : [];
-        const groupKey = recommendedKnotIds.join("|");
-        let group = groupByKnotSet.get(groupKey);
-
-        if (!group) {
-            group = { recommendedKnotIds, applications: [] };
-            groupByKnotSet.set(groupKey, group);
-            groupedApplications.push(group);
-        }
-
-        group.applications.push(application);
-    });
-
-    const applicationsMarkup = groupedApplications.map((group) => {
-        const knotLinks = group.recommendedKnotIds
-            .map((knotId) => {
-                const knot = getKnotRecord(knotId);
-                if (!knot) {
-                    console.warn(`Canonical Knot record was not found: ${knotId}`);
-                    return "";
-                }
-                return `
-                    <button class="internal-knowledge-link rig-knot-link" type="button" data-rig-knot-id="${knot.id}">
-                        ${knot.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
-                    </button>
-                `;
-            })
-            .filter(Boolean)
-            .join("");
-
-        const isSharedSet = group.applications.length > 1;
-        const applicationMarkup = isSharedSet
-            ? `
-                <div class="rig-knot-use-group">
-                    <strong>Use these knots for:</strong>
-                    <ul class="rig-knot-use-list">
-                        ${group.applications.map((application) => `<li>${application.label}</li>`).join("")}
-                    </ul>
-                </div>
-            `
-            : `<strong>${group.applications[0].label}</strong>`;
-        const notesMarkup = group.applications
-            .filter((application) => application.notes)
-            .map((application) => isSharedSet
-                ? `<p><strong>${application.label}:</strong> ${application.notes}</p>`
-                : `<p>${application.notes}</p>`
-            )
-            .join("");
-
-        return `
-            <li class="rig-knot-application-item${isSharedSet ? " rig-knot-application-item--grouped" : ""}">
-                ${applicationMarkup}
-                <div class="rig-knot-link-list">${knotLinks}</div>
-                ${notesMarkup}
-            </li>
-        `;
-    }).join("");
-
-    return `
-        <section class="detail-section rig-knot-section">
-            <div class="rig-knot-section__header">
-                <h3>Knots You'll Tie</h3>
-                <p>Select a recommended Knot to view tying instructions.</p>
-            </div>
-            <ul class="rig-knot-application-list">${applicationsMarkup}</ul>
-        </section>
-    `;
-}
 
 function buildKnotDetailDisclosureMarkup(disclosureId, title, bodyMarkup, expanded = false) {
     const panelId = `knot-detail-${disclosureId}-panel`;
@@ -1566,29 +1483,44 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
     const aliasesMarkup = record.aliases?.length
         ? `<p class="knot-aliases"><strong>Also called:</strong> ${record.aliases.join(", ")}</p>`
         : "";
-    const lineCompatibilityMarkup = (record.compatibleLineTypes ?? []).length
+    const buildLineReference = (lineTypeId, roleLabel = "") => {
+        const lineType = typeof REEL_LINE_TYPE_GUIDANCE !== "undefined"
+            ? REEL_LINE_TYPE_GUIDANCE[lineTypeId]
+            : null;
+        const label = lineType?.title ?? lineTypeId;
+        const visibleLabel = roleLabel ? `${label} ${roleLabel}` : label;
+        return `
+            <span class="knot-line-compatibility__label">${visibleLabel}</span>
+            <button
+                class="reference-info-button knot-line-reference-button"
+                type="button"
+                data-line-type-reference-id="${lineTypeId}"
+                aria-label="Learn about ${label} fishing line"
+            ><span aria-hidden="true">ⓘ</span></button>
+        `;
+    };
+    const linePairings = Array.isArray(record.linePairings) ? record.linePairings : [];
+    const lineCompatibilityMarkup = linePairings.length
         ? `
             <ul class="knot-line-compatibility-list">
-                ${(record.compatibleLineTypes ?? []).map((lineTypeId) => {
-                    const lineType = typeof REEL_LINE_TYPE_GUIDANCE !== "undefined"
-                        ? REEL_LINE_TYPE_GUIDANCE[lineTypeId]
-                        : null;
-                    const label = lineType?.title ?? lineTypeId;
-                    return `
-                        <li class="knot-line-compatibility-item">
-                            <span class="knot-line-compatibility__label">${label}</span>
-                            <button
-                                class="reference-info-button knot-line-reference-button"
-                                type="button"
-                                data-line-type-reference-id="${lineTypeId}"
-                                aria-label="Learn about ${label} fishing line"
-                            ><span aria-hidden="true">ⓘ</span></button>
-                        </li>
-                    `;
-                }).join("")}
+                ${linePairings.map((pairing) => `
+                    <li class="knot-line-compatibility-item">
+                        ${buildLineReference(pairing.from)}
+                        <span class="knot-line-compatibility__pairing-arrow" aria-hidden="true">→</span>
+                        ${buildLineReference(pairing.to, pairing.toRole ?? "")}
+                    </li>
+                `).join("")}
             </ul>
         `
-        : `<p class="knot-empty-context">No line compatibility guidance is currently available.</p>`;
+        : (record.compatibleLineTypes ?? []).length
+            ? `
+                <ul class="knot-line-compatibility-list">
+                    ${(record.compatibleLineTypes ?? []).map((lineTypeId) => `
+                        <li class="knot-line-compatibility-item">${buildLineReference(lineTypeId)}</li>
+                    `).join("")}
+                </ul>
+            `
+            : `<p class="knot-empty-context">No line compatibility guidance is currently available.</p>`;
     const usageMarkup = buildKnotUsageMarkup(record, usageContexts);
     const referencesBodyMarkup = record.referenceLinks?.length
         ? `
@@ -1628,6 +1560,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
         )
     ].join("");
 
+    const chooseAnotherKnot = Array.isArray(record.chooseAnotherKnot) ? record.chooseAnotherKnot : [];
     const moreHelpMarkup = [
         buildKnotDetailDisclosureMarkup(
             "common-mistakes",
@@ -1635,12 +1568,14 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
             `<ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>`,
             expanded.has("common-mistakes")
         ),
-        buildKnotDetailDisclosureMarkup(
-            "choose-another",
-            "When to Choose Another Knot",
-            `<ul class="detail-list">${record.limitations.map((limitation) => `<li>${limitation}</li>`).join("")}</ul>`,
-            expanded.has("choose-another")
-        )
+        chooseAnotherKnot.length > 0
+            ? buildKnotDetailDisclosureMarkup(
+                "choose-another",
+                "When to Choose Another Knot",
+                `<ul class="detail-list">${chooseAnotherKnot.map((item) => `<li>${item}</li>`).join("")}</ul>`,
+                expanded.has("choose-another")
+            )
+            : ""
     ].join("");
 
     appMain.innerHTML = `
@@ -1691,6 +1626,14 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
     initializeLineTypeReferenceLinks(appMain);
     initializeHomeNavigation(appMain);
 }
+
+/* ==========================================================
+   END KNOT GUIDE
+   ========================================================== */
+
+/* ==========================================================
+   SHARED REFERENCE — LINE TYPE + PAGED REFERENCE POPOVERS
+   ========================================================== */
 
 function renderLineTypeReferencePopover(lineTypeId, triggerElement) {
     if (typeof REEL_LINE_TYPE_GUIDANCE === "undefined") {
@@ -2410,6 +2353,98 @@ function initializeReferenceLinks(appMain, options = {}) {
         });
     });
 }
+
+
+/* ==========================================================
+   RIG GUIDE — KNOT APPLICATION PRESENTATION
+   ========================================================== */
+function getKnotRecord(knotId) {
+    if (!knotId || typeof KNOT_DATA === "undefined") return null;
+    const record = findRecordById(KNOT_DATA, knotId);
+    return record?.isActive === true ? record : null;
+}
+
+function buildRigKnotApplications(record) {
+    if (!Array.isArray(record?.knotApplications) || record.knotApplications.length === 0) return "";
+
+    const groupedApplications = [];
+    const groupByKnotSet = new Map();
+
+    record.knotApplications.forEach((application) => {
+        const recommendedKnotIds = Array.isArray(application.recommendedKnotIds)
+            ? application.recommendedKnotIds
+            : [];
+        const groupKey = recommendedKnotIds.join("|");
+        let group = groupByKnotSet.get(groupKey);
+
+        if (!group) {
+            group = { recommendedKnotIds, applications: [] };
+            groupByKnotSet.set(groupKey, group);
+            groupedApplications.push(group);
+        }
+
+        group.applications.push(application);
+    });
+
+    const applicationsMarkup = groupedApplications.map((group) => {
+        const knotLinks = group.recommendedKnotIds
+            .map((knotId) => {
+                const knot = getKnotRecord(knotId);
+                if (!knot) {
+                    console.warn(`Canonical Knot record was not found: ${knotId}`);
+                    return "";
+                }
+                return `
+                    <button class="internal-knowledge-link rig-knot-link" type="button" data-rig-knot-id="${knot.id}">
+                        ${knot.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
+                    </button>
+                `;
+            })
+            .filter(Boolean)
+            .join("");
+
+        const isSharedSet = group.applications.length > 1;
+        const applicationMarkup = isSharedSet
+            ? `
+                <div class="rig-knot-use-group">
+                    <strong>Use these knots for:</strong>
+                    <ul class="rig-knot-use-list">
+                        ${group.applications.map((application) => `<li>${application.label}</li>`).join("")}
+                    </ul>
+                </div>
+            `
+            : `<strong>${group.applications[0].label}</strong>`;
+        const notesMarkup = group.applications
+            .filter((application) => application.notes)
+            .map((application) => isSharedSet
+                ? `<p><strong>${application.label}:</strong> ${application.notes}</p>`
+                : `<p>${application.notes}</p>`
+            )
+            .join("");
+
+        return `
+            <li class="rig-knot-application-item${isSharedSet ? " rig-knot-application-item--grouped" : ""}">
+                ${applicationMarkup}
+                <div class="rig-knot-link-list">${knotLinks}</div>
+                ${notesMarkup}
+            </li>
+        `;
+    }).join("");
+
+    return `
+        <section class="detail-section rig-knot-section">
+            <div class="rig-knot-section__header">
+                <h3>Knots You'll Tie</h3>
+                <p>Select a recommended Knot to view tying instructions.</p>
+            </div>
+            <ul class="rig-knot-application-list">${applicationsMarkup}</ul>
+        </section>
+    `;
+}
+
+/* ==========================================================
+   END RIG GUIDE — KNOT APPLICATION PRESENTATION
+   ========================================================== */
 
 function buildRigReferenceLinks(record) {
     if (!Array.isArray(record.referenceLinks) || record.referenceLinks.length === 0) return "";

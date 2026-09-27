@@ -822,6 +822,7 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .knot-line-compatibility-list { display: grid; justify-items: start; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
 .knot-line-compatibility-item { display: inline-flex; min-height: 40px; align-items: center; gap: 0; color: var(--text); font-size: .9rem; font-weight: 700; line-height: 1.3; }
 .knot-line-compatibility__label { display: inline; }
+.knot-line-compatibility__pairing-arrow { margin-inline: var(--space-1); color: var(--text-muted); font-weight: 600; }
 .knot-line-reference-button { width: 40px; min-height: 40px; margin-left: 2px; place-items: center start; padding-left: 5px; color: var(--text-muted); }
 .knot-line-reference-button:hover { background: color-mix(in srgb, var(--surface-hover) 72%, transparent); color: var(--text); }
 .knot-line-reference-button:focus-visible { outline-color: var(--accent); }

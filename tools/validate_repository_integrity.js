@@ -3849,6 +3849,34 @@ function validateCanonicalData() {
             knotLineTypes,
             `Knot ${knot.id} compatibleLineTypes`
         );
+        requireArray(knot.chooseAnotherKnot, `Knot ${knot.id} chooseAnotherKnot`);
+        if (knot.limitations !== undefined) {
+            fail("Knot decision guidance", `${knot.id}: obsolete limitations[] must be replaced by chooseAnotherKnot[]`);
+        }
+        if (knot.linePairings !== undefined) {
+            const pairings = requireArray(knot.linePairings, `Knot ${knot.id} linePairings`);
+            for (const pairing of pairings) {
+                if (!isPlainObject(pairing) || !knotLineTypes.has(pairing.from) || !knotLineTypes.has(pairing.to)) {
+                    fail("Knot line pairings", `${knot.id}: invalid line pairing`);
+                    continue;
+                }
+                if (!(knot.compatibleLineTypes ?? []).includes(pairing.from) || !(knot.compatibleLineTypes ?? []).includes(pairing.to)) {
+                    fail("Knot line pairings", `${knot.id}: pairing materials must also appear in compatibleLineTypes`);
+                }
+                if (pairing.toRole !== undefined && pairing.toRole !== "leader") {
+                    fail("Knot line pairings", `${knot.id}: unsupported pairing role ${JSON.stringify(pairing.toRole)}`);
+                }
+            }
+        }
+    }
+
+
+    const alberto = knotById.get("alberto-knot");
+    const albertoPairings = Array.isArray(alberto?.linePairings)
+        ? alberto.linePairings.map((pairing) => `${pairing.from}->${pairing.to}:${pairing.toRole ?? ""}`).sort()
+        : [];
+    if (JSON.stringify(albertoPairings) !== JSON.stringify(["braid->fluorocarbon:leader", "braid->monofilament:leader"])) {
+        fail("Knot line pairings", "Alberto must explicitly model Braid -> Monofilament/Fluorocarbon leader pairings");
     }
 
 
@@ -4044,6 +4072,20 @@ function validateReelGuidance() {
 
     if (isPlainObject(bindings.REEL_SPOOLING_GUIDANCE)) {
         expectExactIds(new Set(Object.keys(bindings.REEL_SPOOLING_GUIDANCE)), ["spinning", "spincast", "baitcasting"], "Reel spooling guidance");
+        const requiredSpoolGuidanceStages = ["prepare", "wind-backing", "wind-main-line", "check-fill"];
+        for (const [reelTypeId, guidance] of Object.entries(bindings.REEL_SPOOLING_GUIDANCE)) {
+            if (!isPlainObject(guidance?.stages)) {
+                fail("Reel spooling guidance", `${reelTypeId}: expected stage-specific guidance registry`);
+                continue;
+            }
+            expectExactIds(new Set(Object.keys(guidance.stages)), requiredSpoolGuidanceStages, `Reel spooling guidance ${reelTypeId}`);
+            for (const stageId of requiredSpoolGuidanceStages) {
+                const stageGuidance = guidance.stages[stageId];
+                if (!isPlainObject(stageGuidance) || typeof stageGuidance.title !== "string" || typeof stageGuidance.summary !== "string" || !Array.isArray(stageGuidance.items)) {
+                    fail("Reel spooling guidance", `${reelTypeId}/${stageId}: invalid stage guidance`);
+                }
+            }
+        }
     } else {
         fail("Reel spooling guidance", "expected spooling registry");
     }
@@ -4143,6 +4185,25 @@ function validateReelGuidance() {
     }
     if (!controllerSource.includes('title.insertAdjacentElement("afterend", cue)')) {
         fail("Reel Setup choice presentation", "Recommended First Setup must appear below the reel title so peer titles align");
+    }
+
+    if (!controllerSource.includes("KNOTS GUIDE — STATE + DATA ACCESS + CONTROLLERS") ||
+        !controllerSource.includes("END GET YOUR REEL READY") ||
+        !controllerSource.includes("END KNOTS GUIDE") ||
+        !rendererSource.includes("END KNOT GUIDE") ||
+        !rendererSource.includes("RIG GUIDE — KNOT APPLICATION PRESENTATION")) {
+        fail("Guide source boundaries", "Knots/Reel/Rig ownership boundaries must remain explicit in shared source files");
+    }
+    const knotRendererStart = rendererSource.indexOf("KNOT GUIDE — RESULT + LANDING + DETAIL RENDERING");
+    const knotRendererEnd = rendererSource.indexOf("END KNOT GUIDE", knotRendererStart);
+    if (knotRendererStart < 0 || knotRendererEnd < 0 || rendererSource.slice(knotRendererStart, knotRendererEnd).includes("function buildRigKnotApplications")) {
+        fail("Guide source boundaries", "Rig-owned Knot-application rendering must not live inside the Knot Guide renderer boundary");
+    }
+    if (!controllerSource.includes("getReelSpoolingStageGuidance") || controllerSource.includes("getReelSpoolingGuidance(reelSetupState.reelType)")) {
+        fail("Reel spooling presentation", "Spool screens must consume stage-specific guidance rather than repeating one reel-wide guidance block");
+    }
+    if (!controllerSource.includes("targetProfile.caution") || !controllerSource.includes('aria-label="Open ${accessibleLabel}"')) {
+        fail("Reel Setup copy/accessibility", "target cautions and explicit Reference accessible labels must be rendered");
     }
 
     const completedContextFunction = controllerSource.match(/function createCompletedReelSetupContext\(\) \{[\s\S]*?\n\}/);

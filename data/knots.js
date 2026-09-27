@@ -33,9 +33,7 @@ const KNOT_DATA = Object.freeze([
             "Securing monofilament or fluorocarbon to a reel spool before filling the reel.",
             "Securing suitable backing material to a reel spool before adding the main line."
         ],
-        limitations: [
-            "Do not assume the knot will prevent braid from slipping on a smooth spool. For braid, follow the reel manufacturer's spool guidance or use an appropriate backing system when needed."
-        ],
+        chooseAnotherKnot: [],
         tyingSteps: [
             "Run the tag end around the reel spool arbor and bring it back alongside the standing line.",
             "Use the tag end to tie an overhand knot around the standing line, leaving the knot loose enough to slide.",
@@ -45,7 +43,6 @@ const KNOT_DATA = Object.freeze([
         commonMistakes: [
             "Leaving out the second overhand stopper knot, which removes the stop that keeps the sliding knot from pulling off the tag end.",
             "Failing to seat the first overhand knot snugly against the spool arbor before beginning to wind line.",
-            "Tying braid directly to a smooth spool without confirming that the spool provides enough grip or following the reel manufacturer's braid instructions."
         ],
         finalChecks: [
             "The first overhand knot is snug against the reel spool arbor.",
@@ -83,9 +80,9 @@ const KNOT_DATA = Object.freeze([
             "A general-purpose snug connection for monofilament or fluorocarbon line to hooks, swivels, clips, and many lures.",
             "Beginner setups where a compact knot seated directly against the terminal eye is appropriate."
         ],
-        limitations: [
-            "The standard single-line Improved Clinch is not the preferred generic braid connection; braid may require a doubled-line modification or a different knot such as the Palomar.",
-            "Because the knot seats directly against the eye, it does not provide the free-moving terminal loop of a Non-Slip Loop Knot."
+        chooseAnotherKnot: [
+            "Choose the Palomar Knot when you need a terminal knot for braided line.",
+            "Choose the Non-Slip Loop Knot when you want a fixed open loop that gives a lure, jig, or fly more freedom to move."
         ],
         tyingSteps: [
             "Pass the tag end through the eye of the hook, lure, swivel, or clip.",
@@ -137,9 +134,8 @@ const KNOT_DATA = Object.freeze([
             "Braid-capable freshwater setups where a compact doubled-line connection is useful.",
             "Drop-shot and other applications where leaving a longer tag end after tying is useful."
         ],
-        limitations: [
-            "The entire hook, lure, or swivel must pass through the large doubled loop, which can be awkward with bulky terminal tackle.",
-            "The doubled strands must remain uncrossed while the knot is formed and tightened."
+        chooseAnotherKnot: [
+            "Choose another compatible terminal knot when the hook, lure, or swivel is too bulky or awkward to pass through the Palomar's doubled loop."
         ],
         tyingSteps: [
             "Double the end of the line and pass the doubled section through the terminal eye.",
@@ -193,9 +189,8 @@ const KNOT_DATA = Object.freeze([
             "Connecting braided main line to monofilament or fluorocarbon leader.",
             "Connecting backing, main line, or leader when a straightforward beginner line-to-line knot is preferred."
         ],
-        limitations: [
-            "The connection is less suitable when the two lines differ dramatically in diameter; a more specialized connection such as the Alberto may be preferable in that situation.",
-            "Braided line needs more wraps than ordinary monofilament or fluorocarbon; use the higher braid wrap count shown in the tying steps."
+        chooseAnotherKnot: [
+            "Choose the Alberto Knot for a braid-to-monofilament or braid-to-fluorocarbon leader connection when the two lines differ dramatically in diameter."
         ],
         tyingSteps: [
             "Overlap the two lines by several inches so there is enough tag length to form a knot on each side.",
@@ -206,7 +201,7 @@ const KNOT_DATA = Object.freeze([
         ],
         commonMistakes: [
             "Using too few wraps on the braided side of a braid-to-leader connection.",
-            "Fully cinching each Uni knot in place before the two knot bodies have been allowed to slide together.",
+            "Tightening either Uni knot completely before sliding the two knots together.",
             "Letting wraps cross or bunch unevenly instead of forming orderly coils around both lines."
         ],
         finalChecks: [
@@ -250,9 +245,8 @@ const KNOT_DATA = Object.freeze([
             "A reel-spool attachment option when the selected line and spool design provide an appropriate grip.",
             "Anglers who want one basic knot pattern that also forms the building block of the Double Uni."
         ],
-        limitations: [
-            "Direct braid-to-smooth-spool attachment remains equipment-specific; use reel-manufacturer guidance or backing when the spool does not provide secure braid grip.",
-            "For joining two separate lines, use the Double Uni form rather than treating a single Uni knot as the complete line-to-line connection."
+        chooseAnotherKnot: [
+            "Choose the Double Uni Knot when you need to join two separate lines; a single Uni is not the complete line-to-line connection."
         ],
         tyingSteps: [
             "Pass the tag end through the terminal eye, or around the reel spool arbor for spool attachment, and bring it back parallel to the standing line.",
@@ -304,10 +298,9 @@ const KNOT_DATA = Object.freeze([
             "A quick beginner line-to-line connection using monofilament or fluorocarbon.",
             "Joining leader or tippet sections of similar or different diameters when enough free line is available to pass through the loop twice."
         ],
-        limitations: [
-            "One side of the connection must have enough free length to pass through the formed loop twice.",
-            "The finished connection is bulkier and less clean than some more complex line-to-line knots.",
-            "This is not the preferred braid-focused connection; Double Uni or Alberto provides clearer braid-specific guidance."
+        chooseAnotherKnot: [
+            "Choose another line-to-line knot when you do not have enough free line to pass one side through the loop twice.",
+            "Choose the Double Uni or Alberto when you need a braid-to-leader connection with braid-specific tying guidance."
         ],
         tyingSteps: [
             "Lay the two lines parallel and overlap them by several inches.",
@@ -359,26 +352,24 @@ const KNOT_DATA = Object.freeze([
             "Lures, jigs, and flies that benefit from a fixed open loop at the terminal eye.",
             "Presentations where a snug terminal knot would unnecessarily restrict lure or bait movement."
         ],
-        limitations: [
-            "A lure that already uses a split ring often does not need an additional free-moving loop connection.",
-            "The correct wrap count varies with unusually light or heavy leader material; the five-wrap method shown here targets common freshwater line sizes.",
-            "This terminal-loop method is intended for monofilament and fluorocarbon rather than braid."
+        chooseAnotherKnot: [
+            "Choose a snug terminal knot instead when the lure already has a split ring and you do not need an additional open loop."
         ],
         tyingSteps: [
             "Tie a loose overhand knot in the line, leaving enough tag end to complete the connection, then pass the tag end through the terminal eye.",
-            "Bring the tag end back through the original overhand knot in the correct routing direction and set the desired terminal-loop size.",
+            "Bring the tag end back through the original overhand knot from the same side it first exited, then set the desired terminal-loop size.",
             "Wrap the tag end around the standing line five times.",
-            "Pass the tag end back through the original overhand knot using the same routing orientation established by the earlier passes.",
+            "Pass the tag end back through the original overhand knot from the same side used on the earlier return pass.",
             "Moisten the knot and pull the tag end and standing line in opposite directions to seat the knot while keeping the terminal loop open, then trim the excess tag end."
         ],
         commonMistakes: [
-            "Routing the tag end through the original overhand knot from the wrong side, which changes the intended knot geometry.",
+            "Routing the tag end back through the original overhand knot from the wrong side, so the knot cannot form in the intended path.",
             "Allowing the wraps to cross or bunch instead of forming an orderly series around the standing line.",
             "Pulling the knot in a way that collapses the intended terminal loop instead of leaving a fixed open loop."
         ],
         finalChecks: [
             "A fixed loop remains visibly open between the knot and terminal eye.",
-            "The wraps are compact and the repeated passes through the original overhand knot follow the same intended routing.",
+            "The wraps are compact and both return passes through the original overhand knot enter from the same side.",
             "The loop does not slide closed when the standing line and terminal item are pulled firmly apart."
         ],
         referenceLinks: [
@@ -411,9 +402,8 @@ const KNOT_DATA = Object.freeze([
             "Creating a branch loop in monofilament leader for multi-hook, multi-jig, or bottom-fishing rigs.",
             "Building an in-line attachment point that stands away from the main leader."
         ],
-        limitations: [
-            "This is a branch loop formed in the middle of a line or leader, not a free-moving terminal loop for tying a lure directly to the end of the line.",
-            "Use monofilament leader for this method; the supporting application guidance is based on monofilament leader systems."
+        chooseAnotherKnot: [
+            "Choose the Non-Slip Loop Knot when you need a free-moving terminal loop at the end of the line. The Dropper Loop creates a branch loop in the middle of a line or leader."
         ],
         tyingSteps: [
             "Form a fairly large loop in the line at the location where the branch is needed.",
@@ -423,7 +413,7 @@ const KNOT_DATA = Object.freeze([
         ],
         commonMistakes: [
             "Letting the central opening close before the original branch loop is passed through it.",
-            "Pulling the wrong section through the central opening so a clean branch loop is not formed.",
+            "Pushing one of the standing-line sections through the central opening instead of the original branch loop.",
             "Allowing the wraps to cross or tightening only one standing-line side instead of seating the coils evenly."
         ],
         finalChecks: [
@@ -463,10 +453,8 @@ const KNOT_DATA = Object.freeze([
             "Hooks and presentations designed to benefit from a line connection aligned with the hook shank.",
             "Circle, octopus, flipping, tandem-hook, and other hook-specific applications where a snelled connection is appropriate."
         ],
-        limitations: [
-            "The Snell is a hook-specific connection rather than a general knot for attaching swivels or lures.",
-            "Several legitimate Snell variants exist. This page teaches the traditional loop-wrapped Snell method rather than combining multiple Snell geometries.",
-            "This method assumes an eyed hook; hook-eye orientation and hook design should be appropriate for the intended snelled presentation."
+        chooseAnotherKnot: [
+            "Choose a general terminal knot such as the Improved Clinch, Palomar, or Uni when attaching a lure, swivel, or clip; the Snell is a hook-specific connection."
         ],
         tyingSteps: [
             "Pass the leader through the hook eye, then pass it through the eye a second time in the same direction, leaving a large loop beside the hook.",
@@ -513,6 +501,10 @@ const KNOT_DATA = Object.freeze([
             "fluorocarbon",
             "braid"
         ],
+        linePairings: [
+            Object.freeze({ from: "braid", to: "monofilament", toRole: "leader" }),
+            Object.freeze({ from: "braid", to: "fluorocarbon", toRole: "leader" })
+        ],
         aliases: [
             "Crazy Alberto Knot"
         ],
@@ -520,10 +512,9 @@ const KNOT_DATA = Object.freeze([
             "Connecting braided main line to a monofilament or fluorocarbon leader.",
             "Braid-to-leader connections where the line materials or diameters differ enough that a more specialized knot is useful."
         ],
-        limitations: [
-            "The Alberto is specialized for braid-to-monofilament or braid-to-fluorocarbon leader connections rather than being a general-purpose same-material splice.",
-            "It requires more careful wrap organization and tag-end routing than the Double Uni.",
-            "The braid tag must leave the leader loop in the same direction it entered; incorrect exit routing changes the knot geometry."
+        chooseAnotherKnot: [
+            "Choose the Double Uni when you want a more general line-to-line connection, especially when the lines are similar or only moderately different in diameter.",
+            "Choose a simpler line-to-line knot if you do not need the Alberto's specialized braid-to-leader connection and want fewer wraps and routing steps."
         ],
         tyingSteps: [
             "Fold the end of the monofilament or fluorocarbon leader to form a loop, then pass the braid tag end through that loop.",
@@ -534,7 +525,7 @@ const KNOT_DATA = Object.freeze([
             "Pull firmly on the main braid and leader to seat the knot completely, then trim both tag ends."
         ],
         commonMistakes: [
-            "Passing the braid tag back through the leader loop in the opposite direction from its original entry.",
+            "Passing the braid tag back through the leader loop from the opposite side instead of exiting on the same side where it entered.",
             "Allowing the return wraps to cross, loosen, or spread unevenly instead of forming a compact up-and-back wrap column.",
             "Pulling only the standing lines before the wrap column has been organized and tightened with all four line sections."
         ],

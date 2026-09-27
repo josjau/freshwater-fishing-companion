@@ -89,7 +89,7 @@ const REEL_LINE_TYPE_GUIDANCE = Object.freeze({
         identificationCue: "Usually one smooth strand that feels softer and stretchier than fluorocarbon.",
         beginnerGuidance: "Easy beginner choice: monofilament is manageable, knot-friendly, and its stretch makes it forgiving while you learn.",
         tradeoff: "The extra stretch reduces sensitivity compared with braid and some fluorocarbon setups.",
-        weightInterpretation: "For this beginner workflow, the approved target starting references below are Monofilament values. Confirm the actual pound-test you will spool.",
+        weightInterpretation: "The target starting reference shown here is for Monofilament. Confirm the actual pound-test you intend to spool.",
         recommendedFirstSetup: true
     }),
     fluorocarbon: Object.freeze({
@@ -136,7 +136,7 @@ const REEL_TARGET_FISH_PROFILES = Object.freeze([
         description: "A beginner starting point for common freshwater bass fishing.",
         strengthReference: "8–12 lb",
         monofilamentStartWeight: 10,
-        guidance: "Ten-pound Monofilament is the approved beginner starting reference for the broad Bass path.",
+        guidance: "Ten-pound Monofilament is a practical beginner starting point for general Bass fishing.",
         caution: "Heavy vegetation, wood, or specialized presentations can require substantially heavier line later."
     }),
     Object.freeze({
@@ -145,7 +145,7 @@ const REEL_TARGET_FISH_PROFILES = Object.freeze([
         description: "A heavier rod-and-reel starting point for general catfish fishing rather than trophy-specific tackle.",
         strengthReference: "15–20 lb",
         monofilamentStartWeight: 20,
-        guidance: "Twenty-pound Monofilament is the approved broad beginner starting reference for general Catfish fishing.",
+        guidance: "Twenty-pound Monofilament is a practical beginner starting point for general Catfish fishing.",
         caution: "Large blue or flathead catfish, strong current, or heavy cover can require much heavier specialized gear."
     }),
     Object.freeze({
@@ -154,7 +154,7 @@ const REEL_TARGET_FISH_PROFILES = Object.freeze([
         description: "A light-line starting point for crappie, bluegill, and similar small freshwater fish.",
         strengthReference: "4–6 lb",
         monofilamentStartWeight: 6,
-        guidance: "Six-pound Monofilament is the approved beginner starting reference for this light-tackle category.",
+        guidance: "Six-pound Monofilament is a practical beginner starting point for this light-tackle category.",
         caution: "Heavy cover or frequent snags may justify moving heavier after checking the equipment you own."
     }),
     Object.freeze({
@@ -163,7 +163,7 @@ const REEL_TARGET_FISH_PROFILES = Object.freeze([
         description: "A light-line starting point for common stocked and stream trout situations.",
         strengthReference: "2–4 lb",
         monofilamentStartWeight: 4,
-        guidance: "Four-pound Monofilament is the approved beginner starting reference at the more forgiving end of this light-line range.",
+        guidance: "Four-pound Monofilament is a practical beginner starting point at the more forgiving end of this light-line range.",
         caution: "Use a properly set drag and confirm your equipment is designed for line this light."
     }),
     Object.freeze({
@@ -172,7 +172,7 @@ const REEL_TARGET_FISH_PROFILES = Object.freeze([
         description: "A medium-light starting point for common Walleye and Sauger-family approaches.",
         strengthReference: "6–10 lb",
         monofilamentStartWeight: 8,
-        guidance: "Eight-pound Monofilament is the approved beginner starting reference for the broad Walleye path.",
+        guidance: "Eight-pound Monofilament is a practical beginner starting point for general Walleye and Sauger fishing.",
         caution: "Technique, depth, cover, and later leader or presentation choices can change the final system."
     })
 ]);
@@ -212,7 +212,7 @@ const REEL_EQUIPMENT_GUIDANCE = Object.freeze({
     mismatch: Object.freeze({
         id: "mismatch",
         title: "If the Ratings Don't Match",
-        summary: "FCC does not know your exact models, so manufacturer and equipment markings are the final guide.",
+        summary: "Use the markings and manufacturer specifications for your exact rod and reel as the final guide.",
         items: Object.freeze([
             "Go back and choose a line that fits both the reel capacity guidance and the rod line rating, or change the equipment before spooling.",
             "If the reel lists capacity by diameter instead of pound-test, compare the diameter printed on the line package or manufacturer specification.",
@@ -238,93 +238,190 @@ const REEL_BACKING_CHOICES = Object.freeze({
 const REEL_SPOOLING_GUIDANCE = Object.freeze({
     spinning: Object.freeze({
         title: "Spool Your Spinning Reel",
-        summary: "Feed line onto the fixed spool under steady tension while controlling line twist and stopping short of the spool lip.",
-        items: Object.freeze([
-            Object.freeze({
-                text: "Route the line through the first rod guide above the reel before winding so the line approaches the reel in the normal path.",
-                emphasis: Object.freeze(["Route the line through the first rod guide above the reel before winding"])
+        stages: Object.freeze({
+            prepare: Object.freeze({
+                title: "Prepare Your Spinning Reel",
+                summary: "Set the line path and bail position before making the spool connection.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Route the line through the first rod guide above the reel before winding so the line approaches the reel in the normal path.",
+                        emphasis: Object.freeze(["Route the line through the first rod guide above the reel before winding"])
+                    }),
+                    Object.freeze({
+                        text: "Open the bail before securing the line to the spool. After the spool connection is complete, close the bail before you begin winding.",
+                        emphasis: Object.freeze(["Open the bail before securing the line to the spool.", "close the bail before you begin winding"])
+                    })
+                ])
             }),
-            Object.freeze({
-                text: "Open the bail before securing the line to the spool. After the spool connection is complete, close the bail before you begin winding.",
-                emphasis: Object.freeze(["Open the bail before securing the line to the spool.", "close the bail before you begin winding"])
+            "wind-backing": Object.freeze({
+                title: "Wind the Backing",
+                summary: "Pack the Monofilament backing evenly under steady pressure before joining it to Braid.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Keep steady pressure on the incoming Monofilament with your fingers or a soft cloth so the backing lays evenly without loose coils.",
+                        emphasis: Object.freeze(["Keep steady pressure on the incoming Monofilament"])
+                    }),
+                    Object.freeze({
+                        text: "If the backing begins to twist or form loose coils, pause and correct the feed before continuing to the backing-to-Braid connection.",
+                        emphasis: Object.freeze(["pause and correct the feed"])
+                    })
+                ])
             }),
-            Object.freeze({
-                text: "For monofilament or fluorocarbon, start with the filler spool lying flat so the line comes off counterclockwise. After about 15 handle turns, pause and check for coils or twist; if twist forms, flip the filler spool and continue. Braid does not rely on the same memory-direction check, but it should still feed cleanly without loose loops.",
-                emphasis: Object.freeze(["start with the filler spool lying flat so the line comes off counterclockwise", "pause and check for coils or twist", "flip the filler spool and continue"])
+            "wind-main-line": Object.freeze({
+                title: "Wind the Main Line",
+                summary: "Feed the selected main line onto the fixed spool under steady tension while controlling twist.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "For monofilament or fluorocarbon, start with the filler spool lying flat so the line comes off counterclockwise. After about 15 handle turns, pause and check for coils or twist; if twist forms, flip the filler spool and continue. Braid does not rely on the same memory-direction check, but it should still feed cleanly without loose loops.",
+                        emphasis: Object.freeze(["start with the filler spool lying flat so the line comes off counterclockwise", "pause and check for coils or twist", "flip the filler spool and continue"])
+                    }),
+                    Object.freeze({
+                        text: "Keep steady pressure on the incoming line with your fingers or a soft cloth so the line packs evenly without slack.",
+                        emphasis: Object.freeze(["Keep steady pressure on the incoming line"])
+                    })
+                ])
             }),
-            Object.freeze({
-                text: "Keep steady pressure on the incoming line with your fingers or a soft cloth so the line packs evenly without slack.",
-                emphasis: Object.freeze(["Keep steady pressure on the incoming line"])
-            }),
-            Object.freeze({
-                text: "Stop when the line is about 1/8 inch below the spool's outer lip. Do not fill the line flush with or beyond the lip.",
-                emphasis: Object.freeze(["Stop when the line is about 1/8 inch below the spool's outer lip."])
-            }),
-            Object.freeze({
-                text: "If the exact reel manufacturer's instructions specify a different line-loading method or fill level, follow the instructions for that reel model.",
-                emphasis: Object.freeze(["follow the instructions for that reel model"])
+            "check-fill": Object.freeze({
+                title: "Check the Fill",
+                summary: "Stop before the line reaches the spool lip and use the reel maker's fill guidance when available.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Stop when the line is about 1/8 inch below the spool's outer lip. Do not fill the line flush with or beyond the lip.",
+                        emphasis: Object.freeze(["Stop when the line is about 1/8 inch below the spool's outer lip."])
+                    }),
+                    Object.freeze({
+                        text: "If the exact reel manufacturer's instructions specify a different line-loading method or fill level, follow the instructions for that reel model.",
+                        emphasis: Object.freeze(["follow the instructions for that reel model"])
+                    })
+                ])
             })
-        ])
+        })
     }),
     spincast: Object.freeze({
         title: "Spool Your Spincast Reel",
-        summary: "Use the reel's front-cover line path, wind slowly under light tension, and inspect the hidden spool as it fills.",
-        items: Object.freeze([
-            Object.freeze({
-                text: "Remove the front cover using the method specified for your reel, and feed the line through the cover opening before the line is secured to the spool.",
-                emphasis: Object.freeze(["feed the line through the cover opening before the line is secured to the spool"])
+        stages: Object.freeze({
+            prepare: Object.freeze({
+                title: "Prepare Your Spincast Reel",
+                summary: "Open the front cover and establish the correct line path before making the spool connection.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Remove the front cover using the method specified for your reel, and feed the line through the cover opening before the line is secured to the spool.",
+                        emphasis: Object.freeze(["feed the line through the cover opening before the line is secured to the spool"])
+                    }),
+                    Object.freeze({
+                        text: "After the spool connection is complete, reattach the front cover before normal winding so the pickup system can guide line onto the enclosed spool.",
+                        emphasis: Object.freeze(["reattach the front cover before normal winding"])
+                    })
+                ])
             }),
-            Object.freeze({
-                text: "Reattach the front cover before normal winding so the reel's pickup system guides line onto the enclosed spool. If your setup uses backing and a backing-to-main-line connection, follow the exact reel's line-change procedure so the connection passes cleanly through the cover and pickup system.",
-                emphasis: Object.freeze(["Reattach the front cover before normal winding", "follow the exact reel's line-change procedure"])
+            "wind-backing": Object.freeze({
+                title: "Wind the Backing",
+                summary: "Wind the backing slowly under light, steady tension so it lays evenly on the enclosed spool.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Hold the incoming Monofilament between your thumb and forefinger with light, steady tension and wind slowly so the backing lays on without loose coils.",
+                        emphasis: Object.freeze(["light, steady tension", "wind slowly"])
+                    }),
+                    Object.freeze({
+                        text: "When the backing layer is ready, follow the reel's line-change procedure so the backing-to-Braid connection passes cleanly through the cover and pickup system.",
+                        emphasis: Object.freeze(["passes cleanly through the cover and pickup system"])
+                    })
+                ])
             }),
-            Object.freeze({
-                text: "Use only a line type and size that the actual spincast reel supports. Braided line may not work correctly on some spincast reels even when it works on other reel types.",
-                emphasis: Object.freeze(["Use only a line type and size that the actual spincast reel supports.", "Braided line may not work correctly on some spincast reels"])
+            "wind-main-line": Object.freeze({
+                title: "Wind the Main Line",
+                summary: "Wind slowly under light tension and make sure the selected line is supported by the actual reel.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Use only a line type and size that the actual spincast reel supports. Braided line may not work correctly on some spincast reels even when it works on other reel types.",
+                        emphasis: Object.freeze(["Use only a line type and size that the actual spincast reel supports.", "Braided line may not work correctly on some spincast reels"])
+                    }),
+                    Object.freeze({
+                        text: "Hold the incoming line between your thumb and forefinger with light, steady tension and wind slowly so the line lays on without loose coils.",
+                        emphasis: Object.freeze(["light, steady tension", "wind slowly"])
+                    })
+                ])
             }),
-            Object.freeze({
-                text: "Hold the incoming line between your thumb and forefinger with light, steady tension and wind slowly so the line lays on without loose coils.",
-                emphasis: Object.freeze(["light, steady tension", "wind slowly"])
-            }),
-            Object.freeze({
-                text: "Periodically remove the front cover and inspect the spool. Stop when the line is about 1/8 inch below the top of the spool rather than filling it completely to the edge.",
-                emphasis: Object.freeze(["Periodically remove the front cover and inspect the spool.", "Stop when the line is about 1/8 inch below the top of the spool"])
-            }),
-            Object.freeze({
-                text: "If the exact reel manufacturer's instructions differ, use the model-specific cover, routing, and fill procedure.",
-                emphasis: Object.freeze(["use the model-specific cover, routing, and fill procedure"])
+            "check-fill": Object.freeze({
+                title: "Check the Fill",
+                summary: "Inspect the hidden spool before it becomes overfilled.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Periodically remove the front cover and inspect the spool. Stop when the line is about 1/8 inch below the top of the spool rather than filling it completely to the edge.",
+                        emphasis: Object.freeze(["Periodically remove the front cover and inspect the spool.", "Stop when the line is about 1/8 inch below the top of the spool"])
+                    }),
+                    Object.freeze({
+                        text: "If the exact reel manufacturer's instructions differ, use the model-specific cover, routing, and fill procedure.",
+                        emphasis: Object.freeze(["use the model-specific cover, routing, and fill procedure"])
+                    })
+                ])
             })
-        ])
+        })
     }),
     baitcasting: Object.freeze({
         title: "Spool Your Baitcasting Reel",
-        summary: "Feed line straight through the reel's line guide, pack it firmly and evenly, and leave a small margin below the spool edge.",
-        items: Object.freeze([
-            Object.freeze({
-                text: "Route the line through the rod guides and through the baitcaster's line guide before it reaches the spool. Do not bypass the reel's line guide.",
-                emphasis: Object.freeze(["through the baitcaster's line guide", "Do not bypass the reel's line guide."])
+        stages: Object.freeze({
+            prepare: Object.freeze({
+                title: "Prepare Your Baitcasting Reel",
+                summary: "Route the line through the normal rod and reel path before making the spool connection.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Route the line through the rod guides and through the baitcaster's line guide before it reaches the spool. Do not bypass the reel's line guide.",
+                        emphasis: Object.freeze(["through the baitcaster's line guide", "Do not bypass the reel's line guide."])
+                    })
+                ])
             }),
-            Object.freeze({
-                text: "Keep the filler spool upright on its edge so the line feeds off the top of the filler spool and travels straight toward the reel.",
-                emphasis: Object.freeze(["Keep the filler spool upright on its edge", "line feeds off the top of the filler spool"])
+            "wind-backing": Object.freeze({
+                title: "Wind the Backing",
+                summary: "Feed the backing straight toward the reel and pack it firmly and evenly.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Keep the filler spool upright on its edge so the line feeds off the top of the filler spool and travels straight toward the reel.",
+                        emphasis: Object.freeze(["Keep the filler spool upright on its edge", "line feeds off the top of the filler spool"])
+                    }),
+                    Object.freeze({
+                        text: "Apply constant, firm pressure to the incoming line while winding so it packs tightly and evenly. Use a soft cloth or towel instead of bare fingers when greater pressure is needed.",
+                        emphasis: Object.freeze(["Apply constant, firm pressure to the incoming line", "packs tightly and evenly"])
+                    }),
+                    Object.freeze({
+                        text: "Winding tension here means pressure on the incoming fishing line. It is not an instruction to change the reel's casting spool-tension knob or braking system.",
+                        emphasis: Object.freeze(["Winding tension here means pressure on the incoming fishing line.", "not an instruction to change the reel's casting spool-tension knob or braking system"])
+                    })
+                ])
             }),
-            Object.freeze({
-                text: "Apply constant, firm pressure to the incoming line while winding so it packs tightly and evenly. Use a soft cloth or towel instead of bare fingers when greater pressure is needed, especially with braid.",
-                emphasis: Object.freeze(["Apply constant, firm pressure to the incoming line", "packs tightly and evenly"])
+            "wind-main-line": Object.freeze({
+                title: "Wind the Main Line",
+                summary: "Feed the main line straight toward the reel and pack it firmly and evenly.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Keep the filler spool upright on its edge so the line feeds off the top of the filler spool and travels straight toward the reel.",
+                        emphasis: Object.freeze(["Keep the filler spool upright on its edge", "line feeds off the top of the filler spool"])
+                    }),
+                    Object.freeze({
+                        text: "Apply constant, firm pressure to the incoming line while winding so it packs tightly and evenly. Use a soft cloth or towel instead of bare fingers when greater pressure is needed, especially with braid.",
+                        emphasis: Object.freeze(["Apply constant, firm pressure to the incoming line", "packs tightly and evenly"])
+                    }),
+                    Object.freeze({
+                        text: "Winding tension here means pressure on the incoming fishing line. It is not an instruction to change the reel's casting spool-tension knob or braking system.",
+                        emphasis: Object.freeze(["Winding tension here means pressure on the incoming fishing line.", "not an instruction to change the reel's casting spool-tension knob or braking system"])
+                    })
+                ])
             }),
-            Object.freeze({
-                text: "Winding tension here means pressure on the incoming fishing line. It is not an instruction to change the reel's casting spool-tension knob or braking system.",
-                emphasis: Object.freeze(["Winding tension here means pressure on the incoming fishing line.", "not an instruction to change the reel's casting spool-tension knob or braking system"])
-            }),
-            Object.freeze({
-                text: "Stop when the line is about 1/8 inch below the spool's outer edge or at the reel manufacturer's specified fill mark. Underfilling reduces performance; overfilling increases the chance of line-control problems.",
-                emphasis: Object.freeze(["Stop when the line is about 1/8 inch below the spool's outer edge or at the reel manufacturer's specified fill mark."])
-            }),
-            Object.freeze({
-                text: "If the exact reel manufacturer's instructions specify a different attachment, line-feed, or fill method, follow that model-specific guidance.",
-                emphasis: Object.freeze(["follow that model-specific guidance"])
+            "check-fill": Object.freeze({
+                title: "Check the Fill",
+                summary: "Leave a small margin below the spool edge unless the reel maker specifies a different fill mark.",
+                items: Object.freeze([
+                    Object.freeze({
+                        text: "Stop when the line is about 1/8 inch below the spool's outer edge or at the reel manufacturer's specified fill mark. Underfilling reduces performance; overfilling increases the chance of line-control problems.",
+                        emphasis: Object.freeze(["Stop when the line is about 1/8 inch below the spool's outer edge or at the reel manufacturer's specified fill mark."])
+                    }),
+                    Object.freeze({
+                        text: "If the exact reel manufacturer's instructions specify a different attachment, line-feed, or fill method, follow that model-specific guidance.",
+                        emphasis: Object.freeze(["follow that model-specific guidance"])
+                    })
+                ])
             })
-        ])
+        })
     })
 });
 
@@ -343,7 +440,7 @@ const REEL_SPOOL_PATHS = Object.freeze({
         stages: Object.freeze([
             Object.freeze({ id: "prepare", title: "Prepare the Reel", description: "Use the reel-specific routing guidance before making the spool connection." }),
             Object.freeze({ id: "attach-backing", title: "Attach the Backing", description: "Attach Monofilament backing to the spool with the Arbor Knot.", knotId: "arbor-knot", knotActionLabel: "Tie Arbor Knot" }),
-            Object.freeze({ id: "wind-backing", title: "Wind the Backing", description: "Wind a secure backing layer. Use the exact reel capacity guidance; FCC does not invent a universal backing length or pound-test." }),
+            Object.freeze({ id: "wind-backing", title: "Wind the Backing", description: "Wind a secure backing layer using the reel's capacity guidance. Backing length and pound-test vary by reel, so use the exact reel or spool instructions when available." }),
             Object.freeze({ id: "connect-main-line", title: "Connect Backing to Braid", description: "Join the Monofilament backing to the confirmed Braid with the Double Uni Knot.", knotId: "double-uni-knot", knotActionLabel: "Tie Double Uni Knot" }),
             Object.freeze({ id: "wind-main-line", title: "Wind the Braid", description: "Wind the confirmed Braid under steady tension using the reel-specific procedure." }),
             Object.freeze({ id: "check-fill", title: "Check the Fill", description: "Stop short of overfill and use the exact reel manufacturer's fill mark or instructions when available." })
@@ -353,7 +450,7 @@ const REEL_SPOOL_PATHS = Object.freeze({
         id: "direct-braid",
         stages: Object.freeze([
             Object.freeze({ id: "prepare", title: "Prepare the Reel", description: "Use the reel-specific routing guidance before making the spool connection." }),
-            Object.freeze({ id: "attach-main-line", title: "Use the Manufacturer-Supported Attachment", description: "Follow the exact reel or spool manufacturer's secure direct-Braid method. FCC does not present the Arbor Knot as a generic direct-Braid solution." }),
+            Object.freeze({ id: "attach-main-line", title: "Use the Manufacturer-Supported Attachment", description: "Follow the exact reel or spool manufacturer's secure direct-Braid method instead of using a generic Arbor Knot attachment." }),
             Object.freeze({ id: "wind-main-line", title: "Wind the Braid", description: "Wind the confirmed Braid under steady tension using the reel-specific procedure." }),
             Object.freeze({ id: "check-fill", title: "Check the Fill", description: "Stop short of overfill and use the exact reel manufacturer's fill mark or instructions when available." })
         ])
@@ -362,17 +459,17 @@ const REEL_SPOOL_PATHS = Object.freeze({
 
 const REEL_LEADER_REFERENCE_GUIDANCE = Object.freeze({
     title: "What Is a Leader?",
-    summary: "A leader is a separate terminal section between the main line and the later Rig or lure. A leader is not required to finish spooling the reel.",
+    summary: "A leader is a separate terminal section between the main line and a Rig, lure, or other terminal connection. A leader is not required to finish spooling the reel.",
     items: Object.freeze([
         "Anglers may use a leader to change visibility, abrasion resistance, stretch, or buoyancy near the terminal presentation.",
         "Fluorocarbon is lower visibility underwater and abrasion resistant but sinks more readily; Monofilament is easy to knot, stretches more, and is more buoyant.",
-        "Braid users commonly consider a leader because Braid is visible and has very little stretch, but the correct leader material, strength, length, and connection depend on the later Rig, target, cover, and conditions.",
-        "Choose and build a leader later when the actual Rig or presentation provides enough context. Reel Ready does not require one."
+        "Braid users commonly consider a leader because Braid is visible and has very little stretch, but the right leader material, strength, length, and connection depend on the Rig, target, cover, and conditions.",
+        "Choose and build a leader after spooling when the actual Rig or presentation provides enough context. A leader is not part of the Reel Ready requirement."
     ])
 });
 
 const REEL_READY_GUIDANCE = Object.freeze({
-    title: "Reel Ready",
+    title: "Final Checks",
     summary: "Your reel is ready when the completed reel + main-line + backing system is correctly routed, securely connected, and properly filled. This does not mean a terminal Rig, leader, bait, or lure is attached.",
     items: Object.freeze([
         Object.freeze({

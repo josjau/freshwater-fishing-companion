@@ -135,11 +135,20 @@ const KNOT_SEARCH_INTENTS = Object.freeze([
     Object.freeze({
         id: "specific-palomar",
         kind: "specific",
-        terms: Object.freeze([
-            "braid knot",
-            "drop shot knot"
-        ]),
+        terms: Object.freeze(["drop shot knot"]),
         knotIds: Object.freeze(["palomar-knot"])
+    }),
+    Object.freeze({
+        id: "specific-braid-capable",
+        kind: "specific",
+        terms: Object.freeze(["braid knot"]),
+        knotIds: Object.freeze([
+            "palomar-knot",
+            "double-uni-knot",
+            "uni-knot",
+            "snell-knot",
+            "alberto-knot"
+        ])
     }),
     Object.freeze({
         id: "specific-uni",
@@ -182,6 +191,7 @@ const KNOT_SEARCH_INTENTS = Object.freeze([
         kind: "specific",
         terms: Object.freeze(["leader knot"]),
         knotIds: Object.freeze([
+            "double-uni-knot",
             "double-surgeons-knot",
             "alberto-knot"
         ])
@@ -235,10 +245,19 @@ const KNOT_SEARCH_INTENTS = Object.freeze([
         terms: Object.freeze([
             "alberto knot",
             "crazy alberto",
-            "braid to mono",
-            "connect different diameter lines"
+            "braid to mono"
         ]),
         knotIds: Object.freeze(["alberto-knot"])
+    }),
+    Object.freeze({
+        id: "specific-different-diameter-lines",
+        kind: "specific",
+        terms: Object.freeze(["connect different diameter lines"]),
+        knotIds: Object.freeze([
+            "double-uni-knot",
+            "double-surgeons-knot",
+            "alberto-knot"
+        ])
     }),
     Object.freeze({
         id: "practical-attach-line-to-reel",
@@ -263,14 +282,6 @@ const KNOT_SEARCH_INTENTS = Object.freeze([
         kind: "practical",
         terms: Object.freeze([
             "tie on hook swivel or lure",
-            "tie hook",
-            "tie on hook",
-            "hook knot",
-            "tie lure",
-            "tie on lure",
-            "lure knot",
-            "tie swivel",
-            "tie clip",
             "terminal attachment"
         ]),
         knotIds: Object.freeze([
@@ -278,6 +289,38 @@ const KNOT_SEARCH_INTENTS = Object.freeze([
             "palomar-knot",
             "uni-knot",
             "snell-knot"
+        ])
+    }),
+    Object.freeze({
+        id: "practical-hook-attachment",
+        kind: "practical",
+        terms: Object.freeze([
+            "tie hook",
+            "tie on hook",
+            "hook knot"
+        ]),
+        knotIds: Object.freeze([
+            "improved-clinch-knot",
+            "palomar-knot",
+            "uni-knot",
+            "snell-knot"
+        ])
+    }),
+    Object.freeze({
+        id: "practical-lure-swivel-attachment",
+        kind: "practical",
+        terms: Object.freeze([
+            "tie lure",
+            "tie on lure",
+            "lure knot",
+            "tie swivel",
+            "swivel knot",
+            "tie clip"
+        ]),
+        knotIds: Object.freeze([
+            "improved-clinch-knot",
+            "palomar-knot",
+            "uni-knot"
         ])
     }),
     Object.freeze({

@@ -100,13 +100,8 @@ let dashboardMarkup = "";
 let selectedRigId = null;
 let selectedRigCollectionKey = "all";
 let selectedRigConfigurationId = null;
-let selectedKnotId = null;
-let selectedKnotBrowseKey = "all";
-let selectedKnotTaskId = null;
-let selectedKnotDetailSource = "guide";
 let selectedRegulationStateId = null;
 let regulationsGatewayState = { query: "" };
-let reelSetupState = createInitialReelSetupState();
 let detailNavigationStack = [];
 
 function clearDetailNavigationStack() {
@@ -908,6 +903,10 @@ function openRigDetailFromFish(rigId, lureBaitId = null) {
    END FISH GUIDE
    ========================================================== */
 
+/* ==========================================================
+   RIG GUIDE — REEL SETUP HANDOFF PRESENTATION + CONTROLLERS
+   ========================================================== */
+
 function getRigReelSetupContextLines() {
     if (!completedReelSetupContext) return [];
 
@@ -1274,6 +1273,14 @@ function updateRigReadinessSelection(rigId, selectionId, isOwned) {
     saveReadinessState(state);
 }
 
+/* ==========================================================
+   END RIG GUIDE
+   ========================================================== */
+
+/* ==========================================================
+   RECOMMENDATIONS — CONTROLLER
+   ========================================================== */
+
 function renderRecommendationsView(appMain) {
     renderView(appMain, {
         headingId: "recommendations-title",
@@ -1288,6 +1295,14 @@ function renderRecommendationsView(appMain) {
     });
 }
 
+/* ==========================================================
+   END RECOMMENDATIONS
+   ========================================================== */
+
+/* ==========================================================
+   TACKLE — CONTROLLER
+   ========================================================== */
+
 function renderTackleView(appMain) {
     renderView(appMain, {
         headingId: "tackle-title",
@@ -1301,6 +1316,22 @@ function renderTackleView(appMain) {
     });
 }
 
+
+/* ==========================================================
+   END TACKLE
+   ========================================================== */
+
+/* ==========================================================
+   KNOTS GUIDE — STATE + DATA ACCESS + CONTROLLERS
+   ========================================================== */
+
+let selectedKnotId = null;
+let selectedKnotBrowseKey = "all";
+let selectedKnotTaskId = null;
+let selectedKnotDetailSource = "guide";
+let knotGuideState = { query: "", scrollY: 0 };
+let knotBrowseState = { query: "", scrollY: 0 };
+let reelSetupState = createInitialReelSetupState();
 
 /* ==========================================================
    KNOTS GUIDE — GET YOUR REEL READY STATE + CONTROLLERS
@@ -1382,8 +1413,8 @@ function getReelBackingChoice(backingChoiceId) {
     return REEL_BACKING_CHOICES[backingChoiceId] ?? null;
 }
 
-function getReelSpoolingGuidance(reelTypeId) {
-    return REEL_SPOOLING_GUIDANCE[reelTypeId] ?? null;
+function getReelSpoolingStageGuidance(reelTypeId, stageId) {
+    return REEL_SPOOLING_GUIDANCE[reelTypeId]?.stages?.[stageId] ?? null;
 }
 
 function createCompletedReelSetupContext() {
@@ -1687,17 +1718,18 @@ function renderReelSetupGuidanceList(appMain, guidance, options = {}) {
         appendReelSetupGuidanceText(listItem, item);
         list.append(listItem);
     });
-    section.append(heading, summary, list);
+    if (options.showSummary === false) section.append(heading, list);
+    else section.append(heading, summary, list);
     cardGrid.parentNode.insertBefore(section, cardGrid);
     return section;
 }
 
-function renderReelSetupReferencePrompt(appMain, label, onOpen) {
+function renderReelSetupReferencePrompt(appMain, label, accessibleLabel, onOpen) {
     const cardGrid = appMain.querySelector("[data-view-card-grid]");
     if (!cardGrid || typeof onOpen !== "function") return;
     const prompt = document.createElement("div");
     prompt.className = "reel-setup-reference-prompt";
-    prompt.innerHTML = `<span class="reel-setup-reference-prompt__label">${label}</span><button class="reference-info-button reel-setup-reference-prompt__button" type="button" aria-label="Open ${label} reference"><span aria-hidden="true">ⓘ</span></button>`;
+    prompt.innerHTML = `<span class="reel-setup-reference-prompt__label">${label}</span><button class="reference-info-button reel-setup-reference-prompt__button" type="button" aria-label="Open ${accessibleLabel}"><span aria-hidden="true">ⓘ</span></button>`;
     prompt.querySelector("button")?.addEventListener("click", (event) => onOpen(event.currentTarget));
     cardGrid.parentNode.insertBefore(prompt, cardGrid);
 }
@@ -1807,7 +1839,7 @@ function renderReelSetupReelTypeStep(appMain) {
             showView(ROUTES.REEL_SETUP);
         }
     });
-    renderReelSetupReferencePrompt(appMain, "Not sure which reel you have?", openReelTypeReference);
+    renderReelSetupReferencePrompt(appMain, "Not sure which reel you have?", "Reel Identification Reference", openReelTypeReference);
 }
 
 function renderReelSetupLineTypeStep(appMain) {
@@ -1842,7 +1874,7 @@ function renderReelSetupLineTypeStep(appMain) {
             showView(ROUTES.REEL_SETUP);
         }
     });
-    renderReelSetupReferencePrompt(appMain, "Need help choosing or identifying your line?", openReelLineTypeReference);
+    renderReelSetupReferencePrompt(appMain, "Need help choosing or identifying your line?", "Fishing Line Reference", openReelLineTypeReference);
 }
 
 function renderReelSetupTargetFishStep(appMain) {
@@ -1896,6 +1928,7 @@ function renderReelLineWeightPicker(appMain, targetProfile, lineType) {
             <p><strong>${getReelSetupTargetLabel(targetProfile)} reference:</strong> ${targetProfile.strengthReference}</p>
             <p>${targetProfile.guidance}</p>
             <p>${lineType.weightInterpretation}</p>
+            ${targetProfile.caution ? `<p class="reel-line-weight-picker__note"><strong>Keep in mind:</strong> ${targetProfile.caution}</p>` : ""}
             ${targetProfile.lighterAlternativeWeight && lineType.id === "monofilament"
                 ? `<p class="reel-line-weight-picker__note">Lighter all-around alternative: ${targetProfile.lighterAlternativeWeight} lb Monofilament.</p>`
                 : ""}
@@ -2076,7 +2109,7 @@ function renderReelSetupLineWeightStep(appMain) {
     }
     renderReelSetupStep(appMain, {
         title: "Confirm Line Weight",
-        description: "Use the target strength reference as a starting point, then confirm the actual pound-test you intend to spool. FCC recommendations and your confirmed selection remain separate.",
+        description: "Use the target strength reference as a starting point, then confirm the actual pound-test you intend to spool.",
         cards: [],
         onCardSelect: () => {}
     });
@@ -2116,11 +2149,11 @@ function renderReelSetupEquipmentStep(appMain) {
     }
     renderReelSetupStep(appMain, {
         title: "Check Your Reel & Rod Markings",
-        description: "This step helps you read the equipment you own. FCC does not know your exact models and does not issue a compatibility PASS/FAIL verdict.",
+        description: "Check the reel-capacity and rod line-rating markings for the line you selected before spooling.",
         cards: [],
         onCardSelect: () => {}
     });
-    renderReelSetupReferencePrompt(appMain, "How do I read my reel and rod?", openReelEquipmentReference);
+    renderReelSetupReferencePrompt(appMain, "How do I read my reel and rod?", "Equipment Reference", openReelEquipmentReference);
     renderReelSetupEquipmentDiagramSummary(appMain, lineType, reelSetupState.lineWeight);
     renderReelSetupInformationalWarning(
         appMain,
@@ -2262,8 +2295,7 @@ function renderReelSpoolKnotAction(appMain, stage) {
 function renderReelSetupSpoolStep(appMain) {
     const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
     const lineType = getReelLineType(reelSetupState.lineType);
-    const guidance = getReelSpoolingGuidance(reelSetupState.reelType);
-    if (!reelType || !lineType || !reelSetupState.lineWeight || !guidance) {
+    if (!reelType || !lineType || !reelSetupState.lineWeight) {
         reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT;
         renderReelSetupEquipmentStep(appMain);
         return;
@@ -2278,6 +2310,7 @@ function renderReelSetupSpoolStep(appMain) {
     const stage = ensureActiveReelSpoolStage();
     if (!stage) return;
     const stageIndex = stages.findIndex((item) => item.id === stage.id);
+    const stageGuidance = getReelSpoolingStageGuidance(reelSetupState.reelType, stage.id);
     const replacementNote = reelSetupState.entryMode === "replace-existing-line"
         ? "Remove the old line completely before building the fresh line system. "
         : "";
@@ -2291,11 +2324,11 @@ function renderReelSetupSpoolStep(appMain) {
     renderReelSpoolStageProgress(appMain, stages, stage);
     renderReelSpoolKnotAction(appMain, stage);
 
-    if (["prepare", "wind-backing", "wind-main-line", "check-fill"].includes(stage.id)) {
-        renderReelSetupGuidanceList(appMain, guidance, { className: "reel-spool-guidance" });
+    if (stageGuidance) {
+        renderReelSetupGuidanceList(appMain, stageGuidance, { className: "reel-spool-guidance" });
     }
     if (lineType.id === "braid") {
-        renderReelSetupReferencePrompt(appMain, "What about a leader?", openReelLeaderReference);
+        renderReelSetupReferencePrompt(appMain, "What about a leader?", "Leader Reference", openReelLeaderReference);
     }
 
     const isLastStage = stageIndex === stages.length - 1;
@@ -2326,7 +2359,7 @@ function renderReelSetupReadyStep(appMain) {
         onCardSelect: () => {},
         ready: true
     });
-    renderReelSetupGuidanceList(appMain, REEL_READY_GUIDANCE, { className: "reel-ready-guidance" });
+    renderReelSetupGuidanceList(appMain, REEL_READY_GUIDANCE, { className: "reel-ready-guidance", showSummary: false });
     renderReelSetupPrimaryAction(appMain, {
         label: "Choose a Rig",
         onClick: () => {
@@ -2348,8 +2381,9 @@ function renderReelSetupReadyStep(appMain) {
 }
 
 
-let knotGuideState = { query: "", scrollY: 0 };
-let knotBrowseState = { query: "", scrollY: 0 };
+/* ==========================================================
+   END GET YOUR REEL READY
+   ========================================================== */
 
 function createInitialKnotDetailState(knotId) {
     return {
@@ -2748,6 +2782,10 @@ function renderKnotDetailView(appMain) {
     restoreKnotDetailFocus(appMain);
 }
 
+
+/* ==========================================================
+   END KNOTS GUIDE
+   ========================================================== */
 
 function getActiveRegulationStates() {
     if (typeof STATE_DATA === "undefined") return [];

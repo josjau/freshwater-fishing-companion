@@ -48,8 +48,8 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C CLOSED / PASS; CP9.4 CLOSED / PASS; CP9.5 CLOSED / PASS; CP9.6 OPEN — 101KNOTS R1 BUILT / USER REVIEW PENDING / LOCAL MEDIA DEFERRED |
-| KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
+| KG Audit — CP9 | Implementation + Browser Validation | CLOSED / PASS — CP9.1-CP9.6 CLOSED / PASS; 101KNOTS STANDARDIZATION MOBILE + CI VALIDATED / LOCAL MEDIA DEFERRED |
+| KG Audit — CP10 | Final Refinement + Closeout | OPEN — R1 USER REVIEW |
 
 
 # Global Knots Audit Rules
@@ -2212,7 +2212,7 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 
 ## CP9.6 V1 Media Direction Approval — 2026-09-27
 
-**Status:** OPEN / DIRECTION APPROVED / LOCAL MEDIA DEFERRED / 101KNOTS EXTERNAL STANDARDIZATION APPROVED / R1 BUILT / USER REVIEW PENDING
+**Status:** CLOSED / PASS — LOCAL MEDIA DEFERRED / 101KNOTS EXTERNAL STANDARDIZATION IMPLEMENTED + MOBILE/CI VALIDATED
 
 - **User approval:** locally hosted/internal Knot instructional images are retained as a future project goal rather than a Version 1 requirement. The rejected custom SVG R1 remains immutable rejected history and no further internal-media sourcing, drawing, adaptation, viewer work, or six-Knot expansion is required for V1.
 - **Approved V1 external direction:** standardize the preferred external **Visual Guide** destination for all 10 canonical Knots on **101Knots**. FCC canonical `tyingSteps[]` remain the authoritative in-app instruction; the external page is supplemental visual instruction and does not own canonical Knot facts.
@@ -2264,6 +2264,7 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 - **Targeted validation:** PASS — JavaScript syntax; 10/10 Knot record inventory; 10/10 `101Knots` provider values; 10/10 `external-diagram` types; 10/10 illustrated-instruction action labels; 10/10 external-only rights flags; no stale Animated Knots / Bass Pro-Pro-Knot / Knots 3D provider or destination remains in the Knot section; source prefix/suffix identity preserved; candidate `data/media.js` SHA-256 `00532ca3d5c96e3996d3af530e3dcdde904dd224e137aea352356cd97c91554a`.
 - **External destination verification:** PASS at R1 build time — all 10 approved 101Knots URLs resolved to the intended Knot instructional pages. Browser/device behavior remains pending user review.
 - **R1 review package:** `FCC-49J-H-Knots-Guide-CP9.6-101Knots-R1.zip`. It contains the candidate `data/media.js` plus the current applicable Knots documentation owners needed for review/transport. The packaged audit copy intentionally does not self-embed the final ZIP hash; the authoritative Drive audit and Live Working State record that hash after package freeze.
+- **Frozen R1 ZIP SHA-256:** `b7631cba8c070061108333e78a49c4b6dba33c4252bc9031181e395edb10c1c6`. ZIP integrity test PASS.
 - **Production boundary:** R1 is a non-authoritative review candidate. Candidate `data/media.js` has **not** been promoted to Drive Current. No commit/push/CI/Pages action is authorized or performed.
 
 ### R1 Review Areas
@@ -2274,6 +2275,80 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 4. Review phone, intermediate/tablet, and desktop presentation for the existing Visual Guide container; this R1 intentionally changes no UI geometry or styling.
 5. Regression-check HOW TO TIE IT numbered instructions, CHECK YOUR KNOT, ABOUT THIS KNOT, MORE HELP, Sources & References, Line Compatibility Reference behavior, and Reel Setup/Knot return-state behavior.
 
+## CP9.6 R1 Local Approval / Promotion / GitHub Mobile-Test Gate — 2026-09-27
+
+- **User approval:** local repository review of frozen 101Knots R1 is approved.
+- **Promotion:** exact approved candidate `data/media.js` SHA-256 `00532ca3d5c96e3996d3af530e3dcdde904dd224e137aea352356cd97c91554a` was promoted to Drive Current through the canonical raw-file replacement path. Readback is byte-identical to frozen R1; temporary transport was deleted.
+- **GitHub push:** user pushed local reviewed scope to `main` as commit `9607ddbda8ee9aa99f70e2b73614585293d1a0c3` (`Knots Guide Build - External Media Build`), exactly one commit after `611ab99b9cdd3c61e20f01e17e69a943622a2a5d`.
+- **Commit scope verification:** exactly four modified paths — `archive/workstreams/knots/KNOT-GUIDE.md`, `archive/workstreams/knots/KNOTS-GUIDE-V1-REFINEMENT-AUDIT.md`, `data/media.js`, and `docs/MEDIA_GUIDE.md`. No additions, deletions, or unrelated production paths are present.
+- **Drive/Git convergence:** `KNOT-GUIDE.md`, `MEDIA_GUIDE.md`, and `data/media.js` are byte-converged with GitHub. The active Knots audit is intentionally newer in Drive because this approval/promotion/mobile-test trace is uncommitted operational documentation.
+- **Validation state:** local/R1 targeted validation PASS; true mobile browser/device validation is now pending against the GitHub-hosted build. Repository Integrity / Pages runs had not yet registered when this gate was recorded, so CI remains OPEN and must be verified before CP9.6 closure.
+- **Owner classification:** **UPDATE REQUIRED** — active Knots audit and Live Working State. **PROMOTED / GITHUB MOBILE-TEST OWNER** — `data/media.js` exact approved R1 bytes. **VERIFIED NO CHANGE** — `KNOT-GUIDE.md`, `MEDIA_GUIDE.md`, `data/knots.js`, `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css`, `PROJECT-RULES.md`, `KNOT_REFERENCE_SOURCES.md`. **N/A / DEFERRED** — local Knot instructional assets/viewer and any unrelated production scope.
+- **Gate state:** CP9.6 remains **OPEN** for true mobile acceptance and CI/Pages verification. No further production change is authorized by this gate.
+
+## CP9.6 Mobile Approval / Final Closure — 2026-09-27
+
+- **User validation:** true mobile review of the GitHub-hosted 101Knots standardization is approved with no new defect reported.
+- **GitHub baseline:** `main` remains `9607ddbda8ee9aa99f70e2b73614585293d1a0c3` (`Knots Guide Build - External Media Build`).
+- **Repository Integrity:** run `36350128305` completed **PASS** for `9607ddbda8ee9aa99f70e2b73614585293d1a0c3`.
+- **Pages deployment:** run `36350127739` completed **PASS** for the same commit.
+- **Production convergence:** Drive Current `data/media.js` remains byte-identical to the approved/promoted R1 candidate SHA-256 `00532ca3d5c96e3996d3af530e3dcdde904dd224e137aea352356cd97c91554a`. No R2+ correction was required.
+- **Durable-owner reconciliation:** `KNOT-GUIDE.md` revision **0.3.35** and `MEDIA_GUIDE.md` revision **1.0.15** remove the now-stale pre-validation mixed-provider wording and record 101Knots standardization as the validated Version 1 production state. No canonical Knot tying content changed.
+- **Owner classification:** **UPDATE REQUIRED / completed in Drive** — `KNOT-GUIDE.md`, `MEDIA_GUIDE.md`, this active audit, and Live Working State. **VERIFIED NO CHANGE** — `data/media.js`, `data/knots.js`, `knot-media-renderer.js`, `view-renderer.js`, `forest-journal.css`, `script.js`, `search.js`, `PROJECT-RULES.md`, and `KNOT_REFERENCE_SOURCES.md`. **DEFERRED** — locally hosted/project-owned Knot instructional media and any viewer/animation work.
+- **Gate result:** **CP9.6 CLOSED / PASS. CP9 IMPLEMENTATION + BROWSER VALIDATION CLOSED / PASS.** Version 1 uses 101Knots as the standardized external Visual Guide provider for all 10 canonical Knots, while FCC `tyingSteps[]` remain authoritative.
+- **Commit/push boundary:** no additional production or documentation commit/push is authorized or performed by this closure reconciliation. Current Drive documentation may therefore be newer than GitHub until a later authorized convergence commit.
+
 # Current Exact Resume
 
-**Exact resume:** CP9.6 101Knots R1 is frozen for user browser/device review. Review package `FCC-49J-H-Knots-Guide-CP9.6-101Knots-R1.zip`; production delta is only the 10 Knot Media records in `data/media.js`, candidate SHA-256 `00532ca3d5c96e3996d3af530e3dcdde904dd224e137aea352356cd97c91554a`. Verify provider/action wording, all 10 external destinations, external/return behavior, and phone/intermediate/desktop presentation using the R1 Review Areas above. Do not promote `data/media.js` to Drive Current, commit, or push until the user explicitly approves the R1 candidate. CP10 still requires the recorded Description / Helper Copy Review before final Knots closeout.**
+**Exact resume:** CP9 is CLOSED / PASS. Begin **CP10 — Final Refinement + Closeout** from GitHub `main` `9607ddbda8ee9aa99f70e2b73614585293d1a0c3` plus current Drive Current. First action: perform the recorded **Description / Helper Copy Review**, then run the CP10 line-by-line closure scan so every remaining BUILD REQUIRED / BUILD TEST REQUIRED / VERIFY ONLY / DOC UPDATE / DEFERRED item has an explicit final disposition. Do not begin any new production/source change without its own exact-scope authorization. The locally hosted Knot-media goal remains deferred and does not block Version 1 closeout.**
+
+# KG Audit — CP10 — Final Refinement + Closeout
+
+## CP10 Description / Helper Copy + Semantic Placement Review
+
+**Status:** OPEN — R1 USER REVIEW
+
+The mandatory CP10 copy review was repeated using a stricter semantic-placement test after the first pass proved too shallow. The review checked factual support, section fit, beginner usefulness, duplication, stale workflow language, unnecessary implementation wording, and source ownership before build.
+
+### CP10 Findings / Dispositions
+
+- **CP10-COPY-001 — Knot Detail alternative-selection contract:** BUILD REQUIRED. `limitations[]` mixed true limitations, tying requirements, line compatibility, method notes, and actual alternative-selection guidance while the UI labeled all of it **When to Choose Another Knot**. R1 replaces that generic field with decision-oriented `chooseAnotherKnot[]`; Arbor intentionally has no alternative-selection row and therefore hides that disclosure.
+- **CP10-COPY-002 — Common Mistakes semantic placement / clarity:** BUILD REQUIRED. Remove the Arbor braid/spool equipment warning from Common Mistakes and clarify selected Double Uni, Non-Slip Loop, Dropper Loop, and Alberto wording without changing the validated tying methods.
+- **CP10-COPY-003 — Alberto line compatibility:** BUILD REQUIRED. Preserve the three participating line materials for Search/filter semantics but explicitly model and render the supported relationships as **Braid → Monofilament leader** and **Braid → Fluorocarbon leader** so independent material labels do not imply arbitrary pairwise compatibility.
+- **CP10-COPY-004 — Knot Search intent precision:** BUILD REQUIRED. Exact lure/swivel Search terms must not return the hook-specific Snell; `swivel knot` must resolve; `leader knot` must include Double Uni; generic different-diameter-line Search must not imply Alberto is the only option; generic `braid knot` must expose the applicable braid-capable Knot set. Search mechanics remain `search.js`-owned and unchanged; the correction belongs in Guide-owned intent data.
+- **CP10-COPY-005 — Line Weight copy + target cautions:** BUILD REQUIRED. Display the existing target-specific cautions, remove stale spatial wording, and remove internal recommendation/selection bookkeeping language.
+- **CP10-COPY-006 — Equipment / Backing / Leader helper copy:** BUILD REQUIRED. Replace audit/implementation-facing `PASS/FAIL`, `FCC does not invent`, `FCC does not present`, and stale `later Rig` phrasing with direct beginner-facing instructions while preserving manufacturer-specific authority boundaries.
+- **CP10-COPY-007 — Reel Setup Reference accessibility:** BUILD REQUIRED. Keep visible prompts unchanged but give the four adjacent Reference buttons explicit accessible names: Reel Identification Reference, Fishing Line Reference, Equipment Reference, and Leader Reference.
+- **CP10-COPY-008 — Reel Ready duplication:** BUILD REQUIRED. Keep the page title/summary once; rename the checklist subsection **Final Checks** and suppress the repeated checklist summary.
+- **CP10-COPY-009 — stage-specific spooling guidance:** BUILD REQUIRED. The current reel-wide guidance block repeats preparation, winding, and fill instructions on multiple Spool stages. R1 restructures `data/reel-guidance.js` so each reel owns guidance for `prepare`, `wind-backing`, `wind-main-line`, and `check-fill`; `script.js` only selects the current stage guidance.
+- **CP10-STRUCT-001 — shared-source ownership boundaries:** BUILD REQUIRED. `script.js` did not fully implement the approved Knots/Reel ownership boundary, and Rig-owned Knot-application rendering remained inside the Knot Guide region in `view-renderer.js`. R1 restores explicit boundaries and moves the Rig-owned renderer to the Rig presentation region without redesigning unrelated application structure.
+- **CP10-STYLE-001 — Alberto pairing presentation:** BUILD REQUIRED. Add only the minimal spacing treatment required for the new explicit line-pairing arrow; no broader visual redesign.
+
+### Verified No-Change Surfaces
+
+- `search.js` — Search algorithm/normalization/scoring remains unchanged.
+- `data/media.js` and `knot-media-renderer.js` — standardized 101Knots Visual Guide implementation remains unchanged.
+- Knot inventory, Core registry, Guide hierarchy, visual design, instructional-media provider decisions, and overall Reel Setup architecture are not reopened.
+
+## CP10 R1 Cumulative Review Build
+
+- **Starting GitHub authority:** `9607ddbda8ee9aa99f70e2b73614585293d1a0c3` (`Knots Guide Build - External Media Build`).
+- **Drive lineage:** fresh-read `Working Source/Current` versions of every modified production file were used; candidate edits are non-authoritative until user approval and promotion.
+- **Production candidate scope:** `data/knots.js`, `data/knot-guidance.js`, `data/reel-guidance.js`, `script.js`, `view-renderer.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`.
+- **Traceability copy:** this active audit is included in the R1 review package. The packaged audit copy intentionally does not self-embed the final ZIP hash; the authoritative Drive audit and Live Working State own the frozen R1 hash after package creation.
+- **Validation before handoff:** JavaScript syntax PASS for all modified JavaScript; targeted Knot schema/decision checks PASS; targeted Search regression PASS for lure/swivel/hook/leader/different-diameter/braid/drop-shot queries; Reel stage-guidance contract PASS for all three reel types; stale CP10 wording scan PASS; explicit Guide/source-boundary checks PASS; ZIP integrity test required after freeze. Full browser/device acceptance remains user review work and is not pre-declared PASS.
+- **Commit/push boundary:** no production promotion, commit, push, CI, or Pages action is authorized or performed by R1 creation.
+
+### R1 User Review Areas
+
+1. **Knot Detail — all 10 Knots:** expand Common Mistakes and When to Choose Another Knot. Confirm each alternative item is genuinely a reason to choose another Knot; Arbor should not show the alternative disclosure.
+2. **Alberto Knot — Line Compatibility:** confirm the UI communicates **Braid → Monofilament leader** and **Braid → Fluorocarbon leader**, with an adjacent `ⓘ` Reference control for each line material.
+3. **Non-Slip Loop / Double Uni / Dropper Loop / Alberto:** review the clarified instructional/support wording for beginner readability without changing the intended tying method.
+4. **Knots Search:** test `tie lure`, `tie swivel`, `swivel knot`, `tie hook`, `leader knot`, `connect different diameter lines`, `braid knot`, and `drop shot knot`; verify the result sets match the task being asked.
+5. **Get Your Reel Ready — Confirm Line Weight:** inspect all six target profiles and confirm the target caution appears once, the Mono/Fluoro/Braid helper copy reads naturally, and the selected pound-test interaction is unchanged.
+6. **Equipment / Backing / Leader Reference:** review the rewritten direct user guidance and verify the four `ⓘ` controls still open the correct Reference surfaces and return focus/context correctly.
+7. **Spool workflow:** run Spinning, Spincast, and Baitcasting paths, including Braid + Monofilament Backing and supported Direct Braid. Each Spool sub-step should show only guidance relevant to that stage rather than repeating the whole reel procedure.
+8. **Reel Ready:** confirm the page shows one Reel Ready title/summary followed by **Final Checks**, with no duplicated summary.
+9. **Responsive/accessibility regression:** phone, intermediate/tablet, and desktop checks for the Alberto pairing row, longer target cautions, stage-specific Spool guidance, keyboard/focus behavior, and no horizontal overflow.
+10. **Cross-Guide regression:** open a Knot from a Rig and from Reel Setup and verify Parent/return-state behavior is unchanged; Rig **Knots You'll Tie** presentation must remain unchanged despite its source move.
+
