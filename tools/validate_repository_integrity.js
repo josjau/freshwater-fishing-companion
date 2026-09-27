@@ -4144,6 +4144,54 @@ function validateReelGuidance() {
     if (!controllerSource.includes('title.insertAdjacentElement("afterend", cue)')) {
         fail("Reel Setup choice presentation", "Recommended First Setup must appear below the reel title so peer titles align");
     }
+
+    const completedContextFunction = controllerSource.match(/function createCompletedReelSetupContext\(\) \{[\s\S]*?\n\}/);
+    const requiredContextFields = ["reelType", "targetFish", "lineType", "lineWeight"];
+    const forbiddenContextFields = ["entryMode", "spoolStageId", "scrollY", "restoreScroll", "restoreFocusActionId"];
+    if (!completedContextFunction ||
+        requiredContextFields.some((field) => !completedContextFunction[0].includes(field)) ||
+        forbiddenContextFields.some((field) => completedContextFunction[0].includes(field)) ||
+        !completedContextFunction[0].includes('const backingChoice = braidChoice?.id === "monofilament-backing" ? braidChoice : null;') ||
+        !completedContextFunction[0].includes('...(backingChoice ? { backingChoice: backingChoice.id } : {})')) {
+        fail("Reel Setup handoff", "completed Reel context must contain only Reel Type, Target, Line Type, Line Weight, and actual conditional Monofilament Backing");
+    }
+    if (!controllerSource.includes("let completedReelSetupContext = null;") ||
+        !controllerSource.includes("function clearCompletedReelSetupContext()") ||
+        !controllerSource.includes("function startNewReelSetup()")) {
+        fail("Reel Setup handoff", "completed context must remain separate from live Reel Setup state and clear on a deliberate new setup");
+    }
+    const readyFunction = controllerSource.match(/function renderReelSetupReadyStep\(appMain\) \{[\s\S]*?\n\}/);
+    if (!readyFunction ||
+        !readyFunction[0].includes("const completedContext = createCompletedReelSetupContext()") ||
+        !readyFunction[0].includes("completedReelSetupContext = completedContext") ||
+        readyFunction[0].indexOf("completedReelSetupContext = completedContext") > readyFunction[0].indexOf("resetReelSetupState()") ||
+        !readyFunction[0].includes("showView(ROUTES.RIGS)")) {
+        fail("Reel Setup handoff", "Choose a Rig must snapshot completed context before clearing internal Reel Setup history and opening the normal Rig Guide");
+    }
+    const rigContextLinesFunction = controllerSource.match(/function getRigReelSetupContextLines\(\) \{[\s\S]*?\n\}/);
+    const rigContextCallCount = (controllerSource.match(/renderRigReelSetupContext\(appMain\);/g) || []).length;
+    if (!rigContextLinesFunction ||
+        !rigContextLinesFunction[0].includes('? "Monofilament Backing"') ||
+        rigContextLinesFunction[0].includes("Recommended First Setup") ||
+        !controllerSource.includes(">Your Reel Setup</h3>") ||
+        rigContextCallCount !== 1 ||
+        !styleSource.includes(".rig-reel-setup-context {") ||
+        !styleSource.includes(".rig-reel-setup-context__summary {") ||
+        !styleSource.includes(".rig-reel-setup-context__line {") ||
+        !styleSource.includes("padding: 8px 12px;")) {
+        fail("Rig Guide Reel context", "Rig landing must show one compact two-line noninteractive Your Reel Setup summary with factual Backing wording only");
+    }
+    const rigSearchFunction = controllerSource.match(/function updateRigGuideSearchResults\(appMain, query\) \{[\s\S]*?\n\}/);
+    const rigCollectionFunction = controllerSource.match(/function getRigsForCollection\(activeRigs\) \{[\s\S]*?\n\}/);
+    const rigBrowseFunction = controllerSource.match(/function renderRigBrowseView\(appMain\) \{[\s\S]*?\n\}/);
+    const rigDetailFunction = controllerSource.match(/function renderRigDetailView\(appMain\) \{[\s\S]*?\n\}/);
+    if (!rigSearchFunction || !rigCollectionFunction || !rigBrowseFunction || !rigDetailFunction ||
+        rigSearchFunction[0].includes("completedReelSetupContext") ||
+        rigCollectionFunction[0].includes("completedReelSetupContext") ||
+        rigBrowseFunction[0].includes("renderRigReelSetupContext") ||
+        rigDetailFunction[0].includes("renderRigReelSetupContext")) {
+        fail("Rig Guide Reel context", "completed Reel context must not alter Rig Search/collection eligibility or add the CP9.5 summary to Browse/Detail surfaces");
+    }
     if (!styleSource.includes(".knot-instruction-media__type {") ||
         !styleSource.includes(".knot-instruction-media__description { display: none; }") ||
         !styleSource.includes(".reel-line-weight-picker { width: min(100%, 680px); margin: var(--space-3) auto; }") ||

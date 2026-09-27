@@ -908,6 +908,53 @@ function openRigDetailFromFish(rigId, lureBaitId = null) {
    END FISH GUIDE
    ========================================================== */
 
+function getRigReelSetupContextLines() {
+    if (!completedReelSetupContext) return [];
+
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, completedReelSetupContext.reelType);
+    const targetProfile = getReelSetupTargetFish(completedReelSetupContext.targetFish);
+    const lineType = getReelLineType(completedReelSetupContext.lineType);
+    const backingChoice = completedReelSetupContext.backingChoice
+        ? getReelBackingChoice(completedReelSetupContext.backingChoice)
+        : null;
+
+    if (!reelType || !targetProfile || !lineType || !Number.isFinite(completedReelSetupContext.lineWeight)) {
+        return [];
+    }
+
+    const backingLabel = backingChoice?.id === "monofilament-backing"
+        ? "Monofilament Backing"
+        : null;
+
+    return [
+        [reelType.title, getReelSetupTargetLabel(targetProfile)],
+        [`${completedReelSetupContext.lineWeight} lb ${lineType.title}`, backingLabel].filter(Boolean)
+    ];
+}
+
+function renderRigReelSetupContext(appMain) {
+    const lines = getRigReelSetupContextLines();
+    if (!lines.length) return;
+
+    const contentView = appMain.querySelector(".content-view");
+    const searchForm = appMain.querySelector("[data-section-search-form]");
+    if (!contentView) return;
+
+    const section = document.createElement("section");
+    section.className = "rig-reel-setup-context";
+    section.dataset.rigReelSetupContext = "true";
+    section.setAttribute("aria-labelledby", "rig-reel-setup-context-title");
+    section.innerHTML = `
+        <h3 id="rig-reel-setup-context-title">Your Reel Setup</h3>
+        <div class="rig-reel-setup-context__summary">
+            ${lines.map((line) => `
+                <p class="rig-reel-setup-context__line">${line.join('<span class="rig-reel-setup-context__separator" aria-hidden="true">·</span>')}</p>
+            `).join("")}
+        </div>
+    `;
+    contentView.insertBefore(section, searchForm ?? contentView.querySelector("[data-view-card-grid]") ?? null);
+}
+
 function renderRigGuideView(appMain) {
     renderView(appMain, {
         headingId: "rig-guide-title",
@@ -933,6 +980,7 @@ function renderRigGuideView(appMain) {
     });
 
     appMain.querySelector(".content-view")?.classList.add("rig-guide-view");
+    renderRigReelSetupContext(appMain);
     appMain.querySelector('[data-card-id="browse-core-rigs"]')?.classList.add(
         "dashboard-card--primary",
         "rig-guide-core-card"
@@ -1258,6 +1306,8 @@ function renderTackleView(appMain) {
    KNOTS GUIDE — GET YOUR REEL READY STATE + CONTROLLERS
    ========================================================== */
 
+let completedReelSetupContext = null;
+
 function createInitialReelSetupState() {
     return {
         stepId: REEL_SETUP_STEP_IDS.START,
@@ -1278,8 +1328,17 @@ function resetReelSetupState() {
     reelSetupState = createInitialReelSetupState();
 }
 
-function openReelSetup() {
+function clearCompletedReelSetupContext() {
+    completedReelSetupContext = null;
+}
+
+function startNewReelSetup() {
+    clearCompletedReelSetupContext();
     resetReelSetupState();
+}
+
+function openReelSetup() {
+    startNewReelSetup();
     showView(ROUTES.REEL_SETUP);
 }
 
@@ -1325,6 +1384,28 @@ function getReelBackingChoice(backingChoiceId) {
 
 function getReelSpoolingGuidance(reelTypeId) {
     return REEL_SPOOLING_GUIDANCE[reelTypeId] ?? null;
+}
+
+function createCompletedReelSetupContext() {
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
+    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
+    const lineType = getReelLineType(reelSetupState.lineType);
+    const lineWeight = reelSetupState.lineWeight;
+    const braidChoice = lineType?.id === "braid"
+        ? getReelBackingChoice(reelSetupState.backingChoice)
+        : null;
+    const backingChoice = braidChoice?.id === "monofilament-backing" ? braidChoice : null;
+
+    if (!reelType || !targetProfile || !lineType || !Number.isFinite(lineWeight)) return null;
+    if (lineType.id === "braid" && !braidChoice) return null;
+
+    return Object.freeze({
+        reelType: reelType.id,
+        targetFish: targetProfile.id,
+        lineType: lineType.id,
+        lineWeight,
+        ...(backingChoice ? { backingChoice: backingChoice.id } : {})
+    });
 }
 
 function getReelSetupPhaseId(stepId) {
@@ -1517,7 +1598,7 @@ function renderReelSetupUtilityActions(appMain, { ready = false } = {}) {
         restart.className = "reel-setup-utility-button";
         restart.textContent = "Restart Setup";
         restart.addEventListener("click", () => {
-            resetReelSetupState();
+            startNewReelSetup();
             showView(ROUTES.REEL_SETUP);
         });
         utilities.append(restart);
@@ -2249,9 +2330,17 @@ function renderReelSetupReadyStep(appMain) {
     renderReelSetupPrimaryAction(appMain, {
         label: "Choose a Rig",
         onClick: () => {
-            // CP9.5 owns the completed Reel Setup snapshot and Rig landing summary.
-            // CP9.4 preserves the existing neutral forward route with no filtering,
-            // ranking, compatibility verdict, or automatic Rig selection.
+            const completedContext = createCompletedReelSetupContext();
+            if (!completedContext) {
+                console.warn("Reel Setup could not create a completed Rig handoff context.");
+                return;
+            }
+
+            completedReelSetupContext = completedContext;
+            resetReelSetupState();
+            selectedRigId = null;
+            selectedRigCollectionKey = "all";
+            selectedRigConfigurationId = null;
             clearDetailNavigationStack();
             showView(ROUTES.RIGS);
         }
@@ -2394,7 +2483,7 @@ function openKnotTaskFromDetail(taskId) {
     if (!task || !pushCurrentKnotDetailContext(`task:${taskId}`)) return;
 
     if (taskId === "attach-line-to-reel") {
-        resetReelSetupState();
+        startNewReelSetup();
         showView(ROUTES.REEL_SETUP);
         return;
     }

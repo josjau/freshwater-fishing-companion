@@ -2,11 +2,11 @@
 
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.146  
+**Document Revision:** 1.10.147  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** GitHub `main` commit `db5d664c918fe83ce8c9142440573de85395c4c0`  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-26
 
 
 # Purpose
@@ -60,6 +60,14 @@ No active workflow-transition item remains. The 2026-08-25 Workflow Performance 
 
 
 **Knot visual-instruction carry-forward:** historical `PARK-003` is superseded as a pure Parking Lot item. The Knot Guide remains functionally complete; local/offline visual tying instruction is now an explicit UX-009 evaluation/refinement requirement, with implementation conditional on acceptable instructional quality, accuracy, rights/provenance, mobile behavior, and accessibility.
+
+
+# Rig Guide Audit Carry-Forward
+
+
+| ID | Status | Item | Canonical detail / gate | Next action |
+|---|---|---|---|---|
+| RIG-001 | DEFERRED TO NAMED GATE — RIG GUIDE AUDIT | Material use of retained Reel Setup context in Rig guidance | Knots CP6.6 / CP9.5 handoff; `KNOT-GUIDE.md`; upcoming Rig Guide audit | CP9.5 keeps the completed Reel Setup snapshot runtime/session-only and shows it only as a compact noninteractive **Your Reel Setup** summary on the Rig Guide landing page; normal Rig access remains unrestricted and the current snapshot does not filter, rank, hide, block, auto-select, or declare compatibility. During the Rig Guide audit, explicitly decide whether Rig Detail should materially consume Reel Type, Target, Line Type, Line Weight, and conditional Backing. Evaluate leader guidance, line-to-leader Knot guidance, setup-specific notes, equipment considerations, and component/lure sizing recommendations — especially **Direct-Tie Lure Setup** configurations. Any numeric size/weight recommendation must be source-backed and use sufficient inputs for the specific decision; candidate inputs to evaluate include target/species, actual line type/weight, rod lure-weight rating, depth/current/cover/presentation, and other Rig-specific factors. Do not introduce Rig rejection/blocking from Reel Setup context without a separate explicit contract. |
 
 
 # Tackle Open Design

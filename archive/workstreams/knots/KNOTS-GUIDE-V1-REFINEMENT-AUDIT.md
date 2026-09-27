@@ -48,7 +48,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C CLOSED / PASS; CP9.4 R4 REVIEW |
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C CLOSED / PASS; CP9.4 CLOSED / PASS; CP9.5 R3 REVIEW OPEN |
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -2044,12 +2044,72 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 
 - R5 is reconstructed from immutable `FCC-49J-D-Knots-Guide-CP9.4-R1-Cumulative-Review.zip` plus **all cumulative documented R1/R2/R3/R4 corrections**. R2/R3/R4 candidate bytes are not reconstruction authority; the immutable R1 production paths were freshly expanded and the cumulative documented correction patch was re-applied and verified to reproduce the frozen R4 production candidate before the bounded R5 delta.
 - Cumulative package scope remains the same five CP9.4 production candidate paths — `data/reel-guidance.js`, `script.js`, `view-renderer.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js` — plus this active audit. `data/reel-guidance.js` remains byte-identical to immutable R1. No deletions.
-- Production Drive Current remains unchanged. R5 is review-only pending explicit user approval.
+- **R5 APPROVED.** The exact frozen R5 production candidate was promoted into Drive Current and byte/readback verified before commit staging. The deployed build then passed explicit user actual-phone review.
 - R5 source validation PASS: JavaScript syntax for `data/reel-guidance.js`, `script.js`, `view-renderer.js`, and `tools/validate_repository_integrity.js`; CSS braces balanced; Visual Guide chip-visible/provider-sentence-hidden assertion; tablet/desktop `480px` Line Weight control constraint + centered label assertion; and all prior R1-R4 migration assertions PASS.
 - Full Repository Integrity PASS against the verified GitHub `main` baseline `76cd919044435ff8fc6ec2ea26ca554f91b2d3c9` with the cumulative five CP9.4 production candidate files overlaid: **20 validation groups PASS / no repository content modified**.
-- Browser/device/accessibility verdict remains **PENDING USER REVIEW**. R5 specifically needs review of the restored Visual Guide medium chip with the visible provider sentence removed, and the centered/constrained Line Weight control at tablet/desktop widths. All retained R4 review areas remain cumulative until approved.
-- Final frozen R5 ZIP identity is recorded in the Drive audit and Live Working State after package freeze; the packaged audit copy intentionally does not self-embed the final ZIP hash.
+- Browser/device verdict: **PASS by explicit user approval** after actual-phone review of the deployed R5 build. The approved review includes the restored Visual Guide medium chip with the visible provider sentence removed, the centered/constrained Line Weight control, and all retained cumulative R4 review areas.
+- Frozen R5 package: `FCC-49J-D-Knots-Guide-CP9.4-R5-Cumulative-Review.zip`; SHA-256 `3651148f973146bc14101db91c0417fe2f4699b6e3eb69b8c77bc2a27059d6a8`. The packaged audit copy intentionally does not self-embed this final ZIP hash; this Drive audit record and Live Working State own the final package identity.
+
+## R5 Approval / Promotion Gate
+
+- **User approval:** APPROVED — exact frozen R5 accepted for production promotion.
+- **Owner classification at closure:** UPDATE REQUIRED — active Knots audit and Live Working State reconciliation. VERIFIED NO CHANGE — the five approved CP9.4 production paths after promotion. N/A — CP9.5/CP9.6 source work for this gate.
+- **Drive promotion:** PASS — exact frozen R5 bytes promoted to `data/reel-guidance.js`, `script.js`, `view-renderer.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`; all five read back byte-identical to the approved candidate.
+- **Commit/push ownership correction:** the user's statement that they wanted to push for actual-phone testing meant the user would commit/push the already-reviewed local R5 working tree. It did **not** authorize the assistant to perform GitHub production writes. The assistant's attempted GitHub branch-update path was therefore an execution mistake and is not part of the approved FCC workflow for this gate.
+- **User-local production commit:** GitHub `main` production commit `46f86286dfd7752423d434abafaf08b529b985bd` (`Knots Guide Build - Get Your Reel Ready Workflow Update`) is exactly one commit after CP9.3C baseline `76cd919044435ff8fc6ec2ea26ca554f91b2d3c9` and changes exactly six expected paths: the five CP9.4 production files plus this active audit; no deletions.
+- **Actual-phone review:** PASS by explicit user approval after testing the deployed build.
+- **Repository Integrity:** PASS — GitHub Actions run `36291883843`, job `Repository Integrity`, completed successfully with **20 validation groups passed**.
+- **Pages:** PASS — GitHub Actions run `36291883694`; `build`, `deploy`, and `report-build-status` all completed successfully.
+- **Drive/Git production convergence:** PASS — all five CP9.4 production files are byte-identical between Drive Current and GitHub production commit `46f86286dfd7752423d434abafaf08b529b985bd`.
+- **Documentation reconciliation:** this closure update is documentation-only and uses standing documentation commit authority. The resulting final repository SHA is recorded in Live Working State rather than self-embedded here, so Drive/Git can converge on this exact audit content without recursive self-reference.
+- **Closure state:** **CP9.4 CLOSED / PASS.** CP9.5 — Ready → Rig handoff context/summary is the next implementation segment. CP9.6 local instructional media remains later/out of scope.
+
+# KG Audit — CP9.5 — Ready → Rig Guide Handoff
+
+**Status:** R3 REVIEW OPEN / BUILD TEST REQUIRED
+
+## R1 Implementation
+
+- Starting authority: GitHub `main` `61b035f7c4eb9274562d35c5e94127d9df713eca`; applicable Drive Current source/guardrail files were freshly read and verified byte-identical to that baseline before candidate work.
+- R1 production candidate scope is limited to `script.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`, plus this active audit for review traceability. `search.js` and `data/rigs.js` remain verify-only/read-only for CP9.5. No deletions.
+- `script.js` now keeps the completed Reel Setup handoff snapshot separate from live Reel Setup state, captures it before internal workflow reset, preserves only Reel Type, Target / All-Around target, Line Type, confirmed Line Weight, and actual conditional Monofilament Backing, and clears the snapshot on a deliberate new/restarted Reel Setup. Manufacturer-supported Direct Braid remains a valid Ready path but does not create a fake Backing value in the handoff summary.
+- The normal Rig Guide landing consumes the transient snapshot only as compact noninteractive **Your Reel Setup** context. The summary remains available through normal Rig browse/search/detail navigation for the setup journey.
+- Rig Search/collection logic does not consume the completed Reel context. No Rig filtering, ranking, hiding, compatibility inference, or automatic Rig selection is introduced.
+- `forest-journal.css` adds only the bounded **Your Reel Setup** presentation treatment. The summary has no interactive controls and does not add a new focus stop.
+- `tools/validate_repository_integrity.js` adds CP9.5 guardrails for the approved snapshot schema/lifetime, Ready capture-before-reset route, summary hook, actual conditional backing semantics, and no Rig Search/collection side effects.
+
+## R1 Finding / R2 Correction
+
+- `KG-CP9.5-R1-001` — R1 packaged audit traceability defect: the top checkpoint summary still said **CP9.5 NEXT** even though the CP9.5 implementation section correctly recorded **R1 REVIEW OPEN**. R2 corrects only that summary status to **CP9.5 R2 REVIEW OPEN**. Production candidate bytes are unchanged from immutable R1.
+
+## R2 Browser Findings / R3 Corrections
+
+- `KG-CP9.5-R2-001` — **Compactness defect:** the R2 **Your Reel Setup** treatment was visually too large and read like another major card. R3 replaces the four stacked label/value blocks with one lightweight context strip: the existing title plus two compact factual value lines. The first line is Reel Type + Target; the second is Line Weight/Type + actual Monofilament Backing when present. Field labels are removed from the visible summary.
+- `KG-CP9.5-R2-002` — **Backing presentation defect:** the R2 summary resolved the backing choice through its full workflow title, causing **Recommended First Setup** to appear as though it were part of the completed setup fact. R3 keeps the stored conditional backing ID but renders the factual value **Monofilament Backing** only. Recommendation/UI cues do not carry forward into the completed summary.
+- `KG-CP9.5-R2-003` — **Persistence-contract clarification:** the user's review confirmed the visible summary is present on the Rig Guide landing page, disappears on Rig Detail, and is still present when navigation returns to the landing page. This is the intended current behavior. The transient snapshot may remain alive through the setup journey, but CP9.5 has **no visible or behavioral consumer on Rig Browse/Search/Detail**. The earlier R2 review wording that asked the summary itself to survive those pages is superseded.
+- `KG-CP9.5-R2-004` — **Future Rig Guide carry-forward:** do not discard the retained session context merely because CP9.5 uses it only on the landing page. The upcoming Rig Guide audit must decide whether individual Rig pages can use it materially. Explicit candidate uses are contextual Leader guidance, line-to-leader Knot guidance, setup-specific notes, equipment considerations, and component/lure sizing recommendations — especially Direct-Tie lure configurations. Any numeric size/weight guidance must be source-backed and must use enough actual inputs for the decision; Reel Setup context alone may be insufficient. Normal Rig access remains unrestricted unless a separate future contract explicitly approves stronger behavior. This carry-forward is promoted to `docs/ACTIVE-CHANGE-LEDGER.md` as `RIG-001` so it cannot disappear when the Knots audit retires.
+- **User browser review already PASS:** original review points 1–4 and 6–7. Point 5 is re-scoped by `KG-CP9.5-R2-003`; absence of the summary on Rig Detail is not a defect.
+
+## R3 Candidate / Validation State
+
+- R3 is reconstructed from immutable `FCC-49J-E-Knots-Guide-CP9.5-R1-Cumulative-Review.zip` plus all cumulative documented corrections. R2 candidate bytes are not reconstruction authority.
+- R3 production candidate scope remains exactly `script.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`. Documentation carried in the review package is this active audit, `archive/workstreams/knots/KNOT-GUIDE.md`, and `docs/ACTIVE-CHANGE-LEDGER.md`. No deletions.
+- `script.js` keeps the R1 session-only snapshot/lifetime and no-side-effect behavior, but renders the landing summary as two factual value lines and strips the Backing recommendation cue from presentation. The summary renderer is called only from the Rig Guide landing renderer; Rig Browse/Search/Detail remain normal and do not display the summary.
+- `forest-journal.css` converts the summary from a large bordered card/grid into a compact context strip with small vertical padding, a single workflow accent edge, and two tight value lines.
+- `tools/validate_repository_integrity.js` now guards the compact two-line/factual-backing treatment, landing-only visible summary, and unchanged no-filter/no-ranking/no-hide behavior.
+- `KNOT-GUIDE.md` revision 0.3.32 reconciles the current CP6.6 contract: the session snapshot may remain available through the setup journey, but CP9.5 visibly consumes it only on the Rig landing page; any material Rig-detail use is deferred to the Rig Guide audit.
+- `ACTIVE-CHANGE-LEDGER.md` revision 1.10.147 adds `RIG-001` so the future Rig audit explicitly evaluates material Reel Setup-context uses, including Direct-Tie lure/component sizing, without pre-authorizing Rig blocking/filtering.
+- JavaScript syntax: **PASS** for `script.js` and `tools/validate_repository_integrity.js`.
+- CSS structural check: **PASS** — braces balanced.
+- Four-path handoff matrix: **STATIC PASS** for direct Mono, direct Fluoro, Braid + Monofilament Backing, and manufacturer-supported Direct Braid. Direct Braid carries no fake Backing field; Braid + backing displays factual **Monofilament Backing** only.
+- Landing-only presentation guard: **STATIC PASS** — exactly one `renderRigReelSetupContext(appMain);` call exists and it is in `renderRigGuideView`; Rig Browse and Rig Detail do not call the summary renderer.
+- Recommendation-side-effect guardrails: **STATIC PASS** — completed Reel context remains absent from Rig Search and Rig collection eligibility logic; no filtering, ranking, hiding, compatibility inference, or automatic selection is introduced.
+- Full Repository Integrity: **PASS — 20 validation groups / no repository content modified** in a reconstructed current-main validation checkout made from the verified Pages artifact for GitHub `main` `61b035f7c4eb9274562d35c5e94127d9df713eca`, the authoritative `.gitignore`, and a temporary Git index used only so tracked-file checks can execute. The candidate production/documentation files were overlaid before validation.
+- Browser/device/accessibility validation remains **OPEN — R3 USER REVIEW REQUIRED**, now narrowed to the changed treatment: compactness/readability at phone/intermediate/desktop widths, factual Backing wording, no extra focus stop, landing-only visibility, persistence when returning to Rig landing, unchanged Rig behavior, and deliberate new/restart clearing.
+- Production Drive Current source files remain unchanged. The R3 production bytes are review-only pending explicit approval. The approved documentation/carry-forward owners may be reconciled separately without promoting the production candidate.
+- Immutable R1 package: `FCC-49J-E-Knots-Guide-CP9.5-R1-Cumulative-Review.zip`; SHA-256 `c5c1b8f2e46ba7617b85b3d6335613b9d265abd4e0522345013e54555fc51bfd`.
+- Prior R2 package: `FCC-49J-E-Knots-Guide-CP9.5-R2-Cumulative-Review.zip`; SHA-256 `fd6c35bfcfe10bd3c26942e52a265879c511bf3adca554c4c4f247820f28c857`. R2 is superseded by R3 for review. The packaged R3 audit copy intentionally does not self-embed the final R3 ZIP hash; the authoritative Drive audit record and Live Working State own current package identity after freeze.
 
 # Current Exact Resume
 
-**Exact resume: CP9.4 R5 candidate is frozen and awaiting user browser/device/accessibility review. Use the frozen `FCC-49J-D-Knots-Guide-CP9.4-R5-Cumulative-Review.zip`; the final SHA-256 is recorded in the Drive audit and Live Working State after package freeze. Production Drive Current remains unchanged. Review the R5 corrections above plus any retained cumulative R4 areas not yet accepted. Do not promote production source or begin CP9.5 unless R5 or a later cumulative revision is explicitly approved. If review finds defects, record each finding and reconstruct R6 from immutable R1 plus all cumulative documented corrections. CP9.6 local instructional media remains out of scope. CP10 must include the recorded Description / Helper Copy Review before Knots final closeout.**
+**Exact resume: CP9.5 — Ready → Rig Guide Handoff is at R3 REVIEW OPEN. Review the frozen R3 candidate with focus on the revised compact `Your Reel Setup` landing treatment: confirm the two factual value lines are substantially more compact, Braid + backing shows `Monofilament Backing` without recommendation wording, the summary is visible only on Rig landing and returns there after normal Rig navigation, and no Rig results/ranking/selection behavior changes. Original R2 review points 1–4 and 6–7 are already PASS. CP9.6 local instructional media remains later/out of scope. CP10 still requires the recorded Description / Helper Copy Review before Knots final closeout.**
