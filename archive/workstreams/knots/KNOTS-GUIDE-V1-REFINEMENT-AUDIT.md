@@ -48,7 +48,7 @@ No item may disappear from this file merely because a discussion moves to anothe
 | KG Audit — CP6 | Get Your Reel Ready Workflow | CLOSED / APPROVED / REFINEMENT ALLOWED — CP6.1-CP6.6 CLOSED |  
 | KG Audit — CP7 | JavaScript / Data Structural Audit | CLOSED / APPROVED / REFINEMENT ALLOWED — CP7.1-CP7.4 CLOSED |  
 | KG Audit — CP8 | Implementation Scope Lock | CLOSED / APPROVED / REFINEMENT ALLOWED — SCOPE LOCK COMPLETE |  
-| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C CLOSED / PASS; CP9.4 CLOSED / PASS; CP9.5 R3 LOCAL APPROVED / PROMOTED / MOBILE REVIEW PENDING |
+| KG Audit — CP9 | Implementation + Browser Validation | IN PROGRESS — CP9.1 CLOSED / PASS; CP9.2 CLOSED / PASS; CP9.3A CLOSED / PASS; CP9.3B CLOSED / PASS; CP9.3C CLOSED / PASS; CP9.4 CLOSED / PASS; CP9.5 NEXT |
 | KG Audit — CP10 | Final Refinement + Closeout | NOT STARTED |
 
 
@@ -2064,62 +2064,6 @@ R5 continues to use the compact Knot relationship-list model rather than Fish **
 - **Documentation reconciliation:** this closure update is documentation-only and uses standing documentation commit authority. The resulting final repository SHA is recorded in Live Working State rather than self-embedded here, so Drive/Git can converge on this exact audit content without recursive self-reference.
 - **Closure state:** **CP9.4 CLOSED / PASS.** CP9.5 — Ready → Rig handoff context/summary is the next implementation segment. CP9.6 local instructional media remains later/out of scope.
 
-# KG Audit — CP9.5 — Ready → Rig Guide Handoff
-
-**Status:** R3 LOCAL APPROVED / PROMOTED / MOBILE REVIEW PENDING
-
-## R1 Implementation
-
-- Starting authority: GitHub `main` `61b035f7c4eb9274562d35c5e94127d9df713eca`; applicable Drive Current source/guardrail files were freshly read and verified byte-identical to that baseline before candidate work.
-- R1 production candidate scope is limited to `script.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`, plus this active audit for review traceability. `search.js` and `data/rigs.js` remain verify-only/read-only for CP9.5. No deletions.
-- `script.js` now keeps the completed Reel Setup handoff snapshot separate from live Reel Setup state, captures it before internal workflow reset, preserves only Reel Type, Target / All-Around target, Line Type, confirmed Line Weight, and actual conditional Monofilament Backing, and clears the snapshot on a deliberate new/restarted Reel Setup. Manufacturer-supported Direct Braid remains a valid Ready path but does not create a fake Backing value in the handoff summary.
-- The normal Rig Guide landing consumes the transient snapshot only as compact noninteractive **Your Reel Setup** context. The summary remains available through normal Rig browse/search/detail navigation for the setup journey.
-- Rig Search/collection logic does not consume the completed Reel context. No Rig filtering, ranking, hiding, compatibility inference, or automatic Rig selection is introduced.
-- `forest-journal.css` adds only the bounded **Your Reel Setup** presentation treatment. The summary has no interactive controls and does not add a new focus stop.
-- `tools/validate_repository_integrity.js` adds CP9.5 guardrails for the approved snapshot schema/lifetime, Ready capture-before-reset route, summary hook, actual conditional backing semantics, and no Rig Search/collection side effects.
-
-## R1 Finding / R2 Correction
-
-- `KG-CP9.5-R1-001` — R1 packaged audit traceability defect: the top checkpoint summary still said **CP9.5 NEXT** even though the CP9.5 implementation section correctly recorded **R1 REVIEW OPEN**. R2 corrects only that summary status to **CP9.5 R2 REVIEW OPEN**. Production candidate bytes are unchanged from immutable R1.
-
-## R2 Browser Findings / R3 Corrections
-
-- `KG-CP9.5-R2-001` — **Compactness defect:** the R2 **Your Reel Setup** treatment was visually too large and read like another major card. R3 replaces the four stacked label/value blocks with one lightweight context strip: the existing title plus two compact factual value lines. The first line is Reel Type + Target; the second is Line Weight/Type + actual Monofilament Backing when present. Field labels are removed from the visible summary.
-- `KG-CP9.5-R2-002` — **Backing presentation defect:** the R2 summary resolved the backing choice through its full workflow title, causing **Recommended First Setup** to appear as though it were part of the completed setup fact. R3 keeps the stored conditional backing ID but renders the factual value **Monofilament Backing** only. Recommendation/UI cues do not carry forward into the completed summary.
-- `KG-CP9.5-R2-003` — **Persistence-contract clarification:** the user's review confirmed the visible summary is present on the Rig Guide landing page, disappears on Rig Detail, and is still present when navigation returns to the landing page. This is the intended current behavior. The transient snapshot may remain alive through the setup journey, but CP9.5 has **no visible or behavioral consumer on Rig Browse/Search/Detail**. The earlier R2 review wording that asked the summary itself to survive those pages is superseded.
-- `KG-CP9.5-R2-004` — **Future Rig Guide carry-forward:** do not discard the retained session context merely because CP9.5 uses it only on the landing page. The upcoming Rig Guide audit must decide whether individual Rig pages can use it materially. Explicit candidate uses are contextual Leader guidance, line-to-leader Knot guidance, setup-specific notes, equipment considerations, and component/lure sizing recommendations — especially Direct-Tie lure configurations. Any numeric size/weight guidance must be source-backed and must use enough actual inputs for the decision; Reel Setup context alone may be insufficient. Normal Rig access remains unrestricted unless a separate future contract explicitly approves stronger behavior. This carry-forward is promoted to `docs/ACTIVE-CHANGE-LEDGER.md` as `RIG-001` so it cannot disappear when the Knots audit retires.
-- **User browser review already PASS:** original review points 1–4 and 6–7. Point 5 is re-scoped by `KG-CP9.5-R2-003`; absence of the summary on Rig Detail is not a defect.
-
-## R3 Candidate / Validation State
-
-- R3 is reconstructed from immutable `FCC-49J-E-Knots-Guide-CP9.5-R1-Cumulative-Review.zip` plus all cumulative documented corrections. R2 candidate bytes are not reconstruction authority.
-- R3 production candidate scope remains exactly `script.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`. Documentation carried in the review package is this active audit, `archive/workstreams/knots/KNOT-GUIDE.md`, and `docs/ACTIVE-CHANGE-LEDGER.md`. No deletions.
-- `script.js` keeps the R1 session-only snapshot/lifetime and no-side-effect behavior, but renders the landing summary as two factual value lines and strips the Backing recommendation cue from presentation. The summary renderer is called only from the Rig Guide landing renderer; Rig Browse/Search/Detail remain normal and do not display the summary.
-- `forest-journal.css` converts the summary from a large bordered card/grid into a compact context strip with small vertical padding, a single workflow accent edge, and two tight value lines.
-- `tools/validate_repository_integrity.js` now guards the compact two-line/factual-backing treatment, landing-only visible summary, and unchanged no-filter/no-ranking/no-hide behavior.
-- `KNOT-GUIDE.md` revision 0.3.32 reconciles the current CP6.6 contract: the session snapshot may remain available through the setup journey, but CP9.5 visibly consumes it only on the Rig landing page; any material Rig-detail use is deferred to the Rig Guide audit.
-- `ACTIVE-CHANGE-LEDGER.md` revision 1.10.147 adds `RIG-001` so the future Rig audit explicitly evaluates material Reel Setup-context uses, including Direct-Tie lure/component sizing, without pre-authorizing Rig blocking/filtering.
-- JavaScript syntax: **PASS** for `script.js` and `tools/validate_repository_integrity.js`.
-- CSS structural check: **PASS** — braces balanced.
-- Four-path handoff matrix: **STATIC PASS** for direct Mono, direct Fluoro, Braid + Monofilament Backing, and manufacturer-supported Direct Braid. Direct Braid carries no fake Backing field; Braid + backing displays factual **Monofilament Backing** only.
-- Landing-only presentation guard: **STATIC PASS** — exactly one `renderRigReelSetupContext(appMain);` call exists and it is in `renderRigGuideView`; Rig Browse and Rig Detail do not call the summary renderer.
-- Recommendation-side-effect guardrails: **STATIC PASS** — completed Reel context remains absent from Rig Search and Rig collection eligibility logic; no filtering, ranking, hiding, compatibility inference, or automatic selection is introduced.
-- Full Repository Integrity: **PASS — 20 validation groups / no repository content modified** in a reconstructed current-main validation checkout made from the verified Pages artifact for GitHub `main` `61b035f7c4eb9274562d35c5e94127d9df713eca`, the authoritative `.gitignore`, and a temporary Git index used only so tracked-file checks can execute. The candidate production/documentation files were overlaid before validation.
-- Local browser review: **PASS / USER APPROVED** for the R3 treatment. The user approved the substantially more compact two-line summary, factual Backing wording, landing-only visibility, persistence when returning to Rig landing, unchanged Rig behavior, no extra focus stop, and deliberate new/restart clearing. Final actual-mobile review remains **OPEN** before CP9.5 can close.
-- Production promotion: **PASS** — after explicit local approval, the exact frozen R3 production bytes were promoted to Drive Current for `script.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`; raw readback hashes match the approved candidate exactly. `KNOT-GUIDE.md` and `ACTIVE-CHANGE-LEDGER.md` already matched the approved R3 documentation bytes; the authoritative Drive audit retains the frozen-package self-identity line by design. No GitHub production commit/push has been performed by the assistant.
-- Immutable R1 package: `FCC-49J-E-Knots-Guide-CP9.5-R1-Cumulative-Review.zip`; SHA-256 `c5c1b8f2e46ba7617b85b3d6335613b9d265abd4e0522345013e54555fc51bfd`.
-- Prior R2 package: `FCC-49J-E-Knots-Guide-CP9.5-R2-Cumulative-Review.zip`; SHA-256 `fd6c35bfcfe10bd3c26942e52a265879c511bf3adca554c4c4f247820f28c857`. R2 is superseded by R3 for review. The packaged R3 audit copy intentionally does not self-embed the final R3 ZIP hash; the authoritative Drive audit record and Live Working State own current package identity after freeze.
-- Frozen R3 package: `FCC-49J-E-Knots-Guide-CP9.5-R3-Cumulative-Review.zip`; SHA-256 `987163ec4d9dd2e708f880da2e1b6766fd7588bcffd8b0343415a00b2f0f209f`. The packaged audit copy intentionally omits this self-referential hash; this authoritative Drive audit record and Live Working State own the frozen R3 identity.
-
-## R3 Local Approval / Promotion Gate
-
-- **User local approval:** APPROVED — R3 local review accepted.
-- **Owner classification:** UPDATE REQUIRED — `script.js`, `forest-journal.css`, `tools/validate_repository_integrity.js`, this active audit, and Live Working State. VERIFIED NO CHANGE — `KNOT-GUIDE.md` (approved CP9.5 behavior already current) and `ACTIVE-CHANGE-LEDGER.md` (`RIG-001` already owns the future Rig-audit carry-forward). N/A — `search.js`, `data/rigs.js`, CP9.6 production scope.
-- **Drive promotion/readback:** PASS — exact approved R3 source hashes are `script.js` `0ca121cabac4da297820aecf73e0a6cf5460a3b0fbee7d3a791160ef0f060f84`, `forest-journal.css` `1fbe1563760596a34d54273e27ab9e645fe2b6f3d91dc1e53c9a965f73807a36`, and `tools/validate_repository_integrity.js` `a608ec3c9be47190e9a5764e12177e2694c205aa2c06effe003277b65f8f544a`; Drive raw readback matches all three.
-- **Validation:** full Repository Integrity remains PASS — 20 validation groups / no repository content modified — against the approved R3 candidate. Local browser review is PASS. Final actual-mobile review is still required.
-- **Commit/push/mobile state:** the user explicitly requested the approved R3 state be pushed for mobile review. This authorizes the user-local production commit/push of the exact promoted R3 state plus this approval-state documentation reconciliation. The assistant does not write production source directly to GitHub. GitHub `main` remains `61b035f7c4eb9274562d35c5e94127d9df713eca` until the user-local push occurs.
-- **Closure:** **OPEN** — CP9.5 cannot close until the pushed GitHub SHA/scope, Repository Integrity, Pages deployment, Drive/Git convergence, and actual-mobile review all PASS.
-
 # Current Exact Resume
 
-**Exact resume: CP9.5 — Ready → Rig Guide Handoff is R3 LOCAL APPROVED / PROMOTED / MOBILE REVIEW PENDING. Apply the approved mobile-staging package to a verified local checkout at GitHub `main` `61b035f7c4eb9274562d35c5e94127d9df713eca`, verify the expected six-path diff, commit/push that exact state, then verify the resulting GitHub SHA/scope, Repository Integrity and Pages deployment. Perform the final actual-mobile review of the full CP9.5 handoff: complete Reel Ready through the four approved line-system paths, confirm the compact factual `Your Reel Setup` landing summary and return behavior, confirm no summary on Rig Detail, confirm normal unrestricted Rig browse/search/detail behavior, and verify restart clearing. Report findings or give final CP9.5 approval. CP9.6 local instructional media remains later/out of scope. CP10 still requires the recorded Description / Helper Copy Review before Knots final closeout.**
+**Exact resume: CP9.4 — Get Your Reel Ready Migration is CLOSED / PASS after R5 approval/promotion, user-local production commit, successful Repository Integrity and Pages runs, byte-identical Drive/Git production convergence, and explicit actual-phone approval. Next segment is CP9.5 — Ready → Rig handoff context/summary. CP9.6 local instructional media remains later/out of scope. CP10 still requires the recorded Description / Helper Copy Review before Knots final closeout. Start CP9.5 only from current GitHub `main`, current Drive Current, this active audit, and Live Working State.**
