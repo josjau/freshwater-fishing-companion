@@ -2,11 +2,11 @@
 
 
 **Document:** UI_STANDARD.md  
-**Document Revision:** 1.3.23  
+**Document Revision:** 1.3.24  
 **Document Status:** Approved  
 **Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard  
 **Decision Baseline:** D015, D020-D022, D030-D032, D035, D042, D046-D048, D050-D052, D061, D063  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-27
 
 
 # Purpose
@@ -96,7 +96,7 @@ This is a consistency/data-ownership rule as well as a presentation rule: a futu
 Guide/domain identity styling must remain conceptually separate from semantic/card-state styling. **Guide pages and Guide subpages do not receive a fixed Guide-specific color assignment.** Guide identity should come from content, headings, imagery, restrained motifs/graphics, and domain-appropriate information structure rather than making every Fish, Knot, Tackle, Technique, or Rig surface one assigned color. Equivalent internal-knowledge navigation should converge on one shared interaction treatment rather than acquiring unrelated domain-specific decoration. Exact visual implementation remains subject to the element-level review gates.
 
 
-Guide-specific lightweight motifs or decorative graphics may be evaluated during the Fish baseline work, especially on Guide identity, landing, and browse surfaces, but they remain subordinate to content and must not become mandatory decoration inside dense detail/reference cards.
+Guide-specific lightweight motifs or decorative graphics are deferred to the final Version 1 UX Audit after the functional project build. They are not part of the bounded Fish post-Knots UX-011 correction and are not mandatory decoration on Guide identity, landing, browse, detail, or reference surfaces. Any later decorative treatment must be separately evaluated and validated under `V1-DESIGN-AUDIT.md`.
 
 
 A Fish treatment becomes a reusable Guide-family baseline only after the relevant section has passed its approval gate and applicable desktop/mobile validation.

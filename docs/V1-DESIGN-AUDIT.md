@@ -2,10 +2,10 @@
 
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.41  
+**Document Revision:** 1.0.42  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-27
 
 
 # Purpose
@@ -1257,6 +1257,8 @@ The first bounded section is **FCC 48B — Fish Guide — Landing Page Component
 
 
 The current accent system is generally liked but the site needs additional restrained visual character. The final audit must therefore evaluate a **light graphic / illustrative layer** that remains subordinate to content.
+
+**Post-Knots scope clarification — 2026-09-27:** Fish-specific decorative imagery/visual-flair implementation is not part of UX-011. The earlier Fish-baseline allowance to explore restrained motifs remains historical design context, but current execution defers image/decorative additions until this final Version 1 UX Audit after the functional project build. UX-011 is limited to the Habitat/Common Waters Reference-affordance correction, the associated 35-Condition integration recheck, and focused regression validation.
 
 
 Required evaluation:
