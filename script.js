@@ -1254,6 +1254,10 @@ function renderTackleView(appMain) {
 }
 
 
+/* ==========================================================
+   KNOTS GUIDE — GET YOUR REEL READY STATE + CONTROLLERS
+   ========================================================== */
+
 function createInitialReelSetupState() {
     return {
         stepId: REEL_SETUP_STEP_IDS.START,
@@ -1261,9 +1265,12 @@ function createInitialReelSetupState() {
         reelType: null,
         lineType: null,
         targetFish: null,
-        equipmentCheck: null,
+        lineWeight: null,
         backingChoice: null,
-        leaderChoice: null
+        spoolStageId: null,
+        scrollY: 0,
+        restoreScroll: false,
+        restoreFocusActionId: null
     };
 }
 
@@ -1272,264 +1279,205 @@ function resetReelSetupState() {
 }
 
 function openReelSetup() {
-    clearDetailNavigationStack();
     resetReelSetupState();
     showView(ROUTES.REEL_SETUP);
 }
 
 function getReelSetupOption(options, optionId) {
-    return options.find((option) => option.id === optionId) ?? null;
+    return Array.isArray(options) ? options.find((option) => option.id === optionId) ?? null : null;
 }
 
-function renderReelSetupView(appMain) {
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.REEL_TYPE) {
-        renderReelSetupReelTypeStep(appMain);
-        return;
-    }
+function getReelLineType(lineTypeId) {
+    return REEL_LINE_TYPE_GUIDANCE[lineTypeId] ?? null;
+}
 
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LINE_SELECTION) {
-        renderReelSetupLineSelectionStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LINE_HELP) {
-        renderReelSetupLineHelpStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LINE_IDENTIFICATION) {
-        renderReelSetupLineIdentificationStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LINE_SELECTION_COMPLETE) {
-        renderReelSetupLineSelectionComplete(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.TARGET_FISH) {
-        renderReelSetupTargetFishStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.TARGET_GUIDANCE) {
-        renderReelSetupTargetGuidanceStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.REEL_IDENTIFICATION_HELP) {
-        renderReelSetupReelIdentificationHelpStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK) {
-        renderReelSetupEquipmentCheckStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.READ_REEL) {
-        renderReelSetupReadReelStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.READ_ROD) {
-        renderReelSetupReadRodStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH) {
-        renderReelSetupEquipmentMismatchStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE) {
-        renderReelSetupEquipmentCompleteStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.BACKING_DECISION) {
-        renderReelSetupBackingDecisionStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN) {
-        renderReelSetupSpoolConnectionPlanStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS) {
-        renderReelSetupSpoolingInstructionsStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LEADER_DECISION) {
-        renderReelSetupLeaderDecisionStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LEADER_MATERIAL) {
-        renderReelSetupLeaderMaterialStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LEADER_SETUP) {
-        renderReelSetupLeaderSetupStep(appMain);
-        return;
-    }
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.REEL_READY_CHECK) {
-        renderReelSetupReelReadyCheckStep(appMain);
-        return;
-    }
-
-    renderReelSetupStartStep(appMain);
+function getCanonicalFishCategory(categoryId) {
+    if (!categoryId || typeof FISH_CATEGORY_DATA === "undefined") return null;
+    return FISH_CATEGORY_DATA.find((category) => category.id === categoryId) ?? null;
 }
 
 function getReelSetupTargetFish(targetFishId) {
     return REEL_TARGET_FISH_PROFILES.find((profile) => profile.id === targetFishId) ?? null;
 }
 
+function getReelSetupTargetLabel(profile) {
+    if (!profile) return "";
+    if (profile.title) return profile.title;
+    return getCanonicalFishCategory(profile.categoryId)?.name ?? profile.id;
+}
+
+function getOrderedReelTargetProfiles() {
+    const allAround = REEL_TARGET_FISH_PROFILES.find((profile) => profile.id === "all-around-freshwater");
+    const profilesByCategoryId = new Map(
+        REEL_TARGET_FISH_PROFILES
+            .filter((profile) => profile.categoryId)
+            .map((profile) => [profile.categoryId, profile])
+    );
+    const orderedCategoryProfiles = typeof FISH_CATEGORY_DATA === "undefined"
+        ? REEL_TARGET_FISH_PROFILES.filter((profile) => profile.categoryId)
+        : FISH_CATEGORY_DATA.map((category) => profilesByCategoryId.get(category.id)).filter(Boolean);
+    return [allAround, ...orderedCategoryProfiles].filter(Boolean);
+}
+
+function getReelBackingChoice(backingChoiceId) {
+    return REEL_BACKING_CHOICES[backingChoiceId] ?? null;
+}
+
+function getReelSpoolingGuidance(reelTypeId) {
+    return REEL_SPOOLING_GUIDANCE[reelTypeId] ?? null;
+}
+
+function getReelSetupPhaseId(stepId) {
+    if (stepId === REEL_SETUP_STEP_IDS.START || stepId === REEL_SETUP_STEP_IDS.REEL_TYPE) return "reel";
+    if ([REEL_SETUP_STEP_IDS.LINE_TYPE, REEL_SETUP_STEP_IDS.TARGET_FISH, REEL_SETUP_STEP_IDS.LINE_WEIGHT].includes(stepId)) return "line";
+    if (stepId === REEL_SETUP_STEP_IDS.EQUIPMENT) return "equipment";
+    if ([REEL_SETUP_STEP_IDS.BACKING_DECISION, REEL_SETUP_STEP_IDS.SPOOL].includes(stepId)) return "spool";
+    if (stepId === REEL_SETUP_STEP_IDS.READY) return "ready";
+    return "reel";
+}
+
+function getReelSetupPhaseIndex() {
+    const phaseId = getReelSetupPhaseId(reelSetupState.stepId);
+    return Math.max(0, REEL_SETUP_PHASES.findIndex((phase) => phase.id === phaseId));
+}
+
+function renderReelSetupView(appMain) {
+    const renderers = {
+        [REEL_SETUP_STEP_IDS.START]: renderReelSetupStartStep,
+        [REEL_SETUP_STEP_IDS.REEL_TYPE]: renderReelSetupReelTypeStep,
+        [REEL_SETUP_STEP_IDS.LINE_TYPE]: renderReelSetupLineTypeStep,
+        [REEL_SETUP_STEP_IDS.TARGET_FISH]: renderReelSetupTargetFishStep,
+        [REEL_SETUP_STEP_IDS.LINE_WEIGHT]: renderReelSetupLineWeightStep,
+        [REEL_SETUP_STEP_IDS.EQUIPMENT]: renderReelSetupEquipmentStep,
+        [REEL_SETUP_STEP_IDS.BACKING_DECISION]: renderReelSetupBackingDecisionStep,
+        [REEL_SETUP_STEP_IDS.SPOOL]: renderReelSetupSpoolStep,
+        [REEL_SETUP_STEP_IDS.READY]: renderReelSetupReadyStep
+    };
+    const renderer = renderers[reelSetupState.stepId] ?? renderReelSetupStartStep;
+    renderer(appMain);
+    restoreReelSetupNavigationContext(appMain);
+}
+
 function getReelSetupSelectedChoiceLabels() {
-    const labels = [];
     const entryOption = getReelSetupOption(REEL_SETUP_ENTRY_OPTIONS, reelSetupState.entryMode);
-    const reelTypeOption = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
     const lineType = getReelLineType(reelSetupState.lineType);
-    const targetFish = getReelSetupTargetFish(reelSetupState.targetFish);
+    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
     const backingChoice = getReelBackingChoice(reelSetupState.backingChoice);
-    const leaderChoice = getReelLeaderChoice(reelSetupState.leaderChoice);
+    const labels = [];
 
-    if (entryOption) labels.push(entryOption.title);
-    if (reelTypeOption) labels.push(reelTypeOption.title);
-    if (lineType) labels.push(lineType.title);
-    if (targetFish) labels.push(targetFish.title);
-    if (backingChoice) labels.push(backingChoice.title);
-    if (leaderChoice) labels.push(leaderChoice.title);
-
+    if (entryOption) labels.push({ label: "Setup", value: entryOption.title });
+    if (reelType) labels.push({ label: "Reel", value: reelType.title });
+    if (lineType) {
+        const lineValue = reelSetupState.lineWeight
+            ? `${reelSetupState.lineWeight} lb ${lineType.title}`
+            : lineType.title;
+        labels.push({ label: "Line", value: lineValue });
+    }
+    if (targetProfile) labels.push({ label: "Target", value: getReelSetupTargetLabel(targetProfile) });
+    if (lineType?.id === "braid" && backingChoice) {
+        labels.push({ label: "Backing", value: backingChoice.title.replace(" — Recommended First Setup", "") });
+    }
     return labels;
 }
 
-function renderReelSetupSelectedChoices(appMain) {
+function renderReelSetupStatus(appMain) {
+    const firstGrid = appMain.querySelector("[data-view-card-grid]");
+    if (!firstGrid || reelSetupState.stepId === REEL_SETUP_STEP_IDS.START) return;
+
     const labels = getReelSetupSelectedChoiceLabels();
-    if (labels.length === 0) return;
+    const phaseIndex = getReelSetupPhaseIndex();
+    const currentPhase = REEL_SETUP_PHASES[phaseIndex];
+    const status = document.createElement("section");
+    status.className = "reel-setup-status";
+    status.dataset.reelSetupStatus = "true";
+    status.setAttribute("aria-label", "Reel Setup status");
 
-    const contentView = appMain.querySelector(".content-view");
-    const description = contentView?.querySelector("h2 + p");
-    if (!contentView || !description) return;
+    const selectedValues = labels.length
+        ? labels.map((item) => item.value).join(" · ")
+        : "No choices selected yet.";
+    const progressSegments = REEL_SETUP_PHASES.map((phase, index) => {
+        const state = index < phaseIndex ? "completed" : index === phaseIndex ? "current" : "upcoming";
+        return `<span class="reel-setup-progress-strip__segment is-${state}" title="${phase.title}"></span>`;
+    }).join("");
 
-    const selectedChoices = document.createElement("div");
-    selectedChoices.dataset.reelSetupSelectedChoices = "true";
-    selectedChoices.style.marginBottom = "var(--space-4)";
-    selectedChoices.style.padding = "var(--space-3) 0";
-    selectedChoices.style.borderTop = "1px solid var(--border)";
-    selectedChoices.style.borderBottom = "1px solid var(--border)";
+    status.innerHTML = `
+        <div class="reel-setup-selected">
+            <h3>Selected Choices</h3>
+            <p class="reel-setup-selected__summary">${selectedValues}</p>
+        </div>
+        <div class="reel-setup-progress-region" data-reel-progress-region>
+            <div class="reel-setup-progress-strip">
+                <div class="reel-setup-progress-strip__text">
+                    <span class="reel-setup-progress-strip__eyebrow">Setup Progress</span>
+                    <span class="reel-setup-progress-strip__phase" aria-current="step">Phase ${phaseIndex + 1} of ${REEL_SETUP_PHASES.length} · ${currentPhase.title}</span>
+                </div>
+                <div class="reel-setup-progress-strip__segments" aria-hidden="true">${progressSegments}</div>
+            </div>
+        </div>
+    `;
 
-    const label = document.createElement("span");
-    label.textContent = "Selected choices";
-    label.style.display = "block";
-    label.style.marginBottom = "var(--space-1)";
-    label.style.color = "var(--text-subtle)";
-    label.style.fontSize = ".78rem";
-    label.style.fontWeight = "800";
-    label.style.letterSpacing = ".06em";
-    label.style.textTransform = "uppercase";
-
-    const values = document.createElement("strong");
-    values.textContent = labels.join(" · ");
-    values.style.display = "block";
-    values.style.color = "color-mix(in srgb, var(--accent-knots) 72%, white 28%)";
-    values.style.fontSize = ".78rem";
-    values.style.fontWeight = "800";
-    values.style.lineHeight = "1.45";
-    values.style.letterSpacing = ".015em";
-    values.style.overflowWrap = "anywhere";
-
-    selectedChoices.append(label, values);
-    contentView.insertBefore(selectedChoices, description);
+    firstGrid.parentNode.insertBefore(status, firstGrid);
 }
 
-function getReelSetupPreviousStep() {
-    const previousSteps = {
-        [REEL_SETUP_STEP_IDS.REEL_TYPE]: { stepId: REEL_SETUP_STEP_IDS.START, label: "Get Your Reel Ready" },
-        [REEL_SETUP_STEP_IDS.REEL_IDENTIFICATION_HELP]: { stepId: REEL_SETUP_STEP_IDS.REEL_TYPE, label: "Reel Type" },
-        [REEL_SETUP_STEP_IDS.LINE_SELECTION]: { stepId: REEL_SETUP_STEP_IDS.REEL_TYPE, label: "Reel Type" },
-        [REEL_SETUP_STEP_IDS.LINE_HELP]: { stepId: REEL_SETUP_STEP_IDS.LINE_SELECTION, label: "Line Choices" },
-        [REEL_SETUP_STEP_IDS.LINE_IDENTIFICATION]: { stepId: REEL_SETUP_STEP_IDS.LINE_SELECTION, label: "Line Choices" },
-        [REEL_SETUP_STEP_IDS.LINE_SELECTION_COMPLETE]: { stepId: REEL_SETUP_STEP_IDS.LINE_SELECTION, label: "Line Choices" },
-        [REEL_SETUP_STEP_IDS.TARGET_FISH]: { stepId: REEL_SETUP_STEP_IDS.LINE_SELECTION_COMPLETE, label: "Line Choice Check" },
-        [REEL_SETUP_STEP_IDS.TARGET_GUIDANCE]: { stepId: REEL_SETUP_STEP_IDS.TARGET_FISH, label: "Target Fish" },
-        [REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK]: { stepId: REEL_SETUP_STEP_IDS.TARGET_GUIDANCE, label: "Starting Line Strength" },
-        [REEL_SETUP_STEP_IDS.READ_REEL]: { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK, label: "Reel & Rod Check" },
-        [REEL_SETUP_STEP_IDS.READ_ROD]: { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK, label: "Reel & Rod Check" },
-        [REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH]: { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK, label: "Reel & Rod Check" },
-        [REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE]: { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK, label: "Reel & Rod Check" },
-        [REEL_SETUP_STEP_IDS.BACKING_DECISION]: { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE, label: "Equipment Check" },
-        [REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN]: { stepId: REEL_SETUP_STEP_IDS.BACKING_DECISION, label: "Backing Choice" },
-        [REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS]: { stepId: REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN, label: "Spool Connection Plan" },
-        [REEL_SETUP_STEP_IDS.LEADER_DECISION]: { stepId: REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS, label: "Spool the Reel" },
-        [REEL_SETUP_STEP_IDS.LEADER_MATERIAL]: { stepId: REEL_SETUP_STEP_IDS.LEADER_DECISION, label: "Leader Decision" },
-        [REEL_SETUP_STEP_IDS.REEL_READY_CHECK]: { stepId: REEL_SETUP_STEP_IDS.LEADER_SETUP, label: "Leader Setup" }
-    };
-
-    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.LEADER_SETUP) {
-        return reelSetupState.leaderChoice === "none"
-            ? { stepId: REEL_SETUP_STEP_IDS.LEADER_DECISION, label: "Leader Decision" }
-            : { stepId: REEL_SETUP_STEP_IDS.LEADER_MATERIAL, label: "Leader Material" };
+function getReelSetupPreviousDestination() {
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.SPOOL) {
+        const stages = getActiveReelSpoolStages();
+        const stageIndex = stages.findIndex((stage) => stage.id === reelSetupState.spoolStageId);
+        if (stageIndex > 0) return { spoolStageId: stages[stageIndex - 1].id, label: stages[stageIndex - 1].title };
+        return reelSetupState.lineType === "braid"
+            ? { stepId: REEL_SETUP_STEP_IDS.BACKING_DECISION, label: "Backing" }
+            : { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT, label: "Equipment" };
+    }
+    if (reelSetupState.stepId === REEL_SETUP_STEP_IDS.READY) {
+        const stages = getActiveReelSpoolStages();
+        return { stepId: REEL_SETUP_STEP_IDS.SPOOL, spoolStageId: stages.at(-1)?.id ?? null, label: "Spool" };
     }
 
+    const previousSteps = {
+        [REEL_SETUP_STEP_IDS.REEL_TYPE]: { stepId: REEL_SETUP_STEP_IDS.START, label: "Get Your Reel Ready" },
+        [REEL_SETUP_STEP_IDS.LINE_TYPE]: { stepId: REEL_SETUP_STEP_IDS.REEL_TYPE, label: "Reel Type" },
+        [REEL_SETUP_STEP_IDS.TARGET_FISH]: { stepId: REEL_SETUP_STEP_IDS.LINE_TYPE, label: "Line Type" },
+        [REEL_SETUP_STEP_IDS.LINE_WEIGHT]: { stepId: REEL_SETUP_STEP_IDS.TARGET_FISH, label: "Target" },
+        [REEL_SETUP_STEP_IDS.EQUIPMENT]: { stepId: REEL_SETUP_STEP_IDS.LINE_WEIGHT, label: "Line Weight" },
+        [REEL_SETUP_STEP_IDS.BACKING_DECISION]: { stepId: REEL_SETUP_STEP_IDS.EQUIPMENT, label: "Equipment" }
+    };
     return previousSteps[reelSetupState.stepId] ?? null;
 }
 
 function renderReelSetupNavigation(appMain) {
-    const contentView = appMain.querySelector(".content-view");
-    const genericHomeButton = contentView?.querySelector("[data-home-navigation]");
-    const genericNavigationGroup = genericHomeButton?.closest(".page-navigation-group");
-    if (!contentView || !genericHomeButton || !genericNavigationGroup) return;
+    const genericNavigationGroup = appMain.querySelector(".page-navigation-group");
+    if (!genericNavigationGroup) return;
 
     const navigation = document.createElement("div");
+    navigation.className = "page-navigation-group reel-setup-navigation";
     navigation.dataset.reelSetupNavigation = "true";
-    navigation.style.display = "flex";
-    navigation.style.flexWrap = "wrap";
-    navigation.style.gap = "var(--space-2)";
-    navigation.style.marginBottom = "var(--space-5)";
 
-    const previous = getReelSetupPreviousStep();
+    const previous = getReelSetupPreviousDestination();
     const backButton = document.createElement("button");
     backButton.type = "button";
     backButton.className = "page-navigation";
-    backButton.style.marginBottom = "0";
-
-    const setBackButtonLabel = (label) => {
-        const arrow = document.createElement("span");
-        arrow.className = "link-arrow link-arrow--back";
-        arrow.setAttribute("aria-hidden", "true");
-        arrow.textContent = "←";
-        backButton.replaceChildren(arrow, document.createTextNode(` ${label}`));
-    };
-
-    if (previous) {
-        setBackButtonLabel(previous.label);
-        backButton.addEventListener("click", () => {
-            reelSetupState.stepId = previous.stepId;
-            showView(ROUTES.REEL_SETUP);
-        });
-    } else {
-        const returnContext = peekDetailNavigationContext();
-        const fromKnotDetail = returnContext?.route === ROUTES.KNOT_DETAIL;
-        setBackButtonLabel(fromKnotDetail ? returnContext.label : "Knots");
-        backButton.addEventListener("click", () => {
+    const backLabel = previous?.label ?? "Knots Guide";
+    if (backLabel.length > 22) backButton.classList.add("page-navigation--long-label");
+    backButton.innerHTML = '<span class="link-arrow link-arrow--back" aria-hidden="true">←</span> ' + backLabel;
+    backButton.addEventListener("click", () => {
+        if (!previous) {
             resetReelSetupState();
-            if (fromKnotDetail && returnToDetailNavigationContext()) return;
             showView(ROUTES.KNOTS);
-        });
-    }
+            return;
+        }
+        if (previous.spoolStageId) reelSetupState.spoolStageId = previous.spoolStageId;
+        if (previous.stepId) reelSetupState.stepId = previous.stepId;
+        showView(ROUTES.REEL_SETUP);
+    });
 
     const homeButton = document.createElement("button");
     homeButton.type = "button";
     homeButton.className = "page-navigation";
-    homeButton.style.marginBottom = "0";
     homeButton.textContent = "Home";
     homeButton.addEventListener("click", () => {
         resetReelSetupState();
+        clearDetailNavigationStack();
         showView(ROUTES.DASHBOARD);
     });
 
@@ -1537,19 +1485,88 @@ function renderReelSetupNavigation(appMain) {
     genericNavigationGroup.replaceWith(navigation);
 }
 
-function applyReelSetupWorkflowCardTreatment(appMain, config) {
-    const renderedCards = appMain.querySelectorAll("[data-view-card-grid] > .dashboard-card");
-    config.cards.forEach((card, index) => {
-        if (card.isWorkflowAction !== true) return;
-        renderedCards[index]?.classList.add("dashboard-card--workflow");
+function applyReelSetupChoiceTreatment(appMain, cards) {
+    const renderedCards = Array.from(appMain.querySelectorAll("[data-view-card-grid] > .dashboard-card"));
+    cards.forEach((card, index) => {
+        const element = renderedCards[index];
+        if (!element) return;
+        element.classList.add("reel-choice-card");
+        if (card.recommendedFirstSetup) {
+            element.classList.add("reel-choice-card--recommended");
+            const cue = document.createElement("span");
+            cue.className = "reel-choice-card__recommendation";
+            cue.textContent = "Recommended First Setup";
+            const title = element.querySelector(".dashboard-card__title");
+            if (title) title.insertAdjacentElement("afterend", cue);
+            else element.prepend(cue);
+        }
     });
 }
 
+function renderReelSetupUtilityActions(appMain, { ready = false } = {}) {
+    const contentView = appMain.querySelector(".content-view");
+    if (!contentView) return;
+
+    const utilities = document.createElement("div");
+    utilities.className = "reel-setup-utilities";
+    utilities.dataset.reelSetupUtilities = "true";
+
+    if (reelSetupState.stepId !== REEL_SETUP_STEP_IDS.START) {
+        const restart = document.createElement("button");
+        restart.type = "button";
+        restart.className = "reel-setup-utility-button";
+        restart.textContent = "Restart Setup";
+        restart.addEventListener("click", () => {
+            resetReelSetupState();
+            showView(ROUTES.REEL_SETUP);
+        });
+        utilities.append(restart);
+    }
+
+    const exit = document.createElement("button");
+    exit.type = "button";
+    exit.className = "reel-setup-utility-button";
+    exit.textContent = ready ? "Done — Knots Guide" : "Exit to Knots";
+    exit.addEventListener("click", () => {
+        resetReelSetupState();
+        clearDetailNavigationStack();
+        showView(ROUTES.KNOTS);
+    });
+    utilities.append(exit);
+    if (utilities.children.length === 1) utilities.classList.add("reel-setup-utilities--single");
+    contentView.append(utilities);
+}
+
+function renderReelSetupPrimaryAction(appMain, config) {
+    if (!config?.label || typeof config.onClick !== "function") return null;
+    const contentView = appMain.querySelector(".content-view");
+    const utilities = appMain.querySelector("[data-reel-setup-utilities]");
+    if (!contentView) return null;
+
+    const action = document.createElement("button");
+    action.type = "button";
+    action.className = "reel-setup-primary-action";
+    action.dataset.reelSetupPrimaryAction = "true";
+    action.disabled = config.disabled === true;
+    action.innerHTML = `${config.label} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>`;
+    action.addEventListener("click", config.onClick);
+    contentView.insertBefore(action, utilities ?? null);
+    return action;
+}
+
 function renderReelSetupStep(appMain, config) {
-    renderView(appMain, config);
-    applyReelSetupWorkflowCardTreatment(appMain, config);
+    const cards = Array.isArray(config.cards) ? config.cards : [];
+    renderView(appMain, {
+        headingId: config.headingId ?? "reel-setup-title",
+        title: config.title,
+        description: config.description,
+        cards,
+        onCardSelect: config.onCardSelect
+    });
     renderReelSetupNavigation(appMain);
-    renderReelSetupSelectedChoices(appMain);
+    renderReelSetupStatus(appMain);
+    applyReelSetupChoiceTreatment(appMain, cards);
+    renderReelSetupUtilityActions(appMain, { ready: config.ready === true });
 }
 
 function appendReelSetupGuidanceText(listItem, item) {
@@ -1561,41 +1578,27 @@ function appendReelSetupGuidanceText(listItem, item) {
     emphasis.forEach((phrase) => {
         const phraseIndex = text.indexOf(phrase, cursor);
         if (phraseIndex < 0) return;
-
-        if (phraseIndex > cursor) {
-            listItem.append(document.createTextNode(text.slice(cursor, phraseIndex)));
-        }
-
+        if (phraseIndex > cursor) listItem.append(document.createTextNode(text.slice(cursor, phraseIndex)));
         const strong = document.createElement("strong");
         strong.textContent = phrase;
         listItem.append(strong);
         cursor = phraseIndex + phrase.length;
     });
-
-    if (cursor < text.length) {
-        listItem.append(document.createTextNode(text.slice(cursor)));
-    }
+    if (cursor < text.length) listItem.append(document.createTextNode(text.slice(cursor)));
 }
 
-function renderReelSetupGuidanceList(appMain, guidance) {
+function renderReelSetupGuidanceList(appMain, guidance, options = {}) {
     const cardGrid = appMain.querySelector("[data-view-card-grid]");
-    if (!cardGrid || !guidance || !Array.isArray(guidance.items)) return;
+    if (!cardGrid || !guidance || !Array.isArray(guidance.items)) return null;
 
     const section = document.createElement("section");
+    section.className = `reel-setup-guidance${options.className ? ` ${options.className}` : ""}`;
     section.dataset.reelSetupGuidance = "true";
-    section.style.marginBottom = "var(--space-4)";
-    section.style.padding = "var(--space-3) 0 var(--space-4)";
-    section.style.borderBottom = "1px solid var(--border)";
-
     const heading = document.createElement("h3");
     heading.textContent = guidance.title;
-    heading.style.marginBottom = "var(--space-2)";
-
     const summary = document.createElement("p");
+    summary.className = "reel-setup-guidance__summary";
     summary.textContent = guidance.summary;
-    summary.style.color = "var(--text-muted)";
-    summary.style.marginBottom = "var(--space-3)";
-
     const list = document.createElement("ul");
     list.className = "detail-list";
     guidance.items.forEach((item) => {
@@ -1603,21 +1606,91 @@ function renderReelSetupGuidanceList(appMain, guidance) {
         appendReelSetupGuidanceText(listItem, item);
         list.append(listItem);
     });
-
     section.append(heading, summary, list);
     cardGrid.parentNode.insertBefore(section, cardGrid);
+    return section;
+}
+
+function renderReelSetupReferencePrompt(appMain, label, onOpen) {
+    const cardGrid = appMain.querySelector("[data-view-card-grid]");
+    if (!cardGrid || typeof onOpen !== "function") return;
+    const prompt = document.createElement("div");
+    prompt.className = "reel-setup-reference-prompt";
+    prompt.innerHTML = `<span class="reel-setup-reference-prompt__label">${label}</span><button class="reference-info-button reel-setup-reference-prompt__button" type="button" aria-label="Open ${label} reference"><span aria-hidden="true">ⓘ</span></button>`;
+    prompt.querySelector("button")?.addEventListener("click", (event) => onOpen(event.currentTarget));
+    cardGrid.parentNode.insertBefore(prompt, cardGrid);
+}
+
+function openReelTypeReference(triggerElement) {
+    const pages = REEL_TYPE_OPTIONS.map((option) => ({
+        id: option.id,
+        title: option.title,
+        summary: option.description,
+        items: option.recognitionTraits
+    }));
+    renderPagedReferencePopover({
+        eyebrow: "Reel Identification",
+        pages,
+        initialPageId: reelSetupState.reelType ?? "spinning",
+        triggerElement
+    });
+}
+
+function openReelLineTypeReference(triggerElement) {
+    const pages = Object.values(REEL_LINE_TYPE_GUIDANCE).map((lineType) => ({
+        id: lineType.id,
+        title: lineType.title,
+        summary: lineType.selectionDescription,
+        sections: [
+            { title: "How to Recognize It", text: lineType.identificationCue },
+            { title: "Beginner Guidance", text: lineType.beginnerGuidance },
+            { title: "Tradeoff", text: lineType.tradeoff }
+        ]
+    }));
+    renderPagedReferencePopover({
+        eyebrow: "Fishing Line",
+        pages,
+        initialPageId: reelSetupState.lineType ?? "monofilament",
+        triggerElement
+    });
+}
+
+function openReelEquipmentReference(triggerElement) {
+    const pages = Object.values(REEL_EQUIPMENT_GUIDANCE).map((guidance) => ({
+        id: guidance.id,
+        title: guidance.title,
+        summary: guidance.summary,
+        items: guidance.items,
+        visualType: guidance.id === "reel" ? "reel-capacity-diagram" : null
+    }));
+    renderPagedReferencePopover({
+        eyebrow: "Equipment Reference",
+        pages,
+        initialPageId: "reel",
+        triggerElement
+    });
+}
+
+function openReelLeaderReference(triggerElement) {
+    renderPagedReferencePopover({
+        eyebrow: "Leader Reference",
+        pages: [{
+            id: "leader-reference",
+            title: REEL_LEADER_REFERENCE_GUIDANCE.title,
+            summary: REEL_LEADER_REFERENCE_GUIDANCE.summary,
+            items: REEL_LEADER_REFERENCE_GUIDANCE.items
+        }],
+        initialPageId: "leader-reference",
+        triggerElement
+    });
 }
 
 function renderReelSetupStartStep(appMain) {
+    const cards = REEL_SETUP_ENTRY_OPTIONS.map((option) => ({ ...option, isAvailable: true }));
     renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
         title: "Get Your Reel Ready",
-        description: "Start by telling us whether this reel is empty or already has line that you want to replace.",
-        cards: REEL_SETUP_ENTRY_OPTIONS.map((option) => ({
-            ...option,
-            isAvailable: true,
-            isWorkflowAction: true
-        })),
+        description: "Build a beginner-friendly reel and line system step by step. Start by telling us whether this reel is empty or already has line you want to replace.",
+        cards,
         onCardSelect: (entryMode) => {
             if (!getReelSetupOption(REEL_SETUP_ENTRY_OPTIONS, entryMode)) return;
             reelSetupState.entryMode = entryMode;
@@ -1628,1439 +1701,563 @@ function renderReelSetupStartStep(appMain) {
 }
 
 function renderReelSetupReelTypeStep(appMain) {
-    const entryOption = getReelSetupOption(
-        REEL_SETUP_ENTRY_OPTIONS,
-        reelSetupState.entryMode
-    );
-
-    if (!entryOption) {
+    if (!getReelSetupOption(REEL_SETUP_ENTRY_OPTIONS, reelSetupState.entryMode)) {
         resetReelSetupState();
         renderReelSetupStartStep(appMain);
         return;
     }
-
+    const cards = REEL_TYPE_OPTIONS.map((option) => ({ ...option, isAvailable: true }));
     renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "What Kind of Reel Do You Have?",
-        description: "Choose the reel style you are working with.",
-        cards: REEL_TYPE_OPTIONS.map((option) => ({
-            ...option,
-            isAvailable: true,
-            isWorkflowAction: true
-        })),
-        onCardSelect: (reelType) => {
-            if (!getReelSetupOption(REEL_TYPE_OPTIONS, reelType)) return;
-
-            reelSetupState.lineType = null;
-            reelSetupState.targetFish = null;
-            reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-
-            if (reelType === "not-sure") {
-                reelSetupState.reelType = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_IDENTIFICATION_HELP;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            reelSetupState.reelType = reelType;
-            reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
+        title: "Choose Your Reel Type",
+        description: "Choose the reel that matches the equipment you actually have. Spinning is the recommended first freshwater setup when you are choosing new equipment.",
+        cards,
+        onCardSelect: (reelTypeId) => {
+            if (!getReelSetupOption(REEL_TYPE_OPTIONS, reelTypeId)) return;
+            reelSetupState = {
+                ...reelSetupState,
+                reelType: reelTypeId,
+                lineType: null,
+                targetFish: null,
+                lineWeight: null,
+                backingChoice: null,
+                spoolStageId: null,
+                stepId: REEL_SETUP_STEP_IDS.LINE_TYPE
+            };
             showView(ROUTES.REEL_SETUP);
         }
     });
+    renderReelSetupReferencePrompt(appMain, "Not sure which reel you have?", openReelTypeReference);
 }
 
-function renderReelSetupReelIdentificationHelpStep(appMain) {
-    const actualReelTypes = REEL_TYPE_OPTIONS.filter((option) => option.id !== "not-sure");
-
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Which Reel Matches Yours?",
-        description: "Use the physical layout of the reel rather than guessing from brand or size number.",
-        cards: [
-            ...actualReelTypes.map((option) => ({
-                ...option,
-                isAvailable: true,
-                isWorkflowAction: true
-            })),
-            {
-                id: "back-to-reel-types",
-                title: "Back to Reel Choices",
-                description: "Return to the reel-type list without choosing a reel.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            const reelTypeOption = getReelSetupOption(actualReelTypes, actionId);
-            if (reelTypeOption) {
-                reelSetupState.reelType = reelTypeOption.id;
-                reelSetupState.lineType = null;
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "back-to-reel-types") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
-                showView(ROUTES.REEL_SETUP);
-            }
-        }
-    });
-}
-
-function getReelLineType(lineTypeId) {
-    return REEL_LINE_TYPE_GUIDANCE[lineTypeId] ?? null;
-}
-
-function getReelBeginnerLineRecommendation(reelTypeId) {
-    return REEL_BEGINNER_LINE_RECOMMENDATIONS[reelTypeId] ?? null;
-}
-
-function getReelLineCompatibilityNote(reelTypeId, lineTypeId) {
-    return REEL_LINE_COMPATIBILITY_NOTES[reelTypeId]?.[lineTypeId] ?? null;
-}
-
-function selectReelSetupLineType(lineTypeId) {
-    if (!getReelLineType(lineTypeId)) return false;
-    reelSetupState.lineType = lineTypeId;
-    reelSetupState.targetFish = null;
-    reelSetupState.equipmentCheck = null;
-    reelSetupState.backingChoice = null;
-    reelSetupState.leaderChoice = null;
-    reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION_COMPLETE;
-    showView(ROUTES.REEL_SETUP);
-    return true;
-}
-
-function renderReelSetupLineSelectionStep(appMain) {
-    const entryOption = getReelSetupOption(
-        REEL_SETUP_ENTRY_OPTIONS,
-        reelSetupState.entryMode
-    );
-    const reelTypeOption = getReelSetupOption(
-        REEL_TYPE_OPTIONS,
-        reelSetupState.reelType
-    );
-
-    if (!entryOption || !reelTypeOption) {
-        resetReelSetupState();
-        renderReelSetupStartStep(appMain);
+function renderReelSetupLineTypeStep(appMain) {
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
+    if (!reelType) {
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
+        renderReelSetupReelTypeStep(appMain);
         return;
     }
-
-    const lineCards = Object.values(REEL_LINE_TYPE_GUIDANCE).map((lineType) => ({
-        id: lineType.id,
-        title: lineType.title,
-        description: lineType.selectionDescription,
+    const cards = Object.values(REEL_LINE_TYPE_GUIDANCE).map((option) => ({
+        id: option.id,
+        title: option.title,
+        description: option.selectionDescription,
         isAvailable: true,
-        isWorkflowAction: true
+        recommendedFirstSetup: option.recommendedFirstSetup === true
     }));
-    const guidanceCards = REEL_LINE_GUIDANCE_ACTIONS.map((action) => ({
-        ...action,
-        isAvailable: true,
-        isWorkflowAction: true
-    }));
-
     renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "What Line Are You Using?",
-        description: "Choose the line you plan to spool, or use beginner help if you are not sure.",
-        cards: [...lineCards, ...guidanceCards],
-        onCardSelect: (optionId) => {
-            if (getReelLineType(optionId)) {
-                selectReelSetupLineType(optionId);
-                return;
-            }
-
-            if (optionId === "help-me-choose") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_HELP;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (optionId === "not-sure-line") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_IDENTIFICATION;
-                showView(ROUTES.REEL_SETUP);
-            }
+        title: "Choose Your Line Type",
+        description: `Choose the line material you plan to spool on your ${reelType.title.toLowerCase()}. The actual pound-test is confirmed after you choose a target.`,
+        cards,
+        onCardSelect: (lineTypeId) => {
+            if (!getReelLineType(lineTypeId)) return;
+            reelSetupState = {
+                ...reelSetupState,
+                lineType: lineTypeId,
+                targetFish: null,
+                lineWeight: null,
+                backingChoice: null,
+                spoolStageId: null,
+                stepId: REEL_SETUP_STEP_IDS.TARGET_FISH
+            };
+            showView(ROUTES.REEL_SETUP);
         }
     });
-}
-
-function renderReelSetupLineHelpStep(appMain) {
-    const reelTypeOption = getReelSetupOption(
-        REEL_TYPE_OPTIONS,
-        reelSetupState.reelType
-    );
-    const recommendation = getReelBeginnerLineRecommendation(reelSetupState.reelType);
-    const recommendedLine = getReelLineType(recommendation?.lineTypeId);
-
-    if (!reelTypeOption || !recommendation || !recommendedLine) {
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
-        renderReelSetupLineSelectionStep(appMain);
-        return;
-    }
-
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Beginner Line Starting Point",
-        description: `${recommendation.label}: ${recommendedLine.title}. ${recommendation.reason} This is a starting point, not a required line; line strength and equipment compatibility are checked later.`,
-        cards: [
-            {
-                id: "use-recommended-line",
-                title: `Use ${recommendedLine.title}`,
-                description: recommendedLine.selectionDescription,
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "compare-line-types",
-                title: "Compare the Line Types",
-                description: "Return to Monofilament, Fluorocarbon, and Braid to choose directly.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "identify-existing-line",
-                title: "I'm Not Sure What Line I Have",
-                description: "Use simple visual and handling cues before choosing.",
-                isAvailable: true,
-                isWorkflowAction: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "use-recommended-line") {
-                selectReelSetupLineType(recommendedLine.id);
-                return;
-            }
-
-            if (actionId === "compare-line-types") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "identify-existing-line") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_IDENTIFICATION;
-                showView(ROUTES.REEL_SETUP);
-            }
-        }
-    });
-}
-
-function renderReelSetupLineIdentificationStep(appMain) {
-    const identificationCards = Object.values(REEL_LINE_TYPE_GUIDANCE).map((lineType) => ({
-        id: lineType.id,
-        title: lineType.title,
-        description: lineType.identificationCue,
-        isAvailable: true,
-        isWorkflowAction: true
-    }));
-
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Which Line Looks Like Yours?",
-        description: "Use these cues only as a practical check. If you still cannot identify the line confidently, choose Help Me Choose instead of guessing.",
-        cards: [
-            ...identificationCards,
-            {
-                id: "help-me-choose",
-                title: "Still Not Sure — Help Me Choose",
-                description: "Use the beginner starting recommendation for your selected reel type.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "back-to-line-selection",
-                title: "Back to Line Choices",
-                description: "Return without selecting a line type.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (optionId) => {
-            if (getReelLineType(optionId)) {
-                selectReelSetupLineType(optionId);
-                return;
-            }
-
-            if (optionId === "help-me-choose") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_HELP;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (optionId === "back-to-line-selection") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
-                showView(ROUTES.REEL_SETUP);
-            }
-        }
-    });
-}
-
-function renderReelSetupLineSelectionComplete(appMain) {
-    const entryOption = getReelSetupOption(
-        REEL_SETUP_ENTRY_OPTIONS,
-        reelSetupState.entryMode
-    );
-    const reelTypeOption = getReelSetupOption(
-        REEL_TYPE_OPTIONS,
-        reelSetupState.reelType
-    );
-    const lineType = getReelLineType(reelSetupState.lineType);
-
-    if (!entryOption || !reelTypeOption || !lineType) {
-        reelSetupState.lineType = null;
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
-        renderReelSetupLineSelectionStep(appMain);
-        return;
-    }
-
-    const compatibilityNote = getReelLineCompatibilityNote(
-        reelSetupState.reelType,
-        reelSetupState.lineType
-    );
-    const compatibilityText = compatibilityNote ? ` ${compatibilityNote}` : "";
-
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Line Choice Check",
-        description: `${lineType.beginnerGuidance} ${lineType.tradeoff}${compatibilityText}`,
-        cards: [
-            {
-                id: "continue-to-target-fish",
-                title: "Continue — Choose Target Fish",
-                description: "Use your target fish to set a beginner starting line-strength range.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            },
-            {
-                id: "return-to-knots",
-                title: "Return to Knots",
-                description: "Leave the internal Package 3 route and return to the Knot Guide.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "continue-to-target-fish") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-                return;
-            }
-
-            if (actionId === "return-to-knots") {
-                resetReelSetupState();
-                showView(ROUTES.KNOTS);
-            }
-        }
-    });
-}
-
-function getReelTargetStrengthGuidance(targetProfile, lineType) {
-    if (!targetProfile || !lineType) return "";
-
-    if (lineType.id === "braid") {
-        return `Recommended fish-strength reference: ${targetProfile.recommendedRange}. ` +
-            `${targetProfile.guidance} Because braid is much thinner than monofilament or fluorocarbon at the same breaking strength, ` +
-            `do not treat ${targetProfile.easyChoice} as the final braid purchase size. The next equipment-compatibility step will compare your reel and rod markings before the braid test is finalized. ` +
-            targetProfile.caution;
-    }
-
-    return `Recommended starting range: ${targetProfile.recommendedRange}. ` +
-        `Easy beginner choice: ${targetProfile.easyChoice}. ${targetProfile.guidance} ` +
-        `This is a starting point, not a requirement; the next equipment-compatibility step will compare the choice with your reel and rod ratings. ` +
-        targetProfile.caution;
+    renderReelSetupReferencePrompt(appMain, "Need help choosing or identifying your line?", openReelLineTypeReference);
 }
 
 function renderReelSetupTargetFishStep(appMain) {
     const lineType = getReelLineType(reelSetupState.lineType);
     if (!lineType) {
-        reelSetupState.targetFish = null;
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
-        renderReelSetupLineSelectionStep(appMain);
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_TYPE;
+        renderReelSetupLineTypeStep(appMain);
         return;
     }
-
+    const profiles = getOrderedReelTargetProfiles();
+    const cards = profiles.map((profile) => ({
+        id: profile.id,
+        title: getReelSetupTargetLabel(profile),
+        description: profile.description,
+        isAvailable: true
+    }));
     renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
         title: "What Are You Fishing For?",
-        description: "Choose the closest beginner target. This sets a starting line-strength range without trying to optimize for every lure, cover type, or technique.",
-        cards: REEL_TARGET_FISH_PROFILES.map((profile) => ({
-            id: profile.id,
-            title: profile.title,
-            description: profile.description,
-            isAvailable: true,
-            isWorkflowAction: true
-        })),
+        description: "Choose the closest beginner target. This sets the starting fishing-strength reference; it does not lock you into one universal line choice.",
+        cards,
         onCardSelect: (targetFishId) => {
             if (!getReelSetupTargetFish(targetFishId)) return;
             reelSetupState.targetFish = targetFishId;
-            reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-            reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_GUIDANCE;
+            reelSetupState.lineWeight = null;
+            reelSetupState.backingChoice = null;
+            reelSetupState.spoolStageId = null;
+            reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_WEIGHT;
             showView(ROUTES.REEL_SETUP);
         }
     });
 }
 
-function renderReelSetupTargetGuidanceStep(appMain) {
+function renderReelLineWeightPicker(appMain, targetProfile, lineType) {
+    const cardGrid = appMain.querySelector("[data-view-card-grid]");
+    if (!cardGrid) return;
+
+    const exactRecommendation = lineType.id === "monofilament"
+        ? targetProfile.monofilamentStartWeight ?? null
+        : null;
+    let selectedWeight = reelSetupState.lineWeight ?? exactRecommendation;
+    let pickerDraftWeight = selectedWeight;
+    let primaryAction = null;
+    let wheelScrollFrame = null;
+
+    const picker = document.createElement("section");
+    picker.className = "reel-line-weight-picker";
+    picker.setAttribute("aria-labelledby", "reel-line-weight-picker-title");
+    picker.innerHTML = `
+        <div class="reel-line-weight-picker__summary">
+            <h3 id="reel-line-weight-picker-title">Choose Your Line Weight</h3>
+            <p><strong>${getReelSetupTargetLabel(targetProfile)} reference:</strong> ${targetProfile.strengthReference}</p>
+            <p>${targetProfile.guidance}</p>
+            <p>${lineType.weightInterpretation}</p>
+            ${targetProfile.lighterAlternativeWeight && lineType.id === "monofilament"
+                ? `<p class="reel-line-weight-picker__note">Lighter all-around alternative: ${targetProfile.lighterAlternativeWeight} lb Monofilament.</p>`
+                : ""}
+        </div>
+        <div class="reel-line-weight-picker__control">
+            <span class="reel-line-weight-picker__label">Line Weight</span>
+            <button class="reel-line-weight-picker-trigger" type="button" data-reel-line-weight-picker-trigger
+                aria-haspopup="dialog" aria-expanded="false" aria-controls="reel-line-weight-dialog">
+                <span data-reel-line-weight-trigger-label></span>
+                <span class="reel-line-weight-picker-trigger__arrow" aria-hidden="true">⌄</span>
+            </button>
+        </div>
+        <p class="reel-line-weight-picker__selection" data-reel-line-weight-selection aria-live="polite"></p>
+        <div class="reel-line-weight-dialog" id="reel-line-weight-dialog" data-reel-line-weight-dialog hidden>
+            <button class="reel-line-weight-dialog__backdrop" type="button" data-reel-line-weight-picker-cancel tabindex="-1" aria-label="Close line weight picker"></button>
+            <section class="reel-line-weight-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="reel-line-weight-dialog-title">
+                <div class="reel-line-weight-dialog__header">
+                    <h3 id="reel-line-weight-dialog-title">Select Line Weight</h3>
+                    <button class="reel-line-weight-dialog__close" type="button" data-reel-line-weight-picker-cancel aria-label="Close line weight picker">×</button>
+                </div>
+                <div class="reel-line-weight-wheel-shell">
+                    <div class="reel-line-weight-wheel" data-reel-line-weight-wheel role="listbox" tabindex="0" aria-label="Line weight in pounds"></div>
+                    <div class="reel-line-weight-wheel-selection" aria-hidden="true"></div>
+                </div>
+                <div class="reel-line-weight-dialog__actions">
+                    <button class="reel-line-weight-dialog__cancel" type="button" data-reel-line-weight-picker-cancel>Cancel</button>
+                    <button class="reel-line-weight-dialog__done" type="button" data-reel-line-weight-picker-done>Done</button>
+                </div>
+            </section>
+        </div>
+    `;
+    cardGrid.parentNode.insertBefore(picker, cardGrid);
+
+    const trigger = picker.querySelector("[data-reel-line-weight-picker-trigger]");
+    const triggerLabel = picker.querySelector("[data-reel-line-weight-trigger-label]");
+    const dialog = picker.querySelector("[data-reel-line-weight-dialog]");
+    const wheel = picker.querySelector("[data-reel-line-weight-wheel]");
+    const doneButton = picker.querySelector("[data-reel-line-weight-picker-done]");
+    const cancelButtons = picker.querySelectorAll("[data-reel-line-weight-picker-cancel]");
+    const selection = picker.querySelector("[data-reel-line-weight-selection]");
+    const values = [null, ...REEL_LINE_WEIGHT_OPTIONS];
+
+    wheel.innerHTML = values.map((weight, index) => `
+        <button class="reel-line-weight-wheel-option" id="reel-line-weight-${index}" type="button"
+            role="option" aria-selected="false" tabindex="-1" data-reel-line-weight-option
+            data-line-weight="${weight ?? ""}">${weight ? `${weight} lb` : "Choose pound-test"}</button>
+    `).join("");
+
+    const getOptionWeight = (option) => option?.dataset.lineWeight ? Number(option.dataset.lineWeight) : null;
+
+    const setWheelDraft = (nextWeight, { scrollWheel = false, behavior = "auto" } = {}) => {
+        pickerDraftWeight = Number.isFinite(nextWeight) ? nextWeight : null;
+        let selectedOption = null;
+        wheel.querySelectorAll("[data-reel-line-weight-option]").forEach((option) => {
+            const isSelected = getOptionWeight(option) === pickerDraftWeight;
+            option.classList.toggle("is-selected", isSelected);
+            option.setAttribute("aria-selected", String(isSelected));
+            if (isSelected) selectedOption = option;
+        });
+        if (selectedOption) {
+            wheel.setAttribute("aria-activedescendant", selectedOption.id);
+            if (scrollWheel) {
+                const targetTop = selectedOption.offsetTop - ((wheel.clientHeight - selectedOption.offsetHeight) / 2);
+                wheel.scrollTo({ top: targetTop, behavior });
+            }
+        }
+        if (doneButton) doneButton.disabled = !pickerDraftWeight;
+    };
+
+    const updateSelectionUi = () => {
+        if (triggerLabel) triggerLabel.textContent = selectedWeight ? `${selectedWeight} lb` : "Choose line weight";
+        if (selection) {
+            selection.textContent = selectedWeight
+                ? `${selectedWeight} lb ${lineType.title} is selected. Open the picker only if you want to change it.`
+                : "Choose the actual pound-test you intend to spool.";
+        }
+        if (primaryAction) {
+            primaryAction.disabled = !selectedWeight;
+            const labelNode = primaryAction.firstChild;
+            if (labelNode) {
+                labelNode.textContent = selectedWeight
+                    ? `Continue with ${selectedWeight} lb ${lineType.title} `
+                    : `Continue with ${lineType.title} `;
+            }
+        }
+    };
+
+    const closePicker = ({ commit = false } = {}) => {
+        if (!dialog || dialog.hidden) return;
+        if (commit && pickerDraftWeight) selectedWeight = pickerDraftWeight;
+        dialog.hidden = true;
+        document.body.classList.remove("reel-line-weight-picker-open");
+        trigger?.setAttribute("aria-expanded", "false");
+        updateSelectionUi();
+        trigger?.focus({ preventScroll: true });
+    };
+
+    const openPicker = () => {
+        if (!dialog || !wheel) return;
+        dialog.hidden = false;
+        document.body.classList.add("reel-line-weight-picker-open");
+        trigger?.setAttribute("aria-expanded", "true");
+        pickerDraftWeight = selectedWeight;
+        requestAnimationFrame(() => {
+            setWheelDraft(pickerDraftWeight, { scrollWheel: true });
+            wheel.focus({ preventScroll: true });
+        });
+    };
+
+    trigger?.addEventListener("click", openPicker);
+    doneButton?.addEventListener("click", () => closePicker({ commit: true }));
+    cancelButtons.forEach((button) => button.addEventListener("click", () => closePicker()));
+    dialog?.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closePicker();
+        }
+    });
+    wheel?.addEventListener("click", (event) => {
+        const option = event.target.closest("[data-reel-line-weight-option]");
+        if (!option) return;
+        setWheelDraft(getOptionWeight(option), { scrollWheel: true, behavior: "smooth" });
+    });
+    wheel?.addEventListener("keydown", (event) => {
+        if (!["ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) return;
+        const options = Array.from(wheel.querySelectorAll("[data-reel-line-weight-option]"));
+        if (options.length === 0) return;
+        event.preventDefault();
+        let currentIndex = options.findIndex((option) => getOptionWeight(option) === pickerDraftWeight);
+        if (currentIndex < 0) currentIndex = 0;
+        let nextIndex = currentIndex;
+        if (event.key === "ArrowUp") nextIndex = Math.max(0, currentIndex - 1);
+        if (event.key === "ArrowDown") nextIndex = Math.min(options.length - 1, currentIndex + 1);
+        if (event.key === "Home") nextIndex = 0;
+        if (event.key === "End") nextIndex = options.length - 1;
+        setWheelDraft(getOptionWeight(options[nextIndex]), { scrollWheel: true, behavior: "smooth" });
+    });
+    wheel?.addEventListener("scroll", () => {
+        if (wheelScrollFrame) cancelAnimationFrame(wheelScrollFrame);
+        wheelScrollFrame = requestAnimationFrame(() => {
+            const options = Array.from(wheel.querySelectorAll("[data-reel-line-weight-option]"));
+            if (options.length === 0) return;
+            const wheelBounds = wheel.getBoundingClientRect();
+            const wheelCenter = wheelBounds.top + (wheelBounds.height / 2);
+            const nearestOption = options.reduce((nearest, option) => {
+                const bounds = option.getBoundingClientRect();
+                const distance = Math.abs((bounds.top + (bounds.height / 2)) - wheelCenter);
+                return !nearest || distance < nearest.distance ? { option, distance } : nearest;
+            }, null)?.option;
+            if (!nearestOption) return;
+            const weight = getOptionWeight(nearestOption);
+            if (weight !== pickerDraftWeight) setWheelDraft(weight);
+        });
+    }, { passive: true });
+
+    primaryAction = renderReelSetupPrimaryAction(appMain, {
+        label: selectedWeight ? `Continue with ${selectedWeight} lb ${lineType.title}` : `Continue with ${lineType.title}`,
+        disabled: !selectedWeight,
+        onClick: () => {
+            if (!selectedWeight) return;
+            reelSetupState.lineWeight = selectedWeight;
+            reelSetupState.backingChoice = null;
+            reelSetupState.spoolStageId = null;
+            reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT;
+            showView(ROUTES.REEL_SETUP);
+        }
+    });
+    updateSelectionUi();
+}
+
+function renderReelSetupLineWeightStep(appMain) {
     const lineType = getReelLineType(reelSetupState.lineType);
     const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
-
     if (!lineType || !targetProfile) {
-        reelSetupState.targetFish = null;
-        reelSetupState.equipmentCheck = null;
-        reelSetupState.backingChoice = null;
-        reelSetupState.leaderChoice = null;
         reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
         renderReelSetupTargetFishStep(appMain);
         return;
     }
-
     renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Starting Line Strength",
-        description: getReelTargetStrengthGuidance(targetProfile, lineType),
-        cards: [
-            {
-                id: "continue-to-equipment-check",
-                title: "Next — Check Reel & Rod Compatibility",
-                description: "Compare this starting guidance with the line-capacity and line-rating markings on your actual equipment.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            },
-            {
-                id: "return-to-knots",
-                title: "Return to Knots",
-                description: "Leave the internal Package 3 route and return to the Knot Guide.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "continue-to-equipment-check") {
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-                return;
-            }
-
-            if (actionId === "return-to-knots") {
-                resetReelSetupState();
-                showView(ROUTES.KNOTS);
-            }
-        }
+        title: "Confirm Line Weight",
+        description: "Use the target strength reference as a starting point, then confirm the actual pound-test you intend to spool. FCC recommendations and your confirmed selection remain separate.",
+        cards: [],
+        onCardSelect: () => {}
     });
+    renderReelLineWeightPicker(appMain, targetProfile, lineType);
 }
 
-function getReelEquipmentCheckDescription(targetProfile, lineType) {
-    if (!targetProfile || !lineType) return "";
-
-    if (lineType.id === "braid") {
-        return `For ${targetProfile.title}, keep ${targetProfile.recommendedRange} as a fish-strength reference. ` +
-            "Choose an actual braid test only after confirming the reel's Braid capacity and the rod's line rating.";
-    }
-
-    return `Start by checking whether ${targetProfile.easyChoice} ${lineType.title.toLowerCase()} fits both ` +
-        "the reel's capacity guidance and the rod's line rating. If it does not, use the markings on your equipment rather than forcing the starting recommendation.";
+function renderReelSetupEquipmentDiagramSummary(appMain, lineType, lineWeight) {
+    const cardGrid = appMain.querySelector("[data-view-card-grid]");
+    if (!cardGrid) return;
+    const section = document.createElement("section");
+    section.className = "reel-equipment-check";
+    section.innerHTML = `
+        <h3>Compare Your Equipment</h3>
+        <p>Your confirmed line is <strong>${lineWeight} lb ${lineType.title}</strong>. Check the reel-capacity marking for the selected line type or diameter and check the rod's Line / Line Wt / Line Rating. Manufacturer guidance is the final authority.</p>
+    `;
+    cardGrid.parentNode.insertBefore(section, cardGrid);
 }
 
-function getReelEquipmentConfirmationDescription(targetProfile, lineType) {
-    if (!targetProfile || !lineType) return "";
-
-    if (lineType.id === "braid") {
-        return "You confirmed that the braid size you intend to use fits your reel's Braid capacity and your rod's line rating. The next step decides whether backing is needed before the main line is attached to the spool.";
-    }
-
-    return `You confirmed that your ${lineType.title.toLowerCase()} choice for ${targetProfile.title} fits both ` +
-        "your reel's capacity guidance and your rod's line rating. The next step decides whether backing is needed before the main line is attached to the spool.";
+function renderReelSetupInformationalWarning(appMain, message) {
+    if (!message) return;
+    const cardGrid = appMain.querySelector("[data-view-card-grid]");
+    if (!cardGrid) return;
+    const warning = document.createElement("aside");
+    warning.className = "reel-setup-notice";
+    warning.setAttribute("role", "note");
+    warning.innerHTML = `<strong>Check Your Reel</strong><p>${message}</p>`;
+    cardGrid.parentNode.insertBefore(warning, cardGrid);
 }
 
-function renderReelSetupEquipmentCheckStep(appMain) {
+function renderReelSetupEquipmentStep(appMain) {
     const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
     const lineType = getReelLineType(reelSetupState.lineType);
-    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
-
-    if (!reelType) {
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_IDENTIFICATION_HELP;
-        renderReelSetupReelIdentificationHelpStep(appMain);
+    if (!reelType || !lineType || !reelSetupState.lineWeight) {
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_WEIGHT;
+        renderReelSetupLineWeightStep(appMain);
         return;
     }
-
-    if (!lineType || !targetProfile) {
-        reelSetupState.equipmentCheck = null;
-        reelSetupState.backingChoice = null;
-        reelSetupState.leaderChoice = null;
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
-        renderReelSetupTargetFishStep(appMain);
-        return;
-    }
-
     renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Check Your Reel & Rod",
-        description: getReelEquipmentCheckDescription(targetProfile, lineType),
-        cards: [
-            {
-                id: "confirm-equipment-match",
-                title: "My Reel & Rod Support This Setup",
-                description: "Continue only after the intended line fits both pieces of equipment.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "read-reel",
-                title: "How to Read Your Reel",
-                description: "Learn how pound-test, yards, meters, diameter, Mono/Braid labels, and reel size numbers differ.",
-                isAvailable: true
-            },
-            {
-                id: "read-rod",
-                title: "How to Read Your Rod",
-                description: "Find the rod's line rating and keep it separate from the lure-weight rating.",
-                isAvailable: true
-            },
-            {
-                id: "equipment-mismatch",
-                title: "Something Doesn't Match / I'm Not Sure",
-                description: "Pause before spooling and use the markings to adjust the line choice or equipment.",
-                isAvailable: true,
-                isWorkflowAction: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "confirm-equipment-match") {
-                reelSetupState.equipmentCheck = "compatible";
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_COMPLETE;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "read-reel") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "read-rod") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_ROD;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-
-            if (actionId === "equipment-mismatch") {
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH;
-                showView(ROUTES.REEL_SETUP);
-            }
+        title: "Check Your Reel & Rod Markings",
+        description: "This step helps you read the equipment you own. FCC does not know your exact models and does not issue a compatibility PASS/FAIL verdict.",
+        cards: [],
+        onCardSelect: () => {}
+    });
+    renderReelSetupReferencePrompt(appMain, "How do I read my reel and rod?", openReelEquipmentReference);
+    renderReelSetupEquipmentDiagramSummary(appMain, lineType, reelSetupState.lineWeight);
+    renderReelSetupInformationalWarning(
+        appMain,
+        REEL_INFORMATIONAL_WARNINGS[reelType.id]?.[lineType.id] ?? null
+    );
+    renderReelSetupPrimaryAction(appMain, {
+        label: lineType.id === "braid" ? "Continue to Backing" : "Continue to Spool",
+        onClick: () => {
+            reelSetupState.backingChoice = null;
+            reelSetupState.spoolStageId = null;
+            reelSetupState.stepId = lineType.id === "braid"
+                ? REEL_SETUP_STEP_IDS.BACKING_DECISION
+                : REEL_SETUP_STEP_IDS.SPOOL;
+            showView(ROUTES.REEL_SETUP);
         }
     });
-}
-
-function renderReelSetupReadReelStep(appMain) {
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "How to Read Your Reel",
-        description: "Use the printed labels or the exact model's official specification. Capacity formats vary, so read the units before interpreting the numbers.",
-        cards: [
-            {
-                id: "back-to-equipment-check",
-                title: "Back to Equipment Check",
-                description: "Return and compare your reel and rod against the selected line system.",
-                isAvailable: true
-            },
-            {
-                id: "read-rod",
-                title: "How to Read Your Rod",
-                description: "Review the rod line-rating markings next.",
-                isAvailable: true
-            },
-            {
-                id: "equipment-mismatch",
-                title: "Something Doesn't Match / I'm Not Sure",
-                description: "Use the adjustment path before spooling if the reel guidance does not support the intended line.",
-                isAvailable: true,
-                isWorkflowAction: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "back-to-equipment-check") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "read-rod") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_ROD;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "equipment-mismatch") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH;
-                showView(ROUTES.REEL_SETUP);
-            }
-        }
-    });
-
-    renderReelSetupGuidanceList(appMain, REEL_EQUIPMENT_GUIDANCE.reel);
-}
-
-function renderReelSetupReadRodStep(appMain) {
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "How to Read Your Rod",
-        description: "The rod's line rating is a separate equipment limit from the reel's line-capacity marking.",
-        cards: [
-            {
-                id: "back-to-equipment-check",
-                title: "Back to Equipment Check",
-                description: "Return and compare your reel and rod against the selected line system.",
-                isAvailable: true
-            },
-            {
-                id: "read-reel",
-                title: "How to Read Your Reel",
-                description: "Review the reel capacity markings next.",
-                isAvailable: true
-            },
-            {
-                id: "equipment-mismatch",
-                title: "Something Doesn't Match / I'm Not Sure",
-                description: "Use the adjustment path before spooling if the rod rating does not support the intended line.",
-                isAvailable: true,
-                isWorkflowAction: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "back-to-equipment-check") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "read-reel") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "equipment-mismatch") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_MISMATCH;
-                showView(ROUTES.REEL_SETUP);
-            }
-        }
-    });
-
-    renderReelSetupGuidanceList(appMain, REEL_EQUIPMENT_GUIDANCE.rod);
-}
-
-function renderReelSetupEquipmentMismatchStep(appMain) {
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Pause Before Spooling",
-        description: "If either piece of equipment does not support the intended line system, adjust the setup before line goes on the reel.",
-        cards: [
-            {
-                id: "read-reel",
-                title: "Review Reel Markings",
-                description: "Return to the reel-capacity guide.",
-                isAvailable: true
-            },
-            {
-                id: "read-rod",
-                title: "Review Rod Markings",
-                description: "Return to the rod line-rating guide.",
-                isAvailable: true
-            },
-            {
-                id: "change-target-fish",
-                title: "Change Target Fish",
-                description: "Choose a different target reference while keeping the reel and line selections.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "change-line-type",
-                title: "Change Line Choice",
-                description: "Return to line selection and clear the target-fish guidance.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "change-reel-type",
-                title: "Change Reel Type",
-                description: "Return to reel identification while preserving the setup mode.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "back-to-equipment-check",
-                title: "Back to Equipment Check",
-                description: "Return after verifying or adjusting the equipment markings.",
-                isAvailable: true
-            },
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "read-reel") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "read-rod") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_ROD;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "change-target-fish") {
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.TARGET_FISH;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "change-line-type") {
-                reelSetupState.lineType = null;
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LINE_SELECTION;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "change-reel-type") {
-                reelSetupState.reelType = null;
-                reelSetupState.lineType = null;
-                reelSetupState.targetFish = null;
-                reelSetupState.equipmentCheck = null;
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_TYPE;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "back-to-equipment-check") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-            }
-        }
-    });
-
-    renderReelSetupGuidanceList(appMain, REEL_EQUIPMENT_GUIDANCE.mismatch);
-}
-
-function renderReelSetupEquipmentCompleteStep(appMain) {
-    const lineType = getReelLineType(reelSetupState.lineType);
-    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
-
-    if (!lineType || !targetProfile || reelSetupState.equipmentCheck !== "compatible") {
-        reelSetupState.equipmentCheck = null;
-        reelSetupState.backingChoice = null;
-        reelSetupState.leaderChoice = null;
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
-        renderReelSetupEquipmentCheckStep(appMain);
-        return;
-    }
-
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Equipment Compatibility Check",
-        description: getReelEquipmentConfirmationDescription(targetProfile, lineType),
-        cards: [
-            {
-                id: "backing-decision-next",
-                title: "Next — Decide on Backing",
-                description: "Choose whether the selected main line should attach directly to the spool or use monofilament backing first.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            },
-            {
-                id: "return-to-knots",
-                title: "Return to Knots",
-                description: "Leave the internal Package 3 route and return to the Knot Guide.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "backing-decision-next") {
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.BACKING_DECISION;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-                return;
-            }
-            if (actionId === "return-to-knots") {
-                resetReelSetupState();
-                showView(ROUTES.KNOTS);
-            }
-        }
-    });
-}
-
-function getReelBackingChoice(backingChoiceId) {
-    return REEL_BACKING_CHOICES[backingChoiceId] ?? null;
-}
-
-function getReelSpoolingGuidance(reelTypeId) {
-    return REEL_SPOOLING_GUIDANCE[reelTypeId] ?? null;
-}
-
-function getReelLeaderChoice(leaderChoiceId) {
-    return REEL_LEADER_CHOICES[leaderChoiceId] ?? null;
-}
-
-function getReelLeaderDecisionGuidance(lineTypeId) {
-    return REEL_LEADER_DECISION_GUIDANCE[lineTypeId] ?? null;
-}
-
-function getReelLeaderSetupGuidance(leaderChoiceId, targetProfile) {
-    const baseGuidance = REEL_LEADER_SETUP_GUIDANCE[leaderChoiceId] ?? null;
-    if (!baseGuidance || !targetProfile) return null;
-
-    const strengthLead = `Starting strength reference: ${targetProfile.easyChoice}.`;
-    const strengthItem = {
-        text: `${strengthLead} This reuses the existing target-fish beginner reference; it is not a measured property of the line actually on the reel. Adjust the real leader strength to the actual main line, target fish, cover, and later Rig or presentation.`,
-        emphasis: [strengthLead, "not a measured property of the line actually on the reel"]
-    };
-
-    return {
-        ...baseGuidance,
-        items: [
-            ...baseGuidance.items.slice(0, 2),
-            strengthItem,
-            ...baseGuidance.items.slice(2)
-        ]
-    };
-}
-
-function getReelBackingCards(lineType) {
-    if (!lineType) return [];
-
-    if (lineType.id === "braid") {
-        return [
-            {
-                ...REEL_BACKING_CHOICES["monofilament-backing"],
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                ...REEL_BACKING_CHOICES["direct-braid-approved"],
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "review-reel-guidance",
-                title: "Review Reel Markings First",
-                description: "Return to the reel-capacity guide if you cannot confirm whether this spool is designed for direct braid.",
-                isAvailable: true
-            }
-        ];
-    }
-
-    return [
-        {
-            ...REEL_BACKING_CHOICES.none,
-            isAvailable: true,
-            isWorkflowAction: true
-        },
-        {
-            ...REEL_BACKING_CHOICES["monofilament-backing"],
-            isAvailable: true,
-            isWorkflowAction: true
-        }
-    ];
-}
-
-function selectReelSetupBackingChoice(backingChoiceId) {
-    const backingChoice = getReelBackingChoice(backingChoiceId);
-    const lineType = getReelLineType(reelSetupState.lineType);
-    if (!backingChoice || !lineType || reelSetupState.equipmentCheck !== "compatible") return false;
-
-    if (lineType.id === "braid" && backingChoiceId === "none") return false;
-    if (lineType.id !== "braid" && backingChoiceId === "direct-braid-approved") return false;
-
-    reelSetupState.backingChoice = backingChoiceId;
-    reelSetupState.leaderChoice = null;
-    reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN;
-    showView(ROUTES.REEL_SETUP);
-    return true;
 }
 
 function renderReelSetupBackingDecisionStep(appMain) {
     const lineType = getReelLineType(reelSetupState.lineType);
-    if (!lineType || reelSetupState.equipmentCheck !== "compatible") {
-                reelSetupState.backingChoice = null;
-                reelSetupState.leaderChoice = null;
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT_CHECK;
-        renderReelSetupEquipmentCheckStep(appMain);
+    if (lineType?.id !== "braid") {
+        reelSetupState.backingChoice = null;
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOL;
+        renderReelSetupSpoolStep(appMain);
         return;
     }
-
-    const description = lineType.id === "braid"
-        ? "Braid can slip on a smooth spool. Use monofilament backing as the general beginner path unless your exact reel or spool explicitly supports secure direct-braid attachment."
-        : `For ${lineType.title}, the simplest beginner path is direct spool attachment. Monofilament backing is optional when you deliberately want to reduce the amount of main line needed to fill the spool.`;
-
+    const cards = Object.values(REEL_BACKING_CHOICES).map((choice) => ({
+        ...choice,
+        isAvailable: true
+    }));
     renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Do You Need Backing?",
-        description,
-        cards: [
-            ...getReelBackingCards(lineType),
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (getReelBackingChoice(actionId)) {
-                selectReelSetupBackingChoice(actionId);
-                return;
-            }
-            if (actionId === "review-reel-guidance") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READ_REEL;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-            }
+        title: "Decide on Backing",
+        description: "Braid can slip on some smooth spool arbors. Choose the beginner Monofilament-backing path unless the exact reel or spool explicitly supports a secure direct-Braid method.",
+        cards,
+        onCardSelect: (backingChoiceId) => {
+            if (!getReelBackingChoice(backingChoiceId)) return;
+            reelSetupState.backingChoice = backingChoiceId;
+            reelSetupState.spoolStageId = null;
+            reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOL;
+            showView(ROUTES.REEL_SETUP);
         }
     });
 }
 
-function getReelSpoolConnectionPlan(lineType, backingChoice) {
-    if (!lineType || !backingChoice) return null;
-
-    if (backingChoice.id === "monofilament-backing") {
-        return {
-            description: `Attach the monofilament backing to the spool first, then join the backing to ${lineType.title}. Open the Knot instructions you need from the actions below.`,
-            knotActions: [
-                { id: "view-arbor-knot", knotId: "arbor-knot", title: "View Arbor Knot", description: "Use the Arbor Knot to secure the monofilament backing to the reel spool." },
-                { id: "view-double-uni-knot", knotId: "double-uni-knot", title: "View Double Uni Knot", description: `Use the Double Uni Knot to join the monofilament backing to ${lineType.title}.` }
-            ]
-        };
-    }
-
-    if (backingChoice.id === "direct-braid-approved") {
-        return {
-            description: "Your reel or spool must explicitly support secure direct-braid attachment. Follow that reel manufacturer's attachment method; the generic Arbor Knot is not presented as a direct-braid spool knot.",
-            knotActions: []
-        };
-    }
-
-    return {
-        description: `Attach ${lineType.title} directly to the reel spool. Open the Arbor Knot instructions from the action below.`,
-        knotActions: [
-            { id: "view-arbor-knot", knotId: "arbor-knot", title: "View Arbor Knot", description: `Use the Arbor Knot to secure ${lineType.title} to the reel spool before winding line.` }
-        ]
-    };
+function getActiveReelSpoolPathId() {
+    if (reelSetupState.lineType !== "braid") return "direct-main-line";
+    return reelSetupState.backingChoice === "monofilament-backing"
+        ? "braid-with-backing"
+        : "direct-braid";
 }
 
-function openKnotDetailFromReelSetup(knotId, returnLabel = "Spool Connection Plan") {
+function getActiveReelSpoolStages() {
+    return REEL_SPOOL_PATHS[getActiveReelSpoolPathId()]?.stages ?? [];
+}
+
+function getActiveReelSpoolStage() {
+    const stages = getActiveReelSpoolStages();
+    return stages.find((stage) => stage.id === reelSetupState.spoolStageId) ?? stages[0] ?? null;
+}
+
+function ensureActiveReelSpoolStage() {
+    const stage = getActiveReelSpoolStage();
+    if (stage && reelSetupState.spoolStageId !== stage.id) reelSetupState.spoolStageId = stage.id;
+    return stage;
+}
+
+function renderReelSpoolStageProgress(appMain, stages, activeStage) {
+    const progressRegion = appMain.querySelector("[data-reel-progress-region]");
+    if (!progressRegion || !activeStage) return;
+    const activeIndex = stages.findIndex((stage) => stage.id === activeStage.id);
+    const progressSegments = stages.map((stage, index) => {
+        const state = index < activeIndex ? "completed" : index === activeIndex ? "current" : "upcoming";
+        return `<span class="reel-spool-progress-strip__segment is-${state}" title="${stage.title}"></span>`;
+    }).join("");
+    const section = document.createElement("section");
+    section.className = "reel-spool-progress-strip";
+    section.setAttribute("aria-label", "Spool progress");
+    section.innerHTML = `
+        <div class="reel-spool-progress-strip__text">
+            <span class="reel-spool-progress-strip__eyebrow">Spool Progress</span>
+            <span class="reel-spool-progress-strip__phase" aria-current="step">Step ${activeIndex + 1} of ${stages.length} · ${activeStage.title}</span>
+        </div>
+        <div class="reel-spool-progress-strip__segments" style="--spool-step-count: ${stages.length}" aria-hidden="true">${progressSegments}</div>
+    `;
+    progressRegion.classList.add("has-spool-progress");
+    progressRegion.append(section);
+}
+
+function openKnotDetailFromReelSetup(knotId, actionId, returnLabel) {
     const knot = findRecordById(KNOT_DATA, knotId);
-    if (!knot || knot.isActive !== true) {
-        console.warn(`Reel Setup Knot could not be opened: ${knotId}`);
-        return;
-    }
+    if (!knot || knot.isActive !== true) return;
 
     pushDetailNavigationContext({
         route: ROUTES.REEL_SETUP,
         label: returnLabel,
         state: {
-            reelSetupState: { ...reelSetupState }
+            reelSetupState: {
+                ...reelSetupState,
+                scrollY: window.scrollY,
+                restoreScroll: true,
+                restoreFocusActionId: actionId
+            }
         }
     });
-
     selectedKnotId = knotId;
+    selectedKnotBrowseKey = "all";
+    selectedKnotTaskId = null;
     selectedKnotDetailSource = "reel-setup";
     resetKnotDetailState(knotId);
     showView(ROUTES.KNOT_DETAIL);
 }
 
-function renderReelSetupSpoolConnectionPlanStep(appMain) {
-    const lineType = getReelLineType(reelSetupState.lineType);
-    const backingChoice = getReelBackingChoice(reelSetupState.backingChoice);
-    const plan = getReelSpoolConnectionPlan(lineType, backingChoice);
+function restoreReelSetupNavigationContext(appMain) {
+    if (reelSetupState.restoreScroll !== true && !reelSetupState.restoreFocusActionId) return;
+    const scrollY = Number(reelSetupState.scrollY ?? 0);
+    const focusActionId = reelSetupState.restoreFocusActionId;
+    reelSetupState = { ...reelSetupState, restoreScroll: false, restoreFocusActionId: null };
+    requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+        if (!focusActionId) return;
+        appMain.querySelector(`[data-reel-spool-knot-action="${focusActionId}"]`)?.focus({ preventScroll: true });
+    });
+}
 
-    if (!lineType || !backingChoice || !plan || reelSetupState.equipmentCheck !== "compatible") {
-        reelSetupState.backingChoice = null;
-        reelSetupState.leaderChoice = null;
+function renderReelSpoolKnotAction(appMain, stage) {
+    if (!stage?.knotId || !stage?.knotActionLabel) return;
+    const cardGrid = appMain.querySelector("[data-view-card-grid]");
+    if (!cardGrid) return;
+    const actionId = `${stage.id}:${stage.knotId}`;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "reel-spool-knot-action";
+    button.dataset.reelSpoolKnotAction = actionId;
+    button.innerHTML = `${stage.knotActionLabel} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>`;
+    button.addEventListener("click", () => openKnotDetailFromReelSetup(stage.knotId, actionId, stage.title));
+    cardGrid.parentNode.insertBefore(button, cardGrid);
+}
+
+function renderReelSetupSpoolStep(appMain) {
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
+    const lineType = getReelLineType(reelSetupState.lineType);
+    const guidance = getReelSpoolingGuidance(reelSetupState.reelType);
+    if (!reelType || !lineType || !reelSetupState.lineWeight || !guidance) {
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.EQUIPMENT;
+        renderReelSetupEquipmentStep(appMain);
+        return;
+    }
+    if (lineType.id === "braid" && !getReelBackingChoice(reelSetupState.backingChoice)) {
         reelSetupState.stepId = REEL_SETUP_STEP_IDS.BACKING_DECISION;
         renderReelSetupBackingDecisionStep(appMain);
         return;
     }
 
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Spool Connection Plan",
-        description: plan.description,
-        cards: [
-            {
-                id: "spool-reel-next",
-                title: "Next — Spool the Reel",
-                description: "Follow the reel-specific routing, winding-tension, and spool-fill steps before moving on to the rest of the line system.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            ...plan.knotActions.map((action) => ({
-                id: action.id,
-                title: action.title,
-                description: action.description,
-                isAvailable: true
-            })),
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            },
-            {
-                id: "return-to-knots",
-                title: "Return to Knots",
-                description: "Leave the internal Package 3 route and return to the Knot Guide.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            const knotAction = plan.knotActions.find((action) => action.id === actionId);
-            if (knotAction) {
-                openKnotDetailFromReelSetup(knotAction.knotId);
-                return;
-            }
-            if (actionId === "spool-reel-next") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-                return;
-            }
-            if (actionId === "return-to-knots") {
-                resetReelSetupState();
-                showView(ROUTES.KNOTS);
-            }
-        }
-    });
-}
-
-function renderReelSetupSpoolingInstructionsStep(appMain) {
-    const entryOption = getReelSetupOption(REEL_SETUP_ENTRY_OPTIONS, reelSetupState.entryMode);
-    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
-    const lineType = getReelLineType(reelSetupState.lineType);
-    const backingChoice = getReelBackingChoice(reelSetupState.backingChoice);
-    const guidance = getReelSpoolingGuidance(reelSetupState.reelType);
-
-    if (!entryOption || !reelType || !lineType || !backingChoice || !guidance || reelSetupState.equipmentCheck !== "compatible") {
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOL_CONNECTION_PLAN;
-        renderReelSetupSpoolConnectionPlanStep(appMain);
-        return;
-    }
-
+    const stages = getActiveReelSpoolStages();
+    const stage = ensureActiveReelSpoolStage();
+    if (!stage) return;
+    const stageIndex = stages.findIndex((item) => item.id === stage.id);
     const replacementNote = reelSetupState.entryMode === "replace-existing-line"
-        ? "Remove the old line completely before beginning the fresh line system. "
+        ? "Remove the old line completely before building the fresh line system. "
         : "";
 
     renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Spool the Reel",
-        description: `${replacementNote}Use the ${reelType.title.toLowerCase()} procedure below for line routing, winding tension, and fill level. Treat the previous Spool Connection Plan as the connection sequence; route the line correctly before making any spool connection that would prevent the line from passing through the required guide, bail, or cover opening.`,
-        cards: [
-            {
-                id: "leader-setup-next",
-                title: "Next — Leader Setup",
-                description: "Decide whether to keep the spooled main line direct or add a separate leader before the final Reel Ready checkpoint.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            },
-            {
-                id: "return-to-knots",
-                title: "Return to Knots",
-                description: "Leave the internal Package 3 route and return to the Knot Guide.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "leader-setup-next") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_DECISION;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-                return;
-            }
-            if (actionId === "return-to-knots") {
-                resetReelSetupState();
-                showView(ROUTES.KNOTS);
-            }
-        }
+        title: `Spool — ${stage.title}`,
+        description: `${replacementNote}${stage.description}`,
+        cards: [],
+        onCardSelect: () => {}
     });
+    renderReelSpoolStageProgress(appMain, stages, stage);
+    renderReelSpoolKnotAction(appMain, stage);
 
-    renderReelSetupGuidanceList(appMain, guidance);
-}
-
-
-function renderReelSetupLeaderDecisionStep(appMain) {
-    const lineType = getReelLineType(reelSetupState.lineType);
-    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
-    const backingChoice = getReelBackingChoice(reelSetupState.backingChoice);
-    const decisionGuidance = getReelLeaderDecisionGuidance(reelSetupState.lineType);
-
-    if (!lineType || !targetProfile || !backingChoice || !decisionGuidance || reelSetupState.equipmentCheck !== "compatible") {
-        reelSetupState.leaderChoice = null;
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOLING_INSTRUCTIONS;
-        renderReelSetupSpoolingInstructionsStep(appMain);
-        return;
+    if (["prepare", "wind-backing", "wind-main-line", "check-fill"].includes(stage.id)) {
+        renderReelSetupGuidanceList(appMain, guidance, { className: "reel-spool-guidance" });
+    }
+    if (lineType.id === "braid") {
+        renderReelSetupReferencePrompt(appMain, "What about a leader?", openReelLeaderReference);
     }
 
-    const noLeader = getReelLeaderChoice("none");
+    const isLastStage = stageIndex === stages.length - 1;
+    renderReelSetupPrimaryAction(appMain, {
+        label: isLastStage ? "Continue to Reel Ready" : `Continue — ${stages[stageIndex + 1].title}`,
+        onClick: () => {
+            if (isLastStage) {
+                reelSetupState.stepId = REEL_SETUP_STEP_IDS.READY;
+            } else {
+                reelSetupState.spoolStageId = stages[stageIndex + 1].id;
+            }
+            showView(ROUTES.REEL_SETUP);
+        }
+    });
+}
 
+function renderReelSetupReadyStep(appMain) {
+    const stages = getActiveReelSpoolStages();
+    if (!stages.length || !reelSetupState.lineWeight) {
+        reelSetupState.stepId = REEL_SETUP_STEP_IDS.SPOOL;
+        renderReelSetupSpoolStep(appMain);
+        return;
+    }
     renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Do You Need a Leader?",
-        description: `${decisionGuidance.summary} Choose the simple direct-main-line path or continue to select a separate leader material.`,
-        cards: [
-            {
-                id: noLeader.id,
-                title: noLeader.title,
-                description: noLeader.description,
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "add-leader",
-                title: "Add a Leader",
-                description: "Choose fluorocarbon or monofilament for a separate terminal section, then connect it to the main line.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            },
-            {
-                id: "return-to-knots",
-                title: "Return to Knots",
-                description: "Leave the internal Package 3 route and return to the Knot Guide.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "none") {
-                reelSetupState.leaderChoice = "none";
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_SETUP;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "add-leader") {
-                reelSetupState.leaderChoice = null;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_MATERIAL;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-                return;
-            }
-            if (actionId === "return-to-knots") {
-                resetReelSetupState();
-                showView(ROUTES.KNOTS);
-            }
+        title: "Reel Ready",
+        description: REEL_READY_GUIDANCE.summary,
+        cards: [],
+        onCardSelect: () => {},
+        ready: true
+    });
+    renderReelSetupGuidanceList(appMain, REEL_READY_GUIDANCE, { className: "reel-ready-guidance" });
+    renderReelSetupPrimaryAction(appMain, {
+        label: "Choose a Rig",
+        onClick: () => {
+            // CP9.5 owns the completed Reel Setup snapshot and Rig landing summary.
+            // CP9.4 preserves the existing neutral forward route with no filtering,
+            // ranking, compatibility verdict, or automatic Rig selection.
+            clearDetailNavigationStack();
+            showView(ROUTES.RIGS);
         }
     });
 }
 
-function renderReelSetupLeaderMaterialStep(appMain) {
-    const lineType = getReelLineType(reelSetupState.lineType);
-    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
-    const backingChoice = getReelBackingChoice(reelSetupState.backingChoice);
-    if (!lineType || !targetProfile || !backingChoice || reelSetupState.equipmentCheck !== "compatible") {
-        reelSetupState.leaderChoice = null;
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_DECISION;
-        renderReelSetupLeaderDecisionStep(appMain);
-        return;
-    }
-
-    const materialChoices = [
-        getReelLeaderChoice("fluorocarbon-leader"),
-        getReelLeaderChoice("monofilament-leader")
-    ].filter(Boolean);
-
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "What Leader Material?",
-        description: "Choose the material for the separate terminal section. This is a general line-system decision; later Rig and presentation choices can justify different leader details.",
-        cards: [
-            ...materialChoices.map((choice) => ({
-                id: choice.id,
-                title: choice.title,
-                description: choice.description,
-                isAvailable: true,
-                isWorkflowAction: true
-            })),
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            },
-            {
-                id: "return-to-knots",
-                title: "Return to Knots",
-                description: "Leave the internal Package 3 route and return to the Knot Guide.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (materialChoices.some((choice) => choice.id === actionId)) {
-                reelSetupState.leaderChoice = actionId;
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_SETUP;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-                return;
-            }
-            if (actionId === "return-to-knots") {
-                resetReelSetupState();
-                showView(ROUTES.KNOTS);
-            }
-        }
-    });
-}
-
-function renderReelSetupLeaderSetupStep(appMain) {
-    const lineType = getReelLineType(reelSetupState.lineType);
-    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
-    const backingChoice = getReelBackingChoice(reelSetupState.backingChoice);
-    const leaderChoice = getReelLeaderChoice(reelSetupState.leaderChoice);
-
-    if (!lineType || !targetProfile || !backingChoice || !leaderChoice || reelSetupState.equipmentCheck !== "compatible") {
-        reelSetupState.leaderChoice = null;
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_DECISION;
-        renderReelSetupLeaderDecisionStep(appMain);
-        return;
-    }
-
-    const hasLeader = leaderChoice.id !== "none";
-    const guidance = hasLeader
-        ? getReelLeaderSetupGuidance(leaderChoice.id, targetProfile)
-        : null;
-
-    if (hasLeader && !guidance) {
-        reelSetupState.leaderChoice = null;
-        reelSetupState.stepId = REEL_SETUP_STEP_IDS.LEADER_MATERIAL;
-        renderReelSetupLeaderMaterialStep(appMain);
-        return;
-    }
-
-    const description = hasLeader
-        ? `You selected ${leaderChoice.title}. Use the setup guidance below as a starting point, then connect the leader to the ${lineType.title.toLowerCase()} main line with the recommended line-to-line Knot.`
-        : "No separate leader will be added. The spooled main line remains the working line for the later Rig connection; use previous-step navigation if you want to revisit that decision.";
-
-    const cards = [
-        {
-            id: "reel-ready-next",
-            title: "Next — Reel Ready Check",
-            description: "Review the completed line system with a final physical checklist before choosing a Rig.",
-            isAvailable: true,
-            isWorkflowAction: true
-        }
-    ];
-
-    if (hasLeader) {
-        cards.push({
-            id: "view-double-uni-knot",
-            title: "View Double Uni Knot",
-            description: `Use the Double Uni Knot instructions to connect ${lineType.title} main line to the selected ${leaderChoice.title.toLowerCase()}.`,
-            isAvailable: true
-        });
-    }
-
-    cards.push(
-        {
-            id: "start-reel-setup-over",
-            title: "Start Over",
-            description: "Clear your current Reel Setup choices and return to the first step.",
-            isAvailable: true
-        },
-        {
-            id: "return-to-knots",
-            title: "Return to Knots",
-            description: "Leave the internal Package 3 route and return to the Knot Guide.",
-            isAvailable: true
-        }
-    );
-
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Leader Setup",
-        description,
-        cards,
-        onCardSelect: (actionId) => {
-            if (actionId === "reel-ready-next") {
-                reelSetupState.stepId = REEL_SETUP_STEP_IDS.REEL_READY_CHECK;
-                showView(ROUTES.REEL_SETUP);
-                return;
-            }
-            if (actionId === "view-double-uni-knot" && hasLeader) {
-                openKnotDetailFromReelSetup("double-uni-knot", "Leader Setup");
-                return;
-            }
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-                return;
-            }
-            if (actionId === "return-to-knots") {
-                resetReelSetupState();
-                showView(ROUTES.KNOTS);
-            }
-        }
-    });
-
-    if (guidance) {
-        renderReelSetupGuidanceList(appMain, guidance);
-    }
-}
-
-function getReelReadyCheckGuidance(leaderChoice) {
-    const items = [...REEL_READY_CHECK_GUIDANCE.items];
-
-    if (leaderChoice?.id && leaderChoice.id !== "none") {
-        items.splice(3, 0, REEL_READY_CHECK_GUIDANCE.leaderConnectionItem);
-    }
-
-    return {
-        title: REEL_READY_CHECK_GUIDANCE.title,
-        summary: REEL_READY_CHECK_GUIDANCE.summary,
-        items
-    };
-}
-
-function renderReelSetupReelReadyCheckStep(appMain) {
-    const entryOption = getReelSetupOption(REEL_SETUP_ENTRY_OPTIONS, reelSetupState.entryMode);
-    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, reelSetupState.reelType);
-    const lineType = getReelLineType(reelSetupState.lineType);
-    const targetProfile = getReelSetupTargetFish(reelSetupState.targetFish);
-    const backingChoice = getReelBackingChoice(reelSetupState.backingChoice);
-    const leaderChoice = getReelLeaderChoice(reelSetupState.leaderChoice);
-
-    if (!entryOption || !reelType || !lineType || !targetProfile || !backingChoice || !leaderChoice || reelSetupState.equipmentCheck !== "compatible") {
-        resetReelSetupState();
-        renderReelSetupStartStep(appMain);
-        return;
-    }
-
-    const guidance = getReelReadyCheckGuidance(leaderChoice);
-
-    renderReelSetupStep(appMain, {
-        headingId: "reel-setup-title",
-        title: "Reel Ready Check",
-        description: "Your selected setup is summarized above. Complete the physical checks below; when they are satisfied, finish Reel Setup and choose a Rig.",
-        cards: [
-            {
-                id: "reel-ready-choose-rig",
-                title: "My Reel Is Ready — Choose a Rig",
-                description: "Finish Reel Setup and open the normal Rig Guide. No Rig will be selected automatically.",
-                isAvailable: true,
-                isWorkflowAction: true
-            },
-            {
-                id: "start-reel-setup-over",
-                title: "Start Over",
-                description: "Clear your current Reel Setup choices and return to the first step.",
-                isAvailable: true
-            },
-            {
-                id: "return-to-knots",
-                title: "Return to Knots",
-                description: "Leave Reel Setup and return to the Knot Guide.",
-                isAvailable: true
-            }
-        ],
-        onCardSelect: (actionId) => {
-            if (actionId === "reel-ready-choose-rig") {
-                resetReelSetupState();
-                clearDetailNavigationStack();
-                selectedRigId = null;
-                selectedRigCollectionKey = "all";
-                showView(ROUTES.RIGS);
-                return;
-            }
-            if (actionId === "start-reel-setup-over") {
-                openReelSetup();
-                return;
-            }
-            if (actionId === "return-to-knots") {
-                resetReelSetupState();
-                clearDetailNavigationStack();
-                showView(ROUTES.KNOTS);
-            }
-        }
-    });
-
-    renderReelSetupGuidanceList(appMain, guidance);
-}
 
 let knotGuideState = { query: "", scrollY: 0 };
 let knotBrowseState = { query: "", scrollY: 0 };

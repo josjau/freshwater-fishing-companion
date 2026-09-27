@@ -1,40 +1,38 @@
 /* ==========================================================
    FRESHWATER FISHING COMPANION
    FILE: data/reel-guidance.js
-   PURPOSE: Owns Reel & Line Setup Decision Knowledge used by the
-   Get Your Reel Ready guided workflow without altering canonical Knots.
+   PURPOSE: Owns Get Your Reel Ready Decision Knowledge without
+   altering canonical Knots or duplicating Fish category identity.
    ========================================================== */
 
 "use strict";
 
 const REEL_GUIDANCE_BUILD_INFO = Object.freeze({
     file: "data/reel-guidance.js",
-    milestone: "Knots — Production Package 3 Block 3.9"
+    milestone: "Knots Guide — CP9.4 Get Your Reel Ready Migration"
 });
 
+// Internal screens are separate from the fixed five-phase progress model.
+// Contextual Reference surfaces are intentionally not workflow step IDs.
 const REEL_SETUP_STEP_IDS = Object.freeze({
     START: "start",
     REEL_TYPE: "reel-type",
-    LINE_SELECTION: "line-selection",
-    LINE_HELP: "line-help",
-    LINE_IDENTIFICATION: "line-identification",
-    LINE_SELECTION_COMPLETE: "line-selection-complete",
+    LINE_TYPE: "line-type",
     TARGET_FISH: "target-fish",
-    TARGET_GUIDANCE: "target-guidance",
-    REEL_IDENTIFICATION_HELP: "reel-identification-help",
-    EQUIPMENT_CHECK: "equipment-check",
-    READ_REEL: "read-reel",
-    READ_ROD: "read-rod",
-    EQUIPMENT_MISMATCH: "equipment-mismatch",
-    EQUIPMENT_COMPLETE: "equipment-complete",
+    LINE_WEIGHT: "line-weight",
+    EQUIPMENT: "equipment",
     BACKING_DECISION: "backing-decision",
-    SPOOL_CONNECTION_PLAN: "spool-connection-plan",
-    SPOOLING_INSTRUCTIONS: "spooling-instructions",
-    LEADER_DECISION: "leader-decision",
-    LEADER_MATERIAL: "leader-material",
-    LEADER_SETUP: "leader-setup",
-    REEL_READY_CHECK: "reel-ready-check"
+    SPOOL: "spool",
+    READY: "ready"
 });
+
+const REEL_SETUP_PHASES = Object.freeze([
+    Object.freeze({ id: "reel", title: "Reel" }),
+    Object.freeze({ id: "line", title: "Line" }),
+    Object.freeze({ id: "equipment", title: "Equipment" }),
+    Object.freeze({ id: "spool", title: "Spool" }),
+    Object.freeze({ id: "ready", title: "Ready" })
+]);
 
 const REEL_SETUP_ENTRY_OPTIONS = Object.freeze([
     Object.freeze({
@@ -53,22 +51,33 @@ const REEL_TYPE_OPTIONS = Object.freeze([
     Object.freeze({
         id: "spinning",
         title: "Spinning Reel",
-        description: "The spool is fixed and exposed, with a bail that wraps line around the spool."
+        description: "The spool is fixed and exposed, with a bail that wraps line around the spool.",
+        recommendedFirstSetup: true,
+        recognitionTraits: Object.freeze([
+            "Fixed, exposed spool below the rod.",
+            "Wire bail rotates around the spool when the handle turns.",
+            "Line leaves the spool in coils rather than the spool rotating during a cast."
+        ])
     }),
     Object.freeze({
         id: "spincast",
         title: "Spincast Reel",
-        description: "The line spool is enclosed by a front cover and the reel usually uses a push button."
+        description: "The line spool is enclosed by a front cover and the reel usually uses a push button.",
+        recognitionTraits: Object.freeze([
+            "Closed front cover hides most of the spool.",
+            "Push-button release is common on the back of the reel.",
+            "Line exits through a small opening in the front cover."
+        ])
     }),
     Object.freeze({
         id: "baitcasting",
         title: "Baitcasting Reel",
-        description: "The spool itself rotates and sits across the reel body above the rod."
-    }),
-    Object.freeze({
-        id: "not-sure",
-        title: "I'm Not Sure",
-        description: "Use beginner recognition help before choosing a reel-specific setup path."
+        description: "The spool itself rotates and sits across the reel body above the rod.",
+        recognitionTraits: Object.freeze([
+            "Reel sits above the rod handle.",
+            "Exposed spool rotates during the cast and retrieve.",
+            "Line passes through a level-wind guide in front of the spool on most models."
+        ])
     })
 ]);
 
@@ -79,7 +88,9 @@ const REEL_LINE_TYPE_GUIDANCE = Object.freeze({
         selectionDescription: "Forgiving, easy to manage, and easy to knot. A strong general starting point for a first freshwater setup.",
         identificationCue: "Usually one smooth strand that feels softer and stretchier than fluorocarbon.",
         beginnerGuidance: "Easy beginner choice: monofilament is manageable, knot-friendly, and its stretch makes it forgiving while you learn.",
-        tradeoff: "Tradeoff: the extra stretch reduces sensitivity compared with braid and some fluorocarbon setups."
+        tradeoff: "The extra stretch reduces sensitivity compared with braid and some fluorocarbon setups.",
+        weightInterpretation: "For this beginner workflow, the approved target starting references below are Monofilament values. Confirm the actual pound-test you will spool.",
+        recommendedFirstSetup: true
     }),
     fluorocarbon: Object.freeze({
         id: "fluorocarbon",
@@ -87,7 +98,8 @@ const REEL_LINE_TYPE_GUIDANCE = Object.freeze({
         selectionDescription: "Low-visibility, sinking line with useful sensitivity and abrasion resistance, but it is usually stiffer than monofilament.",
         identificationCue: "Usually one smooth, nearly clear strand that often feels stiffer or wirier than monofilament.",
         beginnerGuidance: "Choose fluorocarbon when its low visibility, sinking behavior, or abrasion resistance is useful and your reel is suited to the line you selected.",
-        tradeoff: "Tradeoff: fluorocarbon is typically less manageable and less forgiving for a first full-spool setup than monofilament."
+        tradeoff: "Fluorocarbon is typically less manageable and less forgiving for a first full-spool setup than monofilament.",
+        weightInterpretation: "The target range is a fishing-strength reference, not an automatic Fluorocarbon prescription. Choose and confirm the actual pound-test that fits your equipment and line package."
     }),
     braid: Object.freeze({
         id: "braid",
@@ -95,129 +107,131 @@ const REEL_LINE_TYPE_GUIDANCE = Object.freeze({
         selectionDescription: "Thin-diameter, very low-stretch line with high sensitivity and strength for its diameter.",
         identificationCue: "Looks and feels woven or fibrous instead of like one smooth plastic strand.",
         beginnerGuidance: "Choose braid when you specifically want very low stretch, high sensitivity, or high strength for a small diameter.",
-        tradeoff: "Tradeoff: braid is more visible, can slip with some spool setups, and may call for equipment-specific backing or a leader."
+        tradeoff: "Braid is more visible, can slip with some spool setups, and may call for equipment-specific backing or a later leader.",
+        weightInterpretation: "Use the target range only as a fish-strength reference. Braid is much thinner for a given pound-test than Monofilament, so do not copy a Monofilament number blindly. Confirm the actual Braid pound-test and reel capacity guidance."
     })
 });
 
-const REEL_LINE_GUIDANCE_ACTIONS = Object.freeze([
-    Object.freeze({
-        id: "help-me-choose",
-        title: "Help Me Choose",
-        description: "Start from a simple beginner recommendation for your reel type, then refine line strength in the next step."
-    }),
-    Object.freeze({
-        id: "not-sure-line",
-        title: "I'm Not Sure",
-        description: "Use simple visual and handling cues to identify the line you already have."
-    })
-]);
+// The selector uses common beginner freshwater package strengths. Moving the
+// selector never changes the approved recommendation; confirmation is explicit.
+const REEL_LINE_WEIGHT_OPTIONS = Object.freeze([2, 4, 6, 8, 10, 12, 15, 17, 20, 25, 30]);
 
-const REEL_BEGINNER_LINE_RECOMMENDATIONS = Object.freeze({
-    spinning: Object.freeze({
-        lineTypeId: "monofilament",
-        label: "Easy beginner choice",
-        reason: "Monofilament is a manageable and forgiving starting point for learning a spinning reel."
-    }),
-    spincast: Object.freeze({
-        lineTypeId: "monofilament",
-        label: "Easy beginner choice",
-        reason: "Monofilament is the simplest starting point for most beginner spincast setups; confirm the line rating printed on your reel before spooling."
-    }),
-    baitcasting: Object.freeze({
-        lineTypeId: "monofilament",
-        label: "Easy beginner choice",
-        reason: "Monofilament is an inexpensive and forgiving starting point while learning a baitcasting reel before moving to more specialized line choices."
-    }),
-    "not-sure": Object.freeze({
-        lineTypeId: "monofilament",
-        label: "Easy beginner choice",
-        reason: "If the reel type is still uncertain, monofilament is the most forgiving general starting point. Confirm the reel type and capacity before final spooling."
-    })
-});
-
-const REEL_LINE_COMPATIBILITY_NOTES = Object.freeze({
-    spincast: Object.freeze({
-        braid: "Compatibility check required: braided line may not work properly on some spincast reels. Confirm your reel's markings or manufacturer guidance before continuing."
-    }),
-    "not-sure": Object.freeze({
-        monofilament: "Reel type still needs confirmation before final line-capacity and spooling instructions.",
-        fluorocarbon: "Reel type still needs confirmation before final line-capacity and spooling instructions.",
-        braid: "Reel type still needs confirmation before final line-capacity, backing, and spooling instructions."
-    })
-});
-
+// All-Around is Reel Setup-owned. The other records reference canonical Fish
+// category IDs; display names and category order are derived from FISH_CATEGORY_DATA.
 const REEL_TARGET_FISH_PROFILES = Object.freeze([
     Object.freeze({
         id: "all-around-freshwater",
+        categoryId: null,
         title: "All-Around Freshwater",
         description: "A general starting point when you want one beginner setup for several common freshwater fish.",
-        recommendedRange: "6–12 lb",
-        easyChoice: "8 lb",
-        guidance: "Eight-pound test is a practical all-around beginner reference for a medium-light freshwater setup.",
-        caution: "Final line strength still has to fit the rod and reel ratings."
-    }),
-    Object.freeze({
-        id: "panfish",
-        title: "Panfish — Bluegill & Crappie",
-        description: "Light freshwater fish that are commonly targeted with small hooks, jigs, and bobber rigs.",
-        recommendedRange: "4–6 lb",
-        easyChoice: "6 lb",
-        guidance: "This range overlaps established light-line guidance for bluegill and crappie while remaining approachable for a beginner.",
-        caution: "Heavy cover or frequent snags may justify moving heavier after the equipment check."
-    }),
-    Object.freeze({
-        id: "trout",
-        title: "Trout",
-        description: "A light-line starting point for common stocked and stream trout situations.",
-        recommendedRange: "2–4 lb",
-        easyChoice: "4 lb",
-        guidance: "Clear-water trout are commonly approached with very light line, so four-pound test is the more forgiving end of this beginner range.",
-        caution: "Use a properly set drag and confirm your equipment is designed for line this light."
+        strengthReference: "6–12 lb",
+        monofilamentStartWeight: 10,
+        lighterAlternativeWeight: 8,
+        guidance: "Ten-pound Monofilament is the preferred all-around beginner starting point; 8 lb Monofilament remains a lighter general-purpose alternative.",
+        caution: "Final line strength still has to fit the rod and reel ratings and the actual fishing situation."
     }),
     Object.freeze({
         id: "bass",
-        title: "Bass",
-        description: "A simple beginner starting point for largemouth and similar freshwater bass fishing.",
-        recommendedRange: "6–8 lb",
-        easyChoice: "8 lb",
-        guidance: "Eight-pound test is a manageable starting point on a basic medium-action bass setup before cover and technique-specific optimization.",
+        categoryId: "bass",
+        description: "A beginner starting point for common freshwater bass fishing.",
+        strengthReference: "8–12 lb",
+        monofilamentStartWeight: 10,
+        guidance: "Ten-pound Monofilament is the approved beginner starting reference for the broad Bass path.",
         caution: "Heavy vegetation, wood, or specialized presentations can require substantially heavier line later."
     }),
     Object.freeze({
-        id: "walleye",
-        title: "Walleye",
-        description: "A medium-light starting range for common spinning-reel walleye approaches.",
-        recommendedRange: "6–10 lb",
-        easyChoice: "8 lb",
-        guidance: "Eight-pound test sits near the middle of a common six- to ten-pound walleye setup range.",
-        caution: "Technique, depth, and leader choice can change the final system."
+        id: "catfish",
+        categoryId: "catfish",
+        description: "A heavier rod-and-reel starting point for general catfish fishing rather than trophy-specific tackle.",
+        strengthReference: "15–20 lb",
+        monofilamentStartWeight: 20,
+        guidance: "Twenty-pound Monofilament is the approved broad beginner starting reference for general Catfish fishing.",
+        caution: "Large blue or flathead catfish, strong current, or heavy cover can require much heavier specialized gear."
     }),
     Object.freeze({
-        id: "catfish",
-        title: "Catfish",
-        description: "A heavier rod-and-reel starting point for general catfish fishing rather than trophy-specific tackle.",
-        recommendedRange: "17–20 lb",
-        easyChoice: "20 lb",
-        guidance: "Catfish commonly justify heavier line than panfish, trout, bass, or walleye; twenty-pound test is a conservative beginner reference for a heavier setup.",
-        caution: "Large blue or flathead catfish, strong current, or heavy cover can require much heavier specialized gear."
+        id: "sunfish-crappie",
+        categoryId: "sunfish-crappie",
+        description: "A light-line starting point for crappie, bluegill, and similar small freshwater fish.",
+        strengthReference: "4–6 lb",
+        monofilamentStartWeight: 6,
+        guidance: "Six-pound Monofilament is the approved beginner starting reference for this light-tackle category.",
+        caution: "Heavy cover or frequent snags may justify moving heavier after checking the equipment you own."
+    }),
+    Object.freeze({
+        id: "trout",
+        categoryId: "trout",
+        description: "A light-line starting point for common stocked and stream trout situations.",
+        strengthReference: "2–4 lb",
+        monofilamentStartWeight: 4,
+        guidance: "Four-pound Monofilament is the approved beginner starting reference at the more forgiving end of this light-line range.",
+        caution: "Use a properly set drag and confirm your equipment is designed for line this light."
+    }),
+    Object.freeze({
+        id: "walleye-sauger",
+        categoryId: "walleye-sauger",
+        description: "A medium-light starting point for common Walleye and Sauger-family approaches.",
+        strengthReference: "6–10 lb",
+        monofilamentStartWeight: 8,
+        guidance: "Eight-pound Monofilament is the approved beginner starting reference for the broad Walleye path.",
+        caution: "Technique, depth, cover, and later leader or presentation choices can change the final system."
     })
 ]);
 
-const REEL_BACKING_CHOICES = Object.freeze({
-    none: Object.freeze({
-        id: "none",
-        title: "No Separate Backing",
-        description: "Attach the selected monofilament or fluorocarbon main line directly to the spool for the simplest beginner setup."
+const REEL_INFORMATIONAL_WARNINGS = Object.freeze({
+    spincast: Object.freeze({
+        braid: "Some spincast reels may not support braided line appropriately. Check the exact reel markings or manufacturer guidance before continuing; FCC does not declare your specific reel incompatible."
+    })
+});
+
+const REEL_EQUIPMENT_GUIDANCE = Object.freeze({
+    reel: Object.freeze({
+        id: "reel",
+        title: "How to Read Your Reel",
+        summary: "Reel capacity markings pair a line size with the approximate amount of that line the spool is designed to hold.",
+        items: Object.freeze([
+            "Find the line-capacity marking on the spool, reel body, package, manual, or official model specification.",
+            "A capacity such as 8 lb / 140 yd or 8-140 pairs line strength with approximate spool capacity.",
+            "Some manufacturers print the order differently. Read the printed headings or manual instead of assuming the order.",
+            "Metric capacity may pair line diameter and length, such as 0.25 mm / 160 m.",
+            "If Mono and Braid capacities are listed separately, use the listing for the line type you actually selected.",
+            "Numbers such as 1000, 2500, or 3000 identify reel size or model families; they are not direct pound-test ratings."
+        ])
     }),
+    rod: Object.freeze({
+        id: "rod",
+        title: "How to Read Your Rod",
+        summary: "Rod markings usually give a recommended line-strength range separately from the lure-weight range.",
+        items: Object.freeze([
+            "Look on the rod blank or official model specification for Line Wt, Line, or Line Rating.",
+            "A marking such as 6-12 lb gives the manufacturer's line-strength range for that rod model.",
+            "Do not confuse line rating with Lure Wt, which is often shown separately in ounces.",
+            "Your final line system should fit the rod's line rating as well as the reel's capacity guidance for the line type you selected.",
+            "If the rod marking is missing or unreadable, use the exact model number to check the manufacturer's official specification before spooling."
+        ])
+    }),
+    mismatch: Object.freeze({
+        id: "mismatch",
+        title: "If the Ratings Don't Match",
+        summary: "FCC does not know your exact models, so manufacturer and equipment markings are the final guide.",
+        items: Object.freeze([
+            "Go back and choose a line that fits both the reel capacity guidance and the rod line rating, or change the equipment before spooling.",
+            "If the reel lists capacity by diameter instead of pound-test, compare the diameter printed on the line package or manufacturer specification.",
+            "If you still cannot verify the markings, stop before spooling and look up the exact reel and rod models from their manufacturers."
+        ])
+    })
+});
+
+const REEL_BACKING_CHOICES = Object.freeze({
     "monofilament-backing": Object.freeze({
         id: "monofilament-backing",
-        title: "Monofilament Backing",
-        description: "Start with monofilament on the spool, then join it to the selected main line. This is the safer general path when braid could slip on a smooth spool and can also reduce the amount of main line needed to fill a spool."
+        title: "Monofilament Backing — Recommended First Setup",
+        description: "Start with Monofilament on the spool, then join it to the selected Braid. This is the preferred beginner path when Braid could slip on a smooth spool.",
+        recommendedFirstSetup: true
     }),
     "direct-braid-approved": Object.freeze({
         id: "direct-braid-approved",
-        title: "Direct Braid — Reel Approved",
-        description: "Use this only when the exact reel or spool explicitly provides a braid-ready attachment surface or manufacturer-approved direct-braid method."
+        title: "Direct Braid — Manufacturer Supported",
+        description: "Use this only when the exact reel or spool explicitly supports a secure direct-Braid attachment method or braid-ready surface."
     })
 });
 
@@ -314,136 +328,70 @@ const REEL_SPOOLING_GUIDANCE = Object.freeze({
     })
 });
 
-
-const REEL_LEADER_CHOICES = Object.freeze({
-    none: Object.freeze({
-        id: "none",
-        title: "No Leader — Keep the Main Line",
-        description: "Keep the spooled main line as the working line for the later Rig connection. This is the simplest path when a separate leader is not needed."
-    }),
-    "fluorocarbon-leader": Object.freeze({
-        id: "fluorocarbon-leader",
-        title: "Fluorocarbon Leader",
-        description: "Add a fluorocarbon leader when lower underwater visibility and abrasion resistance are useful. Fluorocarbon sinks more readily than monofilament, so it is not automatically the best choice for every presentation."
-    }),
-    "monofilament-leader": Object.freeze({
-        id: "monofilament-leader",
-        title: "Monofilament Leader",
-        description: "Add a monofilament leader when easy knot handling, stretch, shock absorption, or greater buoyancy than fluorocarbon is useful. Monofilament is generally more visible underwater than fluorocarbon."
-    })
-});
-
-const REEL_LEADER_DECISION_GUIDANCE = Object.freeze({
-    monofilament: Object.freeze({
-        summary: "No Leader is the simplest general starting point with monofilament main line. Add a leader only when you deliberately want a separate section with different visibility, abrasion, stretch, or buoyancy characteristics."
-    }),
-    fluorocarbon: Object.freeze({
-        summary: "No Leader is the simplest general starting point with fluorocarbon main line. A separate leader is optional rather than assumed when the main line already provides fluorocarbon behavior."
-    }),
-    braid: Object.freeze({
-        summary: "A leader is optional with braid, but monofilament or fluorocarbon can reduce the visibility of the terminal section and add different abrasion, stretch, or buoyancy behavior. Choose based on the job the leader needs to do."
-    })
-});
-
-const REEL_LEADER_SETUP_GUIDANCE = Object.freeze({
-    "fluorocarbon-leader": Object.freeze({
-        title: "Fluorocarbon Leader Setup",
-        summary: "Build a short fluorocarbon terminal section without treating one leader length or strength as universal.",
-        items: Object.freeze([
-            Object.freeze({
-                text: "Start with about 3–4 feet of leader as a practical beginner reference. Clearer water, wary fish, cover, species, and the later Rig or presentation can justify a different length.",
-                emphasis: Object.freeze(["Start with about 3–4 feet of leader as a practical beginner reference.", "can justify a different length"])
-            }),
-            Object.freeze({
-                text: "Fluorocarbon offers low underwater visibility and useful abrasion resistance, and it sinks more readily than monofilament. That can help in many leader applications, but it is not a universal choice for every presentation.",
-                emphasis: Object.freeze(["low underwater visibility and useful abrasion resistance", "not a universal choice for every presentation"])
-            }),
-            Object.freeze({
-                text: "Use the Double Uni Knot as the beginner line-to-line connection when the main line and leader are reasonably similar or moderately different in diameter. If the two lines differ dramatically in diameter, a more specialized connection may be preferable.",
-                emphasis: Object.freeze(["Double Uni Knot", "If the two lines differ dramatically in diameter"])
-            })
+const REEL_SPOOL_PATHS = Object.freeze({
+    "direct-main-line": Object.freeze({
+        id: "direct-main-line",
+        stages: Object.freeze([
+            Object.freeze({ id: "prepare", title: "Prepare the Reel", description: "Use the reel-specific routing guidance before making the spool connection." }),
+            Object.freeze({ id: "attach-main-line", title: "Attach Main Line", description: "Attach the confirmed main line to the spool with the Arbor Knot.", knotId: "arbor-knot", knotActionLabel: "Tie Arbor Knot" }),
+            Object.freeze({ id: "wind-main-line", title: "Wind the Main Line", description: "Wind the confirmed main line under the reel-specific tension and routing guidance." }),
+            Object.freeze({ id: "check-fill", title: "Check the Fill", description: "Stop short of overfill and use the exact reel manufacturer's fill mark or instructions when available." })
         ])
     }),
-    "monofilament-leader": Object.freeze({
-        title: "Monofilament Leader Setup",
-        summary: "Build a short monofilament terminal section when stretch, knot handling, or buoyancy is useful.",
-        items: Object.freeze([
-            Object.freeze({
-                text: "Start with about 3–4 feet of leader as a practical beginner reference. Clearer water, wary fish, cover, species, and the later Rig or presentation can justify a different length.",
-                emphasis: Object.freeze(["Start with about 3–4 feet of leader as a practical beginner reference.", "can justify a different length"])
-            }),
-            Object.freeze({
-                text: "Monofilament is easy to knot, adds stretch and shock absorption, and is more buoyant than fluorocarbon. It is generally more visible underwater than fluorocarbon, so that tradeoff should remain explicit.",
-                emphasis: Object.freeze(["easy to knot, adds stretch and shock absorption, and is more buoyant than fluorocarbon", "more visible underwater than fluorocarbon"])
-            }),
-            Object.freeze({
-                text: "Use the Double Uni Knot as the beginner line-to-line connection when the main line and leader are reasonably similar or moderately different in diameter. If the two lines differ dramatically in diameter, a more specialized connection may be preferable.",
-                emphasis: Object.freeze(["Double Uni Knot", "If the two lines differ dramatically in diameter"])
-            })
+    "braid-with-backing": Object.freeze({
+        id: "braid-with-backing",
+        stages: Object.freeze([
+            Object.freeze({ id: "prepare", title: "Prepare the Reel", description: "Use the reel-specific routing guidance before making the spool connection." }),
+            Object.freeze({ id: "attach-backing", title: "Attach the Backing", description: "Attach Monofilament backing to the spool with the Arbor Knot.", knotId: "arbor-knot", knotActionLabel: "Tie Arbor Knot" }),
+            Object.freeze({ id: "wind-backing", title: "Wind the Backing", description: "Wind a secure backing layer. Use the exact reel capacity guidance; FCC does not invent a universal backing length or pound-test." }),
+            Object.freeze({ id: "connect-main-line", title: "Connect Backing to Braid", description: "Join the Monofilament backing to the confirmed Braid with the Double Uni Knot.", knotId: "double-uni-knot", knotActionLabel: "Tie Double Uni Knot" }),
+            Object.freeze({ id: "wind-main-line", title: "Wind the Braid", description: "Wind the confirmed Braid under steady tension using the reel-specific procedure." }),
+            Object.freeze({ id: "check-fill", title: "Check the Fill", description: "Stop short of overfill and use the exact reel manufacturer's fill mark or instructions when available." })
+        ])
+    }),
+    "direct-braid": Object.freeze({
+        id: "direct-braid",
+        stages: Object.freeze([
+            Object.freeze({ id: "prepare", title: "Prepare the Reel", description: "Use the reel-specific routing guidance before making the spool connection." }),
+            Object.freeze({ id: "attach-main-line", title: "Use the Manufacturer-Supported Attachment", description: "Follow the exact reel or spool manufacturer's secure direct-Braid method. FCC does not present the Arbor Knot as a generic direct-Braid solution." }),
+            Object.freeze({ id: "wind-main-line", title: "Wind the Braid", description: "Wind the confirmed Braid under steady tension using the reel-specific procedure." }),
+            Object.freeze({ id: "check-fill", title: "Check the Fill", description: "Stop short of overfill and use the exact reel manufacturer's fill mark or instructions when available." })
         ])
     })
 });
 
-const REEL_READY_CHECK_GUIDANCE = Object.freeze({
-    title: "Final Reel Check",
-    summary: "The app cannot physically inspect your reel. Use these checks to confirm the completed line system before moving on to a Rig.",
+const REEL_LEADER_REFERENCE_GUIDANCE = Object.freeze({
+    title: "What Is a Leader?",
+    summary: "A leader is a separate terminal section between the main line and the later Rig or lure. A leader is not required to finish spooling the reel.",
+    items: Object.freeze([
+        "Anglers may use a leader to change visibility, abrasion resistance, stretch, or buoyancy near the terminal presentation.",
+        "Fluorocarbon is lower visibility underwater and abrasion resistant but sinks more readily; Monofilament is easy to knot, stretches more, and is more buoyant.",
+        "Braid users commonly consider a leader because Braid is visible and has very little stretch, but the correct leader material, strength, length, and connection depend on the later Rig, target, cover, and conditions.",
+        "Choose and build a leader later when the actual Rig or presentation provides enough context. Reel Ready does not require one."
+    ])
+});
+
+const REEL_READY_GUIDANCE = Object.freeze({
+    title: "Reel Ready",
+    summary: "Your reel is ready when the completed reel + main-line + backing system is correctly routed, securely connected, and properly filled. This does not mean a terminal Rig, leader, bait, or lure is attached.",
     items: Object.freeze([
         Object.freeze({
-            text: "Confirm the line follows the reel-specific routing you completed and passes cleanly through the rod guides needed for the finished setup.",
-            emphasis: Object.freeze(["Confirm the line follows the reel-specific routing you completed"])
+            text: "Confirm the line follows the reel-specific routing and retrieves cleanly.",
+            emphasis: Object.freeze(["follows the reel-specific routing and retrieves cleanly"])
         }),
         Object.freeze({
-            text: "Confirm the line is packed evenly and the spool is not overfilled. Use the reel manufacturer's fill mark or model-specific guidance when it differs from the general starting reference.",
-            emphasis: Object.freeze(["Confirm the line is packed evenly and the spool is not overfilled.", "reel manufacturer's fill mark or model-specific guidance"])
+            text: "Confirm the line is packed reasonably evenly and the spool is not overfilled; manufacturer fill marks or model-specific instructions are authoritative.",
+            emphasis: Object.freeze(["the spool is not overfilled", "manufacturer fill marks or model-specific instructions are authoritative"])
         }),
         Object.freeze({
-            text: "Confirm every spool, backing, and main-line connection used in this setup is secure before fishing.",
-            emphasis: Object.freeze(["Confirm every spool, backing, and main-line connection used in this setup is secure"])
+            text: "Confirm every spool-to-line or backing-to-main-line connection actually used in this setup is secure.",
+            emphasis: Object.freeze(["every spool-to-line or backing-to-main-line connection actually used in this setup is secure"])
         }),
         Object.freeze({
-            text: "Confirm the finished main-line system still fits the reel capacity guidance and rod line rating you checked earlier. Re-check the equipment before fishing if the actual line changed.",
-            emphasis: Object.freeze(["Confirm the finished main-line system still fits the reel capacity guidance and rod line rating you checked earlier."])
+            text: "Confirm the final main line still fits the reel-capacity and rod line-rating guidance you reviewed during Equipment.",
+            emphasis: Object.freeze(["fits the reel-capacity and rod line-rating guidance"])
         })
-    ]),
-    leaderConnectionItem: Object.freeze({
-        text: "Because you selected a separate leader, confirm the main-line-to-leader connection is secure and trimmed cleanly before attaching the later Rig.",
-        emphasis: Object.freeze(["confirm the main-line-to-leader connection is secure and trimmed cleanly"])
-    })
-});
-
-const REEL_EQUIPMENT_GUIDANCE = Object.freeze({
-    reel: Object.freeze({
-        title: "How to Read Your Reel",
-        summary: "Reel capacity markings pair a line size with the approximate amount of that line the spool is designed to hold.",
-        items: Object.freeze([
-            "Find the line-capacity marking on the spool, reel body, package, manual, or official model specification.",
-            "A capacity such as 8 lb / 140 yd or 8-140 pairs line strength with approximate spool capacity.",
-            "Some manufacturers print the order differently. A marking such as 120 yd / 10 lb is yards first and pounds second, so use the printed headings or manual instead of assuming the order.",
-            "Metric capacity may pair line diameter and length, such as 0.25 mm / 160 m.",
-            "If Mono and Braid capacities are listed separately, use the listing for the line type you actually selected.",
-            "Numbers such as 1000, 2500, or 3000 identify reel size or model families; they are not direct pound-test ratings."
-        ])
-    }),
-    rod: Object.freeze({
-        title: "How to Read Your Rod",
-        summary: "Rod markings usually give a recommended line-strength range separately from the lure-weight range.",
-        items: Object.freeze([
-            "Look on the rod blank or official model specification for Line Wt, Line, or Line Rating.",
-            "A marking such as 6-12 lb gives the manufacturer's line-strength range for that rod model.",
-            "Do not confuse line rating with Lure Wt, which is often shown separately in ounces, such as 1/4-5/8 oz.",
-            "Your final line system should fit the rod's line rating as well as the reel's capacity guidance for the line type you selected.",
-            "If the rod marking is missing or unreadable, use the exact model number to check the manufacturer's official specification before spooling."
-        ])
-    }),
-    mismatch: Object.freeze({
-        title: "If the Ratings Do Not Match",
-        summary: "Do not force a line choice that falls outside the guidance for either piece of equipment.",
-        items: Object.freeze([
-            "Use a line choice that fits both the reel capacity guidance and the rod line rating, or change the equipment before spooling.",
-            "If the reel lists capacity by diameter instead of pound-test, compare the diameter printed on the line package or manufacturer specification.",
-            "If you still cannot verify the markings, stop before spooling and look up the exact reel and rod models from their manufacturers."
-        ])
-    })
+    ])
 });
 
 console.info(
@@ -453,9 +401,7 @@ console.info(
     `${REEL_TYPE_OPTIONS.length} reel types | ` +
     `${Object.keys(REEL_LINE_TYPE_GUIDANCE).length} line types | ` +
     `${REEL_TARGET_FISH_PROFILES.length} target profiles | ` +
-    `${Object.keys(REEL_EQUIPMENT_GUIDANCE).length} equipment guidance groups | ` +
-    `${Object.keys(REEL_BACKING_CHOICES).length} backing choices | ` +
-    `${Object.keys(REEL_SPOOLING_GUIDANCE).length} spooling profiles | ` +
-    `${Object.keys(REEL_LEADER_CHOICES).length} leader outcomes | ` +
-    `${REEL_READY_CHECK_GUIDANCE.items.length} final-check items`
+    `${REEL_SETUP_PHASES.length} workflow phases | ` +
+    `${Object.keys(REEL_BACKING_CHOICES).length} Braid backing choices | ` +
+    `${Object.keys(REEL_SPOOLING_GUIDANCE).length} spooling profiles`
 );

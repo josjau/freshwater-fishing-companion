@@ -3928,130 +3928,229 @@ function validateObjectRegistry(registry, label) {
 
 
 function validateReelGuidance() {
-    recordCheck("Reel & Line Setup Decision Knowledge references");
-
+    recordCheck("Get Your Reel Ready guidance ownership and workflow contract");
 
     const names = [
         "REEL_SETUP_STEP_IDS",
+        "REEL_SETUP_PHASES",
         "REEL_SETUP_ENTRY_OPTIONS",
         "REEL_TYPE_OPTIONS",
         "REEL_LINE_TYPE_GUIDANCE",
-        "REEL_LINE_GUIDANCE_ACTIONS",
-        "REEL_BEGINNER_LINE_RECOMMENDATIONS",
-        "REEL_LINE_COMPATIBILITY_NOTES",
+        "REEL_LINE_WEIGHT_OPTIONS",
         "REEL_TARGET_FISH_PROFILES",
+        "REEL_INFORMATIONAL_WARNINGS",
+        "REEL_EQUIPMENT_GUIDANCE",
         "REEL_BACKING_CHOICES",
         "REEL_SPOOLING_GUIDANCE",
-        "REEL_LEADER_CHOICES",
-        "REEL_LEADER_DECISION_GUIDANCE",
-        "REEL_LEADER_SETUP_GUIDANCE",
-        "REEL_READY_CHECK_GUIDANCE",
-        "REEL_EQUIPMENT_GUIDANCE"
+        "REEL_SPOOL_PATHS",
+        "REEL_LEADER_REFERENCE_GUIDANCE",
+        "REEL_READY_GUIDANCE"
     ];
     const bindings = loadBindings("data/reel-guidance.js", names);
-
+    const fishBindings = loadBindings("data/fish-categories.js", ["FISH_CATEGORY_DATA"]);
+    const knotBindings = loadBindings("data/knots.js", ["KNOT_DATA"]);
 
     const entryIds = validateOptionArray(bindings.REEL_SETUP_ENTRY_OPTIONS, "Reel setup entry options");
     const reelTypeIds = validateOptionArray(bindings.REEL_TYPE_OPTIONS, "Reel type options");
-    const actionIds = validateOptionArray(bindings.REEL_LINE_GUIDANCE_ACTIONS, "Reel line guidance actions");
     const targetIds = validateOptionArray(bindings.REEL_TARGET_FISH_PROFILES, "Reel target profiles");
     const lineTypeIds = validateObjectRegistry(bindings.REEL_LINE_TYPE_GUIDANCE, "Reel line types");
     const backingIds = validateObjectRegistry(bindings.REEL_BACKING_CHOICES, "Reel backing choices");
-    const leaderIds = validateObjectRegistry(bindings.REEL_LEADER_CHOICES, "Reel leader choices");
+    const spoolPathIds = validateObjectRegistry(bindings.REEL_SPOOL_PATHS, "Reel spool paths");
 
+    const expectExactIds = (actualIds, expectedIds, label) => {
+        const actual = [...actualIds].sort();
+        const expected = [...expectedIds].sort();
+        if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+            fail(label, `expected ${expected.join(", ")}; received ${actual.join(", ")}`);
+        }
+    };
 
-    void entryIds;
-    void actionIds;
-    void targetIds;
-    void backingIds;
+    expectExactIds(entryIds, ["new-empty-reel", "replace-existing-line"], "Reel setup entry options");
+    expectExactIds(reelTypeIds, ["spinning", "spincast", "baitcasting"], "Reel type options");
+    expectExactIds(lineTypeIds, ["monofilament", "fluorocarbon", "braid"], "Reel line types");
+    expectExactIds(backingIds, ["monofilament-backing", "direct-braid-approved"], "Reel backing choices");
+    expectExactIds(spoolPathIds, ["direct-main-line", "braid-with-backing", "direct-braid"], "Reel spool paths");
 
-
+    const expectedSteps = [
+        "start", "reel-type", "line-type", "target-fish", "line-weight",
+        "equipment", "backing-decision", "spool", "ready"
+    ];
     if (!isPlainObject(bindings.REEL_SETUP_STEP_IDS)) {
         fail("Reel setup steps", "expected REEL_SETUP_STEP_IDS object");
     } else {
-        const seenSteps = new Set();
-        for (const [key, value] of Object.entries(bindings.REEL_SETUP_STEP_IDS)) {
-            if (!validateId(value, "Reel setup steps")) {
-                continue;
-            }
-            if (seenSteps.has(value)) {
-                fail("Reel setup steps", `duplicate step ID ${value}`);
-            }
-            seenSteps.add(value);
-            if (!/^[A-Z0-9_]+$/.test(key)) {
-                fail("Reel setup steps", `unexpected step key format ${key}`);
-            }
+        expectExactIds(new Set(Object.values(bindings.REEL_SETUP_STEP_IDS)), expectedSteps, "Reel setup steps");
+    }
+
+    const phases = requireArray(bindings.REEL_SETUP_PHASES, "Reel setup phases");
+    validateUniqueIds(phases, "Reel setup phases");
+    const phaseIds = phases.map((phase) => phase && phase.id);
+    if (JSON.stringify(phaseIds) !== JSON.stringify(["reel", "line", "equipment", "spool", "ready"])) {
+        fail("Reel setup phases", `expected Reel -> Line -> Equipment -> Spool -> Ready; received ${phaseIds.join(" -> ")}`);
+    }
+
+    const weights = requireArray(bindings.REEL_LINE_WEIGHT_OPTIONS, "Reel line-weight options");
+    const invalidWeights = weights.filter((weight) => !Number.isFinite(weight) || weight <= 0);
+    if (invalidWeights.length) fail("Reel line-weight options", `invalid values ${invalidWeights.join(", ")}`);
+    for (const requiredWeight of [4, 6, 8, 10, 20]) {
+        if (!weights.includes(requiredWeight)) fail("Reel line-weight options", `missing approved beginner value ${requiredWeight} lb`);
+    }
+
+    const expectedTargetIds = [
+        "all-around-freshwater", "bass", "catfish", "sunfish-crappie", "trout", "walleye-sauger"
+    ];
+    expectExactIds(targetIds, expectedTargetIds, "Reel target profiles");
+    const expectedTargetContract = {
+        "all-around-freshwater": ["6–12 lb", 10],
+        bass: ["8–12 lb", 10],
+        catfish: ["15–20 lb", 20],
+        "sunfish-crappie": ["4–6 lb", 6],
+        trout: ["2–4 lb", 4],
+        "walleye-sauger": ["6–10 lb", 8]
+    };
+    const fishCategories = requireArray(fishBindings.FISH_CATEGORY_DATA, "Fish category registry");
+    const fishCategoryIds = new Set(fishCategories.map((category) => category && category.id).filter(Boolean));
+    for (const profile of requireArray(bindings.REEL_TARGET_FISH_PROFILES, "Reel target profiles")) {
+        if (!isPlainObject(profile) || !expectedTargetContract[profile.id]) continue;
+        const [expectedRange, expectedMonoWeight] = expectedTargetContract[profile.id];
+        if (profile.strengthReference !== expectedRange) {
+            fail("Reel target profiles", `${profile.id}: expected strength reference ${expectedRange}, received ${JSON.stringify(profile.strengthReference)}`);
+        }
+        if (profile.monofilamentStartWeight !== expectedMonoWeight) {
+            fail("Reel target profiles", `${profile.id}: expected ${expectedMonoWeight} lb Monofilament start, received ${JSON.stringify(profile.monofilamentStartWeight)}`);
+        }
+        if (profile.id === "all-around-freshwater") {
+            if (profile.categoryId != null) fail("Reel target profiles", "all-around-freshwater must remain Reel Setup-owned, not a Fish category alias");
+        } else if (!fishCategoryIds.has(profile.categoryId)) {
+            fail("Reel target profiles", `${profile.id}: unresolved Fish category ${JSON.stringify(profile.categoryId)}`);
         }
     }
 
-
-    if (isPlainObject(bindings.REEL_BEGINNER_LINE_RECOMMENDATIONS)) {
-        for (const [reelTypeId, recommendation] of Object.entries(bindings.REEL_BEGINNER_LINE_RECOMMENDATIONS)) {
-            if (!reelTypeIds.has(reelTypeId)) {
-                fail("Reel line recommendations", `unknown reel type key ${reelTypeId}`);
-            }
-            if (!isPlainObject(recommendation) || !lineTypeIds.has(recommendation.lineTypeId)) {
-                fail(
-                    "Reel line recommendations",
-                    `${reelTypeId}: unresolved lineTypeId ${JSON.stringify(recommendation && recommendation.lineTypeId)}`
-                );
-            }
-        }
-    } else {
-        fail("Reel line recommendations", "expected recommendation registry");
+    const monofilament = bindings.REEL_LINE_TYPE_GUIDANCE && bindings.REEL_LINE_TYPE_GUIDANCE.monofilament;
+    if (!isPlainObject(monofilament) || monofilament.recommendedFirstSetup !== true) {
+        fail("Reel line types", "Monofilament must carry the recommended-first-setup cue");
+    }
+    const spinning = requireArray(bindings.REEL_TYPE_OPTIONS, "Reel type options").find((record) => record && record.id === "spinning");
+    if (!spinning || spinning.recommendedFirstSetup !== true) {
+        fail("Reel type options", "Spinning Reel must carry the recommended-first-setup cue");
     }
 
-
-    if (isPlainObject(bindings.REEL_LINE_COMPATIBILITY_NOTES)) {
-        for (const [reelTypeId, notes] of Object.entries(bindings.REEL_LINE_COMPATIBILITY_NOTES)) {
-            if (!reelTypeIds.has(reelTypeId)) {
-                fail("Reel compatibility notes", `unknown reel type key ${reelTypeId}`);
-            }
-            if (!isPlainObject(notes)) {
-                fail("Reel compatibility notes", `${reelTypeId}: expected line-type note object`);
-                continue;
-            }
-            for (const lineTypeId of Object.keys(notes)) {
-                if (!lineTypeIds.has(lineTypeId)) {
-                    fail("Reel compatibility notes", `${reelTypeId}: unknown line type ${lineTypeId}`);
-                }
-            }
-        }
-    } else {
-        fail("Reel compatibility notes", "expected compatibility registry");
+    if (!isPlainObject(bindings.REEL_INFORMATIONAL_WARNINGS) ||
+        typeof bindings.REEL_INFORMATIONAL_WARNINGS.spincast?.braid !== "string") {
+        fail("Reel informational warnings", "expected non-blocking Spincast + Braid guidance");
     }
 
+    const equipmentIds = validateObjectRegistry(bindings.REEL_EQUIPMENT_GUIDANCE, "Reel equipment guidance");
+    expectExactIds(equipmentIds, ["reel", "rod", "mismatch"], "Reel equipment guidance");
 
     if (isPlainObject(bindings.REEL_SPOOLING_GUIDANCE)) {
-        for (const reelTypeId of Object.keys(bindings.REEL_SPOOLING_GUIDANCE)) {
-            if (!reelTypeIds.has(reelTypeId)) {
-                fail("Reel spooling guidance", `unknown reel type key ${reelTypeId}`);
-            }
-        }
+        expectExactIds(new Set(Object.keys(bindings.REEL_SPOOLING_GUIDANCE)), ["spinning", "spincast", "baitcasting"], "Reel spooling guidance");
     } else {
         fail("Reel spooling guidance", "expected spooling registry");
     }
 
-
-    if (isPlainObject(bindings.REEL_LEADER_DECISION_GUIDANCE)) {
-        for (const lineTypeId of Object.keys(bindings.REEL_LEADER_DECISION_GUIDANCE)) {
-            if (!lineTypeIds.has(lineTypeId)) {
-                fail("Reel leader guidance", `unknown line type key ${lineTypeId}`);
+    const knotIds = new Set(requireArray(knotBindings.KNOT_DATA, "Knot registry").map((knot) => knot && knot.id).filter(Boolean));
+    for (const [pathId, path] of Object.entries(bindings.REEL_SPOOL_PATHS || {})) {
+        const stages = requireArray(path && path.stages, `Reel spool path ${pathId}`);
+        for (const stage of stages) {
+            if (!isPlainObject(stage) || !stage.id || !stage.title) {
+                fail("Reel spool paths", `${pathId}: invalid stage`);
+                continue;
+            }
+            if (stage.knotId && !knotIds.has(stage.knotId)) {
+                fail("Reel spool paths", `${pathId}/${stage.id}: unresolved knot ${stage.knotId}`);
             }
         }
+    }
+    const directBraid = bindings.REEL_SPOOL_PATHS?.["direct-braid"];
+    if (JSON.stringify(directBraid || {}).includes("arbor-knot")) {
+        fail("Reel spool paths", "direct-braid must not present Arbor Knot as the generic direct-Braid solution");
+    }
+
+    if (!isPlainObject(bindings.REEL_LEADER_REFERENCE_GUIDANCE) || !Array.isArray(bindings.REEL_LEADER_REFERENCE_GUIDANCE.items)) {
+        fail("Reel leader boundary", "Leader knowledge must remain a non-blocking Reference record");
+    }
+    const reelSource = readText("data/reel-guidance.js");
+    for (const obsoleteName of [
+        "REEL_LINE_GUIDANCE_ACTIONS", "REEL_BEGINNER_LINE_RECOMMENDATIONS", "REEL_LINE_COMPATIBILITY_NOTES",
+        "REEL_LEADER_CHOICES", "REEL_LEADER_DECISION_GUIDANCE", "REEL_LEADER_SETUP_GUIDANCE", "REEL_READY_CHECK_GUIDANCE"
+    ]) {
+        if (reelSource.includes(obsoleteName)) fail("Reel migration cleanup", `obsolete owner ${obsoleteName} remains in data/reel-guidance.js`);
+    }
+    if (reelSource.includes("No Separate Backing")) {
+        fail("Reel backing ownership", "Mono/Fluoro direct-spool behavior must be derived, not stored as a fake backing choice");
+    }
+
+    if (!isPlainObject(bindings.REEL_READY_GUIDANCE) || !Array.isArray(bindings.REEL_READY_GUIDANCE.items)) {
+        fail("Reel Ready guidance", "expected Reel Ready checklist guidance");
     } else {
-        fail("Reel leader guidance", "expected leader-decision registry");
+        const readyItemText = bindings.REEL_READY_GUIDANCE.items
+            .map((item) => typeof item === "string" ? item : item?.text ?? "")
+            .join(" ")
+            .toLowerCase();
+        if (/leader connection|confirm[^.]*leader|leader check/.test(readyItemText)) {
+            fail("Reel Ready guidance", "Reel Ready checklist must not require a Leader");
+        }
     }
 
 
-    if (isPlainObject(bindings.REEL_LEADER_SETUP_GUIDANCE)) {
-        for (const leaderId of Object.keys(bindings.REEL_LEADER_SETUP_GUIDANCE)) {
-            if (!leaderIds.has(leaderId)) {
-                fail("Reel leader setup", `unknown leader choice key ${leaderId}`);
-            }
-        }
-    } else {
-        fail("Reel leader setup", "expected leader-setup registry");
+    const controllerSource = readText("script.js") ?? "";
+    const rendererSource = readText("view-renderer.js") ?? "";
+    const styleSource = readText("forest-journal.css") ?? "";
+    if (controllerSource.includes("renderReelLineSystem") || controllerSource.includes("Your Line System")) {
+        fail("Reel Setup presentation", "redundant Your Line System presentation must remain removed after browser review");
+    }
+    if (!controllerSource.includes('class="reel-setup-selected__summary"') ||
+        !controllerSource.includes('class="reel-setup-progress-strip"') ||
+        !controllerSource.includes('reel-setup-progress-strip__segments')) {
+        fail("Reel Setup presentation", "Selected Choices and Setup Progress must use the compact R3 status treatment");
+    }
+    if (!controllerSource.includes("reel-line-weight-dialog") ||
+        !controllerSource.includes("let selectedWeight = reelSetupState.lineWeight ?? exactRecommendation")) {
+        fail("Reel Setup presentation", "Line Weight must use the modal picker and accept the exact approved default as the active selection");
+    }
+    if (!controllerSource.includes("reel-setup-utilities--single")) {
+        fail("Reel Setup presentation", "single utility rows must expose the shared Search-width cap hook");
+    }
+    const equipmentFunction = controllerSource.match(/function renderReelSetupEquipmentStep\([\s\S]*?\n}\n/);
+    if (!equipmentFunction || equipmentFunction[0].indexOf("renderReelSetupReferencePrompt") > equipmentFunction[0].indexOf("renderReelSetupEquipmentDiagramSummary")) {
+        fail("Reel Setup presentation", "Equipment Reference must appear before Compare Your Equipment");
+    }
+    if (!rendererSource.includes("(activeIndex + 1) % validPages.length") ||
+        !rendererSource.includes("(activeIndex - 1 + validPages.length) % validPages.length") ||
+        !rendererSource.includes('>←</span> Prev')) {
+        fail("Reference paging", "multi-page References must wrap continuously and use the compact Prev / Next pager");
+    }
+    if (rendererSource.includes("reel-reference-diagram__spool")) {
+        fail("Equipment Reference", "the non-instructional spool-circle graphic must remain removed");
+    }
+    if (!styleSource.includes("--radius-section: var(--radius-large)") || styleSource.includes("--radius-medium")) {
+        fail("Shared section presentation", "section containers must use the defined shared rounded section radius");
+    }
+    if (!rendererSource.includes("page-navigation--long-label") ||
+        rendererSource.includes("page-navigation-group--knot-task-origin") ||
+        styleSource.includes("page-navigation-group--knot-task-origin")) {
+        fail("Shared breadcrumb presentation", "long dynamic parent labels must retain the standard pill and use the shared reduced-text treatment");
+    }
+    if (!controllerSource.includes('class="reel-setup-progress-region"') ||
+        !controllerSource.includes('section.className = "reel-spool-progress-strip"') ||
+        !controllerSource.includes("Spool Progress") ||
+        controllerSource.includes("Spool Sequence")) {
+        fail("Reel Setup progress", "Spool must use the distinct compact progress rail paired with Setup Progress");
+    }
+    if (!controllerSource.includes('progressRegion.classList.add("has-spool-progress")') ||
+        !styleSource.includes(".reel-setup-progress-region:not(.has-spool-progress) .reel-setup-progress-strip")) {
+        fail("Reel Setup progress", "Setup Progress must center alone and pair with Spool Progress at wider breakpoints");
+    }
+    if (!controllerSource.includes('title.insertAdjacentElement("afterend", cue)')) {
+        fail("Reel Setup choice presentation", "Recommended First Setup must appear below the reel title so peer titles align");
+    }
+    if (!styleSource.includes(".knot-instruction-media__type {") ||
+        !styleSource.includes(".knot-instruction-media__description { display: none; }") ||
+        !styleSource.includes(".reel-line-weight-picker { width: min(100%, 680px); margin: var(--space-3) auto; }") ||
+        !styleSource.includes(".reel-line-weight-picker__control { width: min(100%, 480px); margin-inline: auto; }") ||
+        !styleSource.includes(".reel-line-weight-picker__label { text-align: center; }") ||
+        !styleSource.includes("width: fit-content;")) {
+        fail("Reel Setup responsive refinement", "R5 Visual Guide, Line Weight, and centered action treatments are missing");
     }
 }
 

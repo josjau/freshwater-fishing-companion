@@ -37,8 +37,11 @@ function buildSearchControlsMarkup(inputId, placeholder, options = {}) {
 
 function buildPageNavigationMarkup(parentLabel = null, groupClassName = "") {
     const backArrowMarkup = '<span class="link-arrow link-arrow--back" aria-hidden="true">←</span>';
+    const parentLabelClass = typeof parentLabel === "string" && parentLabel.length > 22
+        ? " page-navigation--long-label"
+        : "";
     const parentMarkup = parentLabel
-        ? `<button class="page-navigation" type="button" data-parent-navigation>${backArrowMarkup} ${parentLabel}</button>`
+        ? `<button class="page-navigation${parentLabelClass}" type="button" data-parent-navigation>${backArrowMarkup} ${parentLabel}</button>`
         : "";
     const homeLabel = parentLabel ? "Home" : `${backArrowMarkup} Home`;
     const groupClass = groupClassName ? ` ${groupClassName}` : "";
@@ -1271,7 +1274,7 @@ function renderKnotGuideLanding(appMain, config) {
                                 <span class="dashboard-card__title">Get Your Reel Ready</span>
                                 <span class="dashboard-card__action dashboard-card__action--link">Start Setup <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
                             </span>
-                            <span class="dashboard-card__description">Walk through reel type, line choice, compatibility, and spool setup step by step.</span>
+                            <span class="dashboard-card__description">Walk through reel type, line choice, line weight, equipment markings, and spool setup step by step.</span>
                         </button>
                     </div>
                 </section>
@@ -1602,12 +1605,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
     const tyingStepsLabelMarkup = instructionMediaMarkup
         ? '<p class="knot-tying-steps__label">Numbered Tying Steps</p>'
         : "";
-    const isTaskOriginNavigation = Boolean(detailConfig.parentLabel) &&
-        typeof KNOT_TASK_DEFINITIONS !== "undefined" &&
-        KNOT_TASK_DEFINITIONS.some((task) => task?.title === detailConfig.parentLabel);
-    const navigationClassName = isTaskOriginNavigation
-        ? "page-navigation-group--knot-task-origin"
-        : "";
+    const navigationClassName = "";
 
     const aboutMarkup = [
         buildKnotDetailDisclosureMarkup(
@@ -1759,6 +1757,117 @@ function renderLineTypeReferencePopover(lineTypeId, triggerElement) {
     dialog.showModal();
 }
 
+
+function buildPagedReferenceVisualMarkup(page) {
+    if (page?.visualType !== "reel-capacity-diagram") return "";
+    return `
+        <figure class="reel-reference-diagram" aria-label="Example reel capacity marking">
+            <div class="reel-reference-diagram__reel" aria-hidden="true">
+                <span class="reel-reference-diagram__capacity">MONO<br>8 lb / 140 yd<br>10 lb / 110 yd</span>
+            </div>
+            <figcaption>
+                Example only: find the capacity marking on your actual spool, reel body, package, manual, or official model specification. Printed order and units vary by manufacturer.
+            </figcaption>
+        </figure>
+    `;
+}
+
+function renderPagedReferencePopover({ eyebrow = "Reference", pages = [], initialPageId = null, triggerElement = null } = {}) {
+    if (!Array.isArray(pages) || pages.length === 0) {
+        console.warn("Paged Reference requires at least one page.");
+        return;
+    }
+
+    const validPages = pages.filter((page) => page?.id && page?.title);
+    if (validPages.length === 0) return;
+    removeOpenReferencePopovers();
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "reference-popover paged-reference-popover";
+    dialog.dataset.pagedReferencePopover = "";
+    dialog.setAttribute("aria-labelledby", "paged-reference-title");
+    let activeIndex = Math.max(0, validPages.findIndex((page) => page.id === initialPageId));
+
+    const closeDialog = () => {
+        if (dialog.open) dialog.close();
+    };
+
+    const renderPage = (focusDirection = null) => {
+        const page = validPages[activeIndex];
+        const listMarkup = Array.isArray(page.items) && page.items.length ? `
+            <section class="reference-popover__section">
+                <ul>${page.items.map((item) => `<li>${item}</li>`).join("")}</ul>
+            </section>
+        ` : "";
+        const sectionsMarkup = Array.isArray(page.sections) ? page.sections.map((section) => `
+            <section class="reference-popover__section">
+                <h3>${section.title}</h3>
+                <p>${section.text}</p>
+            </section>
+        `).join("") : "";
+        const showPager = validPages.length > 1;
+
+        dialog.innerHTML = `
+            <div class="reference-popover__shell paged-reference-popover__shell">
+                <header class="reference-popover__header">
+                    <div class="reference-popover__header-main">
+                        <p class="reference-popover__eyebrow">${eyebrow}</p>
+                        <h2 id="paged-reference-title">${page.title}</h2>
+                    </div>
+                    <button class="reference-popover__close" type="button" data-paged-reference-close aria-label="Close ${eyebrow}">&times;</button>
+                </header>
+                ${buildPagedReferenceVisualMarkup(page)}
+                <div class="reference-popover__body">
+                    <p class="reference-popover__summary">${page.summary ?? ""}</p>
+                    ${sectionsMarkup}${listMarkup}
+                </div>
+                ${showPager ? `
+                    <nav class="paged-reference-popover__pager" aria-label="${eyebrow} pages">
+                        <button type="button" data-paged-reference-previous aria-label="Previous reference page">
+                            <span class="link-arrow link-arrow--back" aria-hidden="true">←</span> Prev
+                        </button>
+                        <span class="paged-reference-popover__position" aria-live="polite">${activeIndex + 1} of ${validPages.length}</span>
+                        <button type="button" data-paged-reference-next aria-label="Next reference page">
+                            Next <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
+                        </button>
+                    </nav>
+                ` : ""}
+            </div>
+        `;
+
+        dialog.querySelector("[data-paged-reference-close]")?.addEventListener("click", closeDialog);
+        dialog.querySelector("[data-paged-reference-previous]")?.addEventListener("click", () => {
+            activeIndex = (activeIndex - 1 + validPages.length) % validPages.length;
+            renderPage("previous");
+        });
+        dialog.querySelector("[data-paged-reference-next]")?.addEventListener("click", () => {
+            activeIndex = (activeIndex + 1) % validPages.length;
+            renderPage("next");
+        });
+
+        if (focusDirection === "previous") {
+            dialog.querySelector("[data-paged-reference-previous]")?.focus({ preventScroll: true });
+        } else if (focusDirection === "next") {
+            dialog.querySelector("[data-paged-reference-next]")?.focus({ preventScroll: true });
+        }
+    };
+
+    dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeDialog();
+    });
+    dialog.addEventListener("close", () => {
+        dialog.remove();
+        unlockReferencePopoverBackground();
+        triggerElement?.focus({ preventScroll: true });
+    });
+
+    document.body.append(dialog);
+    lockReferencePopoverBackground();
+    renderPage();
+    dialog.showModal();
+    dialog.querySelector("[data-paged-reference-close]")?.focus({ preventScroll: true });
+}
+
 function initializeLineTypeReferenceLinks(appMain) {
     appMain.querySelectorAll("[data-line-type-reference-id]").forEach((referenceButton) => {
         referenceButton.addEventListener("click", () => {
@@ -1885,6 +1994,7 @@ function removeOpenReferencePopovers() {
     document.querySelectorAll([
         "[data-reference-popover]",
         "[data-line-type-reference-popover]",
+        "[data-paged-reference-popover]",
         "[data-condition-popover]",
         "[data-fish-habitat-popover]",
         "[data-lure-bait-popover]",
