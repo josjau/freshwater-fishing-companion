@@ -1,14 +1,25 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.8.5  
+**Document Revision:** 3.8.9  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-09-27
+**Last Updated:** 2026-09-28
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, current-state/resume surface, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to the external Live Working State; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-09-28 — FCC 49J-K Roadmap + Build/Review Workflow Standardization
+
+- Locked the remaining Version 1 execution order from Rig Guide through the final V1 UX/design audit while preserving explicit dependency-based reorder authority.
+- Added an explicit UX-009/final-design-audit criterion for multi-subsection separation: sections with multiple subsections must visibly divide adjacent subsection groups. Fish Guide and Knots Guide are known audit targets from user review; Rig Guide provides the current comparison pattern.
+- Reworked FCC execution governance around coherent Build Units rather than chat-by-chat repository closeout: routine decisions are captured promptly with exact operative wording in one external active workstream/audit, while material boundaries retain full approval gates. Normal approvals default to **APPROVED / REVISION ALLOWED** unless explicitly locked.
+- Separated durable repository authority from operational continuity: GitHub contains committed durable project material; Drive `Working Source/Current` contains approved uncommitted durable repo material; Live Working State is the compact project-level resume/index; temporary audits/candidate notes stay external and never enter Git or review ZIPs.
+- Standardized cumulative review packaging: immutable R1, cumulative R2+, descriptive `FCC-<workstream>-<Build-Unit>-R<n>.zip`, fresh `...-FINAL-LOCAL.zip` at Local Final / Commit Candidate Approval, explicit deletions outside ZIP extraction, and complete Commit Preview before local Git handoff.
+- Made actual-mobile review validation-first. A passing deployed Final Local state creates no mobile ZIP and no extra Git commit; `MOBILE-R<n>` / `MOBILE-FINAL` exist only when a real-device defect requires repository correction.
+- Updated the compact Project Custom Instructions to mirror the canonical `PROJECT-RULES.md` procedure within the product's 8,000-character instruction limit.
+- Closeout validation recovery corrected the documentation-governance/path defects and hardened the Reel Setup validator for Windows CRLF checkouts: `ARCHITECTURE.md` now carries both required Live Working State governance markers (`single project-level resume/index` and `single operational continuity/exact-resume surface`), the retired `docs/WORKING_STATE.md` reference in workflow rationale is explicitly classified as retired, and the Reel Setup function matcher accepts LF or CRLF without changing production behavior.
 
 # 2026-09-27 — UX-011 Fish Post-Knots Shared Detail Correction — Closed
 

@@ -1,11 +1,11 @@
-﻿# Freshwater Fishing Companion
+# Freshwater Fishing Companion
 
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.8.1  
+**Document Revision:** 0.8.2  
 **Document Status:** Approved  
 **Role:** Compact canonical decision index  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-27
 
 
 # Purpose
@@ -71,8 +71,8 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 | D036 | Status and Version Semantics | Approved | [`decisions/workflow.md`](decisions/workflow.md#d036--status-and-version-semantics) |
 | D037 | Data-Model Documentation Structure | Approved | [`decisions/data-model.md`](decisions/data-model.md#d037--data-model-documentation-structure) |
 | D038 | Repository Continuity Entrypoint | Superseded by D070 | [`decisions/workflow.md`](decisions/workflow.md#d038--repository-continuity-entrypoint) |
-| D039 | Documentation-Validated Closeout | Approved | [`decisions/workflow.md`](decisions/workflow.md#d039--documentation-validated-closeout) |
-| D040 | No Unvalidated Build Transition | Approved | [`decisions/workflow.md`](decisions/workflow.md#d040--no-unvalidated-build-transition) |
+| D039 | Documentation-Validated Build Unit Closeout | Approved | [`decisions/workflow.md`](decisions/workflow.md#d039--documentation-validated-build-unit-closeout) |
+| D040 | No Unvalidated Build Unit Transition | Approved | [`decisions/workflow.md`](decisions/workflow.md#d040--no-unvalidated-build-unit-transition) |
 | D041 | Cross-Segment Decision Capture and Parking | Approved | [`decisions/workflow.md`](decisions/workflow.md#d041--cross-segment-decision-capture-and-parking) |
 | D042 | Core Learning Path Visual Emphasis | Approved | [`decisions/ux-navigation.md`](decisions/ux-navigation.md#d042--core-learning-path-visual-emphasis) |
 | D043 | Ready-to-Fish Terminal Setups in the Rig Guide | Approved | [`decisions/product.md`](decisions/product.md#d043--ready-to-fish-terminal-setups-in-the-rig-guide) |
@@ -102,4 +102,4 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 | D067 | User-Aware User Knowledge Architecture Before Tackle Expansion | Approved | [`decisions/data-model.md`](decisions/data-model.md#d067--user-aware-user-knowledge-architecture-before-tackle-expansion) |
 | D068 | Drive-First Complete Working Tree and ChatGPT Project Workflow Performance Standard | Approved | [`decisions/workflow.md`](decisions/workflow.md#d068--drive-first-complete-working-tree-and-chatgpt-project-workflow-performance-standard) |
 | D069 | What Should I Throw Prerequisite Architecture and Phase 0 Handoff | Approved | [`decisions/product.md`](decisions/product.md#d069--what-should-i-throw-prerequisite-architecture-and-phase-0-handoff) |
-| D070 | Live Working State Sole Operational Continuity and Repository Working State Retirement | Approved | [`decisions/workflow.md`](decisions/workflow.md#d070--live-working-state-sole-operational-continuity-and-repository-working-state-retirement) |
+| D070 | Live Working State Project Resume and External Active Workstream Continuity | Approved | [`decisions/workflow.md`](decisions/workflow.md#d070--live-working-state-project-resume-and-external-active-workstream-continuity) |

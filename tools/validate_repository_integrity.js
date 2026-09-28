@@ -4153,7 +4153,7 @@ function validateReelGuidance() {
     if (!controllerSource.includes("reel-setup-utilities--single")) {
         fail("Reel Setup presentation", "single utility rows must expose the shared Search-width cap hook");
     }
-    const equipmentFunction = controllerSource.match(/function renderReelSetupEquipmentStep\([\s\S]*?\n}\n/);
+    const equipmentFunction = controllerSource.match(/function renderReelSetupEquipmentStep\([\s\S]*?\r?\n}\r?\n/);
     if (!equipmentFunction || equipmentFunction[0].indexOf("renderReelSetupReferencePrompt") > equipmentFunction[0].indexOf("renderReelSetupEquipmentDiagramSummary")) {
         fail("Reel Setup presentation", "Equipment Reference must appear before Compare Your Equipment");
     }
@@ -4869,7 +4869,8 @@ function validateDocumentationGovernance() {
             "docs/ARCHITECTURE.md",
             [
                 "**Role:** Current technical/source architecture and durable ownership boundaries",
-                "single operational continuity/exact-resume surface"
+                "single project-level resume/index",
+                "external temporary active audit/workstream record"
             ]
         ],
         [

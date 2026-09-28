@@ -2,10 +2,10 @@
 
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.42  
+**Document Revision:** 1.0.43  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-09-27
+**Last Updated:** 2026-09-28
 
 
 # Purpose
@@ -32,6 +32,7 @@ Before Version 1 design is considered complete:
 4. Validate the resulting application in a **full-size desktop web browser** and on an **actual mobile device**. Desktop-wide fixes must not regress mobile behavior, and mobile fixes must not leave full desktop layouts visually broken or poorly proportioned.
 5. Preserve readable typography, practical touch targets, accessible focus/contrast behavior, and mobile field usability.
 6. Prefer reducing duplicated content, excess padding, excess margins, unnecessary container nesting, and redundant visual treatments before shrinking typography.
+7. In any section that contains multiple peer subsections, provide a clear visual divider between adjacent subsection groups. Audit every applicable Guide and non-Guide surface; Fish Guide and Knots Guide are known current gaps, while the current Rig Guide treatment is the comparison example. Validate the final divider treatment on full desktop and actual mobile.
 
 
 Design target:
@@ -1394,6 +1395,7 @@ The Version 1 design audit may close only when:
 7. The full tracked repository has been inventoried for documentation/source ownership, with archived material correctly distinguished from active authority.
 8. Every active JavaScript file has an explicit audit disposition for readability, semantic organization, change-placement discipline, and maintainability.
 9. No known material documentation gap, contradictory active owner, orphan source block, or arbitrary append-only code placement remains without an explicit approved disposition.
+10. Every implemented section with multiple peer subsections has an explicit divider disposition and, when applicable, a visible divider between adjacent subsection groups that passes desktop and actual-mobile review.
 
 
 # Relationship to Active Development

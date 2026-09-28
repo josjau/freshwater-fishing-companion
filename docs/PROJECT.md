@@ -2,10 +2,10 @@
 
 
 **Document:** PROJECT.md  
-**Document Revision:** 0.3.5  
+**Document Revision:** 0.3.6  
 **Document Status:** Approved  
-**Decision Baseline:** D027, D038-D041, D057, D066  
-**Last Updated:** 2026-09-24
+**Decision Baseline:** D027, D039-D041, D057, D066, D068, D070  
+**Last Updated:** 2026-09-28
 
 
 # Purpose
@@ -196,10 +196,10 @@ The goal is to help a newer angler become successful with a small number of broa
 # Project Continuity
 
 
-The external Live Working State is the single operational continuity/exact-resume surface. `ACTIVE-CHANGE-LEDGER.md` preserves material non-closed carry-forward across workstreams, while durable repository state remains in the applicable canonical owners and actual GitHub/Drive lineage.
+The external Live Working State is the single project-level resume/index. Detailed continuity for an active Build Unit may live in one named external temporary audit/workstream record outside the repository tree; `ACTIVE-CHANGE-LEDGER.md` preserves material non-closed cross-workstream carry-forward, while durable repository state remains in the applicable canonical owners and actual GitHub/Drive lineage.
 
 
-A session, module, or section is not finalized until relevant documentation is updated and validated in GitHub. The project does not move into a new build segment while the current segment remains unfinalized.
+A chat, module, or review slice is not itself a repository-closeout boundary. A coherent Build Unit may span multiple chats; dependent Build Units begin only after the current Build Unit is finalized or deliberately parked with safe resume state under `PROJECT-RULES.md`.
 
 
 # Success Criteria

@@ -2,10 +2,10 @@
 
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.15.8  
+**Document Revision:** 0.15.11  
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-09-28
 
 
 # Purpose
@@ -22,8 +22,8 @@ This document defines the current application architecture, source ownership, an
 
 - GitHub `main` is authoritative for committed source, documentation, and formal history.
 - Google Drive `Working Source/Current` is the complete editable repository working tree and owns approved uncommitted repository work under D068.
-- The Live Working State is the **single operational continuity/exact-resume surface** for review-cycle identity, live decisions/constraints, approval/validation state, defects, GitHub/Drive lineage, and exact resume context. It may capture material live-chat decisions as explicitly pending approval when continuity risk warrants immediate preservation; it is not repository content and is not an append-only history log.
-- Review/checkpoint ZIPs in Drive Packages are transport artifacts, not working truth.
+- The Live Working State is the **single project-level resume/index** and the **single operational continuity/exact-resume surface** for active Build Unit identity, GitHub/Drive lineage, material gate state, candidate pointer, and exact resume. One named external temporary active audit/workstream record may own detailed Build Unit decisions, findings/dispositions, candidate lineage, validation state, and unresolved discussion. Neither is repository authority.
+- Review ZIPs are bounded candidate/transport artifacts, not working truth. Their retention and promotion rules are owned by `PROJECT-RULES.md`.
 - ChatGPT Work is not part of the supported FCC execution environment.
 
 
@@ -471,7 +471,7 @@ Documentation uses single-owner semantics:
 - `DECISIONS.md` + `decisions/*.md` — decision index and full durable decision bodies.
 - `PROJECT-RULES.md` — single canonical current execution/governance procedure.
 - `ROADMAP.md` — product milestone order/future direction.
-- External Live Working State — sole operational continuity/exact-resume surface and live-decision safety net; not repository content.
+- External Live Working State — sole project-level resume/index; not repository content. A named external active audit/workstream may hold detailed current Build Unit continuity under `PROJECT-RULES.md`.
 - `ACTIVE-CHANGE-LEDGER.md` — material non-closed carry-forward.
 - `STYLE_GUIDE.md` — code/data/file/document conventions.
 - `UI_STANDARD.md` — cross-domain UI interaction standards.

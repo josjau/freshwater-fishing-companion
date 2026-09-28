@@ -1,11 +1,11 @@
-﻿# Freshwater Fishing Companion — Decisions: Workflow, Governance, and Continuity
+# Freshwater Fishing Companion — Decisions: Workflow, Governance, and Continuity
 
 
 **Document:** decisions/workflow.md  
 **Document Status:** Approved  
 **Role:** Canonical durable decision bodies for this ownership domain  
 **Migration Baseline:** `af3bffb9995d56f8b9e47236bbadfa481d88cc34`  
-**Last Updated:** 2026-09-25
+**Last Updated:** 2026-09-28
 
 
 # Purpose
@@ -26,7 +26,7 @@ For user-facing application work, the local checkout must be verified against th
 All intended repository changes—including documentation-only changes—must first exist in the authoritative Drive working state before GitHub commit. Documentation-only work retains standing commit authority and does not require local browser/user validation, but it no longer bypasses Drive. When local browser/device validation is useful or required, the local checkout is a validation target rather than the authoritative uncommitted owner.
 
 
-Production source/data/media/configuration writes require explicit authorization for the specific scope, and production/user-facing commit/push requires explicit authorization. Under D068, Drive owns the complete authoritative approved-uncommitted working tree. The first review ZIP for a cycle is compiled from verified GitHub/Drive authority; bounded later candidate revisions may follow the immutable-R1 procedure in `../PROJECT-RULES.md` until user approval triggers promotion back into Drive. Review ZIPs never contain `.git`. Documentation-only commits are standing-authorized when required to keep durable project state current.
+Production source/data/media/configuration writes require explicit authorization for the specific scope, and production/user-facing commit/push requires explicit authorization. Under D068, Drive owns the complete authoritative approved-uncommitted working tree. The first review ZIP for a cycle is compiled from verified GitHub/Drive authority; bounded later candidate revisions may follow the immutable-R1 procedure in `../PROJECT-RULES.md` until **Local Final Approval / Commit Candidate Approval** triggers exact-candidate promotion back into Drive. Review ZIPs never contain `.git`. Documentation-only commits remain standing-authorized when required to keep durable project state current, but they do not override the active-review no-silent-baseline rule: GitHub `main` must not move behind an active local review cycle without explicit disclosure and reconciliation under `../PROJECT-RULES.md`.
 
 
 Commit economy is required: use as few commits as practical while preserving reviewability, validation boundaries, rollback safety, and current documentation. Fewer commits never justify stale documentation or an overbroad unreviewable commit.
@@ -105,32 +105,32 @@ Package-specific source-header language such as `REPLACEMENT` should be removed 
 Historical decision: the now-retired `docs/WORKING_STATE.md` was the single compact repository entrypoint for current state and exact resume. It was intended as a current-state map rather than a duplicate specification/decision archive/history log.
 
 
-D070 retires that repository path and moves the single operational continuation/exact-resume role to the external Live Working State. The permanent principle survives unchanged: **one continuation entrypoint, then follow canonical ownership paths; do not reconstruct state from chat.**
+D070 retires that repository path and keeps one project-level continuation entrypoint in the external Live Working State, with detailed active Build Unit continuity in the external operational audit named by that entrypoint. The permanent principle survives unchanged: **one continuation entrypoint, then follow the named active operational record and canonical ownership paths; do not reconstruct state from chat.**
 
 
-# D039 – Documentation-Validated Closeout
+# D039 – Documentation-Validated Build Unit Closeout
 
 
-A session, module, or section is not finalized until all relevant documentation has been updated, pushed to GitHub, inspected in the actual repository, and validated.
+A **Build Unit** is not finally closed until its durable documentation is reconciled into the correct repository owners, required implementation is landed, GitHub is inspected, and applicable validation is complete. Internal discussion/audit/review chat slices are not independent repository-closeout units merely because a chat ends.
 
 
-Conversation agreement, locally generated files, staged files, preflight checks, or code implementation alone do not constitute closeout.
+During an active Build Unit, exact approved decisions and findings may live in the external temporary audit/workstream record while permanent canonical documents remain at the last finalized Build Unit state. This temporary bounded divergence is deliberate, visible, and must be reconciled before final Build Unit closeout.
 
 
-Permanent rule: **no session, module, or section is finalized until all relevant documentation is updated and validated in GitHub.**
-# D040 – No Unvalidated Build Transition
+Conversation agreement, candidate ZIPs, locally generated files, staged files, or implementation alone do not constitute final Build Unit closeout.
 
 
-The project does not begin a new build segment while the current segment remains unfinalized.
+Permanent rule: **close the coherent Build Unit with durable documentation and validation; do not force repository closeout for every chat/review slice.**
+# D040 – No Unvalidated Build Unit Transition
 
 
-Before moving to the next build segment, the current segment must have its decisions settled, required implementation completed when applicable, relevant documentation updated, changes pushed, GitHub state inspected, and runtime/application behavior validated where applicable.
+The project does not begin a dependent **Build Unit** while the current Build Unit remains unfinalized. Internal audit, implementation, review, and refinement slices may proceed within one Build Unit without separate Git pushes or full closeout gates between slices.
 
 
-If an area remains open, it must be explicitly resolved or deliberately parked and documented before the project transitions to a new build segment.
+Before moving to a dependent Build Unit, the current Build Unit must be finalized or deliberately parked with its exact approved decisions preserved, implementation/candidate state identified, validation state known, and exact resume/carry-forward recorded. Finalized Build Units receive the durable documentation/GitHub/runtime closeout required by D039 and `../PROJECT-RULES.md`.
 
 
-Permanent rule: **finish cleanly or deliberately park; do not leave half-finalized project areas behind.**
+Permanent rule: **finish or deliberately park the coherent Build Unit; do not confuse chat-slice boundaries with repository-release boundaries.**
 # D041 – Cross-Segment Decision Capture and Parking
 
 
@@ -182,7 +182,7 @@ The model also required single-writer discipline, compact current state, a docum
 **Reason at the time:** It addressed drift between local edits and an unreliable file-by-file Drive mirror and preserved an exact cross-session working package.
 
 
-**Supersession:** D068 replaces ZIP-as-working-state and the documentation-direct-to-GitHub bypass with a complete editable Drive working tree. Review ZIPs are transport only and documentation is Drive-first. Its former repository Working State continuity clause was later superseded by D070, which makes Live Working State the sole operational continuity/exact-resume surface.
+**Supersession:** D068 replaces ZIP-as-working-state and the documentation-direct-to-GitHub bypass with a complete editable Drive working tree for durable repository material. Review ZIPs are transport only and durable documentation is Drive-first. Its former repository Working State continuity clause was later superseded/refined by D070: Live Working State is the project-level resume/index, while a named external active audit may hold detailed Build Unit continuity outside the repo tree.
 
 
 **Current implementation status:** Superseded / historical only.
@@ -228,7 +228,7 @@ The gate must define:
 **Decision:** Freshwater Fishing Companion operates in the normal ChatGPT project/chat environment using connected Google Drive and GitHub. ChatGPT Work is not part of the supported project workflow.
 
 
-GitHub `main` owns committed truth/formal history. Google Drive `Working Source/Current` is the **complete editable repository working tree** and owns all approved uncommitted repository changes, including documentation, source, data, media, configuration, planning, and workstream files. Documentation-only work retains standing commit authority but uses the same Drive-first edit/validation path.
+GitHub `main` owns committed truth/formal history and contains only durable project/repository material. Google Drive `Working Source/Current` is the **complete editable repository working tree** and owns all approved uncommitted **durable repository** changes, including durable documentation, source, data, media, configuration, planning, and workstream files. Temporary operational audits, decision registers, candidate tracking notes, Chat Logs, and similar working-only artifacts live outside the repo tree and never become Git content merely because they support the workflow. Documentation-only durable repository work still uses the Drive-first edit/validation path.
 
 
 For existing non-native/raw Drive files such as Markdown, canonical working identity is the approved `Working Source/Current` path/name plus verified content rather than chat, transport artifacts, or historical copies. Exact raw-file edit/transport mechanics—including the approved Sediment bridge and its circuit-breaker behavior—are owned by `../PROJECT-RULES.md`; this decision preserves the durable Drive-first authority model rather than duplicating procedure.
@@ -237,7 +237,7 @@ For existing non-native/raw Drive files such as Markdown, canonical working iden
 Drive structure is intentionally simple: `Working Source` contains only `Current` and `Packages`. Explicitly retained historical/design-reconstruction material lives outside `Working Source` under top-level `Historical Archive`. Normal startup, routine documentation reconciliation, and current source lookup must not traverse or edit `Historical Archive`; it is consulted only for an explicit historical-intent reconstruction, archival-evidence, or archive-integrity task. Historical material never overrides current authority.
 
 
-Live Working State is the **sole operational continuity/exact-resume surface** for active decisions, review-cycle identity, validation/approval state, defects, GitHub/Drive lineage, and detailed resume context. Under D070 it may also capture material live-chat decisions/constraints immediately as explicitly pending approval when continuity risk warrants preservation. `ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward across workstreams.
+Live Working State is the sole **project-level operational resume/index**: active Build Unit/workstream identity, GitHub/Drive lineage, material gate state, current candidate pointer, and exact next action. Detailed current Build Unit decision/traceability state belongs to one external temporary audit/workstream record outside `Working Source/Current`. That record captures exact approved decision text, findings/dispositions, slice status, candidate lineage, and unresolved discussion state. `ACTIVE-CHANGE-LEDGER.md` owns material non-closed carry-forward across workstreams.
 
 
 `Freshwater Fishing Companion Chat Log.md` is manually maintained by the user and is outside the assistant-run approval, startup, closeout, continuity, and recovery process. It does not gate progression and is not read, written, appended, replaced, or verified as part of routine FCC workflow unless the user explicitly requests a separate Chat Log task.
@@ -249,13 +249,13 @@ Live Working State is the **sole operational continuity/exact-resume surface** f
 Approval/disposition closure requires an explicit user-facing gate receipt. The current receipt fields and stop/progression mechanics are owned by `../PROJECT-RULES.md`.
 
 
-Review ZIPs remain bounded transport/review artifacts rather than general repository authority. R1 is compiled from verified GitHub/Drive authority and becomes the immutable baseline for that active review cycle. Within an unchanged cycle, later candidate revisions may be built from R1 plus the cumulative audit-recorded corrections instead of promoting every unapproved visual/browser correction into Drive Current. Exact lineage, retention, invalidation, promotion, inclusion/exclusion, deletion, and handoff mechanics are owned by `../PROJECT-RULES.md`.
+Review ZIPs remain bounded transport/review artifacts rather than general repository authority. R1 is compiled from verified GitHub/Drive authority and becomes the immutable baseline for that active review cycle. Within an unchanged cycle, later candidate revisions may be built from R1 plus the cumulative audit-recorded corrections instead of promoting every unapproved visual/browser correction into Drive Current. Ordinary review packages are cumulative and use descriptive `FCC-<workstream>-<Build-Unit>-R<n>.zip` naming; they carry only the durable repository files needed to reproduce the candidate, while operational records stay excluded. Local Final uses a fresh `...-FINAL-LOCAL.zip` containing the complete intended commit payload, including durable documentation that must land with the implementation, with deletions supplied separately. Conditional mobile correction packages use `...-MOBILE-R<n>.zip` and `...-MOBILE-FINAL.zip` only when actual-device validation finds a repository defect. Exact lineage, retention, invalidation, promotion, inclusion/exclusion, deletion, and handoff mechanics are owned by `../PROJECT-RULES.md`.
 
 
-The user's local Git repository remains the review/validation/final-commit surface while Drive Current owns approved uncommitted work. An active review candidate may temporarily advance through R2+ without each unapproved revision being written back to Drive. Explicit user approval freezes the candidate; that exact approved state must then be promoted to Drive Current, read back, reconciled, and validated before dependent work or commit staging. Current review, correction, promotion, commit, and closeout mechanics are owned by `../PROJECT-RULES.md`.
+The user's local Git repository remains the review/validation/final-commit surface while Drive Current owns approved uncommitted durable repository work. An active review candidate may advance through R1/R2+ and receive slice/candidate acceptance without production/source promotion into Drive Current. The promotion boundary is **Local Final Approval / Commit Candidate Approval**: the exact frozen candidate is then promoted/read back/verified in Drive Current, durable repository documentation needed to describe the landing state is reconciled, and a fresh Final Local ZIP plus explicit Commit Preview is handed to the user. After the user lands that candidate in GitHub and the commit/CI/Pages scope is verified, deployed actual-mobile validation remains open. Actual-mobile review is validation-first: if the landed Final Local state passes on the real device, no mobile correction ZIP, MOBILE-FINAL ZIP, or additional Git commit is created. Only an actual deployed-device defect that requires repository changes starts a bounded mobile correction candidate/promote-on-local-final cycle against the new GitHub baseline; a final mobile correction package exists only when such a correction is ready to commit. Actual-Mobile Final Approval then closes the Build Unit; routine closeout should not require an additional bookkeeping/documentation commit because durable docs should have traveled with the relevant product commit. Current review, correction, promotion, commit-preview, mobile-validation, and closeout mechanics are owned by `../PROJECT-RULES.md`.
 
 
-Review-cycle lineage must remain deterministic enough to prove starting authority, immutable R1 identity/hash, cumulative candidate corrections, changed/deleted scope, approval/validation state, approved-candidate promotion, and final landed GitHub identity; exact operational tracking belongs to `../PROJECT-RULES.md`, Live Working State, and the active temporary Guide audit/workstream traceability owner.
+Review-cycle lineage must remain deterministic enough to prove starting authority, immutable R1 identity/hash, cumulative candidate corrections, changed/deleted scope, approval/validation state, approved-candidate promotion, and final landed GitHub identity; exact detailed tracking belongs to the external active audit/workstream record under `../PROJECT-RULES.md`, while Live Working State keeps the compact project-level pointer/resume.
 
 
 Routine safety comes from stable authority, complete Drive working state, bounded ownership, targeted validation, exact package identity, changed/deletion-set comparison, and post-write verification. Full-tree reconstruction is reserved for real drift/invalidation.
@@ -270,7 +270,7 @@ Documentation structure is deliberately lean: `DECISIONS.md` indexes six domain 
 **Tradeoff / risk:** Maintaining a complete Drive tree can make initial population/large refreshes more expensive with current connector capabilities. Candidate-package iteration adds a temporary second state, so it is tightly bounded to one active review cycle: R1 is immutable, cumulative corrections are recorded, obsolete candidates are disposable, and any authority/scope drift invalidates the cycle. Drive remains the approved-uncommitted owner, and approved candidates must be promoted/read back before progression.
 
 
-**Implementation history:** D068 was implemented and validated during the workflow consolidation that landed at GitHub commit `4e982d84ab6207efacfafe4fa92682046c6240cb`. Current operational workstream/resume status belongs to Live Working State and the active workstream; `ROADMAP.md` owns product order/future direction. This decision records the durable authority model rather than acting as a mutable status owner.
+**Implementation history:** D068 was implemented and validated during the workflow consolidation that landed at GitHub commit `4e982d84ab6207efacfafe4fa92682046c6240cb`. Current project-level resume status belongs to Live Working State; detailed active Build Unit traceability belongs to the external temporary audit/workstream record; `ROADMAP.md` owns product order/future direction. This decision records the durable authority model rather than acting as a mutable status owner.
 
 
 **Deferred trigger:** Revisit representation only if real operation demonstrates the full-tree model itself is materially unworkable. Any future authority-model change requires an explicit new decision.
@@ -279,31 +279,34 @@ Documentation structure is deliberately lean: `DECISIONS.md` indexes six domain 
 **Canonical owners:** D068 and D070 preserve durable workflow/governance rationale; `../PROJECT-RULES.md` owns current procedure; root `AGENTS.md` is a routing layer only. D062 remains historical/superseded.
 
 
-# D070 – Live Working State Sole Operational Continuity and Repository Working State Retirement
+# D070 – Live Working State Project Resume and External Active Workstream Continuity
 
 
-**Decision:** Retire repository `docs/WORKING_STATE.md`. The external **Live Working State** is the single operational continuity/exact-resume surface for FCC.
+**Decision:** Repository `docs/WORKING_STATE.md` remains retired. The external **Live Working State** is the single project-level operational resume/index for FCC, while one external temporary active audit/workstream record may own detailed continuity for the current Build Unit. Neither is repository authority.
 
 
-Live Working State owns the active workstream/review-cycle identity, GitHub/Drive lineage needed to resume safely, current approval/validation/defect state, important live constraints, and the exact next action. It also acts as the **live-decision safety net**: the assistant has authority to capture a material live-chat decision or constraint immediately when losing it before the next approval gate would create continuity risk.
+Live Working State owns the active Build Unit/workstream identity, GitHub/Drive lineage needed to resume safely, material approval/validation state, current candidate pointer, and exact next action. It stays compact and points to the detailed active audit when one exists rather than duplicating its decision register.
 
 
-Immediate capture does **not** make an unapproved item approved. The live record must preserve state such as **PENDING APPROVAL**, **APPROVED — PENDING DURABLE RECONCILIATION**, or reconciled. Once approved durable meaning is written into the correct repository owner, superseded live detail is compacted rather than retained as append-only history.
+The external active audit/workstream record owns the current Build Unit's exact approved decision text, findings and dispositions, slice/checkpoint status, candidate revision lineage, and unresolved discussion state. Approved decisions are captured when made; end-of-chat consolidation verifies coverage and resume state but does not reconstruct or paraphrase approved decisions as a substitute for the operative text.
 
 
-No second repository state/resume mirror is maintained. The current startup/preflight sequence is owned by `../PROJECT-RULES.md`; Live Working State remains the single operational continuity/exact-resume surface.
+Immediate continuity capture does **not** turn discussion into approval. Unresolved material may be recorded as `OPEN`/`PENDING`, and ordinary approvals default to `APPROVED / REVISION ALLOWED` unless the user explicitly locks them. Ambiguous approvals are clarified or confirmed before they are recorded as approved.
 
 
-Durable meaning continues to belong to its semantic owner. `ACTIVE-CHANGE-LEDGER.md` remains the formal repository owner of material non-closed cross-workstream carry-forward. `ROADMAP.md` owns product order/future direction. Git/CHANGELOG own landed history. Live Working State is operational continuity, not a substitute durable decision archive.
+The active audit is operational-only: it lives outside `Working Source/Current`, is excluded from review ZIPs, and is never committed to Git. At final Build Unit reconciliation, its durable decisions/carry-forward are mapped to the correct repository owners, then the temporary record is retired/deleted once no required meaning would be lost.
 
 
-**Reason:** The retired `docs/WORKING_STATE.md` duplicated Live Working State, created a second synchronization surface, accumulated closed execution history, and developed severe transport/blank-line bloat. The duplicate state file added approval-gate cost and contradiction risk without owning unique durable semantics.
+No second **repository** state/resume mirror is maintained. The current startup/preflight sequence is owned by `../PROJECT-RULES.md`; Live Working State remains the one project-level continuation entrypoint, which then directs the next chat to the active external audit and applicable durable owners.
 
 
-**Implementation requirement:** retirement of `docs/WORKING_STATE.md` must occur only as one coherent governance refactor that preserves all valid current procedure in `../PROJECT-RULES.md`, updates active references, and makes Repository Integrity prohibit the retired path from returning.
+Durable meaning continues to belong to its semantic owner. `ACTIVE-CHANGE-LEDGER.md` remains the repository owner of material non-closed cross-workstream carry-forward. `ROADMAP.md` owns product order/future direction. Git/CHANGELOG own landed history. Operational records preserve continuity but do not replace durable canonical owners.
 
 
-**Supersedes:** D038. D068 remains approved except where D070 narrows/replaces its former repository-continuity wording.
+**Reason:** A single compact project resume avoids the duplicate-repository-state failure that caused the retired `docs/WORKING_STATE.md` to bloat, while a separate external Build Unit record prevents abrupt chat limits from losing exact decisions or forcing expensive full canonical documentation gates after every approval. Keeping the temporary record outside the repo also prevents working-process artifacts from polluting Git history or review ZIPs.
 
 
-**Canonical owners:** D070; `../PROJECT-RULES.md`; root `AGENTS.md` as router; `../ARCHITECTURE.md`; `../PROJECT.md`; `../ROADMAP.md`; `../ACTIVE-CHANGE-LEDGER.md`; Repository Integrity validator; external Live Working State.
+**Supersedes/refines:** D038 remains superseded. D068 remains approved with the durable/operational separation above. This refinement replaces D070's former claim that Live Working State itself must contain all detailed operational continuity.
+
+
+**Canonical owners:** D070; `../PROJECT-RULES.md`; root `AGENTS.md` as router; `../ARCHITECTURE.md`; `../PROJECT.md`; `../ROADMAP.md`; `../ACTIVE-CHANGE-LEDGER.md`; Repository Integrity validator; external Live Working State; external active Build Unit audit/workstream record when one exists.

@@ -2,10 +2,10 @@
 
 
 **Document:** ROADMAP.md  
-**Document Revision:** 0.12.4  
+**Document Revision:** 0.12.7  
 **Document Status:** Approved  
 **Role:** Product milestone order and future direction  
-**Last Updated:** 2026-09-27
+**Last Updated:** 2026-09-28
 
 
 # Purpose
@@ -86,24 +86,10 @@ Approved constraints:
 **Roadmap status:** FCC 47 has now resequenced the remaining Version 1 work from this dependency model. The historical milestone sections below remain useful domain records, but their old numbering is not the current dependency or execution order.
 
 
-# FCC 47 — Approved Knowledge-First Roadmap Resequencing
+# FCC 47 — Knowledge-First Roadmap Foundation — Historical / Superseded Sequencing
 
 
-FCC 47 is **CLOSED / APPROVED WITH REVISIONS ALLOWED**. The remaining Version 1 roadmap is intentionally knowledge-first: Freshwater Fishing Companion should provide a coherent, polished, cross-linked Reference Knowledge experience before the User Knowledge Platform becomes the primary development focus.
-
-
-## Phase 1 — Reference Knowledge Completion
-
-
-Complete the following in this order:
-
-
-1. **Fish Guide** — targeted baseline/UX review. Preserve approved Fish facts, media, relationships, and identification guidance unless a real defect is found. Establish the shared Guide-family baseline through a component-by-component and element-by-element Fish review rather than treating current Fish presentation as automatically final. Approve and validate bounded Fish surfaces before their equivalent-element rules are carried forward into later Guides.
-2. **Knots Guide** — user-facing rename from Knots; complete the known relationship/card/detail refinements and validated visual-instruction path. The approved Version 1 baseline pairs FCC canonical numbered `tyingSteps[]` with one standardized external **101Knots Visual Guide** destination for each of the 10 canonical Knots. 101Knots remains external-link-only under the approved rights contract. Locally hosted/project-owned Knot instructional media is not a Knots Version 1 closure requirement and may be reconsidered only through the later UX-009 quality/rights/mobile/accessibility gate.
-3. **Tackle Guide** — top-level Dashboard Guide for the canonical Tackle Reference domain. It remains distinct from My Tackle and from commercial shopping/catalog scope.
-4. **Technique Guide** — top-level Dashboard Guide for the canonical Technique domain and reusable How to Fish It knowledge.
-5. **Rig Guide** — targeted complete-library refinement after the Knot, Tackle, and Technique destinations are established. Include known What You Need, relationship/navigation, Knot/Technique presentation, semantic-ownership, information-hierarchy, and mobile/detail-density findings.
-6. **Reference Knowledge cohesion review** — verify cross-guide navigation, equivalent-element consistency, responsive behavior, and desktop/mobile usability before moving the primary development focus deeper into persistent User Knowledge.
+FCC 47 is **CLOSED / APPROVED WITH REVISIONS ALLOWED** and remains the durable origin of the knowledge-first principle: Freshwater Fishing Companion should establish a coherent, polished, cross-linked Reference Knowledge experience before persistent User Knowledge becomes the primary product focus. Its former detailed Phase 1–5 execution ordering is superseded by FCC 49J-K below. Git history preserves the prior ordering; this document now maintains only the current active sequence.
 
 
 **Conditions remains supporting/contextual Reference Knowledge rather than a top-level Guide.** Present Condition explanations through consuming surfaces such as Recommendation inputs, Rig/Technique context, rationale, and contextual help rather than creating a standalone Conditions Guide.
@@ -115,34 +101,62 @@ Complete the following in this order:
 The Guides should look like members of the same application family without forcing unlike information into one universal card template. Equivalent elements across Guides should match in appearance and behavior; domain-specific information may use intentional Guide-specific visual language. Fish Guide establishes the starting baseline only after its recurring elements have been deliberately reviewed and the relevant section has passed approval/validation. That validated rule set is then carried forward and challenged as each later Guide is reviewed.
 
 
-## Phase 2 — Authentication-Independent User Tools
+# FCC 49J-K — Approved Remaining Version 1 Build Order
 
 
-After Reference Knowledge Completion, FCC may continue useful workflows that do not require synchronized User Knowledge, including **Choose a Setup / Start Here**, **Starter Tackle Box**, and **What Should I Throw — Best Overall**, subject to their already-approved functional/commercial dependencies. Local saved plan/progress state remains permitted where already approved.
+FCC 49J-K is **APPROVED WITH REVISIONS ALLOWED**. The order below is the canonical remaining Version 1 execution target. It is deliberately dependency-aware rather than a claim that every earlier item is a technical prerequisite for every later item. The sequence balances hard prerequisites, product completeness, avoidance of temporary/duplicate persistence, downstream-unlock value, and the goal of making FCC feel progressively usable rather than perpetually unfinished.
 
 
-## Phase 3 — Minimum User Knowledge Platform
+The user explicitly reserves the right to revise this sequence. A future reorder is valid when a concrete dependency, implementation constraint, safety/recovery requirement, or materially better product-value reason is demonstrated and the roadmap is explicitly revised. Do not reopen the order merely because an older milestone number or historical phase placed work differently.
 
 
-Build the minimum vertical identity/authentication, secure persistence, and required record/revision semantics needed for authoritative synchronized user-created state. Do not front-load every recovery/Data Management surface merely because later User Knowledge will need them.
+## Canonical Build Order
 
 
-## Phase 4 — Persistent Personal Capabilities
+1. **Rig Guide — Full Guide Audit & Refinement** — complete the existing high-value Rig surface first. It already helps anglers fish now, and its audit exposes downstream Tackle, Technique, Reel Setup, relationship, semantic-ownership, navigation, density, and RIG-001 issues while those dependencies can still be corrected cleanly.
+2. **Technique — Knowledge/Data Audit + Technique Guide Build** — audit the existing canonical Technique knowledge/relationships/source organization, then build the user-facing reusable **How to Fish It** Guide in the same domain workstream. This closes a major instructional gap and prevents Recommendation from depending on a domain whose user-facing teaching surface is unfinished.
+3. **Regulations — Full Guide Audit & Refinement** — refine the already-usable 48-state official-resource gateway so the major existing Reference Knowledge surfaces are polished before attention shifts toward mostly new features. Preserve its approved legal-resource/provenance boundary.
+4. **Tackle Guide — Knowledge Audit + Guide Build** — finish the remaining major Reference Knowledge destination. Canonical Tackle is already an important dependency of Rig **What You Need**; the Guide gives those concepts a proper browse/search/recognition/learning destination while remaining distinct from My Tackle ownership and commercial catalog scope.
+5. **Reference Knowledge Cohesion Review** — after Fish, Knots, Rig, Technique, Regulations, and Tackle are established, verify equivalent-element consistency, cross-guide navigation, terminology, search/browse behavior, responsive presentation, and missing destinations as one connected learning system. This is intentionally before the primary Recommendation/User Knowledge expansion so later features consume a stable Reference Knowledge layer.
+6. **What Should I Throw? — Recommendation Decision Knowledge + Best Overall** — build the inventory-independent recommendation path while its Reference Knowledge inputs are stable. Best Overall does not require authentication or My Tackle; building it here provides a major useful capability before account-dependent work and establishes the ranking/context engine later reused by Best Currently Available.
+7. **User Account, Profile & Sync Foundation** — build the real Version 1 account platform, not a temporary/minimal substitute: Firebase Authentication, approved email/password + Google Sign-In, the deliberately small FCC Profile surface, Cloud Firestore profile-scoped persistence, authenticated security rules, FCC repository/data-access abstraction, supported offline/sync behavior, record/schema/revision/conflict/deletion foundations, and required auth/sync status handling. Authentication is not a technical prerequisite for every remaining independent feature, but after Best Overall it becomes the next dependency-critical foundation for nearly every remaining persistent or personalized workflow. **GATE-012 repository disaster-recovery/reconstruction must close before the project proceeds into meaningful irreplaceable User Knowledge.**
+8. **Persistent My Tackle** — make My Tackle the sole authoritative persistent ownership source on the real profile/sync substrate. Complete the applicable Version 1 management, canonical mapping, quantity/variant, import/export, and My-Tackle-specific protection requirements so later tools derive ownership rather than inventing parallel checklists or local-only ownership state.
+9. **Choose a Setup / Start Here** — the advisor may technically run anonymously, but the complete Version 1 experience is intentionally scheduled after account/My Tackle persistence. A selected Fishing Setup can then be saved to the profile and explicit owned rod/reel/line can hand off directly to My Tackle instead of creating temporary local persistence that later requires migration/re-entry.
+10. **Starter Tackle Box** — likewise, anonymous guidance is technically possible, but durable progress should use canonical ownership. Build it after My Tackle so **Owned / Still Need / Acquired** can be derived from or explicitly written to My Tackle rather than maintained as a second inventory system. This also lets the feature behave as a purposeful Core-Rig coverage workflow instead of an isolated checklist.
+11. **Current Availability + Best Currently Available** — build after both required sides exist: the Best Overall recommendation engine and authoritative My Tackle/current-availability semantics. This closes the personalized Recommendation path without conflating ownership with temporary availability.
+12. **Catch Log** — implement on the now-proven User Knowledge substrate. Catch Log technically requires the profile/persistence foundation but not My Tackle or Recommendation; it is intentionally later because it records history rather than unlocking the primary learn → rig → choose → fish workflow.
+13. **Global Search** — implement once the major searchable Reference Knowledge and principal destinations are stable. Global Search is not account-dependent, but it is intentionally later because it does not unlock downstream persistence/recommendation capabilities and benefits from a stable route/entity universe.
+14. **Appearance — Themes / Light / Dark / System** — finish supported production Theme/Color Scheme variants after functional surfaces are largely stable to avoid repeated styling rework. Appearance remains device-local and independent of account state, but it must be stabilized before the final UX/mobile audit.
+15. **Favorites — Final Keep / Change / Remove Decision** — decide only after Search, Recommendation, My Tackle, Catch Log/history, and connected knowledge exist. Those real workflows provide evidence for whether Favorites adds value, should be narrowed/replaced, or should be removed.
+16. **Repository / Source Quality Audit** — perform the late engineering/convergence audit after most functional source has stabilized so it can address actual final ownership boundaries, obsolete code/docs, JavaScript organization, module boundaries, validation coverage, and maintainability without repeated re-auditing during active feature construction.
+17. **Final Version 1 UX / Desktop / Mobile / Design Audit** — final release-oriented experience pass after functional scope and supported Appearance variants are stable. Verify cross-site consistency, responsive/mobile behavior, accessibility, visual identity/flair, Dashboard/header/brand treatment, and the remaining UX-009 requirements, including actual-mobile validation. Also verify subsection separation: any section that contains multiple subsections must provide a clear visual divider between adjacent subsection groups, with the final treatment validated across desktop and mobile.
 
 
-Use that substrate for persistent **My Tackle**, authoritative **Current Availability**, **Best Currently Available**, Catch Log, and other synchronized personal capabilities according to their approved dependencies. My Tackle portability/import/export/backup-restore and full-profile recovery retain their separately approved completion/release requirements.
+## Why Authentication Is Not Immediately After the Guides
 
 
-## Phase 5 — Remaining Independent / Completion Work
+It is **not** correct to state that nothing after the Guides is reasonably usable without authentication. **What Should I Throw? — Best Overall** remains deliberately inventory-independent and is useful without an account. Global Search and Appearance are also technically account-independent.
 
 
-Complete the remaining independent and release-oriented work, including **Global Search**, **Appearance — Theme + Color Scheme**, the **Favorites** final decision, **GATE-012** disaster recovery/reconstruction, **V1-REPO-AUDIT**, and the final **UX-009** site-wide desktop/mobile design audit. Independent work may move earlier when useful, but it must not displace Phase 1's approved Reference Knowledge priority without an explicit roadmap revision.
+The controlling product rule is narrower: **after Reference Knowledge and Best Overall are complete, User Account/Profile/Sync becomes the next dependency-critical foundation for the remaining persistent and personalized product path.** Building it at that point avoids disposable browser-only ownership/progress models, duplicate persistence authorities, and later user re-entry/migration for Choose a Setup and Starter Tackle Box.
+
+
+The existing architecture permission for anonymous/device-local planning remains valid; this roadmap intentionally chooses not to rely on that permission as the primary Version 1 persistence path for Setup/Tackle Box completion. Reference Knowledge and anonymous guidance remain usable while signed out. Durable profile-owned User Knowledge requires the approved authenticated profile.
+
+
+## Cross-Cutting Completion Constraints
+
+
+- **GATE-012 disaster recovery/reconstruction** is not postponed to the final release if meaningful irreplaceable User Knowledge would begin earlier. It must close before Persistent My Tackle begins storing such data.
+- **Full-profile backup/restore and Data Management** remain Version 1 completion requirements under the approved User Data architecture. They should be implemented/validated against real persistent domain schemas when those exist rather than as speculative empty infrastructure, and must close before final Version 1 release.
+- **My Tackle portability/import/export/backup-restore** remains part of the complete Version 1 My Tackle package under its existing requirements.
+- Independent work may move earlier only through an explicit roadmap revision when doing so has a concrete benefit and does not violate the dependency/safety rationale above.
 
 
 # Canonical Product Sequence
 
 
-The canonical **remaining Version 1 execution order** is the FCC 47 phase sequence above. The numbered milestone/domain sections below are retained for scope, history, and domain-specific planning context; they no longer define dependency or execution order.
+The canonical **remaining Version 1 execution order** is FCC 49J-K above. Historical milestone/domain sections below remain useful for scope and domain-specific planning context; they do not independently define current execution order.
 
 
 # 1. Knots Guide — Completed Core Milestone / Targeted V1 Completion Pass Approved

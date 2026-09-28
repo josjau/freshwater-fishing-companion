@@ -1,12 +1,12 @@
-﻿# Freshwater Fishing Companion — Active Change Ledger
+# Freshwater Fishing Companion — Active Change Ledger
 
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.151  
+**Document Revision:** 1.10.153  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
 **Reconciliation Baseline:** GitHub `main` commit `e14402dc0fdb4505ebf27ae7d150b9a74d7fa19e`  
-**Last Updated:** 2026-09-27
+**Last Updated:** 2026-09-28
 
 
 # Purpose
@@ -18,7 +18,7 @@ This ledger keeps every material non-closed project item visible until it receiv
 It does not duplicate full design reasoning. Each entry identifies the current status, the controlling detailed owner/gate, and the required next action.
 
 
-GitHub `main` owns committed formal state. Google Drive `Working Source/Current` owns all approved uncommitted repository changes against its recorded GitHub baseline. The external Live Working State is the sole operational continuity/exact-resume surface and live-decision safety net; this ledger owns material non-closed carry-forward across workstreams and is not a duplicate resume/state mirror.
+GitHub `main` owns committed formal state. Google Drive `Working Source/Current` owns all approved uncommitted repository changes against its recorded GitHub baseline. The external Live Working State is the sole project-level resume/index. Detailed current Build Unit decisions, findings, candidate lineage, validation state, and unresolved discussion may live in one named external temporary workstream/audit outside the repository tree; this ledger owns material non-closed carry-forward across workstreams and is not a duplicate resume/state mirror.
 
 
 # Status Vocabulary
@@ -54,7 +54,7 @@ No active workflow-transition item remains. The 2026-08-25 Workflow Performance 
 | UX-005 | DEFERRED TO NAMED GATE | Compact detail density outside Rigs | Domain-specific review | Reuse only after the target domain demonstrates the Rig density pattern fits. |
 | UX-006 | PARKED | Technically verified local Rig visual library | Rig/media future quality gate | Use licensed/verified/manual/reference-grounded media only; generated finished/build-step Rig imagery remains prohibited. |
 | UX-008 | DEFERRED TO NAMED GATE | Package-era source headers such as `REPLACEMENT` | Next deliberate edit to an affected permanent source file | Remove obsolete package-era header language when that file is next intentionally edited; do not create unrelated source churn solely for comments. |
-| UX-009 | REQUIRED | Version 1 full site-wide design/mobile audit | `V1-DESIGN-AUDIT.md` | After Version 1 functional scope is sufficiently stable, execute the component-first site-wide audit, including the recorded Rig `useCases[]` species-applicability ownership defect under D056. Treat the approved native directional-glyph grammar and shared `font-weight: 800` navigation-arrow rule as established standards to verify, not redesign. Reconcile remaining inconsistent visual/link/container semantics and duplicated relationship semantics. Explicitly re-evaluate local/offline Knot visual tying instruction: search again for acceptable rights-compatible instructional media and/or prototype project-owned stepped visuals/controlled animation; implement only if the result passes accuracy, quality, rights, mobile, accessibility, and instructional-usefulness gates. If it does not, retain the functional written Knot Guide and document the disposition. Require PASS on an actual mobile device before Version 1 design is complete. |
+| UX-009 | REQUIRED | Version 1 full site-wide design/mobile audit | `V1-DESIGN-AUDIT.md` | After Version 1 functional scope is sufficiently stable, execute the component-first site-wide audit, including the recorded Rig `useCases[]` species-applicability ownership defect under D056. Treat the approved native directional-glyph grammar and shared `font-weight: 800` navigation-arrow rule as established standards to verify, not redesign. Reconcile remaining inconsistent visual/link/container semantics and duplicated relationship semantics. Explicitly audit multi-subsection separation: every section with multiple subsections must provide a visible divider between adjacent subsection groups. User review identified Fish Guide and Knots Guide as currently lacking the separator; Rig Guide is the observed comparison example. Verify/correct all applicable Guide and non-Guide surfaces during UX-009 rather than limiting the check to those three. Explicitly re-evaluate local/offline Knot visual tying instruction: search again for acceptable rights-compatible instructional media and/or prototype project-owned stepped visuals/controlled animation; implement only if the result passes accuracy, quality, rights, mobile, accessibility, and instructional-usefulness gates. If it does not, retain the functional written Knot Guide and document the disposition. Require PASS on an actual mobile device before Version 1 design is complete. |
 | UX-010 | DEFERRED TO NAMED GATE | My Tackle / Recommendation visual recognition examples | `V1-DESIGN-AUDIT.md` Section 15; settled GATE-007 + What Should I Throw / Recommendation UX | Hook and Weight remain minimum required recognition scope. FCC 37 additionally approved the **Variant Recognition Gallery** as a UX candidate for applicable Tackle/Lure-Bait concepts across Rig -> What You Need, Tackle/Lure Index, and detail/reference surfaces. Resolve exact Media ownership/roles, interaction, accessibility, mobile density, and whether the shared pattern extends to other families during the named UX gate. No gallery mechanic or commercial-catalog expansion is preselected. |
 
 
