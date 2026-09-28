@@ -2,7 +2,7 @@
 
 
 **Document:** UI_STANDARD.md  
-**Document Revision:** 1.3.24  
+**Document Revision:** 1.3.25  
 **Document Status:** Approved  
 **Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard  
 **Decision Baseline:** D015, D020-D022, D030-D032, D035, D042, D046-D048, D050-D052, D061, D063  
@@ -317,7 +317,7 @@ Checkpoint 154.3 is **APPROVED / refinement allowed**. **Habitat & Water** is an
 Inside the expanded section, keep **Habitat** and **Common Waters** semantically separate. Habitat answers what physical environments the Fish commonly uses; Common Waters answers what kinds of waterbodies the Fish is commonly found in. Against the approved canonical Habitat target, render only applicable Habitat dimension groups: **Cover**, **Water Zone**, **Water Movement**, **Structure**, and **Bottom / Substrate**. Omit empty group headings. Keep waterbody types in their own simpler Common Waters group, including the approved `Creek / Stream` normalization when the later Fish migration lands.
 
 
-Short Habitat and waterbody values may remain compact chips/tags as a data-presentation treatment, but Reference interaction follows the shared FCC convention: place an immediately adjacent **`ⓘ`** control beside each value that opens contextual/reference information, and keep the value/chip itself non-Reference-interactive unless it separately owns another approved behavior. The visible `ⓘ` stays visually close to the value while its independent hit/focus area may be enlarged without overlapping the value or neighboring controls. Fish UX-011 must reconcile the current whole-chip interaction to this shared convention and browser-test the final resting, hover, focus-visible, pressed, touch, and focus-return behavior.
+Fish Habitat and Common Waters values use plain-text labels rather than chip/button chrome. Reference interaction follows the shared FCC convention: place an immediately adjacent **`ⓘ`** control beside each value that opens contextual/reference information, and keep the value itself non-Reference-interactive unless it separately owns another approved behavior. The visible `ⓘ` stays visually close to the value while its independent hit/focus area may be enlarged invisibly without overlapping the value or neighboring controls. Fish UX-011 establishes this as the shared detail-page Reference-info treatment and browser-tests resting, hover, focus-visible, pressed, touch, and focus-return behavior.
 
 
 Do not use Fish Habitat associations to imply preference strength, ranking, current conditions, or Recommendation suitability. The approved Habitat↔Condition and waterbody bridges establish environmental equivalence only. The UI should use neutral wording such as **Habitat** / **Common Waters**, not stronger unsupported labels such as Best Habitat or Preferred Conditions.
@@ -629,6 +629,22 @@ Do not overload the identity header with technical metadata.
 
 
 A domain may omit, rename, combine, or add sections when its information genuinely requires a different treatment. Material changes to architecture/ownership/workflow meaning still require explicit approval.
+
+
+## Shared contextual Reference-info control
+
+
+Card-ID/detail surfaces use one shared adjacent **`ⓘ`** visual language for contextual Reference/help controls. The approved Fish UX-011 treatment is the baseline: the referenced text remains visually plain/non-button content; the `ⓘ` sits immediately beside that text; the control has no resting chip/circle/background chrome; and any enlarged touch target is invisible and must not overlap the referenced text or neighboring controls. Hover may change the glyph color but must not paint a large touch-target background. Keyboard focus remains explicit and visible, and closing the contextual Reference restores focus to the originating `ⓘ`.
+
+The default shared glyph/accent treatment is the standard FCC warm accent. Workflow-owned surfaces may use their established semantic workflow color while preserving the same geometry, adjacency, invisible hit-target behavior, and focus semantics. Reel Setup is the current approved workflow-color exception. Page-specific overrides must not create different control sizes, spacing systems, painted touch targets, or alternate glyph treatments for the same Reference-info function.
+
+
+## Nested subsection heading hierarchy
+
+
+When one detail section or expander contains multiple named internal groups, those group titles use a shared **nested subsection** treatment rather than repeating the parent section/expander header language. Nested subsection titles are smaller than the parent, uppercase, use the restrained shared accent treatment, and include a separator line directly beneath the title before the subsection content. This pattern establishes visual hierarchy without implying another disclosure level.
+
+Apply the shared nested-subsection treatment to equivalent structures such as **Habitat / Common Waters** inside Fish `Habitat & Water`, **Common Tasks / Rigs that use this Knot** inside Knot `Where You'll Use It`, and the grouped **Best For / Good Conditions / Techniques** content on Rig detail. Do not apply it mechanically to every `h3`/`h4`; it is for sibling named groups within one larger section/disclosure. Empty subsection headings remain omitted.
 
 
 # Related Knowledge / Contextual Navigation

@@ -353,7 +353,6 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 }
 .rig-at-a-glance__group + .rig-at-a-glance__group {
     padding-top: var(--space-4);
-    border-top: 1px solid var(--border);
 }
 .detail-view--rig-compact .tag-list { gap: var(--space-1) var(--space-2); }
 .detail-view--rig-compact .tag-list li { display: inline-flex; min-height: 32px; align-items: center; padding: 3px 8px; font-size: .86rem; }
@@ -567,16 +566,57 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .rig-component-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
 .rig-component-item { min-width: 0; padding: 4px var(--space-2); border: 1px solid var(--border); border-radius: var(--radius-small); background: var(--surface-elevated); }
 .rig-component-item:has(.rig-component-owned__checkbox:checked) { border-color: color-mix(in srgb, var(--success) 65%, var(--border)); }
-.rig-component-item__row { display: grid; grid-template-columns: minmax(0, 1fr) 40px auto; align-items: center; gap: var(--space-1); min-height: 44px; }
+.rig-component-item__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--space-2); min-height: 44px; }
 .rig-component-item__required,
 .detail-list__optional { color: var(--text-subtle); font-size: .76rem; font-weight: 700; white-space: nowrap; }
 .rig-component-owned { display: flex; min-width: 0; min-height: 44px; align-items: center; gap: var(--space-2); color: var(--text); font-size: .9rem; font-weight: 700; cursor: pointer; }
 .rig-component-owned__name { min-width: 0; overflow-wrap: anywhere; }
 .rig-component-owned__checkbox { width: 1.15rem; height: 1.15rem; flex: 0 0 auto; margin: 0; accent-color: var(--success); }
 .rig-component-owned__checkbox:focus-visible { outline: 3px solid var(--accent-tackle); outline-offset: 3px; }
-.reference-info-button { display: inline-grid; min-height: 40px; width: 40px; place-items: center; margin: 0; padding: 0; border: 0; border-radius: 999px; background: transparent; color: var(--accent); font-size: 1rem; cursor: pointer; }
-.reference-info-button:hover { background: color-mix(in srgb, var(--accent-tackle) 14%, transparent); color: var(--accent-hover); }
-.reference-info-button:focus-visible { outline: 3px solid var(--accent-tackle); outline-offset: 1px; }
+.rig-component-reference-cluster { display: inline-flex; min-width: 0; align-items: center; gap: 3px; width: fit-content; max-width: 100%; }
+.reference-info-button {
+    position: relative;
+    display: inline-grid;
+    min-height: 0;
+    width: auto;
+    height: auto;
+    flex: 0 0 auto;
+    place-items: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--accent-hover);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.reference-info-button::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 32px;
+    height: 36px;
+    transform: translateY(-50%);
+    content: "";
+}
+.reference-info-button:hover { background: transparent; color: var(--text); }
+.reference-info-button:focus-visible { border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 3px; background: transparent; }
+
+.detail-subsection-heading {
+    display: block;
+    margin: 0 0 var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 62%, var(--border));
+    color: color-mix(in srgb, var(--accent) 72%, white 28%);
+    font-size: .82rem;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+.detail-section h3.detail-subsection-heading { margin: 0 0 var(--space-2); }
 
 
 /* =========================================================
@@ -765,15 +805,7 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .knot-empty-context { color: var(--text-muted); font-size: .9rem; }
 .knot-usage-group { display: grid; gap: var(--space-2); }
 .knot-usage-group + .knot-usage-group { margin-top: var(--space-3); }
-.knot-usage-group__label {
-    padding-bottom: var(--space-2);
-    border-bottom: 1px solid color-mix(in srgb, var(--accent-knots) 62%, var(--border));
-    color: color-mix(in srgb, var(--accent-knots) 72%, white 28%);
-    font-size: .82rem;
-    font-weight: 800;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-}
+.knot-usage-group__label { width: 100%; }
 .knot-usage-link-list { display: grid; gap: 0; }
 .knot-usage-link {
     display: flex;
@@ -822,10 +854,8 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .knot-line-compatibility-list { display: grid; justify-items: start; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
 .knot-line-compatibility-item { display: inline-flex; min-height: 40px; align-items: center; gap: 0; color: var(--text); font-size: .9rem; font-weight: 700; line-height: 1.3; }
 .knot-line-compatibility__label { display: inline; }
-.knot-line-compatibility__pairing-arrow { display: inline-block; flex: 0 0 auto; margin-inline: var(--space-1); color: var(--text-muted); font-size: 1.3em; font-weight: 900; line-height: 1; }
-.knot-line-reference-button { width: 40px; min-height: 40px; margin-left: 2px; place-items: center start; padding-left: 5px; color: var(--text-muted); }
-.knot-line-reference-button:hover { background: color-mix(in srgb, var(--surface-hover) 72%, transparent); color: var(--text); }
-.knot-line-reference-button:focus-visible { outline-color: var(--accent); }
+.knot-line-compatibility__pairing-arrow { display: inline-block; flex: 0 0 auto; margin: 0 var(--space-1) 0 var(--space-3); color: var(--text-muted); font-size: 1.3em; font-weight: 900; line-height: 1; }
+.knot-line-reference-button { margin-left: 3px; }
 
 .internal-knowledge-link-list,
 .rig-knot-link-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
@@ -1258,16 +1288,34 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 }
 
 .fish-habitat-groups { display: grid; gap: var(--space-4); }
-.fish-habitat-group h4,
-.fish-rig-recommendation-group h4,
 .fish-learn-more h4 { margin: 0 0 var(--space-2); color: var(--text); font-size: .92rem; }
 .fish-habitat-group .tag-list { gap: var(--space-1) var(--space-2); }
 .fish-habitat-group .tag-list li { padding: 0; font-size: .86rem; }
+.fish-habitat-group .fish-reference-tag-list {
+    align-items: center;
+    row-gap: var(--space-1);
+    column-gap: var(--space-4);
+}
+.fish-habitat-group .fish-reference-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+}
+.fish-reference-tag__value {
+    display: inline;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    line-height: 1.35;
+}
+.fish-reference-info-button { color: var(--accent-hover); }
 
 .fish-rig-recommendation-group + .fish-rig-recommendation-group {
     margin-top: var(--space-4);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--border);
 }
 .fish-rig-recommendation-list { display: grid; gap: var(--space-2); }
 .fish-rig-recommendation {
@@ -2057,7 +2105,7 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .reel-setup-reference-prompt {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: 3px;
     width: fit-content;
     max-width: 100%;
     margin: var(--space-3) 0;
@@ -2066,17 +2114,9 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
     font-weight: 700;
 }
 .reel-setup-reference-prompt__label { line-height: 1.3; }
-.reel-setup-reference-prompt .reference-info-button {
-    width: 44px;
-    min-height: 44px;
-    flex: 0 0 44px;
-    border: 0;
-    background: transparent;
-    color: color-mix(in srgb, var(--accent-workflow) 86%, white 14%);
-    font-size: 1.3rem;
-}
-.reel-setup-reference-prompt .reference-info-button:hover { background: color-mix(in srgb, var(--accent-workflow) 12%, transparent); color: var(--text); }
-.reel-setup-reference-prompt .reference-info-button:focus-visible { outline-color: var(--accent-workflow); background: color-mix(in srgb, var(--accent-workflow) 12%, transparent); }
+.reel-setup-reference-prompt .reference-info-button { color: color-mix(in srgb, var(--accent-workflow) 86%, white 14%); }
+.reel-setup-reference-prompt .reference-info-button:hover { background: transparent; color: var(--text); }
+.reel-setup-reference-prompt .reference-info-button:focus-visible { outline-color: var(--accent-workflow); background: transparent; }
 
 .reel-setup-primary-action {
     display: flex;

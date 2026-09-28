@@ -676,15 +676,15 @@ const FISH_INTRINSIC_REFERENCE_DETAILS = Object.freeze({
 
 function buildFishConditionTagList(items) {
     if (!Array.isArray(items) || items.length === 0) return "";
-    return `<ul class="tag-list tag-list--conditions">${items.map((item) => {
+    return `<ul class="tag-list tag-list--conditions fish-reference-tag-list">${items.map((item) => {
         const conditionId = FISH_CONDITION_REFERENCE_IDS[item];
-        if (conditionId) {
-            return `<li><button class="condition-tag-button" type="button" data-condition-id="${conditionId}" aria-label="Learn about ${item}">${item}</button></li>`;
-        }
-        if (FISH_INTRINSIC_REFERENCE_DETAILS[item]) {
-            return `<li><button class="condition-tag-button" type="button" data-fish-habitat-reference="${item}" aria-label="Learn about ${item}">${item}</button></li>`;
-        }
-        return `<li>${item}</li>`;
+        const referenceButton = conditionId
+            ? `<button class="reference-info-button fish-reference-info-button" type="button" data-condition-id="${conditionId}" aria-label="Open ${item} reference"><span aria-hidden="true">ⓘ</span></button>`
+            : FISH_INTRINSIC_REFERENCE_DETAILS[item]
+                ? `<button class="reference-info-button fish-reference-info-button" type="button" data-fish-habitat-reference="${item}" aria-label="Open ${item} reference"><span aria-hidden="true">ⓘ</span></button>`
+                : "";
+
+        return `<li class="fish-reference-tag"><span class="fish-reference-tag__value">${item}</span>${referenceButton}</li>`;
     }).join("")}</ul>`;
 }
 
@@ -806,8 +806,8 @@ function renderFishDetail(appMain, detailConfig) {
             "Habitat & Water",
             `
                 <div class="fish-habitat-groups">
-                    ${hasHabitat ? `<section class="fish-habitat-group"><h4>Habitat</h4>${buildFishConditionTagList(record.habitatTags)}</section>` : ""}
-                    ${hasWaters ? `<section class="fish-habitat-group"><h4>Common Waters</h4>${buildFishConditionTagList(record.waterbodyTypes)}</section>` : ""}
+                    ${hasHabitat ? `<section class="fish-habitat-group"><h4 class="detail-subsection-heading">Habitat</h4>${buildFishConditionTagList(record.habitatTags)}</section>` : ""}
+                    ${hasWaters ? `<section class="fish-habitat-group"><h4 class="detail-subsection-heading">Common Waters</h4>${buildFishConditionTagList(record.waterbodyTypes)}</section>` : ""}
                 </div>
             `,
             expandedDisclosureIds.has("habitat")
@@ -822,7 +822,7 @@ function renderFishDetail(appMain, detailConfig) {
     const buildRigGroup = (title, records, showHeading = true) => records.length
         ? `
             <section class="fish-rig-recommendation-group">
-                ${showHeading ? `<h4>${title}</h4>` : ""}
+                ${showHeading ? `<h4 class="detail-subsection-heading">${title}</h4>` : ""}
                 <div class="fish-rig-recommendation-list">
                     ${records.map((item) => `
                         <button class="fish-rig-recommendation" type="button"
@@ -1339,7 +1339,7 @@ function buildKnotUsageMarkup(record, usageContexts) {
     const taskMarkup = taskContexts.length
         ? `
             <div class="knot-usage-group">
-                <span class="knot-usage-group__label">Common tasks</span>
+                <span class="detail-subsection-heading knot-usage-group__label">Common tasks</span>
                 <div class="knot-usage-link-list">
                     ${taskContexts.map((task) => `
                         <button class="knot-usage-link" type="button" data-knot-task-link-id="${task.taskId}">
@@ -1383,7 +1383,7 @@ function buildKnotUsageMarkup(record, usageContexts) {
     return `
         ${taskMarkup}
         <div class="knot-usage-group knot-usage-group--rigs">
-            <span class="knot-usage-group__label">Rigs that use this Knot</span>
+            <span class="detail-subsection-heading knot-usage-group__label">Rigs that use this Knot</span>
             <ul class="knot-usage-list compact-link-list" id="${rigListId}">${rigItems}</ul>
             ${toggleMarkup}
         </div>
@@ -2610,23 +2610,25 @@ function renderInstructionDetail(appMain, detailConfig) {
         return `
             <li class="rig-component-item">
                 <div class="rig-component-item__row">
-                    <label class="rig-component-owned" for="${checkboxId}">
-                        <input
-                            id="${checkboxId}"
-                            class="rig-component-owned__checkbox"
-                            type="checkbox"
-                            data-component-owned-id="${component.tackleId}"
-                            data-readiness-selection-id="${component.tackleId}"
-                            ${isOwned ? "checked" : ""}
-                        >
-                        <span class="rig-component-owned__name">${componentName}</span>
-                    </label>
-                    <button
-                        class="reference-info-button"
-                        type="button"
-                        data-reference-id="${component.tackleId}"
-                        aria-label="Identification help for ${componentName}"
-                    ><span aria-hidden="true">&#9432;</span></button>
+                    <div class="rig-component-reference-cluster">
+                        <label class="rig-component-owned" for="${checkboxId}">
+                            <input
+                                id="${checkboxId}"
+                                class="rig-component-owned__checkbox"
+                                type="checkbox"
+                                data-component-owned-id="${component.tackleId}"
+                                data-readiness-selection-id="${component.tackleId}"
+                                ${isOwned ? "checked" : ""}
+                            >
+                            <span class="rig-component-owned__name">${componentName}</span>
+                        </label>
+                        <button
+                            class="reference-info-button"
+                            type="button"
+                            data-reference-id="${component.tackleId}"
+                            aria-label="Identification help for ${componentName}"
+                        ><span aria-hidden="true">&#9432;</span></button>
+                    </div>
                     ${component.required
                         ? '<span class="rig-component-item__required">Required tackle</span>'
                         : '<span class="detail-list__optional">Optional tackle</span>'}
@@ -2647,23 +2649,25 @@ function renderInstructionDetail(appMain, detailConfig) {
         return `
             <li class="rig-component-item" data-lure-bait-requirement="${requirement.lureBaitId}">
                 <div class="rig-component-item__row">
-                    <label class="rig-component-owned" for="${checkboxId}">
-                        <input
-                            id="${checkboxId}"
-                            class="rig-component-owned__checkbox"
-                            type="checkbox"
-                            data-lure-bait-owned-id="${requirement.lureBaitId}"
-                            data-readiness-selection-id="${selectionId}"
-                            ${isAvailable ? "checked" : ""}
-                        >
-                        <span class="rig-component-owned__name">${displayName}</span>
-                    </label>
-                    <button
-                        class="reference-info-button"
-                        type="button"
-                        data-lure-bait-reference-id="${requirement.lureBaitId}"
-                        aria-label="Identification help for ${displayName}"
-                    ><span aria-hidden="true">&#9432;</span></button>
+                    <div class="rig-component-reference-cluster">
+                        <label class="rig-component-owned" for="${checkboxId}">
+                            <input
+                                id="${checkboxId}"
+                                class="rig-component-owned__checkbox"
+                                type="checkbox"
+                                data-lure-bait-owned-id="${requirement.lureBaitId}"
+                                data-readiness-selection-id="${selectionId}"
+                                ${isAvailable ? "checked" : ""}
+                            >
+                            <span class="rig-component-owned__name">${displayName}</span>
+                        </label>
+                        <button
+                            class="reference-info-button"
+                            type="button"
+                            data-lure-bait-reference-id="${requirement.lureBaitId}"
+                            aria-label="Identification help for ${displayName}"
+                        ><span aria-hidden="true">&#9432;</span></button>
+                    </div>
                     ${requirement.required
                         ? '<span class="rig-component-item__required">Required lure/bait</span>'
                         : '<span class="detail-list__optional">Optional lure/bait</span>'}
@@ -2684,9 +2688,9 @@ function renderInstructionDetail(appMain, detailConfig) {
             </header>
             ${configurationMarkup}
             <section class="detail-section rig-at-a-glance">
-                <div class="rig-at-a-glance__group"><h3>Best For</h3>${buildTagList(record.useCases)}</div>
-                <div class="rig-at-a-glance__group"><h3>Good Conditions</h3>${buildConditionTagList(record.conditionTags)}</div>
-                <div class="rig-at-a-glance__group"><h3>Techniques</h3>${buildRigTechniqueTagList(record.id, selectedConfiguration?.lureBaitId ?? null)}</div>
+                <div class="rig-at-a-glance__group"><h3 class="detail-subsection-heading">Best For</h3>${buildTagList(record.useCases)}</div>
+                <div class="rig-at-a-glance__group"><h3 class="detail-subsection-heading">Good Conditions</h3>${buildConditionTagList(record.conditionTags)}</div>
+                <div class="rig-at-a-glance__group"><h3 class="detail-subsection-heading">Techniques</h3>${buildRigTechniqueTagList(record.id, selectedConfiguration?.lureBaitId ?? null)}</div>
             </section>
             <section class="detail-section rig-requirements-section">
                 <div class="rig-requirements-section__header">
