@@ -1,11 +1,11 @@
-# Freshwater Fishing Companion — Active Change Ledger
+﻿# Freshwater Fishing Companion — Active Change Ledger
 
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.150  
+**Document Revision:** 1.10.151  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** GitHub `main` commit `f111fe4aa3c07fa87818c2221d6e56d28c973903`  
+**Reconciliation Baseline:** GitHub `main` commit `e14402dc0fdb4505ebf27ae7d150b9a74d7fa19e`  
 **Last Updated:** 2026-09-27
 
 
@@ -56,7 +56,6 @@ No active workflow-transition item remains. The 2026-08-25 Workflow Performance 
 | UX-008 | DEFERRED TO NAMED GATE | Package-era source headers such as `REPLACEMENT` | Next deliberate edit to an affected permanent source file | Remove obsolete package-era header language when that file is next intentionally edited; do not create unrelated source churn solely for comments. |
 | UX-009 | REQUIRED | Version 1 full site-wide design/mobile audit | `V1-DESIGN-AUDIT.md` | After Version 1 functional scope is sufficiently stable, execute the component-first site-wide audit, including the recorded Rig `useCases[]` species-applicability ownership defect under D056. Treat the approved native directional-glyph grammar and shared `font-weight: 800` navigation-arrow rule as established standards to verify, not redesign. Reconcile remaining inconsistent visual/link/container semantics and duplicated relationship semantics. Explicitly re-evaluate local/offline Knot visual tying instruction: search again for acceptable rights-compatible instructional media and/or prototype project-owned stepped visuals/controlled animation; implement only if the result passes accuracy, quality, rights, mobile, accessibility, and instructional-usefulness gates. If it does not, retain the functional written Knot Guide and document the disposition. Require PASS on an actual mobile device before Version 1 design is complete. |
 | UX-010 | DEFERRED TO NAMED GATE | My Tackle / Recommendation visual recognition examples | `V1-DESIGN-AUDIT.md` Section 15; settled GATE-007 + What Should I Throw / Recommendation UX | Hook and Weight remain minimum required recognition scope. FCC 37 additionally approved the **Variant Recognition Gallery** as a UX candidate for applicable Tackle/Lure-Bait concepts across Rig -> What You Need, Tackle/Lure Index, and detail/reference surfaces. Resolve exact Media ownership/roles, interaction, accessibility, mobile density, and whether the shared pattern extends to other families during the named UX gate. No gallery mechanic or commercial-catalog expansion is preselected. |
-| UX-011 | APPROVED / IN REVIEW — AFTER KNOTS | Fish post-Knots Habitat/Common Waters + shared detail-component correction | Fish checkpoints 152–156.3; `UI_STANDARD.md`; transitional Fish Habitat-to-Condition bridge | Before substantive Tackle Guide work, complete the bounded Fish post-closeout correction and its review-discovered shared-component convergence: use plain-text Habitat/Common Waters values with adjacent `ⓘ`; preserve/re-check the current 35-Condition integration baseline (13 canonical Condition mappings + 3 intentional Fish-specific contextual references: `Cold Water`, `Current`, `Mud`; 0 unmapped; 0 broken unless a real defect is found); standardize the Fish-established Reference-info control across existing Card-ID/detail surfaces, with Reel Setup retaining only its workflow-blue semantic color exception; and standardize nested subsection headings/separator lines for multi-group detail sections/expanders (including Fish Habitat/Common Waters, Knot Common Tasks/Rigs, and Rig Best For/Good Conditions/Techniques). Fish-specific decorative imagery/visual flair remains deferred to final UX-009 / `V1-DESIGN-AUDIT.md`. Permanent Habitat migration remains out of scope absent separate approval. Finish with focused desktop/mobile browser and regression validation. |
 
 
 **Knot visual-instruction carry-forward:** historical `PARK-003` is superseded as a pure Parking Lot item. The Knot Guide remains functionally complete; local/offline visual tying instruction is now an explicit UX-009 evaluation/refinement requirement, with implementation conditional on acceptable instructional quality, accuracy, rights/provenance, mobile behavior, and accessibility.

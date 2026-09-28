@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.8.4  
+**Document Revision:** 3.8.5  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-09-27
@@ -9,6 +9,18 @@
 # Purpose
 
 This is a curated project changelog, not a second Working State, current-state/resume surface, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to the external Live Working State; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-09-27 — UX-011 Fish Post-Knots Shared Detail Correction — Closed
+
+Production commit `e14402dc0fdb4505ebf27ae7d150b9a74d7fa19e` — `UX 011 Fixes`
+
+- Closed the bounded post-Knots Fish correction with user-approved desktop/mobile browser review. Fish Habitat/Common Waters now use plain-text values with an immediately adjacent contextual `ⓘ`; the referenced text itself is non-Reference-interactive, the visible touch-target chrome is removed, and focus returns to the originating info control after Reference close.
+- Re-verified the current Fish/Condition bridge without data migration: 35 active Conditions, 13 canonical Fish Habitat/Common Waters mappings plus 3 intentional Fish-specific contextual references (`Cold Water`, `Current`, `Mud`), with 0 unmapped values and 0 broken targets. The permanent Habitat migration remains separately deferred.
+- Promoted the Fish-established `ⓘ` treatment into the shared Card-ID/detail-page standard. Knots and Rig/Tackle detail references now use the same geometry/adjacency behavior; Reel Setup retains only its workflow-blue semantic-color exception.
+- Standardized nested subsection hierarchy for multi-group detail sections/expanders: smaller uppercase restrained-accent subsection titles with a separator line beneath the title. Current applications include Fish Habitat/Common Waters and Primary Choices/Alternatives, Knot Common Tasks/Rigs that use this Knot, and Rig Best For/Good Conditions/Techniques.
+- Fish-specific decorative imagery/visual flair remains deferred to the final UX-009 / Version 1 Design Audit after functional build completion.
+- Final production scope from `b216f48b134681624040b1412169cea3e0fd5607` is exactly 4 modified paths: `view-renderer.js`, `forest-journal.css`, `docs/UI_STANDARD.md`, and `docs/ACTIVE-CHANGE-LEDGER.md`. Repository Integrity run `36363711839` and Pages run `36363711366` passed. Approved production bytes are promoted to Drive Current and converge with GitHub.
+- UX-011 is terminal and is removed from the active ledger. The next substantive Reference Knowledge phase is Tackle Guide.
 
 # 2026-09-27 — FCC 49 Knots Guide V1 Refinement + Build — Closed
 
