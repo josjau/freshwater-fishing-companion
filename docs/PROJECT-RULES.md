@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Project Rules
 
 **Document:** PROJECT-RULES.md  
-**Document Revision:** 1.2.3  
+**Document Revision:** 1.2.4  
 **Document Status:** Approved  
 **Role:** Single canonical current FCC procedural owner  
 **Last Updated:** 2026-09-28
@@ -144,7 +144,9 @@ Do not substitute a runtime `file_...` handle, the full `file_uri` object, a sig
 
 - Ordinary slice approval, review finding acceptance, or candidate acceptance does **not** promote production/source files into Drive Current. It means the accepted change remains in the cumulative review candidate and its exact decision/candidate lineage is recorded in the external active audit.
 - **Local Final Approval / Commit Candidate Approval** is the promotion boundary. It occurs when the user explicitly indicates that the locally reviewed Build Unit is ready for the final handoff/commit candidate (for example, asks for the final ZIP).
-- At Local Final Approval, freeze the exact candidate and regenerate a fresh Final Local package named `FCC-<workstream>-<Build-Unit>-FINAL-LOCAL.zip` even when its product bytes are identical to the last review ZIP. Promote those exact candidate repository files into Drive Current, read back/hash-verify the promoted files against the frozen candidate, and reconcile the durable repository documentation that must accurately describe the state about to land.
+- Before freezing or regenerating Final Local, run a **Final Local preflight** against every directly applicable validator/check that can reasonably be executed against the current candidate in the available environment. Include changed validator/tool expectations and documentation-governance/reference checks when applicable. Any check that cannot be run before user handoff must be named explicitly in the handoff; do not treat it as passed.
+- A failing Final Local preflight keeps the candidate in recovery and blocks package regeneration/readiness. Do not hand the user a newly rebuilt Final Local merely to discover a defect that the current environment could have detected first.
+- At Local Final Approval, after the Final Local preflight passes, freeze the exact candidate and regenerate a fresh Final Local package named `FCC-<workstream>-<Build-Unit>-FINAL-LOCAL.zip` even when its product bytes are identical to the last review ZIP. Promote those exact candidate repository files into Drive Current, read back/hash-verify the promoted files against the frozen candidate, and reconcile the durable repository documentation that must accurately describe the state about to land.
 - The Final Local ZIP contains the complete intended commit payload for the Build Unit: final production/source/data/media/configuration files, changed validators/tools, and all durable repository documentation that must land with that implementation. The external active audit/workstream record and all other operational-only records remain excluded.
 - Files that must be deleted are listed separately as explicit cleanup instructions because ZIP extraction does not remove obsolete local files; deletion-only paths are not represented by placeholder files inside the ZIP.
 - The Final Local handoff must include a **Commit Preview** identifying at minimum: expected GitHub baseline SHA; modified paths; added paths; deleted paths/cleanup instructions; production/source paths; durable documentation paths; and the proposed commit message. If the handoff scope changes after the preview, revise the preview before commit authorization/use.
@@ -162,6 +164,8 @@ Do not substitute a runtime `file_...` handle, the full `file_uri` object, a sig
 - Structural/documentation changes must reconcile affected validators and CI expectations.
 - User-facing work requires the applicable desktop/mobile/browser/device validation before final closure. If that validation is absent, report the result as partial/unvalidated rather than PASS.
 - Required validation failure blocks closure.
+- When required validation fails, record the failure once in the active audit/workstream, inspect the complete affected validation surface before rebuilding, collect all reasonably related defects/corrections into one bounded recovery batch, rerun the affected validation, and only then rebuild/reissue the candidate. Do not regenerate a package after each individual defect unless a later independent correction legitimately changes the candidate after that sweep.
+- Detailed recovery findings belong in the active audit/workstream. Update Live Working State only when material gate state, candidate pointer, GitHub/Drive lineage, or exact resume changes; do not rewrite it for each micro-correction.
 - Closeout is verification/convergence, not a broad audit. Do not reopen completed or unrelated work merely because closeout is occurring.
 - Never report `CLOSED / PASS` while applicable writes, readbacks, validation, authorization, commit/push, CI, retirement, or state reconciliation remain incomplete.
 - Before final closeout, ensure canonical owners, Live Working State, GitHub, Drive Current, retirement/deletion dispositions, and any active carry-forward agree.

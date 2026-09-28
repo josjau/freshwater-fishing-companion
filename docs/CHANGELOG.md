@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.8.9  
+**Document Revision:** 3.8.10  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
 **Last Updated:** 2026-09-28
@@ -9,6 +9,12 @@
 # Purpose
 
 This is a curated project changelog, not a second Working State, current-state/resume surface, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to the external Live Working State; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-09-28 — Workflow Closeout Efficiency Refinement
+
+- Added a mandatory **Final Local preflight**: run every directly applicable validator/check that can reasonably execute against the candidate before freezing or reissuing `FINAL-LOCAL`; explicitly disclose any user-side-only validation rather than treating it as passed.
+- Standardized validation recovery as one bounded affected-surface sweep: record the failure once, collect related corrections, rerun affected validation, and only then rebuild/reissue the candidate. Detailed defect recovery remains in the external audit/workstream; Live Working State changes only on material state transitions.
+- Assigned repository text line-ending policy to `V1-REPO-AUDIT` so the later Repository / Source Quality Audit deliberately resolves CRLF/LF normalization across GitHub, Drive, and the supported Windows/local-Git workflow instead of repeatedly rediscovering transport-only divergence during closeout.
 
 # 2026-09-28 — FCC 49J-K Roadmap + Build/Review Workflow Standardization
 
