@@ -588,8 +588,8 @@ function renderFishGuideLanding(appMain, config) {
                 <h2 id="fish-guide-title">Fish Guide</h2>
                 <p>Identify freshwater Fish, compare similar species, or browse by group.</p>
             </header>
-            <form class="search-form section-search-form fish-guide-search-form" data-fish-search-form>
-                <label class="search-label" for="fish-guide-search-input">Search Fish</label>
+            <form class="search-form section-search-form fish-guide-search-form" data-fish-search-form aria-labelledby="fish-guide-search-title">
+                <h3 class="guide-search-heading" id="fish-guide-search-title"><label class="search-label" for="fish-guide-search-input">Search Fish</label></h3>
                 <p class="search-help" id="fish-guide-search-help">Search by common name, alias, or group.</p>
                 ${buildSearchControlsMarkup("fish-guide-search-input", config.searchPlaceholder, {
                     showSubmitButton: false,
@@ -1244,6 +1244,51 @@ function renderKnotGuideLanding(appMain, config) {
         `;
     }).join("");
 
+    const reelSetupLines = Array.isArray(config.reelSetupContextLines)
+        ? config.reelSetupContextLines.filter((line) => Array.isArray(line) && line.length > 0)
+        : [];
+    const workflowMarkup = reelSetupLines.length > 0
+        ? `
+            <section class="knot-guide-section knot-guide-workflow-section" aria-label="Current Reel Setup">
+                <div class="guide-reel-setup-context knot-reel-setup-context">
+                    <h3>Current Reel Setup</h3>
+                    <div class="guide-reel-setup-context__summary">
+                        ${reelSetupLines.map((line) => `
+                            <p class="guide-reel-setup-context__line">${line.join('<span class="guide-reel-setup-context__separator" aria-hidden="true">·</span>')}</p>
+                        `).join("")}
+                    </div>
+                    <div class="reel-setup-utilities">
+                        <button class="reel-setup-utility-button" type="button" data-knot-reel-setup data-knot-reel-setup-update>Update Setup</button>
+                        <button class="reel-setup-utility-button" type="button" data-knot-reel-setup-clear>Clear Setup</button>
+                    </div>
+                    <dialog class="reel-setup-clear-dialog" data-knot-reel-setup-clear-dialog aria-labelledby="knot-reel-setup-clear-title">
+                        <div class="reel-setup-clear-dialog__body">
+                            <h3 class="reel-setup-clear-dialog__title" id="knot-reel-setup-clear-title">Clear your Reel Setup?</h3>
+                            <p>Your current Reel Setup will be removed until you complete Get Your Reel Ready again.</p>
+                        </div>
+                        <div class="reel-setup-clear-dialog__actions">
+                            <button class="reel-setup-clear-dialog__button reel-setup-clear-dialog__cancel" type="button" data-knot-reel-setup-clear-cancel>Cancel</button>
+                            <button class="reel-setup-clear-dialog__button reel-setup-clear-dialog__confirm" type="button" data-knot-reel-setup-clear-confirm>Clear Setup</button>
+                        </div>
+                    </dialog>
+                </div>
+            </section>
+        `
+        : `
+            <section class="knot-guide-section knot-guide-workflow-section" aria-label="Reel setup workflow">
+                <div class="dashboard-grid knot-guide-workflow-grid">
+                    <button class="dashboard-card dashboard-card--workflow knot-reel-ready-card" type="button" data-knot-reel-setup>
+                        <span class="guide-workflow-eyebrow">Guided Setup</span>
+                        <span class="guide-card__heading-row">
+                            <span class="dashboard-card__title">Get Your Reel Ready</span>
+                            <span class="dashboard-card__action dashboard-card__action--link">Start Setup <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                        </span>
+                        <span class="dashboard-card__description">Walk through reel type, line choice, line weight, equipment markings, and spool setup step by step.</span>
+                    </button>
+                </div>
+            </section>
+        `;
+
     appMain.innerHTML = `
         <section class="content-view knot-guide-view" aria-labelledby="knots-title">
             ${buildPageNavigationMarkup()}
@@ -1253,8 +1298,8 @@ function renderKnotGuideLanding(appMain, config) {
                     <p>Learn the essential fishing knots for attaching line to your reel, tying on hooks and lures, connecting lines, and making loop connections.</p>
                 </div>
             </header>
-            <form class="search-form section-search-form knot-guide-search-form" data-knot-search-form>
-                <label class="search-label" for="knot-guide-search-input">Search Knots</label>
+            <form class="search-form section-search-form knot-guide-search-form" data-knot-search-form aria-labelledby="knot-guide-search-title">
+                <h3 class="guide-search-heading" id="knot-guide-search-title"><label class="search-label" for="knot-guide-search-input">Search Knots</label></h3>
                 <p class="search-help" id="knot-guide-search-help">Search by Knot name, task, line type, or difficulty.</p>
                 ${buildSearchControlsMarkup("knot-guide-search-input", "Try Palomar, tie hook, braid, or beginner", {
                     showSubmitButton: false,
@@ -1266,25 +1311,14 @@ function renderKnotGuideLanding(appMain, config) {
                 <div class="search-results" data-search-results></div>
             </div>
             <div class="knot-guide-content" data-knot-guide-content>
-                <section class="knot-guide-section knot-guide-workflow-section" aria-label="Reel setup workflow">
-                    <div class="dashboard-grid knot-guide-workflow-grid">
-                        <button class="dashboard-card dashboard-card--workflow knot-reel-ready-card" type="button" data-knot-reel-setup>
-                            <span class="guide-workflow-eyebrow">Guided Setup</span>
-                            <span class="guide-card__heading-row">
-                                <span class="dashboard-card__title">Get Your Reel Ready</span>
-                                <span class="dashboard-card__action dashboard-card__action--link">Start Setup <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
-                            </span>
-                            <span class="dashboard-card__description">Walk through reel type, line choice, line weight, equipment markings, and spool setup step by step.</span>
-                        </button>
-                    </div>
-                </section>
+${workflowMarkup}
                 <section class="knot-guide-section knot-guide-section--tasks" aria-labelledby="knot-task-title">
                     <h3 id="knot-task-title">What Are You Trying to Do?</h3>
                     <p>Choose the connection or learning path that matches what you need right now.</p>
                     <div class="dashboard-grid knot-task-grid">${taskMarkup}</div>
                 </section>
                 <section class="knot-guide-section knot-guide-section--collections" aria-labelledby="knot-collection-title">
-                    <h3 id="knot-collection-title">All Knots</h3>
+                    <h3 id="knot-collection-title">Browse Knots</h3>
                     <div class="dashboard-grid knot-collection-grid">${collectionMarkup}</div>
                 </section>
             </div>
@@ -1322,6 +1356,23 @@ function renderKnotGuideLanding(appMain, config) {
 
     appMain.querySelector("[data-knot-reel-setup]")?.addEventListener("click", () => {
         config.onWorkflowSelect?.();
+    });
+    const reelSetupClearButton = appMain.querySelector("[data-knot-reel-setup-clear]");
+    const reelSetupClearDialog = appMain.querySelector("[data-knot-reel-setup-clear-dialog]");
+    reelSetupClearButton?.addEventListener("click", () => {
+        if (typeof reelSetupClearDialog?.showModal === "function") reelSetupClearDialog.showModal();
+    });
+    const restoreReelSetupClearFocus = () => {
+        requestAnimationFrame(() => reelSetupClearButton?.focus({ preventScroll: true }));
+    };
+    reelSetupClearDialog?.addEventListener("cancel", restoreReelSetupClearFocus);
+    appMain.querySelector("[data-knot-reel-setup-clear-cancel]")?.addEventListener("click", () => {
+        reelSetupClearDialog?.close();
+        restoreReelSetupClearFocus();
+    });
+    appMain.querySelector("[data-knot-reel-setup-clear-confirm]")?.addEventListener("click", () => {
+        reelSetupClearDialog?.close();
+        config.onWorkflowClear?.();
     });
     appMain.querySelectorAll("[data-knot-task-id]").forEach((card) => {
         card.addEventListener("click", () => config.onTaskSelect?.(card.dataset.knotTaskId));
@@ -2356,6 +2407,152 @@ function initializeReferenceLinks(appMain, options = {}) {
 
 
 /* ==========================================================
+   RIGS GUIDE — LANDING + SEARCH / BROWSE RESULT PRESENTATION
+   ========================================================== */
+
+function buildRigResultCardMarkup(rig) {
+    const isCore = isCoreRigRecord(rig);
+    const classification = `${isCore ? "Core Rig • " : ""}${rig.difficulty}`;
+
+    return `
+        <button class="search-result-card search-result-card--rig${isCore ? " search-result-card--core" : ""}" type="button" data-result-id="${rig.id}">
+            <span class="rig-result-card__classification">${classification}</span>
+            <span class="rig-result-card__heading-row">
+                <span class="search-result-card__title">${rig.name}</span>
+                <span class="search-result-card__action">View Rig <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+            </span>
+            <span class="search-result-card__summary">${rig.summary}</span>
+        </button>
+    `;
+}
+
+function renderRigSearchResults(appMain, records, resultConfig = {}) {
+    const resultsContainer = appMain?.querySelector("[data-search-results]");
+    const status = appMain?.querySelector("[data-search-status]");
+    if (!resultsContainer || !status) {
+        console.error("Rig search result containers were not created.");
+        return;
+    }
+
+    const query = String(resultConfig.query ?? "").trim();
+    const hasQuery = query.length > 0;
+    const resultRecords = Array.isArray(records) ? records : [];
+
+    if (resultRecords.length === 0) {
+        status.textContent = hasQuery
+            ? "No rigs found. Try another search."
+            : "No rigs are available in this collection.";
+        resultsContainer.innerHTML = "";
+        return;
+    }
+
+    const rigLabel = resultRecords.length === 1 ? "rig" : "rigs";
+    status.textContent = hasQuery
+        ? `${resultRecords.length} ${rigLabel} found`
+        : `${resultRecords.length} ${rigLabel}`;
+    resultsContainer.innerHTML = resultRecords.map(buildRigResultCardMarkup).join("");
+
+    if (typeof resultConfig.onResultSelect !== "function") return;
+    resultsContainer.querySelectorAll("[data-result-id]").forEach((resultCard) => {
+        resultCard.addEventListener("click", () => resultConfig.onResultSelect(resultCard.dataset.resultId));
+    });
+}
+
+function renderRigGuideLanding(appMain, config) {
+    if (!appMain || !config || !Array.isArray(config.cards)) {
+        console.error("A valid Rigs Guide landing configuration is required.");
+        return;
+    }
+
+    const browseMarkup = config.cards.map((card) => {
+        const className = [
+            "dashboard-card",
+            "guide-browse-card",
+            "rig-collection-card",
+            card.id === "browse-core-rigs" ? "rig-guide-core-card" : ""
+        ].filter(Boolean).join(" ");
+
+        return `
+            <button class="${className}" type="button" data-card-id="${card.id}" data-rig-card-id="${card.id}">
+                <span class="guide-card__heading-row">
+                    <span class="dashboard-card__title">${card.title}</span>
+                    <span class="dashboard-card__action dashboard-card__action--link">Browse <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                </span>
+                <span class="dashboard-card__description">${card.description}</span>
+            </button>
+        `;
+    }).join("");
+
+    appMain.innerHTML = `
+        <section class="content-view rig-guide-view" aria-labelledby="rig-guide-title">
+            ${buildPageNavigationMarkup()}
+            <header class="rig-guide-identity">
+                <h2 id="rig-guide-title">Rigs Guide</h2>
+                <p>${config.description}</p>
+            </header>
+            <form class="search-form section-search-form rig-guide-search-form" data-rig-search-form aria-labelledby="rig-guide-search-title">
+                <h3 class="guide-search-heading" id="rig-guide-search-title"><label class="search-label" for="rig-guide-search-input">Search Rigs</label></h3>
+                <p class="search-help" id="rig-guide-search-help">Search by Rig name, difficulty, use case, condition, or setup.</p>
+                ${buildSearchControlsMarkup("rig-guide-search-input", config.searchPlaceholder, {
+                    showSubmitButton: false,
+                    inputDescriptionId: "rig-guide-search-help"
+                })}
+            </form>
+            <div class="section-search-results" data-rig-search-region hidden>
+                <p class="search-status" data-search-status aria-live="polite"></p>
+                <div class="search-results" data-search-results></div>
+            </div>
+            <div class="rig-guide-content" data-rig-guide-content>
+                <div data-rig-reel-setup-slot></div>
+                <section class="rig-guide-section" aria-labelledby="rig-browse-title">
+                    <h3 id="rig-browse-title">Browse Rigs</h3>
+                    <div class="dashboard-grid rig-collection-grid">${browseMarkup}</div>
+                </section>
+            </div>
+        </section>
+    `;
+
+    initializeHomeNavigation(appMain);
+
+    const searchForm = appMain.querySelector("[data-rig-search-form]");
+    const searchInput = appMain.querySelector("#rig-guide-search-input");
+    const clearButton = appMain.querySelector("[data-search-clear]");
+    const searchRegion = appMain.querySelector("[data-rig-search-region]");
+    const guideContent = appMain.querySelector("[data-rig-guide-content]");
+    if (searchInput && typeof config.initialQuery === "string") searchInput.value = config.initialQuery;
+
+    const updateSearch = () => {
+        const query = searchInput?.value?.trim() ?? "";
+        config.onQueryChange?.(query);
+        const hasQuery = query.length > 0;
+        if (searchRegion) searchRegion.hidden = !hasQuery;
+        if (guideContent) guideContent.hidden = hasQuery;
+
+        if (!hasQuery) {
+            const status = appMain.querySelector("[data-search-status]");
+            const results = appMain.querySelector("[data-search-results]");
+            if (status) status.textContent = "";
+            if (results) results.innerHTML = "";
+            return;
+        }
+
+        config.onSearch?.(query);
+    };
+
+    initializeSearchControls(searchForm, searchInput, clearButton, updateSearch);
+    updateSearch();
+
+    appMain.querySelectorAll("[data-rig-card-id]").forEach((card) => {
+        card.addEventListener("click", () => config.onCardSelect?.(card.dataset.rigCardId));
+    });
+}
+
+/* ==========================================================
+   END RIGS GUIDE — LANDING + SEARCH / BROWSE RESULT PRESENTATION
+   ========================================================== */
+
+
+/* ==========================================================
    RIG GUIDE — KNOT APPLICATION PRESENTATION
    ========================================================== */
 function getKnotRecord(knotId) {
@@ -2449,15 +2646,12 @@ function buildRigKnotApplications(record) {
 function buildRigReferenceLinks(record) {
     if (!Array.isArray(record.referenceLinks) || record.referenceLinks.length === 0) return "";
     return `
-        <section class="detail-section detail-section--supporting rig-reference-section">
-            <h3>Verified References</h3>
-            <p class="rig-reference-intro">Use these external sources for additional technical cross-checking.</p>
-            <div class="rig-reference-links">
-                ${record.referenceLinks.map((reference) => `
-                    <a class="rig-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
-                `).join("")}
-            </div>
-        </section>
+        <p class="rig-reference-intro">Use these external sources for additional technical cross-checking.</p>
+        <div class="rig-reference-links">
+            ${record.referenceLinks.map((reference) => `
+                <a class="rig-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
+            `).join("")}
+        </div>
     `;
 }
 
@@ -2552,6 +2746,43 @@ function buildConditionTagList(items) {
 }
 
 
+function buildRigDetailDisclosureMarkup(disclosureId, title, bodyMarkup, expanded = false) {
+    const panelId = `rig-detail-${disclosureId}-panel`;
+    return `
+        <div class="rig-detail-row rig-detail-row--disclosure">
+            <button class="rig-detail-row__trigger" type="button"
+                data-rig-disclosure-id="${disclosureId}"
+                aria-expanded="${expanded ? "true" : "false"}"
+                aria-controls="${panelId}">
+                <span>${title}</span>
+                <span class="rig-detail-row__state" aria-hidden="true">${expanded ? "▴" : "▾"}</span>
+            </button>
+            <div class="rig-detail-row__panel" id="${panelId}" data-rig-disclosure-panel="${disclosureId}"${expanded ? "" : " hidden"}>
+                ${bodyMarkup}
+            </div>
+        </div>
+    `;
+}
+
+function initializeRigDetailDisclosures(appMain, detailConfig, expandedDisclosureIds = []) {
+    const expanded = new Set(expandedDisclosureIds);
+    appMain.querySelectorAll("[data-rig-disclosure-id]").forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+            const disclosureId = trigger.dataset.rigDisclosureId;
+            const panel = appMain.querySelector(`[data-rig-disclosure-panel="${disclosureId}"]`);
+            if (!disclosureId || !panel) return;
+            const nextExpanded = trigger.getAttribute("aria-expanded") !== "true";
+            trigger.setAttribute("aria-expanded", nextExpanded ? "true" : "false");
+            panel.hidden = !nextExpanded;
+            const stateCue = trigger.querySelector(".rig-detail-row__state");
+            if (stateCue) stateCue.textContent = nextExpanded ? "▴" : "▾";
+            if (nextExpanded) expanded.add(disclosureId);
+            else expanded.delete(disclosureId);
+            detailConfig.onDisclosureStateChange?.([...expanded]);
+        });
+    });
+}
+
 function renderInstructionDetail(appMain, detailConfig) {
     if (!appMain || !detailConfig?.record) {
         console.error("A valid instructional detail record is required.");
@@ -2569,23 +2800,33 @@ function renderInstructionDetail(appMain, detailConfig) {
             ...record,
             useCases: selectedConfiguration.useCases ?? record.useCases,
             conditionTags: selectedConfiguration.conditionTags ?? record.conditionTags,
-            referenceLinks: selectedConfiguration.referenceLinks,
-            componentRequirements: selectedConfiguration.componentRequirements,
-            lureBaitRequirements: selectedConfiguration.lureBaitRequirements,
-            knotApplications: selectedConfiguration.knotApplications,
-            assemblySteps: selectedConfiguration.assemblySteps,
-            setupNotes: selectedConfiguration.setupNotes,
-            commonMistakes: selectedConfiguration.commonMistakes,
+            referenceLinks: selectedConfiguration.referenceLinks ?? record.referenceLinks,
+            componentRequirements: selectedConfiguration.componentRequirements ?? record.componentRequirements,
+            lureBaitRequirements: selectedConfiguration.lureBaitRequirements ?? record.lureBaitRequirements,
+            knotApplications: selectedConfiguration.knotApplications ?? record.knotApplications,
+            assemblySteps: selectedConfiguration.assemblySteps ?? record.assemblySteps,
+            setupNotes: selectedConfiguration.setupNotes ?? record.setupNotes,
+            commonMistakes: selectedConfiguration.commonMistakes ?? record.commonMistakes,
             tutorialVideo: selectedConfiguration.tutorialVideo ?? null
         }
         : record;
     const componentRequirements = Array.isArray(effectiveRecord.componentRequirements) ? effectiveRecord.componentRequirements : [];
     const lureBaitRequirements = Array.isArray(effectiveRecord.lureBaitRequirements) ? effectiveRecord.lureBaitRequirements : [];
+    const safetyNotes = Array.isArray(effectiveRecord.safetyNotes) ? effectiveRecord.safetyNotes : [];
+    const setupNotes = Array.isArray(effectiveRecord.setupNotes) ? effectiveRecord.setupNotes : [];
+    const commonMistakes = Array.isArray(effectiveRecord.commonMistakes) ? effectiveRecord.commonMistakes : [];
+    const expandedDisclosureIds = Array.isArray(detailConfig.expandedDisclosureIds)
+        ? detailConfig.expandedDisclosureIds
+        : [];
+    const expanded = new Set(expandedDisclosureIds);
     const isCoreRig = isCoreRigRecord(record);
+    const reelSetupLines = Array.isArray(detailConfig.reelSetupContextLines)
+        ? detailConfig.reelSetupContextLines.filter((line) => Array.isArray(line) && line.length > 0)
+        : [];
     const configurationMarkup = configurations.length > 0 ? `
         <section class="detail-section rig-configuration-section">
             <div class="rig-configuration-control">
-                <label class="rig-configuration-control__label" for="rig-configuration-select">Setup Type / Lure Type</label>
+                <label class="rig-configuration-control__label" for="rig-configuration-select">Choose a Setup</label>
                 <div class="rig-configuration-control__select-shell">
                     <select class="rig-configuration-control__select" id="rig-configuration-select" data-rig-configuration-select>
                         ${configurations.map((configuration) => `
@@ -2597,10 +2838,31 @@ function renderInstructionDetail(appMain, detailConfig) {
             </div>
         </section>
     ` : "";
+    const reelSetupMarkup = reelSetupLines.length > 0
+        ? `
+            <aside class="rig-detail-reel-setup" aria-label="Current Reel Setup">
+                <p class="rig-detail-reel-setup__label">Current Reel Setup</p>
+                <div class="rig-detail-reel-setup__summary">
+                    ${reelSetupLines.map((line) => `
+                        <p class="rig-detail-reel-setup__line">${line.join('<span class="rig-detail-reel-setup__separator" aria-hidden="true">·</span>')}</p>
+                    `).join("")}
+                </div>
+            </aside>
+        `
+        : "";
+    const getQuantity = (requirement) => {
+        const quantity = Number(requirement?.quantity ?? 1);
+        return Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
+    };
+    const buildRequirementTypeLabel = (required, quantity) => {
+        const typeLabel = required ? "Required component" : "Optional component";
+        return quantity > 1 ? `${typeLabel} · Qty ${quantity}` : typeLabel;
+    };
     const componentsMarkup = componentRequirements.map((component) => {
         const tackleRecord = getTackleRecord(component.tackleId);
         const componentName = tackleRecord?.name ?? component.tackleId;
         const isOwned = selections[component.tackleId] === true;
+        const quantity = getQuantity(component);
         const checkboxId = `rig-component-owned-${record.id}-${selectedConfiguration?.id ?? "base"}-${component.tackleId}`;
 
         if (!tackleRecord) {
@@ -2629,9 +2891,7 @@ function renderInstructionDetail(appMain, detailConfig) {
                             aria-label="Identification help for ${componentName}"
                         ><span aria-hidden="true">&#9432;</span></button>
                     </div>
-                    ${component.required
-                        ? '<span class="rig-component-item__required">Required tackle</span>'
-                        : '<span class="detail-list__optional">Optional tackle</span>'}
+                    <span class="${component.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(component.required === true, quantity)}</span>
                 </div>
                 ${component.notes ? `<p>${component.notes}</p>` : ""}
             </li>
@@ -2642,6 +2902,7 @@ function renderInstructionDetail(appMain, detailConfig) {
         const displayName = lureBaitRecord?.name ?? requirement.lureBaitId;
         const selectionId = `lure-bait:${requirement.lureBaitId}`;
         const isAvailable = selections[selectionId] === true;
+        const quantity = getQuantity(requirement);
         const checkboxId = `rig-lure-bait-owned-${record.id}-${selectedConfiguration?.id ?? "base"}-${requirement.lureBaitId}`;
         if (!lureBaitRecord) {
             console.warn(`Canonical Lure/Bait record was not found: ${requirement.lureBaitId}`);
@@ -2668,50 +2929,96 @@ function renderInstructionDetail(appMain, detailConfig) {
                             aria-label="Identification help for ${displayName}"
                         ><span aria-hidden="true">&#9432;</span></button>
                     </div>
-                    ${requirement.required
-                        ? '<span class="rig-component-item__required">Required lure/bait</span>'
-                        : '<span class="detail-list__optional">Optional lure/bait</span>'}
+                    <span class="${requirement.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(requirement.required === true, quantity)}</span>
                 </div>
                 ${requirement.notes ? `<p>${requirement.notes}</p>` : ""}
             </li>
         `;
     }).join("");
+    const moreHelpMarkup = [
+        setupNotes.length > 0
+            ? buildRigDetailDisclosureMarkup(
+                "setup-notes",
+                "Setup Notes",
+                `<ul class="detail-list">${setupNotes.map((note) => `<li>${note}</li>`).join("")}</ul>`,
+                expanded.has("setup-notes")
+            )
+            : "",
+        commonMistakes.length > 0
+            ? buildRigDetailDisclosureMarkup(
+                "common-mistakes",
+                "Common Mistakes",
+                `<ul class="detail-list">${commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>`,
+                expanded.has("common-mistakes")
+            )
+            : ""
+    ].filter(Boolean).join("");
+    const referencesBodyMarkup = buildRigReferenceLinks(effectiveRecord);
+    const sourcesMarkup = referencesBodyMarkup
+        ? `
+            <section class="rig-detail-group rig-detail-group--sources" aria-label="Sources and references">
+                <div class="rig-detail-group__shell">
+                    ${buildRigDetailDisclosureMarkup(
+                        "sources",
+                        "Sources & References",
+                        referencesBodyMarkup,
+                        expanded.has("sources")
+                    )}
+                </div>
+            </section>
+        `
+        : "";
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--rig-compact" aria-labelledby="rig-detail-title">
             ${buildPageNavigationMarkup(detailConfig.parentLabel)}
-            <header class="detail-header${isCoreRig ? " detail-header--core" : ""}">
-                ${isCoreRig ? '<p class="detail-core-badge">Core Rig</p>' : ""}
-                <p class="detail-eyebrow">${record.difficulty}</p>
-                <h2 id="rig-detail-title">${record.name}</h2>
-                <p>${record.summary}</p>
+            <header class="detail-header rig-detail-header${isCoreRig ? " detail-header--core" : ""}${reelSetupMarkup ? " rig-detail-header--with-reel-setup" : ""}">
+                <div class="rig-detail-header__copy">
+                    ${isCoreRig ? '<p class="detail-core-badge">Core Rig</p>' : ""}
+                    <p class="detail-eyebrow">${record.difficulty}</p>
+                    <h2 id="rig-detail-title">${record.name}</h2>
+                    <p>${record.summary}</p>
+                </div>
+                ${reelSetupMarkup}
             </header>
             ${configurationMarkup}
-            <section class="detail-section rig-at-a-glance">
-                <div class="rig-at-a-glance__group"><h3 class="detail-subsection-heading">Best For</h3>${buildTagList(record.useCases)}</div>
-                <div class="rig-at-a-glance__group"><h3 class="detail-subsection-heading">Good Conditions</h3>${buildConditionTagList(record.conditionTags)}</div>
-                <div class="rig-at-a-glance__group"><h3 class="detail-subsection-heading">Techniques</h3>${buildRigTechniqueTagList(record.id, selectedConfiguration?.lureBaitId ?? null)}</div>
+            <section class="detail-section rig-at-a-glance" aria-labelledby="rig-at-a-glance-title">
+                <h3 id="rig-at-a-glance-title">At a Glance</h3>
+                <div class="rig-at-a-glance__grid">
+                    <div class="rig-at-a-glance__group"><h4 class="detail-subsection-heading">Best For</h4>${buildTagList(effectiveRecord.useCases)}</div>
+                    <div class="rig-at-a-glance__group"><h4 class="detail-subsection-heading">Good Conditions</h4>${buildConditionTagList(effectiveRecord.conditionTags)}</div>
+                    <div class="rig-at-a-glance__group"><h4 class="detail-subsection-heading">Techniques</h4>${buildRigTechniqueTagList(record.id, selectedConfiguration?.lureBaitId ?? null)}</div>
+                </div>
             </section>
             <section class="detail-section rig-requirements-section">
                 <div class="rig-requirements-section__header">
                     <div>
                         <h3>What You Need</h3>
-                        <p>Check physical tackle you have. Lure/Bait requirements are shown separately and are not yet persistent My Tackle ownership.</p>
+                        <p>Mark each component you have available for this setup right now. Optional components do not block readiness.</p>
                     </div>
                     <div class="readiness-status" data-readiness-status aria-live="polite"></div>
                 </div>
                 <ul class="rig-component-list">${lureBaitMarkup}${componentsMarkup}</ul>
             </section>
+            ${buildRigKnotApplications(effectiveRecord)}
+            ${safetyNotes.length > 0 ? `
+                <section class="detail-section detail-section--supporting detail-section--safety">
+                    <h3>Safety</h3>
+                    <ul class="detail-list">${safetyNotes.map((note) => `<li>${note}</li>`).join("")}</ul>
+                </section>
+            ` : ""}
             <section class="detail-section detail-section--build">
                 <h3>How to Build It</h3>
                 <ol class="detail-steps">${effectiveRecord.assemblySteps.map((step) => `<li>${step}</li>`).join("")}</ol>
             </section>
             ${buildRigTutorial(effectiveRecord)}
-            ${effectiveRecord.tutorialVideo ? "" : buildRigReferenceLinks(effectiveRecord)}
-            ${buildRigKnotApplications(effectiveRecord)}
-            <section class="detail-section detail-section--supporting"><h3>Setup Notes</h3><ul class="detail-list">${effectiveRecord.setupNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
-            <section class="detail-section detail-section--supporting"><h3>Common Mistakes</h3><ul class="detail-list">${effectiveRecord.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul></section>
-            <section class="detail-section detail-section--supporting detail-section--safety"><h3>Safety</h3><ul class="detail-list">${record.safetyNotes.map((note) => `<li>${note}</li>`).join("")}</ul></section>
+            ${moreHelpMarkup ? `
+                <section class="rig-detail-group rig-detail-group--more-help" aria-labelledby="rig-more-help-title">
+                    <h3 class="rig-detail-group__title" id="rig-more-help-title">More Help</h3>
+                    <div class="rig-detail-group__shell">${moreHelpMarkup}</div>
+                </section>
+            ` : ""}
+            ${sourcesMarkup}
         </article>
     `;
 
@@ -2719,41 +3026,38 @@ function renderInstructionDetail(appMain, detailConfig) {
         const checkboxes = Array.from(appMain.querySelectorAll("[data-readiness-selection-id]"));
         const isChecked = (selectionId) =>
             checkboxes.find((checkbox) => checkbox.dataset.readinessSelectionId === selectionId)?.checked === true;
+        const formatMissingName = (name, requirement) => {
+            const quantity = getQuantity(requirement);
+            return quantity > 1 ? `${name} (Qty ${quantity})` : name;
+        };
 
         const missingRequired = [
             ...componentRequirements
                 .filter((component) => component.required && !isChecked(component.tackleId))
-                .map((component) => getTackleRecord(component.tackleId)?.name ?? component.tackleId),
+                .map((component) => formatMissingName(getTackleRecord(component.tackleId)?.name ?? component.tackleId, component)),
             ...lureBaitRequirements
                 .filter((requirement) => requirement.required && !isChecked(`lure-bait:${requirement.lureBaitId}`))
-                .map((requirement) => getLureBaitRecord(requirement.lureBaitId)?.name ?? requirement.lureBaitId)
+                .map((requirement) => formatMissingName(getLureBaitRecord(requirement.lureBaitId)?.name ?? requirement.lureBaitId, requirement))
         ];
         const status = appMain.querySelector("[data-readiness-status]");
         if (!status) return;
 
         if (missingRequired.length === 0) {
             status.className = "readiness-status readiness-status--ready";
-            status.innerHTML = lureBaitRequirements.some((item) => item.required)
-                ? `<strong>Tackle Ready</strong><span>All required tackle and lure/bait items are marked available.</span>`
-                : `<strong>Ready to Fish</strong><span>All required tackle is marked available.</span>`;
+            status.innerHTML = `<strong>Ready to Assemble</strong><span>All required components are marked available.</span>`;
             return;
         }
 
         status.className = "readiness-status readiness-status--missing";
         status.innerHTML = `
-            <strong>Missing ${missingRequired.length}</strong>
+            <strong>Missing ${missingRequired.length} Required ${missingRequired.length === 1 ? "Component" : "Components"}</strong>
             <span>${missingRequired.join(", ")}</span>
         `;
     };
 
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", detailConfig.onParent);
     appMain.querySelector("[data-rig-configuration-select]")?.addEventListener("change", (event) => {
-        const nextConfigurationId = event.currentTarget.value;
-        detailConfig.onConfigurationChange?.(nextConfigurationId);
-        renderInstructionDetail(appMain, {
-            ...detailConfig,
-            selectedConfigurationId: nextConfigurationId
-        });
+        detailConfig.onConfigurationChange?.(event.currentTarget.value);
     });
     appMain.querySelectorAll("[data-rig-knot-id]").forEach((button) => {
         button.addEventListener("click", () => detailConfig.onKnotSelect?.(button.dataset.rigKnotId));
@@ -2765,6 +3069,7 @@ function renderInstructionDetail(appMain, detailConfig) {
         });
     });
 
+    initializeRigDetailDisclosures(appMain, detailConfig, expandedDisclosureIds);
     initializeReferenceLinks(appMain, { onRigSelect: detailConfig.onRigSelect, currentRigId: record.id });
     initializeLureBaitReferenceLinks(appMain, lureBaitRequirements);
     initializeConditionLinks(appMain);

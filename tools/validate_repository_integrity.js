@@ -3958,6 +3958,7 @@ function validateObjectRegistry(registry, label) {
 function validateReelGuidance() {
     recordCheck("Get Your Reel Ready guidance ownership and workflow contract");
 
+    const indexHtml = readText("index.html");
     const names = [
         "REEL_SETUP_STEP_IDS",
         "REEL_SETUP_PHASES",
@@ -4216,18 +4217,26 @@ function validateReelGuidance() {
         !completedContextFunction[0].includes('...(backingChoice ? { backingChoice: backingChoice.id } : {})')) {
         fail("Reel Setup handoff", "completed Reel context must contain only Reel Type, Target, Line Type, Line Weight, and actual conditional Monofilament Backing");
     }
-    if (!controllerSource.includes("let completedReelSetupContext = null;") ||
-        !controllerSource.includes("function clearCompletedReelSetupContext()") ||
-        !controllerSource.includes("function startNewReelSetup()")) {
-        fail("Reel Setup handoff", "completed context must remain separate from live Reel Setup state and clear on a deliberate new setup");
+    const startNewReelSetupFunction = controllerSource.match(/function startNewReelSetup\(\) \{[\s\S]*?\n\}/);
+    const clearCompletedReelSetupFunction = controllerSource.match(/function clearCompletedReelSetupContext\(\) \{[\s\S]*?\n\}/);
+    if (!controllerSource.includes('const COMPLETED_REEL_SETUP_STORAGE_KEY = "freshwaterFishingCompanion.completedReelSetup.v1";') ||
+        !controllerSource.includes("let completedReelSetupContext = null;") ||
+        !controllerSource.includes("function loadCompletedReelSetupContext()") ||
+        !controllerSource.includes("function retainCompletedReelSetupContext(context)") ||
+        !startNewReelSetupFunction ||
+        startNewReelSetupFunction[0].includes("clearCompletedReelSetupContext") ||
+        !startNewReelSetupFunction[0].includes("resetReelSetupState()") ||
+        !clearCompletedReelSetupFunction ||
+        !clearCompletedReelSetupFunction[0].includes("COMPLETED_REEL_SETUP_STORAGE_KEY")) {
+        fail("Reel Setup handoff", "completed Reel Setup must persist device-locally until explicit clear and remain separate from replacement-workflow draft state");
     }
     const readyFunction = controllerSource.match(/function renderReelSetupReadyStep\(appMain\) \{[\s\S]*?\n\}/);
     if (!readyFunction ||
         !readyFunction[0].includes("const completedContext = createCompletedReelSetupContext()") ||
-        !readyFunction[0].includes("completedReelSetupContext = completedContext") ||
-        readyFunction[0].indexOf("completedReelSetupContext = completedContext") > readyFunction[0].indexOf("resetReelSetupState()") ||
+        !readyFunction[0].includes("retainCompletedReelSetupContext(completedContext)") ||
+        readyFunction[0].indexOf("retainCompletedReelSetupContext(completedContext)") > readyFunction[0].indexOf("resetReelSetupState()") ||
         !readyFunction[0].includes("showView(ROUTES.RIGS)")) {
-        fail("Reel Setup handoff", "Choose a Rig must snapshot completed context before clearing internal Reel Setup history and opening the normal Rig Guide");
+        fail("Reel Setup handoff", "Choose a Rig must persist the newly completed Reel context before clearing draft history and opening the normal Rigs Guide");
     }
     const rigContextLinesFunction = controllerSource.match(/function getRigReelSetupContextLines\(\) \{[\s\S]*?\n\}/);
     const rigContextCallCount = (controllerSource.match(/renderRigReelSetupContext\(appMain\);/g) || []).length;
@@ -4235,13 +4244,125 @@ function validateReelGuidance() {
         !rigContextLinesFunction[0].includes('? "Monofilament Backing"') ||
         rigContextLinesFunction[0].includes("Recommended First Setup") ||
         !controllerSource.includes(">Your Reel Setup</h3>") ||
+        !controllerSource.includes('class="dashboard-card dashboard-card--workflow rig-reel-ready-card"') ||
+        !controllerSource.includes('class="guide-workflow-eyebrow">Guided Setup</span>') ||
+        !controllerSource.includes('class="dashboard-card__title">Get Your Reel Ready</span>') ||
+        !controllerSource.includes('class="dashboard-card__action dashboard-card__action--link">Start Setup') ||
+        !controllerSource.includes("data-rig-reel-setup-update") ||
+        !controllerSource.includes("data-rig-reel-setup-clear") ||
+        !controllerSource.includes("Clear your Reel Setup?") ||
+        !controllerSource.includes("Your current Reel Setup will be removed until you complete Get Your Reel Ready again.") ||
+        !controllerSource.includes('class="reel-setup-clear-dialog__actions"') ||
+        !controllerSource.includes('class="reel-setup-clear-dialog__button reel-setup-clear-dialog__confirm"') ||
+        !controllerSource.includes('clearDialog?.addEventListener("cancel", restoreClearSetupFocus);') ||
         rigContextCallCount !== 1 ||
         !styleSource.includes(".rig-reel-setup-context {") ||
         !styleSource.includes(".rig-reel-setup-context__summary {") ||
         !styleSource.includes(".rig-reel-setup-context__line {") ||
+        !styleSource.includes(".rig-reel-setup-entry {") ||
+        !styleSource.includes(".rig-reel-ready-card {") ||
+        !styleSource.includes(".reel-setup-clear-dialog {") ||
+        !styleSource.includes(".reel-setup-clear-dialog::backdrop {") ||
+        !styleSource.includes(".reel-setup-clear-dialog__confirm {") ||
         !styleSource.includes("padding: 8px 12px;")) {
-        fail("Rig Guide Reel context", "Rig landing must show one compact two-line noninteractive Your Reel Setup summary with factual Backing wording only");
+        fail("Rigs Guide Reel context", "Rigs landing must expose the retained Reel Setup summary or compact canonical Guided Setup entry, with explicit Update/Clear controls and FCC-styled approved clear confirmation");
     }
+
+
+    const knotLandingStart = rendererSource.indexOf("function renderKnotGuideLanding(appMain, config) {");
+    const knotLandingEnd = rendererSource.indexOf("\nconst KNOT_USAGE_VISIBLE_RIG_LIMIT", knotLandingStart);
+    const knotLandingSource = knotLandingStart >= 0 && knotLandingEnd > knotLandingStart
+        ? rendererSource.slice(knotLandingStart, knotLandingEnd)
+        : "";
+    if (!knotLandingSource ||
+        !knotLandingSource.includes("config.reelSetupContextLines") ||
+        !knotLandingSource.includes(">Current Reel Setup</h3>") ||
+        !knotLandingSource.includes("data-knot-reel-setup-update") ||
+        !knotLandingSource.includes("data-knot-reel-setup-clear") ||
+        !knotLandingSource.includes("Clear your Reel Setup?") ||
+        !knotLandingSource.includes("Your current Reel Setup will be removed until you complete Get Your Reel Ready again.") ||
+        !knotLandingSource.includes("config.onWorkflowClear?.()") ||
+        !controllerSource.includes("reelSetupContextLines: getRigReelSetupContextLines()") ||
+        !controllerSource.includes("onWorkflowClear: () =>") ||
+        !styleSource.includes(".guide-reel-setup-context {") ||
+        !styleSource.includes(".guide-reel-setup-context__summary {") ||
+        !styleSource.includes(".guide-reel-setup-context__line {")) {
+        fail("Knots Reel Setup retained state", "Knots landing must remain the canonical workflow entry while switching to a shared Current Reel Setup summary with Update/Clear actions after completion");
+    }
+
+    const rigDetailStart = rendererSource.indexOf("function renderInstructionDetail(appMain, detailConfig) {");
+    const rigDetailEnd = rendererSource.indexOf("\nfunction getRegulationsResourceActionLabel", rigDetailStart);
+    const rigDetailSource = rigDetailStart >= 0 && rigDetailEnd > rigDetailStart
+        ? rendererSource.slice(rigDetailStart, rigDetailEnd)
+        : "";
+    if (!rigDetailSource) {
+        fail("Rig Detail structure", "Rig Detail renderer must exist");
+    } else {
+        const hierarchyTokens = [
+            "At a Glance",
+            "What You Need",
+            "buildRigKnotApplications(effectiveRecord)",
+            ">Safety</h3>",
+            ">How to Build It</h3>",
+            "buildRigTutorial(effectiveRecord)",
+            ">More Help</h3>",
+            "${sourcesMarkup}"
+        ];
+        let lastIndex = -1;
+        for (const token of hierarchyTokens) {
+            const tokenIndex = rigDetailSource.indexOf(token);
+            if (tokenIndex < 0 || tokenIndex <= lastIndex) {
+                fail("Rig Detail structure", "Rig Detail must preserve At a Glance -> What You Need -> Knots -> Safety -> How to Build -> Tutorial -> More Help -> Sources hierarchy");
+                break;
+            }
+            lastIndex = tokenIndex;
+        }
+        if (!rigDetailSource.includes("Choose a Setup") ||
+            !rigDetailSource.includes("effectiveRecord.useCases") ||
+            !rigDetailSource.includes("effectiveRecord.conditionTags") ||
+            !rigDetailSource.includes("Required component") ||
+            !rigDetailSource.includes("Optional component") ||
+            !rigDetailSource.includes("Qty ${quantity}") ||
+            !rigDetailSource.includes("Ready to Assemble") ||
+            !rigDetailSource.includes("All required components are marked available.") ||
+            !rigDetailSource.includes("Missing ${missingRequired.length} Required") ||
+            !rigDetailSource.includes("buildRigDetailDisclosureMarkup") ||
+            !rigDetailSource.includes("initializeRigDetailDisclosures") ||
+            !rigDetailSource.includes("rig-detail-reel-setup") ||
+            !rigDetailSource.includes("Current Reel Setup") ||
+            !styleSource.includes(".rig-detail-header--with-reel-setup") ||
+            !styleSource.includes(".rig-detail-reel-setup") ||
+            !styleSource.includes(".rig-detail-group__shell") ||
+            !styleSource.includes(".rig-detail-row__trigger")) {
+            fail("Rig Detail semantics", "Rig Detail must implement approved configuration context, component readiness, passive Reel Setup inset, and disclosure semantics");
+        }
+        if (rigDetailSource.includes('effectiveRecord.tutorialVideo ? "" : buildRigReferenceLinks(effectiveRecord)')) {
+            fail("Rig Detail sources", "Rig Tutorial must not suppress Sources & References");
+        }
+    }
+
+    const rigReadinessPoolFunction = controllerSource.match(/function getRigReadinessPool\(\) \{[\s\S]*?\n\}/);
+    const rigReadinessSaveFunction = controllerSource.match(/function saveRigReadinessPool\(pool\) \{[\s\S]*?\n\}/);
+    const rigReadinessUpdateFunction = controllerSource.match(/function updateRigReadinessSelection\(rigId, selectionId, isAvailable\) \{[\s\S]*?\n\}/);
+    if (!controllerSource.includes('const RIG_READINESS_SESSION_STORAGE_KEY = "freshwaterFishingCompanion.rigReadiness.session.v1";') ||
+        controllerSource.includes('const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";') ||
+        !controllerSource.includes('poolKey: `tackle:${requirement.tackleId}`') ||
+        !controllerSource.includes('poolKey: `lure-bait:${requirement.lureBaitId}`') ||
+        !rigReadinessPoolFunction || !rigReadinessPoolFunction[0].includes("sessionStorage.getItem") ||
+        !rigReadinessSaveFunction || !rigReadinessSaveFunction[0].includes("sessionStorage.setItem") ||
+        !rigReadinessUpdateFunction ||
+        !rigReadinessUpdateFunction[0].includes("Math.max(pool[requirement.poolKey] ?? 0, requirement.quantity)") ||
+        !rigReadinessUpdateFunction[0].includes("delete pool[requirement.poolKey]")) {
+        fail("Rig readiness", "Rig readiness must use a session-scoped domain-qualified shared component pool with conservative quantity reuse and shared uncheck semantics");
+    }
+    if (!rendererSource.includes('<h2 id="rig-guide-title">Rigs Guide</h2>') ||
+        rendererSource.includes('<h2 id="rig-guide-title">Rig Guide</h2>') ||
+        !controllerSource.includes('label: "Rigs Guide"') ||
+        !indexHtml.includes('<span class="dashboard-card__title">Rigs Guide</span>') ||
+        indexHtml.includes('<span class="dashboard-card__title">Rig Guide</span>')) {
+        fail("Rigs Guide naming", "current user-facing Guide identity, navigation labels, and Dashboard card must use the approved Rigs Guide name");
+    }
+
     const rigSearchFunction = controllerSource.match(/function updateRigGuideSearchResults\(appMain, query\) \{[\s\S]*?\n\}/);
     const rigCollectionFunction = controllerSource.match(/function getRigsForCollection\(activeRigs\) \{[\s\S]*?\n\}/);
     const rigBrowseFunction = controllerSource.match(/function renderRigBrowseView\(appMain\) \{[\s\S]*?\n\}/);

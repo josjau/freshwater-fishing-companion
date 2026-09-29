@@ -9,10 +9,9 @@
 
 const BUILD_INFO = Object.freeze({
     file: "script.js",
-    milestone: "Knots — Connected Knowledge Navigation Closeout"
+    milestone: "Rigs — I1 State / Storage / Routing Foundation"
 });
 
-const TACKLE_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
 console.info(`[Loaded] ${BUILD_INFO.file} | ${BUILD_INFO.milestone}`);
 
 /* ==========================================================
@@ -44,62 +43,11 @@ const ROUTES = Object.freeze({
 });
 
 /* ==========================================================
-   RIG GUIDE — COLLECTION CONFIGURATION
-   ========================================================== */
-
-const RIG_COLLECTIONS = Object.freeze({
-    core: Object.freeze({
-        title: "Core Rigs",
-        description: "Six curated rigs that cover broadly useful freshwater fishing situations."
-    }),
-    beginner: Object.freeze({
-        title: "Beginner Rigs",
-        description: "Simple rigs with forgiving assembly and straightforward fishing applications."
-    }),
-    "beginner-plus": Object.freeze({
-        title: "Beginner+ Rigs",
-        description: "Rigs that add a little more setup precision while remaining approachable for a newer angler."
-    }),
-    intermediate: Object.freeze({
-        title: "Intermediate Rigs",
-        description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup."
-    }),
-    "intermediate-plus": Object.freeze({
-        title: "Intermediate+ Rigs",
-        description: "Four specialized finesse and multi-component setups that add precise weight placement and rig orientation."
-    }),
-    advanced: Object.freeze({
-        title: "Advanced Rigs",
-        description: "Two purpose-built rigs for specialized terminal topology and demanding heavy-cover fishing."
-    }),
-    expert: Object.freeze({
-        title: "Expert Rigs",
-        description: "A system-oriented trolling rig that combines bottom contact, harness control, and multiple setup decisions."
-    }),
-    all: Object.freeze({
-        title: "All Rigs",
-        description: "Browse every Rig in the guide."
-    })
-});
-
-const RIG_DIFFICULTY_ORDER = Object.freeze([
-    "Beginner",
-    "Beginner+",
-    "Intermediate",
-    "Intermediate+",
-    "Advanced",
-    "Expert"
-]);
-
-/* ==========================================================
    SHARED APP — RUNTIME STATE + DETAIL NAVIGATION STACK
    ========================================================== */
 
 let currentView = ROUTES.DASHBOARD;
 let dashboardMarkup = "";
-let selectedRigId = null;
-let selectedRigCollectionKey = "all";
-let selectedRigConfigurationId = null;
 let selectedRegulationStateId = null;
 let regulationsGatewayState = { query: "" };
 let detailNavigationStack = [];
@@ -166,10 +114,35 @@ function returnToDetailNavigationContext() {
         return true;
     }
 
+    if (context.route === ROUTES.RIGS) {
+        rigGuideState = { ...context.state.rigGuideState };
+        showView(ROUTES.RIGS);
+        return true;
+    }
+
+    if (context.route === ROUTES.RIG_BROWSE) {
+        selectedRigCollectionKey = context.state.selectedRigCollectionKey;
+        rigBrowseState = { ...context.state.rigBrowseState };
+        showView(ROUTES.RIG_BROWSE);
+        return true;
+    }
+
     if (context.route === ROUTES.RIG_DETAIL) {
         selectedRigId = context.state.selectedRigId;
         selectedRigCollectionKey = context.state.selectedRigCollectionKey;
+        rigDetailState = context.state.rigDetailState
+            ? {
+                ...context.state.rigDetailState,
+                expandedDisclosureIds: [...(context.state.rigDetailState.expandedDisclosureIds ?? [])]
+            }
+            : createInitialRigDetailState(selectedRigId);
         showView(ROUTES.RIG_DETAIL);
+        return true;
+    }
+
+    if (context.route === ROUTES.KNOTS) {
+        knotGuideState = { ...context.state.knotGuideState };
+        showView(ROUTES.KNOTS);
         return true;
     }
 
@@ -236,6 +209,9 @@ function showView(route) {
         clearDetailNavigationStack();
         fishGuideState = { query: "", scrollY: 0 };
         fishDetailState = createInitialFishDetailState(null);
+        rigGuideState = createInitialRigGuideState();
+        rigBrowseState = createInitialRigBrowseState();
+        resetRigDetailState(null);
         knotGuideState = { query: "", scrollY: 0 };
         knotBrowseState = { query: "", scrollY: 0 };
         selectedRegulationStateId = null;
@@ -895,7 +871,7 @@ function openRigDetailFromFish(rigId, lureBaitId = null) {
     });
     selectedRigId = rig.id;
     selectedRigCollectionKey = "all";
-    selectedRigConfigurationId = lureBaitId;
+    resetRigDetailState(rig.id, lureBaitId);
     showView(ROUTES.RIG_DETAIL);
 }
 
@@ -904,7 +880,315 @@ function openRigDetailFromFish(rigId, lureBaitId = null) {
    ========================================================== */
 
 /* ==========================================================
-   RIG GUIDE — REEL SETUP HANDOFF PRESENTATION + CONTROLLERS
+   RIGS GUIDE — STATE / STORAGE / ROUTING FOUNDATION
+   ========================================================== */
+
+const RIG_READINESS_SESSION_STORAGE_KEY = "freshwaterFishingCompanion.rigReadiness.session.v1";
+const LEGACY_RIG_READINESS_STORAGE_KEY = "freshwaterFishingCompanion.tackleReadiness.v1";
+
+const RIG_COLLECTIONS = Object.freeze({
+    core: Object.freeze({
+        title: "Core Rigs",
+        description: "Six curated rigs that cover broadly useful freshwater fishing situations."
+    }),
+    beginner: Object.freeze({
+        title: "Beginner Rigs",
+        description: "Simple rigs with forgiving assembly and straightforward fishing applications."
+    }),
+    "beginner-plus": Object.freeze({
+        title: "Beginner+ Rigs",
+        description: "Rigs that add a little more setup precision while remaining approachable for a newer angler."
+    }),
+    intermediate: Object.freeze({
+        title: "Intermediate Rigs",
+        description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup."
+    }),
+    "intermediate-plus": Object.freeze({
+        title: "Intermediate+ Rigs",
+        description: "Four specialized finesse and multi-component setups that add precise weight placement and rig orientation."
+    }),
+    advanced: Object.freeze({
+        title: "Advanced Rigs",
+        description: "Two purpose-built rigs for specialized terminal topology and demanding heavy-cover fishing."
+    }),
+    expert: Object.freeze({
+        title: "Expert Rigs",
+        description: "A system-oriented trolling rig that combines bottom contact, harness control, and multiple setup decisions."
+    }),
+    all: Object.freeze({
+        title: "All Rigs",
+        description: "Browse every Rig in the guide."
+    })
+});
+
+const RIG_DIFFICULTY_ORDER = Object.freeze([
+    "Beginner",
+    "Beginner+",
+    "Intermediate",
+    "Intermediate+",
+    "Advanced",
+    "Expert"
+]);
+
+function createInitialRigGuideState() {
+    return { query: "", scrollY: 0, restoreFocusTarget: null };
+}
+
+function createInitialRigBrowseState() {
+    return { query: "", scrollY: 0, restoreFocusTarget: null };
+}
+
+function createInitialRigDetailState(rigId, selectedConfigurationId = null) {
+    return {
+        rigId,
+        selectedConfigurationId,
+        expandedDisclosureIds: [],
+        scrollY: 0,
+        restoreScroll: false,
+        restoreFocusTarget: null
+    };
+}
+
+let selectedRigId = null;
+let selectedRigCollectionKey = "all";
+let rigGuideState = createInitialRigGuideState();
+let rigBrowseState = createInitialRigBrowseState();
+let rigDetailState = createInitialRigDetailState(null);
+let rigReadinessMemoryFallback = {};
+
+function resetRigDetailState(rigId, selectedConfigurationId = null) {
+    rigDetailState = createInitialRigDetailState(rigId, selectedConfigurationId);
+}
+
+function captureRigDetailNavigationState(restoreFocusTarget = null) {
+    return {
+        selectedRigId,
+        selectedRigCollectionKey,
+        rigDetailState: {
+            ...rigDetailState,
+            rigId: selectedRigId,
+            expandedDisclosureIds: [...(rigDetailState.expandedDisclosureIds ?? [])],
+            scrollY: window.scrollY,
+            restoreScroll: true,
+            restoreFocusTarget
+        }
+    };
+}
+
+function restoreRigScroll(scrollY) {
+    if (!Number.isFinite(scrollY) || scrollY <= 0) return;
+    window.requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+    });
+}
+
+function getRigCollectionCardId(collectionKey) {
+    const cardIdByCollectionKey = {
+        core: "browse-core-rigs",
+        beginner: "browse-beginner-rigs",
+        "beginner-plus": "browse-beginner-plus-rigs",
+        intermediate: "browse-intermediate-rigs",
+        "intermediate-plus": "browse-intermediate-plus-rigs",
+        advanced: "browse-advanced-rigs",
+        expert: "browse-expert-rigs",
+        all: "browse-all-rigs"
+    };
+    return cardIdByCollectionKey[collectionKey] ?? null;
+}
+
+function restoreRigFocus(appMain, focusTarget) {
+    if (!appMain || !focusTarget) return;
+    window.requestAnimationFrame(() => {
+        const [kind, id] = focusTarget.split(":", 2);
+        let target = null;
+
+        if (kind === "result" && id) {
+            target = Array.from(appMain.querySelectorAll("[data-result-id]")).find((element) =>
+                element.dataset.resultId === id
+            );
+        } else if (kind === "collection" && id) {
+            const cardId = getRigCollectionCardId(id);
+            target = cardId ? appMain.querySelector(`[data-card-id="${cardId}"]`) : null;
+        } else if (kind === "knot" && id) {
+            target = Array.from(appMain.querySelectorAll("[data-rig-knot-id]")).find((element) =>
+                element.dataset.rigKnotId === id
+            );
+        } else if (focusTarget === "reel-setup") {
+            target = appMain.querySelector("[data-rig-reel-setup-primary]");
+        }
+
+        target?.focus({ preventScroll: true });
+    });
+}
+
+function restoreRigGuideNavigationState(appMain) {
+    const searchInput = appMain.querySelector("#rig-guide-search-input");
+    if (searchInput && rigGuideState.query) {
+        searchInput.value = rigGuideState.query;
+        searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
+    restoreRigScroll(rigGuideState.scrollY);
+    const focusTarget = rigGuideState.restoreFocusTarget;
+    rigGuideState = { ...rigGuideState, restoreFocusTarget: null };
+    restoreRigFocus(appMain, focusTarget);
+}
+
+function restoreRigBrowseNavigationState(appMain) {
+    restoreRigScroll(rigBrowseState.scrollY);
+    const focusTarget = rigBrowseState.restoreFocusTarget;
+    rigBrowseState = { ...rigBrowseState, restoreFocusTarget: null };
+    restoreRigFocus(appMain, focusTarget);
+}
+
+function restoreRigDetailNavigationState(appMain) {
+    if (rigDetailState.rigId !== selectedRigId) return;
+    const scrollY = Number(rigDetailState.scrollY ?? 0);
+    const shouldRestoreScroll = rigDetailState.restoreScroll === true;
+    const focusTarget = rigDetailState.restoreFocusTarget;
+    rigDetailState = {
+        ...rigDetailState,
+        restoreScroll: false,
+        restoreFocusTarget: null
+    };
+
+    if (shouldRestoreScroll) {
+        window.requestAnimationFrame(() => {
+            window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+        });
+    }
+    restoreRigFocus(appMain, focusTarget);
+}
+
+function sanitizeRigReadinessPool(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    return Object.fromEntries(
+        Object.entries(value)
+            .filter(([key, quantity]) =>
+                (key.startsWith("tackle:") || key.startsWith("lure-bait:")) &&
+                Number.isInteger(quantity) && quantity > 0
+            )
+    );
+}
+
+function getRigReadinessPool() {
+    try {
+        const storedValue = sessionStorage.getItem(RIG_READINESS_SESSION_STORAGE_KEY);
+        if (!storedValue) return { ...rigReadinessMemoryFallback };
+        const pool = sanitizeRigReadinessPool(JSON.parse(storedValue));
+        rigReadinessMemoryFallback = { ...pool };
+        return pool;
+    } catch (error) {
+        console.warn("Rig readiness session state could not be loaded.", error);
+        return { ...rigReadinessMemoryFallback };
+    }
+}
+
+function saveRigReadinessPool(pool) {
+    const normalizedPool = sanitizeRigReadinessPool(pool);
+    rigReadinessMemoryFallback = { ...normalizedPool };
+    try {
+        sessionStorage.setItem(RIG_READINESS_SESSION_STORAGE_KEY, JSON.stringify(normalizedPool));
+    } catch (error) {
+        console.warn("Rig readiness session state could not be saved.", error);
+    }
+}
+
+function discardLegacyRigReadinessStorage() {
+    try {
+        localStorage.removeItem(LEGACY_RIG_READINESS_STORAGE_KEY);
+    } catch (error) {
+        console.warn("Legacy Rig readiness storage could not be cleared.", error);
+    }
+}
+
+function getRigRequirementQuantity(requirement) {
+    const quantity = Number(requirement?.quantity ?? 1);
+    return Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
+}
+
+function buildRigReadinessRequirementEntries(source) {
+    const componentRequirements = Array.isArray(source?.componentRequirements) ? source.componentRequirements : [];
+    const lureBaitRequirements = Array.isArray(source?.lureBaitRequirements) ? source.lureBaitRequirements : [];
+    return [
+        ...componentRequirements.map((requirement) => ({
+            selectionId: requirement.tackleId,
+            poolKey: `tackle:${requirement.tackleId}`,
+            quantity: getRigRequirementQuantity(requirement)
+        })),
+        ...lureBaitRequirements.map((requirement) => ({
+            selectionId: `lure-bait:${requirement.lureBaitId}`,
+            poolKey: `lure-bait:${requirement.lureBaitId}`,
+            quantity: getRigRequirementQuantity(requirement)
+        }))
+    ];
+}
+
+function getRigSelectedConfiguration(rig) {
+    const configurations = Array.isArray(rig?.configurations) ? rig.configurations : [];
+    if (configurations.length === 0) return null;
+    const selectedConfigurationId = rigDetailState.rigId === rig.id
+        ? rigDetailState.selectedConfigurationId
+        : null;
+    return configurations.find((configuration) => configuration.id === selectedConfigurationId) ?? configurations[0];
+}
+
+function getRigActiveReadinessRequirements(rig) {
+    return buildRigReadinessRequirementEntries(getRigSelectedConfiguration(rig) ?? rig);
+}
+
+function getRigAllReadinessRequirements(rig) {
+    const configurations = Array.isArray(rig?.configurations) ? rig.configurations : [];
+    if (configurations.length === 0) return buildRigReadinessRequirementEntries(rig);
+    return configurations.flatMap(buildRigReadinessRequirementEntries);
+}
+
+function getRigReadinessSelections(rigId) {
+    const rig = findRecordById(RIG_DATA, rigId);
+    if (!rig || rig.isActive !== true) return {};
+
+    const pool = getRigReadinessPool();
+    const selections = {};
+    const maximumQuantityBySelection = new Map();
+    getRigAllReadinessRequirements(rig).forEach((requirement) => {
+        maximumQuantityBySelection.set(
+            requirement.selectionId,
+            Math.max(maximumQuantityBySelection.get(requirement.selectionId) ?? 0, requirement.quantity)
+        );
+    });
+    maximumQuantityBySelection.forEach((quantity, selectionId) => {
+        const requirement = getRigAllReadinessRequirements(rig).find((item) => item.selectionId === selectionId);
+        if (!requirement) return;
+        selections[selectionId] = (pool[requirement.poolKey] ?? 0) >= quantity;
+    });
+
+    // The actively displayed configuration owns the exact quantity threshold.
+    getRigActiveReadinessRequirements(rig).forEach((requirement) => {
+        selections[requirement.selectionId] = (pool[requirement.poolKey] ?? 0) >= requirement.quantity;
+    });
+    return selections;
+}
+
+function updateRigReadinessSelection(rigId, selectionId, isAvailable) {
+    const rig = findRecordById(RIG_DATA, rigId);
+    if (!rig || rig.isActive !== true) return;
+    const requirement = getRigActiveReadinessRequirements(rig).find((item) => item.selectionId === selectionId);
+    if (!requirement) {
+        console.warn(`Rig readiness requirement was not found: ${selectionId}`);
+        return;
+    }
+
+    const pool = getRigReadinessPool();
+    if (isAvailable === true) {
+        pool[requirement.poolKey] = Math.max(pool[requirement.poolKey] ?? 0, requirement.quantity);
+    } else {
+        delete pool[requirement.poolKey];
+    }
+    saveRigReadinessPool(pool);
+}
+
+/* ==========================================================
+   RIGS GUIDE — REEL SETUP HANDOFF PRESENTATION + CONTROLLERS
    ========================================================== */
 
 function getRigReelSetupContextLines() {
@@ -931,75 +1215,125 @@ function getRigReelSetupContextLines() {
     ];
 }
 
+function openReelSetupFromRigs() {
+    clearDetailNavigationStack();
+    rigGuideState = {
+        ...rigGuideState,
+        scrollY: window.scrollY,
+        restoreFocusTarget: "reel-setup"
+    };
+    pushDetailNavigationContext({
+        route: ROUTES.RIGS,
+        label: "Rigs Guide",
+        state: { rigGuideState: { ...rigGuideState } }
+    });
+    startNewReelSetup();
+    showView(ROUTES.REEL_SETUP);
+}
+
 function renderRigReelSetupContext(appMain) {
     const lines = getRigReelSetupContextLines();
-    if (!lines.length) return;
-
     const contentView = appMain.querySelector(".content-view");
+    const reelSetupSlot = appMain.querySelector("[data-rig-reel-setup-slot]");
     const searchForm = appMain.querySelector("[data-section-search-form]");
     if (!contentView) return;
 
     const section = document.createElement("section");
-    section.className = "rig-reel-setup-context";
     section.dataset.rigReelSetupContext = "true";
-    section.setAttribute("aria-labelledby", "rig-reel-setup-context-title");
-    section.innerHTML = `
-        <h3 id="rig-reel-setup-context-title">Your Reel Setup</h3>
-        <div class="rig-reel-setup-context__summary">
-            ${lines.map((line) => `
-                <p class="rig-reel-setup-context__line">${line.join('<span class="rig-reel-setup-context__separator" aria-hidden="true">·</span>')}</p>
-            `).join("")}
-        </div>
-    `;
-    contentView.insertBefore(section, searchForm ?? contentView.querySelector("[data-view-card-grid]") ?? null);
+
+    if (!lines.length) {
+        section.className = "rig-reel-setup-entry";
+        section.setAttribute("aria-label", "Reel setup workflow");
+        section.innerHTML = `
+            <div class="dashboard-grid rig-reel-setup-entry__grid">
+                <button class="dashboard-card dashboard-card--workflow rig-reel-ready-card" type="button" data-rig-reel-setup-primary data-rig-reel-setup-entry>
+                    <span class="guide-workflow-eyebrow">Guided Setup</span>
+                    <span class="guide-card__heading-row">
+                        <span class="dashboard-card__title">Get Your Reel Ready</span>
+                        <span class="dashboard-card__action dashboard-card__action--link">Start Setup <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                    </span>
+                    <span class="dashboard-card__description">Set up your reel and line step by step, then carry that completed setup into Rigs.</span>
+                </button>
+            </div>
+        `;
+        section.querySelector("[data-rig-reel-setup-entry]")?.addEventListener("click", openReelSetupFromRigs);
+    } else {
+        section.className = "rig-reel-setup-context";
+        section.setAttribute("aria-labelledby", "rig-reel-setup-context-title");
+        section.innerHTML = `
+            <h3 id="rig-reel-setup-context-title">Your Reel Setup</h3>
+            <div class="rig-reel-setup-context__summary">
+                ${lines.map((line) => `
+                    <p class="rig-reel-setup-context__line">${line.join('<span class="rig-reel-setup-context__separator" aria-hidden="true">·</span>')}</p>
+                `).join("")}
+            </div>
+            <div class="reel-setup-utilities">
+                <button class="reel-setup-utility-button" type="button" data-rig-reel-setup-primary data-rig-reel-setup-update>Update Setup</button>
+                <button class="reel-setup-utility-button" type="button" data-rig-reel-setup-clear>Clear Setup</button>
+            </div>
+            <dialog class="reel-setup-clear-dialog" data-rig-reel-setup-clear-dialog aria-labelledby="rig-reel-setup-clear-title">
+                <div class="reel-setup-clear-dialog__body">
+                    <h3 class="reel-setup-clear-dialog__title" id="rig-reel-setup-clear-title">Clear your Reel Setup?</h3>
+                    <p>Your current Reel Setup will be removed until you complete Get Your Reel Ready again.</p>
+                </div>
+                <div class="reel-setup-clear-dialog__actions">
+                    <button class="reel-setup-clear-dialog__button reel-setup-clear-dialog__cancel" type="button" data-rig-reel-setup-clear-cancel>Cancel</button>
+                    <button class="reel-setup-clear-dialog__button reel-setup-clear-dialog__confirm" type="button" data-rig-reel-setup-clear-confirm>Clear Setup</button>
+                </div>
+            </dialog>
+        `;
+
+        const clearButton = section.querySelector("[data-rig-reel-setup-clear]");
+        const clearDialog = section.querySelector("[data-rig-reel-setup-clear-dialog]");
+        section.querySelector("[data-rig-reel-setup-update]")?.addEventListener("click", openReelSetupFromRigs);
+        clearButton?.addEventListener("click", () => {
+            if (typeof clearDialog?.showModal === "function") clearDialog.showModal();
+        });
+        const restoreClearSetupFocus = () => {
+            requestAnimationFrame(() => clearButton?.focus({ preventScroll: true }));
+        };
+        clearDialog?.addEventListener("cancel", restoreClearSetupFocus);
+        section.querySelector("[data-rig-reel-setup-clear-cancel]")?.addEventListener("click", () => {
+            clearDialog?.close();
+            restoreClearSetupFocus();
+        });
+        section.querySelector("[data-rig-reel-setup-clear-confirm]")?.addEventListener("click", () => {
+            clearCompletedReelSetupContext();
+            clearDialog?.close();
+            rigGuideState = { ...rigGuideState, restoreFocusTarget: "reel-setup" };
+            renderRigGuideView(appMain);
+        });
+    }
+
+    if (reelSetupSlot) reelSetupSlot.replaceChildren(section);
+    else if (searchForm) searchForm.insertAdjacentElement("afterend", section);
+    else contentView.prepend(section);
 }
 
 function renderRigGuideView(appMain) {
-    renderView(appMain, {
-        headingId: "rig-guide-title",
-        title: "Rig Guide",
+    renderRigGuideLanding(appMain, {
         description: "Search the full Rig library or choose a learning collection.",
-        search: {
-            inputId: "rig-guide-search-input",
-            label: "Search all Rigs",
-            placeholder: "Try Texas, bobber, shore, cover, or clear water",
-            onSearch: (query) => updateRigGuideSearchResults(appMain, query)
+        searchPlaceholder: "Try Texas, bobber, shore, cover, or clear water",
+        initialQuery: rigGuideState.query,
+        onQueryChange: (query) => {
+            rigGuideState = { ...rigGuideState, query: query.trim() };
         },
         cards: [
-            { id: "browse-all-rigs", title: "All Rigs", description: "Browse every Rig in the guide.", isAvailable: true },
-            { id: "browse-core-rigs", title: "Core Rigs", description: "Six curated setups that form a broadly useful fishing toolkit.", isAvailable: true },
-            { id: "browse-beginner-rigs", title: "Beginner", description: "Seven simple rigs with forgiving assembly and broad usefulness.", isAvailable: true },
-            { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Five approachable rigs that require a little more setup precision.", isAvailable: true },
-            { id: "browse-intermediate-rigs", title: "Intermediate", description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup.", isAvailable: true },
-            { id: "browse-intermediate-plus-rigs", title: "Intermediate+", description: "Four specialized finesse and multi-component setups with more precise weight placement and rig orientation.", isAvailable: true },
-            { id: "browse-advanced-rigs", title: "Advanced", description: "Two purpose-built rigs for specialized terminal topology and demanding heavy-cover fishing.", isAvailable: true },
-            { id: "browse-expert-rigs", title: "Expert", description: "A system-oriented trolling rig combining bottom contact, harness control, and multiple setup decisions.", isAvailable: true }
+            { id: "browse-all-rigs", title: "All Rigs", description: "Browse every Rig in the guide." },
+            { id: "browse-core-rigs", title: "Core Rigs", description: "Six curated setups that form a broadly useful fishing toolkit." },
+            { id: "browse-beginner-rigs", title: "Beginner", description: "Seven simple rigs with forgiving assembly and broad usefulness." },
+            { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Five approachable rigs that require a little more setup precision." },
+            { id: "browse-intermediate-rigs", title: "Intermediate", description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup." },
+            { id: "browse-intermediate-plus-rigs", title: "Intermediate+", description: "Four specialized finesse and multi-component setups with more precise weight placement and rig orientation." },
+            { id: "browse-advanced-rigs", title: "Advanced", description: "Two purpose-built rigs for specialized terminal topology and demanding heavy-cover fishing." },
+            { id: "browse-expert-rigs", title: "Expert", description: "A system-oriented trolling rig combining bottom contact, harness control, and multiple setup decisions." }
         ],
-        onCardSelect: handleRigGuideCardSelect
+        onCardSelect: handleRigGuideCardSelect,
+        onSearch: (query) => updateRigGuideSearchResults(appMain, query)
     });
 
-    appMain.querySelector(".content-view")?.classList.add("rig-guide-view");
     renderRigReelSetupContext(appMain);
-    appMain.querySelector('[data-card-id="browse-core-rigs"]')?.classList.add(
-        "dashboard-card--primary",
-        "rig-guide-core-card"
-    );
-}
-
-function renderRigSearchResultCard(rig) {
-    const coreBadge = isCoreRig(rig)
-        ? '<span class="search-result-card__badge">Core Rig</span>'
-        : "";
-
-    return `
-        <button class="search-result-card search-result-card--rig${isCoreRig(rig) ? " search-result-card--core" : ""}" type="button" data-result-id="${rig.id}">
-            ${coreBadge}
-            <span class="search-result-card__title">${rig.name}</span>
-            <span class="search-result-card__meta">${rig.difficulty}</span>
-            <span class="search-result-card__summary">${rig.summary}</span>
-            <span class="search-result-card__action">View instructions <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
-        </button>
-    `;
+    restoreRigGuideNavigationState(appMain);
 }
 
 function getRigSearchRecord(rig) {
@@ -1012,6 +1346,7 @@ function getRigSearchRecord(rig) {
 }
 
 function updateRigGuideSearchResults(appMain, query) {
+    rigGuideState = { ...rigGuideState, query: query.trim() };
     const activeRigs = RIG_DATA.filter((rig) => rig.isActive).map(getRigSearchRecord);
     const matches = searchRecords(
         activeRigs,
@@ -1019,9 +1354,8 @@ function updateRigGuideSearchResults(appMain, query) {
         ["name", "difficulty", "useCases", "conditionTags", "configurationNames"]
     );
 
-    renderSearchResults(appMain, matches, {
-        emptyMessage: "No rigs matched your search.",
-        renderRecord: renderRigSearchResultCard,
+    renderRigSearchResults(appMain, matches, {
+        query,
         onResultSelect: (rigId) => openRigDetail(rigId, "guide")
     });
 }
@@ -1040,12 +1374,19 @@ function handleRigGuideCardSelect(cardId) {
     const collectionKey = collectionKeyByCardId[cardId];
 
     if (collectionKey) {
+        clearDetailNavigationStack();
+        rigGuideState = {
+            ...rigGuideState,
+            scrollY: window.scrollY,
+            restoreFocusTarget: `collection:${collectionKey}`
+        };
         selectedRigCollectionKey = collectionKey;
+        rigBrowseState = createInitialRigBrowseState();
         showView(ROUTES.RIG_BROWSE);
         return;
     }
 
-    console.info(`Rig Guide action not implemented yet: ${cardId}`);
+    console.info(`Rigs Guide action not implemented yet: ${cardId}`);
 }
 
 function isCoreRig(rig) {
@@ -1099,10 +1440,44 @@ function sortRigCollection(records) {
 }
 
 function openRigDetail(rigId, collectionKey = selectedRigCollectionKey) {
+    const rig = findRecordById(RIG_DATA, rigId);
+    if (!rig || rig.isActive !== true) {
+        console.warn(`Rig was not found: ${rigId}`);
+        return;
+    }
+
     clearDetailNavigationStack();
+    if (collectionKey === "guide") {
+        rigGuideState = {
+            ...rigGuideState,
+            scrollY: window.scrollY,
+            restoreFocusTarget: `result:${rigId}`
+        };
+        pushDetailNavigationContext({
+            route: ROUTES.RIGS,
+            label: "Rigs Guide",
+            state: { rigGuideState: { ...rigGuideState } }
+        });
+        selectedRigCollectionKey = "all";
+    } else {
+        selectedRigCollectionKey = RIG_COLLECTIONS[collectionKey] ? collectionKey : "all";
+        rigBrowseState = {
+            ...rigBrowseState,
+            scrollY: window.scrollY,
+            restoreFocusTarget: `result:${rigId}`
+        };
+        pushDetailNavigationContext({
+            route: ROUTES.RIG_BROWSE,
+            label: getRigCollectionConfig().title,
+            state: {
+                selectedRigCollectionKey,
+                rigBrowseState: { ...rigBrowseState }
+            }
+        });
+    }
+
     selectedRigId = rigId;
-    selectedRigCollectionKey = collectionKey;
-    selectedRigConfigurationId = null;
+    resetRigDetailState(rigId);
     showView(ROUTES.RIG_DETAIL);
 }
 
@@ -1122,7 +1497,7 @@ function openRigDetailFromKnot(rigId) {
 
     selectedRigId = rigId;
     selectedRigCollectionKey = "all";
-    selectedRigConfigurationId = null;
+    resetRigDetailState(rigId);
     showView(ROUTES.RIG_DETAIL);
 }
 
@@ -1139,15 +1514,12 @@ function openRigDetailFromComponentReference(rigId) {
     pushDetailNavigationContext({
         route: ROUTES.RIG_DETAIL,
         label: currentRig.name,
-        state: {
-            selectedRigId,
-            selectedRigCollectionKey
-        }
+        state: captureRigDetailNavigationState()
     });
 
     selectedRigId = nextRig.id;
     selectedRigCollectionKey = "all";
-    selectedRigConfigurationId = null;
+    resetRigDetailState(nextRig.id);
     showView(ROUTES.RIG_DETAIL);
 }
 
@@ -1162,10 +1534,7 @@ function openKnotDetailFromRig(knotId) {
     pushDetailNavigationContext({
         route: ROUTES.RIG_DETAIL,
         label: rig.name,
-        state: {
-            selectedRigId,
-            selectedRigCollectionKey
-        }
+        state: captureRigDetailNavigationState(`knot:${knotId}`)
     });
 
     selectedKnotId = knotId;
@@ -1181,12 +1550,26 @@ function renderRigBrowseView(appMain) {
         inputId: "rig-search-input",
         title: collection.title,
         description: collection.description,
-        label: `Search within ${collection.title}`,
+        label: `Search ${collection.title}`,
+        helpText: "Search by Rig name, difficulty, use case, condition, or setup.",
         placeholder: `Search ${collection.title}`,
-        parentLabel: "Rig Guide",
-        onParent: () => showView(ROUTES.RIGS),
+        showSubmitButton: false,
+        viewClass: "rig-browse-view",
+        parentLabel: "Rigs Guide",
+        initialQuery: rigBrowseState.query,
+        onQueryChange: (query) => {
+            rigBrowseState = { ...rigBrowseState, query: query.trim() };
+        },
+        onParent: () => {
+            rigGuideState = {
+                ...rigGuideState,
+                restoreFocusTarget: `collection:${selectedRigCollectionKey}`
+            };
+            showView(ROUTES.RIGS);
+        },
         onSearch: (query) => updateRigBrowseResults(appMain, query)
     });
+    restoreRigBrowseNavigationState(appMain);
 }
 
 function updateRigBrowseResults(appMain, query) {
@@ -1201,76 +1584,56 @@ function updateRigBrowseResults(appMain, query) {
         ? matches
         : sortRigCollection(matches);
 
-    renderSearchResults(appMain, resultRecords, {
-        emptyMessage: "No rigs matched your search.",
-        renderRecord: renderRigSearchResultCard,
+    renderRigSearchResults(appMain, resultRecords, {
+        query,
         onResultSelect: (rigId) => openRigDetail(rigId, selectedRigCollectionKey)
     });
 }
 
 function renderRigDetailView(appMain) {
     const rig = findRecordById(RIG_DATA, selectedRigId);
-    const fromGuideSearch = selectedRigCollectionKey === "guide";
     const returnContext = peekDetailNavigationContext();
-    const hasConnectedReturn = [ROUTES.KNOT_DETAIL, ROUTES.FISH_DETAIL, ROUTES.RIG_DETAIL].includes(returnContext?.route);
-    if (!rig) {
+    if (!rig || rig.isActive !== true) {
         console.warn(`Rig was not found: ${selectedRigId}`);
-        if (hasConnectedReturn && returnToDetailNavigationContext()) return;
-        showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE);
+        if (returnContext && returnToDetailNavigationContext()) return;
+        showView(ROUTES.RIGS);
         return;
     }
 
-    const collection = getRigCollectionConfig();
+    if (rigDetailState.rigId !== rig.id) resetRigDetailState(rig.id);
+
     renderInstructionDetail(appMain, {
         record: rig,
-        parentLabel: hasConnectedReturn
-            ? returnContext.label
-            : (fromGuideSearch ? "Rig Guide" : collection.title),
+        parentLabel: returnContext?.label ?? getRigCollectionConfig().title,
         selections: getRigReadinessSelections(rig.id),
-        selectedConfigurationId: selectedRigConfigurationId,
-        onConfigurationChange: (configurationId) => { selectedRigConfigurationId = configurationId; },
-        onParent: hasConnectedReturn
+        reelSetupContextLines: getRigReelSetupContextLines(),
+        selectedConfigurationId: rigDetailState.selectedConfigurationId,
+        expandedDisclosureIds: rigDetailState.expandedDisclosureIds,
+        onConfigurationChange: (configurationId) => {
+            rigDetailState = {
+                ...rigDetailState,
+                rigId: rig.id,
+                selectedConfigurationId: configurationId
+            };
+            renderRigDetailView(appMain);
+        },
+        onDisclosureStateChange: (expandedDisclosureIds) => {
+            rigDetailState = {
+                ...rigDetailState,
+                rigId: rig.id,
+                expandedDisclosureIds: [...(expandedDisclosureIds ?? [])]
+            };
+        },
+        onParent: returnContext
             ? returnToDetailNavigationContext
-            : () => showView(fromGuideSearch ? ROUTES.RIGS : ROUTES.RIG_BROWSE),
+            : () => showView(ROUTES.RIGS),
         onKnotSelect: openKnotDetailFromRig,
         onRigSelect: openRigDetailFromComponentReference,
-        onReadinessChange: (selectionId, isOwned) =>
-            updateRigReadinessSelection(rig.id, selectionId, isOwned)
+        onReadinessChange: (selectionId, isAvailable) =>
+            updateRigReadinessSelection(rig.id, selectionId, isAvailable)
     });
-}
 
-function getReadinessState() {
-    try {
-        const storedValue = localStorage.getItem(TACKLE_READINESS_STORAGE_KEY);
-        if (!storedValue) return {};
-        const parsedValue = JSON.parse(storedValue);
-        return parsedValue && typeof parsedValue === "object" ? parsedValue : {};
-    } catch (error) {
-        console.warn("Tackle readiness could not be loaded.", error);
-        return {};
-    }
-}
-
-function saveReadinessState(state) {
-    try {
-        localStorage.setItem(TACKLE_READINESS_STORAGE_KEY, JSON.stringify(state));
-    } catch (error) {
-        console.warn("Tackle readiness could not be saved.", error);
-    }
-}
-
-function getRigReadinessSelections(rigId) {
-    const state = getReadinessState();
-    const rigState = state[rigId];
-    return rigState && typeof rigState === "object" ? rigState : {};
-}
-
-function updateRigReadinessSelection(rigId, selectionId, isOwned) {
-    const state = getReadinessState();
-    const rigState = state[rigId] && typeof state[rigId] === "object" ? state[rigId] : {};
-    rigState[selectionId] = isOwned;
-    state[rigId] = rigState;
-    saveReadinessState(state);
+    restoreRigDetailNavigationState(appMain);
 }
 
 /* ==========================================================
@@ -1337,6 +1700,7 @@ let reelSetupState = createInitialReelSetupState();
    KNOTS GUIDE — GET YOUR REEL READY STATE + CONTROLLERS
    ========================================================== */
 
+const COMPLETED_REEL_SETUP_STORAGE_KEY = "freshwaterFishingCompanion.completedReelSetup.v1";
 let completedReelSetupContext = null;
 
 function createInitialReelSetupState() {
@@ -1359,18 +1723,92 @@ function resetReelSetupState() {
     reelSetupState = createInitialReelSetupState();
 }
 
+function normalizeCompletedReelSetupContext(value) {
+    const context = value?.version === 1 && value.context ? value.context : value;
+    if (!context || typeof context !== "object" || Array.isArray(context)) return null;
+
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, context.reelType);
+    const targetProfile = getReelSetupTargetFish(context.targetFish);
+    const lineType = getReelLineType(context.lineType);
+    const lineWeight = Number(context.lineWeight);
+    const backingChoice = context.backingChoice ? getReelBackingChoice(context.backingChoice) : null;
+    if (!reelType || !targetProfile || !lineType || !Number.isFinite(lineWeight) || lineWeight <= 0) return null;
+    if (context.backingChoice && !backingChoice) return null;
+
+    return Object.freeze({
+        reelType: reelType.id,
+        targetFish: targetProfile.id,
+        lineType: lineType.id,
+        lineWeight,
+        ...(backingChoice ? { backingChoice: backingChoice.id } : {})
+    });
+}
+
+function loadCompletedReelSetupContext() {
+    try {
+        const storedValue = localStorage.getItem(COMPLETED_REEL_SETUP_STORAGE_KEY);
+        if (!storedValue) return null;
+        const context = normalizeCompletedReelSetupContext(JSON.parse(storedValue));
+        if (!context) console.warn("Stored Reel Setup context is invalid and will not be used.");
+        return context;
+    } catch (error) {
+        console.warn("Completed Reel Setup context could not be loaded.", error);
+        return null;
+    }
+}
+
+function retainCompletedReelSetupContext(context) {
+    const normalizedContext = normalizeCompletedReelSetupContext(context);
+    if (!normalizedContext) return false;
+    completedReelSetupContext = normalizedContext;
+    try {
+        localStorage.setItem(COMPLETED_REEL_SETUP_STORAGE_KEY, JSON.stringify({
+            version: 1,
+            context: normalizedContext
+        }));
+    } catch (error) {
+        console.warn("Completed Reel Setup context could not be persisted.", error);
+    }
+    return true;
+}
+
 function clearCompletedReelSetupContext() {
     completedReelSetupContext = null;
+    try {
+        localStorage.removeItem(COMPLETED_REEL_SETUP_STORAGE_KEY);
+    } catch (error) {
+        console.warn("Completed Reel Setup context could not be cleared.", error);
+    }
 }
 
 function startNewReelSetup() {
-    clearCompletedReelSetupContext();
+    // A replacement workflow is a draft. The retained completed setup stays active
+    // until a newly completed workflow explicitly replaces it.
     resetReelSetupState();
 }
 
 function openReelSetup() {
+    clearDetailNavigationStack();
+    knotGuideState = { ...knotGuideState, scrollY: window.scrollY, restoreWorkflowFocus: true };
+    pushDetailNavigationContext({
+        route: ROUTES.KNOTS,
+        label: "Knots Guide",
+        state: { knotGuideState: { ...knotGuideState } }
+    });
     startNewReelSetup();
     showView(ROUTES.REEL_SETUP);
+}
+
+function getReelSetupOriginContext() {
+    const context = peekDetailNavigationContext();
+    return context?.route === ROUTES.REEL_SETUP ? null : context;
+}
+
+function returnFromReelSetupToOrigin() {
+    resetReelSetupState();
+    const originContext = getReelSetupOriginContext();
+    if (originContext && returnToDetailNavigationContext()) return;
+    showView(ROUTES.KNOTS);
 }
 
 function getReelSetupOption(options, optionId) {
@@ -1566,16 +2004,16 @@ function renderReelSetupNavigation(appMain) {
     navigation.dataset.reelSetupNavigation = "true";
 
     const previous = getReelSetupPreviousDestination();
+    const originContext = getReelSetupOriginContext();
     const backButton = document.createElement("button");
     backButton.type = "button";
     backButton.className = "page-navigation";
-    const backLabel = previous?.label ?? "Knots Guide";
+    const backLabel = previous?.label ?? originContext?.label ?? "Knots Guide";
     if (backLabel.length > 22) backButton.classList.add("page-navigation--long-label");
     backButton.innerHTML = '<span class="link-arrow link-arrow--back" aria-hidden="true">←</span> ' + backLabel;
     backButton.addEventListener("click", () => {
         if (!previous) {
-            resetReelSetupState();
-            showView(ROUTES.KNOTS);
+            returnFromReelSetupToOrigin();
             return;
         }
         if (previous.spoolStageId) reelSetupState.spoolStageId = previous.spoolStageId;
@@ -1638,12 +2076,9 @@ function renderReelSetupUtilityActions(appMain, { ready = false } = {}) {
     const exit = document.createElement("button");
     exit.type = "button";
     exit.className = "reel-setup-utility-button";
-    exit.textContent = ready ? "Done — Knots Guide" : "Exit to Knots";
-    exit.addEventListener("click", () => {
-        resetReelSetupState();
-        clearDetailNavigationStack();
-        showView(ROUTES.KNOTS);
-    });
+    const originLabel = getReelSetupOriginContext()?.label ?? "Knots Guide";
+    exit.textContent = ready ? `Done — ${originLabel}` : `Exit to ${originLabel}`;
+    exit.addEventListener("click", returnFromReelSetupToOrigin);
     utilities.append(exit);
     if (utilities.children.length === 1) utilities.classList.add("reel-setup-utilities--single");
     contentView.append(utilities);
@@ -2369,11 +2804,16 @@ function renderReelSetupReadyStep(appMain) {
                 return;
             }
 
-            completedReelSetupContext = completedContext;
+            if (!retainCompletedReelSetupContext(completedContext)) {
+                console.warn("Reel Setup could not retain the completed context.");
+                return;
+            }
             resetReelSetupState();
             selectedRigId = null;
             selectedRigCollectionKey = "all";
-            selectedRigConfigurationId = null;
+            rigGuideState = createInitialRigGuideState();
+            rigBrowseState = createInitialRigBrowseState();
+            resetRigDetailState(null);
             clearDetailNavigationStack();
             showView(ROUTES.RIGS);
         }
@@ -2551,6 +2991,7 @@ function renderKnotsView(appMain) {
     renderKnotGuideLanding(appMain, {
         tasks: KNOT_LANDING_TASK_DEFINITIONS,
         collections: collectionCards,
+        reelSetupContextLines: getRigReelSetupContextLines(),
         initialQuery: knotGuideState.query,
         onQueryChange: (query) => {
             knotGuideState.query = query.trim();
@@ -2559,6 +3000,11 @@ function renderKnotsView(appMain) {
         onWorkflowSelect: () => {
             knotGuideState.scrollY = window.scrollY;
             openReelSetup();
+        },
+        onWorkflowClear: () => {
+            clearCompletedReelSetupContext();
+            knotGuideState = { ...knotGuideState, restoreWorkflowFocus: true };
+            renderKnotsView(appMain);
         },
         onTaskSelect: (taskId) => {
             const landingTask = getKnotLandingTask(taskId);
@@ -2577,6 +3023,12 @@ function renderKnotsView(appMain) {
     });
 
     restoreKnotScroll(knotGuideState.scrollY);
+    if (knotGuideState.restoreWorkflowFocus === true) {
+        knotGuideState = { ...knotGuideState, restoreWorkflowFocus: false };
+        window.requestAnimationFrame(() => {
+            appMain.querySelector("[data-knot-reel-setup]")?.focus({ preventScroll: true });
+        });
+    }
 }
 
 function updateKnotGuideSearchResults(appMain, query) {
@@ -2925,6 +3377,8 @@ function initializeApp() {
         console.error("Application main content area was not found.");
         return;
     }
+    completedReelSetupContext = loadCompletedReelSetupContext();
+    discardLegacyRigReadinessStorage();
     dashboardMarkup = appMain.innerHTML;
     initializeDashboardRouting();
 }
