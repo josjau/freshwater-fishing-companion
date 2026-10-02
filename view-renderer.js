@@ -2714,23 +2714,38 @@ const RIG_CONDITION_REFERENCE_IDS = Object.freeze({
     "Sparse Cover": "light-cover",
     "Light Current": "current-light",
     "Open Water": "open-water",
-    "Rock": "rock",
     "Shallow Water": "shallow",
     "Stained Water": "water-clarity-stained",
     "Vegetation": "vegetation"
 });
 
+const RIG_CONDITION_DISPLAY_LABELS = Object.freeze({
+    "Sparse Cover": "Light Cover"
+});
+
 function buildRigConditionReferenceMarkup(items) {
     if (!Array.isArray(items) || items.length === 0) return "";
-    return `<ul class="rig-about-list rig-about-list--references">${items.map((item) => {
+
+    const references = [];
+    const seenConditionIds = new Set();
+    items.forEach((item) => {
         const conditionId = RIG_CONDITION_REFERENCE_IDS[item];
-        return `
-            <li class="rig-about-reference-item">
-                <span class="rig-about-reference-term">${item}</span>
-                ${conditionId ? `<button class="reference-info-button rig-about-reference-cue" type="button" data-condition-id="${conditionId}" aria-label="Learn about ${item}"><span aria-hidden="true">&#9432;</span></button>` : ""}
-            </li>
-        `;
-    }).join("")}</ul>`;
+        if (!conditionId || seenConditionIds.has(conditionId)) return;
+        if (!getConditionRecord(conditionId)) return;
+        seenConditionIds.add(conditionId);
+        references.push({
+            conditionId,
+            label: RIG_CONDITION_DISPLAY_LABELS[item] ?? item
+        });
+    });
+
+    if (references.length === 0) return "";
+    return `<ul class="rig-about-list rig-about-list--references">${references.map(({ conditionId, label }) => `
+        <li class="rig-about-reference-item">
+            <span class="rig-about-reference-term">${label}</span>
+            <button class="reference-info-button rig-about-reference-cue" type="button" data-condition-id="${conditionId}" aria-label="Learn about ${label}"><span aria-hidden="true">&#9432;</span></button>
+        </li>
+    `).join("")}</ul>`;
 }
 
 function buildRigTechniqueReferenceMarkup(rigId, lureBaitId = null) {

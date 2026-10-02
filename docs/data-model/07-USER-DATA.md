@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 07-USER-DATA.md  
-**Document Revision:** 0.13.2  
+**Document Revision:** 0.13.3  
 **Document Status:** Draft  
-**Implementation Status:** Mixed — transitional local state exists; authoritative User Knowledge schemas not implemented  
+**Implementation Status:** Mixed — session-scoped Rig readiness and device-local completed Reel Setup exist; authoritative general User Knowledge schemas not implemented  
 **Decision Baseline:** D028, D029, D056, D067, D069
 
 ---
@@ -20,7 +20,9 @@ User Knowledge is information created, maintained, or owned by the angler. It re
 
 Current `main` does **not** implement one authoritative general User Data schema containing Profile, Preferences, Favorites, My Tackle, Fishing Setups, Catch Log, and Backup History.
 
-The application currently persists lightweight local Rig-readiness selections. That state is transitional availability data and is not authoritative My Tackle ownership.
+The application currently maintains Rig readiness as a **session-scoped shared component-availability pool** using `sessionStorage` with an in-memory fallback. Availability is keyed by canonical domain-qualified Tackle/Lure-Bait identity so the same confirmed component can be reused across Rigs during the active browser session. Legacy per-Rig Rig-readiness `localStorage` is discarded. This state is transitional at-time availability data and is not authoritative My Tackle ownership.
+
+A completed **Get Your Reel Ready / Reel Setup** context is separately retained device-locally in `localStorage` until the user explicitly clears it. Starting or updating Reel Setup is draft workflow state; canceling does not replace the retained completed context, and completing the workflow replaces it. Clearing completed Reel Setup removes only that retained workflow context and does not clear Rig readiness or modify My Tackle. The retained Reel Setup context is device-local workflow state, not synchronized profile-owned User Knowledge.
 
 Other user-facing areas may exist as routes or UI placeholders, but their presence does not establish a production persistence schema.
 
@@ -109,7 +111,7 @@ UD-3 establishes the Version 1 local/offline persistence boundary:
 - Persistent multi-tab caching should be enabled where supported. If persistent cache initialization is unavailable or fails, the application must degrade safely to supported memory/online behavior rather than failing normal Reference Knowledge use.
 - The local cache is neither backup nor a second ownership source. Browser/site-data clearing may remove the local replica without deleting synchronized cloud records; UD-6 owns exact reset and retention semantics.
 - UD-9 owns export/backup/restore. UD-10 owns application-level conflict, deletion/tombstone, concurrent-edit, and resurrection-prevention behavior.
-- Existing Rig-readiness `localStorage` remains transitional availability state and is not automatically migrated into authoritative User Knowledge.
+- Current Rig readiness remains transitional session-scoped availability state and is not automatically migrated into authoritative User Knowledge. The old per-Rig `localStorage` readiness key is discarded rather than migrated.
 
 UD-3 may be refined if browser support, Firebase persistence behavior, a later UD-2 provider change, security/privacy findings, or demonstrated product requirements require a different implementation. The durable architectural principle is one authoritative User Knowledge persistence path behind an FCC-owned access abstraction unless a later explicit decision demonstrates why a second authoritative local store is necessary.
 
@@ -200,7 +202,7 @@ UD-8 separates persistent ownership from current/temporary tackle availability.
 - Rig Readiness, Search, Recommendations, Catch Log history, prior usage, borrowing, Packed / With Me state, or other availability workflows may not silently create or remove ownership.
 - Current availability may include both owned tackle and temporary/non-owned tackle that the angler can actually use in the active fishing context.
 - Recommendation executability uses confirmed current availability when an availability context exists. Owned-but-unavailable tackle is insufficient; temporary non-owned tackle may satisfy executability.
-- Existing transitional Rig Readiness state must never be silently converted into My Tackle ownership.
+- Current transitional Rig Readiness session state must never be silently converted into My Tackle ownership. Completed device-local Reel Setup context is separate workflow state and likewise does not establish ownership.
 - The beginner capture model derives effective availability from selected owned equipment/Fishing Setups + selected Inventory Location contents + loose owned additions + temporary/non-owned additions - explicit exceptions.
 - Availability actions do not change persistent ownership, Inventory Location organization, or Fishing Setup relationships.
 - No separate durable Loadout domain is required for Version 1 absent a demonstrated need.

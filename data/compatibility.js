@@ -938,6 +938,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             isActive: true
     },
     {
+            id: "rig-technique-drop-shot-rig-bottom-presentation",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "drop-shot-rig",
+            targetType: "technique",
+            targetId: "bottom-presentation",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
             id: "rig-technique-drop-shot-rig-shake",
             relationshipType: "rig-technique",
             sourceType: "rig",
@@ -955,6 +966,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             sourceId: "drop-shot-rig",
             targetType: "technique",
             targetId: "deadstick",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
+            id: "rig-technique-carolina-rig-bottom-presentation",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "carolina-rig",
+            targetType: "technique",
+            targetId: "bottom-presentation",
             createdVersion: "0.7.0",
             lastModifiedVersion: "0.7.0",
             isActive: true
@@ -1037,6 +1059,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             isActive: true
     },
     {
+            id: "rig-technique-neko-rig-bottom-presentation",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "neko-rig",
+            targetType: "technique",
+            targetId: "bottom-presentation",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
             id: "rig-technique-neko-rig-hop",
             relationshipType: "rig-technique",
             sourceType: "rig",
@@ -1081,6 +1114,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             isActive: true
     },
     {
+            id: "rig-technique-shaky-head-rig-bottom-presentation",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "shaky-head-rig",
+            targetType: "technique",
+            targetId: "bottom-presentation",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
             id: "rig-technique-shaky-head-rig-shake",
             relationshipType: "rig-technique",
             sourceType: "rig",
@@ -1120,6 +1164,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             sourceId: "shaky-head-rig",
             targetType: "technique",
             targetId: "deadstick",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
+            id: "rig-technique-free-rig-bottom-presentation",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "free-rig",
+            targetType: "technique",
+            targetId: "bottom-presentation",
             createdVersion: "0.7.0",
             lastModifiedVersion: "0.7.0",
             isActive: true
@@ -1180,6 +1235,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             isActive: true
     },
     {
+            id: "rig-technique-jika-rig-bottom-presentation",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "jika-rig",
+            targetType: "technique",
+            targetId: "bottom-presentation",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
             id: "rig-technique-jika-rig-hop",
             relationshipType: "rig-technique",
             sourceType: "rig",
@@ -1213,12 +1279,34 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             isActive: true
     },
     {
+            id: "rig-technique-punch-pegged-texas-rig-bottom-presentation",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "punch-pegged-texas-rig",
+            targetType: "technique",
+            targetId: "bottom-presentation",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
             id: "rig-technique-punch-pegged-texas-rig-lift-and-fall",
             relationshipType: "rig-technique",
             sourceType: "rig",
             sourceId: "punch-pegged-texas-rig",
             targetType: "technique",
             targetId: "lift-and-fall",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
+            id: "rig-technique-bottom-bouncer-spinner-rig-bottom-presentation",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "bottom-bouncer-spinner-rig",
+            targetType: "technique",
+            targetId: "bottom-presentation",
             createdVersion: "0.7.0",
             lastModifiedVersion: "0.7.0",
             isActive: true

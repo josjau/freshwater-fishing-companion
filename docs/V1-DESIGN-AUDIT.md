@@ -2,10 +2,10 @@
 
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.43  
+**Document Revision:** 1.0.47  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-09-28
+**Last Updated:** 2026-09-30
 
 
 # Purpose
@@ -45,6 +45,68 @@ Design target:
 
 
 Beginning with the Knots Guide refinement audit, each Guide-family audit creates one **temporary Guide-specific audit file** at discovery start. That file is the active discovery-to-build traceability owner for the Guide and is not a new permanent semantic authority.
+
+
+## Named Visual Pattern Mapping
+
+Guide-family audits must use the canonical **Visual Pattern Registry** in `UI_STANDARD.md` continuously during discovery, not only during final visual comparison. For every visible section/element under review:
+
+1. identify the semantic role first;
+2. assign the applicable named pattern or combination of patterns;
+3. verify the current implementation against that pattern's established visual, interaction, accessibility, and responsive contract; and
+4. record any deliberate domain-specific exception with its reason instead of silently diverging.
+
+Do not force every element into a registry entry. When no current pattern truthfully fits, record **NO PATTERN MATCH — OPEN** and resolve whether the element needs an existing pattern, a justified local treatment, or a newly approved reusable pattern before implementation scope is locked. New patterns belong in `UI_STANDARD.md`; the temporary Guide audit may propose them but does not become a competing visual-language owner.
+
+Pattern mapping is composable. For example, one section may be **Peer Subsection Group + Compact Internal Link List**, while a disclosed supporting section may be **Disclosure Group + Standard Detail List**. Human-readable pattern names are the canonical audit notation; cryptic IDs must not replace them.
+
+The end-of-rebuild screenshot comparison remains required as a final cross-Guide verification layer. It does not substitute for page-by-page pattern mapping during the audit/rebuild.
+
+
+## Guide-Family Comparison Matrix
+
+Beginning with FCC 50B-C, Guide-family reconciliation uses one explicit comparison matrix in addition to the Visual Pattern Registry. Fish remains starting evidence, but no Guide is automatically the final answer merely because it was built first. Equivalent semantic roles are compared across Guides and the best validated shared treatment becomes the Guide-family language; domain differences require a deliberate semantic reason.
+
+The comparison matrix must evaluate, where applicable:
+
+| Dimension | Required comparison | Validation target |
+| --- | --- | --- |
+| **Information architecture** | Identity, primary visible task content, About/context grouping, More Help/support grouping, and section order. | Equivalent roles follow a coherent family model without forcing identical field inventories. |
+| **Visual Pattern Registry mapping** | Named pattern or pattern composition for every visible section/element. | Equivalent semantics reuse the canonical pattern unless a documented exception exists. |
+| **Interaction / disclosure** | What remains visible, what expands/collapses, what navigates, and what loads media. | Primary task content is not hidden solely to reduce page length; disclosure semantics remain consistent. |
+| **Text Hierarchy & Semantic Color** | Primary/body text, headings, helper/supporting text, metadata, labels/eyebrows, action text, and semantic-state text. | Text color follows semantic role rather than Guide membership; contrast and non-color semantics remain sufficient. |
+| **Navigation / link language** | Internal `→`, external `↗`, contextual `ⓘ`, and source/reference presentation. | Equivalent navigation uses one shared interaction grammar; links do not become arbitrary buttons/chips. |
+| **Media treatment** | Identification media, instructional media, media-type cues, external fallbacks, and loading behavior. | UI grammar is coherent while `MEDIA_GUIDE.md` retains technical/media ownership. |
+| **Responsive behavior** | Mobile, intermediate, standard desktop, wide desktop, wrapping, stacking, focus, and touch behavior. | Content-fit behavior remains readable and task-usable; desktop/mobile do not diverge accidentally. |
+| **Production implementation** | Rendered appearance plus actual markup/CSS/component ownership. | Equivalent semantics converge in implementation, not only screenshots. |
+| **Data-shape dependency** | Whether UI behavior is being driven by correct semantic data rather than field presence alone. | Data correctness/ownership issues are surfaced as findings instead of being normalized visually. |
+
+The emerging Guide-family information architecture is **Detail Identity → visible primary task content → About/context knowledge → More Help/support**. This is a reconciliation model, not a requirement that every Guide expose all four layers or identical sections. Final family-level locking occurs only after the planned Rigs/Fish/Knots reconciliation passes validate the model.
+
+
+## Guide Data & Evidence Sweep Standard
+
+Data/evidence review is a separate correctness/ownership track from the Guide comparison. A Guide data sweep asks whether user-facing knowledge is correct, complete enough, useful, and owned by the right canonical source; the comparison matrix asks how equivalent semantic content should be presented. One may expose a dependency in the other, but they must not be collapsed into one UI-only audit.
+
+For a full Guide data sweep:
+
+1. review **every active record**, but begin with a coverage inventory instead of blindly re-researching every field;
+2. classify evidence as **VERIFIED / REUSE EVIDENCE**, **VERIFY / WEAK OR OLD**, **MISSING EVIDENCE**, or **CONFLICT / RESEARCH REQUIRED**;
+3. disposition reviewed content as **KEEP**, **REFINE**, **MOVE**, **REMOVE**, or **ADD**;
+4. prefer authoritative government/conservation/extension/manufacturer technical evidence, then established instructional sources; use practitioner/community evidence to discover recurring field-use mistakes or consensus and corroborate technical claims where stronger evidence is available;
+5. reconcile semantic ownership before schema/source changes; and
+6. treat a full sweep as full record coverage, not mandatory redundant web research for already well-supported fields.
+
+Research should improve confidence and beginner usefulness without turning each canonical record into a comprehensive article merely because more source material exists.
+
+
+## Fish / Knots Second-Pass Reconciliation Sequence
+
+After the current Rigs Guide Build Unit closes, perform one targeted **Fish Guide — Matrix + Data Reconciliation Pass**, then one targeted **Knots Guide — Matrix + Data Reconciliation Pass**, followed by a bounded **Fish / Knots / Rigs Side-by-Side Convergence**. Preserve previously validated work unless the current matrix/evidence pass demonstrates a concrete correction.
+
+The three-Guide convergence verifies information architecture, Visual Pattern Registry usage, interaction/disclosure, Text Hierarchy & Semantic Color, link/reference language, responsive behavior, production markup/CSS consistency, and data-shape dependencies. It is convergence only and must not become a third content audit.
+
+This bounded sequence occurs before Technique under the current roadmap revision. It does **not** replace the later full Reference Knowledge Cohesion Review after Technique, Regulations, and Tackle are established, nor the final Version 1 site-wide design audit.
 
 
 ## Discussion-to-Approval Documentation Batching
@@ -740,6 +802,32 @@ At minimum inventory these semantic component classes:
 For each component class, identify all implementations across Fish, Rigs, Knots, Tackle, Reel Setup, Dashboard/landing pages, and any additional implemented Version 1 domains.
 
 
+## Guide-Family Side-by-Side Visual-Language Reconciliation — REQUIRED
+
+
+The final Guide-family comparison must review **Fish Guide, Knots Guide, Rigs Guide, Tackle Guide, and Technique Guide side by side** wherever they expose semantically equivalent elements. The audit is responsible for discovering inconsistencies; it is not limited to defects the user has already enumerated in screenshots or chat.
+
+
+For every equivalent visible element, compare both the rendered presentation and the production implementation that creates it. Inspect the directly relevant renderer/markup, controller/state hooks when interaction semantics matter, and CSS. Map the element to the applicable Visual Pattern Registry language and verify that equivalent Guide elements use the same visual grammar unless a documented domain-specific semantic reason requires a different treatment.
+
+
+The production-file comparison must specifically check for missed legacy selectors, one-off containers, duplicated component grammars, link treatments that visually read as buttons or chips, unexplained blooms/accents, responsive-only divergence, and elements whose CSS/markup semantics no longer match their current role. A visually acceptable screenshot is not sufficient if the underlying production implementation still carries an unexplained parallel visual language that can reappear elsewhere.
+
+
+Chip/pill use must be **deliberate and sparse**. A chip is not retained merely because its appearance is attractive. During the Guide comparison, inventory every remaining chip/pill implementation and identify its specific semantic role. If no current element class requires chip treatment, remove or reclassify legacy chip language rather than preserving it without a defined purpose. Where a chip remains appropriate, distinguish passive categorical/context labels from actionable links, reference controls, workflow actions, and status indicators.
+
+
+Known comparison findings that must be included in this audit even if they are corrected earlier:
+
+
+- **Fish Detail — Current Reel Setup:** after the bounded Fish Detail Reel Setup decision is made, verify the resulting choice whether Reel Setup context is added or deliberately omitted. Confirm the decision is coherent with the tested Rigs pattern and does not create unexplained Guide-family inconsistency.
+- **Fish Detail — Compare Fish:** `View Comparison Fish` currently mixes chip and link visual language. Reconcile it to the approved link/component grammar.
+- **Fish Detail — Habitat & Water:** when Habitat and Common Water render as desktop side-by-side peer subsections, provide the approved subsection divider between them; preserve appropriate stacked/mobile behavior.
+- **Knots Detail — Sources & References:** source/reference destinations must use the standard link language rather than button-like formatting.
+- **Knots Detail — How to Tie It / Visual Guide:** Visual Guide should not be wrapped in an unnecessary container. Review the `Visual Guide` wording and its Reference-type chip on the same line, subject to final responsive validation.
+- **Knots Detail — Numbered Tying Steps:** use the same visual treatment family as Visual Guide so the two instructional aids read as peers, while preserving their different content semantics.
+
+
 # Deferred Findings From Fish Wave 1 Mobile Review
 
 
@@ -1001,28 +1089,26 @@ The final audit must:
 ## 13. Rig `useCases[]` Semantic Ownership / Fish-Specific Leakage
 
 
-**Status:** AUDIT REQUIRED / ARCHITECTURE CONSISTENCY DEFECT
+**Status:** APPROVED / FCC 50B-D DISPOSITION — IMPLEMENTATION PENDING R6
 
 
-Fish applicability is owned by `FISH_RIG_GUIDANCE` Decision Knowledge, not by canonical Rig records. The current Rig model intentionally does not define `targetFishIds[]`, and any future Rig-to-Fish presentation must derive from `FISH_RIG_GUIDANCE` rather than duplicating the relationship on Rig.
+Fish applicability remains owned by `FISH_RIG_GUIDANCE` Decision Knowledge, not by canonical Rig records. The current Rig model intentionally does not define `targetFishIds[]`, and any reverse Fish presentation must derive from `FISH_RIG_GUIDANCE` rather than duplicating the relationship on Rig.
 
 
-Several existing Rig `useCases[]` strings nevertheless name target Fish directly (for example, Jighead + Soft Plastic, Inline Spinner Setup, Live-Bait Slip-Sinker Rig, Ned Rig, and other bass-oriented Rig records). This creates semantic leakage: a user can follow a Fish-to-Rig recommendation into a Rig whose descriptive `useCases[]` wording appears to privilege a different species even though that wording is not the canonical Fish-applicability relationship.
+FCC 50B-D completed the all-23-Rig Practical Guidance & Evidence Sweep and approved the Rig-specific semantic disposition:
 
 
-The Version 1 UX Design Audit must:
+- retain `useCases[]`, but narrow it to intrinsic Rig purpose/job/use context;
+- present that content on Rig Detail as **Use It For**, replacing **Best For**;
+- remove duplicated Fish or Fish-group applicability from Rig `useCases[]`;
+- keep canonical Fish-to-Rig suitability, ranking, and rationale exclusively in `FISH_RIG_GUIDANCE`;
+- keep reusable retrieve/presentation actions in typed Rig-to-Technique relationships and do not duplicate them into `useCases[]` merely to populate the About section;
+- keep **Good Conditions** derived from the current transitional `conditionTags[]` field until Recommendation Decision Knowledge replaces that metadata;
+- for `Direct-Tie Lure Setup`, derive **Use It For** and **Good Conditions** from the selected configuration;
+- do not add `targetFishIds[]`, `fishIds[]`, or another inverse Fish mapping to Rig for UX, search, or navigation.
 
 
-- inventory every Rig `useCases[]` entry that names a Fish or Fish group,
-- determine whether each phrase is intrinsic Rig-use context or duplicated Fish-applicability guidance,
-- rewrite duplicated Fish-specific applicability as species-neutral presentation/condition/use-context language where practical,
-- keep canonical Fish-to-Rig suitability, ranking, and rationale exclusively in `FISH_RIG_GUIDANCE`,
-- derive any Rig-detail “Fish this Rig is useful for” presentation from `FISH_RIG_GUIDANCE` if such reverse presentation is retained or added,
-- do not add `targetFishIds[]`, `fishIds[]`, or another inverse Fish mapping to Rig merely to support UX, search, or navigation,
-- validate that revised Rig copy still explains the Rig clearly without misleading users about its broader applicability.
-
-
-This defect is intentionally parked for the site-wide UX Design Audit unless it blocks an active Fish-production review. It must not be solved by adding more species-specific duplication to Rig data.
+The original semantic-leakage issue is therefore no longer an open design question. R6 owns the targeted `data/rigs.js` copy cleanup and matching Rig Detail implementation/validation. The wider UX-009/site-wide component and Guide-family consistency audit remains OPEN, and later Fish/Knots/Rigs convergence may refine shared presentation language without reopening this Rig ownership contract.
 
 
 ## 14. Knowledge Card Element Standardization
@@ -1396,6 +1482,10 @@ The Version 1 design audit may close only when:
 8. Every active JavaScript file has an explicit audit disposition for readability, semantic organization, change-placement discipline, and maintainability.
 9. No known material documentation gap, contradictory active owner, orphan source block, or arbitrary append-only code placement remains without an explicit approved disposition.
 10. Every implemented section with multiple peer subsections has an explicit divider disposition and, when applicable, a visible divider between adjacent subsection groups that passes desktop and actual-mobile review.
+11. Fish, Knots, Rigs, Tackle, and Technique have completed a deliberate side-by-side Guide comparison for semantically equivalent visible elements; unexplained differences are fixed or have a documented domain-specific reason.
+12. The Guide comparison includes the directly relevant production renderer/markup/CSS, not only rendered screenshots, and no known legacy or parallel visual language remains undispositioned.
+13. Every remaining chip/pill implementation has a specific documented semantic role; no chip treatment remains solely as decorative legacy styling or as a duplicate of standard link/action/reference language.
+14. The Fish Detail Reel Setup decision, Fish Compare/Habitat findings, and Knots Sources/Visual Guide/Numbered Tying Steps findings have explicit final-audit dispositions even if corrected before the final site-wide gate.
 
 
 # Relationship to Active Development

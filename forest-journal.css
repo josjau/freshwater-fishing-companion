@@ -664,6 +664,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .rig-about-list { margin: 0; padding-left: 1.2rem; }
 .rig-about-list li { margin-bottom: var(--space-2); }
 .rig-about-list li:last-child { margin-bottom: 0; }
+.rig-about-list--references > li { margin-bottom: 0; }
 .rig-about-list--references {
     display: flex;
     flex-wrap: wrap;

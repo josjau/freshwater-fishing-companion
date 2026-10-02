@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03A-TECHNIQUES.md  
-**Document Revision:** 0.6.0  
+**Document Revision:** 0.6.1  
 **Document Status:** Approved  
-**Implementation Status:** IMPLEMENTED / VALIDATED / CLOSED — 16 active Technique records; 69 Rig↔Technique + 54 Lure/Bait↔Technique Compatibility relationships active  
+**Implementation Status:** IMPLEMENTED / VALIDATED / CLOSED — 16 active Technique records; 77 Rig↔Technique + 54 Lure/Bait↔Technique Compatibility relationships active  
 **Decision Baseline:** D003, D024, D056, D069
 
 ---
@@ -146,6 +146,8 @@ Retrieve speed, countdown/depth, float-depth adjustment, weighting, current orie
 Technique production must validate the exact 16-item vocabulary, Foundation/lifecycle fields, meaningful summaries, lowercase kebab-case IDs, and only demonstrated optional instructional fields. It must not introduce Fish-specific guidance, Condition-specific advice, Rig construction instructions, inverse Compatibility arrays, or contextual recommendation fields.
 
 Rig↔Technique and Lure/Bait↔Technique authored scopes are canonical Compatibility data under `09-RELATIONSHIPS.md`. Three-part Rig + Lure/Bait + Technique validity is derived from active pairwise Compatibility intersection.
+
+FCC 50B reconciles legacy Rig `Bottom Fishing` semantics to the existing canonical `bottom-presentation` Technique. The active Compatibility set adds Bottom Presentation for Drop Shot Rig, Carolina Rig, Neko Rig, Shaky Head Rig, Free Rig, Jika Rig, Punch / Pegged Texas Rig, and Bottom-Bouncer / Spinner Rig. This changes relationship coverage only: no new Technique vocabulary, Technique schema, Condition, or recommendation field is created.
 
 # Locked V1 Production Content — C2 EXACT CONTENT LOCK
 

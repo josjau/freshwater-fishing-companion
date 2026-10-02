@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.5.13  
+**Document Revision:** 0.5.15  
 **Document Status:** Approved  
 **Implementation Status:** IMPLEMENTED / VALIDATED CURRENT — 23 active canonical Rigs including Direct-Tie Lure Setup, Weighted Swimbait Hook Rig, and Tube Jig Rig  
 **Decision Baseline:** D024, D025, D026, D027, D028, D042-D049, D056, D057, D065
@@ -18,17 +18,21 @@ A Rig represents a complete ready-to-fish terminal setup. Rig owns physical asse
 
 # Current Production Schema
 
-Every current Rig contains the Foundation fields plus:
+Current top-level Rig records use the Foundation fields plus the following production fields as applicable:
 
 ```text
 difficulty
+useCases[]
 conditionTags[]
+referenceLinks[]
+tutorialVideo
 componentRequirements[]
 knotApplications[]
 assemblySteps[]
 setupNotes[]
+commonMistakes[]
+safetyNotes[]
 variationIds[]
-tutorialVideo
 ```
 
 Current production does **not** contain:
@@ -48,7 +52,7 @@ lureBaitRequirements[]   # specific canonical Lure/Bait required by a Rig when a
 configurations[]         # only when one Rig family has materially shared terminal architecture with lure-specific setup variants
 ```
 
-`Direct-Tie Lure Setup` uses `configurations[]`; its configuration records own the applicable Lure/Bait requirement, Tackle requirements, knot applications, assembly steps, setup notes, mistakes, configuration-specific references, and optional configuration-specific `tutorialVideo`. Weighted Swimbait Hook Rig and Tube Jig Rig use top-level `lureBaitRequirements[]` and top-level `tutorialVideo`. These fields express physical/setup requirements only; contextual recommendation suitability remains outside Rig.
+`Direct-Tie Lure Setup` uses `configurations[]`; the selected configuration owns its applicable `useCases[]`, `conditionTags[]`, Lure/Bait requirement, Tackle requirements, knot applications, assembly steps, setup notes, common mistakes, configuration-specific references, and optional configuration-specific `tutorialVideo`. Direct-Tie does not introduce configuration-level Safety metadata in the current model; material Rig-specific Safety remains top-level `safetyNotes[]` only when it applies to the Rig as represented. Weighted Swimbait Hook Rig and Tube Jig Rig use top-level `lureBaitRequirements[]` and top-level `tutorialVideo`. Fish applicability and reusable presentation behavior remain outside Rig ownership.
 
 ---
 
@@ -69,11 +73,26 @@ Allowed values:
 
 Core is not a difficulty value. Core membership is owned separately by `CORE_RIG_IDS`.
 
+## useCases[]
+
+Concise intrinsic Rig purpose/job/use-context statements used by Rig search and the Rig Detail **Use It For** presentation. `useCases[]` explains what the Rig is for without acting as a duplicate relationship registry.
+
+Rules:
+
+- Fish applicability, ranking, and rationale remain owned by `data/fish-rig-guidance.js`; do not encode target Fish or Fish groups into `useCases[]` merely to express applicability.
+- Reusable retrieve/presentation actions belong to typed Rig-to-Technique relationships in `data/compatibility.js`; do not duplicate those Technique relationships into `useCases[]` merely to populate **Use It For**.
+- Condition suitability belongs in the current transitional `conditionTags[]` field or future Recommendation Decision Knowledge, not duplicated into `useCases[]` when the phrase adds no intrinsic Rig-use meaning.
+- `Direct-Tie Lure Setup` derives **Use It For** from the selected configuration's `useCases[]`.
+
 ## conditionTags[]
 
 Current transitional Rig-owned text metadata describing conditions where the Rig performs well. RP-A1 locks this field as **frozen legacy metadata** during Recommendation Prerequisites Foundation Subphase A. Existing values remain temporarily because current Rig Search and the Rig Detail **Good Conditions** presentation still consume them, but no new `conditionTags[]` vocabulary may be introduced.
 
 RP-A1 explicitly prohibits converting these strings into `conditionIds[]` or creating a Rig↔Condition relationship. Contextual “works well in” suitability belongs to future Recommendation Decision Knowledge. The field is removed only after the replacement Recommendation owner and dependent search/presentation behavior are implemented and validated.
+
+## referenceLinks[]
+
+Rig- or configuration-specific external references used for technical verification, source fallback, and **Sources & References** presentation. The evidence register in `docs/RIG_REFERENCE_SOURCES.md` is the durable provenance owner; `referenceLinks[]` carries the approved runtime links required by the Rig record.
 
 ## componentRequirements[]
 
@@ -89,7 +108,7 @@ Current `componentRequirements[]` describes one coherent ready-to-fish setup. It
 
 The canonical Slip Bobber Rig currently owns the hook-plus-live/natural-bait configuration. A jig is a legitimate alternate presentation, but it is not a simultaneous `bait` value and must not be added as an ad hoc optional requirement that makes assembly/readiness ambiguous.
 
-Before one Rig can offer hook+bait **or** jig terminal choices, approve a reusable model for component substitution, assembly steps, readiness, knots, and setup/presentation consequences—or approve a separate Rig when the configurations should remain distinct. This is deferred under D065 and does not block the current 21-Rig library.
+Before one Rig can offer hook+bait **or** jig terminal choices, approve a reusable model for component substitution, assembly steps, readiness, knots, and setup/presentation consequences—or approve a separate Rig when the configurations should remain distinct. This is deferred under D065 and does not block the current 23-Rig library.
 
 ## knotApplications[]
 
@@ -113,7 +132,35 @@ Rules:
 - reverse Knot **Where You'll Use It** navigation is derived from active Rig records,
 - runtime code does not infer Knot relationships by parsing assembly prose.
 
-The validated 21-Rig library contains 32 real tied connection points.
+The validated 23-Rig library contains 38 current Rig-owned tied-connection records, including Direct-Tie configuration connections.
+
+### R2 approved knot-to-build-step mapping — pending implementation
+
+FCC 50B-E approves one minimal schema extension for the R2 Rig-detail correction: each `knotApplications[]` entry will add required `assemblyStepIndex`. This field is approved canonical direction but is not part of the current production source until the R2 candidate is implemented, reviewed, and promoted.
+
+The R2 application shape is:
+
+```text
+label
+connectionType
+recommendedKnotIds[]
+assemblyStepIndex
+notes
+```
+
+`assemblyStepIndex` is a zero-based integer pointer into the owning Rig or selected configuration's existing `assemblySteps[]` array. It stores only the real tied connection's association with the Build Step where that connection is made.
+
+Rules:
+
+- every `knotApplications[]` entry must map to exactly one valid `assemblySteps[]` index,
+- the index must be in range for the owning Rig/configuration,
+- `recommendedKnotIds[]` remains the sole Knot relationship owner; do not duplicate Knot IDs/names into `assemblySteps[]` merely for presentation,
+- `assemblySteps[]` remains the sole owner of ordered build-instruction text; do not convert the array to step objects solely for this mapping,
+- runtime must not infer the connection-to-step association by parsing human-readable assembly prose,
+- Rig Detail **Knots You'll Tie** may derive one de-duplicated applicable-Knot learning list from `recommendedKnotIds[]`, while Build Steps use `assemblyStepIndex` to render the valid Knot option(s) at the exact connection step,
+- this mapping does not change Knot-owned tying instructions, Rig-owned real-connection semantics, or Technique ownership.
+
+Current audit evidence confirms all 38 existing tied-connection records map to exactly one current Build Step, including all Direct-Tie configurations.
 
 ## assemblySteps[]
 
@@ -121,7 +168,17 @@ Authoritative ordered instructions for physically constructing the Rig.
 
 ## setupNotes[]
 
-Rig-specific setup/configuration guidance that does not generalize cleanly to reusable Technique instruction.
+Rig-specific setup/configuration guidance that does not generalize cleanly to reusable Technique instruction. Setup/maintenance checks belong here when they affect correct Rig configuration but are not material Safety warnings.
+
+## commonMistakes[]
+
+Rig-specific construction, configuration, or handling mistakes that commonly produce the wrong topology, poor function, avoidable tangles/snags, or other incorrect setup outcomes. Generic Safety language does not belong here merely to fill the section.
+
+## safetyNotes[]
+
+Material Rig-specific Safety guidance only. A Rig may have an empty `safetyNotes[]` array when no distinctive material hazard is supported. Runtime renders the Safety block only when material notes exist; no separate `showSafety`, severity, prose heuristic, or speculative configuration-level Safety field is part of the current model.
+
+Generic hook-point awareness, ordinary casting awareness, routine connection inspection, regulations, and equipment-maintenance reminders belong to their proper owners unless a Rig creates a distinctive material hazard.
 
 ## variationIds[]
 
@@ -195,7 +252,7 @@ The six Core Rigs, in the current canonical `CORE_RIG_IDS` teaching order, are:
 
 # Rig Guide Learning Tiers — Implemented
 
-The current 21-Rig library implements all six difficulty tiers:
+The current 23-Rig library implements all six difficulty tiers:
 
 - Beginner
 - Beginner+
@@ -204,7 +261,7 @@ The current 21-Rig library implements all six difficulty tiers:
 - Advanced
 - Expert
 
-Current tier counts are 7 Beginner / 3 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert.
+Current tier counts are 7 Beginner / 5 Beginner+ / 4 Intermediate / 4 Intermediate+ / 2 Advanced / 1 Expert.
 
 The Rig Guide exposes All Rigs, Core Rigs, and each implemented difficulty tier. Earlier documentation describing Intermediate through Expert as future tier expansion is obsolete.
 

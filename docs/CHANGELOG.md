@@ -1,14 +1,22 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.8.10  
+**Document Revision:** 3.8.11  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-09-28
+**Last Updated:** 2026-10-01
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, current-state/resume surface, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to the external Live Working State; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-10-01 — Rig Guide R6 — Local Review Complete / Commit Candidate
+
+- Completed the Rig Guide audit/build through the locally approved R6 candidate, including the reviewed detail hierarchy, retained Reel Setup handoff, session-scoped shared What You Need readiness, material-only Safety presentation, connection-first Knot guidance, build-step Knot options, tutorial disclosure behavior, About This Rig organization, and More Help/source treatment.
+- Final R6 context reconciliation restricts **Good Conditions** to canonical Conditions, displays legacy **Sparse Cover** as canonical **Light Cover**, suppresses unresolved mixed-semantic legacy values from that subsection, and preserves Fish Position/State as deferred Recommendation/Technique-stage work rather than creating a new Rig schema domain.
+- Reconciled legacy **Bottom Fishing** to the existing **Bottom Presentation** Technique and added eight intrinsic Rig↔Technique relationships, bringing active Compatibility to **185 total: 54 Rig↔Lure/Bait + 77 Rig↔Technique + 54 Lure/Bait↔Technique**.
+- Corrected compact About This Rig reference-row alignment and reconciled durable architecture/user-data documentation to the implemented session-scoped Rig-readiness and device-local completed Reel Setup persistence boundaries.
+- Local browser review is PASS. This commit candidate still requires the normal post-push CI/Pages verification and deployed actual-mobile validation before Build Unit closeout.
 
 # 2026-09-28 — Workflow Closeout Efficiency Refinement
 

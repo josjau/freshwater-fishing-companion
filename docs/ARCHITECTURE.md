@@ -2,10 +2,10 @@
 
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.15.11  
+**Document Revision:** 0.15.12  
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
-**Last Updated:** 2026-09-28
+**Last Updated:** 2026-10-01
 
 
 # Purpose
@@ -247,7 +247,9 @@ The Knots milestone is closed and validated.
 `data/tackle.js` owns 29 active canonical functional Tackle concepts. Canonical Tackle describes functional types, not a user's commercial possessions.
 
 
-Persistent owned tackle belongs to future My Tackle/User Knowledge. The current readiness store is transitional only and must not be mistaken for authoritative ownership.
+Persistent owned tackle belongs to future My Tackle/User Knowledge. Current Rig readiness is a transitional at-time availability aid implemented as a session-scoped shared component pool (`sessionStorage` with in-memory fallback), keyed by canonical domain-qualified Tackle/Lure-Bait identity and reused across Rigs during the active browser session. Legacy per-Rig readiness `localStorage` is discarded. This state is not authoritative ownership and must never silently mutate My Tackle.
+
+The completed **Get Your Reel Ready / Reel Setup** context is separate from Rig readiness. A valid completed context persists device-locally in `localStorage` until the user explicitly clears it; starting or updating a setup uses draft workflow state, and only completing that workflow replaces the retained context. Clearing the retained Reel Setup does not clear Rig readiness or create/remove My Tackle ownership.
 
 
 `data/lure-bait.js` owns the implemented 13-identity Lure/Bait Reference domain under D069. Tackle owns functional fishing equipment and Rig-building components; Lure/Bait owns canonical lure and bait identities intentionally presented to Fish. Commercial product identity is not required for the current Lure/Bait architecture.
@@ -297,7 +299,7 @@ The closed Settings / User Data Architecture workstream settled the core Version
 - **UD-11 - CLOSED / PASS / refinement allowed:** Appearance, Preferences Version 1, Profile, Data Management, About, and cross-cutting authentication/synchronization/conflict/recovery status surfaces are architecture-complete for demonstrated Version 1 needs.
 
 
-Firebase Authentication + Cloud Firestore is LOCKED / refinement allowed. Exact provider primitives, domain record fields, UI wording/layout, and later My Tackle/Catch Log implementation mechanics remain owned by their appropriate implementation gates. Current Rig-readiness `localStorage` remains transitional availability state and is not authoritative ownership. UD-12 and GATE-007 are CLOSED / PASS; GATE-004 Recommendation production is active.
+Firebase Authentication + Cloud Firestore is LOCKED / refinement allowed. Exact provider primitives, domain record fields, UI wording/layout, and later My Tackle/Catch Log implementation mechanics remain owned by their appropriate implementation gates. Current Rig readiness remains transitional session-scoped availability state and is not authoritative ownership. Completed Reel Setup is a separate device-local workflow context retained until explicit clear; it is not synchronized profile-owned User Knowledge. UD-12 and GATE-007 are CLOSED / PASS; GATE-004 Recommendation production is active.
 
 
 ## Media

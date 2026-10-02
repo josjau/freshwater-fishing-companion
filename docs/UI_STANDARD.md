@@ -1,12 +1,12 @@
-# Freshwater Fishing Companion — UI Standard
+﻿# Freshwater Fishing Companion — UI Standard
 
 
 **Document:** UI_STANDARD.md  
-**Document Revision:** 1.3.25  
+**Document Revision:** 1.3.29  
 **Document Status:** Approved  
 **Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard  
 **Decision Baseline:** D015, D020-D022, D030-D032, D035, D042, D046-D048, D050-D052, D061, D063  
-**Last Updated:** 2026-09-27
+**Last Updated:** 2026-09-30
 
 
 # Purpose
@@ -102,6 +102,92 @@ Guide-specific lightweight motifs or decorative graphics are deferred to the fin
 A Fish treatment becomes a reusable Guide-family baseline only after the relevant section has passed its approval gate and applicable desktop/mobile validation.
 
 
+## Visual Pattern Registry
+
+The Guide-family Visual Pattern Registry provides a small canonical vocabulary for reusable semantic UI patterns. Guide audits and builds use these human-readable names so equivalent information and interactions can be mapped to established visual language without relying on page-specific examples or chat memory.
+
+Patterns are **semantic and composable**. One section may use more than one pattern. Do not create one monolithic style name for a complex section when it combines several reusable roles, and do not create registry entries for every CSS variation, spacing difference, or one-off arrangement. A new registry entry is appropriate only when a reusable semantic role has a sufficiently established visual/interaction contract.
+
+| Pattern | Semantic role | Required baseline |
+| --- | --- | --- |
+| **Guide Identity Intro** | Establishes a Guide and its purpose on a landing page. | Compact Guide title/intro hierarchy with concise purpose text; not a large marketing hero. |
+| **Guide Search Surface** | Searches a Guide or collection. | Shared live-search grammar; `Search [Domain]` peer section-title treatment matching `Browse [Domain]`; scope-appropriate helper text, clear control, result-state behavior, and accessible focus/touch treatment. |
+| **Collection Navigation Card** | Navigates to a browse/collection grouping. | Shared Guide collection-card shell and interaction grammar, including canonical title reuse and the approved heading/action treatment. |
+| **Entity Result Card** | Represents one canonical entity in Search/Browse results. | Shared result-card hierarchy, whole-card action behavior where applicable, concise entity-specific action cue, responsive result-grid limits, and accessible interaction states. |
+| **Persistent Page Navigation** | Provides Parent/Home navigation and context restoration. | Shared floating navigation treatment with standard Parent/Home semantics and applicable state/scroll restoration. |
+| **Detail Identity Header** | Identifies the specific entity being viewed. | Familiar detail hierarchy: priority/core designation when applicable, classification, canonical title, concise description; avoid technical-metadata overload. |
+| **Peer Subsection Group** | Presents multiple named sibling concepts inside one larger section/disclosure. | Each peer keeps its own smaller uppercase nested-subsection heading, separator line directly beneath that heading, and associated content. Complete peers may sit side by side when space permits and stack intact on narrow screens. |
+| **Standard Detail List** | Presents unordered explanatory/supporting items. | Shared detail-list spacing, hierarchy, marker treatment, and readable density; preserve list semantics rather than flattening into paragraph text. |
+| **Ordered Instruction Steps** | Presents ordered actions the user performs. | Use a clear dedicated step-number treatment, instruction text as the dominant content, aligned wrapped text, and readable vertical rhythm. Preserve one ordered vertical sequence at all widths; do not convert procedures into chips, unrelated per-step cards, or multi-column layouts. Routine dividers between every step are not required. |
+| **Compact Internal Link List** | Presents a compact set of related internal destinations. | Shared compact internal-link treatment; destination wording and `→` remain one visual unit; avoid unrelated pill/button styling unless semantics require it. |
+| **Contextual Recommendation Row** | Recommends one canonical internal entity from the current context and explains why it is useful here. | Reuse the canonical destination name; provide one clear internal action such as `View Rig →` or `View Knot →`; include a short evidence-supported/context-owned reason only when it materially helps the choice; use a compact bounded row/card treatment rather than a chip/pill; do not invent ranking, scores, best badges, availability, legality, personalization, or rationale that the owning guidance does not support. |
+| **Disclosure Group** | Hides/reveals secondary supporting information. | Shared full-row disclosure grammar with `▾` / `▴`, independent keyboard/touch access, correct collapsed layout removal, and focus/viewport preservation when content closes. |
+| **Contextual Reference Cue** | Opens exact-term contextual Reference Knowledge without leaving the current task. | Plain referenced text plus immediately adjacent `ⓘ`; the cue is the Reference target, with invisible enlarged hit area where needed and explicit focus restoration. |
+| **Contextual Reference Surface** | Displays the contextual information opened by `ⓘ`. | Shared modal/sheet interaction grammar with one active surface, bounded internal scrolling, appropriate close behavior, background-state preservation, and focus return; content structure remains domain-appropriate. |
+| **Semantic Status Panel** | Communicates readiness, completion, recovery, availability, or comparable current state. | State is communicated with text and semantics rather than color alone; treatment remains visually distinct from ordinary information and accessible to assistive technology. |
+| **Safety / Warning Block** | Surfaces material caution or safety guidance. | Conspicuous semantic warning treatment; material guidance is not hidden merely to reduce page length and does not collapse into ordinary body styling. |
+| **Reel Setup Workflow Context** | Shows retained Get Your Reel Ready data as passive, host-relevant context within another Guide surface. | Identify workflow provenance with the shared Workflow semantic color; show only retained Reel Setup fields materially useful to the host surface; keep values visually secondary; do not imply fit, compatibility, sizing, recommendation, or readiness; prefer compact side-by-side composition when it remains readable and stack only when content-fit requires it. |
+
+Media-specific presentation remains owned by `MEDIA_GUIDE.md`; the registry references that owner rather than duplicating media rules. Directional/reference glyphs such as `→`, `↗`, and `ⓘ` are interaction semantics used inside patterns, not standalone core patterns.
+
+During a Guide audit, map each visible section/element to the applicable named pattern or combination of patterns as the audit progresses. If no existing pattern truthfully fits, record the role as **OPEN** rather than force-fitting it. Equivalent semantic roles must reuse the canonical pattern unless a documented domain-specific reason justifies an exception. Current production implementations may provide evidence for an already-approved pattern, but they do not override this standard merely because they exist.
+
+### Text Hierarchy & Semantic Color
+
+Guide-family text treatment is standardized by **semantic text role**, not by Guide/domain membership. Equivalent roles across Fish, Knots, Rigs, Technique, Tackle, and other comparable Guide surfaces should use the same shared treatment unless a documented semantic exception exists.
+
+The comparison/reconciliation vocabulary includes, as applicable:
+
+- primary body and instructional text;
+- section and nested-subsection headings;
+- supporting/helper text;
+- secondary metadata;
+- labels/eyebrows and grouping labels;
+- internal/external action text and Reference cues; and
+- semantic-state text such as Safety, readiness, Core, and Workflow context.
+
+Semantic colors are reserved for real semantic meaning and must not become decorative body-text coloring. Color may reinforce meaning but may not be the sole cue. Exact token values and the final mapping from existing CSS variables to these roles remain **BUILD/RECONCILIATION OPEN** until the Guide-family comparison has enough cross-Guide evidence to choose the smallest coherent palette. Guide membership alone is never a reason to recolor ordinary body/instruction text or equivalent actions.
+
+### Detail Identity Header composition — Guide-family baseline
+
+**Status:** APPROVED / REVISION ALLOWED — FCC 50A identity-section review. Exact geometry/color values remain build-review items where noted.
+
+The shared **Detail Identity Header** uses the Fish-style complete identity shell as the Guide-family direction: one full rounded neutral container with a complete perimeter border, shared padding/radius hierarchy, no arbitrary Guide-specific accent rail, and no decorative bloom/gradient as a normal identity treatment. Canonical entity name is dominant; classification/designation is subordinate; the concise entity summary belongs to the identity section; legitimate domain-specific identity metadata and media may be included without creating a different identity language.
+
+Equivalent identity roles share this shell even when fields differ by domain. Fish may include category/classification, common name, scientific name, family, aliases, and primary identity media. Knots may include Core designation when applicable, difficulty, canonical Knot name, summary, and aliases. Rigs may include Core designation when applicable, difficulty, canonical Rig name, and summary. Guide-family consistency applies to equivalent roles, not identical field inventories.
+
+#### Core designation modifier
+
+Core remains a meaningful semantic distinction for curated foundational material that is especially important for a newer angler. Core does **not** create a second Detail Identity component. Use the same identity-shell geometry and express the distinction in the classification line:
+
+- `CORE RIG` / `CORE KNOT` uses one shared **Core semantic color** across domains;
+- the separator and difficulty/classification retain the default Identity metadata color;
+- do not use a Core pill/badge merely to decorate the designation;
+- do not use a Core-specific accent rail or bloom/gradient; and
+- a restrained stronger complete-border/surface emphasis may be browser-tested, but it must remain recognizably the same Detail Identity Header.
+
+Exact Core color and whether that additional shell emphasis is useful remain **BUILD-REVIEW OPEN**.
+
+#### Reel Setup Workflow Context inside Detail Identity
+
+**Reel Setup Workflow Context** is retained workflow data, not entity identity, but it may be embedded inside the Detail Identity shell when that placement keeps useful context visible without creating another page section. Its placement does not change its semantics.
+
+For Rig Detail, when retained Reel Setup exists:
+
+- keep entity identity and Reel Setup Workflow Context side by side in the upper identity row whenever both remain comfortably readable;
+- the Rig summary spans the **full identity-container width below both upper regions** rather than remaining constrained to the Rig-identity column;
+- do **not** force stacking merely because the viewport is mobile; stack only when actual content-fit validation shows excessive wrapping, clipping, poor readability, or disproportionate height;
+- `CURRENT REEL SETUP` uses the shared **Workflow semantic color** to identify where and why the retained data is present;
+- Reel Setup values remain visually secondary and use the approved Reel-workflow data treatment rather than Rig-identity emphasis;
+- the embedded context is passive and does not become a workflow launcher or action card;
+- do not imply Rig fit, compatibility, component sizing, recommendation, or readiness; and
+- omit the region completely when no retained Reel Setup exists.
+
+The workflow context is **host-relevant**, not a reproduction of the complete retained workflow record. Each host surface shows only the smallest subset of retained Reel Setup fields that is materially useful there. Future retained workflows may receive their own named visual language rather than inheriting Reel Setup presentation merely because they are persisted workflows.
+
+The following remain **BUILD-REVIEW OPEN** for the Rigs implementation: exact identity/workflow column ratio; Reel Setup value typography/weight/color treatment; exact host-relevant retained fields; worst-case long Rig-name plus long retained-data behavior; the content-fit threshold for fallback stacking; and whether a subtle internal separator improves hierarchy. These open implementation variables do not reopen the approved semantic structure.
+
+
 # Landing / Navigation Page Hierarchy
 
 
@@ -109,9 +195,11 @@ Fish Guide is the active Guide-family landing-page baseline under FCC 48. Gate 1
 
 
 1. **Guide identity** — a compact heading/introduction block with concise purpose text and optional restrained domain motif; do not turn mobile Guide identity into a large marketing hero;
-2. **Search** — the first functional navigation element when the Guide is searchable;
+2. **Search [Domain]** — the first functional navigation element when the Guide is searchable;
 3. **special/workflow navigation** — only when it materially improves a real task;
-4. **Browse/collection framing** — a concise section heading followed by category/collection cards. Supporting copy is optional and should be omitted when the cards are already self-explanatory.
+4. **Browse [Domain] / collection framing** — a concise peer section heading followed by category/collection cards. Supporting copy is optional and should be omitted when the cards are already self-explanatory.
+
+Equivalent searchable Guide landing pages use `Search [Domain]` and `Browse [Domain]` as peer discovery section titles with the same Guide-family section-heading hierarchy and visual weight. Collection names such as `All [Domain]` remain collection-level labels and do not substitute for the Browse section title. Apply this consistently to Fish Guide, Knots Guide, Rigs Guide, and future comparable searchable Guides unless a separately documented domain-specific exception is approved. Preserve an explicit accessible label for the Search input even when the visible Search title is rendered with section-heading semantics.
 
 
 Permanent principle:
@@ -133,7 +221,7 @@ Search uses one shared interaction pattern across searchable sections/subsets:
 - domain search covers that implemented domain library;
 - subset/browse search searches **only** records eligible for the selected subset;
 - **Guide-family Search is live by default and does not display a visible Search button.** Typing performs the search/filter immediately; Enter/mobile Search submission may continue to trigger the same behavior internally. A Guide may retain an explicit submit control only when a separately approved functional reason requires one;
-- use concise, scope-clear labeling such as `Search Fish` rather than unnecessary `Search all ...` wording when the page scope is already obvious;
+- use the Guide-family peer section-title grammar `Search [Domain]` / `Browse [Domain]` on comparable searchable Guide landing pages; keep the Search field explicitly labeled for accessibility and use concise, scope-clear wording such as `Search Fish` rather than unnecessary `Search all ...` wording when the page scope is already obvious;
 - use concise scope helper text such as `Search by common name, alias, or group.`; keep placeholder examples optional and validate any maintained examples against the active scope;
 - show a one-click `×` clear control whenever the field contains text; present it as a small visible chip/button with a comfortably sized touch target rather than a loose symbol;
 - accessible clear label = `Clear search`;

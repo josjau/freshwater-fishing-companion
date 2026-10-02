@@ -1700,7 +1700,9 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         "rig-technique-weightless-soft-plastic-rig-deadstick",
         "rig-technique-drop-shot-rig-shake",
         "rig-technique-drop-shot-rig-deadstick",
+        "rig-technique-drop-shot-rig-bottom-presentation",
         "rig-technique-carolina-rig-drag",
+        "rig-technique-carolina-rig-bottom-presentation",
         "rig-technique-live-bait-slip-sinker-rig-bottom-presentation",
         "rig-technique-live-bait-slip-sinker-rig-drift",
         "rig-technique-live-bait-slip-sinker-rig-troll",
@@ -1711,21 +1713,27 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         "rig-technique-neko-rig-drag",
         "rig-technique-neko-rig-shake",
         "rig-technique-neko-rig-deadstick",
+        "rig-technique-neko-rig-bottom-presentation",
         "rig-technique-shaky-head-rig-shake",
         "rig-technique-shaky-head-rig-drag",
         "rig-technique-shaky-head-rig-hop",
         "rig-technique-shaky-head-rig-deadstick",
+        "rig-technique-shaky-head-rig-bottom-presentation",
         "rig-technique-free-rig-lift-and-fall",
         "rig-technique-free-rig-hop",
         "rig-technique-free-rig-drag",
+        "rig-technique-free-rig-bottom-presentation",
         "rig-technique-double-jig-crappie-rig-vertical-jig",
         "rig-technique-double-jig-crappie-rig-lift-and-fall",
         "rig-technique-jika-rig-hop",
         "rig-technique-jika-rig-drag",
         "rig-technique-jika-rig-lift-and-fall",
+        "rig-technique-jika-rig-bottom-presentation",
         "rig-technique-punch-pegged-texas-rig-lift-and-fall",
+        "rig-technique-punch-pegged-texas-rig-bottom-presentation",
         "rig-technique-bottom-bouncer-spinner-rig-troll",
         "rig-technique-bottom-bouncer-spinner-rig-drift",
+        "rig-technique-bottom-bouncer-spinner-rig-bottom-presentation",
         "rig-technique-split-shot-bait-rig-natural-drift",
         "rig-technique-split-shot-bait-rig-tight-line",
         "rig-technique-split-shot-bait-rig-bottom-presentation",
@@ -1792,7 +1800,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         "lure-bait-technique-cricket-tight-line",
         "lure-bait-technique-cricket-bottom-presentation"
 ]);
-    if (relationships.length !== 177) fail("Compatibility production", `expected 177 records; found ${relationships.length}`);
+    if (relationships.length !== 185) fail("Compatibility production", `expected 185 records; found ${relationships.length}`);
     validateUniqueIds(relationships, "Compatibility production");
     const expectedFields = [
         "id", "relationshipType", "sourceType", "sourceId", "targetType", "targetId",
@@ -1800,7 +1808,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
     ];
     const familyDefinitions = {
         "rig-lure-bait": { sourceType: "rig", targetType: "lure-bait", expectedCount: 54 },
-        "rig-technique": { sourceType: "rig", targetType: "technique", expectedCount: 69 },
+        "rig-technique": { sourceType: "rig", targetType: "technique", expectedCount: 77 },
         "lure-bait-technique": { sourceType: "lure-bait", targetType: "technique", expectedCount: 54 }
     };
     const rigById = indexById(rigs);
@@ -4269,21 +4277,22 @@ function validateRigR2DetailPresentation() {
         if (rendererSource.includes(obsolete)) fail("R4 About This Rig", `obsolete R2/R3 About structure remains: ${obsolete}`);
     }
 
-    // R2-C10 canonical Reference Knowledge cues; unmapped transitional conditionTags remain visible plain text.
+    // R2-C10 + R6 semantic reconciliation: Good Conditions renders canonical Conditions only.
     for (const token of [
         "const RIG_CONDITION_REFERENCE_IDS",
+        "const RIG_CONDITION_DISPLAY_LABELS",
+        '"Sparse Cover": "Light Cover"',
         "function buildRigConditionReferenceMarkup(items)",
         "function buildRigTechniqueReferenceMarkup(rigId, lureBaitId = null)",
         "rig-about-reference-term",
         "rig-about-reference-cue",
-        'aria-label="Learn about ${item}"',
+        'aria-label="Learn about ${label}"',
         'aria-label="Learn about ${technique.name}"',
-        '${conditionId ? `<button class="reference-info-button rig-about-reference-cue"'
+        "if (!conditionId || seenConditionIds.has(conditionId)) return;",
+        "if (!getConditionRecord(conditionId)) return;",
+        "label: RIG_CONDITION_DISPLAY_LABELS[item] ?? item"
     ]) {
-        if (!rendererSource.includes(token)) fail("R2 Rig Reference Knowledge", `missing ${token}`);
-    }
-    if (!rendererSource.includes('<span class="rig-about-reference-term">${item}</span>')) {
-        fail("R2 Rig Reference Knowledge", "Good Conditions must preserve unmapped transitional conditionTags as visible plain text");
+        if (!rendererSource.includes(token)) fail("R6 Rig Reference Knowledge", `missing ${token}`);
     }
     if (rendererSource.includes("rig-about-reference-link") || styleSource.includes(".rig-about-reference-link")) {
         fail("R2 Rig Reference Knowledge", "obsolete whole-term Rig About reference link remains");
