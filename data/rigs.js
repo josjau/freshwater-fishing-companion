@@ -32,9 +32,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner",
         useCases: [
-            "Learning to fish",
-            "Fishing shallow water",
-            "Fishing with worms or small live bait"
+            "Learning a simple fixed-float bait setup",
+            "Suspending worms or small live bait at a set depth"
         ],
         conditionTags: [
             "Shallow Water",
@@ -93,6 +92,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 0,
                 notes: null
             }
         ],
@@ -104,7 +104,7 @@ const RIG_DATA = Object.freeze([
             "Add bait and lower the rig into the water to confirm balance."
         ],
         setupNotes: [
-            "A depth of two to four feet is a practical starting point.",
+            "Set the bait depth relative to the fish, bottom, and cover; two to four feet can be a useful shallow-water starting point.",
             "Use the smallest bobber that still supports the bait and weight."
         ],
         commonMistakes: [
@@ -112,9 +112,7 @@ const RIG_DATA = Object.freeze([
             "Placing the bobber too close to the hook.",
             "Adding more weight than the bobber can support."
         ],
-        safetyNotes: [
-            "Keep the hook pointed away from people while clipping on the bobber."
-        ],
+        safetyNotes: [],
         variationIds: ["slip-bobber-rig"],
     },
     {
@@ -126,9 +124,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner+",
         useCases: [
-            "Fishing from shore",
-            "Fishing around docks",
-            "Presenting bait at a known depth"
+            "Presenting bait at an adjustable depth",
+            "Suspending bait above bottom or cover without retying"
         ],
         conditionTags: [
             "Shallow Water",
@@ -200,6 +197,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 4,
                 notes: null
             }
         ],
@@ -213,7 +211,7 @@ const RIG_DATA = Object.freeze([
             "Add bait and confirm that the float stands upright."
         ],
         setupNotes: [
-            "Start with the bait one to two feet above the bottom.",
+            "For bottom-oriented fishing, start with the bait about one to two feet above bottom, then adjust the stop to the fish and cover.",
             "Move the bobber stop to change depth without retying."
         ],
         commonMistakes: [
@@ -222,8 +220,7 @@ const RIG_DATA = Object.freeze([
             "Using a hook that is too large for the bait."
         ],
         safetyNotes: [
-            "Pinch split shot with pliers rather than your teeth.",
-            "Keep hooks secured while adjusting the bobber stop."
+            "Pinch split shot with pliers rather than your teeth."
         ],
         variationIds: ["fixed-bobber-rig"],
     },
@@ -236,9 +233,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner",
         useCases: [
-            "Bank fishing",
-            "Fishing ponds and lakes",
-            "Presenting bait near the bottom"
+            "Presenting bait near the bottom",
+            "Holding bait in place with a simple fixed-sinker setup"
         ],
         conditionTags: [
             "Deep Water",
@@ -310,6 +306,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 2,
                 notes: null
             },
             {
@@ -320,6 +317,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 3,
                 notes: null
             },
             {
@@ -330,6 +328,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 4,
                 notes: null
             }
         ],
@@ -352,8 +351,7 @@ const RIG_DATA = Object.freeze([
             "Casting too forcefully and throwing off the bait."
         ],
         safetyNotes: [
-            "Check behind you before casting a weighted rig.",
-            "Use controlled casts because sinkers can cause injury."
+            "Use controlled casts and verify the casting lane is clear because the sinker adds substantial moving weight."
         ],
         variationIds: ["carolina-rig"],
     },
@@ -366,9 +364,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner+",
         useCases: [
-            "Fishing around grass",
-            "Fishing brush and timber",
-            "Presenting soft plastics near cover"
+            "Presenting soft plastics weedlessly around cover",
+            "Keeping a soft plastic compact behind a sliding weight"
         ],
         conditionTags: [
             "Heavy Cover",
@@ -428,6 +425,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 1,
                 notes: null
             }
         ],
@@ -450,9 +448,7 @@ const RIG_DATA = Object.freeze([
             "Choosing the re-entry point before the bait is seated on the offset.",
             "Burying the hook point too deeply."
         ],
-        safetyNotes: [
-            "Keep fingers clear of the hook point while threading the bait."
-        ],
+        safetyNotes: [],
         variationIds: ["carolina-rig", "weightless-soft-plastic-rig"],
     },
     {
@@ -464,9 +460,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner",
         useCases: [
-            "Fishing for crappie, white bass, panfish, and bass",
-            "Covering open water from shore or boat",
-            "Fishing at a controlled depth with a compact lure"
+            "Presenting a soft plastic on a weighted hook",
+            "Fishing a compact soft-plastic lure at a controlled depth"
         ],
         conditionTags: [
             "Open Water",
@@ -516,6 +511,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 1,
                 notes: null
             }
         ],
@@ -537,10 +533,7 @@ const RIG_DATA = Object.freeze([
             "Covering too much of the hook gap with the bait.",
             "Leaving the bait loose instead of seating it against the head or keeper."
         ],
-        safetyNotes: [
-            "Keep fingers behind the hook point while threading the soft plastic.",
-            "Check behind you before casting a weighted jighead."
-        ],
+        safetyNotes: [],
         variationIds: ["ned-rig"],
     },
     {
@@ -553,8 +546,7 @@ const RIG_DATA = Object.freeze([
         difficulty: "Beginner",
         useCases: [
             "Simple lure fishing",
-            "Direct terminal tie",
-            "Quick lure changes"
+            "Direct terminal attachment"
         ],
         conditionTags: [
             "Open Water",
@@ -570,10 +562,7 @@ const RIG_DATA = Object.freeze([
         assemblySteps: [],
         setupNotes: [],
         commonMistakes: [],
-        safetyNotes: [
-            "Keep exposed hooks secured until you are ready to cast.",
-            "Check the casting area carefully before casting a weighted or multi-hook lure."
-        ],
+        safetyNotes: [],
         variationIds: [],
         configurations: [
             {
@@ -587,7 +576,7 @@ const RIG_DATA = Object.freeze([
                     }
                 ],
                 tutorialVideo: null,
-                useCases: ["Cast and retrieve", "Shallow open water", "Gentle current"],
+                useCases: ["Attaching an inline spinner directly to line or leader", "Using the lure's built-in line-tie without extra terminal hardware"],
                 conditionTags: ["Open Water", "Light Current", "Shallow Water", "Clear Water", "Stained Water"],
                 componentRequirements: [],
                 lureBaitRequirements: [
@@ -603,6 +592,7 @@ const RIG_DATA = Object.freeze([
                         label: "Main line or leader to inline spinner",
                         connectionType: "terminal-attachment",
                         recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"],
+                        assemblyStepIndex: 2,
                         notes: null
                     }
                 ],
@@ -635,14 +625,14 @@ const RIG_DATA = Object.freeze([
                     videoId: "0Or166Uo8VU",
                     externalUrl: "https://www.youtube.com/watch?v=0Or166Uo8VU"
                 },
-                useCases: ["Shallow cover", "Grass and docks", "Dirty water"],
+                useCases: ["Attaching a spinnerbait directly to line or leader", "Using the lure's intended wire-frame line-tie without extra terminal hardware"],
                 conditionTags: ["Light Cover", "Heavy Cover", "Vegetation", "Docks", "Shallow Water", "Stained Water"],
                 componentRequirements: [],
                 lureBaitRequirements: [
                     { lureBaitId: "spinnerbait", quantity: 1, required: true, notes: "Use a complete spinnerbait with an intact line-tie, wire frame, blades, skirt, and hook." }
                 ],
                 knotApplications: [
-                    { label: "Main line or leader to spinnerbait", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], notes: null }
+                    { label: "Main line or leader to spinnerbait", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], assemblyStepIndex: 2, notes: null }
                 ],
                 assemblySteps: [
                     "Inspect the spinnerbait wire, line-tie, blades, skirt, and hook for damage or tangles.",
@@ -665,7 +655,7 @@ const RIG_DATA = Object.freeze([
                     videoId: "-kHoA2RJX1M",
                     externalUrl: "https://www.youtube.com/watch?v=-kHoA2RJX1M"
                 },
-                useCases: ["Covering water", "Rock and structure", "Depth control"],
+                useCases: ["Attaching a crankbait at its intended front line-tie", "Using the lure's factory split ring when one is part of the line-tie design"],
                 conditionTags: ["Open Water", "Rock", "Shallow Water", "Deep Water", "Clear Water", "Stained Water"],
                 componentRequirements: [
                     { tackleId: "split-ring", quantity: 1, required: false, notes: "Use the lure's existing line-tie or an appropriate split ring when the lure is designed for one." }
@@ -674,7 +664,7 @@ const RIG_DATA = Object.freeze([
                     { lureBaitId: "crankbait", quantity: 1, required: true, notes: "Use a complete crankbait with secure hooks and an undamaged line-tie or bill." }
                 ],
                 knotApplications: [
-                    { label: "Main line or leader to crankbait line-tie or split ring", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], notes: null }
+                    { label: "Main line or leader to crankbait line-tie or split ring", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], assemblyStepIndex: 2, notes: null }
                 ],
                 assemblySteps: [
                     "Inspect the crankbait body, diving bill when present, nose line-tie, factory split ring if present, and hooks.",
@@ -696,7 +686,7 @@ const RIG_DATA = Object.freeze([
                     }
                 ],
                 tutorialVideo: null,
-                useCases: ["Suspended fish", "Open-water baitfish", "Pause and twitch"],
+                useCases: ["Attaching a jerkbait at its intended front line-tie", "Preserving the lure's intended balance by minimizing added terminal hardware"],
                 conditionTags: ["Open Water", "Shallow Water", "Deep Water", "Clear Water", "Stained Water", "Suspended Fish"],
                 componentRequirements: [
                     { tackleId: "split-ring", quantity: 1, required: false, notes: "Use the lure's existing split ring only when it is part of the intended line-tie configuration." }
@@ -705,7 +695,7 @@ const RIG_DATA = Object.freeze([
                     { lureBaitId: "jerkbait", quantity: 1, required: true, notes: "Use a complete jerkbait with an intact line-tie and secure hooks." }
                 ],
                 knotApplications: [
-                    { label: "Main line or leader to jerkbait line-tie or split ring", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], notes: null }
+                    { label: "Main line or leader to jerkbait line-tie or split ring", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], assemblyStepIndex: 2, notes: null }
                 ],
                 assemblySteps: [
                     "Inspect the jerkbait body, front line-tie, factory split ring if present, diving lip when present, and hooks.",
@@ -733,25 +723,23 @@ const RIG_DATA = Object.freeze([
                     videoId: "pLsX7nhM1qk",
                     externalUrl: "https://www.youtube.com/watch?v=pLsX7nhM1qk&t=63s"
                 },
-                useCases: ["Open-water casting", "Deep or vertical", "Fluttering fall"],
+                useCases: ["Attaching a spoon directly at its intended line-tie", "Using a factory split ring when the spoon is designed for one"],
                 conditionTags: ["Open Water", "Deep Water", "Vegetation", "Light Current", "Clear Water", "Stained Water"],
                 componentRequirements: [
-                    { tackleId: "split-ring", quantity: 1, required: false, notes: "Use a split ring only when the spoon is designed to use one at the line-tie." },
-                    { tackleId: "barrel-swivel", quantity: 1, required: false, notes: "An upstream swivel may be useful when a rotating spoon produces persistent line twist." }
+                    { tackleId: "split-ring", quantity: 1, required: false, notes: "Use a split ring only when the spoon is designed to use one at the line-tie." }
                 ],
                 lureBaitRequirements: [
                     { lureBaitId: "spoon", quantity: 1, required: true, notes: "Use a complete spoon with an intact line-tie and secure hook." }
                 ],
                 knotApplications: [
-                    { label: "Main line or leader to spoon or optional swivel", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], notes: "If an anti-twist swivel is used, tie the line to the swivel and connect the spoon according to that hardware's intended attachment." }
+                    { label: "Main line or leader to spoon line-tie or factory split ring", connectionType: "terminal-attachment", recommendedKnotIds: ["improved-clinch-knot", "palomar-knot", "uni-knot"], assemblyStepIndex: 1, notes: null }
                 ],
                 assemblySteps: [
                     "Inspect the spoon, the line-tie end, any factory split ring, and the hook end.",
                     "Identify the line-tie at the end opposite the hook. Tie to the factory split ring if one is installed there; otherwise tie directly through the spoon's front line-tie hole or eye.",
-                    "If repeated rotation causes line twist, place a barrel swivel upstream: tie the main line to one swivel eye, then use a short leader from the other swivel eye to the spoon's normal line-tie. Do not stack a swivel directly onto the spoon unless that is the intended hardware arrangement.",
                     "Trim all tag ends, test each knot firmly, and confirm the spoon and hook move freely."
                 ],
-                setupNotes: ["Use only the attachment hardware needed for the spoon's design and line-twist control."],
+                setupNotes: ["Use only the attachment hardware intended by the spoon's design. If persistent line twist becomes a problem, a separate swivel-based leader setup can be considered outside this Direct-Tie build."],
                 commonMistakes: ["Adding excessive hardware that restricts the spoon's movement.", "Ignoring severe line twist during repeated retrieves."]
             }
         ]
@@ -765,9 +753,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner",
         useCases: [
-            "Learning finesse soft-plastic fishing",
-            "Fishing around docks, sparse grass, and open pockets",
-            "Presenting a slow-falling stick bait to bass"
+            "Learning a simple wacky-style soft-plastic setup",
+            "Presenting a slow-falling stick bait with both ends free to move"
         ],
         conditionTags: [
             "Shallow Water",
@@ -822,6 +809,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 0,
                 notes: null
             }
         ],
@@ -842,9 +830,7 @@ const RIG_DATA = Object.freeze([
             "Covering the hook point or closing the hook gap with too much plastic.",
             "Adding unnecessary weight or hardware that changes the simple falling presentation."
         ],
-        safetyNotes: [
-            "Keep fingers clear of the hook point while piercing the middle of the bait."
-        ],
+        safetyNotes: [],
         variationIds: [],
     },
     {
@@ -856,9 +842,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner",
         useCases: [
-            "Learning a simple finesse presentation",
-            "Fishing for bass in pressured or clear water",
-            "Working open bottom, rock, gravel, and light cover"
+            "Learning a compact finesse setup",
+            "Presenting a short soft plastic on a light mushroom-style jighead"
         ],
         conditionTags: [
             "Clear Water",
@@ -908,6 +893,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 0,
                 notes: null
             }
         ],
@@ -930,10 +916,7 @@ const RIG_DATA = Object.freeze([
             "Covering the exposed hook point or too much of the hook gap with the soft plastic.",
             "Using a long bulky bait that defeats the compact Ned profile."
         ],
-        safetyNotes: [
-            "Keep fingers behind the hook point while threading the soft plastic.",
-            "Check behind you before casting the weighted jighead."
-        ],
+        safetyNotes: [],
         variationIds: ["jighead-soft-plastic"],
     },
     {
@@ -945,9 +928,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner+",
         useCases: [
-            "Fishing shallow grass, brush edges, and open pockets",
             "Presenting a soft plastic slowly without added weight",
-            "Fishing for bass around light to moderate cover"
+            "Using a weedless soft-plastic setup without a sinker"
         ],
         conditionTags: [
             "Shallow Water",
@@ -996,6 +978,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 0,
                 notes: null
             }
         ],
@@ -1017,9 +1000,7 @@ const RIG_DATA = Object.freeze([
             "Choosing the re-entry point before the bait nose is seated against the hook offset.",
             "Burying the hook point so deeply that hooksets become difficult."
         ],
-        safetyNotes: [
-            "Keep fingers clear of the hook point while threading and skin-hooking the bait."
-        ],
+        safetyNotes: [],
         variationIds: ["texas-rig"],
     },
     {
@@ -1032,8 +1013,7 @@ const RIG_DATA = Object.freeze([
         difficulty: "Intermediate",
         useCases: [
             "Presenting finesse plastics just above the bottom",
-            "Fishing clear or pressured water",
-            "Targeting bass around rock, points, ledges, and sparse cover"
+            "Holding a soft plastic above a separate bottom weight"
         ],
         conditionTags: [
             "Clear Water",
@@ -1087,6 +1067,7 @@ const RIG_DATA = Object.freeze([
                 recommendedKnotIds: [
                     "palomar-knot"
                 ],
+                assemblyStepIndex: 0,
                 notes: "Leave a long tag end, then pass the tag end back through the hook eye from the point side so the hook rides point-up."
             }
         ],
@@ -1109,8 +1090,7 @@ const RIG_DATA = Object.freeze([
             "Setting the hook-to-weight spacing without considering grass, rock, or bottom debris."
         ],
         safetyNotes: [
-            "Secure both the exposed hook and hanging weight before moving or storing the rod.",
-            "Keep fingers clear of the exposed hook point when nose-hooking the bait."
+            "Secure both the exposed hook and hanging weight before moving or storing the rod."
         ],
         variationIds: [],
     },
@@ -1123,9 +1103,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Intermediate",
         useCases: [
-            "Covering broad flats, points, and offshore structure",
             "Keeping a soft plastic moving behind a bottom-contact weight",
-            "Fishing for bass in moderate to deep water"
+            "Presenting a leadered soft plastic behind a sliding sinker"
         ],
         conditionTags: [
             "Deep Water",
@@ -1199,6 +1178,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 2,
                 notes: null
             },
             {
@@ -1209,6 +1189,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 3,
                 notes: null
             },
             {
@@ -1219,6 +1200,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 4,
                 notes: null
             }
         ],
@@ -1242,8 +1224,7 @@ const RIG_DATA = Object.freeze([
             "Using excessive weight when lighter tackle would maintain bottom contact."
         ],
         safetyNotes: [
-            "Use a controlled side-arm or lob cast because the long leader and heavy sliding weight create a wide moving rig.",
-            "Check behind and beside you before casting."
+            "Use a controlled side-arm or lob cast and verify the casting lane is clear because the long leader and heavy sliding weight create a wide moving rig."
         ],
         variationIds: ["texas-rig", "basic-bottom-rig"],
     },
@@ -1256,9 +1237,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Intermediate",
         useCases: [
-            "Slow-drifting or back-trolling live bait for walleye",
-            "Presenting worms, leeches, or minnows near bottom",
-            "Fishing points, breaks, and bottom transitions with controlled movement"
+            "Presenting live bait near bottom with a sliding sinker",
+            "Letting a baited leader move behind a sliding-sinker stop"
         ],
         conditionTags: [
             "Deep Water",
@@ -1332,6 +1312,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 2,
                 notes: null
             },
             {
@@ -1342,6 +1323,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 3,
                 notes: null
             },
             {
@@ -1352,6 +1334,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 4,
                 notes: null
             }
         ],
@@ -1375,8 +1358,7 @@ const RIG_DATA = Object.freeze([
             "Failing to check local bait-use regulations before fishing live bait."
         ],
         safetyNotes: [
-            "Use controlled casts because the sliding sinker and baited hook can swing independently.",
-            "Handle live bait and hooks carefully, and follow local bait and invasive-species regulations."
+            "Use controlled casts because the sliding sinker and baited hook can swing independently."
         ],
         variationIds: ["basic-bottom-rig"],
     },
@@ -1389,9 +1371,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Intermediate",
         useCases: [
-            "Fishing bait in river current",
-            "Holding a baited hook above bottom while the sinker stays below it",
-            "Bottom fishing from bank or boat where a separate sinker dropper helps presentation"
+            "Holding a baited hook above a separate sinker dropper",
+            "Keeping bait and sinker on separate leaders from a three-way swivel"
         ],
         conditionTags: [
             "Current",
@@ -1459,6 +1440,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 0,
                 notes: null
             },
             {
@@ -1469,6 +1451,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 1,
                 notes: null
             },
             {
@@ -1479,6 +1462,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 2,
                 notes: null
             },
             {
@@ -1489,6 +1473,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 3,
                 notes: null
             },
             {
@@ -1499,6 +1484,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 4,
                 notes: null
             }
         ],
@@ -1513,6 +1499,7 @@ const RIG_DATA = Object.freeze([
         ],
         setupNotes: [
             "Keep the sinker dropper shorter than the hook leader so the bait rides above the weight.",
+            "In snag-prone current, use a lighter-test sinker dropper than the main line or hook leader so a snagged sinker can break away with less loss.",
             "Use only enough sinker weight to hold the rig where you want it in the current."
         ],
         commonMistakes: [
@@ -1522,8 +1509,7 @@ const RIG_DATA = Object.freeze([
             "Casting aggressively and tangling the two leader branches."
         ],
         safetyNotes: [
-            "Use controlled casts because a baited hook and separate sinker can swing on different leaders.",
-            "Inspect all three swivel connections before fishing strong current."
+            "Use controlled casts because a baited hook and separate sinker can swing on different leaders."
         ],
         variationIds: [],
     },
@@ -1536,9 +1522,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
-            "Fishing pressured bass around docks, rock, and offshore structure",
             "Adding bottom contact to a wacky-style soft plastic",
-            "Presenting a finesse worm in moderate or deep water"
+            "Presenting a nose-weighted finesse worm near bottom"
         ],
         conditionTags: [
             "Clear Water",
@@ -1600,6 +1585,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 3,
                 notes: null
             }
         ],
@@ -1622,7 +1608,6 @@ const RIG_DATA = Object.freeze([
             "Burying the hook gap in the plastic or O-ring."
         ],
         safetyNotes: [
-            "Keep fingers clear of the hook point while installing the hook and weight.",
             "Check the nail weight after catches so a loosened weight is not thrown during the next cast."
         ],
         variationIds: ["wacky-rig"],
@@ -1636,9 +1621,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
-            "Fishing pressured bass on rock, gravel, points, and sparse cover",
             "Maintaining a compact bottom-contact finesse presentation",
-            "Fishing clear to moderately stained water"
+            "Presenting a straight soft-plastic worm on a dedicated shaky head"
         ],
         conditionTags: [
             "Clear Water",
@@ -1688,6 +1672,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 0,
                 notes: null
             }
         ],
@@ -1709,9 +1694,7 @@ const RIG_DATA = Object.freeze([
             "Using excessive weight for a finesse presentation.",
             "Burying the hook point too deeply for reliable hooksets."
         ],
-        safetyNotes: [
-            "Keep fingers behind the hook point while threading and skin-hooking the bait."
-        ],
+        safetyNotes: [],
         variationIds: ["ned-rig"],
     },
     {
@@ -1724,8 +1707,7 @@ const RIG_DATA = Object.freeze([
         difficulty: "Intermediate+",
         useCases: [
             "Giving a Texas-rigged soft plastic a freer fall behind the sinker",
-            "Fishing points, rock, docks, and sparse cover",
-            "Changing fall rate without adding a leader or swivel"
+            "Changing sinker-and-bait separation without adding a leader or swivel"
         ],
         conditionTags: [
             "Bottom Fishing",
@@ -1781,6 +1763,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 1,
                 notes: null
             }
         ],
@@ -1816,9 +1799,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Intermediate+",
         useCases: [
-            "Presenting two jig colors or profiles at different depths",
-            "Vertical jigging or controlled slow presentations for crappie",
-            "Locating the preferred depth of suspended fish"
+            "Presenting two jigs at different depths",
+            "Comparing two jig colors or profiles in one setup"
         ],
         conditionTags: [
             "Open Water",
@@ -1868,6 +1850,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 0,
                 notes: null
             },
             {
@@ -1876,6 +1859,7 @@ const RIG_DATA = Object.freeze([
                 recommendedKnotIds: [
                     "dropper-loop-knot"
                 ],
+                assemblyStepIndex: 1,
                 notes: "Form the branch loop in the main line above the lower jig, then attach the upper jig to the completed loop."
             }
         ],
@@ -1898,8 +1882,7 @@ const RIG_DATA = Object.freeze([
             "Threading either soft plastic crooked so it spins."
         ],
         safetyNotes: [
-            "Remember that two exposed hooks are moving during every cast, lift, and landing sequence.",
-            "Use controlled casts and secure both hooks before transport."
+            "Use controlled casts and secure both exposed hooks before transport because two hooks are moving through each cast, lift, and landing sequence."
         ],
         variationIds: ["jighead-soft-plastic"],
     },
@@ -1912,9 +1895,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Advanced",
         useCases: [
-            "Fishing soft plastics close to bottom with the weight below the hook eye",
-            "Working rock, brush, grass edges, and compact cover",
-            "Using a weed-resistant bait with an independently hanging weight"
+            "Presenting a soft plastic close to bottom with the weight below the hook eye",
+            "Keeping the weight independently hinged below the hook"
         ],
         conditionTags: [
             "Bottom Fishing",
@@ -1976,6 +1958,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 2,
                 notes: null
             }
         ],
@@ -1997,10 +1980,7 @@ const RIG_DATA = Object.freeze([
             "Using a split ring too large for the hook eye or leaving a component caught at the ring opening.",
             "Rigging the soft plastic crooked or exposing too much hook point in heavy cover."
         ],
-        safetyNotes: [
-            "Use split-ring pliers rather than fingernails when installing small heavy-duty rings.",
-            "Inspect the ring and weight connection frequently because a compact weighted rig can damage hardware during repeated contact with cover."
-        ],
+        safetyNotes: [],
         variationIds: ["free-rig", "texas-rig"],
     },
     {
@@ -2012,9 +1992,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Advanced",
         useCases: [
-            "Penetrating matted vegetation and dense grass",
-            "Presenting a compact soft plastic through heavy cover",
-            "Keeping the weight and bait together during vertical heavy-cover presentations"
+            "Presenting a compact soft plastic through dense cover",
+            "Keeping the pegged weight and bait together through heavy cover"
         ],
         conditionTags: [
             "Heavy Cover",
@@ -2075,6 +2054,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 2,
                 notes: null
             }
         ],
@@ -2088,6 +2068,7 @@ const RIG_DATA = Object.freeze([
         ],
         setupNotes: [
             "Unlike the standard Texas Rig, the weight peg is part of the defining heavy-cover configuration rather than an optional accessory.",
+            "Inspect the line near the weight and hook for abrasion after working dense cover, and retie when damage is visible or can be felt.",
             "Heavier weights are used only when needed to penetrate the cover; the goal is reliable entry, not maximum weight."
         ],
         commonMistakes: [
@@ -2097,8 +2078,7 @@ const RIG_DATA = Object.freeze([
             "Using a hook or line system too light for the cover being fished."
         ],
         safetyNotes: [
-            "Heavy weights and hooks carry substantial energy; use short controlled pitches and verify that the casting lane is clear.",
-            "Inspect line near the weight and hook frequently for abrasion after fishing dense cover."
+            "Heavy weights and hooks carry substantial energy; use short controlled pitches and verify that the casting lane is clear."
         ],
         variationIds: ["texas-rig"],
     },
@@ -2111,9 +2091,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Expert",
         useCases: [
-            "Trolling or drifting spinner harnesses for walleye",
-            "Maintaining a baited spinner just above bottom across flats and contours",
-            "Controlling depth while covering water from a boat"
+            "Maintaining a baited spinner just above bottom",
+            "Controlling spinner-harness depth with a bottom-contact wire weight"
         ],
         conditionTags: [
             "Deep Water",
@@ -2169,6 +2148,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 1,
                 notes: null
             }
         ],
@@ -2193,9 +2173,7 @@ const RIG_DATA = Object.freeze([
             "Running a twisted harness whose blade or bait no longer tracks correctly."
         ],
         safetyNotes: [
-            "Deploy the weighted wire rig beside the boat rather than making an uncontrolled overhead cast.",
-            "Keep hooks secured while baiting and handling the harness, especially when multiple hooks are present.",
-            "Secure the rod when trolling because the bouncer and harness remain under continuous load."
+            "Control the heavy bottom bouncer during deployment and retrieval; its rigid weighted wire can recoil or become a projectile if swung, snagged, or released under tension."
         ],
         variationIds: ["live-bait-slip-sinker-rig"],
     },
@@ -2208,9 +2186,8 @@ const RIG_DATA = Object.freeze([
         isActive: true,
         difficulty: "Beginner",
         useCases: [
-            "Fishing live or natural bait without a float",
-            "Drifting bait in light current",
-            "Tight-lining or presenting bait near the bottom"
+            "Presenting live or natural bait without a float",
+            "Adding light fixed weight directly above a baited hook"
         ],
         conditionTags: [
             "Shallow Water",
@@ -2265,6 +2242,7 @@ const RIG_DATA = Object.freeze([
                     "palomar-knot",
                     "uni-knot"
                 ],
+                assemblyStepIndex: 0,
                 notes: null
             }
         ],
@@ -2287,8 +2265,7 @@ const RIG_DATA = Object.freeze([
             "Adding unnecessary terminal hardware and turning the setup into a different Rig family."
         ],
         safetyNotes: [
-            "Attach and remove split shot with pliers rather than your teeth.",
-            "Keep the baited hook controlled while adjusting weights and before casting."
+            "Attach and remove split shot with pliers rather than your teeth."
         ],
         variationIds: [],
     },
@@ -2300,7 +2277,10 @@ const RIG_DATA = Object.freeze([
         lastModifiedVersion: "0.6.0",
         isActive: true,
         difficulty: "Beginner+",
-        useCases: ["Weedless swimming", "Open water and cover", "Depth control"],
+        useCases: [
+            "Presenting a swimbait on a weighted weedless hook",
+            "Adding integrated hook weight for depth control"
+        ],
         conditionTags: ["Open Water", "Light Cover", "Vegetation", "Shallow Water", "Deep Water"],
         referenceLinks: [
             { label: "Mustad — Power Lock Plus Spring Keeper Hook - Weighted", url: "https://mustad-fishing.com/us/products/91768sw" }
@@ -2319,7 +2299,7 @@ const RIG_DATA = Object.freeze([
             { lureBaitId: "paddle-tail-swimbait", quantity: 1, required: true, notes: "Choose a paddle-tail body that fits the hook without crowding the gap or bending the bait." }
         ],
         knotApplications: [
-            { label: "Main line or leader to weighted swimbait hook", connectionType: "terminal-attachment", recommendedKnotIds: ["palomar-knot", "improved-clinch-knot", "uni-knot"], notes: null }
+            { label: "Main line or leader to weighted swimbait hook", connectionType: "terminal-attachment", recommendedKnotIds: ["palomar-knot", "improved-clinch-knot", "uni-knot"], assemblyStepIndex: 5, notes: null }
         ],
         assemblySteps: [
             "Match the paddle-tail swimbait to a weighted swimbait hook whose gap remains open enough for a hookset.",
@@ -2331,7 +2311,7 @@ const RIG_DATA = Object.freeze([
         ],
         setupNotes: ["A straight-rigged swimbait tracks more naturally and lets the paddle tail work freely.", "Use the lightest integrated weight that reaches the intended depth while preserving the desired swimming action."],
         commonMistakes: ["Using a hook too small for the swimbait body and blocking the hook gap.", "Rigging the bait crooked so it rolls instead of tracking straight.", "Burying the hook point so deeply that it cannot clear the plastic on a strike."],
-        safetyNotes: ["Keep the hook point controlled while threading and measuring the soft plastic.", "Check behind you before casting a weighted lure."],
+        safetyNotes: [],
         variationIds: ["jighead-soft-plastic"]
     },
     {
@@ -2342,7 +2322,10 @@ const RIG_DATA = Object.freeze([
         lastModifiedVersion: "0.6.0",
         isActive: true,
         difficulty: "Beginner+",
-        useCases: ["Rocky bottoms", "Dragging or hopping", "Finesse presentation"],
+        useCases: [
+            "Presenting a tube with an internal jighead",
+            "Keeping the jighead weight hidden inside the tube body"
+        ],
         conditionTags: ["Rock", "Open Water", "Deep Water", "Light Current", "Clear Water", "Stained Water"],
         referenceLinks: [
             { label: "Mustad / TUF-LINE — Take 'Em With Tubes", url: "https://mustad-fishing.com/tuf-line/us/article/take-em-with-tubes" },
@@ -2362,7 +2345,7 @@ const RIG_DATA = Object.freeze([
             { lureBaitId: "tube", quantity: 1, required: true, notes: "Use a hollow tube body sized to the jighead and hook." }
         ],
         knotApplications: [
-            { label: "Main line or leader to tube jighead", connectionType: "terminal-attachment", recommendedKnotIds: ["palomar-knot", "improved-clinch-knot", "uni-knot"], notes: null }
+            { label: "Main line or leader to tube jighead", connectionType: "terminal-attachment", recommendedKnotIds: ["palomar-knot", "improved-clinch-knot", "uni-knot"], assemblyStepIndex: 4, notes: null }
         ],
         assemblySteps: [
             "Choose a tube jighead that will slide into the hollow tube body without tearing it.",
@@ -2374,7 +2357,7 @@ const RIG_DATA = Object.freeze([
         ],
         setupNotes: ["Internal tube heads preserve the compact tube profile and can create a gliding or spiraling fall depending on the head and presentation.", "Increase jighead weight only as needed to maintain the intended depth or bottom contact."],
         commonMistakes: ["Using a jighead too large for the tube cavity and splitting the bait.", "Pushing the line-tie through an oversized hole that lets the head shift inside the tube.", "Rigging the tube crooked so it falls or tracks unnaturally."],
-        safetyNotes: ["Keep fingers clear of the hook point while pushing the jighead through the tube body.", "Check behind you before casting a weighted jig."],
+        safetyNotes: [],
         variationIds: ["jighead-soft-plastic"]
     },
 

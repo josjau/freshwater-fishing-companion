@@ -2041,7 +2041,7 @@ function renderConditionPopover(conditionId, triggerElement) {
     dialog.addEventListener("close", () => {
         dialog.remove();
         unlockReferencePopoverBackground();
-        triggerElement?.focus();
+        triggerElement?.focus({ preventScroll: true });
     });
 
     document.body.append(dialog);
@@ -2151,7 +2151,7 @@ function renderTechniquePopover(techniqueId, triggerElement) {
     dialog.addEventListener("close", () => {
         dialog.remove();
         unlockReferencePopoverBackground();
-        triggerElement?.focus();
+        triggerElement?.focus({ preventScroll: true });
     });
 
     document.body.append(dialog);
@@ -2226,7 +2226,7 @@ function renderLureBaitReferencePopover(lureBaitId, triggerElement, requirement 
     dialog.addEventListener("close", () => {
         dialog.remove();
         unlockReferencePopoverBackground();
-        triggerElement?.focus();
+        triggerElement?.focus({ preventScroll: true });
     });
 
     document.body.append(dialog);
@@ -2388,7 +2388,7 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
     dialog.addEventListener("close", () => {
         dialog.remove();
         unlockReferencePopoverBackground();
-        if (!isNavigatingAway) triggerElement?.focus();
+        if (!isNavigatingAway) triggerElement?.focus({ preventScroll: true });
     });
 
     document.body.append(dialog);
@@ -2561,158 +2561,148 @@ function getKnotRecord(knotId) {
     return record?.isActive === true ? record : null;
 }
 
-function buildRigKnotApplications(record) {
-    if (!Array.isArray(record?.knotApplications) || record.knotApplications.length === 0) return "";
+function getRigKnotPurposeText(knot) {
+    if (Array.isArray(knot?.bestFor) && knot.bestFor.length > 0) {
+        return knot.bestFor[0];
+    }
+    return knot?.summary ?? "";
+}
 
-    const groupedApplications = [];
-    const groupByKnotSet = new Map();
+function getRigKnotLineCompatibilityText(knot) {
+    const labels = {
+        monofilament: "monofilament",
+        fluorocarbon: "fluorocarbon",
+        braid: "braid"
+    };
+    const lineTypes = Array.isArray(knot?.compatibleLineTypes)
+        ? knot.compatibleLineTypes.map((lineType) => labels[lineType] ?? lineType).filter(Boolean)
+        : [];
+    if (lineTypes.length === 0) return "";
+    if (lineTypes.length === 1) return `Line compatibility: ${lineTypes[0]}.`;
+    if (lineTypes.length === 2) return `Line compatibility: ${lineTypes[0]} and ${lineTypes[1]}.`;
+    return `Line compatibility: ${lineTypes.slice(0, -1).join(", ")}, and ${lineTypes[lineTypes.length - 1]}.`;
+}
 
-    record.knotApplications.forEach((application) => {
-        const recommendedKnotIds = Array.isArray(application.recommendedKnotIds)
-            ? application.recommendedKnotIds
-            : [];
-        const groupKey = recommendedKnotIds.join("|");
-        let group = groupByKnotSet.get(groupKey);
+function buildRigKnotNavigationMarkup(knotId, className = "") {
+    const knot = getKnotRecord(knotId);
+    if (!knot) {
+        console.warn(`Canonical Knot record was not found: ${knotId}`);
+        return "";
+    }
+    const classes = ["internal-knowledge-link", className].filter(Boolean).join(" ");
+    return `<button class="${classes}" type="button" data-rig-knot-id="${knot.id}">${knot.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></button>`;
+}
 
-        if (!group) {
-            group = { recommendedKnotIds, applications: [] };
-            groupByKnotSet.set(groupKey, group);
-            groupedApplications.push(group);
-        }
+function buildRigKnotRecommendationMarkup(knotId) {
+    const knot = getKnotRecord(knotId);
+    if (!knot) {
+        console.warn(`Canonical Knot record was not found: ${knotId}`);
+        return "";
+    }
 
-        group.applications.push(application);
-    });
-
-    const applicationsMarkup = groupedApplications.map((group) => {
-        const knotLinks = group.recommendedKnotIds
-            .map((knotId) => {
-                const knot = getKnotRecord(knotId);
-                if (!knot) {
-                    console.warn(`Canonical Knot record was not found: ${knotId}`);
-                    return "";
-                }
-                return `
-                    <button class="internal-knowledge-link rig-knot-link" type="button" data-rig-knot-id="${knot.id}">
-                        ${knot.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
-                    </button>
-                `;
-            })
-            .filter(Boolean)
-            .join("");
-
-        const isSharedSet = group.applications.length > 1;
-        const applicationMarkup = isSharedSet
-            ? `
-                <div class="rig-knot-use-group">
-                    <strong>Use these knots for:</strong>
-                    <ul class="rig-knot-use-list">
-                        ${group.applications.map((application) => `<li>${application.label}</li>`).join("")}
-                    </ul>
-                </div>
-            `
-            : `<strong>${group.applications[0].label}</strong>`;
-        const notesMarkup = group.applications
-            .filter((application) => application.notes)
-            .map((application) => isSharedSet
-                ? `<p><strong>${application.label}:</strong> ${application.notes}</p>`
-                : `<p>${application.notes}</p>`
-            )
-            .join("");
-
-        return `
-            <li class="rig-knot-application-item${isSharedSet ? " rig-knot-application-item--grouped" : ""}">
-                ${applicationMarkup}
-                <div class="rig-knot-link-list">${knotLinks}</div>
-                ${notesMarkup}
-            </li>
-        `;
-    }).join("");
+    const purpose = getRigKnotPurposeText(knot);
+    const compatibility = getRigKnotLineCompatibilityText(knot);
+    const contextParts = [purpose, compatibility].filter(Boolean);
 
     return `
-        <section class="detail-section rig-knot-section">
-            <div class="rig-knot-section__header">
-                <h3>Knots You'll Tie</h3>
-                <p>Select a recommended Knot to view tying instructions.</p>
+        <div class="rig-knot-recommendation">
+            ${buildRigKnotNavigationMarkup(knot.id, "rig-knot-recommendation__link")}
+            ${contextParts.length > 0 ? `<p class="rig-knot-recommendation__context">${contextParts.join(" ")}</p>` : ""}
+        </div>
+    `;
+}
+
+function getRigUniqueKnotIds(record) {
+    const uniqueKnotIds = [];
+    const seen = new Set();
+    (Array.isArray(record?.knotApplications) ? record.knotApplications : []).forEach((application) => {
+        (Array.isArray(application?.recommendedKnotIds) ? application.recommendedKnotIds : []).forEach((knotId) => {
+            if (!knotId || seen.has(knotId)) return;
+            seen.add(knotId);
+            uniqueKnotIds.push(knotId);
+        });
+    });
+    return uniqueKnotIds;
+}
+
+function buildRigKnotApplicationsMarkup(record) {
+    const knotIds = getRigUniqueKnotIds(record);
+    if (knotIds.length === 0) return "";
+
+    return `
+        <section class="rig-build-subsection rig-build-subsection--knots" aria-labelledby="rig-knots-title">
+            <h4 class="detail-subsection-heading" id="rig-knots-title">Knots You'll Tie</h4>
+            <p class="rig-build-subsection__intro">These knots work for one or more connections in this Rig. Build Steps show where each can be used.</p>
+            <div class="rig-knot-recommendation-list rig-knot-recommendation-list--unique">
+                ${knotIds.map((knotId) => buildRigKnotRecommendationMarkup(knotId)).filter(Boolean).join("")}
             </div>
-            <ul class="rig-knot-application-list">${applicationsMarkup}</ul>
         </section>
     `;
+}
+
+function getRigKnotIdsForStep(record, stepIndex) {
+    const knotIds = [];
+    const seen = new Set();
+    (Array.isArray(record?.knotApplications) ? record.knotApplications : []).forEach((application) => {
+        if (application?.assemblyStepIndex !== stepIndex) return;
+        (Array.isArray(application.recommendedKnotIds) ? application.recommendedKnotIds : []).forEach((knotId) => {
+            if (!knotId || seen.has(knotId)) return;
+            seen.add(knotId);
+            knotIds.push(knotId);
+        });
+    });
+    return knotIds;
+}
+
+function buildRigBuildStepKnotOptionsMarkup(record, stepIndex) {
+    const knotIds = getRigKnotIdsForStep(record, stepIndex);
+    if (knotIds.length === 0) return "";
+    const label = knotIds.length === 1 ? "Knot:" : "Knot options:";
+    const knotNames = knotIds
+        .map((knotId) => getKnotRecord(knotId)?.name ?? "")
+        .filter(Boolean)
+        .map((knotName) => `<span class="rig-build-step__knot-name">${knotName}</span>`)
+        .join('<span class="rig-build-step__knot-separator" aria-hidden="true">·</span>');
+    return `
+        <div class="rig-build-step__knots">
+            <span class="rig-build-step__knots-label">${label}</span>
+            <span class="rig-build-step__knot-names">${knotNames}</span>
+        </div>
+    `;
+}
+
+function buildRigBuildStepsMarkup(record) {
+    const steps = Array.isArray(record?.assemblySteps) ? record.assemblySteps : [];
+    return `<ol class="detail-steps rig-build-steps">${steps.map((step, stepIndex) => `
+        <li class="rig-build-step">
+            <div class="rig-build-step__instruction">${step}</div>
+            ${buildRigBuildStepKnotOptionsMarkup(record, stepIndex)}
+        </li>
+    `).join("")}</ol>`;
 }
 
 /* ==========================================================
    END RIG GUIDE — KNOT APPLICATION PRESENTATION
    ========================================================== */
 
+/* ==========================================================
+   RIG GUIDE — DETAIL SUPPORT + DISCLOSURE PRESENTATION
+   ========================================================== */
 function buildRigReferenceLinks(record) {
-    if (!Array.isArray(record.referenceLinks) || record.referenceLinks.length === 0) return "";
+    if (!Array.isArray(record?.referenceLinks) || record.referenceLinks.length === 0) return "";
     return `
         <p class="rig-reference-intro">Use these external sources for additional technical cross-checking.</p>
-        <div class="rig-reference-links">
+        <ul class="rig-reference-list">
             ${record.referenceLinks.map((reference) => `
-                <a class="rig-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
+                <li><a class="rig-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a></li>
             `).join("")}
-        </div>
+        </ul>
     `;
 }
 
-function buildRigTutorial(record) {
-    const tutorial = record?.tutorialVideo;
-    if (!tutorial || tutorial.platform !== "youtube" || !tutorial.videoId || !tutorial.externalUrl) return "";
-
-    return `
-        <section class="detail-section rig-tutorial-section" data-rig-tutorial>
-            <div class="rig-tutorial-section__header">
-                <div>
-                    <h3>Rig Tutorial</h3>
-                    <p>${tutorial.title} · ${tutorial.creator}</p>
-                </div>
-                <a class="rig-tutorial-section__external" href="${tutorial.externalUrl}" target="_blank" rel="noopener noreferrer">Watch on YouTube <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
-            </div>
-            <button class="rig-tutorial-load" type="button" data-rig-tutorial-load data-video-id="${tutorial.videoId}" data-video-title="${tutorial.title}">
-                <span class="rig-tutorial-load__icon" aria-hidden="true">▶</span>
-                <span>Load tutorial</span>
-            </button>
-            <div class="rig-tutorial-player" data-rig-tutorial-player hidden></div>
-        </section>
-    `;
-}
-
-function initializeRigTutorial(appMain) {
-    const loadButton = appMain.querySelector("[data-rig-tutorial-load]");
-    const player = appMain.querySelector("[data-rig-tutorial-player]");
-    if (!loadButton || !player) return;
-
-    loadButton.addEventListener("click", () => {
-        const videoId = loadButton.dataset.videoId;
-        const title = loadButton.dataset.videoTitle || "Rig tutorial";
-        if (!videoId) return;
-
-        const iframe = document.createElement("iframe");
-        iframe.className = "rig-tutorial-player__iframe";
-        iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?rel=0`;
-        iframe.title = title;
-        iframe.loading = "lazy";
-        iframe.referrerPolicy = "strict-origin-when-cross-origin";
-        iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        iframe.allowFullscreen = true;
-
-        player.replaceChildren(iframe);
-        player.hidden = false;
-        loadButton.hidden = true;
-    }, { once: true });
-}
-
-function buildTagList(items) {
+function buildRigAboutTextList(items) {
     if (!Array.isArray(items) || items.length === 0) return "";
-    return `<ul class="tag-list">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
-}
-
-function buildRigTechniqueTagList(rigId, lureBaitId = null) {
-    const techniques = getRigTechniqueRecords(rigId, lureBaitId);
-    if (techniques.length === 0) return "";
-    return `<ul class="tag-list tag-list--conditions">${techniques.map((technique) => `
-        <li><button class="technique-tag-button" type="button" data-technique-id="${technique.id}" aria-label="Learn about ${technique.name}">${technique.name}</button></li>
-    `).join("")}</ul>`;
+    return `<ul class="rig-about-list">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 }
 
 const RIG_CONDITION_REFERENCE_IDS = Object.freeze({
@@ -2730,21 +2720,54 @@ const RIG_CONDITION_REFERENCE_IDS = Object.freeze({
     "Vegetation": "vegetation"
 });
 
-
-function buildMappedConditionTagList(items, referenceIds) {
+function buildRigConditionReferenceMarkup(items) {
     if (!Array.isArray(items) || items.length === 0) return "";
-    const mappedItems = items.filter((item) => referenceIds[item]);
-    if (mappedItems.length === 0) return "";
-    return `<ul class="tag-list tag-list--conditions">${mappedItems.map((item) => {
-        const conditionId = referenceIds[item];
-        return `<li><button class="condition-tag-button" type="button" data-condition-id="${conditionId}" aria-label="Learn about ${item}">${item}</button></li>`;
+    return `<ul class="rig-about-list rig-about-list--references">${items.map((item) => {
+        const conditionId = RIG_CONDITION_REFERENCE_IDS[item];
+        return `
+            <li class="rig-about-reference-item">
+                <span class="rig-about-reference-term">${item}</span>
+                ${conditionId ? `<button class="reference-info-button rig-about-reference-cue" type="button" data-condition-id="${conditionId}" aria-label="Learn about ${item}"><span aria-hidden="true">&#9432;</span></button>` : ""}
+            </li>
+        `;
     }).join("")}</ul>`;
 }
 
-function buildConditionTagList(items) {
-    return buildMappedConditionTagList(items, RIG_CONDITION_REFERENCE_IDS);
+function buildRigTechniqueReferenceMarkup(rigId, lureBaitId = null) {
+    const techniques = getRigTechniqueRecords(rigId, lureBaitId);
+    if (techniques.length === 0) return "";
+    return `<ul class="rig-about-list rig-about-list--references">${techniques.map((technique) => `
+        <li class="rig-about-reference-item">
+            <span class="rig-about-reference-term">${technique.name}</span>
+            <button class="reference-info-button rig-about-reference-cue" type="button" data-technique-id="${technique.id}" aria-label="Learn about ${technique.name}"><span aria-hidden="true">&#9432;</span></button>
+        </li>
+    `).join("")}</ul>`;
 }
 
+function buildRigAboutOverviewMarkup(useCasesMarkup, conditionsMarkup, techniquesMarkup) {
+    const groups = [
+        useCasesMarkup ? `
+            <section class="rig-about-subsection" aria-labelledby="rig-about-use-it-for-title">
+                <h4 class="detail-subsection-heading" id="rig-about-use-it-for-title">Use It For</h4>
+                ${useCasesMarkup}
+            </section>
+        ` : "",
+        conditionsMarkup ? `
+            <section class="rig-about-subsection" aria-labelledby="rig-about-good-conditions-title">
+                <h4 class="detail-subsection-heading" id="rig-about-good-conditions-title">Good Conditions</h4>
+                ${conditionsMarkup}
+            </section>
+        ` : "",
+        techniquesMarkup ? `
+            <section class="rig-about-subsection" aria-labelledby="rig-about-techniques-title">
+                <h4 class="detail-subsection-heading" id="rig-about-techniques-title">Techniques</h4>
+                ${techniquesMarkup}
+            </section>
+        ` : ""
+    ].filter(Boolean);
+    if (groups.length === 0) return "";
+    return `<div class="rig-about-overview">${groups.join("")}</div>`;
+}
 
 function buildRigDetailDisclosureMarkup(disclosureId, title, bodyMarkup, expanded = false) {
     const panelId = `rig-detail-${disclosureId}-panel`;
@@ -2764,18 +2787,67 @@ function buildRigDetailDisclosureMarkup(disclosureId, title, bodyMarkup, expande
     `;
 }
 
+function buildRigTutorialDisclosureBody(tutorial) {
+    if (!tutorial || tutorial.platform !== "youtube" || !tutorial.videoId || !tutorial.externalUrl) return "";
+    return `
+        <div class="rig-tutorial" data-rig-tutorial-video-id="${tutorial.videoId}" data-rig-tutorial-title="${tutorial.title}">
+            <div class="rig-tutorial__meta">
+                <span class="rig-tutorial__media-type">Video Tutorial</span>
+                <p class="rig-tutorial__title">${tutorial.title}</p>
+                <p class="rig-tutorial__creator">${tutorial.creator}</p>
+            </div>
+            <div class="rig-tutorial__player" data-rig-tutorial-player></div>
+            <a class="rig-tutorial__external" href="${tutorial.externalUrl}" target="_blank" rel="noopener noreferrer">Watch on YouTube <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
+        </div>
+    `;
+}
+
+function setRigTutorialPlayerState(panel, expanded) {
+    const tutorial = panel?.querySelector("[data-rig-tutorial-video-id]");
+    const player = panel?.querySelector("[data-rig-tutorial-player]");
+    if (!tutorial || !player) return;
+
+    if (!expanded) {
+        player.replaceChildren();
+        return;
+    }
+
+    if (player.querySelector("iframe")) return;
+    const videoId = tutorial.dataset.rigTutorialVideoId;
+    if (!videoId) return;
+
+    const iframe = document.createElement("iframe");
+    iframe.className = "rig-tutorial__iframe";
+    iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?rel=0`;
+    iframe.title = tutorial.dataset.rigTutorialTitle || "Rig tutorial";
+    iframe.loading = "lazy";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    player.replaceChildren(iframe);
+}
+
 function initializeRigDetailDisclosures(appMain, detailConfig, expandedDisclosureIds = []) {
     const expanded = new Set(expandedDisclosureIds);
     appMain.querySelectorAll("[data-rig-disclosure-id]").forEach((trigger) => {
+        const disclosureId = trigger.dataset.rigDisclosureId;
+        const panel = disclosureId
+            ? appMain.querySelector(`[data-rig-disclosure-panel="${disclosureId}"]`)
+            : null;
+        if (disclosureId === "rig-tutorial" && panel) {
+            setRigTutorialPlayerState(panel, trigger.getAttribute("aria-expanded") === "true");
+        }
+
         trigger.addEventListener("click", () => {
-            const disclosureId = trigger.dataset.rigDisclosureId;
-            const panel = appMain.querySelector(`[data-rig-disclosure-panel="${disclosureId}"]`);
             if (!disclosureId || !panel) return;
             const nextExpanded = trigger.getAttribute("aria-expanded") !== "true";
             trigger.setAttribute("aria-expanded", nextExpanded ? "true" : "false");
             panel.hidden = !nextExpanded;
             const stateCue = trigger.querySelector(".rig-detail-row__state");
             if (stateCue) stateCue.textContent = nextExpanded ? "▴" : "▾";
+            if (disclosureId === "rig-tutorial") {
+                setRigTutorialPlayerState(panel, nextExpanded);
+            }
             if (nextExpanded) expanded.add(disclosureId);
             else expanded.delete(disclosureId);
             detailConfig.onDisclosureStateChange?.([...expanded]);
@@ -2783,6 +2855,13 @@ function initializeRigDetailDisclosures(appMain, detailConfig, expandedDisclosur
     });
 }
 
+/* ==========================================================
+   END RIG GUIDE — DETAIL SUPPORT + DISCLOSURE PRESENTATION
+   ========================================================== */
+
+/* ==========================================================
+   RIG GUIDE — DETAIL RENDERING + READINESS
+   ========================================================== */
 function renderInstructionDetail(appMain, detailConfig) {
     if (!appMain || !detailConfig?.record) {
         console.error("A valid instructional detail record is required.");
@@ -2798,15 +2877,15 @@ function renderInstructionDetail(appMain, detailConfig) {
     const effectiveRecord = selectedConfiguration
         ? {
             ...record,
-            useCases: selectedConfiguration.useCases ?? record.useCases,
-            conditionTags: selectedConfiguration.conditionTags ?? record.conditionTags,
-            referenceLinks: selectedConfiguration.referenceLinks ?? record.referenceLinks,
-            componentRequirements: selectedConfiguration.componentRequirements ?? record.componentRequirements,
-            lureBaitRequirements: selectedConfiguration.lureBaitRequirements ?? record.lureBaitRequirements,
-            knotApplications: selectedConfiguration.knotApplications ?? record.knotApplications,
-            assemblySteps: selectedConfiguration.assemblySteps ?? record.assemblySteps,
-            setupNotes: selectedConfiguration.setupNotes ?? record.setupNotes,
-            commonMistakes: selectedConfiguration.commonMistakes ?? record.commonMistakes,
+            useCases: selectedConfiguration.useCases ?? [],
+            conditionTags: selectedConfiguration.conditionTags ?? [],
+            referenceLinks: selectedConfiguration.referenceLinks ?? [],
+            componentRequirements: selectedConfiguration.componentRequirements ?? [],
+            lureBaitRequirements: selectedConfiguration.lureBaitRequirements ?? [],
+            knotApplications: selectedConfiguration.knotApplications ?? [],
+            assemblySteps: selectedConfiguration.assemblySteps ?? [],
+            setupNotes: selectedConfiguration.setupNotes ?? [],
+            commonMistakes: selectedConfiguration.commonMistakes ?? [],
             tutorialVideo: selectedConfiguration.tutorialVideo ?? null
         }
         : record;
@@ -2820,6 +2899,12 @@ function renderInstructionDetail(appMain, detailConfig) {
         : [];
     const expanded = new Set(expandedDisclosureIds);
     const isCoreRig = isCoreRigRecord(record);
+    const classificationMarkup = `
+        <p class="detail-eyebrow rig-detail-classification">
+            ${isCoreRig ? '<span class="rig-detail-classification__core">Core Rig</span><span class="rig-detail-classification__separator" aria-hidden="true">·</span>' : ""}
+            <span class="rig-detail-classification__difficulty">${record.difficulty}</span>
+        </p>
+    `;
     const reelSetupLines = Array.isArray(detailConfig.reelSetupContextLines)
         ? detailConfig.reelSetupContextLines.filter((line) => Array.isArray(line) && line.length > 0)
         : [];
@@ -2855,7 +2940,7 @@ function renderInstructionDetail(appMain, detailConfig) {
         return Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
     };
     const buildRequirementTypeLabel = (required, quantity) => {
-        const typeLabel = required ? "Required component" : "Optional component";
+        const typeLabel = required ? "Required" : "Optional";
         return quantity > 1 ? `${typeLabel} · Qty ${quantity}` : typeLabel;
     };
     const componentsMarkup = componentRequirements.map((component) => {
@@ -2888,10 +2973,10 @@ function renderInstructionDetail(appMain, detailConfig) {
                             class="reference-info-button"
                             type="button"
                             data-reference-id="${component.tackleId}"
-                            aria-label="Identification help for ${componentName}"
+                            aria-label="Learn about ${componentName}"
                         ><span aria-hidden="true">&#9432;</span></button>
+                        <span class="rig-component-item__metadata ${component.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(component.required === true, quantity)}</span>
                     </div>
-                    <span class="${component.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(component.required === true, quantity)}</span>
                 </div>
                 ${component.notes ? `<p>${component.notes}</p>` : ""}
             </li>
@@ -2926,15 +3011,83 @@ function renderInstructionDetail(appMain, detailConfig) {
                             class="reference-info-button"
                             type="button"
                             data-lure-bait-reference-id="${requirement.lureBaitId}"
-                            aria-label="Identification help for ${displayName}"
+                            aria-label="Learn about ${displayName}"
                         ><span aria-hidden="true">&#9432;</span></button>
+                        <span class="rig-component-item__metadata ${requirement.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(requirement.required === true, quantity)}</span>
                     </div>
-                    <span class="${requirement.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(requirement.required === true, quantity)}</span>
                 </div>
                 ${requirement.notes ? `<p>${requirement.notes}</p>` : ""}
             </li>
         `;
     }).join("");
+    const knotsMarkup = buildRigKnotApplicationsMarkup(effectiveRecord);
+    const knotGuidanceMarkup = knotsMarkup
+        ? `
+            <section class="rig-build-subsection rig-build-subsection--guidance">
+                ${buildRigDetailDisclosureMarkup(
+                    "knot-guidance",
+                    "Knot Guidance",
+                    knotsMarkup,
+                    expanded.has("knot-guidance")
+                )}
+            </section>
+        `
+        : "";
+    const tutorialBodyMarkup = buildRigTutorialDisclosureBody(effectiveRecord.tutorialVideo);
+    const tutorialMarkup = tutorialBodyMarkup
+        ? buildRigDetailDisclosureMarkup(
+            "rig-tutorial",
+            "Rig Tutorial",
+            tutorialBodyMarkup,
+            expanded.has("rig-tutorial")
+        )
+        : "";
+    const commonMistakesMarkup = commonMistakes.length > 0
+        ? buildRigDetailDisclosureMarkup(
+            "common-mistakes",
+            "Common Mistakes",
+            `<ul class="detail-list">${commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>`,
+            expanded.has("common-mistakes")
+        )
+        : "";
+    const buildSupportRowsMarkup = [tutorialMarkup, commonMistakesMarkup].filter(Boolean).join("");
+    const buildSupportMarkup = buildSupportRowsMarkup
+        ? `
+            <section class="rig-build-subsection rig-build-subsection--support" aria-labelledby="rig-build-support-title">
+                <h4 class="detail-subsection-heading" id="rig-build-support-title">Build Support</h4>
+                <div class="rig-build-support__rows">${buildSupportRowsMarkup}</div>
+            </section>
+        `
+        : "";
+    const howToBuildMarkup = `
+        <section class="detail-section rig-build-section" aria-labelledby="rig-build-title">
+            <h3 id="rig-build-title">How to Build It</h3>
+            ${knotGuidanceMarkup}
+            <section class="rig-build-subsection rig-build-subsection--steps" aria-labelledby="rig-build-steps-title">
+                <h4 class="detail-subsection-heading" id="rig-build-steps-title">Build Steps</h4>
+                ${buildRigBuildStepsMarkup(effectiveRecord)}
+            </section>
+            ${buildSupportMarkup}
+        </section>
+    `;
+    const useCasesMarkup = buildRigAboutTextList(effectiveRecord.useCases);
+    const conditionsMarkup = buildRigConditionReferenceMarkup(effectiveRecord.conditionTags);
+    const techniquesMarkup = buildRigTechniqueReferenceMarkup(record.id, selectedConfiguration?.lureBaitId ?? null);
+    const aboutOverviewMarkup = buildRigAboutOverviewMarkup(useCasesMarkup, conditionsMarkup, techniquesMarkup);
+    const aboutMarkup = aboutOverviewMarkup ? `
+        <section class="rig-detail-group rig-detail-group--about" aria-labelledby="rig-about-title">
+            <h3 class="rig-detail-group__title" id="rig-about-title">About This Rig</h3>
+            <div class="rig-detail-group__shell">
+                ${buildRigDetailDisclosureMarkup(
+                    "about-rig-overview",
+                    "Rig Overview",
+                    aboutOverviewMarkup,
+                    expanded.has("about-rig-overview")
+                )}
+            </div>
+        </section>
+    ` : "";
+    const referencesBodyMarkup = buildRigReferenceLinks(effectiveRecord);
     const moreHelpMarkup = [
         setupNotes.length > 0
             ? buildRigDetailDisclosureMarkup(
@@ -2944,52 +3097,30 @@ function renderInstructionDetail(appMain, detailConfig) {
                 expanded.has("setup-notes")
             )
             : "",
-        commonMistakes.length > 0
+        referencesBodyMarkup
             ? buildRigDetailDisclosureMarkup(
-                "common-mistakes",
-                "Common Mistakes",
-                `<ul class="detail-list">${commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>`,
-                expanded.has("common-mistakes")
+                "sources",
+                "Sources & References",
+                referencesBodyMarkup,
+                expanded.has("sources")
             )
             : ""
     ].filter(Boolean).join("");
-    const referencesBodyMarkup = buildRigReferenceLinks(effectiveRecord);
-    const sourcesMarkup = referencesBodyMarkup
-        ? `
-            <section class="rig-detail-group rig-detail-group--sources" aria-label="Sources and references">
-                <div class="rig-detail-group__shell">
-                    ${buildRigDetailDisclosureMarkup(
-                        "sources",
-                        "Sources & References",
-                        referencesBodyMarkup,
-                        expanded.has("sources")
-                    )}
-                </div>
-            </section>
-        `
-        : "";
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--rig-compact" aria-labelledby="rig-detail-title">
             ${buildPageNavigationMarkup(detailConfig.parentLabel)}
-            <header class="detail-header rig-detail-header${isCoreRig ? " detail-header--core" : ""}${reelSetupMarkup ? " rig-detail-header--with-reel-setup" : ""}">
-                <div class="rig-detail-header__copy">
-                    ${isCoreRig ? '<p class="detail-core-badge">Core Rig</p>' : ""}
-                    <p class="detail-eyebrow">${record.difficulty}</p>
-                    <h2 id="rig-detail-title">${record.name}</h2>
-                    <p>${record.summary}</p>
+            <header class="detail-header rig-detail-header${reelSetupMarkup ? " rig-detail-header--with-reel-setup" : ""}">
+                <div class="rig-detail-header__top">
+                    <div class="rig-detail-header__copy">
+                        ${classificationMarkup}
+                        <h2 id="rig-detail-title">${record.name}</h2>
+                    </div>
+                    ${reelSetupMarkup}
                 </div>
-                ${reelSetupMarkup}
+                <p class="rig-detail-header__summary">${record.summary}</p>
             </header>
             ${configurationMarkup}
-            <section class="detail-section rig-at-a-glance" aria-labelledby="rig-at-a-glance-title">
-                <h3 id="rig-at-a-glance-title">At a Glance</h3>
-                <div class="rig-at-a-glance__grid">
-                    <div class="rig-at-a-glance__group"><h4 class="detail-subsection-heading">Best For</h4>${buildTagList(effectiveRecord.useCases)}</div>
-                    <div class="rig-at-a-glance__group"><h4 class="detail-subsection-heading">Good Conditions</h4>${buildConditionTagList(effectiveRecord.conditionTags)}</div>
-                    <div class="rig-at-a-glance__group"><h4 class="detail-subsection-heading">Techniques</h4>${buildRigTechniqueTagList(record.id, selectedConfiguration?.lureBaitId ?? null)}</div>
-                </div>
-            </section>
             <section class="detail-section rig-requirements-section">
                 <div class="rig-requirements-section__header">
                     <div>
@@ -3000,25 +3131,20 @@ function renderInstructionDetail(appMain, detailConfig) {
                 </div>
                 <ul class="rig-component-list">${lureBaitMarkup}${componentsMarkup}</ul>
             </section>
-            ${buildRigKnotApplications(effectiveRecord)}
             ${safetyNotes.length > 0 ? `
                 <section class="detail-section detail-section--supporting detail-section--safety">
                     <h3>Safety</h3>
                     <ul class="detail-list">${safetyNotes.map((note) => `<li>${note}</li>`).join("")}</ul>
                 </section>
             ` : ""}
-            <section class="detail-section detail-section--build">
-                <h3>How to Build It</h3>
-                <ol class="detail-steps">${effectiveRecord.assemblySteps.map((step) => `<li>${step}</li>`).join("")}</ol>
-            </section>
-            ${buildRigTutorial(effectiveRecord)}
+            ${howToBuildMarkup}
+            ${aboutMarkup}
             ${moreHelpMarkup ? `
                 <section class="rig-detail-group rig-detail-group--more-help" aria-labelledby="rig-more-help-title">
                     <h3 class="rig-detail-group__title" id="rig-more-help-title">More Help</h3>
                     <div class="rig-detail-group__shell">${moreHelpMarkup}</div>
                 </section>
             ` : ""}
-            ${sourcesMarkup}
         </article>
     `;
 
@@ -3044,14 +3170,14 @@ function renderInstructionDetail(appMain, detailConfig) {
 
         if (missingRequired.length === 0) {
             status.className = "readiness-status readiness-status--ready";
-            status.innerHTML = `<strong>Ready to Assemble</strong><span>All required components are marked available.</span>`;
+            status.innerHTML = `<strong class="readiness-status__primary">Ready to Assemble</strong><span class="readiness-status__detail">All required components are marked available.</span>`;
             return;
         }
 
         status.className = "readiness-status readiness-status--missing";
         status.innerHTML = `
-            <strong>Missing ${missingRequired.length} Required ${missingRequired.length === 1 ? "Component" : "Components"}</strong>
-            <span>${missingRequired.join(", ")}</span>
+            <strong class="readiness-status__primary">Missing ${missingRequired.length} Required ${missingRequired.length === 1 ? "Component" : "Components"}</strong>
+            <span class="readiness-status__detail">${missingRequired.join(", ")}</span>
         `;
     };
 
@@ -3074,10 +3200,13 @@ function renderInstructionDetail(appMain, detailConfig) {
     initializeLureBaitReferenceLinks(appMain, lureBaitRequirements);
     initializeConditionLinks(appMain);
     initializeTechniqueLinks(appMain);
-    initializeRigTutorial(appMain);
     initializeHomeNavigation(appMain);
     updateReadinessStatus();
 }
+
+/* ==========================================================
+   END RIG GUIDE — DETAIL RENDERING + READINESS
+   ========================================================== */
 
 function getRegulationsResourceActionLabel(resource) {
     const capabilities = new Set(Array.isArray(resource?.capabilities) ? resource.capabilities : []);

@@ -1896,7 +1896,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         if (!rendererText.includes('getCompatibleTargetIds("lure-bait-technique", "lure-bait", lureBaitId, "technique")')) {
             fail("Direct-Tie Technique presentation", "renderer must intersect Direct-Tie Rig Techniques with selected Lure/Bait Technique compatibility");
         }
-        if (!rendererText.includes('buildRigTechniqueTagList(record.id, selectedConfiguration?.lureBaitId ?? null)')) {
+        if (!rendererText.includes('buildRigTechniqueReferenceMarkup(record.id, selectedConfiguration?.lureBaitId ?? null)')) {
             fail("Direct-Tie Technique presentation", "Rig Detail must pass the selected Direct-Tie Lure/Bait configuration into Technique rendering");
         }
     }
@@ -2317,13 +2317,14 @@ function validateAvailabilityQuantityFoundation(rigs) {
     }
 
 
-    if (authoredRequirements.length !== 87) {
-        fail("G7-QTY Rig requirement", `expected 87 current availability-bearing Rig requirements; found ${authoredRequirements.length}`);
+    // R6 removes the former optional Spoon barrel-swivel requirement from Direct-Tie build topology.
+    if (authoredRequirements.length !== 86) {
+        fail("G7-QTY Rig requirement", `expected 86 current availability-bearing Rig requirements; found ${authoredRequirements.length}`);
     }
     const quantityOneCount = authoredRequirements.filter((item) => item.quantity === 1).length;
     const quantityTwo = authoredRequirements.filter((item) => item.quantity === 2);
-    if (quantityOneCount !== 85 || quantityTwo.length !== 2) {
-        fail("G7-QTY Rig requirement", `expected quantity distribution 85x1 + 2x2; found ${quantityOneCount}x1 + ${quantityTwo.length}x2`);
+    if (quantityOneCount !== 84 || quantityTwo.length !== 2) {
+        fail("G7-QTY Rig requirement", `expected quantity distribution 84x1 + 2x2; found ${quantityOneCount}x1 + ${quantityTwo.length}x2`);
     }
     const quantityTwoKeys = quantityTwo
         .map((item) => `${item.label}|${item.tackleId ?? item.lureBaitId ?? "<unknown>"}`)
@@ -3753,12 +3754,12 @@ function validateCanonicalData() {
             }
 
 
-            const expectedFields = ["connectionType", "label", "notes", "recommendedKnotIds"];
+            const expectedFields = ["assemblyStepIndex", "connectionType", "label", "notes", "recommendedKnotIds"];
             const actualFields = Object.keys(application).sort();
             if (JSON.stringify(actualFields) !== JSON.stringify(expectedFields)) {
                 fail(
                     "Rig â Knot",
-                    `${rig.id}: knot application fields must be exactly label, connectionType, recommendedKnotIds, notes; found ${actualFields.join(", ")}`
+                    `${rig.id}: knot application fields must be exactly label, connectionType, recommendedKnotIds, assemblyStepIndex, notes; found ${actualFields.join(", ")}`
                 );
             }
 
@@ -3924,6 +3925,723 @@ function validateCanonicalData() {
     };
 }
 
+
+/* ==========================================================
+   RIG GUIDE — R2 CONSOLIDATED CHECKLIST TRACEABILITY
+   R2-C1 Detail Identity Header -> Detail validation + CSS checks
+   R2-C2 Choose a Setup -> Detail hierarchy/effective-config validation
+   R2-C3 What You Need rows -> Detail/readiness + responsive CSS validation
+   R2-C4 Semantic Status Panel -> Detail/readiness + stacked CSS validation
+   R2-C5 Material Safety -> Data inventory + conditional Detail validation
+   R2-C6 Unique Knot learning list -> Knot/Build-Step validation
+   R2-C7 Knot-to-Build-Step mapping -> Data + Knot/Build-Step validation
+   R2-C8 Rig Tutorial -> Knot/Tutorial lifecycle validation
+   R2-C9 About This Rig disclosures -> Detail/About validation
+   R2-C10 Reference Knowledge cues -> Detail + support/reference validation
+   R2-C11 More Help / Sources -> Support validation
+   R2-C12 Link glyph / no-underline scope -> Support/CSS validation
+   R2-C13 Responsive density / subsection treatment -> Support/CSS validation
+   R2-C14 Direct-Tie effective ownership -> Detail/data validation
+   R2-C15 Full review coverage -> all four R2 Rig validation groups
+
+   R3 LOCAL REVIEW TRACEABILITY
+   R2-F1 Knots You'll Tie density -> Knot/CSS validation
+   R2-F2 Build-Step Knot links removed -> Knot/Build-Step validation
+   R2-F3 Rig component density -> Detail/readiness + responsive CSS validation
+   R2-F4 About shell formatting -> Detail/About + CSS validation
+   R2-F5 Good Conditions/Techniques compact reference wrapping -> Detail/Reference + CSS validation
+
+   R4 LOCAL REVIEW TRACEABILITY
+   R3-F1 Knot learning typography/rhythm -> Knot/CSS validation
+   R3-F2 Build-Step Knot emphasis -> Knot/Build-Step + CSS validation
+   R3-F3 Guide-family About section title -> Detail/About + CSS validation
+   R3-F4 About disclosure title color -> Detail/About + CSS validation
+   R3-F5 Single Rig Overview disclosure -> Detail/About validation
+   R3-F6 What You Need density verify -> responsive/component CSS validation
+
+   R5 LOCAL REVIEW TRACEABILITY
+   R4-D1 Build-Step Knot annotation color/spacing -> Knot/Build-Step + CSS validation
+   R4-D2 Common Mistakes ownership -> Build Support / More Help validation
+   R4-D3 Knot Guidance disclosure model -> Knot/Tutorial validation
+   R4-D4 Build Support grouping/order -> Knot/Tutorial + Support validation
+   R4-D5 Preserve R4 reference specimen semantics -> all Rig validation groups
+   ========================================================== */
+
+/* ==========================================================
+   RIG GUIDE — R2 DATA + KNOT-STEP MAPPING VALIDATION
+   Consolidated checklist: R2-C5, R2-C7, R2-C14, R2-C15
+   ========================================================== */
+function validateRigR2DataSemantics(rigs) {
+    recordCheck("R2 Rig data semantics, exact Knot-step mappings, and material Safety");
+
+    const activeRigs = requireArray(rigs, "R2 Rig registry").filter((rig) => rig?.isActive === true);
+    const rigById = indexById(activeRigs);
+    if (activeRigs.length !== 23) fail("R2 Rig registry", `expected 23 active Rigs; found ${activeRigs.length}`);
+
+    const expectedSafetyIds = [
+        "basic-bottom-rig",
+        "bottom-bouncer-spinner-rig",
+        "carolina-rig",
+        "double-jig-crappie-rig",
+        "drop-shot-rig",
+        "free-rig",
+        "live-bait-slip-sinker-rig",
+        "neko-rig",
+        "punch-pegged-texas-rig",
+        "slip-bobber-rig",
+        "split-shot-bait-rig",
+        "three-way-rig"
+    ].sort();
+    const actualSafetyIds = activeRigs
+        .filter((rig) => Array.isArray(rig.safetyNotes) && rig.safetyNotes.length > 0)
+        .map((rig) => rig.id)
+        .sort();
+    if (JSON.stringify(actualSafetyIds) !== JSON.stringify(expectedSafetyIds)) {
+        fail("R2 Rig Safety inventory", `expected ${expectedSafetyIds.join(", ")}; found ${actualSafetyIds.join(", ")}`);
+    }
+
+    const fishLeakage = /\b(?:largemouth|smallmouth|spotted bass|white bass|striped bass|hybrid striped bass|bass|bluegill|crappie|walleye|sauger|saugeye|trout|catfish|bullhead|carp|drum|gar|paddlefish|sunfish)\b/i;
+    const techniqueLeakage = /\b(?:dragging|hopping|trolling|drifting|vertical jigging|steady retrieve|stop-and-go retrieve|twitching|jerking|deadsticking|lift-and-fall)\b/i;
+    for (const rig of activeRigs) {
+        const scopes = [[`Rig ${rig.id}`, rig.useCases]];
+        for (const configuration of Array.isArray(rig.configurations) ? rig.configurations : []) {
+            scopes.push([`Rig ${rig.id}/${configuration.id}`, configuration.useCases]);
+            if (Object.prototype.hasOwnProperty.call(configuration, "safetyNotes")) {
+                fail("R2 Rig Safety ownership", `${rig.id}/${configuration.id}: configuration-level safetyNotes is not approved`);
+            }
+        }
+        for (const [label, values] of scopes) {
+            for (const useCase of requireArray(values, `${label} useCases`)) {
+                if (fishLeakage.test(useCase)) fail("R2 Rig useCases ownership", `${label}: Fish applicability leaked into useCases: ${JSON.stringify(useCase)}`);
+                if (techniqueLeakage.test(useCase)) fail("R2 Rig useCases ownership", `${label}: Technique behavior leaked into useCases: ${JSON.stringify(useCase)}`);
+            }
+        }
+    }
+
+    const expectedStepMappings = new Map([
+        ["fixed-bobber-rig|Main line to hook", 0],
+        ["slip-bobber-rig|Main line to hook", 4],
+        ["basic-bottom-rig|Main line to swivel", 2],
+        ["basic-bottom-rig|Leader to swivel", 3],
+        ["basic-bottom-rig|Leader to hook", 4],
+        ["texas-rig|Main line to hook", 1],
+        ["jighead-soft-plastic|Main line or leader to jighead", 1],
+        ["direct-tie-lure-setup/inline-spinner|Main line or leader to inline spinner", 2],
+        ["direct-tie-lure-setup/spinnerbait|Main line or leader to spinnerbait", 2],
+        ["direct-tie-lure-setup/crankbait|Main line or leader to crankbait line-tie or split ring", 2],
+        ["direct-tie-lure-setup/jerkbait|Main line or leader to jerkbait line-tie or split ring", 2],
+        ["direct-tie-lure-setup/spoon|Main line or leader to spoon line-tie or factory split ring", 1],
+        ["wacky-rig|Main line or leader to hook", 0],
+        ["ned-rig|Main line or leader to jighead", 0],
+        ["weightless-soft-plastic-rig|Main line or leader to hook", 0],
+        ["drop-shot-rig|Main line to drop-shot hook", 0],
+        ["carolina-rig|Main line to swivel", 2],
+        ["carolina-rig|Leader to swivel", 3],
+        ["carolina-rig|Leader to hook", 4],
+        ["live-bait-slip-sinker-rig|Main line to swivel", 2],
+        ["live-bait-slip-sinker-rig|Leader to swivel", 3],
+        ["live-bait-slip-sinker-rig|Leader to hook", 4],
+        ["three-way-rig|Main line to three-way swivel", 0],
+        ["three-way-rig|Hook leader to three-way swivel", 1],
+        ["three-way-rig|Hook leader to hook", 2],
+        ["three-way-rig|Sinker dropper to three-way swivel", 3],
+        ["three-way-rig|Sinker dropper to sinker", 4],
+        ["neko-rig|Main line or leader to hook", 3],
+        ["shaky-head-rig|Main line or leader to jighead", 0],
+        ["free-rig|Main line to hook", 1],
+        ["double-jig-crappie-rig|Main line to lower jighead", 0],
+        ["double-jig-crappie-rig|Upper jig branch loop", 1],
+        ["jika-rig|Main line or leader to split ring", 2],
+        ["punch-pegged-texas-rig|Main line to hook", 2],
+        ["bottom-bouncer-spinner-rig|Main line to bottom bouncer", 1],
+        ["split-shot-bait-rig|Main line to hook", 0],
+        ["weighted-swimbait-hook-rig|Main line or leader to weighted swimbait hook", 5],
+        ["tube-jig-rig|Main line or leader to tube jighead", 4]
+    ]);
+    const actualMappingKeys = new Set();
+    let mappingCount = 0;
+    const validateMappingScope = (scopeId, record) => {
+        const steps = requireArray(record?.assemblySteps, `${scopeId} assemblySteps`);
+        for (const application of requireArray(record?.knotApplications, `${scopeId} knotApplications`)) {
+            mappingCount += 1;
+            const key = `${scopeId}|${application?.label ?? ""}`;
+            actualMappingKeys.add(key);
+            if (!Number.isInteger(application?.assemblyStepIndex)) {
+                fail("R2 Rig Knot-step mapping", `${key}: assemblyStepIndex must be an integer`);
+                continue;
+            }
+            if (application.assemblyStepIndex < 0 || application.assemblyStepIndex >= steps.length) {
+                fail("R2 Rig Knot-step mapping", `${key}: assemblyStepIndex ${application.assemblyStepIndex} is out of range for ${steps.length} Build Steps`);
+            }
+            if (!expectedStepMappings.has(key)) {
+                fail("R2 Rig Knot-step mapping", `unexpected mapping record ${key}`);
+            } else if (expectedStepMappings.get(key) !== application.assemblyStepIndex) {
+                fail("R2 Rig Knot-step mapping", `${key}: expected step ${expectedStepMappings.get(key)}; found ${application.assemblyStepIndex}`);
+            }
+        }
+    };
+    for (const rig of activeRigs) {
+        validateMappingScope(rig.id, rig);
+        for (const configuration of Array.isArray(rig.configurations) ? rig.configurations : []) {
+            validateMappingScope(`${rig.id}/${configuration.id}`, configuration);
+        }
+    }
+    if (mappingCount !== 38) fail("R2 Rig Knot-step mapping", `expected 38 knotApplications; found ${mappingCount}`);
+    if (expectedStepMappings.size !== 38) fail("R2 Rig Knot-step mapping", `validator mapping table must contain 38 entries; found ${expectedStepMappings.size}`);
+    for (const key of expectedStepMappings.keys()) {
+        if (!actualMappingKeys.has(key)) fail("R2 Rig Knot-step mapping", `missing mapping ${key}`);
+    }
+
+    const directTie = rigById.get("direct-tie-lure-setup");
+    if (!directTie || requireArray(directTie.safetyNotes, "Direct-Tie safetyNotes").length !== 0) {
+        fail("R2 Rig Safety ownership", "Direct-Tie Lure Setup must not render generic base Safety");
+    }
+    const spoon = directTie?.configurations?.find((configuration) => configuration.id === "spoon");
+    if (!spoon) {
+        fail("R2 Direct-Tie Spoon", "Spoon configuration is missing");
+    } else {
+        const buildTopology = JSON.stringify({
+            componentRequirements: spoon.componentRequirements,
+            knotApplications: spoon.knotApplications,
+            assemblySteps: spoon.assemblySteps
+        });
+        if (/barrel[- ]swivel|short leader|upstream/i.test(buildTopology)) {
+            fail("R2 Direct-Tie Spoon", "removed barrel-swivel/short-leader alternate topology remains in Direct-Tie build data");
+        }
+        const setupText = requireArray(spoon.setupNotes, "Direct-Tie Spoon setupNotes").join(" ");
+        if (!/separate swivel-based leader setup/i.test(setupText)) {
+            fail("R2 Direct-Tie Spoon", "separate swivel-based alternative must remain a concise Setup Note only");
+        }
+    }
+
+    const fixedSetup = requireArray(rigById.get("fixed-bobber-rig")?.setupNotes, "Fixed Bobber setupNotes").join(" ");
+    if (!/relative to the fish, bottom, and cover/i.test(fixedSetup) || !/two to four feet/i.test(fixedSetup)) {
+        fail("R2 Rig practical guidance", "Fixed Bobber depth must remain relative-context guidance with the approved two-to-four-foot starting point");
+    }
+    const slipSetup = requireArray(rigById.get("slip-bobber-rig")?.setupNotes, "Slip Bobber setupNotes").join(" ");
+    if (!/bottom-oriented/i.test(slipSetup) || !/one to two feet above bottom/i.test(slipSetup)) {
+        fail("R2 Rig practical guidance", "Slip Bobber must retain the approved bottom-oriented one-to-two-foot starting point");
+    }
+    const threeWaySetup = requireArray(rigById.get("three-way-rig")?.setupNotes, "Three-Way setupNotes").join(" ");
+    if (!/lighter-test sinker dropper/i.test(threeWaySetup)) {
+        fail("R2 Rig practical guidance", "Three-Way Rig must retain lighter-test sacrificial sinker-dropper guidance");
+    }
+    const punchSetup = requireArray(rigById.get("punch-pegged-texas-rig")?.setupNotes, "Punch setupNotes").join(" ");
+    if (!/abrasion/i.test(punchSetup)) {
+        fail("R2 Rig practical guidance", "Punch / Pegged Texas line-abrasion check must live in Setup Notes");
+    }
+    const bouncerSafety = requireArray(rigById.get("bottom-bouncer-spinner-rig")?.safetyNotes, "Bottom-Bouncer safetyNotes").join(" ");
+    if (!/recoil|projectile/i.test(bouncerSafety)) {
+        fail("R2 Rig Safety ownership", "Bottom-Bouncer Safety must preserve the distinctive recoil/projectile hazard");
+    }
+
+    const dropShotKnots = rigById.get("drop-shot-rig")?.knotApplications?.[0]?.recommendedKnotIds ?? [];
+    if (JSON.stringify(dropShotKnots) !== JSON.stringify(["palomar-knot"])) {
+        fail("R2 Rig Knot data", "Drop Shot must retain the approved Palomar-only hook connection");
+    }
+    const doubleJigDropper = rigById.get("double-jig-crappie-rig")?.knotApplications?.find((application) => application.connectionType === "dropper-loop");
+    if (JSON.stringify(doubleJigDropper?.recommendedKnotIds ?? []) !== JSON.stringify(["dropper-loop-knot"])) {
+        fail("R2 Rig Knot data", "Double-Jig Crappie upper branch must retain Dropper Loop");
+    }
+    if ((rigById.get("three-way-rig")?.knotApplications ?? []).length !== 5) {
+        fail("R2 Rig Knot data", "Three-Way Rig must retain five real tied connection points");
+    }
+    const serializedRigs = JSON.stringify(activeRigs);
+    if (serializedRigs.includes('"snell-knot"') || serializedRigs.includes('"non-slip-loop-knot"')) {
+        fail("R2 Rig Knot data", "Snell or Non-Slip Loop must not be globally introduced into Rig knotApplications");
+    }
+}
+
+/* ==========================================================
+   END RIG GUIDE — R2 DATA + KNOT-STEP MAPPING VALIDATION
+   ========================================================== */
+
+/* ==========================================================
+   RIG GUIDE — R2 DETAIL / READINESS / ABOUT VALIDATION
+   Consolidated checklist: R2-C1-C5, R2-C9-C10, R2-C14-C15
+   ========================================================== */
+function validateRigR2DetailPresentation() {
+    recordCheck("R2 Rig Detail identity, readiness, About disclosures, Reference cues, and effective ownership");
+
+    const rendererSource = readText("view-renderer.js") ?? "";
+    const styleSource = readText("forest-journal.css") ?? "";
+    const start = rendererSource.indexOf("function renderInstructionDetail(appMain, detailConfig) {");
+    const end = rendererSource.indexOf("\nfunction getRegulationsResourceActionLabel", start);
+    const rigDetailSource = start >= 0 && end > start ? rendererSource.slice(start, end) : "";
+    if (!rigDetailSource) {
+        fail("R2 Rig Detail hierarchy", "Rig Detail renderer must exist");
+        return;
+    }
+
+    const hierarchyTokens = [
+        "rig-detail-header",
+        "${configurationMarkup}",
+        "rig-requirements-section",
+        "detail-section--safety",
+        "${howToBuildMarkup}",
+        "${aboutMarkup}",
+        "rig-detail-group--more-help"
+    ];
+    let lastIndex = -1;
+    for (const token of hierarchyTokens) {
+        const tokenIndex = rigDetailSource.indexOf(token);
+        if (tokenIndex < 0 || tokenIndex <= lastIndex) {
+            fail("R2 Rig Detail hierarchy", "expected Identity -> Choose a Setup -> What You Need -> Safety -> How to Build It -> About This Rig -> More Help order");
+            break;
+        }
+        lastIndex = tokenIndex;
+    }
+
+    for (const text of ["About This Rig", "What You Need", "How to Build It", "More Help"]) {
+        if (!rigDetailSource.includes(text)) fail("R2 Rig Detail hierarchy", `missing ${text}`);
+    }
+    if (rigDetailSource.includes("At a Glance") || rigDetailSource.includes(">Best For<") || rigDetailSource.includes("rig-at-a-glance")) {
+        fail("R2 Rig Detail hierarchy", "obsolete At a Glance / Best For presentation remains");
+    }
+    if (!rigDetailSource.includes('${safetyNotes.length > 0 ? `')) {
+        fail("R2 Rig Safety presentation", "Safety must render only when material safetyNotes[] exist");
+    }
+
+    // R2-C1 Detail Identity Header + passive Reel Setup workflow context.
+    for (const token of [
+        "rig-detail-header__top",
+        "rig-detail-classification",
+        "rig-detail-classification__core",
+        "rig-detail-classification__difficulty",
+        "Current Reel Setup",
+        "rig-detail-header__summary"
+    ]) {
+        if (!rigDetailSource.includes(token)) fail("R2 Rig identity", `missing ${token}`);
+    }
+    if (/(?:class=\\?"[^\"]*\bdetail-header--core\b)|detail-core-badge/.test(rigDetailSource)) {
+        fail("R2 Rig identity", "legacy Core badge/header-core identity language remains on Rig Detail");
+    }
+    const identityTopIndex = rigDetailSource.indexOf("rig-detail-header__top");
+    const reelIndex = rigDetailSource.indexOf("${reelSetupMarkup}", identityTopIndex);
+    const summaryIndex = rigDetailSource.indexOf("rig-detail-header__summary", identityTopIndex);
+    if (!(identityTopIndex >= 0 && reelIndex > identityTopIndex && summaryIndex > reelIndex)) {
+        fail("R2 Rig identity", "Rig summary must render beneath the upper identity + Reel Setup row");
+    }
+
+    // R2-C3/C4 What You Need + stacked Semantic Status Panel.
+    for (const token of [
+        "buildRequirementTypeLabel",
+        'const typeLabel = required ? "Required" : "Optional"',
+        "rig-component-item__metadata",
+        'aria-label="Learn about ${componentName}"',
+        'aria-label="Learn about ${displayName}"',
+        "readiness-status__primary",
+        "readiness-status__detail",
+        "Ready to Assemble",
+        "Missing ${missingRequired.length} Required"
+    ]) {
+        if (!rigDetailSource.includes(token)) fail("R2 Rig readiness presentation", `missing ${token}`);
+    }
+    if (rigDetailSource.includes("Identification help for")) {
+        fail("R2 Rig readiness presentation", "obsolete Reference aria wording remains: Identification help for");
+    }
+
+    // R4 single Rig Overview disclosure with shared Guide-family section/disclosure grammar.
+    for (const token of [
+        "function buildRigAboutOverviewMarkup(useCasesMarkup, conditionsMarkup, techniquesMarkup)",
+        'class="rig-detail-group rig-detail-group--about"',
+        '<h3 class="rig-detail-group__title" id="rig-about-title">About This Rig</h3>',
+        '<div class="rig-detail-group__shell">',
+        '"about-rig-overview"',
+        '"Rig Overview"',
+        'id="rig-about-use-it-for-title">Use It For</h4>',
+        'id="rig-about-good-conditions-title">Good Conditions</h4>',
+        'id="rig-about-techniques-title">Techniques</h4>'
+    ]) {
+        if (!rendererSource.includes(token)) fail("R4 About This Rig", `missing ${token}`);
+    }
+    const overviewIdCount = (rendererSource.match(/"about-rig-overview"/g) ?? []).length;
+    if (overviewIdCount !== 2) {
+        fail("R4 About This Rig", `expected one Rig Overview disclosure state ID used for render + state lookup; found ${overviewIdCount}`);
+    }
+    for (const obsolete of [
+        '"about-use-it-for"',
+        '"about-good-conditions"',
+        '"about-techniques"',
+        'class="rig-about-disclosures"',
+        'class="rig-about-section"'
+    ]) {
+        if (rendererSource.includes(obsolete)) fail("R4 About This Rig", `obsolete R2/R3 About structure remains: ${obsolete}`);
+    }
+
+    // R2-C10 canonical Reference Knowledge cues; unmapped transitional conditionTags remain visible plain text.
+    for (const token of [
+        "const RIG_CONDITION_REFERENCE_IDS",
+        "function buildRigConditionReferenceMarkup(items)",
+        "function buildRigTechniqueReferenceMarkup(rigId, lureBaitId = null)",
+        "rig-about-reference-term",
+        "rig-about-reference-cue",
+        'aria-label="Learn about ${item}"',
+        'aria-label="Learn about ${technique.name}"',
+        '${conditionId ? `<button class="reference-info-button rig-about-reference-cue"'
+    ]) {
+        if (!rendererSource.includes(token)) fail("R2 Rig Reference Knowledge", `missing ${token}`);
+    }
+    if (!rendererSource.includes('<span class="rig-about-reference-term">${item}</span>')) {
+        fail("R2 Rig Reference Knowledge", "Good Conditions must preserve unmapped transitional conditionTags as visible plain text");
+    }
+    if (rendererSource.includes("rig-about-reference-link") || styleSource.includes(".rig-about-reference-link")) {
+        fail("R2 Rig Reference Knowledge", "obsolete whole-term Rig About reference link remains");
+    }
+    if (rigDetailSource.includes("tag-list--conditions")) {
+        fail("R2 Rig Reference Knowledge", "Rig About must not use the legacy condition-tag/chip presentation");
+    }
+
+    // R2-C14 selected Direct-Tie configuration ownership.
+    const selectedConfigurationFields = [
+        "useCases", "conditionTags", "referenceLinks", "componentRequirements", "lureBaitRequirements",
+        "knotApplications", "assemblySteps", "setupNotes", "commonMistakes", "tutorialVideo"
+    ];
+    for (const field of selectedConfigurationFields) {
+        if (!rigDetailSource.includes(`selectedConfiguration.${field}`)) {
+            fail("R2 Direct-Tie presentation", `selected configuration must own ${field}`);
+        }
+    }
+    if (!rigDetailSource.includes("buildRigTechniqueReferenceMarkup(record.id, selectedConfiguration?.lureBaitId ?? null)")) {
+        fail("R2 Direct-Tie presentation", "Techniques must remain derived from selected Direct-Tie Lure/Bait compatibility");
+    }
+
+    for (const marker of [
+        "RIG GUIDE — KNOT APPLICATION PRESENTATION",
+        "END RIG GUIDE — KNOT APPLICATION PRESENTATION",
+        "RIG GUIDE — DETAIL SUPPORT + DISCLOSURE PRESENTATION",
+        "END RIG GUIDE — DETAIL SUPPORT + DISCLOSURE PRESENTATION",
+        "RIG GUIDE — DETAIL RENDERING + READINESS",
+        "END RIG GUIDE — DETAIL RENDERING + READINESS"
+    ]) {
+        if (!rendererSource.includes(marker)) fail("R2 Rig source organization", `missing renderer ownership marker ${marker}`);
+    }
+    for (const marker of [
+        "RIG GUIDE — DETAIL HIERARCHY + SUPPORT PRESENTATION",
+        "END RIG GUIDE — DETAIL HIERARCHY + SUPPORT PRESENTATION",
+        "RIG GUIDE — SOURCES LINK PRESENTATION",
+        "END RIG GUIDE — SOURCES LINK PRESENTATION",
+        "RIG GUIDE — CONFIGURATION + READINESS",
+        "END RIG GUIDE — CONFIGURATION + READINESS"
+    ]) {
+        if (!styleSource.includes(marker)) fail("R2 Rig source organization", `missing CSS ownership marker ${marker}`);
+    }
+}
+
+/* ==========================================================
+   END RIG GUIDE — R2 DETAIL / READINESS / ABOUT VALIDATION
+   ========================================================== */
+
+/* ==========================================================
+   RIG GUIDE — R2 KNOT + BUILD STEP + TUTORIAL VALIDATION
+   Consolidated checklist: R2-C6-C8, R2-C15
+   ========================================================== */
+function validateRigR2KnotTutorialPresentation() {
+    recordCheck("R2 Rig unique Knot learning list, per-step Knot options, and Tutorial lifecycle");
+
+    const rendererSource = readText("view-renderer.js") ?? "";
+    const styleSource = readText("forest-journal.css") ?? "";
+    const rigStart = rendererSource.indexOf("RIG GUIDE — KNOT APPLICATION PRESENTATION");
+    const rigEnd = rendererSource.indexOf("function getRegulationsResourceActionLabel", rigStart);
+    const rigSource = rigStart >= 0 && rigEnd > rigStart ? rendererSource.slice(rigStart, rigEnd) : "";
+    if (!rigSource) {
+        fail("R2 Rig Knot/Tutorial", "could not isolate Rig renderer ownership region");
+        return;
+    }
+
+    for (const token of [
+        "function getRigUniqueKnotIds(record)",
+        "function buildRigKnotApplicationsMarkup(record)",
+        "rig-knot-recommendation-list--unique",
+        "knot?.bestFor",
+        "knot?.compatibleLineTypes",
+        "function getRigKnotIdsForStep(record, stepIndex)",
+        "application?.assemblyStepIndex !== stepIndex",
+        "function buildRigBuildStepKnotOptionsMarkup(record, stepIndex)",
+        'const label = knotIds.length === 1 ? "Knot:" : "Knot options:"',
+        "rig-build-step__knot-name",
+        "rig-build-step__knot-names",
+        "function buildRigBuildStepsMarkup(record)",
+        "buildRigBuildStepKnotOptionsMarkup(record, stepIndex)"
+    ]) {
+        if (!rigSource.includes(token)) fail("R2 Rig Knot presentation", `missing ${token}`);
+    }
+    for (const obsolete of [
+        "rig-knot-connection-group",
+        "rig-knot-connection-grid",
+        "function buildRigKnotApplications(record)",
+        "Use these knots for:",
+        "rig-knot-application-item",
+        "rig-knot-use-list",
+        "rig-build-step__knot-link",
+        "rig-build-step__knot-links"
+    ]) {
+        if (rigSource.includes(obsolete) || styleSource.includes(`.${obsolete}`)) {
+            fail("R2 Rig Knot presentation", `obsolete R1 connection-group presentation remains: ${obsolete}`);
+        }
+    }
+
+    const buildStepKnotStart = rigSource.indexOf("function buildRigBuildStepKnotOptionsMarkup(record, stepIndex) {");
+    const buildStepKnotEnd = rigSource.indexOf("function buildRigBuildStepsMarkup(record)", buildStepKnotStart);
+    const buildStepKnotSource = buildStepKnotStart >= 0 && buildStepKnotEnd > buildStepKnotStart
+        ? rigSource.slice(buildStepKnotStart, buildStepKnotEnd)
+        : "";
+    if (!buildStepKnotSource || buildStepKnotSource.includes("buildRigKnotNavigationMarkup") || buildStepKnotSource.includes("data-rig-knot-id")) {
+        fail("R3 Rig Build-Step Knots", "Build-Step Knot names must be plain text; navigation remains owned by Knots You'll Tie");
+    }
+
+    const renderStart = rigSource.indexOf("function renderInstructionDetail(appMain, detailConfig) {");
+    const renderSource = renderStart >= 0 ? rigSource.slice(renderStart) : "";
+    for (const token of [
+        'const knotGuidanceMarkup = knotsMarkup',
+        'class="rig-build-subsection rig-build-subsection--guidance"',
+        '"knot-guidance"',
+        '"Knot Guidance"',
+        'expanded.has("knot-guidance")',
+        'const buildSupportRowsMarkup = [tutorialMarkup, commonMistakesMarkup]',
+        'class="rig-build-subsection rig-build-subsection--support"',
+        'id="rig-build-support-title">Build Support</h4>'
+    ]) {
+        if (!renderSource.includes(token)) fail("R5 Rig How to Build", `missing ${token}`);
+    }
+    const knotGuidanceIdCount = (renderSource.match(/"knot-guidance"/g) ?? []).length;
+    if (knotGuidanceIdCount !== 2) {
+        fail("R5 Rig Knot Guidance", `expected one Knot Guidance disclosure state ID used for render + state lookup; found ${knotGuidanceIdCount}`);
+    }
+    const howStart = renderSource.indexOf("const howToBuildMarkup = `");
+    const howEnd = renderSource.indexOf("const useCasesMarkup", howStart);
+    const howSource = howStart >= 0 && howEnd > howStart ? renderSource.slice(howStart, howEnd) : "";
+    const howTokens = ["${knotGuidanceMarkup}", "Build Steps", "${buildSupportMarkup}"];
+    let lastIndex = -1;
+    for (const token of howTokens) {
+        const tokenIndex = howSource.indexOf(token);
+        if (tokenIndex < 0 || tokenIndex <= lastIndex) {
+            fail("R5 Rig How to Build", "expected Knot Guidance disclosure -> always-visible Build Steps -> Build Support order");
+            break;
+        }
+        lastIndex = tokenIndex;
+    }
+    if (howSource.includes("${knotsMarkup}") || howSource.includes("${tutorialMarkup}")) {
+        fail("R5 Rig How to Build", "Knots You'll Tie and Rig Tutorial must be owned by Knot Guidance / Build Support rather than rendered as direct How-to-Build peers");
+    }
+
+    for (const token of [
+        "function buildRigTutorialDisclosureBody(tutorial)",
+        "function setRigTutorialPlayerState(panel, expanded)",
+        "youtube-nocookie.com/embed/",
+        "player.replaceChildren();",
+        'player.querySelector("iframe")',
+        "setRigTutorialPlayerState(panel, nextExpanded);",
+        "Video Tutorial",
+        "Watch on YouTube"
+    ]) {
+        if (!rigSource.includes(token)) fail("R2 Rig Tutorial", `missing ${token}`);
+    }
+    for (const obsolete of ["autoplay=1", "data-rig-tutorial-load", "Load tutorial", "function initializeRigTutorial("]) {
+        if (rigSource.includes(obsolete)) fail("R2 Rig Tutorial", `obsolete/forbidden tutorial behavior remains: ${obsolete}`);
+    }
+    for (const selector of [
+        ".rig-knot-recommendation-list--unique",
+        ".rig-knot-recommendation",
+        ".rig-build-step__knots",
+        ".rig-build-step__knot-names",
+        ".rig-build-step__knot-name",
+        ".rig-tutorial__player:not(:empty)",
+        ".rig-tutorial__iframe"
+    ]) {
+        if (!styleSource.includes(selector)) fail("R2 Rig Knot/Tutorial CSS", `missing ${selector}`);
+    }
+}
+
+/* ==========================================================
+   END RIG GUIDE — R2 KNOT + BUILD STEP + TUTORIAL VALIDATION
+   ========================================================== */
+
+/* ==========================================================
+   RIG GUIDE — R2 SUPPORT / LINKS / RESPONSIVE VALIDATION
+   Consolidated checklist: R2-C10-C13, R2-C15
+   ========================================================== */
+function validateRigR2SupportPresentation() {
+    recordCheck("R2 Rig More Help, Reference/link semantics, and responsive presentation");
+
+    const rendererSource = readText("view-renderer.js") ?? "";
+    const styleSource = readText("forest-journal.css") ?? "";
+    const start = rendererSource.indexOf("function renderInstructionDetail(appMain, detailConfig) {");
+    const end = rendererSource.indexOf("\nfunction getRegulationsResourceActionLabel", start);
+    const rigDetailSource = start >= 0 && end > start ? rendererSource.slice(start, end) : "";
+
+    // R5 Common Mistakes ownership + R2-C11 More Help / ordinary Sources links.
+    const buildSupportStart = rigDetailSource.indexOf("const tutorialBodyMarkup = buildRigTutorialDisclosureBody");
+    const buildSupportEnd = rigDetailSource.indexOf("const howToBuildMarkup = `", buildSupportStart);
+    const buildSupportSource = buildSupportStart >= 0 && buildSupportEnd > buildSupportStart
+        ? rigDetailSource.slice(buildSupportStart, buildSupportEnd)
+        : "";
+    for (const token of [
+        '"Rig Tutorial"',
+        '"Common Mistakes"',
+        'const buildSupportRowsMarkup = [tutorialMarkup, commonMistakesMarkup]',
+        'id="rig-build-support-title">Build Support</h4>'
+    ]) {
+        if (!buildSupportSource.includes(token)) fail("R5 Rig Build Support", `missing ${token}`);
+    }
+    const supportOrder = ["tutorialMarkup", "commonMistakesMarkup"].map((token) => buildSupportSource.indexOf(token));
+    if (supportOrder.some((index) => index < 0) || supportOrder[0] >= supportOrder[1]) {
+        fail("R5 Rig Build Support", "Rig Tutorial must precede Common Mistakes under Build Support");
+    }
+
+    const moreHelpStart = rigDetailSource.indexOf("const moreHelpMarkup = [");
+    const moreHelpEnd = rigDetailSource.indexOf('].filter(Boolean).join(\"\");', moreHelpStart);
+    const moreHelpSource = moreHelpStart >= 0 && moreHelpEnd > moreHelpStart
+        ? rigDetailSource.slice(moreHelpStart, moreHelpEnd)
+        : "";
+    for (const label of ["Setup Notes", "Sources & References"]) {
+        if (!moreHelpSource.includes(`"${label}"`)) fail("R5 Rig More Help", `missing disclosure peer ${label}`);
+    }
+    if (moreHelpSource.includes('"Common Mistakes"')) {
+        fail("R5 Rig More Help", "Common Mistakes must be owned by Build Support, not More Help");
+    }
+    if (!rigDetailSource.includes("referencesBodyMarkup") || !rigDetailSource.includes("buildRigReferenceLinks(effectiveRecord)")) {
+        fail("R2 Rig More Help", "Sources & References must derive from selected effective Rig/configuration references");
+    }
+    if (rigDetailSource.includes("sourcesMarkup") || rigDetailSource.includes("rig-detail-group--sources")) {
+        fail("R2 Rig More Help", "Sources & References must not remain a standalone top-level group");
+    }
+    if (!rendererSource.includes('<ul class="rig-reference-list">') || !rendererSource.includes('class="rig-reference-link" href=')) {
+        fail("R2 Rig Sources", "Sources must use ordinary external-link list markup");
+    }
+    if (!rendererSource.includes("link-arrow link-arrow--external") || !rendererSource.includes('target="_blank" rel="noopener noreferrer"')) {
+        fail("R2 Rig Sources", "Sources must retain external-arrow and safe new-tab semantics");
+    }
+
+    // R2-C12 no resting underline for Rig-detail internal/external navigation; glyphs remain semantic cue.
+    const sourceRule = styleSource.match(/\.rig-reference-link\s*\{([\s\S]*?)\}/);
+    if (!sourceRule) {
+        fail("R2 Rig Sources", "rig-reference-link CSS rule is missing");
+    } else {
+        const body = sourceRule[1];
+        for (const cardProperty of ["background:", "border:", "padding:", "border-radius:"]) {
+            if (body.includes(cardProperty)) fail("R2 Rig Sources", `ordinary source link retains card/button property ${cardProperty}`);
+        }
+        if (!body.includes("text-decoration: none")) fail("R2 Rig Sources", "Rig source links must remove resting underline decoration");
+    }
+    const tutorialRule = styleSource.match(/\.rig-tutorial__external\s*\{([\s\S]*?)\}/);
+    if (!tutorialRule?.[1]?.includes("text-decoration: none")) {
+        fail("R2 Rig links", "Rig Tutorial external link must remove resting underline decoration");
+    }
+    if (!styleSource.includes(".detail-view--rig-compact .rig-knot-recommendation__link") || !styleSource.includes("text-decoration: none;")) {
+        fail("R2 Rig links", "Rig internal Knot navigation must use glyph semantics without resting underline");
+    }
+
+    // R3/R4 local-review density, typography, and About composition checks.
+    for (const token of [
+        ".rig-knot-recommendation-list { display: grid; gap: 0; }",
+        ".rig-knot-recommendation:first-child { padding-top: 0; }",
+        ".rig-knot-recommendation__context { margin: 2px 0 0; }",
+        ".rig-build-step__knot-names",
+        ".rig-component-item > p { margin: -2px 0 var(--space-1); line-height: 1.35; }",
+        ".rig-detail-group--about .rig-detail-row__panel",
+        ".rig-about-overview { display: grid; gap: var(--space-4); }",
+        ".rig-about-subsection .detail-subsection-heading",
+        "column-gap: var(--space-6);",
+        "font-weight: 500;"
+    ]) {
+        if (!styleSource.includes(token)) fail("R4 Rig density/presentation", `missing ${token}`);
+    }
+    const knotLinkRule = styleSource.match(/\.detail-view--rig-compact \.rig-knot-recommendation__link\s*\{([\s\S]*?)\}/);
+    if (!knotLinkRule || !knotLinkRule[1].includes("font-size: 1rem;") || !knotLinkRule[1].includes("min-height: 0;") || !knotLinkRule[1].includes("padding: 0;")) {
+        fail("R4 Rig Knot typography", "Knots You'll Tie link must use normal body size without artificial min-height/padding");
+    }
+    const knotContextRule = styleSource.match(/\.rig-build-subsection__intro,\s*\.rig-knot-recommendation__context\s*\{([\s\S]*?)\}/);
+    if (!knotContextRule || !knotContextRule[1].includes("font-size: 1rem;")) {
+        fail("R4 Rig Knot typography", "Knot intro/context must use normal body-reading size");
+    }
+    const buildKnotRule = styleSource.match(/\.rig-build-step__knots\s*\{([\s\S]*?)\}/);
+    const r5KnotAccent = "color: color-mix(in srgb, var(--accent) 72%, white 28%);";
+    if (!buildKnotRule
+        || !buildKnotRule[1].includes("font-size: 1rem;")
+        || !buildKnotRule[1].includes("margin-top: 1px;")
+        || !buildKnotRule[1].includes("margin-bottom: var(--space-1);")
+        || !buildKnotRule[1].includes(r5KnotAccent)
+        || buildKnotRule[1].includes("var(--accent-rigs)")) {
+        fail("R5 Rig Build-Step Knots", "Build-Step Knot annotation must use body size, tighter owning-step spacing, and the lighter subsection accent rather than the stronger Rig marker accent");
+    }
+    const buildKnotLabelRule = styleSource.match(/\.rig-build-step__knots-label\s*\{([\s\S]*?)\}/);
+    const buildKnotNamesRule = styleSource.match(/\.rig-build-step__knot-names\s*\{([\s\S]*?)\}/);
+    if (!buildKnotLabelRule?.[1]?.includes(r5KnotAccent) || !buildKnotNamesRule?.[1]?.includes(r5KnotAccent)) {
+        fail("R5 Rig Build-Step Knots", "Knot label and Knot names must share the approved lighter subsection accent");
+    }
+    if (!styleSource.includes(".detail-steps li::marker { color: var(--accent-rigs); font-weight: 800; }")) {
+        fail("R5 Rig Build-Step Knots", "numbered Build Step markers must retain the stronger Rig accent role");
+    }
+    const groupTitleRule = styleSource.match(/\.rig-detail-group__title\s*\{([\s\S]*?)\}/);
+    if (!groupTitleRule || !groupTitleRule[1].includes("color: var(--text-subtle);") || !groupTitleRule[1].includes("font-size: .82rem;") || !groupTitleRule[1].includes("text-transform: uppercase;")) {
+        fail("R4 About This Rig", "About/More Help section labels must share the Guide-family subdued uppercase title grammar");
+    }
+    const rowTriggerRule = styleSource.match(/\.rig-detail-row__trigger\s*\{([\s\S]*?)\}/);
+    if (!rowTriggerRule || !rowTriggerRule[1].includes("color: var(--text);") || !rowTriggerRule[1].includes("font-weight: 800;")) {
+        fail("R4 About This Rig", "Rig Overview disclosure title must inherit the shared high-emphasis disclosure-row grammar");
+    }
+    if (styleSource.includes(".rig-about-disclosures") || styleSource.includes(".rig-detail-group--about .rig-detail-row__trigger")) {
+        fail("R4 About This Rig", "obsolete/special About disclosure-title color override remains");
+    }
+    if (styleSource.includes(".rig-build-step__knot-link") || styleSource.includes(".rig-build-step__knot-links")) {
+        fail("R3/R4 Rig Build-Step Knots", "obsolete Build-Step Knot link styling remains");
+    }
+    for (const token of [
+        ".rig-build-subsection--guidance .rig-detail-row__trigger",
+        ".rig-build-subsection--support .rig-detail-row__trigger",
+        ".rig-build-subsection--guidance .rig-detail-row__panel",
+        ".rig-build-subsection--support .rig-detail-row__panel",
+        ".rig-build-support__rows .rig-detail-row + .rig-detail-row"
+    ]) {
+        if (!styleSource.includes(token)) fail("R5 Rig How to Build CSS", `missing ${token}`);
+    }
+    if (styleSource.includes(".rig-build-subsection--tutorial")) {
+        fail("R5 Rig How to Build CSS", "obsolete standalone Rig Tutorial subsection styling remains");
+    }
+
+    // R2-C10 Reference cues and focus restoration.
+    if (!styleSource.includes(".detail-view--rig-compact .reference-info-button::before") || !styleSource.includes("width: var(--touch-target);") || !styleSource.includes("height: var(--touch-target);") || !styleSource.includes("transform: translate(-50%, -50%);")) {
+        fail("R2/R3 Rig Reference cues", "Rig Detail Reference cues must retain the shared enlarged touch target centered on the visible cue");
+    }
+    const preventScrollFocusCount = (rendererSource.match(/triggerElement\?\.focus\(\{ preventScroll: true \}\);/g) ?? []).length;
+    if (preventScrollFocusCount < 4) {
+        fail("R2 Rig Reference cues", `expected preventScroll focus restoration on Rig-used shared Reference surfaces; found ${preventScrollFocusCount}`);
+    }
+
+    // R2-C13 responsive/readiness density and obsolete R1 presentation cleanup.
+    for (const token of [
+        ".rig-component-list { display: grid; grid-template-columns: minmax(0, 1fr);",
+        ".rig-component-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }",
+        ".rig-component-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }",
+        ".readiness-status__primary",
+        ".readiness-status__detail",
+        ".rig-about-overview"
+    ]) {
+        if (!styleSource.includes(token)) fail("R2 Rig responsive presentation", `missing ${token}`);
+    }
+    for (const obsoleteSelector of [
+        ".rig-about-grid",
+        ".rig-about-group",
+        ".rig-knot-connection-grid",
+        ".rig-knot-connection-group",
+        ".rig-about-reference-link",
+        ".rig-at-a-glance",
+        ".rig-tutorial-load",
+        ".rig-tutorial-section__header",
+        ".rig-knot-application-item",
+        ".tag-list--conditions"
+    ]) {
+        if (styleSource.includes(obsoleteSelector)) fail("R2 Rig CSS cleanup", `obsolete selector remains: ${obsoleteSelector}`);
+    }
+    if (!styleSource.includes(".rig-reference-list") || styleSource.includes(".rig-reference-links")) {
+        fail("R2 Rig Sources", "Sources list must use the normal-link list treatment");
+    }
+}
+
+/* ==========================================================
+   END RIG GUIDE — R2 SUPPORT / LINKS / RESPONSIVE VALIDATION
+   ========================================================== */
 
 function validateOptionArray(records, label) {
     const array = requireArray(records, label);
@@ -4191,13 +4909,12 @@ function validateReelGuidance() {
     if (!controllerSource.includes("KNOTS GUIDE — STATE + DATA ACCESS + CONTROLLERS") ||
         !controllerSource.includes("END GET YOUR REEL READY") ||
         !controllerSource.includes("END KNOTS GUIDE") ||
-        !rendererSource.includes("END KNOT GUIDE") ||
-        !rendererSource.includes("RIG GUIDE — KNOT APPLICATION PRESENTATION")) {
-        fail("Guide source boundaries", "Knots/Reel/Rig ownership boundaries must remain explicit in shared source files");
+        !rendererSource.includes("END KNOT GUIDE")) {
+        fail("Guide source boundaries", "Knots/Reel ownership boundaries must remain explicit in shared source files");
     }
     const knotRendererStart = rendererSource.indexOf("KNOT GUIDE — RESULT + LANDING + DETAIL RENDERING");
     const knotRendererEnd = rendererSource.indexOf("END KNOT GUIDE", knotRendererStart);
-    if (knotRendererStart < 0 || knotRendererEnd < 0 || rendererSource.slice(knotRendererStart, knotRendererEnd).includes("function buildRigKnotApplications")) {
+    if (knotRendererStart < 0 || knotRendererEnd < 0 || rendererSource.slice(knotRendererStart, knotRendererEnd).includes("function buildRigKnotApplicationsMarkup")) {
         fail("Guide source boundaries", "Rig-owned Knot-application rendering must not live inside the Knot Guide renderer boundary");
     }
     if (!controllerSource.includes("getReelSpoolingStageGuidance") || controllerSource.includes("getReelSpoolingGuidance(reelSetupState.reelType)")) {
@@ -4290,56 +5007,6 @@ function validateReelGuidance() {
         fail("Knots Reel Setup retained state", "Knots landing must remain the canonical workflow entry while switching to a shared Current Reel Setup summary with Update/Clear actions after completion");
     }
 
-    const rigDetailStart = rendererSource.indexOf("function renderInstructionDetail(appMain, detailConfig) {");
-    const rigDetailEnd = rendererSource.indexOf("\nfunction getRegulationsResourceActionLabel", rigDetailStart);
-    const rigDetailSource = rigDetailStart >= 0 && rigDetailEnd > rigDetailStart
-        ? rendererSource.slice(rigDetailStart, rigDetailEnd)
-        : "";
-    if (!rigDetailSource) {
-        fail("Rig Detail structure", "Rig Detail renderer must exist");
-    } else {
-        const hierarchyTokens = [
-            "At a Glance",
-            "What You Need",
-            "buildRigKnotApplications(effectiveRecord)",
-            ">Safety</h3>",
-            ">How to Build It</h3>",
-            "buildRigTutorial(effectiveRecord)",
-            ">More Help</h3>",
-            "${sourcesMarkup}"
-        ];
-        let lastIndex = -1;
-        for (const token of hierarchyTokens) {
-            const tokenIndex = rigDetailSource.indexOf(token);
-            if (tokenIndex < 0 || tokenIndex <= lastIndex) {
-                fail("Rig Detail structure", "Rig Detail must preserve At a Glance -> What You Need -> Knots -> Safety -> How to Build -> Tutorial -> More Help -> Sources hierarchy");
-                break;
-            }
-            lastIndex = tokenIndex;
-        }
-        if (!rigDetailSource.includes("Choose a Setup") ||
-            !rigDetailSource.includes("effectiveRecord.useCases") ||
-            !rigDetailSource.includes("effectiveRecord.conditionTags") ||
-            !rigDetailSource.includes("Required component") ||
-            !rigDetailSource.includes("Optional component") ||
-            !rigDetailSource.includes("Qty ${quantity}") ||
-            !rigDetailSource.includes("Ready to Assemble") ||
-            !rigDetailSource.includes("All required components are marked available.") ||
-            !rigDetailSource.includes("Missing ${missingRequired.length} Required") ||
-            !rigDetailSource.includes("buildRigDetailDisclosureMarkup") ||
-            !rigDetailSource.includes("initializeRigDetailDisclosures") ||
-            !rigDetailSource.includes("rig-detail-reel-setup") ||
-            !rigDetailSource.includes("Current Reel Setup") ||
-            !styleSource.includes(".rig-detail-header--with-reel-setup") ||
-            !styleSource.includes(".rig-detail-reel-setup") ||
-            !styleSource.includes(".rig-detail-group__shell") ||
-            !styleSource.includes(".rig-detail-row__trigger")) {
-            fail("Rig Detail semantics", "Rig Detail must implement approved configuration context, component readiness, passive Reel Setup inset, and disclosure semantics");
-        }
-        if (rigDetailSource.includes('effectiveRecord.tutorialVideo ? "" : buildRigReferenceLinks(effectiveRecord)')) {
-            fail("Rig Detail sources", "Rig Tutorial must not suppress Sources & References");
-        }
-    }
 
     const rigReadinessPoolFunction = controllerSource.match(/function getRigReadinessPool\(\) \{[\s\S]*?\n\}/);
     const rigReadinessSaveFunction = controllerSource.match(/function saveRigReadinessPool\(pool\) \{[\s\S]*?\n\}/);
@@ -5230,6 +5897,10 @@ function main() {
 
     validateEntrypoint();
     const canonicalData = validateCanonicalData();
+    validateRigR2DataSemantics(canonicalData.rigs);
+    validateRigR2DetailPresentation();
+    validateRigR2KnotTutorialPresentation();
+    validateRigR2SupportPresentation();
     validateFishEvidence(canonicalData.fish, canonicalData.fishIdentification);
     validateFishSearchHelpers(canonicalData);
     validateReelGuidance();
