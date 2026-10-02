@@ -2583,16 +2583,6 @@ function getRigKnotLineCompatibilityText(knot) {
     return `Line compatibility: ${lineTypes.slice(0, -1).join(", ")}, and ${lineTypes[lineTypes.length - 1]}.`;
 }
 
-function buildRigKnotNavigationMarkup(knotId, className = "") {
-    const knot = getKnotRecord(knotId);
-    if (!knot) {
-        console.warn(`Canonical Knot record was not found: ${knotId}`);
-        return "";
-    }
-    const classes = ["internal-knowledge-link", className].filter(Boolean).join(" ");
-    return `<button class="${classes}" type="button" data-rig-knot-id="${knot.id}">${knot.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></button>`;
-}
-
 function buildRigKnotRecommendationMarkup(knotId) {
     const knot = getKnotRecord(knotId);
     if (!knot) {
@@ -2605,10 +2595,13 @@ function buildRigKnotRecommendationMarkup(knotId) {
     const contextParts = [purpose, compatibility].filter(Boolean);
 
     return `
-        <div class="rig-knot-recommendation">
-            ${buildRigKnotNavigationMarkup(knot.id, "rig-knot-recommendation__link")}
-            ${contextParts.length > 0 ? `<p class="rig-knot-recommendation__context">${contextParts.join(" ")}</p>` : ""}
-        </div>
+        <button class="rig-knot-recommendation" type="button" data-rig-knot-id="${knot.id}">
+            <span class="rig-knot-recommendation__heading">
+                <span class="rig-knot-recommendation__name">${knot.name}</span>
+                <span class="rig-knot-recommendation__action">View Knot <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+            </span>
+            ${contextParts.length > 0 ? `<span class="rig-knot-recommendation__context">${contextParts.join(" ")}</span>` : ""}
+        </button>
     `;
 }
 

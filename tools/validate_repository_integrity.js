@@ -4537,15 +4537,19 @@ function validateRigR2SupportPresentation() {
     if (!tutorialRule?.[1]?.includes("text-decoration: none")) {
         fail("R2 Rig links", "Rig Tutorial external link must remove resting underline decoration");
     }
-    if (!styleSource.includes(".detail-view--rig-compact .rig-knot-recommendation__link") || !styleSource.includes("text-decoration: none;")) {
-        fail("R2 Rig links", "Rig internal Knot navigation must use glyph semantics without resting underline");
+    if (!rendererSource.includes('class="rig-knot-recommendation"')
+        || !rendererSource.includes('rig-knot-recommendation__action">View Knot')
+        || !rendererSource.includes('link-arrow link-arrow--internal')) {
+        fail("R2 Rig links", "Rig internal Knot navigation must use the contained View Knot arrow-action contract");
     }
 
     // R3/R4 local-review density, typography, and About composition checks.
     for (const token of [
-        ".rig-knot-recommendation-list { display: grid; gap: 0; }",
-        ".rig-knot-recommendation:first-child { padding-top: 0; }",
-        ".rig-knot-recommendation__context { margin: 2px 0 0; }",
+        ".rig-knot-recommendation-list {",
+        "gap: var(--space-2);",
+        ".rig-knot-recommendation__heading",
+        ".rig-knot-recommendation__action",
+        "color: var(--accent-knots);",
         ".rig-build-step__knot-names",
         ".rig-component-item > p { margin: -2px 0 var(--space-1); line-height: 1.35; }",
         ".rig-detail-group--about .rig-detail-row__panel",
@@ -4556,9 +4560,28 @@ function validateRigR2SupportPresentation() {
     ]) {
         if (!styleSource.includes(token)) fail("R4 Rig density/presentation", `missing ${token}`);
     }
-    const knotLinkRule = styleSource.match(/\.detail-view--rig-compact \.rig-knot-recommendation__link\s*\{([\s\S]*?)\}/);
-    if (!knotLinkRule || !knotLinkRule[1].includes("font-size: 1rem;") || !knotLinkRule[1].includes("min-height: 0;") || !knotLinkRule[1].includes("padding: 0;")) {
-        fail("R4 Rig Knot typography", "Knots You'll Tie link must use normal body size without artificial min-height/padding");
+    const knotCardRule = styleSource.match(/\.rig-knot-recommendation\s*\{([\s\S]*?)\}/);
+    if (!knotCardRule
+        || !knotCardRule[1].includes("min-height: var(--touch-target);")
+        || !knotCardRule[1].includes("border: 1px solid var(--border);")
+        || !knotCardRule[1].includes("background: var(--surface-elevated);")) {
+        fail("R4 Rig Knot presentation", "Knots You'll Tie recommendations must use the approved contained interactive-card treatment");
+    }
+    const knotActionRule = styleSource.match(/\.rig-knot-recommendation__action\s*\{([\s\S]*?)\}/);
+    if (!knotActionRule || !knotActionRule[1].includes("color: var(--accent-knots);") || !knotActionRule[1].includes("font-weight: 800;")) {
+        fail("R4 Rig Knot presentation", "View Knot action must retain the approved colored Knot-accent treatment");
+    }
+    if (!styleSource.includes(`.rig-build-subsection + .rig-build-subsection--steps,
+.rig-build-subsection + .rig-build-subsection--support { border-top: 0; }`)) {
+        fail("R6 Mobile Rig dividers", "Build Steps and Build Support must suppress the tan divider above while retaining subsection heading dividers below");
+    }
+    if (!styleSource.includes(".rig-build-subsection--guidance .rig-detail-row,")
+        || !styleSource.includes("border: 1px solid var(--border);")
+        || !styleSource.includes("background: var(--surface-elevated);")
+        || styleSource.includes("border-left: 3px solid color-mix(in srgb, var(--accent-rigs)")
+        || !styleSource.includes('.rig-build-subsection--guidance .rig-detail-row__trigger[aria-expanded="true"]')
+        || !styleSource.includes("background: var(--surface-active);")) {
+        fail("R6 Mobile Rig disclosures", "How to Build It expanders must use the approved neutral contained affordance with no left accent and clear expanded-state feedback");
     }
     const knotContextRule = styleSource.match(/\.rig-build-subsection__intro,\s*\.rig-knot-recommendation__context\s*\{([\s\S]*?)\}/);
     if (!knotContextRule || !knotContextRule[1].includes("font-size: 1rem;")) {
