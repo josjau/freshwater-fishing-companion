@@ -774,8 +774,6 @@ Fish ↔ Technique, Fish ↔ Lure/Bait, and Condition-specific Fish/Rig/Lure/Bai
 My Tackle owned-item mappings and current-availability state are User Knowledge and remain separate from Reference compatibility. Search or UI needs do not authorize inverse compatibility arrays on participating entities.
 
 
-
-
 ## Locked authored scope — 185 exact V1 records
 
 
