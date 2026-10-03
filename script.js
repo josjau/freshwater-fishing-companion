@@ -356,6 +356,14 @@ function getFishPrimaryMedia(fishId) {
     ) ?? null;
 }
 
+
+function getFishSafetyGuidance(fishId) {
+    if (typeof FISH_SAFETY_GUIDANCE === "undefined" || !Array.isArray(FISH_SAFETY_GUIDANCE)) return [];
+    return FISH_SAFETY_GUIDANCE.filter((record) =>
+        Array.isArray(record.fishIds) && record.fishIds.includes(fishId)
+    );
+}
+
 function getActiveFishRelationships() {
     if (typeof FISH_IDENTIFICATION_RELATIONSHIPS === "undefined") return [];
     const activeFishIds = new Set(getActiveFish().map((fish) => fish.id));
@@ -439,7 +447,8 @@ function renderFishGuideView(appMain) {
 function updateFishGuideSearchResults(appMain, query) {
     const matches = searchFishRecords(getActiveFish(), query, FISH_CATEGORY_DATA, FISH_LEGACY_CATEGORY_ID_MAP);
     renderSearchResults(appMain, matches, {
-        emptyMessage: "No Fish matched your search.",
+        emptyMessage: "No fish found. Try another search.",
+        statusText: (records) => `${records.length} fish found`,
         renderRecord: renderFishSearchResultCard,
         onResultSelect: openFishDetailFromGuide
     });
@@ -488,8 +497,14 @@ function renderFishBrowseView(appMain) {
 function updateFishBrowseResults(appMain, query) {
     const collectionFish = getFishForCollection(getActiveFish());
     const matches = searchFishRecords(collectionFish, query, FISH_CATEGORY_DATA, FISH_LEGACY_CATEGORY_ID_MAP);
+    const normalizedQuery = query.trim();
     renderSearchResults(appMain, matches, {
-        emptyMessage: `No Fish matched within ${getFishCollectionConfig().title}.`,
+        emptyMessage: normalizedQuery
+            ? "No fish found. Try another search."
+            : "No fish are currently available in this collection.",
+        statusText: (records) => normalizedQuery
+            ? `${records.length} fish found`
+            : `${records.length} fish`,
         renderRecord: renderFishSearchResultCard,
         onResultSelect: openFishDetailFromBrowse
     });
@@ -588,6 +603,8 @@ function renderFishDetailView(appMain) {
         relationships: getFishRelationshipContexts(fish.id),
         rigRecommendations: getFishRigRecommendationContexts(fish.id),
         specializedTargeting: FISH_SPECIALIZED_TARGETING[fish.id] ?? null,
+        safetyGuidance: getFishSafetyGuidance(fish.id),
+        reelSetupContextLines: getDetailReelSetupContextLines(),
         expandedDisclosureIds: fishDetailState.expandedSectionIds,
         parentLabel: returnContext?.label ?? "Fish Guide",
         onParent: returnContext ? returnToDetailNavigationContext : () => showView(ROUTES.FISH),
@@ -1215,6 +1232,19 @@ function getRigReelSetupContextLines() {
     ];
 }
 
+function getDetailReelSetupContextLines() {
+    if (!completedReelSetupContext) return [];
+
+    const reelType = getReelSetupOption(REEL_TYPE_OPTIONS, completedReelSetupContext.reelType);
+    const lineType = getReelLineType(completedReelSetupContext.lineType);
+    if (!reelType || !lineType || !Number.isFinite(completedReelSetupContext.lineWeight)) return [];
+
+    return [
+        [reelType.title],
+        [`${completedReelSetupContext.lineWeight} lb ${lineType.title}`]
+    ];
+}
+
 function openReelSetupFromRigs() {
     clearDetailNavigationStack();
     rigGuideState = {
@@ -1606,7 +1636,7 @@ function renderRigDetailView(appMain) {
         record: rig,
         parentLabel: returnContext?.label ?? getRigCollectionConfig().title,
         selections: getRigReadinessSelections(rig.id),
-        reelSetupContextLines: getRigReelSetupContextLines(),
+        reelSetupContextLines: getDetailReelSetupContextLines(),
         selectedConfigurationId: rigDetailState.selectedConfigurationId,
         expandedDisclosureIds: rigDetailState.expandedDisclosureIds,
         onConfigurationChange: (configurationId) => {

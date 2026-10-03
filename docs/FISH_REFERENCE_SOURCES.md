@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.2.3  
+**Document Revision:** 1.2.4  
 **Document Status:** Approved — Production Authoring Standard  
 **Implementation Status:** Standard active; Version 1 evidence baseline COMPLETE through closed Wave 4 — 30 Fish / 20 identification pairs, with approved Fish-to-Rig guidance recorded where applicable  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
-**Last Updated:** 2026-09-24
+**Last Updated:** 2026-10-02
 
 # Purpose
 
@@ -220,6 +220,30 @@ Notes
 ```
 
 This relationship evidence may reference the same catalog sources already used by the two Fish records.
+
+# Fish Safety Guidance Evidence
+
+`FISH_SAFETY_GUIDANCE` is independent authored guidance and may apply one warning to multiple Fish. Its evidence is therefore keyed by the stable Safety-guidance `id` instead of duplicating the same warning prose and source mapping inside every applicable Fish evidence entry.
+
+Recommended Safety evidence shape:
+
+```text
+## <safety-guidance-id>
+
+Applies to Fish
+- <fish-id>
+
+Safety / Handling Evidence
+- <SOURCE-ID> — short scope note when useful
+```
+
+Rules:
+
+- every active Safety record must resolve only to active canonical Fish;
+- shared guidance is evidenced once at the Safety-record level;
+- evidence must support the narrow actionable warning actually authored;
+- avoid overstating disputed mechanisms when the stable beginner-safety fact is narrower;
+- runtime Safety records do not duplicate source IDs; provenance remains here.
 
 # Freshness / Re-Review Boundary
 
@@ -535,7 +559,7 @@ These entries document the approved Phase 0 taxonomy decision and provide the in
 **URL:** https://www.wildlifedepartment.com/outdoorok/ooj/perch-vs-percidae-how-catch-walleye-saugeye  
 **Source type:** Official state fisheries angling guidance  
 **Reviewed date:** 2026-08-23  
-**Notes:** Supports bottom contact, Lindy-style natural-bait rigs, jigheads with live bait or soft plastics, and bottom-bouncing spinner-harness presentations for Walleye/Saugeye.
+**Notes:** Supports bottom contact, Lindy-style natural-bait rigs, jigheads with live bait or soft plastics, and bottom-bouncing spinner-harness presentations for Walleye/Saugeye. Its identification discussion also states that Walleye, Sauger, and Saugeye have sharp canine-shaped teeth, supporting the shared mouth-handling Safety warning.
 
 ## MDC-CHANNEL-CATFISH
 
@@ -1031,6 +1055,60 @@ These entries document the approved Phase 0 taxonomy decision and provide the in
 **Source type:** Project media provenance / documented one-time exception  
 **Reviewed date:** 2026-08-25  
 **Notes:** The one-time generated-media exception remains bounded to Ozark Bass. Historical approval recorded SHA-256 `d67c5933f43381a243659e5031d87dbe3d2db460af002fa5898de03a1598073f`. The user supplied the selected visual again for this review package as a 1535 x 1024 PNG with transfer SHA-256 `ccc895f312f33d3957f3041680e9e8e7b123d2d9084c60fa304636ecbb514167`; transfer-byte mismatch is preserved rather than misrepresented as hash equality. This generated asset is not labeled Public Domain.
+## MDC-BEAVER-CREEK-2026
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Beaver Creek Prospect Report  
+**URL:** https://mdc.mo.gov/fishing/fishing-prospects/reports/beaver-creek-prospect-report  
+**Source type:** Official state fisheries prospect / angling guidance  
+**Reviewed date:** 2026-10-02  
+**Notes:** The current 2026 prospect report explicitly recommends finesse rigs including Ned rigs for Smallmouth Bass around boulders and logs. Supports the approved Smallmouth Bass Ned Rig Alternative evidence trace.
+
+## MDC-TROUT-FISHING-TIPS
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Trout: Fishing Tips  
+**URL:** https://mdc.mo.gov/fishing/species/trout/trout-fishing-tips  
+**Source type:** Official state fisheries angling guidance  
+**Reviewed date:** 2026-10-02  
+**Notes:** Explicitly teaches split-shot bait presentations for trout, including drift fishing and bottom/tight-line fishing with split shot 12–24 inches above the hook. Supports the approved Rainbow Trout and Brown Trout Split-Shot Bait Rig Primary guidance.
+
+## MDC-SUBURBAN-SALMON
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Suburban Salmon  
+**URL:** https://mdc.mo.gov/magazines/missouri-conservationist/2021-06/suburban-salmon  
+**Source type:** Official state conservation/fisheries angling feature  
+**Reviewed date:** 2026-10-02  
+**Notes:** Describes Common Carp bait fishing with a single bait-holder hook below a slip sinker and letting the bait rest on the bottom. Supports the approved Common Carp Basic Bottom Rig Primary guidance.
+
+## MDC-NICHE-FISH
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Niche Fish  
+**URL:** https://mdc.mo.gov/magazines/conservationist/2016-11/niche-fish  
+**Source type:** Official state conservation/fisheries angling feature  
+**Reviewed date:** 2026-10-02  
+**Notes:** States that Freshwater Drum bottom-feeding behavior makes bait fishing especially productive and gives a shared natural-bait rigging rule to keep bait on/near bottom with a slip-sinker rig. Supports the approved Freshwater Drum Basic Bottom Rig Primary guidance.
+
+## MDC-FISHING-TIPS
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Fishing Tips  
+**URL:** https://mdc.mo.gov/fishing/get-started-fishing/fishing-tips  
+**Source type:** Official state beginner fisheries handling guidance  
+**Reviewed date:** 2026-10-02  
+**Notes:** Warns that careless Fish handling can cause cuts or punctures; specifically identifies sharp Catfish dorsal/pectoral spines and safe handling around them, and warns that Walleye have sharp teeth that can cause painful injury when lipped. Supports the narrow shared Catfish spine-handling and Walleye-family mouth-handling Safety guidance without relying on a disputed venom/slime mechanism.
+
+## MDC-ODDBALL-DRUM
+
+**Authority / publisher:** Missouri Department of Conservation  
+**Title:** Oddball Angling: Drum & Sturgeon  
+**URL:** https://mdc.mo.gov/magazines/conservationist/2011-05/oddball-angling-drum-sturgeon  
+**Source type:** Official state conservation/fisheries angling and handling guidance  
+**Reviewed date:** 2026-10-02  
+**Notes:** Documents Freshwater Drum's powerful crushing throat teeth and explicitly warns anglers not to put fingers down a Drum's throat to recover a swallowed hook. Also recommends hook-removal tools and avoiding pulling swallowed hooks from the throat/stomach. Supports the approved Freshwater Drum throat-handling Safety guidance.
+
 # Evidence Entries — Production Population Status
 
 Per-Fish and pairwise evidence population begins with FISH-008/FISH-009 production authoring. Do not fabricate empty “complete” evidence records merely to satisfy documentation appearance before the corresponding canonical Fish content is researched.
@@ -1052,6 +1130,9 @@ Identification
 
 Habitat / Waterbody
 - MDC-RAINBOW-TROUT
+
+Rig Guidance / Targeting
+- MDC-TROUT-FISHING-TIPS — Directly supports the approved Split-Shot Bait Rig Primary through drift and bottom/tight-line split-shot bait presentations.
 
 Taxonomy / Evidence Notes
 - AFS-NAMES-8 lists `Oncorhynchus mykiss` as Rainbow Trout; MDC independently uses the same scientific identity and places it in Salmonidae.
@@ -1075,6 +1156,9 @@ Habitat / Waterbody
 Aliases
 - MDC-BROWN-TROUT
 - ODWC-BROWN-TROUT
+
+Rig Guidance / Targeting
+- MDC-TROUT-FISHING-TIPS — Directly supports the approved Split-Shot Bait Rig Primary through drift and bottom/tight-line split-shot bait presentations.
 
 Taxonomy / Evidence Notes
 - AFS-NAMES-8 lists `Salmo trutta` as Brown Trout; MDC independently uses the same scientific identity and places it in Salmonidae.
@@ -1163,6 +1247,9 @@ Aliases
 Media Provenance
 - USFWS-COMMON-CARP-RAVER
 
+Rig Guidance / Targeting
+- MDC-SUBURBAN-SALMON — Directly supports bottom-oriented slip-sinker bait fishing behind the approved Basic Bottom Rig Primary.
+
 Taxonomy / Evidence Notes
 - The production aliases are limited to European Carp and German Carp even though USGS documents additional established alternate names.
 
@@ -1186,6 +1273,9 @@ Aliases
 
 Media Provenance
 - USFWS-FRESHWATER-DRUM-RAVER
+
+Rig Guidance / Targeting
+- MDC-NICHE-FISH — Directly supports natural-bait bottom fishing with a slip-sinker presentation behind the approved Basic Bottom Rig Primary.
 
 Taxonomy / Evidence Notes
 - The approved aliases preserve both Sheepshead and Sheephead because the official MDC field guide documents both forms.
@@ -1553,6 +1643,7 @@ Media Provenance
 
 Rig Guidance / Targeting
 - ODWC-SMALLMOUTH-BASS — Supports compact lure/jig targeting in rock and current behind the approved Jighead + Soft Plastic guidance.
+- MDC-BEAVER-CREEK-2026 — Explicitly supports finesse Ned rigs for Smallmouth Bass around boulders/logs, closing the evidence trace for the approved Ned Rig Alternative.
 
 ## Spotted Bass (`spotted-bass`)
 
@@ -1961,6 +2052,57 @@ White Crappie distinction evidence
 
 Notes
 - The comparison uses the official irregular-speckle versus vertical-bar pattern and the 7–8 versus usual-6 dorsal-spine distinction.
+
+# Safety Guidance Evidence — FCC 51A
+
+## catfish-spine-handling
+
+Applies to Fish
+- `channel-catfish`
+- `blue-catfish`
+- `flathead-catfish`
+- `black-bullhead`
+- `yellow-bullhead`
+
+Safety / Handling Evidence
+- MDC-FISHING-TIPS — Supports the narrow beginner-facing puncture-hazard/careful-handling warning for sharp dorsal/pectoral Catfish spines. The approved FCC wording does not depend on disputed venom/slime-mechanism language.
+
+## walleye-family-mouth-handling
+
+Applies to Fish
+- `walleye`
+- `sauger`
+- `saugeye`
+
+Safety / Handling Evidence
+- ODWC-WALLEYE-SAUGEYE-TACTICS — Identifies Walleye, Sauger, and Saugeye as Percidae with sharp canine-shaped teeth.
+- MDC-FISHING-TIPS — Warns that Walleye sharp teeth can cause painful injury when lipped and recommends controlled handling/hook removal.
+
+## freshwater-drum-throat-handling
+
+Applies to Fish
+- `freshwater-drum`
+
+Safety / Handling Evidence
+- MDC-ODDBALL-DRUM — Explicitly documents crushing throat teeth and warns against putting fingers down the throat to recover a swallowed hook.
+
+## gar-roe-toxicity
+
+Applies to Fish
+- `longnose-gar`
+- `spotted-gar`
+
+Safety / Handling Evidence
+- MDC-LONGNOSE-GAR — Supports Gar roe toxicity for Longnose Gar.
+- MDC-SPOTTED-GAR — Supports Gar roe toxicity for Spotted Gar.
+
+## paddlefish-snagging-handling
+
+Applies to Fish
+- `paddlefish`
+
+Safety / Handling Evidence
+- MDC-PADDLEFISH-TIPS — Supports heavy-line/large-hook/large-sinker snagging hazards, controlled sweeping hooksets, landing/handling caution, and regulation checks.
 
 # Related Documents
 

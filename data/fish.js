@@ -148,8 +148,8 @@ const FISH_DATA = Object.freeze([
         id: "channel-catfish",
         name: "Channel Catfish",
         summary:
-            "A common catfish recognized by its deeply forked tail, sensory " +
-            "barbels, and the curved lower edge of its anal fin.",
+            "A common catfish recognized by its deeply forked tail, the curved " +
+            "lower edge of its anal fin, and side spotting that may fade with age.",
         createdVersion: "0.1.0",
         lastModifiedVersion: "0.6.0",
         isActive: true,
@@ -159,8 +159,7 @@ const FISH_DATA = Object.freeze([
         aliases: [],
         identificationTraits: [
             "The tail is deeply forked.",
-            "The lower edge of the anal fin is curved rather than straight.",
-            "Sensory barbels surround the mouth.",
+            "The lower edge of the anal fin has a rounded, curved margin.",
             "Dark side spots may be present, especially on smaller fish, but the spotting can become faint or absent."
         ],
         habitatTags: ["Channel", "Current", "Timber", "Open Water"],
@@ -223,8 +222,7 @@ const FISH_DATA = Object.freeze([
         aliases: [],
         identificationTraits: [
             "The chin barbels are dark gray to black.",
-            "The tail is not forked and has a slight notch along the rear edge.",
-            "The body has the compact, broad-headed profile typical of bullhead catfish."
+            "The tail is not forked and has a slight notch along the rear edge."
         ],
         habitatTags: ["Mud", "Shallow Water"],
         waterbodyTypes: ["Pond", "Lake", "Reservoir", "River", "Creek"]
@@ -244,8 +242,7 @@ const FISH_DATA = Object.freeze([
         aliases: [],
         identificationTraits: [
             "The chin barbels are white or yellow rather than dark.",
-            "The tail is unforked, with a rear edge that is nearly straight.",
-            "The body has the compact, broad-headed profile typical of bullhead catfish."
+            "The tail is unforked, with a rear edge that is nearly straight."
         ],
         habitatTags: ["Grass", "Shallow Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Creek"]
@@ -354,7 +351,7 @@ const FISH_DATA = Object.freeze([
             "The body is thick, with a large mouth and conspicuously large eyes.",
             "The dorsal fin has 12 spines.",
             "The anal fin has 6 spines.",
-            "Dark side spots tend to form parallel rows rather than an irregular freckled pattern."
+            "Dark side spots tend to form distinct parallel rows."
         ],
         habitatTags: ["Rock", "Timber", "Grass", "Deep Water"],
         waterbodyTypes: ["River", "Creek", "Reservoir"]
@@ -385,8 +382,8 @@ const FISH_DATA = Object.freeze([
         id: "ozark-bass",
         name: "Ozark Bass",
         summary:
-            "A comparatively slender rock-bass relative recognized by irregular " +
-            "dark freckling rather than parallel rows of side spots.",
+            "A slender-bodied sunfish recognized by irregular dark freckling " +
+            "across the sides, a large mouth, and prominent eyes.",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true,
@@ -395,9 +392,9 @@ const FISH_DATA = Object.freeze([
         family: "Centrarchidae",
         aliases: ["Goggle-Eye"],
         identificationTraits: [
-            "Dark side markings are irregular and freckled rather than arranged in parallel rows.",
-            "The body is comparatively slender for a rock bass.",
-            "The eyes are comparatively small in proportion to the head."
+            "Dark side markings form an irregular freckled pattern.",
+            "The body is slender and elongate for a sunfish, with a large mouth.",
+            "The eyes are prominent but occupy a modest portion of the head profile."
         ],
         habitatTags: ["Rock", "Deep Water"],
         waterbodyTypes: ["River", "Creek"]
@@ -416,7 +413,7 @@ const FISH_DATA = Object.freeze([
         family: "Centrarchidae",
         aliases: [],
         identificationTraits: [
-            "Dark speckles and blotches are scattered irregularly across the sides rather than forming vertical bars.",
+            "Dark speckles and blotches are scattered irregularly across the sides and fins.",
             "The dorsal fin usually has 7 or 8 spines."
         ],
         habitatTags: ["Brush", "Timber", "Grass", "Open Water"],
@@ -426,8 +423,8 @@ const FISH_DATA = Object.freeze([
         id: "white-crappie",
         name: "White Crappie",
         summary:
-            "A deep-bodied panfish generally showing vertical dark bars " +
-            "rather than irregular spotting.",
+            "A deep-bodied panfish recognized by vertical dark bars along the " +
+            "sides and a dorsal fin that usually has six spines.",
         createdVersion: "0.1.0",
         lastModifiedVersion: "0.6.0",
         isActive: true,

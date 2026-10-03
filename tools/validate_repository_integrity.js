@@ -997,46 +997,85 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
 }
 
 
-function validateFishSpecializedGuidance(specializedGuidance, fish) {
-    const label = "Fish specialized guidance";
-    const requiredFishIds = ["longnose-gar", "spotted-gar", "paddlefish"];
-    const guidanceFields = ["body", "safety", "researchTopics", "researchNote"];
-
-
-    if (!isPlainObject(specializedGuidance)) {
-        fail(label, "registry must be an object keyed by Fish ID");
-        return;
-    }
-
+function validateFishSpecializedGuidance(specializedGuidance, safetyGuidance, fish) {
+    const targetingLabel = "Fish specialized targeting";
+    const safetyLabel = "Fish Safety guidance";
+    const requiredTargetingFishIds = ["longnose-gar", "spotted-gar", "paddlefish"];
+    const targetingFields = ["body", "researchTopics", "researchNote"];
+    const safetyFields = ["id", "fishIds", "body"];
+    const requiredSafetyIds = new Set([
+        "catfish-spine-handling",
+        "walleye-family-mouth-handling",
+        "freshwater-drum-throat-handling",
+        "gar-roe-toxicity",
+        "paddlefish-snagging-handling"
+    ]);
 
     const fishById = indexById(fish);
-    for (const fishId of requiredFishIds) {
-        if (!Object.prototype.hasOwnProperty.call(specializedGuidance, fishId)) {
-            fail(label, `missing required specialized guidance for ${fishId}`);
+    if (!isPlainObject(specializedGuidance)) {
+        fail(targetingLabel, "registry must be an object keyed by Fish ID");
+    } else {
+        for (const fishId of requiredTargetingFishIds) {
+            if (!Object.prototype.hasOwnProperty.call(specializedGuidance, fishId)) {
+                fail(targetingLabel, `missing required specialized targeting for ${fishId}`);
+            }
+        }
+        for (const [fishId, record] of Object.entries(specializedGuidance)) {
+            if (!fishById.has(fishId)) fail(targetingLabel, `unresolved Fish ID ${fishId}`);
+            else if (fishById.get(fishId)?.isActive !== true) fail(targetingLabel, `${fishId}: references inactive Fish`);
+            if (!isPlainObject(record)) {
+                fail(targetingLabel, `${fishId}: targeting record must be an object`);
+                continue;
+            }
+            validateExactFieldOrder(record, targetingFields, `${targetingLabel} ${fishId}`);
+            if (Object.prototype.hasOwnProperty.call(record, "safety")) {
+                fail(targetingLabel, `${fishId}: Safety must not be nested under FISH_SPECIALIZED_TARGETING`);
+            }
+            for (const field of ["body", "researchNote"]) {
+                if (typeof record[field] !== "string" || record[field].trim() === "") {
+                    fail(targetingLabel, `${fishId}: ${field} must be non-empty text`);
+                }
+            }
+            validateTextArray(record.researchTopics, `${targetingLabel} ${fishId} researchTopics`);
+            if (Array.isArray(record.researchTopics) && record.researchTopics.length === 0) {
+                fail(targetingLabel, `${fishId}: researchTopics must not be empty`);
+            }
         }
     }
 
-
-    for (const [fishId, record] of Object.entries(specializedGuidance)) {
-        if (!fishById.has(fishId)) {
-            fail(label, `unresolved Fish ID ${fishId}`);
-        } else if (fishById.get(fishId)?.isActive !== true) {
-            fail(label, `${fishId}: specialized guidance references inactive Fish`);
-        }
-        if (!isPlainObject(record)) {
-            fail(label, `${fishId}: guidance record must be an object`);
+    const safetyRecords = requireArray(safetyGuidance, safetyLabel);
+    const seenSafetyIds = new Set();
+    for (const record of safetyRecords) {
+        if (!isPlainObject(record)) continue;
+        validateExactFieldOrder(record, safetyFields, `${safetyLabel} ${record.id ?? "<unknown>"}`);
+        if (typeof record.id !== "string" || record.id.trim() === "") {
+            fail(safetyLabel, "record id must be non-empty text");
             continue;
         }
-        validateExactFieldOrder(record, guidanceFields, `${label} ${fishId}`);
-        for (const field of ["body", "safety", "researchNote"]) {
-            if (typeof record[field] !== "string" || record[field].trim() === "") {
-                fail(label, `${fishId}: ${field} must be non-empty text`);
+        if (seenSafetyIds.has(record.id)) fail(safetyLabel, `duplicate id ${record.id}`);
+        seenSafetyIds.add(record.id);
+        if (!Array.isArray(record.fishIds) || record.fishIds.length === 0) {
+            fail(safetyLabel, `${record.id}: fishIds must be a non-empty array`);
+        } else {
+            const seenFishIds = new Set();
+            for (const fishId of record.fishIds) {
+                if (typeof fishId !== "string" || fishId.trim() === "") {
+                    fail(safetyLabel, `${record.id}: fishIds entries must be non-empty text`);
+                    continue;
+                }
+                if (seenFishIds.has(fishId)) fail(safetyLabel, `${record.id}: duplicate Fish ID ${fishId}`);
+                seenFishIds.add(fishId);
+                const fishRecord = fishById.get(fishId);
+                if (!fishRecord) fail(safetyLabel, `${record.id}: unresolved Fish ID ${fishId}`);
+                else if (fishRecord.isActive !== true) fail(safetyLabel, `${record.id}: references inactive Fish ${fishId}`);
             }
         }
-        validateTextArray(record.researchTopics, `${label} ${fishId} researchTopics`);
-        if (Array.isArray(record.researchTopics) && record.researchTopics.length === 0) {
-            fail(label, `${fishId}: researchTopics must not be empty`);
+        if (typeof record.body !== "string" || record.body.trim() === "") {
+            fail(safetyLabel, `${record.id}: body must be non-empty text`);
         }
+    }
+    for (const id of requiredSafetyIds) {
+        if (!seenSafetyIds.has(id)) fail(safetyLabel, `missing approved V1 Safety record ${id}`);
     }
 }
 
@@ -3580,7 +3619,7 @@ function validateCanonicalData() {
     const fishRigGuidanceBindings = loadBindings("data/fish-rig-guidance.js", ["FISH_RIG_GUIDANCE"]);
     const fishSpecializedGuidanceBindings = loadBindings(
         "data/fish-specialized-guidance.js",
-        ["FISH_SPECIALIZED_TARGETING"]
+        ["FISH_SPECIALIZED_TARGETING", "FISH_SAFETY_GUIDANCE"]
     );
     const rigBindings = loadBindings("data/rigs.js", ["RIG_DATA", "CORE_RIG_IDS"]);
     const conditionBindings = loadBindings("data/conditions.js", ["CONDITION_DATA"]);
@@ -3620,6 +3659,7 @@ function validateCanonicalData() {
         "Fish-to-Rig guidance"
     );
     const fishSpecializedGuidance = fishSpecializedGuidanceBindings.FISH_SPECIALIZED_TARGETING;
+    const fishSafetyGuidance = fishSpecializedGuidanceBindings.FISH_SAFETY_GUIDANCE;
     const rigs = requireArray(rigBindings.RIG_DATA, "Rig registry");
     const conditions = requireArray(conditionBindings.CONDITION_DATA, "Condition registry");
     const lureBait = requireArray(lureBaitBindings.LURE_BAIT_DATA, "Lure/Bait registry");
@@ -3667,7 +3707,7 @@ function validateCanonicalData() {
         knots
     );
     validateFishProductionData(fish, categories, fishIdentification, fishRigGuidance, rigs, legacyCategoryMap);
-    validateFishSpecializedGuidance(fishSpecializedGuidance, fish);
+    validateFishSpecializedGuidance(fishSpecializedGuidance, fishSafetyGuidance, fish);
     validateRegulationsData(regulationsBindings.REGULATIONS_DATA_BUILD_INFO, states, stateResources, stateNotices);
     validateConditionsData(conditions, rigs);
     validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishRigGuidance, knots);
@@ -4210,13 +4250,11 @@ function validateRigR2DetailPresentation() {
         fail("R2 Rig Safety presentation", "Safety must render only when material safetyNotes[] exist");
     }
 
-    // R2-C1 Detail Identity Header + passive Reel Setup workflow context.
+    // FCC 51A: Rig identity remains compact while passive Reel Setup moves beside Persistent Page Navigation.
     for (const token of [
-        "rig-detail-header__top",
         "rig-detail-classification",
         "rig-detail-classification__core",
         "rig-detail-classification__difficulty",
-        "Current Reel Setup",
         "rig-detail-header__summary"
     ]) {
         if (!rigDetailSource.includes(token)) fail("R2 Rig identity", `missing ${token}`);
@@ -4224,11 +4262,19 @@ function validateRigR2DetailPresentation() {
     if (/(?:class=\\?"[^\"]*\bdetail-header--core\b)|detail-core-badge/.test(rigDetailSource)) {
         fail("R2 Rig identity", "legacy Core badge/header-core identity language remains on Rig Detail");
     }
-    const identityTopIndex = rigDetailSource.indexOf("rig-detail-header__top");
-    const reelIndex = rigDetailSource.indexOf("${reelSetupMarkup}", identityTopIndex);
-    const summaryIndex = rigDetailSource.indexOf("rig-detail-header__summary", identityTopIndex);
-    if (!(identityTopIndex >= 0 && reelIndex > identityTopIndex && summaryIndex > reelIndex)) {
-        fail("R2 Rig identity", "Rig summary must render beneath the upper identity + Reel Setup row");
+    if (!rendererSource.includes('function buildDetailReelSetupContextMarkup(lines)') ||
+        !rendererSource.includes('aria-label="Current Reel Setup"')) {
+        fail("FCC 51A Rig workflow context", "shared passive Current Reel Setup context renderer must exist");
+    }
+    const navigationIndex = rigDetailSource.indexOf('buildPageNavigationMarkup(detailConfig.parentLabel, "", reelSetupMarkup)');
+    const headerIndex = rigDetailSource.indexOf('<header class="detail-header rig-detail-header">');
+    const headerEndIndex = rigDetailSource.indexOf("</header>", headerIndex);
+    const summaryIndex = rigDetailSource.indexOf("rig-detail-header__summary", headerIndex);
+    if (!(navigationIndex >= 0 && headerIndex > navigationIndex && headerEndIndex > headerIndex && summaryIndex > headerIndex && summaryIndex < headerEndIndex)) {
+        fail("FCC 51A Rig workflow context", "Current Reel Setup must compose with page navigation while the Rig summary remains inside the identity header");
+    }
+    if (rigDetailSource.slice(headerIndex, headerEndIndex).includes("${reelSetupMarkup}")) {
+        fail("FCC 51A Rig workflow context", "Current Reel Setup must not remain inside the Rig identity header");
     }
 
     // R2-C3/C4 What You Need + stacked Semantic Status Panel.
@@ -5727,7 +5773,7 @@ function validateDocumentationGovernance() {
         [
             "docs/UI_STANDARD.md",
             [
-                "**Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard",
+                "**Role:** Canonical Version 1 site-wide semantic visual, component, navigation, interaction, mobile, and accessibility standard",
                 "# Card System",
                 "# Persistent Navigation Component"
             ]

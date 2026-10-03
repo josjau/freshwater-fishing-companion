@@ -118,6 +118,37 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 }
 .page-navigation-group .page-navigation,
 [data-reel-setup-navigation] .page-navigation { margin-bottom: 0; }
+.detail-view--fish,
+.detail-view--rig-compact { position: relative; }
+.page-navigation-group--with-workflow-context { max-width: 52%; }
+.detail-reel-setup-context {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    display: grid;
+    max-width: 46%;
+    min-width: 0;
+    align-content: center;
+    justify-items: end;
+    gap: 1px;
+    padding: 4px var(--space-2);
+    border-radius: var(--radius-small);
+    background: color-mix(in srgb, var(--background) 92%, transparent);
+    text-align: right;
+    backdrop-filter: blur(8px);
+}
+.detail-reel-setup-context__label {
+    color: color-mix(in srgb, var(--accent-workflow) 86%, white 14%);
+    font-size: .66rem;
+    font-weight: 850;
+    letter-spacing: .06em;
+    line-height: 1.15;
+    text-transform: uppercase;
+}
+.detail-reel-setup-context__values { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1px var(--space-2); }
+.detail-reel-setup-context__line { color: var(--text-muted); font-size: .78rem; font-weight: 650; line-height: 1.25; }
+.detail-reel-setup-context__separator { margin-inline: .3em; color: var(--text-subtle); }
 .page-navigation:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, transparent); }
 .page-navigation:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
@@ -517,15 +548,6 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     border-radius: var(--radius-large);
     background: var(--surface);
 }
-.rig-detail-header__top {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-4);
-    align-items: start;
-}
-.rig-detail-header--with-reel-setup .rig-detail-header__top {
-    grid-template-columns: minmax(0, 1fr) minmax(132px, 42%);
-}
 .rig-detail-header__copy { min-width: 0; }
 .rig-detail-header__copy > :last-child { margin-bottom: 0; }
 .rig-detail-header__copy h2 { margin-bottom: 0; }
@@ -545,35 +567,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     color: var(--text-muted);
     line-height: 1.55;
 }
-.rig-detail-reel-setup {
-    min-width: 0;
-    padding-left: var(--space-4);
-    border-left: 1px solid var(--border-strong);
-}
-.rig-detail-reel-setup__label {
-    margin: 0 0 var(--space-2);
-    color: color-mix(in srgb, var(--accent-workflow) 86%, white 14%);
-    font-size: .72rem;
-    font-weight: 850;
-    letter-spacing: .07em;
-    line-height: 1.25;
-    text-transform: uppercase;
-}
-.rig-detail-reel-setup__summary { display: grid; gap: 2px; }
-.rig-detail-reel-setup__line {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: .82rem;
-    font-weight: 650;
-    line-height: 1.35;
-    overflow-wrap: anywhere;
-}
-.rig-detail-reel-setup__separator {
-    display: inline-block;
-    margin-inline: .35em;
-    color: var(--text-subtle);
-    font-weight: 700;
-}
+
 
 .rig-build-section > h3 { margin-bottom: var(--space-4); }
 .rig-build-subsection + .rig-build-subsection {
@@ -840,9 +834,12 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .link-arrow--back { margin-right: .06em; font-size: 1.2em; }
 .link-arrow--chevron { font-size: 1.2em; }
 
-.reference-link { display: inline-flex; min-height: auto; align-items: center; gap: var(--space-1); margin: 0; padding: 0; border: 0; background: transparent; color: var(--text); font-weight: 800; text-align: left; cursor: pointer; }
-.reference-link:hover { color: var(--accent-hover); }
-.reference-link:focus-visible { border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 3px; }
+.reference-link,
+.knowledge-navigation-link { display: inline-flex; min-height: auto; align-items: center; gap: var(--space-1); margin: 0; padding: 0; border: 0; background: transparent; color: var(--text); font: inherit; font-weight: 800; text-align: left; cursor: pointer; }
+.reference-link:hover,
+.knowledge-navigation-link:hover { color: var(--accent-hover); }
+.reference-link:focus-visible,
+.knowledge-navigation-link:focus-visible { border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 3px; }
 .reference-link__icon { color: var(--accent); }
 .reference-popover { width: min(calc(100% - 32px), 680px); max-height: min(86vh, 820px); margin: auto; padding: 0; overflow: hidden; border: 1px solid var(--border-strong); border-radius: var(--radius-large); background: var(--surface-elevated); box-shadow: 0 24px 70px rgba(0,0,0,.45); color: var(--text); }
 .reference-popover::backdrop { background: rgba(12,16,12,.72); backdrop-filter: blur(2px); }
@@ -1268,28 +1265,6 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .knot-line-compatibility__pairing-arrow { display: inline-block; flex: 0 0 auto; margin: 0 var(--space-1) 0 var(--space-3); color: var(--text-muted); font-size: 1.3em; font-weight: 900; line-height: 1; }
 .knot-line-reference-button { margin-left: 3px; }
 
-.internal-knowledge-link-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-.internal-knowledge-link {
-    display: inline-flex;
-    min-height: 32px;
-    align-items: center;
-    justify-self: start;
-    width: fit-content;
-    max-width: 100%;
-    margin: 0;
-    padding: 3px 9px;
-    border: 1px solid color-mix(in srgb, var(--accent) 45%, white 15%);
-    border-radius: 999px;
-    background: var(--accent-soft);
-    color: var(--text);
-    font-size: .86rem;
-    font-weight: 800;
-    line-height: 1.2;
-    text-align: left;
-    cursor: pointer;
-}
-.internal-knowledge-link:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, transparent); }
-.internal-knowledge-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .knot-usage-toggle {
     justify-self: start;
     min-height: 40px;
@@ -1342,7 +1317,6 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
     .rig-component-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .app-header { padding-top: var(--space-12); }
 }
-
 
 
 @media (prefers-reduced-motion: reduce) {
@@ -1566,9 +1540,9 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 }
 .fish-detail-header {
     margin-bottom: var(--space-5);
-    padding: var(--space-4);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-section);
+    padding: var(--space-5);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-large);
     background: var(--surface);
 }
 .fish-detail-header > p:last-child { margin-bottom: 0; }
@@ -1613,14 +1587,12 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 }
 .fish-media-attribution { margin: var(--space-2) 0 0; color: var(--text-subtle); font-size: .82rem; }
 
-.fish-identification-overview {
-    max-width: 720px;
-    margin-bottom: var(--space-5);
-}
-.fish-identification-overview h3 { margin-bottom: var(--space-2); }
-.fish-identification-overview p { margin-bottom: 0; color: var(--text-muted); }
+.fish-identification-overview { margin-bottom: var(--space-5); }
+.fish-identification-overview h3 { margin-bottom: var(--space-4); }
+.fish-identification-overview__summary { max-width: 72ch; margin-bottom: 0; color: var(--text-muted); }
+.fish-identification-traits { margin-top: var(--space-4); }
+.fish-identification-traits .detail-subsection-heading { margin: 0 0 var(--space-2); }
 .fish-identification-list li::marker { color: var(--accent); }
-
 .detail-view--fish .detail-section { margin-bottom: var(--space-5); padding: var(--space-4); }
 .fish-specialized-safety {
     border-color: color-mix(in srgb, var(--warning) 62%, var(--border));
@@ -1849,8 +1821,8 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .fish-comparison-layout { display: grid; gap: var(--space-4); }
 .fish-comparison-identity,
 .fish-comparison-difference { min-width: 0; }
-.fish-comparison-identity h3,
-.fish-comparison-difference h4 { margin-top: 0; margin-bottom: var(--space-3); }
+.fish-comparison-identity h3 { margin-top: 0; margin-bottom: var(--space-3); }
+.fish-comparison-difference .detail-subsection-heading { margin: 0 0 var(--space-2); }
 .fish-comparison-identity--b {
     padding-top: var(--space-4);
     border-top: 1px solid var(--border);
@@ -1880,7 +1852,26 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
     border-top: 1px solid var(--border);
 }
 .fish-comparison-difference .detail-list { margin-bottom: 0; }
-.fish-comparison-difference .internal-knowledge-link { align-self: flex-start; margin-top: auto; }
+.fish-comparison-difference .detail-list li::marker { color: var(--accent); }
+.fish-comparison-view-link {
+    display: inline-flex;
+    min-height: auto;
+    align-items: baseline;
+    align-self: flex-start;
+    gap: var(--space-3);
+    margin: auto 0 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+.fish-comparison-view-link__name { font-weight: 800; }
+.fish-comparison-view-link__action { color: var(--accent); font-size: .9rem; font-weight: 800; white-space: nowrap; }
+.fish-comparison-view-link:hover .fish-comparison-view-link__action { color: var(--accent-hover); }
+.fish-comparison-view-link:focus-visible { border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 3px; }
 .fish-comparison-diagnostic-media {
     margin-top: var(--space-5);
     padding-top: var(--space-4);
@@ -1933,6 +1924,10 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
     .fish-result-card__heading-row .search-result-card__action { white-space: nowrap; }
     .fish-primary-media { padding: var(--space-5); }
     .fish-habitat-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fish-habitat-group + .fish-habitat-group {
+        padding-left: var(--space-4);
+        border-left: 1px solid var(--border);
+    }
 }
 
 /* ==========================================================
@@ -2793,4 +2788,5 @@ body.reel-line-weight-picker-open { overflow: hidden; }
     object-fit: contain;
     background: #f4f0e8;
 }
+
 

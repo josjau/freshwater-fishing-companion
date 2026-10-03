@@ -2,11 +2,11 @@
 
 
 **Document:** UI_STANDARD.md  
-**Document Revision:** 1.3.29  
+**Document Revision:** 1.3.35  
 **Document Status:** Approved  
-**Role:** Canonical Version 1 visual, navigation, card, detail-page, search-interaction, mobile, and accessibility standard  
+**Role:** Canonical Version 1 site-wide semantic visual, component, navigation, interaction, mobile, and accessibility standard  
 **Decision Baseline:** D015, D020-D022, D030-D032, D035, D042, D046-D048, D050-D052, D061, D063  
-**Last Updated:** 2026-09-30
+**Last Updated:** 2026-10-02
 
 
 # Purpose
@@ -61,27 +61,34 @@ Reference and instructional pages should share recognizable information hierarch
 Do **not** force Fish photos, Rig diagrams, Tackle illustrations, Knot instructional media, and other domain media into one technical format; `MEDIA_GUIDE.md` owns media-specific rules.
 
 
-## Guide-Family Component Baseline
+## Site-Wide Semantic Component Baseline
 
 
-Fish Guide is the starting Guide-family design baseline, but existing Fish presentation is not automatically the final standard. Fish earns baseline status through a deliberate component-by-component and element-by-element review. Each recurring element is reviewed, approved, implemented when change is required, and validated before its treatment is carried into later Guides.
+The canonical FCC presentation baseline is the **Visual Pattern Registry and semantic-role rules in this document**, not any one Guide, feature, page, or data model. The comparison matrix in `V1-DESIGN-AUDIT.md` is the audit mechanism for applying this contract; it does not own or override pattern definitions. Presentation is selected by semantic role first. When a Guide, workflow, recommendation surface, User Knowledge surface, settings/support surface, Dashboard surface, or other page exposes an established semantic role, it starts from the corresponding shared pattern regardless of the underlying field name, schema, domain, or page type.
 
 
-The Fish baseline review must separately consider, where applicable:
+The completed **Rig Guide** at GitHub `main` commit `a63fbd1413499d8389d147310b66ce508d407a6f` is the current validated reference implementation for the broadest set of shared patterns after the FCC 50B audit, desktop/mobile review, and Actual-Mobile approval. Rig is implementation evidence and a visual reference for equivalent elements; it is **not** a monolithic template and does not make Rig-specific information architecture universal. Fish and Knots remain valid domain implementations and evidence, and a later validated implementation may become the better reference for a specific pattern only by reconciling that pattern back into this standard.
 
 
-- Guide identity and introductory framing;
-- Search controls and scoped-search behavior;
-- workflow/task entry cards and collection/browse cards;
-- shared card shell geometry plus card-specific internal content;
-- titles, eyebrows, labels, supporting text, metadata, media framing, chips, links, and actions;
-- ordinary-information, workflow/action, warning/safety, readiness/status, and other semantically distinct states;
-- internal-navigation and related-knowledge treatments;
-- default, hover, focus, pressed/active, selected, disabled/unavailable, and touch behavior; and
-- mobile, intermediate, standard-desktop, and wide-desktop layout behavior.
+The historical rule that **Fish Guide is the starting baseline** is superseded for current execution. Fish served as the first proving ground, but the reusable contract now lives here. Future work must consume the canonical semantic patterns rather than inherit a page merely because it was built earlier.
 
 
-Equivalent elements in Knots Guide, Tackle Guide, Technique Guide, and Rig Guide should start from the approved Fish treatment and differ only when domain semantics or content structure justify a deliberate exception. Fish-specific structures such as scientific identity fields, anatomical identification, pairwise Fish comparison, species framing, and Fish-to-Rig guidance do not become universal Guide requirements merely because Fish is the baseline.
+For every new or materially modified surface, and for every existing surface when its workstream or the final site-wide audit reaches it:
+
+
+- identify the semantic role of each visible section, component, interaction, and state **before** choosing presentation;
+- map the role to the applicable Visual Pattern Registry entry or explicit composition of entries;
+- reuse the established hierarchy, interaction, accessibility, responsive, and link/action language when the semantics match;
+- preserve domain-specific content, information architecture, data ownership, and media needs instead of forcing identical field inventories;
+- treat different field names, record types, or source schemas as implementation details rather than reasons for visual divergence;
+- record **NO PATTERN MATCH - OPEN** when no current pattern truthfully fits instead of inventing a one-off treatment; and
+- require a documented semantic reason for an exception. Page ownership, implementation history, or the fact that a surface is not formally called a Guide is not sufficient reason.
+
+
+Patterns may therefore apply site-wide. Examples include section/subsection hierarchy, ordered instruction steps, contained related-knowledge recommendations, disclosure rows, status/readiness panels, Safety/warning treatment, contextual Reference cues, internal/external link grammar, navigation, and responsive stacking. Guide-only patterns such as **Guide Identity Intro** remain Guide-only because their semantic role is Guide-specific.
+
+
+Existing untouched legacy surfaces do not require an immediate broad retrofit solely because this baseline is clarified. However, once a surface is actively audited, rebuilt, or materially edited, applicable semantic mismatches must be corrected or explicitly dispositioned. The final Version 1 site-wide design audit remains responsible for discovering any remaining legacy divergence.
 
 
 ### Canonical user-facing identity reuse
@@ -99,42 +106,50 @@ Guide/domain identity styling must remain conceptually separate from semantic/ca
 Guide-specific lightweight motifs or decorative graphics are deferred to the final Version 1 UX Audit after the functional project build. They are not part of the bounded Fish post-Knots UX-011 correction and are not mandatory decoration on Guide identity, landing, browse, detail, or reference surfaces. Any later decorative treatment must be separately evaluated and validated under `V1-DESIGN-AUDIT.md`.
 
 
-A Fish treatment becomes a reusable Guide-family baseline only after the relevant section has passed its approval gate and applicable desktop/mobile validation.
+A treatment becomes part of the reusable FCC baseline only after its semantic role and behavior are approved, implemented, and validated at the applicable desktop/mobile breakpoints. Once promoted, the reusable contract lives in the Visual Pattern Registry rather than remaining owned by the page that first demonstrated it.
 
 
 ## Visual Pattern Registry
 
-The Guide-family Visual Pattern Registry provides a small canonical vocabulary for reusable semantic UI patterns. Guide audits and builds use these human-readable names so equivalent information and interactions can be mapped to established visual language without relying on page-specific examples or chat memory.
+The **Visual Pattern Registry** is the canonical site-wide vocabulary for reusable semantic UI patterns. Guide and non-Guide audits/builds use these human-readable names so equivalent information and interactions map to the same established visual language without relying on page-specific examples, field names, or chat memory.
 
-Patterns are **semantic and composable**. One section may use more than one pattern. Do not create one monolithic style name for a complex section when it combines several reusable roles, and do not create registry entries for every CSS variation, spacing difference, or one-off arrangement. A new registry entry is appropriate only when a reusable semantic role has a sufficiently established visual/interaction contract.
+Patterns are **semantic and composable**. One section may use more than one pattern, and the same pattern may be used by unrelated data domains when the user-facing role is the same. Do not create one monolithic style name for a complex section when it combines several reusable roles, and do not create registry entries for every CSS variation, spacing difference, or one-off arrangement. A new registry entry is appropriate only when a reusable semantic role has a sufficiently established visual/interaction contract.
+
+Responsive behavior is part of each pattern contract. When content-fit requires stacking, preserve semantic group integrity, heading/action pairing, touch/focus behavior, and reading order rather than creating a domain-specific alternate layout.
+
+The registry is the authority; rendered pages are reference implementations. When a validated build improves a reusable pattern, update this owner and applicable validation in the same Build Unit so later work inherits the improved contract instead of copying stale markup or CSS.
 
 | Pattern | Semantic role | Required baseline |
 | --- | --- | --- |
 | **Guide Identity Intro** | Establishes a Guide and its purpose on a landing page. | Compact Guide title/intro hierarchy with concise purpose text; not a large marketing hero. |
 | **Guide Search Surface** | Searches a Guide or collection. | Shared live-search grammar; `Search [Domain]` peer section-title treatment matching `Browse [Domain]`; scope-appropriate helper text, clear control, result-state behavior, and accessible focus/touch treatment. |
 | **Collection Navigation Card** | Navigates to a browse/collection grouping. | Shared Guide collection-card shell and interaction grammar, including canonical title reuse and the approved heading/action treatment. |
+| **Special / Task Navigation Card** | Opens a task-oriented workflow, curated collection, or other special destination that materially helps the user act without first knowing a canonical entity or collection. | Compact task-oriented whole-card navigation used only when it materially improves a real task; keep the title, concise explanation, and explicit action cue within one interaction; use reserved special/workflow accent semantics rather than ordinary collection-card accents; avoid duplicate destinations, decorative graphics, and forced row-spanning; preserve left-aligned action wrapping plus accessible whole-card focus/touch behavior. |
 | **Entity Result Card** | Represents one canonical entity in Search/Browse results. | Shared result-card hierarchy, whole-card action behavior where applicable, concise entity-specific action cue, responsive result-grid limits, and accessible interaction states. |
 | **Persistent Page Navigation** | Provides Parent/Home navigation and context restoration. | Shared floating navigation treatment with standard Parent/Home semantics and applicable state/scroll restoration. |
 | **Detail Identity Header** | Identifies the specific entity being viewed. | Familiar detail hierarchy: priority/core designation when applicable, classification, canonical title, concise description; avoid technical-metadata overload. |
+| **Section / Subsection Hierarchy** | Distinguishes a major content/task section from its named internal groups and their boundaries. | Parent and nested headings must read as different hierarchy levels. Named nested subsections use the approved restrained heading/separator treatment; avoid redundant divider lines immediately above and below the same heading. Neutral inter-group separators are used only when they clarify sibling boundaries. The hierarchy follows semantic structure, not the data domain. |
 | **Peer Subsection Group** | Presents multiple named sibling concepts inside one larger section/disclosure. | Each peer keeps its own smaller uppercase nested-subsection heading, separator line directly beneath that heading, and associated content. Complete peers may sit side by side when space permits and stack intact on narrow screens. |
 | **Standard Detail List** | Presents unordered explanatory/supporting items. | Shared detail-list spacing, hierarchy, marker treatment, and readable density; preserve list semantics rather than flattening into paragraph text. |
 | **Ordered Instruction Steps** | Presents ordered actions the user performs. | Use a clear dedicated step-number treatment, instruction text as the dominant content, aligned wrapped text, and readable vertical rhythm. Preserve one ordered vertical sequence at all widths; do not convert procedures into chips, unrelated per-step cards, or multi-column layouts. Routine dividers between every step are not required. |
 | **Compact Internal Link List** | Presents a compact set of related internal destinations. | Shared compact internal-link treatment; destination wording and `→` remain one visual unit; avoid unrelated pill/button styling unless semantics require it. |
 | **Contextual Recommendation Row** | Recommends one canonical internal entity from the current context and explains why it is useful here. | Reuse the canonical destination name; provide one clear internal action such as `View Rig →` or `View Knot →`; include a short evidence-supported/context-owned reason only when it materially helps the choice; use a compact bounded row/card treatment rather than a chip/pill; do not invent ranking, scores, best badges, availability, legality, personalization, or rationale that the owning guidance does not support. |
-| **Disclosure Group** | Hides/reveals secondary supporting information. | Shared full-row disclosure grammar with `▾` / `▴`, independent keyboard/touch access, correct collapsed layout removal, and focus/viewport preservation when content closes. |
+| **Disclosure Group** | Hides/reveals secondary supporting information. | Shared full-row disclosure grammar with `▾` / `▴`, independent keyboard/touch access, correct collapsed layout removal, and focus/viewport preservation when content closes. Compose with **Contained Disclosure Row** when discrete expanders need stronger actionable separation. |
+| **Contained Disclosure Row** | Presents one discrete secondary/support item as an actionable expander inside a larger section. | Use a neutral bordered/radius surface with the whole row as the interaction target, visible caret, and clear hover/focus/expanded feedback. Do not add a decorative semantic-color rail by default. Separate peer rows with spacing/contained boundaries rather than accidental double dividers. |
 | **Contextual Reference Cue** | Opens exact-term contextual Reference Knowledge without leaving the current task. | Plain referenced text plus immediately adjacent `ⓘ`; the cue is the Reference target, with invisible enlarged hit area where needed and explicit focus restoration. |
 | **Contextual Reference Surface** | Displays the contextual information opened by `ⓘ`. | Shared modal/sheet interaction grammar with one active surface, bounded internal scrolling, appropriate close behavior, background-state preservation, and focus return; content structure remains domain-appropriate. |
+| **Reference / Source Links** | Presents verified evidence, attribution, or provenance destinations that support the current content. | Use ordinary source/reference hierarchy with clearly named destination text; external destinations use `↗` and keep destination wording + glyph as one visual unit. Keep URLs/metadata visually secondary, do not restyle source links as workflow buttons/chips, and preserve evidence/media ownership in the canonical source owner. |
 | **Semantic Status Panel** | Communicates readiness, completion, recovery, availability, or comparable current state. | State is communicated with text and semantics rather than color alone; treatment remains visually distinct from ordinary information and accessible to assistive technology. |
 | **Safety / Warning Block** | Surfaces material caution or safety guidance. | Conspicuous semantic warning treatment; material guidance is not hidden merely to reduce page length and does not collapse into ordinary body styling. |
 | **Reel Setup Workflow Context** | Shows retained Get Your Reel Ready data as passive, host-relevant context within another Guide surface. | Identify workflow provenance with the shared Workflow semantic color; show only retained Reel Setup fields materially useful to the host surface; keep values visually secondary; do not imply fit, compatibility, sizing, recommendation, or readiness; prefer compact side-by-side composition when it remains readable and stack only when content-fit requires it. |
 
 Media-specific presentation remains owned by `MEDIA_GUIDE.md`; the registry references that owner rather than duplicating media rules. Directional/reference glyphs such as `→`, `↗`, and `ⓘ` are interaction semantics used inside patterns, not standalone core patterns.
 
-During a Guide audit, map each visible section/element to the applicable named pattern or combination of patterns as the audit progresses. If no existing pattern truthfully fits, record the role as **OPEN** rather than force-fitting it. Equivalent semantic roles must reuse the canonical pattern unless a documented domain-specific reason justifies an exception. Current production implementations may provide evidence for an already-approved pattern, but they do not override this standard merely because they exist.
+During any Guide or non-Guide audit/build, map each applicable visible section/element to the named pattern or combination of patterns as the work progresses. If no existing pattern truthfully fits, record the role as **OPEN** rather than force-fitting it. Equivalent semantic roles must reuse the canonical pattern unless a documented semantic reason justifies an exception. Current production implementations may provide evidence for an already-approved pattern, but they do not override this standard merely because they exist.
 
 ### Text Hierarchy & Semantic Color
 
-Guide-family text treatment is standardized by **semantic text role**, not by Guide/domain membership. Equivalent roles across Fish, Knots, Rigs, Technique, Tackle, and other comparable Guide surfaces should use the same shared treatment unless a documented semantic exception exists.
+FCC text treatment is standardized by **semantic text role**, not by Guide/domain/page membership. Equivalent roles across Fish, Knots, Rigs, Technique, Tackle, workflows, recommendation surfaces, User Knowledge, and other comparable surfaces should use the same shared treatment unless a documented semantic exception exists.
 
 The comparison/reconciliation vocabulary includes, as applicable:
 
@@ -168,30 +183,33 @@ Core remains a meaningful semantic distinction for curated foundational material
 
 Exact Core color and whether that additional shell emphasis is useful remain **BUILD-REVIEW OPEN**.
 
-#### Reel Setup Workflow Context inside Detail Identity
+#### Reel Setup Workflow Context placement
 
-**Reel Setup Workflow Context** is retained workflow data, not entity identity, but it may be embedded inside the Detail Identity shell when that placement keeps useful context visible without creating another page section. Its placement does not change its semantics.
+**Reel Setup Workflow Context** is retained workflow data, not entity identity. Its semantic treatment is shared, but its placement is host-layout dependent: it may be embedded inside a Detail Identity shell or composed with a nearby top utility/navigation region when that keeps entity identity cleaner and retained context readable. Placement does not change its semantics.
 
-For Rig Detail, when retained Reel Setup exists:
+For Fish Detail and Rig Detail, FCC 51A establishes the validated Version 1 placement: passive **Current Reel Setup** sits in the same initial top utility area as **Persistent Page Navigation** while remaining a separate semantic element. Parent/Home stays at the left and Current Reel Setup stays at the right at the validated desktop and mobile/narrow widths. The two elements share an initial visual row/region but do not share behavior: Parent/Home retains the established sticky navigation behavior, while Current Reel Setup remains attached to normal page flow and scrolls away with its original position above the Detail Identity Header.
 
-- keep entity identity and Reel Setup Workflow Context side by side in the upper identity row whenever both remain comfortably readable;
-- the Rig summary spans the **full identity-container width below both upper regions** rather than remaining constrained to the Rig-identity column;
-- do **not** force stacking merely because the viewport is mobile; stack only when actual content-fit validation shows excessive wrapping, clipping, poor readability, or disproportionate height;
+For this validated placement:
+
+- Parent/Home remains navigation; Current Reel Setup remains passive workflow context and must not be styled as another navigation control, action card, or launcher;
+- retain the left-navigation/right-context composition at the validated desktop and mobile/narrow widths; do not stack Current Reel Setup below navigation merely because the viewport is narrow;
+- Current Reel Setup is **not sticky** and must not follow the viewport while scrolling;
+- the approved Version 1 host-relevant field subset is **Reel type + main-line strength/type** only;
 - `CURRENT REEL SETUP` uses the shared **Workflow semantic color** to identify where and why the retained data is present;
-- Reel Setup values remain visually secondary and use the approved Reel-workflow data treatment rather than Rig-identity emphasis;
-- the embedded context is passive and does not become a workflow launcher or action card;
-- do not imply Rig fit, compatibility, component sizing, recommendation, or readiness; and
+- Reel Setup values remain visually secondary and use the approved Reel-workflow data treatment rather than Fish- or Rig-identity emphasis;
+- do not imply Fish/Rig fit, compatibility, component sizing, recommendation, or readiness;
+- do not add Update/Clear actions merely because those actions exist on workflow-management surfaces; and
 - omit the region completely when no retained Reel Setup exists.
 
-The workflow context is **host-relevant**, not a reproduction of the complete retained workflow record. Each host surface shows only the smallest subset of retained Reel Setup fields that is materially useful there. Future retained workflows may receive their own named visual language rather than inheriting Reel Setup presentation merely because they are persisted workflows.
+With this placement, the Fish and Rig Detail Identity shells contain entity identity content only. Fish keeps its legitimate identity metadata and primary identification media; Rig keeps its classification, name, and summary within the shared identity shell.
 
-The following remain **BUILD-REVIEW OPEN** for the Rigs implementation: exact identity/workflow column ratio; Reel Setup value typography/weight/color treatment; exact host-relevant retained fields; worst-case long Rig-name plus long retained-data behavior; the content-fit threshold for fallback stacking; and whether a subtle internal separator improves hierarchy. These open implementation variables do not reopen the approved semantic structure.
+The workflow context is **host-relevant**, not a reproduction of the complete retained workflow record. The compact top-utility treatment is approved only for the current Version 1 field subset. If future requirements add more retained Reel Setup fields, substantially longer values, or other workflow context, reopen content-fit and presentation instead of cramming additional items into this compact treatment. A later expansion may require a different summary, disclosure, or workflow-context surface. Future retained workflows may likewise receive their own named visual language rather than inheriting Reel Setup presentation merely because they are persisted workflows.
 
 
 # Landing / Navigation Page Hierarchy
 
 
-Fish Guide is the active Guide-family landing-page baseline under FCC 48. Gate 152 is CLOSED / PASS / refinement allowed through checkpoints 152.1-152.8. R1 browser review resolved Fish desktop Search width in favor of a constrained width approximately equal to two cards in the three-column Guide browse grid, and R2 browser review resolves Compare Similar Fish in favor of the normal grid-position width rather than row spanning. These refinements do not reopen the approved landing hierarchy, interaction model, or responsive baseline. Where applicable, a Guide landing page uses:
+The Visual Pattern Registry / shared Guide-family semantic contract is the landing-page baseline. The completed Rig Guide is the current validated reference implementation for equivalent shared elements; it is not a monolithic page template. Fish's approved FCC 48 landing hierarchy, interaction model, responsive behavior, constrained desktop Search width, and normal-grid Compare Similar Fish placement remain valid Fish-specific implementation evidence. They do not make Fish the cross-domain presentation authority. Where applicable, a Guide landing page uses:
 
 
 1. **Guide identity** — a compact heading/introduction block with concise purpose text and optional restrained domain motif; do not turn mobile Guide identity into a large marketing hero;
@@ -260,6 +278,8 @@ Search is relevance-first. Exact canonical names/approved aliases and strong ide
 
 # Special / Task Navigation
 
+
+The named Visual Pattern Registry pattern for this role is **Special / Task Navigation Card**.
 
 Special navigation is optional and appears **after Search and before collection cards** when it materially helps a beginner accomplish a task without first knowing a canonical record name/category.
 
@@ -369,13 +389,13 @@ Gate 153 is **CLOSED / PASS / refinement allowed** through checkpoints 153.1-153
 ### Fish detail-page working baseline — checkpoint 154.1
 
 
-Checkpoint 154.1 establishes the **Fish-first detail-page working direction** and remains refinement-allowed through implementation review. It does **not** yet promote one fixed detail layout across all Guides. Build and review Fish first, refine the exact mobile/desktop composition and disclosure-panel visual language against the real implementation, finalize Fish, and only then evaluate which successful equivalent-element treatments should become Guide-family standards.
+Checkpoint 154.1 remains the approved Fish-detail domain baseline, but its historical Fish-first cross-Guide sequencing language is superseded. The **Visual Pattern Registry / shared Guide-family semantic contract** is the current presentation authority, and the completed Rig Guide is the current validated reference implementation for equivalent shared elements rather than a monolithic template. Preserve Fish-specific information architecture and approved Fish detail behavior wherever the semantics differ.
 
 
 The visible Fish detail hierarchy should preserve, where applicable: **Parent/Home → category → dominant common name → explicitly labeled subordinate scientific name → approved aliases when present → compact Family metadata → prominent primary Fish image → a visible beginner-oriented `How to Identify This Fish` overview**. The overview is primary detail content and should remain visible rather than being hidden behind a secondary control. This checkpoint defines the presentation requirement, not a new canonical Fish data field.
 
 
-Supporting information may be grouped under a compact **ABOUT THIS FISH** treatment, especially on mobile. The current working set is **Key Identification Traits**, **Habitat & Water**, **Rigs to Start With**, and **Compare Similar Fish →**. Checkpoint 154.3 refines the first three rows into **independent expanders**: the complete labeled row is the control target, `▾` denotes collapsed, `▴` denotes expanded, each starts collapsed on initial Fish-detail entry, and opening one does not automatically close another. `ⓘ` is reserved for contextual/reference information about a specific concept and is not an expand/collapse cue. `→` continues to denote navigation/workflow. **How to Identify This Fish** remains visible core content outside the collapsible group.
+Supporting information may be grouped under a compact **ABOUT THIS FISH** treatment, especially on mobile. The current working set is **Habitat & Water**, **Rigs to Start With**, optional **Fishing This Species**, and **Compare Similar Fish →**. Applicable supporting disclosures are independent expanders: the complete labeled row is the control target, `▾` denotes collapsed, `▴` denotes expanded, each starts collapsed on initial Fish-detail entry, and opening one does not automatically close another. `ⓘ` is reserved for contextual/reference information about a specific concept and is not an expand/collapse cue. `→` continues to denote navigation/workflow. **How to Identify This Fish** remains visible core content outside the collapsible group and owns the visible **Key Identification Traits** subsection.
 
 
 Disclosure creates room to improve the internal presentation instead of merely hiding the old compact treatment. Pills/chips remain appropriate for short categorical values, while compact information rows, restrained icon/label treatments, or other space-aware structures may be tested for richer concepts and recommendations. Rigs should preserve recommendation structure such as priority, reason, and navigation rather than collapsing structured guidance into pills. Exact iconography, panel geometry, desktop arrangement, modal/bottom-sheet/inline behavior, and the final balance among chips, rows, or restrained tiles remain build-review decisions.
@@ -387,10 +407,10 @@ Material safety/handling cautions must not be hidden solely for compactness: whe
 ### Fish identification-content structure — checkpoint 154.2
 
 
-Checkpoint 154.2 is **APPROVED / refinement allowed**. The visible **How to Identify This Fish** overview uses the existing Fish `summary` as the quick-recognition layer; no new Fish schema field is introduced. The **Key Identification Traits** independent expander exposes the existing strongest-first `identificationTraits[]` as detailed species-owned recognition guidance, while **Compare Similar Fish →** remains the exclusive UI path for explicit look-alike/pairwise distinction content owned by `FISH_IDENTIFICATION_RELATIONSHIPS`.
+Checkpoint 154.2 is **APPROVED / refinement allowed**, as amended by FCC 51A. The visible **How to Identify This Fish** section uses the existing Fish `summary` as the quick-recognition layer and then presents the existing strongest-first `identificationTraits[]` as a visible nested **KEY IDENTIFICATION TRAITS** subsection. No new Fish schema field is introduced. **Key Identification Traits** is no longer an ABOUT THIS FISH disclosure. **Compare Similar Fish →** remains the exclusive UI path for explicit look-alike/pairwise distinction content owned by `FISH_IDENTIFICATION_RELATIONSHIPS`.
 
 
-The visible overview should normally remain one concise beginner-readable sentence centered on approximately 2–3 high-value observable clues. Detailed traits should remain short stacked statements/rows rather than being reduced to pills; they may use precise anatomical terms when useful, but wording should remain understandable to a new angler. Exact bullet/row styling and disclosure geometry remain implementation-review decisions.
+The visible overview should normally remain one concise beginner-readable sentence centered on approximately 2–3 high-value observable clues. Detailed traits should remain short stacked statements/rows rather than being reduced to pills; they may use precise anatomical terms when useful, but wording should remain understandable to a new angler. Exact bullet/row styling, nested-subsection spacing, and optional supporting trait-media integration remain implementation-review decisions.
 
 
 Existing explicit cross-species wording inside some species-owned `identificationTraits[]` is a targeted semantic-cleanup requirement: preserve the approved Fish fact, rewrite the species-owned trait intrinsically where practical, and keep explicit “Fish A versus Fish B” wording in the identification-relationship owner. This checkpoint does not create an anatomy glossary or broader terminology system.
@@ -399,7 +419,7 @@ Existing explicit cross-species wording inside some species-owned `identificatio
 ### Fish Habitat & Water supporting-information structure — checkpoint 154.3
 
 
-Checkpoint 154.3 is **APPROVED / refinement allowed**. **Habitat & Water** is an independent ABOUT THIS FISH expander using the shared `▾` collapsed / `▴` expanded grammar. It starts collapsed on initial Fish-detail entry, the full labeled row toggles it, and its state is independent from **Key Identification Traits** and **Rigs to Start With**.
+Checkpoint 154.3 is **APPROVED / refinement allowed**. **Habitat & Water** is an independent ABOUT THIS FISH expander using the shared `▾` collapsed / `▴` expanded grammar. It starts collapsed on initial Fish-detail entry, the full labeled row toggles it, and its state is independent from **Rigs to Start With** and optional **Fishing This Species**.
 
 
 Inside the expanded section, keep **Habitat** and **Common Waters** semantically separate. Habitat answers what physical environments the Fish commonly uses; Common Waters answers what kinds of waterbodies the Fish is commonly found in. Against the approved canonical Habitat target, render only applicable Habitat dimension groups: **Cover**, **Water Zone**, **Water Movement**, **Structure**, and **Bottom / Substrate**. Omit empty group headings. Keep waterbody types in their own simpler Common Waters group, including the approved `Creek / Stream` normalization when the later Fish migration lands.
@@ -540,7 +560,7 @@ No production Fish source/data/media/configuration change is authorized by this 
 
 Checkpoint 155.3 is **APPROVED / refinement allowed**. The pair-comparison page remains a focused field-identification surface owned by `FISH_IDENTIFICATION_RELATIONSHIPS`, not a duplicate Fish-detail page.
 
-Use the hierarchy **FIELD IDENTIFICATION → Fish A vs Fish B → concise comparison guidance → comparison media → comparison facts/actions**. Scientific names, category, Family, aliases, summaries, Habitat, Rig guidance, and other non-identification metadata are omitted from this page. Pairwise distinction statements are rendered from the canonical relationship as authored; do not infer or manufacture trait-by-trait comparison rows that the relationship data does not explicitly encode.
+Use the hierarchy **Fish A vs Fish B → concise comparison guidance → comparison media → comparison facts/actions**. Scientific names, category, Family, aliases, summaries, Habitat, Rig guidance, and other non-identification metadata are omitted from this page. Pairwise distinction statements are rendered from the canonical relationship as authored; do not infer or manufacture trait-by-trait comparison rows that the relationship data does not explicitly encode.
 
 Responsive presentation has two intentional modes:
 
@@ -551,7 +571,7 @@ The switch between modes is determined by actual image usefulness/readability du
 
 Pair orientation is presentation state only and never changes the unordered/bidirectional relationship model. From Fish Detail or the scoped chooser, the originating Fish appears first/left. From the global catalog, preserve the catalog's deterministic displayed pair orientation. Parent return must preserve the originating path/context rather than silently flipping the comparison.
 
-Use one shared comparison composition rather than treating the two Fish as unrelated independently accented peer cards. `FIELD IDENTIFICATION` may remain a compact task eyebrow, but the page must not rely on a fixed Fish-specific page/subpage color.
+Use one shared comparison composition rather than treating the two Fish as unrelated independently accented peer cards. FCC 51A authorizes a **review-build test** that removes the historical `FIELD IDENTIFICATION` eyebrow because the pair title and comparison guidance already establish the task. Restore an eyebrow only if browser/device review demonstrates a real clarity loss; if restored, use a neutral shared semantic-label treatment rather than a fixed Fish-specific page/subpage color.
 
 No production Fish source/data/media/configuration change is authorized by this approval.
 

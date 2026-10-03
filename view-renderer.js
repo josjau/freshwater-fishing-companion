@@ -35,7 +35,7 @@ function buildSearchControlsMarkup(inputId, placeholder, options = {}) {
     `;
 }
 
-function buildPageNavigationMarkup(parentLabel = null, groupClassName = "") {
+function buildPageNavigationMarkup(parentLabel = null, groupClassName = "", workflowContextMarkup = "") {
     const backArrowMarkup = '<span class="link-arrow link-arrow--back" aria-hidden="true">←</span>';
     const parentLabelClass = typeof parentLabel === "string" && parentLabel.length > 22
         ? " page-navigation--long-label"
@@ -45,12 +45,32 @@ function buildPageNavigationMarkup(parentLabel = null, groupClassName = "") {
         : "";
     const homeLabel = parentLabel ? "Home" : `${backArrowMarkup} Home`;
     const groupClass = groupClassName ? ` ${groupClassName}` : "";
-
-    return `
-        <div class="page-navigation-group${groupClass}">
+    const workflowClass = workflowContextMarkup ? " page-navigation-group--with-workflow-context" : "";
+    const navigationMarkup = `
+        <div class="page-navigation-group${groupClass}${workflowClass}">
             ${parentMarkup}
             <button class="page-navigation" type="button" data-home-navigation>${homeLabel}</button>
         </div>
+    `;
+
+    return workflowContextMarkup
+        ? `${navigationMarkup}${workflowContextMarkup}`
+        : navigationMarkup;
+}
+
+function buildDetailReelSetupContextMarkup(lines) {
+    const reelSetupLines = Array.isArray(lines)
+        ? lines.filter((line) => Array.isArray(line) && line.length > 0)
+        : [];
+    if (reelSetupLines.length === 0) return "";
+
+    return `
+        <aside class="detail-reel-setup-context" aria-label="Current Reel Setup">
+            <span class="detail-reel-setup-context__label">Current Reel Setup</span>
+            <span class="detail-reel-setup-context__values">
+                ${reelSetupLines.map((line) => `<span class="detail-reel-setup-context__line">${line.join('<span class="detail-reel-setup-context__separator" aria-hidden="true">·</span>')}</span>`).join("")}
+            </span>
+        </aside>
     `;
 }
 
@@ -234,12 +254,16 @@ function renderSearchResults(appMain, records, resultConfig) {
     }
 
     if (!Array.isArray(records) || records.length === 0) {
-        status.textContent = resultConfig.emptyMessage;
+        status.textContent = typeof resultConfig.emptyMessage === "function"
+            ? resultConfig.emptyMessage(records)
+            : resultConfig.emptyMessage;
         resultsContainer.innerHTML = "";
         return;
     }
 
-    status.textContent = `${records.length} ${records.length === 1 ? "result" : "results"}`;
+    status.textContent = typeof resultConfig.statusText === "function"
+        ? resultConfig.statusText(records)
+        : `${records.length} ${records.length === 1 ? "result" : "results"}`;
     resultsContainer.innerHTML = records.map((record) => resultConfig.renderRecord(record)).join("");
 
     if (typeof resultConfig.onResultSelect !== "function") return;
@@ -790,12 +814,12 @@ function renderFishDetail(appMain, detailConfig) {
 
     const identificationTraits = Array.isArray(record.identificationTraits) ? record.identificationTraits : [];
     const traitsMarkup = identificationTraits.length
-        ? buildFishDisclosureMarkup(
-            "identification",
-            "Key Identification Traits",
-            `<ul class="detail-list fish-identification-list">${identificationTraits.map((trait) => `<li>${trait}</li>`).join("")}</ul>`,
-            expandedDisclosureIds.has("identification")
-        )
+        ? `
+            <section class="fish-identification-traits" aria-labelledby="fish-identification-traits-title">
+                <h4 class="detail-subsection-heading" id="fish-identification-traits-title">Key Identification Traits</h4>
+                <ul class="detail-list fish-identification-list">${identificationTraits.map((trait) => `<li>${trait}</li>`).join("")}</ul>
+            </section>
+        `
         : "";
 
     const hasHabitat = Array.isArray(record.habitatTags) && record.habitatTags.length > 0;
@@ -876,11 +900,14 @@ function renderFishDetail(appMain, detailConfig) {
             expandedDisclosureIds.has("fishing")
         )
         : "";
-    const safetyMarkup = specializedTargeting?.safety
+    const safetyGuidance = Array.isArray(detailConfig.safetyGuidance)
+        ? detailConfig.safetyGuidance.filter((item) => typeof item?.body === "string" && item.body.trim())
+        : [];
+    const safetyMarkup = safetyGuidance.length
         ? `
             <section class="detail-section detail-section--safety fish-specialized-safety" aria-labelledby="fish-safety-title">
                 <h3 id="fish-safety-title">Safety &amp; Handling</h3>
-                <p>${specializedTargeting.safety}</p>
+                ${safetyGuidance.map((item) => `<p>${item.body}</p>`).join("")}
             </section>
         `
         : "";
@@ -900,13 +927,14 @@ function renderFishDetail(appMain, detailConfig) {
         `
         : "";
 
-    const aboutMarkup = [traitsMarkup, habitatMarkup, rigMarkup, specializedTargetingMarkup, compareMarkup]
+    const aboutMarkup = [habitatMarkup, rigMarkup, specializedTargetingMarkup, compareMarkup]
         .filter(Boolean)
         .join("");
+    const reelSetupMarkup = buildDetailReelSetupContextMarkup(detailConfig.reelSetupContextLines);
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--fish" aria-labelledby="fish-detail-title">
-            ${buildPageNavigationMarkup(detailConfig.parentLabel)}
+            ${buildPageNavigationMarkup(detailConfig.parentLabel, "", reelSetupMarkup)}
             <header class="detail-header fish-detail-header">
                 <p class="detail-eyebrow">${category?.name ?? "Fish"}</p>
                 <h2 id="fish-detail-title">${record.name}</h2>
@@ -925,9 +953,10 @@ function renderFishDetail(appMain, detailConfig) {
                     ${attributionMarkup}
                 </figure>
             </header>
-            <section class="fish-identification-overview" aria-labelledby="fish-identification-overview-title">
+            <section class="detail-section fish-identification-overview" aria-labelledby="fish-identification-overview-title">
                 <h3 id="fish-identification-overview-title">How to Identify This Fish</h3>
-                <p>${record.summary}</p>
+                <p class="fish-identification-overview__summary">${record.summary}</p>
+                ${traitsMarkup}
             </section>
             ${safetyMarkup}
             ${aboutMarkup ? `
@@ -1091,10 +1120,11 @@ function renderFishComparison(appMain, config) {
 
     const buildDifferences = (fish, side) => `
         <section class="fish-comparison-difference fish-comparison-difference--${side}" aria-labelledby="fish-comparison-${side}-differences">
-            <h4 id="fish-comparison-${side}-differences">${fish.name}</h4>
+            <h4 class="detail-subsection-heading" id="fish-comparison-${side}-differences">${fish.name}</h4>
             <ul class="detail-list">${distinctionsFor(fish.id)}</ul>
-            <button class="internal-knowledge-link" type="button" data-fish-detail-id="${fish.id}">
-                View ${fish.name} <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
+            <button class="fish-comparison-view-link" type="button" data-fish-detail-id="${fish.id}">
+                <span class="fish-comparison-view-link__name">${fish.name}</span>
+                <span class="fish-comparison-view-link__action">View <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
             </button>
         </section>
     `;
@@ -1122,7 +1152,6 @@ function renderFishComparison(appMain, config) {
         <article class="detail-view detail-view--fish-comparison" aria-labelledby="fish-comparison-title">
             ${buildPageNavigationMarkup(config.parentLabel)}
             <header class="detail-header fish-comparison-header">
-                <p class="detail-eyebrow">Field Identification</p>
                 <h2 id="fish-comparison-title">${config.fishA.name} vs ${config.fishB.name}</h2>
                 <p>Focus on the visible traits that best distinguish these two Fish.</p>
             </header>
@@ -2931,18 +2960,7 @@ function renderInstructionDetail(appMain, detailConfig) {
             </div>
         </section>
     ` : "";
-    const reelSetupMarkup = reelSetupLines.length > 0
-        ? `
-            <aside class="rig-detail-reel-setup" aria-label="Current Reel Setup">
-                <p class="rig-detail-reel-setup__label">Current Reel Setup</p>
-                <div class="rig-detail-reel-setup__summary">
-                    ${reelSetupLines.map((line) => `
-                        <p class="rig-detail-reel-setup__line">${line.join('<span class="rig-detail-reel-setup__separator" aria-hidden="true">·</span>')}</p>
-                    `).join("")}
-                </div>
-            </aside>
-        `
-        : "";
+    const reelSetupMarkup = buildDetailReelSetupContextMarkup(reelSetupLines);
     const getQuantity = (requirement) => {
         const quantity = Number(requirement?.quantity ?? 1);
         return Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
@@ -3117,14 +3135,11 @@ function renderInstructionDetail(appMain, detailConfig) {
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--rig-compact" aria-labelledby="rig-detail-title">
-            ${buildPageNavigationMarkup(detailConfig.parentLabel)}
-            <header class="detail-header rig-detail-header${reelSetupMarkup ? " rig-detail-header--with-reel-setup" : ""}">
-                <div class="rig-detail-header__top">
-                    <div class="rig-detail-header__copy">
-                        ${classificationMarkup}
-                        <h2 id="rig-detail-title">${record.name}</h2>
-                    </div>
-                    ${reelSetupMarkup}
+            ${buildPageNavigationMarkup(detailConfig.parentLabel, "", reelSetupMarkup)}
+            <header class="detail-header rig-detail-header">
+                <div class="rig-detail-header__copy">
+                    ${classificationMarkup}
+                    <h2 id="rig-detail-title">${record.name}</h2>
                 </div>
                 <p class="rig-detail-header__summary">${record.summary}</p>
             </header>

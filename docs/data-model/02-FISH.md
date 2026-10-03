@@ -1,27 +1,57 @@
-# Freshwater Fishing Companion
+﻿# Freshwater Fishing Companion
+
+
+
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.4.12  
+**Document Revision:** 0.4.15  
 **Document Status:** Approved — Production Baseline + Fish Production Contract  
 **Implementation Status:** Version 1 production migration COMPLETE / VALIDATED / CLOSED — 30 active Fish on the approved production schema  
 **Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056–D061, FISH-001–FISH-007  
-**Last Updated:** 2026-09-14
+**Last Updated:** 2026-10-02
+
+
+
 
 ---
+
+
+
 
 # Purpose
 
+
+
+
 This document defines the approved Fish production contract and records the completed Version 1 production state present on `main`.
+
+
+
 
 Fish owns facts intrinsic to the species. Recommendations, pairwise identification guidance, Media attachment, regulations, source provenance, and User Knowledge belong to their respective owners rather than being duplicated into Fish.
 
+
+
+
 Fish Guide Phase 0 and Version 1 production are closed. All 30 locked Version 1 Fish have completed the approved production contract and use the production schema below. The former mixed-schema migration state is retired.
+
+
+
 
 ---
 
+
+
+
 # Current Production Schema — Migration Complete
 
+
+
+
 `data/fish.js` contains 30 active canonical Fish. All 30 use the approved production shape:
+
+
+
 
 ```text
 id
@@ -38,15 +68,33 @@ identificationTraits[]
 habitatTags[]
 waterbodyTypes[]
 ```
+
+
+
+
+
+
 
 
 The canonical Fish category registry, 20-pair Fish-identification relationship graph, Fish-to-Rig guidance registry, 30 primary-identification Media attachments, and per-Fish source-evidence ledger are implemented. All Version 1 Fish have completed the migration/readiness contract.
 
+
+
+
 ---
+
+
+
 
 # Approved Fish Production Target
 
+
+
+
 The approved canonical Fish record field order is:
+
+
+
 
 ```text
 id
@@ -64,7 +112,13 @@ habitatTags[]
 waterbodyTypes[]
 ```
 
+
+
+
 Target-model changes relative to the legacy seed shape:
+
+
+
 
 - replace legacy `category` text with canonical `categoryId`,
 - add legitimate alternate common names through `aliases[]`,
@@ -72,49 +126,97 @@ Target-model changes relative to the legacy seed shape:
 - preserve Fish-owned `habitatTags[]` and `waterbodyTypes[]`,
 - keep relationship, recommendation, Media, regulation, and source-provenance data outside canonical Fish.
 
+
+
+
 ## Field ownership
+
+
+
 
 ### `id`
 Stable canonical Fish identity used by routing and relationships.
 
+
+
+
 ### `name`
 Canonical beginner-facing common name.
 
+
+
+
 ### `summary`
-Concise beginner-friendly species/reference description.
+Concise beginner-friendly species/reference description. On Fish Detail, this is also the visible **How to Identify This Fish** quick-recognition overview. It should normally remain one concise sentence centered on approximately 2–3 high-value observable clues, favoring plain beginner-readable wording. This presentation use does not create a second summary/identification field.
+
+
+
 
 ### `createdVersion` / `lastModifiedVersion`
 Canonical lifecycle/version metadata.
 
+
+
+
 ### `isActive`
 Sole Fish runtime lifecycle authority. No parallel `isV1`, `isReady`, `releaseStatus`, or `publicationStatus` field is allowed.
+
+
+
 
 ### `scientificName`
 Canonical scientific identity. For North American Fish naming, use the current American Fisheries Society **Names of Fishes** standard unless a documented project-specific reason requires an exception. Scientific synonyms/former nomenclature belong in `FISH_REFERENCE_SOURCES.md`, not `aliases[]`.
 
+
+
+
 Approved Largemouth Bass production identity:
+
+
+
 
 ```text
 name: Largemouth Bass
 scientificName: Micropterus nigricans
 ```
 
+
+
+
 `Micropterus salmoides` is retained in source provenance as former/synonymous nomenclature and does not create a separate Version 1 Florida Bass record.
+
+
+
 
 ### `categoryId`
 Reference to one Fish-domain category in `FISH_CATEGORY_DATA`.
 
+
+
+
 ### `family`
 Biological family/reference metadata.
+
+
+
 
 ### `aliases[]`
 Legitimate established alternate common names or regional terminology. Do not use arbitrary search phrases or scientific synonyms here. Shared legitimate aliases are allowed when evidence supports them.
 
+
+
+
 ### `identificationTraits[]`
-Observable, beginner-readable, species-specific field-identification traits. Put the strongest useful diagnostic traits first. Pairwise distinctions belong to the identification-relationship owner rather than being duplicated here.
+Observable, beginner-readable, species-specific field-identification traits. Put the strongest useful diagnostic traits first; the current Fish Detail contract normally presents these as 2–4 short stacked statements under **Key Identification Traits ⓘ**. Accurate anatomical terminology may be used where useful, but the surrounding wording must remain understandable to a new angler. Explicit look-alike / Fish-versus-Fish distinctions belong to the identification-relationship owner rather than being duplicated here. Existing cross-species wording inside this field is a targeted semantic-cleanup requirement for the implementation/content pass: preserve the approved intrinsic fact, rewrite the species-owned statement intrinsically where practical, and retain pairwise wording in `FISH_IDENTIFICATION_RELATIONSHIPS`.
+
+
+
 
 ### `habitatTags[]`
 Stable intrinsic habitat associations owned by Fish. Approved Version 1 vocabulary:
+
+
+
 
 ```text
 Grass
@@ -130,8 +232,14 @@ Mud
 Channel
 ```
 
+
+
+
 ### `waterbodyTypes[]`
 General waterbody environments owned by Fish. Approved Version 1 vocabulary:
+
+
+
 
 ```text
 Pond
@@ -141,17 +249,35 @@ River
 Creek
 ```
 
+
+
+
 ---
+
+
+
 
 # Fish Category Registry
 
+
+
+
 Implemented source:
+
+
+
 
 ```text
 FISH_CATEGORY_DATA
 ```
 
+
+
+
 Category record shape:
+
+
+
 
 ```text
 id
@@ -159,7 +285,13 @@ name
 summary
 ```
 
+
+
+
 Approved Version 1 categories:
+
+
+
 
 ```text
 bass             — Bass
@@ -173,7 +305,13 @@ drum             — Drum
 paddlefish       — Paddlefish
 ```
 
+
+
+
 Rules:
+
+
+
 
 - `All Fish` is a browse mode, not a category record.
 - Category order is owned by the category registry.
@@ -182,11 +320,23 @@ Rules:
 - every migrated Fish `categoryId` must resolve to exactly one canonical category.
 - category assignment is project-owned beginner navigation taxonomy and does not require external biological evidence.
 
+
+
+
 ---
+
+
+
 
 # Version 1 Library
 
+
+
+
 The locked Version 1 target contains 30 canonical Fish:
+
+
+
 
 1. Channel Catfish
 2. Blue Catfish
@@ -219,7 +369,13 @@ The locked Version 1 target contains 30 canonical Fish:
 29. Longnose Gar
 30. Spotted Gar
 
+
+
+
 Northern Rock Bass is the canonical identity from D060:
+
+
+
 
 ```text
 id: northern-rock-bass
@@ -228,17 +384,38 @@ scientificName: Ambloplites rupestris
 aliases: Rock Bass, Goggle-Eye
 ```
 
+
+
+
 Deferred/non-Version-1 candidates are not inserted as inactive placeholders merely to preserve future possibilities.
+
+
+
 
 ---
 
+
+
+
 # Activation and Staged Production
+
+
+
 
 Version 1 membership and runtime activation are separate concepts.
 
+
+
+
 An approved Version 1 Fish may exist temporarily with `isActive: false` while its production package is authored or validated. Staged activation of individual Fish or dependency-safe groups is allowed. During the active migration, legacy seed Fish may also remain active until their package deliberately replaces them; legacy activation does not waive target-production readiness.
 
+
+
+
 Before a newly migrated/additive Fish may be considered production-ready, it must have:
+
+
+
 
 1. a complete valid canonical Fish record,
 2. a valid `categoryId`,
@@ -247,26 +424,56 @@ Before a newly migrated/additive Fish may be considered production-ready, it mus
 5. exactly one valid active Fish Media record with `role: "primary-identification"`,
 6. any approved Version 1 identification relationship records needed for its completed package implemented and structurally valid.
 
+
+
+
 Fish-to-Rig guidance is optional and does not block Fish activation. If an active guidance record exists, that record must validate independently.
+
+
+
 
 Supplemental-identification and comparison Media remain optional and do not block activation.
 
+
+
+
 Intermediate production validation must **not** hardcode “30 active Fish.” Final Version 1 completion separately requires the full locked 30-Fish library, the approved 20-pair identification graph, required primary Media coverage, complete source evidence, and all applicable integrity checks.
+
+
+
 
 ---
 
+
+
+
 # Fish Identification Relationships
 
+
+
+
 Pairwise field-identification knowledge belongs outside Fish in:
+
+
+
 
 ```text
 data/fish-identification.js
 FISH_IDENTIFICATION_RELATIONSHIPS
 ```
 
+
+
+
 This registry is implemented and expands as production packages land.
 
+
+
+
 Relationship shape:
+
+
+
 
 ```text
 id
@@ -277,30 +484,60 @@ isActive
 distinctions[]
 ```
 
+
+
+
 Each distinction contains:
+
+
+
 
 ```text
 fishId
 text
 ```
 
+
+
+
 ## Deterministic ID convention — FISH-001
 
+
+
+
 For exactly two participant Fish IDs:
+
+
+
 
 1. sort the canonical lowercase ASCII Fish IDs in ascending lexicographic order,
 2. store `fishIds[]` in that same order,
 3. join them with `-vs-` to create the relationship `id`.
 
+
+
+
 Example concept:
+
+
+
 
 ```text
 fish-a-vs-fish-b
 ```
 
+
+
+
 The relationship remains semantically unordered/bidirectional. Runtime consumers use `relationship.fishIds`; they must never parse the relationship ID to determine participants.
 
+
+
+
 Validation rejects:
+
+
+
 
 - duplicate relationship IDs,
 - duplicate unordered Fish pairs,
@@ -311,24 +548,51 @@ Validation rejects:
 - distinction references to a third Fish,
 - relationships lacking at least one nonempty distinction for each participant.
 
+
+
+
 Multiple distinction entries for one participant are allowed when useful.
+
+
+
 
 ---
 
+
+
+
 # Fish-to-Rig Guidance
 
+
+
+
 Fish-to-Rig recommendation Decision Knowledge belongs outside Fish and Rig in:
+
+
+
 
 ```text
 data/fish-rig-guidance.js
 FISH_RIG_GUIDANCE
 ```
 
+
+
+
 This registry is implemented and expands through deliberate per-Fish evaluation during production authoring.
+
+
+
 
 There is **no separate guidance-record `id`**. `fishId` uniquely identifies the record for its Fish.
 
+
+
+
 Record shape:
+
+
+
 
 ```text
 fishId
@@ -338,22 +602,39 @@ isActive
 rigRecommendations[]
 ```
 
+
+
+
 Each recommendation contains:
+
 
 ```text
 rigId
+lureBaitId?   // optional; used for a specific Direct-Tie presentation
 priority
 reason
 ```
 
+
+
+
 Approved priority values:
+
+
+
 
 ```text
 Primary
 Alternative
 ```
 
+
+
+
 Rules:
+
+
+
 
 - guidance is optional per Fish,
 - every Version 1 Fish is deliberately evaluated for guidance during authoring/validation,
@@ -363,27 +644,107 @@ Rules:
 - no Rig may appear more than once or appear in both priority groups,
 - every referenced Rig must resolve to an active canonical Rig,
 - every recommendation requires a meaningful nonempty `reason`,
+- authored `rigRecommendations[]` order is semantically meaningful **within each priority group** and represents descending general-purpose beginner starting value for that Fish; no separate numeric rank field is required,
+- Primary/Alternative remains the stronger classification boundary; within-group order is stable Fish Guide guidance and does not encode current-condition, availability, legality, or What Should I Throw ranking,
+- when `rigId: "direct-tie-lure-setup"` includes an applicable `lureBaitId`, Fish Detail may present the Lure/Bait identity as the beginner-facing label while preserving the underlying Rig + Lure/Bait relationship for navigation,
 - Fish and Rig do not duplicate this relationship,
 - reverse Rig-to-Fish presentation, if needed, is derived from `FISH_RIG_GUIDANCE`.
 
+
+
+
 ## Provisional recommendation maxima
 
+
+
+
 Current approved working validator limits are:
+
+
+
 
 ```text
 Primary:     1–3
 Alternative: 0–3
 ```
 
+
+
+
 These are **provisionally approved**, not immutable architecture. Production validation should enforce them while they remain the working standard. If real Fish authoring demonstrates that the maxima are materially unsuitable, revise the rule only through an explicit documented decision; do not silently exceed it.
+
+
+
+
+---
+
+
+
+
+# Specialized Fish Targeting and Safety Guidance
+
+Exceptional authored Fish guidance remains outside canonical `FISH_DATA`. The durable runtime owner is:
+
+```text
+data/fish-specialized-guidance.js
+```
+
+That file owns two independent collections with different semantics:
+
+```text
+FISH_SPECIALIZED_TARGETING
+FISH_SAFETY_GUIDANCE
+```
+
+`FISH_SPECIALIZED_TARGETING` owns exceptional species-specific targeting, research, and regulation-check guidance that does not fit the universal Fish or Fish-to-Rig contracts.
+
+`FISH_SAFETY_GUIDANCE` independently owns material species/group Safety & Handling guidance. Safety is **not** a canonical Fish field and is **not** semantically subordinate to specialized targeting. A Fish may therefore have Safety guidance without having a specialized-targeting record. Shared warnings are authored once and explicitly assigned to the applicable Fish rather than copied into multiple Fish records.
+
+Approved Version 1 Safety record shape:
+
+```text
+id
+fishIds[]
+body
+```
+
+Rules:
+
+- `id` is the stable authored-guidance identity;
+- `fishIds[]` explicitly names every applicable Fish; do not infer applicability from Fish category, family, or another taxonomic grouping;
+- `body` contains concise beginner-facing actionable Safety & Handling guidance;
+- do not add category/type/priority/sourceIds/status fields without a separate approved requirement;
+- source/evidence provenance remains in `FISH_REFERENCE_SOURCES.md`, not runtime guidance records;
+- Fish Detail presents applicable Safety guidance in the dedicated visible **Safety & Handling** section after **How to Identify This Fish** and before **About This Fish**.
+
+Approved FCC 51A target records are:
+
+```text
+catfish-spine-handling
+walleye-family-mouth-handling
+freshwater-drum-throat-handling
+gar-roe-toxicity
+paddlefish-snagging-handling
+```
+
+The current production file still nests Gar/Paddlefish Safety strings under `FISH_SPECIALIZED_TARGETING`. FCC 51A has approved the independent `FISH_SAFETY_GUIDANCE` target above; production remains unchanged until the authorized implementation/review cycle migrates those existing warnings and adds the newly approved Catfish, Walleye-family, and Freshwater Drum guidance.
 
 ---
 
 # Fish Media Readiness
 
+
+
+
 Canonical Fish records do not store `imageIds[]` or `mediaIds[]`.
 
+
+
+
 Media owns attachment through:
+
+
+
 
 ```text
 ownerType
@@ -391,33 +752,69 @@ ownerId
 role
 ```
 
+
+
+
 Fish-related role rules:
+
+
+
 
 ```text
 ownerType: fish
 role: primary-identification | supplemental-identification
 
+
+
+
 ownerType: fish-identification
 role: comparison
 ```
 
+
+
+
 Every production-ready active Fish requires exactly one active `primary-identification` Media record. Supplemental and comparison Media are optional.
+
+
+
 
 Fish Media naming, path, alt-text, attribution, `changesMade`, licensing/provenance, and technical rules are governed by `MEDIA_GUIDE.md` and the FISH-004 contract released by Phase 0.
 
+
+
+
 ---
+
+
+
 
 # Fish Source / Evidence
 
+
+
+
 Editorial/scientific provenance is not stored in runtime Fish records.
 
+
+
+
 Canonical owner:
+
+
+
 
 ```text
 docs/FISH_REFERENCE_SOURCES.md
 ```
 
+
+
+
 The current provisionally approved evidence model requires each Version 1 Fish to document support for:
+
+
+
 
 - Regional Inclusion,
 - Taxonomy / Family,
@@ -425,21 +822,48 @@ The current provisionally approved evidence model requires each Version 1 Fish t
 - Habitat / Waterbody,
 - Aliases when `aliases[]` is nonempty.
 
+
+
+
 One authoritative source may support multiple evidence categories. Citation-per-field is not required. The evidence burden/structure may be deliberately adjusted if real authoring demonstrates a better practical model, but such changes must be documented rather than silently drifting.
+
+
+
 
 The deterministic repository validator checks structural evidence completeness/reference resolution for migrated production Fish. Scientific truth, source quality, and freshness remain human-reviewed.
 
+
+
+
 ---
+
+
+
 
 # Search
 
+
+
+
 ## Current production
+
+
+
 
 Current Fish search consumes the approved production identity fields for all 30 Version 1 Fish. Legacy `category`-shape compatibility is no longer required by active Fish data.
 
+
+
+
 ## Approved Fish production search identity
 
+
+
+
 Migrated Version 1 Fish identity search uses:
+
+
+
 
 ```text
 name
@@ -449,17 +873,38 @@ categoryId -> FISH_CATEGORY_DATA.name
 family
 ```
 
+
+
+
 Do not add `searchKeywords[]` solely to make Fish search work when the same meaning can be derived from canonical identity fields.
+
+
+
 
 Scope is resolved before ranking under D061. Search performed inside a category/collection must never silently broaden to the whole domain.
 
+
+
+
 Search helper text/examples shown in a scoped collection must likewise be valid for that exact eligible result set. Curated helper terms may be used for beginner usefulness, but every suggested term must be mechanically proven to return at least one result in the collection where it appears. There is no hard helper-example count.
+
+
+
 
 ---
 
+
+
+
 # Explicitly Excluded Canonical Fish Fields
 
+
+
+
 Do not add the following merely for UI convenience or speculative future use:
+
+
+
 
 ```text
 regionTags
@@ -491,21 +936,45 @@ forage
 conservationStatus
 ```
 
+
+
+
 Jurisdiction-specific occurrence/regulation facts, recommendation relationships, Media attachment, source provenance, and User Knowledge require their own semantic owners.
+
+
+
 
 ---
 
+
+
+
 # Production Validation Contract
 
+
+
+
 The existing validator is:
+
+
+
 
 ```text
 tools/validate_repository_integrity.js
 ```
 
+
+
+
 Do not create a competing Fish validator.
 
+
+
+
 As Fish production data lands, deterministic validation must cover, as applicable:
+
+
+
 
 - Fish category IDs/required fields and absence of category `isActive`,
 - migrated Fish exact approved fields and controlled vocabularies,
@@ -515,17 +984,33 @@ As Fish production data lands, deterministic validation must cover, as applicabl
 - rejection of forbidden speculative/duplicate-owner fields,
 - deterministic identification relationship IDs/order and valid distinctions,
 - optional Fish-to-Rig guidance structure/references/priorities/reasons and current provisional maxima,
+- specialized targeting/Safety guidance ownership, valid explicit Fish references, and separation of `FISH_SAFETY_GUIDANCE` from `FISH_SPECIALIZED_TARGETING`,
 - Fish Media ownership/role/ID/path/alt/license readiness requirements,
 - source-evidence entry/category/source-reference completeness,
 - staged activation without falsely requiring all 30 Fish active on every intermediate commit.
 
+
+
+
 Final Version 1 closeout separately verifies the complete 30-Fish/20-pair/media/source-evidence target.
+
+
+
 
 ---
 
+
+
+
 # Current Production Package Status
 
+
+
+
 Closed Fish production packages:
+
+
+
 
 - Trout Production Package 1 — Rainbow Trout + Brown Trout
 - Gar Production Package — Longnose Gar + Spotted Gar
@@ -534,11 +1019,23 @@ Closed Fish production packages:
 - Production Wave 3 — Bass — closed six-Fish package retained at `../../archive/workstreams/fish-guide/FISH-WAVE-3-BASS.md`
 - Production Wave 4 — Sunfish & Crappie — closed nine-Fish package retained at `../../archive/workstreams/fish-guide/FISH-WAVE-4-SUNFISH-CRAPPIE.md`; source/media/evidence/relationship/guidance implementation is committed, desktop/mobile validated, post-push repository-integrity verified, and closed
 
+
+
+
 The Version 1 Fish production migration is complete. Future Fish additions are new enhancement/scope work and do not represent unfinished Version 1 migration.
+
+
+
 
 ---
 
+
+
+
 # Related Documents
+
+
+
 
 - `01-FOUNDATION.md`
 - `03-RIGS.md`
@@ -553,9 +1050,18 @@ The Version 1 Fish production migration is complete. Future Fish additions are n
 - `../../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0.md`
 - `../../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
 
+
+
+
 # Condition / Habitat Reference Presentation — Current
 
+
+
+
 Fish Guide Version 1 remains **CLOSED / PASS**. The completed Recommendation Prerequisites Foundation added presentation-only reference behavior without changing Fish facts, schema ownership, or recommendation semantics:
+
+
+
 
 - semantically exact Fish habitat/water labels may open the shared canonical Condition reference popover;
 - approved mappings include Grass→Vegetation; Brush/Timber→Wood / Brush; Channel→Drop-off / Channel / Deep Structure; Shallow Water→Shallow; Deep Water→Deep; Open Water→Open Water; Rock→Rock; Pond/Lake/Reservoir/River direct; and Creek→Creek / Stream;
@@ -563,16 +1069,31 @@ Fish Guide Version 1 remains **CLOSED / PASS**. The completed Recommendation Pre
 - all currently displayed Fish habitat/water chips retain a live reference action;
 - no Fish `conditionIds[]`, Fish↔Condition relationship, recommendation relationship, or Fish schema migration was introduced by this presentation behavior.
 
+
+
+
 The accepted UI keeps Fish reference chips in the clickable-knowledge visual family while preserving the semantic distinction between canonical Condition help and Fish-owned Habitat explanations. Detailed Foundation review chronology belongs in the closed Foundation workstream and Git history.
+
+
+
 
 ## G4-RIF-1A Fish Migration Target — APPROVED / PENDING IMPLEMENTATION
 
+
+
+
 The legacy production `habitatTags[]` vocabulary and current presentation mappings above remain the runtime baseline until explicit migration. G4-RIF-1A has now CLOSED / PASS at the semantic-review level and approves the later Fish-side migration to:
+
+
+
 
 - one canonical 13-concept physical Habitat registry;
 - explicit evidence-backed Fish↔Habitat associations by stable Habitat ID, using the approved 30-Fish set in D069;
 - Fish remaining the semantic owner of species-intrinsic Habitat association even when relationship storage is external to `fish.js`;
 - Fish waterbody value **`Creek` → `Creek / Stream`** as a label/value normalization only, preserving the same waterbody concept;
 - the separate exact Fish waterbody bridge: Pond↔`pond`, Lake↔`lake`, Reservoir↔`reservoir`, River↔`river`, Creek / Stream↔`creek-stream`.
+
+
+
 
 The waterbody bridge and Habitat correspondence establish environmental equivalence only. They do not encode Fish preference strength, Recommendation eligibility, contextual suitability, ranking, weighting, or score. No Fish identity changes are required. Current production remains unchanged until the approved migration is implemented and validated.

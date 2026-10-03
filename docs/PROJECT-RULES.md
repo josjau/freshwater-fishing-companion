@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Project Rules
 
 **Document:** PROJECT-RULES.md  
-**Document Revision:** 1.2.4  
+**Document Revision:** 1.2.5  
 **Document Status:** Approved  
 **Role:** Single canonical current FCC procedural owner  
-**Last Updated:** 2026-09-28
+**Last Updated:** 2026-10-02
 
 # Purpose
 
@@ -59,7 +59,9 @@ A full FCC gate is required when an approval/rejection/deferment/scope lock mate
 
 The material gate receipt states status, material owners/readbacks, validation, production disposition, commit/push/CI disposition, exact next section/resume point, and `New chat: YES / NO / RECOMMENDED` with the reason.
 
-If an approval includes questions, answer the questions before the applicable capture/gate. After a material gate receipt, stop unless the user explicitly directs continuation. Routine decision capture does not require a stop.
+For an already-approved Build Unit whose exact implementation scope is locked and whose Planning-to-Build prerequisites pass, **build/production authorization is inferred by default unless the user explicitly says `wait`, `stop`, `hold`, or otherwise reserves production**. A normal continuation direction such as `continue` or `proceed` confirms progression but is not a second required approval. This inferred authorization applies only to the exact locked production/source/data/media/configuration scope and review-candidate creation. It does **not** authorize scope expansion, Local Final / Commit Candidate Approval, commit/push, or final closeout.
+
+If an approval includes questions, answer the questions before the applicable capture/gate. After a material gate receipt, stop unless the user explicitly directs continuation or the inferred-build rule above already authorizes progression. Routine decision capture does not require a stop.
 
 # Block 3 — Discussion, Decision Fidelity, and Chat Boundaries
 
@@ -110,10 +112,10 @@ Do not substitute a runtime `file_...` handle, the full `file_uri` object, a sig
 
 # Block 5 — Planning-to-Build and Production
 
-- Planning, audit, or design completion does not authorize production.
+- Planning, audit, or design completion does not bypass the Planning-to-Build gate.
 - Before build, the Planning-to-Build gate verifies the Build Unit scope is locked, every approved build-relevant decision is preserved verbatim in the external active audit and mapped to implementation/validation, any durable owner that must be current **before** implementation is reconciled, required readbacks/validation pass, and Live Working State records PASS plus the exact first build action. Durable canonical documentation that is intentionally deferred to final Build Unit reconciliation must be explicitly marked pending rather than silently treated as current.
 - Live Working State alone cannot authorize build.
-- Production source/data/media/configuration writes require explicit authorization for the exact scope. Prior approval is not blanket authority for later production changes.
+- Once those Planning-to-Build prerequisites pass for an already-approved exact scope, production source/data/media/configuration writes and review-candidate creation are **authorized by default unless the user has explicitly said `wait`, `stop`, `hold`, or otherwise reserved production**. This default authorization never expands scope and never carries forward to a different Build Unit.
 - Production/user-facing commit or push requires separate explicit authorization.
 - Documentation-only commits retain standing authority after Drive-first editing and applicable validation.
 - The first review candidate is compiled from verified GitHub/Drive authority. During an unchanged active review cycle, user-found candidate defects are corrected in the review candidate under Block 6 rather than being promoted into Drive Current after every iteration. Production/source promotion occurs only at the **Local Final Approval / Commit Candidate Approval** boundary defined in Block 6, including an approved mobile correction that requires a new commit.
