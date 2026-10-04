@@ -1,12 +1,12 @@
-﻿# Freshwater Fishing Companion
+# Freshwater Fishing Companion
 
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.4.15  
+**Document Revision:** 0.4.16  
 **Document Status:** Approved — Production Baseline + Fish Production Contract  
 **Implementation Status:** Version 1 production migration COMPLETE / VALIDATED / CLOSED — 30 active Fish on the approved production schema  
 **Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056–D061, FISH-001–FISH-007  
-**Last Updated:** 2026-10-02
+**Last Updated:** 2026-10-03
 
 
 ---
@@ -527,7 +527,7 @@ gar-roe-toxicity
 paddlefish-snagging-handling
 ```
 
-The current production file still nests Gar/Paddlefish Safety strings under `FISH_SPECIALIZED_TARGETING`. FCC 51A has approved the independent `FISH_SAFETY_GUIDANCE` target above; production remains unchanged until the authorized implementation/review cycle migrates those existing warnings and adds the newly approved Catfish, Walleye-family, and Freshwater Drum guidance.
+Production now implements independent `FISH_SAFETY_GUIDANCE` with the five approved FCC 51A Safety records listed above. Gar/Paddlefish Safety strings were migrated out of `FISH_SPECIALIZED_TARGETING`, and the approved Catfish, Walleye-family, and Freshwater Drum guidance is implemented under the independent Safety owner.
 
 ---
 
