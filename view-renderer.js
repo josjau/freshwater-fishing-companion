@@ -282,240 +282,10 @@ function buildFishMediaMarkup(media, className, loading = "lazy") {
     return `<img class="${className}" src="${media.file}" alt="${media.alt ?? ""}" loading="${loading}" decoding="async">`;
 }
 
-const FISH_IMAGE_FRAMING = Object.freeze({
-    "largemouth-bass": Object.freeze({
-        selection: Object.freeze({ scale: 0.98, positionY: "24%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.03, positionY: "19%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 0.95, positionY: "41%", offsetX: "0%", offsetY: "5%" }),
-        compareCatalog: Object.freeze({ scale: 0.92, positionY: "41%", offsetX: "0%", offsetY: "5%" }),
-        compareDetail: Object.freeze({ scale: 0.94, positionY: "41%", offsetX: "0%", offsetY: "4%" })
-    }),
-    "smallmouth-bass": Object.freeze({
-        selection: Object.freeze({ scale: 1.18, positionY: "27%", offsetX: "-3.5%" }),
-        detail: Object.freeze({ scale: 1.22, positionY: "22%", offsetX: "-3.5%" }),
-        similar: Object.freeze({ scale: 1.17, positionY: "43%", offsetX: "-3.5%", offsetY: "3%" }),
-        compareCatalog: Object.freeze({ scale: 1.17, positionY: "43%", offsetX: "-3.5%", offsetY: "3%" }),
-        compareDetail: Object.freeze({ scale: 1.17, positionY: "43%", offsetX: "-3.5%", offsetY: "3%" })
-    }),
-    "spotted-bass": Object.freeze({
-        selection: Object.freeze({ scale: 0.98, positionY: "50%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.02, positionY: "50%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 0.95, positionY: "50%", offsetX: "0%", offsetY: "-1%" }),
-        compareCatalog: Object.freeze({ scale: 0.93, positionY: "50%", offsetX: "0%", offsetY: "-1%" }),
-        compareDetail: Object.freeze({ scale: 0.94, positionY: "50%", offsetX: "0%", offsetY: "-1%" })
-    }),
-    "white-bass": Object.freeze({
-        selection: Object.freeze({ scale: 1.27, positionY: "36%", offsetX: "-5.5%" }),
-        detail: Object.freeze({ scale: 1.31, positionY: "31%", offsetX: "-5.5%" }),
-        similar: Object.freeze({ scale: 1.27, positionY: "46%", offsetX: "-5.5%", offsetY: "2%" }),
-        compareCatalog: Object.freeze({ scale: 1.27, positionY: "46%", offsetX: "-5.5%", offsetY: "2%" }),
-        compareDetail: Object.freeze({ scale: 1.27, positionY: "46%", offsetX: "-5.5%", offsetY: "2%" })
-    }),
-    "striped-bass": Object.freeze({
-        selection: Object.freeze({ scale: 1.00, positionY: "40%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.05, positionY: "38%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 0.96, positionY: "47%", offsetX: "0%", offsetY: "1%" }),
-        compareCatalog: Object.freeze({ scale: 0.95, positionY: "47%", offsetX: "0%", offsetY: "1%" }),
-        compareDetail: Object.freeze({ scale: 0.96, positionY: "47%", offsetX: "0%", offsetY: "1%" })
-    }),
-    "hybrid-striped-bass": Object.freeze({
-        selection: Object.freeze({ scale: 0.96, positionY: "50%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 0.94, positionY: "50%", offsetX: "0%", offsetY: "-1%" }),
-        compareCatalog: Object.freeze({ scale: 0.93, positionY: "50%", offsetX: "0%", offsetY: "-1%" }),
-        compareDetail: Object.freeze({ scale: 0.94, positionY: "50%", offsetX: "0%", offsetY: "-1%" })
-    }),
-    "rainbow-trout": Object.freeze({
-        selection: Object.freeze({ scale: 1.06, positionY: "30%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.06, positionY: "17%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 0.91, positionY: "30%", offsetX: "0%" }),
-        compareCatalog: Object.freeze({ scale: 0.91, positionY: "30%", offsetX: "0%", offsetY: "7.0%" }),
-        compareDetail: Object.freeze({ scale: 0.92, positionY: "30%", offsetX: "0%" })
-    }),
-    "brown-trout": Object.freeze({
-        selection: Object.freeze({ scale: 1.27, positionY: "43%", offsetX: "-2.7%" }),
-        detail: Object.freeze({ scale: 1.31, positionY: "39%", offsetX: "-2.7%" }),
-        similar: Object.freeze({ scale: 1.18, positionY: "43%", offsetX: "-2.7%" }),
-        compareCatalog: Object.freeze({ scale: 1.18, positionY: "43%", offsetX: "-2.7%", offsetY: "-0.5%" }),
-        compareDetail: Object.freeze({ scale: 1.18, positionY: "43%", offsetX: "-2.7%" })
-    }),
-    "longnose-gar": Object.freeze({
-        selection: Object.freeze({ scale: 1.28, positionY: "21%", offsetX: "2.4%" }),
-        detail: Object.freeze({ scale: 1.28, positionY: "5%", offsetX: "2.4%" }),
-        similar: Object.freeze({ scale: 1.17, positionY: "21%", offsetX: "2.4%" }),
-        compareCatalog: Object.freeze({ scale: 1.17, positionY: "21%", offsetX: "2.4%", offsetY: "14.5%" }),
-        compareDetail: Object.freeze({ scale: 1.19, positionY: "21%", offsetX: "2.4%" })
-    }),
-    "spotted-gar": Object.freeze({
-        selection: Object.freeze({ scale: 1.08, positionY: "26%", offsetX: "0.8%" }),
-        detail: Object.freeze({ scale: 1.08, positionY: "15%", offsetX: "0.8%" }),
-        similar: Object.freeze({ scale: 0.98, positionY: "26%", offsetX: "0.8%" }),
-        compareCatalog: Object.freeze({ scale: 0.98, positionY: "26%", offsetX: "0.8%", offsetY: "9.5%" }),
-        compareDetail: Object.freeze({ scale: 0.95, positionY: "26%", offsetX: "0.8%" })
-    }),
-    "common-carp": Object.freeze({
-        selection: Object.freeze({ scale: 1.00, positionY: "42%", offsetX: "-1.5%" }),
-        detail: Object.freeze({ scale: 1.08, positionY: "38%", offsetX: "-3%" }),
-        similar: Object.freeze({ scale: 1.05, positionY: "42%", offsetX: "-1.5%" }),
-        compareCatalog: Object.freeze({ scale: 1.05, positionY: "42%", offsetX: "-1.5%" }),
-        compareDetail: Object.freeze({ scale: 0.98, positionY: "42%", offsetX: "-3%" })
-    }),
-    "freshwater-drum": Object.freeze({
-        selection: Object.freeze({ scale: 1.06, positionY: "45%", offsetX: "-1%" }),
-        detail: Object.freeze({ scale: 1.18, positionY: "42%", offsetX: "-1%" }),
-        similar: Object.freeze({ scale: 1.12, positionY: "45%", offsetX: "-1%" }),
-        compareCatalog: Object.freeze({ scale: 1.12, positionY: "45%", offsetX: "-1%" }),
-        compareDetail: Object.freeze({ scale: 1.21, positionY: "45%", offsetX: "-1%" })
-    }),
-    "paddlefish": Object.freeze({
-        selection: Object.freeze({ scale: 1.00, positionY: "42%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.00, positionY: "35%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 0.85, positionY: "42%", offsetX: "0%" }),
-        compareCatalog: Object.freeze({ scale: 0.85, positionY: "42%", offsetX: "0%" }),
-        compareDetail: Object.freeze({ scale: 0.84, positionY: "42%", offsetX: "0%" })
-    }),
-    "walleye": Object.freeze({
-        selection: Object.freeze({ scale: 1.06, positionY: "24%", offsetX: "-1%" }),
-        detail: Object.freeze({ scale: 1.13, positionY: "8%", offsetX: "-1%" }),
-        similar: Object.freeze({ scale: 1.00, positionY: "24%", offsetX: "-1%" }),
-        compareCatalog: Object.freeze({ scale: 1.00, positionY: "24%", offsetX: "-1%", offsetY: "6.5%" }),
-        compareDetail: Object.freeze({ scale: 1.05, positionY: "24%", offsetX: "-1%" })
-    }),
-    "sauger": Object.freeze({
-        selection: Object.freeze({ scale: 1.12, positionY: "43%", offsetX: "1%" }),
-        detail: Object.freeze({ scale: 1.21, positionY: "40%", offsetX: "1%" }),
-        similar: Object.freeze({ scale: 1.12, positionY: "43%", offsetX: "1%" }),
-        compareCatalog: Object.freeze({ scale: 1.12, positionY: "43%", offsetX: "1%", offsetY: "3.0%" }),
-        compareDetail: Object.freeze({ scale: 1.00, positionY: "43%", offsetX: "1%" })
-    }),
-    "saugeye": Object.freeze({
-        selection: Object.freeze({ scale: 0.88, positionY: "54%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 0.94, positionY: "57%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 0.85, positionY: "54%", offsetX: "0%" }),
-        compareCatalog: Object.freeze({ scale: 0.85, positionY: "54%", offsetX: "0%", offsetY: "-3.0%" }),
-        compareDetail: Object.freeze({ scale: 0.82, positionY: "54%", offsetX: "0%" })
-    }),
-    "channel-catfish": Object.freeze({
-        selection: Object.freeze({ scale: 1.14, positionY: "23%", offsetX: "-1%" }),
-        detail: Object.freeze({ scale: 1.14, positionY: "8%", offsetX: "-1%" }),
-        similar: Object.freeze({ scale: 1.02, positionY: "23%", offsetX: "-1%" }),
-        compareCatalog: Object.freeze({ scale: 1.02, positionY: "23%", offsetX: "-1%", offsetY: "8.5%" }),
-        compareDetail: Object.freeze({ scale: 1.00, positionY: "23%", offsetX: "-1%" })
-    }),
-    "blue-catfish": Object.freeze({
-        selection: Object.freeze({ scale: 1.40, positionY: "24%", offsetX: "-2%" }),
-        detail: Object.freeze({ scale: 1.40, positionY: "12%", offsetX: "-2%" }),
-        similar: Object.freeze({ scale: 1.32, positionY: "24%", offsetX: "-2%" }),
-        compareCatalog: Object.freeze({ scale: 1.32, positionY: "24%", offsetX: "-2%", offsetY: "16.5%" }),
-        compareDetail: Object.freeze({ scale: 1.24, positionY: "24%", offsetX: "-2%" })
-    }),
-    "flathead-catfish": Object.freeze({
-        selection: Object.freeze({ scale: 1.02, positionY: "42%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.05, positionY: "38%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 0.94, positionY: "42%", offsetX: "0%" }),
-        compareCatalog: Object.freeze({ scale: 0.94, positionY: "42%", offsetX: "0%", offsetY: "2.0%" }),
-        compareDetail: Object.freeze({ scale: 0.88, positionY: "42%", offsetX: "0%" })
-    }),
-    "black-bullhead": Object.freeze({
-        selection: Object.freeze({ scale: 1.16, positionY: "32%", offsetX: "-3%" }),
-        detail: Object.freeze({ scale: 1.30, positionY: "23%", offsetX: "-4%" }),
-        similar: Object.freeze({ scale: 1.27, positionY: "32%", offsetX: "-3%" }),
-        compareCatalog: Object.freeze({ scale: 1.27, positionY: "32%", offsetX: "-3%", offsetY: "9.5%" }),
-        compareDetail: Object.freeze({ scale: 1.33, positionY: "32%", offsetX: "-3%" })
-    }),
-    "yellow-bullhead": Object.freeze({
-        selection: Object.freeze({ scale: 1.39, positionY: "39%", offsetX: "-2%" }),
-        detail: Object.freeze({ scale: 1.49, positionY: "35%", offsetX: "-2%" }),
-        similar: Object.freeze({ scale: 1.35, positionY: "39%", offsetX: "-2%" }),
-        compareCatalog: Object.freeze({ scale: 1.35, positionY: "39%", offsetX: "-2%", offsetY: "5.0%" }),
-        compareDetail: Object.freeze({ scale: 1.30, positionY: "39%", offsetX: "-2%" })
-    }),
-    "bluegill": Object.freeze({
-        selection: Object.freeze({ scale: 0.92, positionY: "45%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 1.40, positionY: "50%", offsetX: "0%", offsetY: "3%" }),
-        compareCatalog: Object.freeze({ scale: 1.40, positionY: "50%", offsetX: "0%", offsetY: "3%" }),
-        compareDetail: Object.freeze({ scale: 1.35, positionY: "50%", offsetX: "0%", offsetY: "3%" })
-    }),
-    "redear-sunfish": Object.freeze({
-        selection: Object.freeze({ scale: 1.10, positionY: "39%", offsetX: "-3%" }),
-        detail: Object.freeze({ scale: 1.10, positionY: "37%", offsetX: "-3%" }),
-        similar: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "-8%", offsetY: "5%" }),
-        compareCatalog: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "-8%", offsetY: "5%" }),
-        compareDetail: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "-8%", offsetY: "5%" })
-    }),
-    "green-sunfish": Object.freeze({
-        selection: Object.freeze({ scale: 1.10, positionY: "28%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.12, positionY: "24%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "0%", offsetY: "12%" }),
-        compareCatalog: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "0%", offsetY: "12%" }),
-        compareDetail: Object.freeze({ scale: 1.50, positionY: "50%", offsetX: "0%", offsetY: "12%" })
-    }),
-    "longear-sunfish": Object.freeze({
-        selection: Object.freeze({ scale: 1.10, positionY: "38%", offsetX: "-1%" }),
-        detail: Object.freeze({ scale: 1.10, positionY: "35%", offsetX: "-1%" }),
-        similar: Object.freeze({ scale: 1.50, positionY: "50%", offsetX: "-4.5%", offsetY: "6%" }),
-        compareCatalog: Object.freeze({ scale: 1.50, positionY: "50%", offsetX: "-4.5%", offsetY: "6%" }),
-        compareDetail: Object.freeze({ scale: 1.50, positionY: "50%", offsetX: "-4%", offsetY: "6%" })
-    }),
-    "northern-rock-bass": Object.freeze({
-        selection: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%", offsetY: "0%" }),
-        compareCatalog: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%", offsetY: "0%" }),
-        compareDetail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%", offsetY: "0%" })
-    }),
-    "warmouth": Object.freeze({
-        selection: Object.freeze({ scale: 1.12, positionY: "32%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.12, positionY: "26%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "0%", offsetY: "8%" }),
-        compareCatalog: Object.freeze({ scale: 1.55, positionY: "50%", offsetX: "0%", offsetY: "8%" }),
-        compareDetail: Object.freeze({ scale: 1.58, positionY: "50%", offsetX: "0%", offsetY: "8%" })
-    }),
-    "ozark-bass": Object.freeze({
-        selection: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.00, positionY: "50%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 1.05, positionY: "50%", offsetX: "-1%", offsetY: "0%" }),
-        compareCatalog: Object.freeze({ scale: 1.05, positionY: "50%", offsetX: "-1%", offsetY: "0%" }),
-        compareDetail: Object.freeze({ scale: 1.05, positionY: "50%", offsetX: "-1%", offsetY: "0%" })
-    }),
-    "black-crappie": Object.freeze({
-        selection: Object.freeze({ scale: 1.00, positionY: "22%", offsetX: "0%" }),
-        detail: Object.freeze({ scale: 1.00, positionY: "17%", offsetX: "0%" }),
-        similar: Object.freeze({ scale: 1.40, positionY: "50%", offsetX: "-6%", offsetY: "14%" }),
-        compareCatalog: Object.freeze({ scale: 1.40, positionY: "50%", offsetX: "-6%", offsetY: "14%" }),
-        compareDetail: Object.freeze({ scale: 1.35, positionY: "50%", offsetX: "-6%", offsetY: "14%" })
-    }),
-    "white-crappie": Object.freeze({
-        selection: Object.freeze({ scale: 1.06, positionY: "5%", offsetX: "-2%" }),
-        detail: Object.freeze({ scale: 1.06, positionY: "0%", offsetX: "-2%" }),
-        similar: Object.freeze({ scale: 1.30, positionY: "50%", offsetX: "-5%", offsetY: "20%" }),
-        compareCatalog: Object.freeze({ scale: 1.30, positionY: "50%", offsetX: "-5%", offsetY: "20%" }),
-        compareDetail: Object.freeze({ scale: 1.28, positionY: "50%", offsetX: "-5%", offsetY: "20%" })
-    })
-});
-function buildFishFramedMediaMarkup(
-    fish,
-    media,
-    imageClass,
-    frameClass,
-    loading = "lazy",
-    framingContext = "selection"
-) {
+function buildFishPrimaryMediaMarkup(media, imageClass, frameClass, loading = "lazy") {
     if (!media?.file) return "";
-
-    const fishFraming = FISH_IMAGE_FRAMING[fish?.id];
-    const framing = fishFraming?.[framingContext] ?? {};
-    const framingStyle = [
-        `--fish-image-scale: ${framing.scale ?? 1}`,
-        framing.aspectRatio ? `--fish-frame-aspect: ${framing.aspectRatio}` : null,
-        `--fish-image-position-y: ${framing.positionY ?? "50%"}`,
-        `--fish-image-offset-x: ${framing.offsetX ?? "0%"}`,
-        `--fish-image-offset-y: ${framing.offsetY ?? "0%"}`
-    ].filter(Boolean).join("; ");
-
     return `
-        <span class="fish-image-frame ${frameClass}" style="${framingStyle};">
+        <span class="fish-image-frame ${frameClass}">
             ${buildFishMediaMarkup(media, `${imageClass} fish-image-frame__image`, loading)}
         </span>
     `;
@@ -531,13 +301,11 @@ function buildFishResultCardMarkup(fish, category, primaryMedia, isDetailAvailab
     const actionMarkup = isDetailAvailable
         ? `<span class="search-result-card__action">View Fish <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>`
         : "";
-    const primaryImageMarkup = buildFishFramedMediaMarkup(
-        fish,
+    const primaryImageMarkup = buildFishPrimaryMediaMarkup(
         primaryMedia,
         "fish-result-card__image",
         "fish-result-card__image-frame",
-        "lazy",
-        "selection"
+        "lazy"
     );
     const content = `
         <span class="fish-result-card__category">${category?.name ?? "Fish"}</span>
@@ -942,13 +710,11 @@ function renderFishDetail(appMain, detailConfig) {
                 ${aliasesMarkup}
                 <p class="fish-identity-meta"><strong>Family:</strong> ${record.family}</p>
                 <figure class="fish-primary-media fish-primary-media--identity">
-                    ${buildFishFramedMediaMarkup(
-                        record,
+                    ${buildFishPrimaryMediaMarkup(
                         media,
                         "fish-primary-media__image",
                         "fish-primary-media__image-frame",
-                        "eager",
-                        "detail"
+                        "eager"
                     )}
                     ${attributionMarkup}
                 </figure>
@@ -1013,13 +779,11 @@ function renderFishComparisonChooser(appMain, config) {
                 <span>${context.relatedFish.name}</span>
                 <span class="fish-comparison-chooser-card__action">Compare <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
             </span>
-            ${buildFishFramedMediaMarkup(
-                context.relatedFish,
+            ${buildFishPrimaryMediaMarkup(
                 context.relatedMedia,
                 "fish-comparison-chooser-card__image",
                 "fish-comparison-chooser-card__image-frame",
-                "lazy",
-                "similar"
+                "lazy"
             )}
         </button>
     `).join("");
@@ -1053,21 +817,17 @@ function renderFishComparisonCatalog(appMain, config) {
                 ${group.comparisons.map((comparison) => `
                     <button class="fish-comparison-catalog-card" type="button" data-fish-relationship-id="${comparison.relationship.id}">
                         <span class="fish-comparison-catalog-card__images">
-                            ${buildFishFramedMediaMarkup(
-                                comparison.fishA,
+                            ${buildFishPrimaryMediaMarkup(
                                 comparison.mediaA,
                                 "fish-comparison-catalog-card__image",
                                 "fish-comparison-catalog-card__image-frame",
-                                "lazy",
-                                "compareCatalog"
+                                "lazy"
                             )}
-                            ${buildFishFramedMediaMarkup(
-                                comparison.fishB,
+                            ${buildFishPrimaryMediaMarkup(
                                 comparison.mediaB,
                                 "fish-comparison-catalog-card__image",
                                 "fish-comparison-catalog-card__image-frame",
-                                "lazy",
-                                "compareCatalog"
+                                "lazy"
                             )}
                         </span>
                         <span class="fish-comparison-catalog-card__title">${comparison.fishA.name} vs ${comparison.fishB.name}</span>
@@ -1107,13 +867,11 @@ function renderFishComparison(appMain, config) {
     const buildIdentity = (fish, media, side) => `
         <section class="fish-comparison-identity fish-comparison-identity--${side}" aria-labelledby="fish-comparison-${side}-name">
             <h3 id="fish-comparison-${side}-name">${fish.name}</h3>
-            ${buildFishFramedMediaMarkup(
-                fish,
+            ${buildFishPrimaryMediaMarkup(
                 media,
                 "fish-comparison-identity__image",
                 "fish-comparison-identity__image-frame",
-                "eager",
-                "compareDetail"
+                "eager"
             )}
         </section>
     `;

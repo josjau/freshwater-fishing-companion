@@ -36,9 +36,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-22",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 721 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 721 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -63,9 +63,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-22",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 749 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 749 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -90,9 +90,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-22",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 769 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 769 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -117,9 +117,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-22",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 799 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 799 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -144,9 +144,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-22",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 835 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 835 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -171,9 +171,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-22",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 731 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 731 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -198,9 +198,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-22",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 762 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 762 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -225,9 +225,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-23",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 740 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 740 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -252,9 +252,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-23",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 781 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 781 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -279,9 +279,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-23",
-            changesMade: "Used the user-supplied 992 x 644 transparent WebP of the Duane Raver / USFWS Saugeye illustration without crop, recolor, resize, or background compositing. Transparency is preserved and the application renders the shared Fish media surface behind the illustration. Virginia DWR/eRegulations attributes the Saugeye illustration to Duane Raver/USFWS; ODWC independently credits Duane Raver. A dedicated FWS Saugeye media landing page was not located, so the provenance chain is recorded explicitly rather than inventing one."
+            changesMade: "Used the user-supplied 992 x 644 transparent WebP of the Duane Raver / USFWS Saugeye illustration without crop, recolor, resize, or background compositing. Transparency is preserved and the application renders the shared Fish media surface behind the illustration. Virginia DWR/eRegulations attributes the Saugeye illustration to Duane Raver/USFWS; ODWC independently credits Duane Raver. A dedicated FWS Saugeye media landing page was not located, so the provenance chain is recorded explicitly rather than inventing one. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -306,9 +306,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-23",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 765 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 765 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -333,9 +333,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-23",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 798 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 798 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -360,9 +360,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-23",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 814 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 814 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -387,9 +387,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-23",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 778 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 778 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -414,9 +414,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-23",
-            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 813 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration."
+            changesMade: "Converted from the source JPEG to WebP at the original 1200 x 813 dimensions; embedded metadata removed; the non-Fish source background was removed to transparency while preserving the Fish illustration. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -441,9 +441,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-24",
-            changesMade: "Converted from the verified 1200 x 778 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 778 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "User-approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -468,9 +468,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-24",
-            changesMade: "Converted from the verified 1200 x 742 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 742 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "User-approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -495,9 +495,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: null,
             modificationAllowed: null,
             reviewedDate: "2026-08-24",
-            changesMade: "Preserved source transparency and resized the verified 1740 x 1130 ODWC PNG proportionally to 1200 x 779; encoded as transparent WebP without crop, recolor, reshaping, or background compositing."
+            changesMade: "Preserved source transparency and resized the verified 1740 x 1130 ODWC PNG proportionally to 1200 x 779; encoded as transparent WebP without crop, recolor, reshaping, or background compositing. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "User-approved primary Fish identification illustration with documented ODWC rights caveat",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -522,9 +522,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-24",
-            changesMade: "Converted from the verified 1200 x 734 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 734 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "User-approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -549,9 +549,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-24",
-            changesMade: "Converted from the verified 1200 x 772 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 772 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "User-approved primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -576,9 +576,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: null,
             modificationAllowed: null,
             reviewedDate: "2026-08-24",
-            changesMade: "Preserved source transparency and resized the verified 1740 x 1130 ODWC PNG proportionally to 1200 x 779; encoded as transparent WebP without crop, recolor, reshaping, or background compositing."
+            changesMade: "Preserved source transparency and resized the verified 1740 x 1130 ODWC PNG proportionally to 1200 x 779; encoded as transparent WebP without crop, recolor, reshaping, or background compositing. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "User-approved primary Fish identification illustration with documented ODWC rights caveat",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -603,9 +603,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-25",
-            changesMade: "Converted from the verified 1200 x 791 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 791 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Wave 4 review-package primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -630,9 +630,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-25",
-            changesMade: "Converted from the verified 1200 x 751 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 751 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Wave 4 review-package primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -657,9 +657,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-25",
-            changesMade: "Converted from the verified 1200 x 789 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 789 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Wave 4 review-package primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -684,9 +684,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-25",
-            changesMade: "Converted from the verified 1200 x 729 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 729 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Wave 4 review-package primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -711,9 +711,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-25",
-            changesMade: "Received as a user-uploaded 1535 x 1024 PNG representing the previously approved Northern Rock Bass visual; the transfer bytes differ from the historical approval hash. The uniform non-Fish background was removed to transparency without changing Fish anatomy or color, then the transparent canvas was expanded horizontally to 2400 x 1024 to preserve complete fins across existing Fish image-block aspect ratios and encoded as WebP."
+            changesMade: "Received as a user-uploaded 1535 x 1024 PNG representing the previously approved Northern Rock Bass visual; the transfer bytes differ from the historical approval hash. The uniform non-Fish background was removed to transparency without changing Fish anatomy or color, then the transparent canvas was expanded horizontally to 2400 x 1024 to preserve complete fins across existing Fish image-block aspect ratios and encoded as WebP. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Wave 4 review-package primary Fish identification illustration under documented one-time generated-media exception",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -738,9 +738,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-25",
-            changesMade: "Converted from the verified 1200 x 701 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 701 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Wave 4 review-package primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -765,9 +765,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-25",
-            changesMade: "Received as a user-uploaded 1535 x 1024 PNG representing the previously approved Ozark Bass visual; the transfer bytes differ from the historical approval hash. The uniform non-Fish background was removed to transparency without changing Fish anatomy or color, then the transparent canvas was expanded horizontally to 2400 x 1024 to preserve complete fins across existing Fish image-block aspect ratios and encoded as WebP."
+            changesMade: "Received as a user-uploaded 1535 x 1024 PNG representing the previously approved Ozark Bass visual; the transfer bytes differ from the historical approval hash. The uniform non-Fish background was removed to transparency without changing Fish anatomy or color, then the transparent canvas was expanded horizontally to 2400 x 1024 to preserve complete fins across existing Fish image-block aspect ratios and encoded as WebP. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Wave 4 review-package primary Fish identification illustration under documented one-time generated-media exception",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -792,9 +792,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-25",
-            changesMade: "Converted from the verified 1200 x 783 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 783 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Wave 4 review-package primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -819,9 +819,9 @@ const MEDIA_DATA = Object.freeze([
             commercialUseAllowed: true,
             modificationAllowed: true,
             reviewedDate: "2026-08-25",
-            changesMade: "Converted from the verified 1200 x 765 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color."
+            changesMade: "Converted from the verified 1200 x 765 source JPEG to transparent WebP at the original dimensions; embedded metadata and the non-Fish source background were removed while preserving the Fish illustration and source color. Rebuilt for the FCC 51A Fish-image standard by placing the approved canonical Fish rendering on an exact 1860 x 846 RGB #f4f0e8 reference canvas at the approved safe composition, then encoding lossless WebP; the completed composition is reused unchanged across Fish presentation contexts."
         },
-        productionStatus: "Wave 4 review-package primary Fish identification illustration",
+        productionStatus: "Approved primary Fish identification illustration — canonical 1860 x 846 presentation asset",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true

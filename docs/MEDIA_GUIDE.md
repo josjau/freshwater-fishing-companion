@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** MEDIA_GUIDE.md  
-**Document Revision:** 1.0.14  
+**Document Revision:** 1.0.20  
 **Document Status:** Approved  
-**Last Updated:** 2026-09-27
+**Last Updated:** 2026-10-03
 
 # Purpose
 
@@ -81,11 +81,11 @@ Original Freshwater Fishing Companion diagrams do not need a footer badge.
 
 # Reference Media Surface Invariant
 
-The canonical reference-media panel and current Tackle recognition-image canvas use **exact RGB `244, 240, 232` / `#f4f0e8`**.
+The canonical reference-media panel, current Tackle recognition-image canvas, and completed Fish primary-identification presentation canvas use **exact RGB `244, 240, 232` / `#f4f0e8`**.
 
 This color is a permanent cross-theme design constraint, not a Forest Journal-only theme choice.
 
-All future production-supported themes, palettes, and color schemes must be designed to work harmoniously with this fixed reference-media surface. Theme work must not recolor, tint, filter, darken, lighten, or substitute a theme-specific background for the canonical reference-media panel or for Tackle recognition assets built to this canvas.
+All future production-supported themes, palettes, and color schemes must be designed to work harmoniously with this fixed reference-media surface. Theme work must not recolor, tint, filter, darken, lighten, or substitute a theme-specific background for the canonical reference-media panel or for Tackle/Fish assets built to this canvas.
 
 Future theme evaluation must include:
 
@@ -137,21 +137,17 @@ Embedded tutorials remain hosted and controlled by the source platform. Embeddin
 
 Current completed Rig tiers use authoritative text assembly plus validated lazy-loaded tutorial embeds when an appropriate build-first source exists. When no suitable tutorial is available, the Rig uses the next trustworthy D049 fallback rather than adding a weak or mismatched video.
 
-## Rig Page Standard
+## Rig Page / Media Integration Standard
 
-A Rig detail page should normally present:
+Rig detail hierarchy, disclosures, contextual-reference treatment, readiness presentation, and other non-media visual semantics are owned by `UI_STANDARD.md` plus the currently approved Guide-specific decisions. This media guide does not independently prescribe a competing full Rig-page section order.
 
-- Rig name and summary
-- Best For
-- Good Conditions
-- Verified Rig Examples using external-link semantics (`↗`)
-- What You Need with contextual `Name ⓘ` Tackle references and inline ownership/readiness controls
-- Numbered text build instructions
-- Setup Notes
-- Common Mistakes
-- Safety
+For Rig media integration:
 
-Do not repeat the same instruction in multiple visual and text sections without a demonstrated accessibility need.
+- Authoritative text assembly remains required whether or not tutorial media exists.
+- When an approved Rig tutorial exists, present it as the build-first media companion to the assembly instructions using the approved platform-hosted treatment.
+- Tutorial availability must not suppress the Rig's verified external references; tutorial media and supporting source/reference access may coexist.
+- Contextual `ⓘ` references and external `↗` destinations retain their separate interaction semantics.
+- Do not repeat the same instruction in multiple visual and text sections without a demonstrated accessibility need.
 
 ## External Reference Semantics
 
@@ -245,13 +241,14 @@ Production or staging writes inside the repository remain subject to the specifi
 
 ## Fish Isolation and Reference-Surface Standard
 
-When the approved source rights permit modification and the Fish can be isolated without losing diagnostic detail, production Fish media may use a transparent background and render the isolated Fish over the canonical `#f4f0e8` reference-media surface.
+When the approved source rights permit modification and the Fish can be isolated without losing diagnostic detail, a transparent isolation may be retained as the source-preservation/intermediate asset. The completed production primary-identification presentation asset may then composite that verified Fish onto the canonical `#f4f0e8` reference surface when an approved canonical composition requires it.
 
-The transparent Fish file and the UI surface have separate responsibilities:
+For the current 30-Fish primary-identification set, the production standard is one lossless RGB WebP per Fish on an exact **1860 × 846** `#f4f0e8` canvas. The intermediate isolation and the completed presentation asset have separate responsibilities:
 
-- the Fish asset preserves the verified subject and transparency,
-- the application supplies the fixed `#f4f0e8` presentation surface,
-- do not bake a new cream background into an otherwise clean transparent Fish merely to match the UI.
+- the verified/isolation source preserves provenance and the unmodified diagnostic Fish subject,
+- the completed primary-identification asset owns the approved Fish scale/position plus the fixed presentation canvas,
+- the application reuses that completed composition as a whole rather than reconstructing its fit in CSS for each context,
+- background compositing must remain a documented transformation and must not recolor, reshape, repaint, retouch, or reconstruct Fish anatomy.
 
 Background removal is a preservation operation, not an illustration cleanup pass. Remove only pixels that are demonstrably background. Do not recolor, reshape, repaint, retouch, reconstruct, sharpen into new geometry, or otherwise alter the Fish itself.
 
@@ -281,18 +278,25 @@ Do not infer modification permission from artist attribution or government-site 
 
 ## Fish Presentation Framing
 
-Canonical Fish source/provenance remains authoritative; presentation framing does not change Fish identity/media ownership.
+Canonical Fish source/provenance remains authoritative; presentation framing does not change Fish identity/media ownership. This framing contract is **Fish-specific** and must not be generalized to unrelated media roles such as Rig diagrams, Knot media, Technique media, or other instructional/reference imagery.
 
-Standardized UI image blocks should control the presentation surface while per-Fish scale/position settings control how the Fish fits inside that block. Do not distort natural proportions to make differently shaped species appear equally tall.
+Each Fish uses one canonical completed primary-identification presentation asset across Fish Guide surfaces that call for the primary Fish image. The approved Fish scale, position, safe anatomical clearance, fixed canvas, and background are properties of that completed asset. Rendering code must not maintain a second per-Fish or per-context scale/position/offset table for Selection, Detail, Similar, Compare Catalog, or Compare Detail.
 
-Current approved Fish presentation contexts include:
+The Fish should fill its canonical 1860 × 846 composition as much as practical while preserving the complete diagnostic silhouette. Scale until the limiting outer anatomy — typically head/tail extremities or dorsal/pelvic fin extremities — sits just inside the safe composition window. Preserve natural proportions and never distort anatomy to equalize apparent height across differently shaped species. Long/narrow Fish such as gar may therefore retain more vertical negative space than deep-bodied Fish when their head/tail span is the limiting dimension.
 
-- Selection Card image block: 2.4:1,
-- Fish Detail identity image block: 2.2:1,
-- Compare Similar Fish thumbnail: 84 × 56,
-- dedicated Compare Fish contexts use standardized blocks with independent per-Fish fit tuning.
+Current approved Fish presentation contexts include Selection Cards, Fish Detail identity, Similar Fish chooser, Compare Catalog pair images, and Compare Detail identity images.
 
-All framing must preserve diagnostic extremities and safe clearance. Long/narrow Fish such as gar may legitimately retain more vertical negative space than deep-bodied Fish; do not vertically stretch them to imitate the apparent occupancy of trout or carp.
+All primary-Fish image viewports use the canonical **1860 × 846** asset ratio. A context may scale the complete viewport smaller or larger by width, but it must preserve that ratio and render the whole completed asset without a second framing operation. Do not place the canonical Fish asset inside a wider, taller, or otherwise differently proportioned inner image window merely to fit a card or page layout.
+
+When two primary Fish images are presented as peers, including Compare Catalog and Compare Detail, their image viewports use equal available width and identical canonical-ratio geometry. Dividers, padding, or other surrounding layout chrome must not make one peer's image viewport smaller than the other's. Natural differences in Fish body depth, length, and negative space inside the approved canonical compositions remain intentional and must not be normalized by per-Fish zooming.
+
+Outer cards, panes, and page sections may retain context-specific geometry. If a context needs a visually smaller Fish presentation, reduce the width or maximum width of the **entire canonical image viewport** rather than changing its aspect ratio or manipulating the Fish inside it. No context may crop, zoom, translate, or independently re-fit the Fish.
+
+Where source-media rights do not permit an altered/composited production asset, document a bounded media-role exception and use source-faithful non-destructive presentation. Do not reintroduce an undocumented general per-context Fish-framing system.
+
+### Trait Identification Visual framing
+
+Trait Identification Visuals are a separate Fish media role and do **not** automatically inherit the primary Fish-image framing contract. A similar tight-fit treatment may prove appropriate, but annotation labels, leader lines, insets, or highlighted anatomy may require intentional surrounding space. Exact Trait Identification Visual framing/composition remains a build-review decision and should be validated through the first approved trait-visual pilot before broader reuse.
 
 # Tackle Media
 
@@ -383,7 +387,7 @@ ownerId: canonical Knot ID
 
 Canonical in-app `tyingSteps[]` remain authoritative. External instructional Media supplements those instructions; it does not replace or own canonical Knot tying facts.
 
-For Version 1, **101Knots is the approved preferred external Visual Guide provider for all 10 canonical Knots**. The approved direction is one linked diagram-based 101Knots instructional page per Knot, presented through the existing Knot Visual Guide hierarchy. Production records remain on the current mixed provider set until the separately authorized `data/media.js` implementation and browser validation are complete.
+For Version 1, **101Knots is the approved preferred external Visual Guide provider for all 10 canonical Knots**. The approved direction is one linked diagram-based 101Knots instructional page per Knot, presented through the existing Knot Visual Guide hierarchy. Production records are standardized on the approved 101Knots destination set for all 10 canonical Knots. The `data/media.js` implementation has passed local review, true mobile browser validation, Repository Integrity, and Pages deployment validation.
 
 101Knots artwork is **external-link-only** under the current approval. Its diagrams are not copied, bundled, downloaded into the repository, extracted, modified, embedded, traced, or rehosted unless separate permission establishes the required local reuse rights. The external Media record must therefore describe linking/provenance accurately and must not imply local redistribution permission.
 
