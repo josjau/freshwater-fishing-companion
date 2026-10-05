@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Fish Reference Sources
 
 **Document:** FISH_REFERENCE_SOURCES.md  
-**Document Revision:** 1.2.4  
+**Document Revision:** 1.2.5  
 **Document Status:** Approved — Production Authoring Standard  
 **Implementation Status:** Standard active; Version 1 evidence baseline COMPLETE through closed Wave 4 — 30 Fish / 20 identification pairs, with approved Fish-to-Rig guidance recorded where applicable  
 **Decision Baseline:** D056–D061, FISH-006, FISH-007  
-**Last Updated:** 2026-10-02
+**Last Updated:** 2026-10-05
 
 # Purpose
 
@@ -803,6 +803,15 @@ These entries document the approved Phase 0 taxonomy decision and provide the in
 **Source type:** Official federal public-domain scientific illustration / media provenance  
 **Reviewed date:** 2026-08-24  
 **Notes:** Duane Raver artwork commissioned by the U.S. Fish and Wildlife Service; verified original is 1200 x 742 JPEG; Public Domain.
+
+## USFWS-SPOTTED-BASS-RAVER
+
+**Authority / publisher:** U.S. Fish and Wildlife Service  
+**Title:** Spotted bass — Duane Raver illustration  
+**URL:** https://www.fws.gov/sites/default/files/images/2005-05/25338.jpg  
+**Source type:** Official federal public-domain scientific illustration / media provenance  
+**Reviewed date:** 2026-10-04  
+**Notes:** Duane Raver artwork hosted by the U.S. Fish and Wildlife Service; acquired direct 1000 x 638 source raster; Public Domain. FCC processing isolated the Fish from the source background without recoloring, repainting, or reshaping it and placed it on the canonical primary-identification canvas.
 
 ## USFWS-WHITE-BASS-RAVER
 
@@ -1664,13 +1673,13 @@ Aliases
 - ODWC-SPOTTED-BASS
 
 Media Provenance
-- ODWC-SPOTTED-BASS
+- USFWS-SPOTTED-BASS-RAVER
 
 Rig Guidance / Targeting
 - ODWC-SPOTTED-BASS — Supports jig targeting around rock, channel, current, and deeper structure.
 
 Rights / Evidence Notes
-- The selected ODWC illustration carries the exact-file rights caveat documented in the source catalog, Media registry, and Wave 3 workstream. It is not labeled independently verified Public Domain.
+- The production primary uses the direct U.S. Fish and Wildlife Service Duane Raver source and is recorded as Public Domain. The former ODWC-hosted illustration remains evidence for species content but is no longer the production media source.
 
 ## White Bass (`white-bass`)
 
