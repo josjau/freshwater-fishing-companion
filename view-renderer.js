@@ -581,11 +581,25 @@ function renderFishDetail(appMain, detailConfig) {
         : "";
 
     const identificationTraits = Array.isArray(record.identificationTraits) ? record.identificationTraits : [];
+    const tongueReferenceTraitIndex = Number.isInteger(detailConfig.tongueReference?.traitIndex)
+        ? detailConfig.tongueReference.traitIndex
+        : null;
     const traitsMarkup = identificationTraits.length
         ? `
             <section class="fish-identification-traits" aria-labelledby="fish-identification-traits-title">
                 <h4 class="detail-subsection-heading" id="fish-identification-traits-title">Key Identification Traits</h4>
-                <ul class="detail-list fish-identification-list">${identificationTraits.map((trait) => `<li>${trait}</li>`).join("")}</ul>
+                <ul class="detail-list fish-identification-list">${identificationTraits.map((trait, traitIndex) => {
+                    const referenceCue = traitIndex === tongueReferenceTraitIndex
+                        ? `<button class="reference-info-button fish-identification-reference-button" type="button" data-fish-tongue-reference-index="${traitIndex}" aria-label="Open ${record.name} tongue reference"><span aria-hidden="true">ⓘ</span></button>`
+                        : "";
+                    const traitMarkup = referenceCue
+                        ? (() => {
+                            const tailStart = trait.lastIndexOf(" ") + 1;
+                            return `${trait.slice(0, tailStart)}<span class="fish-identification-trait__reference-tail">${trait.slice(tailStart)}&nbsp;${referenceCue}</span>`;
+                        })()
+                        : trait;
+                    return `<li><span class="fish-identification-trait__content">${traitMarkup}</span></li>`;
+                }).join("")}</ul>
             </section>
         `
         : "";
@@ -683,14 +697,14 @@ function renderFishDetail(appMain, detailConfig) {
     const relatedNames = relationships.map((context) => context.relatedFish.name);
     const compareMarkup = relationships.length
         ? `
-            <div class="fish-about-row fish-about-row--navigation">
-                <button class="fish-about-row__trigger fish-about-row__trigger--navigation" type="button" data-fish-compare-from-detail>
-                    <span class="fish-about-row__navigation-copy">
-                        <span>Compare Similar Fish</span>
-                        ${relatedNames.length ? `<span class="fish-about-row__secondary">${relatedNames.join(", ")}</span>` : ""}
-                    </span>
-                    <span class="fish-about-row__navigation-action" aria-hidden="true">→</span>
-                </button>
+            <div class="fish-about-row fish-about-row--similar-fish">
+                <div class="fish-similar-fish__heading">
+                    <h4 class="fish-similar-fish__title">Similar Fish</h4>
+                    <button class="fish-similar-fish__compare" type="button" data-fish-compare-from-detail>
+                        <span>Compare</span> <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
+                    </button>
+                </div>
+                ${relatedNames.length ? `<ul class="fish-similar-fish__list" aria-label="Similar Fish">${relatedNames.map((name) => `<li>${name}</li>`).join("")}</ul>` : ""}
             </div>
         `
         : "";
@@ -756,6 +770,13 @@ function renderFishDetail(appMain, detailConfig) {
 
     appMain.querySelector("[data-fish-compare-from-detail]")?.addEventListener("click", () => {
         detailConfig.onCompareSelect?.();
+    });
+    appMain.querySelectorAll("[data-fish-tongue-reference-index]").forEach((referenceButton) => {
+        referenceButton.addEventListener("click", () => {
+            const traitIndex = Number(referenceButton.dataset.fishTongueReferenceIndex);
+            if (!Number.isInteger(traitIndex)) return;
+            detailConfig.onTongueReferenceSelect?.(traitIndex, referenceButton);
+        });
     });
     appMain.querySelectorAll("[data-fish-rig-id]").forEach((button) => {
         button.addEventListener("click", () => detailConfig.onRigSelect?.(button.dataset.fishRigId, button.dataset.fishLureBaitId ?? null));
@@ -1539,7 +1560,46 @@ function renderLineTypeReferencePopover(lineTypeId, triggerElement) {
 }
 
 
+function buildFishTongueReferenceVisualMarkup(page) {
+    const patchMarkup = {
+        none: `
+            <text class="fish-tongue-reference__empty-label" x="180" y="108" text-anchor="middle">No distinct rough patch</text>
+        `,
+        rough: `
+            <g class="fish-tongue-reference__patch fish-tongue-reference__patch--rough" aria-hidden="true">
+                <ellipse cx="180" cy="105" rx="42" ry="28"></ellipse>
+                <circle cx="160" cy="94" r="3"></circle><circle cx="176" cy="91" r="3"></circle><circle cx="193" cy="96" r="3"></circle>
+                <circle cx="151" cy="108" r="3"></circle><circle cx="169" cy="108" r="3"></circle><circle cx="187" cy="108" r="3"></circle><circle cx="205" cy="108" r="3"></circle>
+                <circle cx="163" cy="121" r="3"></circle><circle cx="181" cy="120" r="3"></circle><circle cx="197" cy="119" r="3"></circle>
+            </g>
+        `,
+        single: `
+            <ellipse class="fish-tongue-reference__patch fish-tongue-reference__patch--single" cx="180" cy="105" rx="38" ry="28" aria-hidden="true"></ellipse>
+        `,
+        double: `
+            <g class="fish-tongue-reference__patch fish-tongue-reference__patch--double" aria-hidden="true">
+                <ellipse cx="157" cy="105" rx="19" ry="35"></ellipse>
+                <ellipse cx="203" cy="105" rx="19" ry="35"></ellipse>
+            </g>
+        `
+    }[page?.visualVariant] ?? "";
+
+    return `
+        <figure class="fish-tongue-reference">
+            <svg class="fish-tongue-reference__diagram" viewBox="0 0 360 210" role="img" aria-label="${page?.visualLabel ?? "Fish tongue tooth-patch reference schematic"}">
+                <path class="fish-tongue-reference__tongue" d="M95 46 C126 23 234 23 265 46 C289 65 294 124 270 158 C247 190 113 190 90 158 C66 124 71 65 95 46 Z"></path>
+                <path class="fish-tongue-reference__centerline" d="M180 45 L180 166"></path>
+                ${patchMarkup}
+            </svg>
+            <figcaption>${page?.visualCaption ?? "FCC-authored schematic reference; not to scale."}</figcaption>
+        </figure>
+    `;
+}
+
 function buildPagedReferenceVisualMarkup(page) {
+    if (page?.visualType === "fish-tongue-tooth-patch") {
+        return buildFishTongueReferenceVisualMarkup(page);
+    }
     if (page?.visualType !== "reel-capacity-diagram") return "";
     return `
         <figure class="reel-reference-diagram" aria-label="Example reel capacity marking">

@@ -28,10 +28,10 @@ const FISH_DATA = Object.freeze([
         family: "Centrarchidae",
         aliases: [],
         identificationTraits: [
-            "The mouth hinge extends behind the rear edge of the eye when the mouth is closed.",
+            "With the mouth closed, the rear corner of the mouth (jaw hinge) extends behind the rear edge of the eye.",
             "A broad dark horizontal stripe runs along the side.",
             "The two dorsal-fin sections are weakly connected and separated by a deep notch.",
-            "The tongue usually lacks a rough tooth patch; color alone is not decisive."
+            "Inspect the tongue inside the mouth. It usually lacks a rough tooth patch; color alone is not decisive."
         ],
         habitatTags: ["Grass", "Timber", "Brush", "Shallow Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
@@ -50,10 +50,10 @@ const FISH_DATA = Object.freeze([
         family: "Centrarchidae",
         aliases: ["Bronzeback"],
         identificationTraits: [
-            "The mouth hinge ends in front of the rear edge of the eye when the mouth is closed.",
+            "With the mouth closed, the rear corner of the mouth (jaw hinge) ends in front of the rear edge of the eye.",
             "Dark vertical bars commonly mark the sides.",
             "The two dorsal-fin sections are connected rather than separated by a deep notch.",
-            "A rough tooth patch on the tongue can support the identification but should not be used alone."
+            "Inspect the tongue inside the mouth. A rough tooth patch can support the identification but should not be used alone."
         ],
         habitatTags: ["Rock", "Open Water", "Current"],
         waterbodyTypes: ["Lake", "River", "Creek", "Reservoir"]
@@ -72,10 +72,10 @@ const FISH_DATA = Object.freeze([
         family: "Centrarchidae",
         aliases: ["Kentucky Bass"],
         identificationTraits: [
-            "The mouth hinge is approximately even with the rear edge of the eye when the mouth is closed.",
+            "With the mouth closed, the rear corner of the mouth (jaw hinge) is approximately even with the rear edge of the eye.",
             "A dark lateral stripe is accompanied by rows of dark spots below it.",
             "The two dorsal-fin sections are connected without a deep separating notch.",
-            "A rough tooth patch on the tongue can support the identification but should not be used alone."
+            "Inspect the tongue inside the mouth. A rough tooth patch can support the identification but should not be used alone."
         ],
         habitatTags: ["Rock", "Current", "Channel", "Deep Water"],
         waterbodyTypes: ["Lake", "River", "Reservoir"]
@@ -95,7 +95,7 @@ const FISH_DATA = Object.freeze([
         aliases: ["Sand Bass"],
         identificationTraits: [
             "The body is deep, with a distinctly arched back behind the head.",
-            "The tongue has one round or heart-shaped tooth patch.",
+            "Inspect the tongue inside the mouth. One round or heart-shaped tooth patch is present.",
             "Horizontal side stripes support the identification, while the deep body and single tongue patch are stronger diagnostic features."
         ],
         habitatTags: ["Open Water", "Current", "Deep Water"],
@@ -117,7 +117,7 @@ const FISH_DATA = Object.freeze([
         identificationTraits: [
             "The body is slender, with a gently arched back profile.",
             "Strong horizontal side stripes are mostly continuous rather than broken.",
-            "The tongue has two distinct parallel tooth patches."
+            "Inspect the tongue inside the mouth. Two distinct parallel tooth patches are present."
         ],
         habitatTags: ["Open Water", "Deep Water", "Current"],
         waterbodyTypes: ["Lake", "Reservoir", "River"]
@@ -136,7 +136,7 @@ const FISH_DATA = Object.freeze([
         family: "Moronidae",
         aliases: ["Wiper", "Whiterock Bass"],
         identificationTraits: [
-            "The body has intermediate depth between the parent species.",
+            "The body has intermediate depth between White Bass and Striped Bass.",
             "Horizontal side stripes are commonly broken or discontinuous.",
             "Tongue-patch presentation varies and should be treated as supporting evidence rather than the sole identifier."
         ],
@@ -159,7 +159,7 @@ const FISH_DATA = Object.freeze([
         aliases: [],
         identificationTraits: [
             "The tail is deeply forked.",
-            "The lower edge of the anal fin has a rounded, curved margin.",
+            "Look at the lower edge of the anal fin on the underside of the fish; it forms a rounded curve rather than a straight edge.",
             "Dark side spots may be present, especially on smaller fish, but the spotting can become faint or absent."
         ],
         habitatTags: ["Channel", "Current", "Timber", "Open Water"],
@@ -180,7 +180,7 @@ const FISH_DATA = Object.freeze([
         aliases: [],
         identificationTraits: [
             "The tail is deeply forked.",
-            "The anal fin is long, with a straight lower edge.",
+            "Look at the lower edge of the long anal fin on the underside of the fish; it runs comparatively straight rather than forming a rounded curve.",
             "The body is generally a plain blue-gray rather than strongly spotted."
         ],
         habitatTags: ["Channel", "Current", "Deep Water", "Rock"],
@@ -202,7 +202,7 @@ const FISH_DATA = Object.freeze([
         identificationTraits: [
             "The head is broad and noticeably flattened.",
             "The lower jaw projects beyond the upper jaw.",
-            "The tail is not deeply forked."
+            "The tail is not deeply forked; its rear edge does not form a deep V."
         ],
         habitatTags: ["Timber", "Brush", "Channel", "Deep Water"],
         waterbodyTypes: ["River", "Reservoir"]
@@ -221,7 +221,7 @@ const FISH_DATA = Object.freeze([
         family: "Ictaluridae",
         aliases: [],
         identificationTraits: [
-            "The chin barbels are dark gray to black.",
+            "The whisker-like barbels under the chin are dark gray to black.",
             "The tail is not forked and has a slight notch along the rear edge."
         ],
         habitatTags: ["Mud", "Shallow Water"],
@@ -241,7 +241,7 @@ const FISH_DATA = Object.freeze([
         family: "Ictaluridae",
         aliases: [],
         identificationTraits: [
-            "The chin barbels are white or yellow rather than dark.",
+            "The whisker-like barbels under the chin are white or yellow rather than dark.",
             "The tail is unforked, with a rear edge that is nearly straight."
         ],
         habitatTags: ["Grass", "Shallow Water"],
@@ -263,8 +263,8 @@ const FISH_DATA = Object.freeze([
         aliases: [],
         identificationTraits: [
             "The mouth is small relative to the deep body.",
-            "The pectoral fin is long and pointed.",
-            "The opercular flap is black, and a dark blotch marks the rear of the soft dorsal fin.",
+            "The side fin just behind the gill cover (pectoral fin) is long and pointed.",
+            "The flap at the rear of the gill cover (opercular flap) is black, and a dark blotch marks the rear soft-rayed portion of the dorsal fin.",
             "Blue coloration is often visible on the chin and lower gill-cover area."
         ],
         habitatTags: ["Grass", "Brush", "Timber", "Shallow Water"],
@@ -285,7 +285,7 @@ const FISH_DATA = Object.freeze([
         aliases: ["Shellcracker"],
         identificationTraits: [
             "The mouth is small and the body is deep.",
-            "The black opercular flap has an orange or red spot at its rear edge.",
+            "The black flap at the rear of the gill cover (opercular flap) has an orange or red spot at its rear edge.",
             "The sides are commonly golden to olive and may show darker vertical bars."
         ],
         habitatTags: ["Grass", "Brush", "Shallow Water"],
@@ -308,7 +308,7 @@ const FISH_DATA = Object.freeze([
             "The mouth is noticeably large for a sunfish.",
             "The body is comparatively elongated and thick rather than strongly disk-shaped.",
             "Blue facial markings are visible on the cheek and lower head.",
-            "The fins often show pale or salmon-colored margins, and a dark blotch marks the rear of the soft dorsal fin."
+            "The fins often show pale or salmon-colored margins, and a dark blotch marks the rear soft-rayed portion of the dorsal fin."
         ],
         habitatTags: ["Shallow Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Creek"]
@@ -327,8 +327,8 @@ const FISH_DATA = Object.freeze([
         family: "Centrarchidae",
         aliases: ["Creek Perch"],
         identificationTraits: [
-            "The black opercular flap is distinctly elongated and is often bordered by white.",
-            "The pectoral fin is rounded rather than long and pointed.",
+            "The black flap at the rear of the gill cover (opercular flap) is distinctly elongated and is often bordered by white.",
+            "The side fin just behind the gill cover (pectoral fin) is rounded rather than long and pointed.",
             "The mouth is moderate in size rather than especially small or large."
         ],
         habitatTags: ["Rock", "Grass"],
@@ -349,8 +349,8 @@ const FISH_DATA = Object.freeze([
         aliases: ["Rock Bass", "Goggle-Eye"],
         identificationTraits: [
             "The body is thick, with a large mouth and conspicuously large eyes.",
-            "The dorsal fin has 12 spines.",
-            "The anal fin has 6 spines.",
+            "The front spiny section of the dorsal fin on top of the fish has 12 spines.",
+            "The anal fin on the underside near the tail has 6 spines.",
             "Dark side spots tend to form distinct parallel rows."
         ],
         habitatTags: ["Rock", "Timber", "Grass", "Deep Water"],
@@ -372,8 +372,8 @@ const FISH_DATA = Object.freeze([
         identificationTraits: [
             "The mouth is large for a sunfish.",
             "Dark lines radiate backward from the eye across the cheek.",
-            "The dorsal fin has 10 spines.",
-            "The anal fin has 3 spines."
+            "The front spiny section of the dorsal fin on top of the fish has 10 spines.",
+            "The anal fin on the underside near the tail has 3 spines."
         ],
         habitatTags: ["Grass", "Shallow Water"],
         waterbodyTypes: ["Lake", "Reservoir", "River"]
@@ -394,7 +394,7 @@ const FISH_DATA = Object.freeze([
         identificationTraits: [
             "Dark side markings form an irregular freckled pattern.",
             "The body is slender and elongate for a sunfish, with a large mouth.",
-            "The eyes are prominent but occupy a modest portion of the head profile."
+            "The eyes are prominent but are typically smaller in proportion to the head than a Northern Rock Bass's."
         ],
         habitatTags: ["Rock", "Deep Water"],
         waterbodyTypes: ["River", "Creek"]
@@ -414,7 +414,7 @@ const FISH_DATA = Object.freeze([
         aliases: [],
         identificationTraits: [
             "Dark speckles and blotches are scattered irregularly across the sides and fins.",
-            "The dorsal fin usually has 7 or 8 spines."
+            "The front spiny section of the dorsal fin on top of the fish usually has 7 or 8 spines."
         ],
         habitatTags: ["Brush", "Timber", "Grass", "Open Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
@@ -434,7 +434,7 @@ const FISH_DATA = Object.freeze([
         aliases: ["Papermouth", "Bachelor Perch"],
         identificationTraits: [
             "Five to 10 dark vertical bars commonly mark the sides.",
-            "The dorsal fin usually has 6 spines."
+            "The front spiny section of the dorsal fin on top of the fish usually has 6 spines."
         ],
         habitatTags: ["Brush", "Timber", "Open Water"],
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
@@ -499,8 +499,8 @@ const FISH_DATA = Object.freeze([
         family: "Percidae",
         aliases: [],
         identificationTraits: [
-            "The spiny dorsal fin lacks distinct individual dark spots.",
-            "The cheeks have few scales or may appear smooth.",
+            "Look at the front, spiny dorsal fin on top of the fish; it lacks distinct individual dark spots.",
+            "Look at the cheek area directly behind and below the eye; it has few scales or may appear smooth.",
             "The eyes are large and reflective."
         ],
         habitatTags: ["Rock", "Open Water", "Current", "Deep Water"],
@@ -520,8 +520,8 @@ const FISH_DATA = Object.freeze([
         family: "Percidae",
         aliases: ["Sand Pike"],
         identificationTraits: [
-            "Distinct individual dark spots mark the spiny dorsal fin.",
-            "The cheeks are covered with scales.",
+            "Look at the front, spiny dorsal fin on top of the fish; distinct individual dark spots mark it.",
+            "Look at the cheek area directly behind and below the eye; it is covered with scales.",
             "Dark saddle-like blotches cross the back and upper sides."
         ],
         habitatTags: ["Current", "Channel", "Deep Water"],
@@ -541,8 +541,8 @@ const FISH_DATA = Object.freeze([
         family: "Percidae",
         aliases: [],
         identificationTraits: [
-            "The spiny dorsal webbing shows distinct spots together with bars or streaks.",
-            "The cheeks are covered with scales.",
+            "On the front, spiny dorsal fin, the membrane between the spines shows distinct spots together with bars or streaks.",
+            "Look at the cheek area directly behind and below the eye; it is covered with scales.",
             "Gold-brown body blotching shows an intermediate mixed pattern."
         ],
         habitatTags: ["Open Water", "Deep Water"],
@@ -563,7 +563,7 @@ const FISH_DATA = Object.freeze([
         family: "Cyprinidae",
         aliases: ["European Carp", "German Carp"],
         identificationTraits: [
-            "Two pairs of barbels are present around the upper jaw.",
+            "Two pairs of whisker-like barbels are present around the upper jaw.",
             "The dorsal fin is long, with a stout saw-toothed spine at the front.",
             "Large dark-edged scales create a crosshatched appearance along the body.",
             "The upper body is brassy olive and grades toward a yellowish-white belly."
@@ -587,9 +587,9 @@ const FISH_DATA = Object.freeze([
         aliases: ["Sheepshead", "Sheephead"],
         identificationTraits: [
             "The silvery, deep body rises steeply from the snout toward the dorsal fin, creating a humpbacked profile.",
-            "The long dorsal fin is divided into two distinct sections.",
+            "The long dorsal fin along the top of the fish is divided into two distinct sections.",
             "The lips are milky white.",
-            "The pelvic fins are white and may be tinged orange."
+            "The paired pelvic fins on the underside of the fish are white and may be tinged orange."
         ],
         habitatTags: ["Rock", "Channel", "Deep Water", "Mud"],
         waterbodyTypes: ["Lake", "River", "Reservoir"]
@@ -610,7 +610,7 @@ const FISH_DATA = Object.freeze([
         aliases: ["Needlenose Gar", "Billfish", "Billy Gar"],
         identificationTraits: [
             "The snout is extremely long and narrow.",
-            "At the nostrils, the snout is narrower than the eye diameter.",
+            "At the nostrils near the end of the snout, the snout is narrower than the diameter of one eye.",
             "Round dark spots mark the unpaired fins and may also occur on the body.",
             "The upper body is brown to dark olive and grades to a white belly."
         ],
@@ -632,7 +632,7 @@ const FISH_DATA = Object.freeze([
         aliases: [],
         identificationTraits: [
             "Well-defined round dark spots cover the top of the head and snout.",
-            "Round dark spots are prominent on the paired fins and other fins.",
+            "Round dark spots are prominent on the paired side fins and the other fins.",
             "The upper body is brownish or olive and grades to white below."
         ],
         habitatTags: ["Grass", "Timber"],
