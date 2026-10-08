@@ -441,48 +441,76 @@ function renderFishGuideLanding(appMain, config) {
     });
 }
 
-// Transitional Habitat compatibility.
-// These Fish-owned mappings bridge canonical Fish habitat/waterbody tags to
-// shared Condition/reference surfaces pending the deferred Habitat migration.
-const FISH_CONDITION_REFERENCE_IDS = Object.freeze({
-    "Brush": "wood-brush",
-    "Channel": "drop-off-channel-deep-structure",
-    "Deep Water": "deep",
-    "Grass": "vegetation",
-    "Open Water": "open-water",
-    "Rock": "rock",
-    "Shallow Water": "shallow",
-    "Timber": "wood-brush",
-    "Pond": "pond",
-    "Lake": "lake",
-    "Reservoir": "reservoir",
-    "River": "river",
-    "Creek": "creek-stream"
-});
+// Fish-owned canonical Habitat associations. Fish intrinsic meaning is independent
+// of present Conditions; environmental equivalence is authored in the bridge.
+const FISH_HABITAT_DIMENSIONS = Object.freeze([
+    Object.freeze({ id: "cover", title: "Cover" }),
+    Object.freeze({ id: "water-zone", title: "Water Zone" }),
+    Object.freeze({ id: "water-movement", title: "Water Movement" }),
+    Object.freeze({ id: "structure", title: "Structure" }),
+    Object.freeze({ id: "bottom-substrate", title: "Bottom / Substrate" })
+]);
 
-const FISH_INTRINSIC_REFERENCE_DETAILS = Object.freeze({
-    "Cold Water": "A broad Fish habitat label for species commonly associated with cooler water. FCC keeps actual water temperature as numeric fishing context rather than defining a Cold Water Condition band.",
-    "Current": "A broad Fish habitat label for species commonly associated with moving water. FCC Conditions describe current by strength—Light, Moderate, or Strong—rather than treating generic Current as a single condition.",
-    "Mud": "A Fish habitat label for soft or muddy bottom areas. It is not the same as the Muddy water-clarity Condition, which describes suspended sediment in the water."
-});
+const FISH_WATERBODY_CONDITION_IDS = Object.freeze(
+    Object.fromEntries(typeof FISH_WATERBODY_CONDITION_CORRESPONDENCES !== "undefined"
+        ? FISH_WATERBODY_CONDITION_CORRESPONDENCES.map((entry) => [entry.waterbody, entry.conditionId])
+        : [])
+);
 
-function buildFishConditionTagList(items) {
+function buildFishReferenceTerms(items, getId, attribute, labelPrefix) {
     if (!Array.isArray(items) || items.length === 0) return "";
     return `<ul class="tag-list tag-list--conditions fish-reference-tag-list">${items.map((item) => {
-        const conditionId = FISH_CONDITION_REFERENCE_IDS[item];
-        const referenceButton = conditionId
-            ? `<button class="reference-info-button fish-reference-info-button" type="button" data-condition-id="${conditionId}" aria-label="Open ${item} reference"><span aria-hidden="true">ⓘ</span></button>`
-            : FISH_INTRINSIC_REFERENCE_DETAILS[item]
-                ? `<button class="reference-info-button fish-reference-info-button" type="button" data-fish-habitat-reference="${item}" aria-label="Open ${item} reference"><span aria-hidden="true">ⓘ</span></button>`
-                : "";
-
-        return `<li class="fish-reference-tag"><span class="fish-reference-tag__value">${item}</span>${referenceButton}</li>`;
+        const id = getId(item);
+        const label = typeof item === "string" ? item : item.name;
+        return `<li class="fish-reference-tag"><span class="fish-reference-tag__value">${label}</span>${id
+            ? `<button class="reference-info-button fish-reference-info-button" type="button" ${attribute}="${id}" aria-label="Learn about ${labelPrefix}${label}"><span aria-hidden="true">ⓘ</span></button>`
+            : ""}</li>`;
     }).join("")}</ul>`;
 }
 
-function renderFishHabitatReferencePopover(label, triggerElement) {
-    const detail = FISH_INTRINSIC_REFERENCE_DETAILS[label];
-    if (!detail) return;
+function buildFishHabitatGroups(fishId) {
+    if (typeof HABITAT_DATA === "undefined" || typeof FISH_HABITAT_ASSOCIATIONS === "undefined") return "";
+    const selected = new Set(FISH_HABITAT_ASSOCIATIONS.filter((link) => link.fishId === fishId).map((link) => link.habitatId));
+    return FISH_HABITAT_DIMENSIONS.map((dimension) => {
+        const habitats = HABITAT_DATA.filter((habitat) => habitat.isActive && habitat.dimension === dimension.id && selected.has(habitat.id));
+        return habitats.length
+            ? `<section class="fish-habitat-group" data-habitat-dimension="${dimension.id}">
+                  <h4 class="detail-subsection-heading">${dimension.title}</h4>
+                  ${buildFishReferenceTerms(habitats, (habitat) => habitat.id, "data-fish-habitat-reference", "")}
+               </section>`
+            : "";
+    }).join("");
+}
+
+function buildFishWaterbodyGroup(items) {
+    return buildFishReferenceTerms(items, (value) => FISH_WATERBODY_CONDITION_IDS[value], "data-condition-id", "");
+}
+
+function showReferencePopoverDialog(dialog, triggerElement, closeSelector) {
+    const closeDialog = () => {
+        if (dialog.open) dialog.close();
+    };
+
+    dialog.querySelector(closeSelector)?.addEventListener("click", closeDialog);
+    dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeDialog();
+    });
+    dialog.addEventListener("close", () => {
+        dialog.remove();
+        unlockReferencePopoverBackground();
+        triggerElement?.focus({ preventScroll: true });
+    });
+
+    document.body.append(dialog);
+    lockReferencePopoverBackground();
+    dialog.showModal();
+}
+
+function renderFishHabitatReferencePopover(habitatId, triggerElement) {
+    const habitat = typeof HABITAT_DATA !== "undefined"
+        ? HABITAT_DATA.find((entry) => entry.id === habitatId && entry.isActive === true)
+        : null;
+    if (!habitat) return;
 
     removeOpenReferencePopovers();
 
@@ -495,33 +523,17 @@ function renderFishHabitatReferencePopover(label, triggerElement) {
             <header class="reference-popover__header">
                 <div class="reference-popover__header-main">
                     <p class="reference-popover__eyebrow">Fish Habitat</p>
-                    <h2 id="fish-habitat-popover-title">${label}</h2>
+                    <h2 id="fish-habitat-popover-title">${habitat.name}</h2>
                 </div>
-                <button class="reference-popover__close" type="button" data-fish-habitat-close aria-label="Close ${label} information">&times;</button>
+                <button class="reference-popover__close" type="button" data-fish-habitat-close aria-label="Close ${habitat.name} information">&times;</button>
             </header>
             <div class="reference-popover__body">
-                <p class="reference-popover__summary">${detail}</p>
+                <p class="reference-popover__summary">${habitat.summary}</p>
             </div>
         </div>
     `;
 
-    const closeDialog = () => {
-        if (dialog.open) dialog.close();
-    };
-
-    dialog.querySelector("[data-fish-habitat-close]")?.addEventListener("click", closeDialog);
-    dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) closeDialog();
-    });
-    dialog.addEventListener("close", () => {
-        dialog.remove();
-        unlockReferencePopoverBackground();
-        triggerElement?.focus();
-    });
-
-    document.body.append(dialog);
-    lockReferencePopoverBackground();
-    dialog.showModal();
+    showReferencePopoverDialog(dialog, triggerElement, "[data-fish-habitat-close]");
 }
 
 function initializeFishHabitatReferenceLinks(appMain) {
@@ -581,40 +593,24 @@ function renderFishDetail(appMain, detailConfig) {
         : "";
 
     const identificationTraits = Array.isArray(record.identificationTraits) ? record.identificationTraits : [];
-    const tongueReferenceTraitIndex = Number.isInteger(detailConfig.tongueReference?.traitIndex)
-        ? detailConfig.tongueReference.traitIndex
-        : null;
     const traitsMarkup = identificationTraits.length
         ? `
             <section class="fish-identification-traits" aria-labelledby="fish-identification-traits-title">
                 <h4 class="detail-subsection-heading" id="fish-identification-traits-title">Key Identification Traits</h4>
-                <ul class="detail-list fish-identification-list">${identificationTraits.map((trait, traitIndex) => {
-                    const referenceCue = traitIndex === tongueReferenceTraitIndex
-                        ? `<button class="reference-info-button fish-identification-reference-button" type="button" data-fish-tongue-reference-index="${traitIndex}" aria-label="Open ${record.name} tongue reference"><span aria-hidden="true">ⓘ</span></button>`
-                        : "";
-                    const traitMarkup = referenceCue
-                        ? (() => {
-                            const tailStart = trait.lastIndexOf(" ") + 1;
-                            return `${trait.slice(0, tailStart)}<span class="fish-identification-trait__reference-tail">${trait.slice(tailStart)}&nbsp;${referenceCue}</span>`;
-                        })()
-                        : trait;
-                    return `<li><span class="fish-identification-trait__content">${traitMarkup}</span></li>`;
-                }).join("")}</ul>
+                <ul class="detail-list fish-identification-list">${identificationTraits.map((trait) => `<li><span class="fish-identification-trait__content">${trait}</span></li>`).join("")}</ul>
             </section>
         `
         : "";
 
-    const hasHabitat = Array.isArray(record.habitatTags) && record.habitatTags.length > 0;
+    const habitatGroupsMarkup = buildFishHabitatGroups(record.id);
     const hasWaters = Array.isArray(record.waterbodyTypes) && record.waterbodyTypes.length > 0;
-    const habitatMarkup = hasHabitat || hasWaters
+    const habitatMarkup = habitatGroupsMarkup || hasWaters
         ? buildFishDisclosureMarkup(
             "habitat",
             "Habitat & Water",
             `
-                <div class="fish-habitat-groups">
-                    ${hasHabitat ? `<section class="fish-habitat-group"><h4 class="detail-subsection-heading">Habitat</h4>${buildFishConditionTagList(record.habitatTags)}</section>` : ""}
-                    ${hasWaters ? `<section class="fish-habitat-group"><h4 class="detail-subsection-heading">Common Waters</h4>${buildFishConditionTagList(record.waterbodyTypes)}</section>` : ""}
-                </div>
+                <div class="fish-habitat-groups">${habitatGroupsMarkup}</div>
+                ${hasWaters ? `<section class="fish-habitat-group fish-habitat-group--waters"><h4 class="detail-subsection-heading">Common Waters</h4>${buildFishWaterbodyGroup(record.waterbodyTypes)}</section>` : ""}
             `,
             expandedDisclosureIds.has("habitat")
         )
@@ -631,15 +627,17 @@ function renderFishDetail(appMain, detailConfig) {
                 ${showHeading ? `<h4 class="detail-subsection-heading">${title}</h4>` : ""}
                 <div class="fish-rig-recommendation-list">
                     ${records.map((item) => `
-                        <button class="fish-rig-recommendation" type="button"
-                            data-fish-rig-id="${item.rig.id}"
-                            ${item.lureBaitId ? `data-fish-lure-bait-id="${item.lureBaitId}"` : ""}>
+                        <div class="fish-rig-recommendation">
                             <span class="fish-rig-recommendation__heading">
                                 <span class="fish-rig-recommendation__name">${getFishRigRecommendationDisplayName(item)}</span>
-                                <span class="fish-rig-recommendation__action">View Rig <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                                <button class="fish-rig-recommendation__action" type="button"
+                                    data-fish-rig-id="${item.rig.id}"
+                                    ${item.lureBaitId ? `data-fish-lure-bait-id="${item.lureBaitId}"` : ""}>
+                                    View Rig <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
+                                </button>
                             </span>
                             <span class="fish-rig-recommendation__reason">${item.reason}</span>
-                        </button>
+                        </div>
                     `).join("")}
                 </div>
             </section>
@@ -701,7 +699,7 @@ function renderFishDetail(appMain, detailConfig) {
                 <div class="fish-similar-fish__heading">
                     <h4 class="fish-similar-fish__title">Similar Fish</h4>
                     <button class="fish-similar-fish__compare" type="button" data-fish-compare-from-detail>
-                        <span>Compare</span> <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
+                        <span>Compare Fish</span> <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
                     </button>
                 </div>
                 ${relatedNames.length ? `<ul class="fish-similar-fish__list" aria-label="Similar Fish">${relatedNames.map((name) => `<li>${name}</li>`).join("")}</ul>` : ""}
@@ -770,13 +768,6 @@ function renderFishDetail(appMain, detailConfig) {
 
     appMain.querySelector("[data-fish-compare-from-detail]")?.addEventListener("click", () => {
         detailConfig.onCompareSelect?.();
-    });
-    appMain.querySelectorAll("[data-fish-tongue-reference-index]").forEach((referenceButton) => {
-        referenceButton.addEventListener("click", () => {
-            const traitIndex = Number(referenceButton.dataset.fishTongueReferenceIndex);
-            if (!Number.isInteger(traitIndex)) return;
-            detailConfig.onTongueReferenceSelect?.(traitIndex, referenceButton);
-        });
     });
     appMain.querySelectorAll("[data-fish-rig-id]").forEach((button) => {
         button.addEventListener("click", () => detailConfig.onRigSelect?.(button.dataset.fishRigId, button.dataset.fishLureBaitId ?? null));
@@ -969,7 +960,12 @@ function isCoreKnotRecord(record) {
 
 function buildKnotResultCardMarkup(knot) {
     const isCore = isCoreKnotRecord(knot);
-    const classification = `${isCore ? "Core Knot • " : ""}${knot.difficulty}`;
+    const classificationMarkup = `
+        <span class="knot-result-card__classification">
+            ${isCore ? '<span class="knot-result-card__classification-core">Core Knot</span><span class="knot-result-card__classification-separator" aria-hidden="true">·</span>' : ""}
+            <span class="knot-result-card__classification-difficulty">${knot.difficulty}</span>
+        </span>
+    `;
     const aliases = Array.isArray(knot.aliases)
         ? knot.aliases.filter((alias) => typeof alias === "string" && alias.trim())
         : [];
@@ -979,7 +975,7 @@ function buildKnotResultCardMarkup(knot) {
 
     return `
         <button class="search-result-card search-result-card--knot${isCore ? " search-result-card--core" : ""}" type="button" data-result-id="${knot.id}">
-            <span class="knot-result-card__classification">${classification}</span>
+            ${classificationMarkup}
             <span class="knot-result-card__heading-row">
                 <span class="search-result-card__title">${knot.name}</span>
                 <span class="search-result-card__action">View Knot <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
@@ -996,8 +992,10 @@ function renderKnotGuideLanding(appMain, config) {
         return;
     }
 
-    const priorityTaskIds = new Set(["learn-core-knots", "terminal-attachment", "line-to-line"]);
-    const taskMarkup = config.tasks.map((task) => {
+    const priorityTaskIds = new Set(["learn-core-knots"]);
+    const startHereTasks = config.tasks.filter((task) => task.id === "learn-core-knots");
+    const practicalTasks = config.tasks.filter((task) => task.id !== "learn-core-knots");
+    const buildTaskMarkup = (tasks) => tasks.map((task) => {
         const actionText = task.id === "learn-core-knots" ? "Learn" : "View Knots";
         const isPriorityTask = priorityTaskIds.has(task.id);
         const taskClassName = [
@@ -1019,6 +1017,8 @@ function renderKnotGuideLanding(appMain, config) {
             </button>
         `;
     }).join("");
+    const startHereMarkup = buildTaskMarkup(startHereTasks);
+    const taskMarkup = buildTaskMarkup(practicalTasks);
 
     const collectionMarkup = config.collections.map((collection) => {
         const isCoreCollection = collection.key === "core";
@@ -1120,9 +1120,13 @@ function renderKnotGuideLanding(appMain, config) {
             </div>
             <div class="knot-guide-content" data-knot-guide-content>
 ${workflowMarkup}
+                <section class="knot-guide-section knot-guide-section--start" aria-labelledby="knot-start-title">
+                    <h3 id="knot-start-title">Start Here</h3>
+                    <div class="dashboard-grid knot-task-grid">${startHereMarkup}</div>
+                </section>
                 <section class="knot-guide-section knot-guide-section--tasks" aria-labelledby="knot-task-title">
                     <h3 id="knot-task-title">What Are You Trying to Do?</h3>
-                    <p>Choose the connection or learning path that matches what you need right now.</p>
+                    <p>Choose the connection that matches what you need right now.</p>
                     <div class="dashboard-grid knot-task-grid">${taskMarkup}</div>
                 </section>
                 <section class="knot-guide-section knot-guide-section--collections" aria-labelledby="knot-collection-title">
@@ -1195,58 +1199,53 @@ const KNOT_USAGE_VISIBLE_RIG_LIMIT = 2;
 function buildKnotUsageMarkup(record, usageContexts) {
     const taskContexts = Array.isArray(usageContexts?.tasks) ? usageContexts.tasks : [];
     const rigContexts = Array.isArray(usageContexts?.rigs) ? usageContexts.rigs : [];
-    const taskMarkup = taskContexts.length
+    const reelSetupTask = taskContexts.find((usage) => usage.taskId === "attach-line-to-reel") ?? null;
+    const commonTasks = taskContexts.filter((usage) => usage.taskId !== "attach-line-to-reel");
+    const taskMarkup = commonTasks.length > 0
         ? `
-            <div class="knot-usage-group">
-                <span class="detail-subsection-heading knot-usage-group__label">Common tasks</span>
-                <div class="knot-usage-link-list">
-                    ${taskContexts.map((task) => `
-                        <button class="knot-usage-link" type="button" data-knot-task-link-id="${task.taskId}">
-                            ${task.title} <span class="link-arrow link-arrow--internal" aria-hidden="true">&rarr;</span>
-                        </button>
+            <section class="knot-usage-subsection" aria-labelledby="knot-common-tasks-title">
+                <h4 class="detail-subsection-heading" id="knot-common-tasks-title">Common Tasks</h4>
+                <div class="compact-link-list compact-link-list--divided knot-usage-list">
+                    ${commonTasks.map((usage) => `
+                        <div class="compact-link-row knot-usage-link">
+                            <span class="compact-link-row__label">${usage.title}</span>
+                            <button class="compact-link-row__action" type="button" data-knot-task-link-id="${usage.taskId}">View Knots <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></button>
+                        </div>
                     `).join("")}
                 </div>
-            </div>
+            </section>
         `
         : "";
-
-    if (rigContexts.length === 0) {
-        return `${taskMarkup}<p class="knot-empty-context">No Rig in the guide currently references this Knot.</p>`;
-    }
-
-    const rigListId = `knot-rig-usage-${record.id}`;
-    const rigItems = rigContexts.map((usage, index) => {
-        const isInitiallyHidden = index >= KNOT_USAGE_VISIBLE_RIG_LIMIT && usageContexts?.rigsExpanded !== true;
-        return `
-            <li${isInitiallyHidden ? ' data-knot-rig-usage-extra hidden' : ""}>
-                <button class="compact-link-row compact-link-row--knot" type="button" data-knot-rig-id="${usage.rigId}">
-                    <span class="knot-usage-link__content">${usage.title}<span class="link-arrow link-arrow--internal" aria-hidden="true">&rarr;</span></span>
-                </button>
-            </li>
-        `;
-    }).join("");
-    const usageExpanded = usageContexts?.rigsExpanded === true;
-    const toggleMarkup = rigContexts.length > KNOT_USAGE_VISIBLE_RIG_LIMIT
+    const reelSetupMarkup = reelSetupTask
         ? `
-            <button
-                class="knot-usage-toggle"
-                type="button"
-                data-knot-usage-toggle
-                data-knot-usage-count="${rigContexts.length}"
-                aria-expanded="${usageExpanded ? "true" : "false"}"
-                aria-controls="${rigListId}"
-            >${usageExpanded ? "Show fewer" : `See all ${rigContexts.length} rigs`}</button>
+            <section class="knot-usage-subsection knot-usage-subsection--workflow" aria-labelledby="knot-reel-setup-title">
+                <h4 class="detail-subsection-heading" id="knot-reel-setup-title">Reel Setup</h4>
+                <div class="compact-link-list knot-usage-list">
+                    <div class="compact-link-row compact-link-row--workflow knot-usage-link">
+                        <span class="compact-link-row__label">Attach Line to a Reel</span>
+                        <button class="compact-link-row__action" type="button" data-knot-task-link-id="${reelSetupTask.taskId}">Get Reel Ready <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></button>
+                    </div>
+                </div>
+            </section>
         `
         : "";
-
-    return `
-        ${taskMarkup}
-        <div class="knot-usage-group knot-usage-group--rigs">
-            <span class="detail-subsection-heading knot-usage-group__label">Rigs that use this Knot</span>
-            <ul class="knot-usage-list compact-link-list" id="${rigListId}">${rigItems}</ul>
-            ${toggleMarkup}
-        </div>
-    `;
+    const rigMarkup = rigContexts.length > 0
+        ? `
+            <section class="knot-usage-subsection" aria-labelledby="knot-rigs-title">
+                <h4 class="detail-subsection-heading" id="knot-rigs-title">Rigs That Use This Knot</h4>
+                <div class="compact-link-list compact-link-list--divided knot-usage-list">
+                    ${rigContexts.map((usage, index) => `
+                        <div class="compact-link-row compact-link-row--knot"${index >= KNOT_USAGE_VISIBLE_RIG_LIMIT && usageContexts?.rigsExpanded !== true ? " hidden data-knot-rig-usage-extra" : index >= KNOT_USAGE_VISIBLE_RIG_LIMIT ? " data-knot-rig-usage-extra" : ""}>
+                            <span class="compact-link-row__label">${usage.title}</span>
+                            <button class="compact-link-row__action" type="button" data-knot-rig-id="${usage.rigId}">View Rig <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></button>
+                        </div>
+                    `).join("")}
+                </div>
+                ${rigContexts.length > KNOT_USAGE_VISIBLE_RIG_LIMIT ? `<button class="knot-usage-expand" type="button" data-knot-usage-toggle data-knot-usage-count="${rigContexts.length}" aria-expanded="${usageContexts?.rigsExpanded === true ? "true" : "false"}">${usageContexts?.rigsExpanded === true ? "Show fewer" : `See all ${rigContexts.length} rigs`}</button>` : ""}
+            </section>
+        `
+        : "";
+    return `${reelSetupMarkup}${taskMarkup}${rigMarkup}`;
 }
 
 function initializeKnotUsageControls(appMain, detailConfig) {
@@ -1338,7 +1337,12 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
         ? detailConfig.expandedDisclosureIds
         : [];
     const expanded = new Set(expandedDisclosureIds);
-    const classification = isCore ? `Core Knot • ${record.difficulty}` : record.difficulty;
+    const classificationMarkup = `
+        <p class="detail-eyebrow knot-detail-classification">
+            ${isCore ? '<span class="knot-detail-classification__core">Core Knot</span><span class="knot-detail-classification__separator" aria-hidden="true">·</span>' : ""}
+            <span class="knot-detail-classification__difficulty">${record.difficulty}</span>
+        </p>
+    `;
     const aliasesMarkup = record.aliases?.length
         ? `<p class="knot-aliases"><strong>Also called:</strong> ${record.aliases.join(", ")}</p>`
         : "";
@@ -1365,7 +1369,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
                 ${linePairings.map((pairing) => `
                     <li class="knot-line-compatibility-item">
                         ${buildLineReference(pairing.from)}
-                        <span class="knot-line-compatibility__pairing-arrow" aria-hidden="true">→</span>
+                        <span class="knot-line-compatibility__pairing-separator">to</span>
                         ${buildLineReference(pairing.to, pairing.toRole ?? "")}
                     </li>
                 `).join("")}
@@ -1385,7 +1389,7 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
         ? `
             <div class="rig-reference-links knot-reference-links">
                 ${record.referenceLinks.map((reference) => `
-                    <a class="rig-reference-link knot-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
+                    <a class="rig-reference-link knot-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer"><span class="reference-source-name">${reference.label}</span><span class="reference-source-action">Visit Site <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></span></a>
                 `).join("")}
             </div>
         `
@@ -1393,8 +1397,21 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
     const instructionMediaMarkup = typeof buildKnotInstructionMediaMarkup === "function"
         ? buildKnotInstructionMediaMarkup(record)
         : "";
-    const tyingStepsLabelMarkup = instructionMediaMarkup
-        ? '<p class="knot-tying-steps__label">Numbered Tying Steps</p>'
+    const tyingStepsLabelMarkup = '<h4 class="detail-subsection-heading knot-tying-steps__label">Tying Steps</h4>';
+    const buildSupportMarkup = instructionMediaMarkup
+        ? `
+            <section class="knot-build-subsection knot-build-subsection--support" aria-labelledby="knot-build-support-title">
+                <h4 class="detail-subsection-heading" id="knot-build-support-title">Build Support</h4>
+                <div class="knot-build-support__rows">
+                    ${buildKnotDetailDisclosureMarkup(
+                        "tying-animation",
+                        "Tying Animation",
+                        instructionMediaMarkup,
+                        expanded.has("tying-animation")
+                    )}
+                </div>
+            </section>
+        `
         : "";
     const navigationClassName = "";
 
@@ -1402,13 +1419,13 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
         buildKnotDetailDisclosureMarkup(
             "best-for",
             "Best For",
-            `<ul class="detail-list">${record.bestFor.map((item) => `<li>${item}</li>`).join("")}</ul>`,
+            `<h4 class="detail-subsection-heading">Recommended Uses</h4><ul class="detail-list">${record.bestFor.map((item) => `<li>${item}</li>`).join("")}</ul>`,
             expanded.has("best-for")
         ),
         buildKnotDetailDisclosureMarkup(
             "line-compatibility",
             "Line Compatibility",
-            lineCompatibilityMarkup,
+            `<h4 class="detail-subsection-heading">Compatible Line Types</h4>${lineCompatibilityMarkup}`,
             expanded.has("line-compatibility")
         ),
         buildKnotDetailDisclosureMarkup(
@@ -1420,57 +1437,58 @@ function renderKnotInstructionDetail(appMain, detailConfig) {
     ].join("");
 
     const chooseAnotherKnot = Array.isArray(record.chooseAnotherKnot) ? record.chooseAnotherKnot : [];
-    const moreHelpMarkup = [
-        buildKnotDetailDisclosureMarkup(
-            "common-mistakes",
-            "Common Mistakes",
-            `<ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>`,
-            expanded.has("common-mistakes")
-        ),
-        chooseAnotherKnot.length > 0
-            ? buildKnotDetailDisclosureMarkup(
-                "choose-another",
-                "When to Choose Another Knot",
-                `<ul class="detail-list">${chooseAnotherKnot.map((item) => `<li>${item}</li>`).join("")}</ul>`,
-                expanded.has("choose-another")
-            )
-            : ""
-    ].join("");
+    const moreHelpMarkup = chooseAnotherKnot.length > 0
+        ? buildKnotDetailDisclosureMarkup(
+            "choose-another",
+            "When to Choose Another Knot",
+            `<h4 class="detail-subsection-heading">When to Switch</h4><ul class="detail-list">${chooseAnotherKnot.map((item) => `<li>${item}</li>`).join("")}</ul>`,
+            expanded.has("choose-another")
+        )
+        : "";
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--knot" aria-labelledby="knot-detail-title">
             ${buildPageNavigationMarkup(detailConfig.parentLabel, navigationClassName)}
-            <header class="detail-header knot-detail-header${isCore ? " knot-detail-header--core" : ""}">
-                <p class="detail-eyebrow knot-detail-classification">${classification}</p>
+            <header class="detail-header knot-detail-header">
+                ${classificationMarkup}
                 <h2 id="knot-detail-title">${record.name}</h2>
                 <p>${record.summary}</p>
                 ${aliasesMarkup}
             </header>
             <section class="detail-section detail-section--build knot-tying-section" aria-labelledby="knot-tying-title">
                 <h3 id="knot-tying-title">How to Tie It</h3>
-                ${instructionMediaMarkup}
                 ${tyingStepsLabelMarkup}
                 <ol class="detail-steps knot-tying-steps">${record.tyingSteps.map((step) => `<li>${step}</li>`).join("")}</ol>
+                ${buildSupportMarkup}
             </section>
             <section class="detail-section detail-section--supporting knot-check-section" aria-labelledby="knot-check-title">
                 <h3 id="knot-check-title">Check Your Knot</h3>
-                <ul class="detail-list">${record.finalChecks.map((check) => `<li>${check}</li>`).join("")}</ul>
+                <section class="knot-check-subsection" aria-labelledby="knot-final-checks-title">
+                    <h4 class="detail-subsection-heading" id="knot-final-checks-title">Final Checks</h4>
+                    <ul class="detail-list">${record.finalChecks.map((check) => `<li>${check}</li>`).join("")}</ul>
+                </section>
+                <section class="knot-check-subsection" aria-labelledby="knot-common-mistakes-title">
+                    <h4 class="detail-subsection-heading" id="knot-common-mistakes-title">Common Mistakes</h4>
+                    <ul class="detail-list">${record.commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>
+                </section>
             </section>
             <section class="knot-detail-group knot-detail-group--about" aria-labelledby="knot-about-title">
                 <h3 class="knot-detail-group__title" id="knot-about-title">About This Knot</h3>
                 <div class="knot-detail-group__shell">${aboutMarkup}</div>
             </section>
-            <section class="knot-detail-group knot-detail-group--more-help" aria-labelledby="knot-more-help-title">
-                <h3 class="knot-detail-group__title" id="knot-more-help-title">More Help</h3>
-                <div class="knot-detail-group__shell">${moreHelpMarkup}</div>
-            </section>
+            ${moreHelpMarkup ? `
+                <section class="knot-detail-group knot-detail-group--more-help" aria-labelledby="knot-more-help-title">
+                    <h3 class="knot-detail-group__title" id="knot-more-help-title">More Help</h3>
+                    <div class="knot-detail-group__shell">${moreHelpMarkup}</div>
+                </section>
+            ` : ""}
             ${referencesBodyMarkup ? `
-                <section class="knot-detail-group knot-detail-group--sources" aria-label="Sources and references">
+                <section class="knot-detail-group knot-detail-group--sources" aria-label="Sources & References">
                     <div class="knot-detail-group__shell">
                         ${buildKnotDetailDisclosureMarkup(
                             "sources",
                             "Sources & References",
-                            referencesBodyMarkup,
+                            `<h4 class="detail-subsection-heading">Verified References</h4>${referencesBodyMarkup}`,
                             expanded.has("sources")
                         )}
                     </div>
@@ -1513,10 +1531,6 @@ function renderLineTypeReferencePopover(lineTypeId, triggerElement) {
     dialog.dataset.lineTypeReferencePopover = "";
     dialog.setAttribute("aria-labelledby", "line-type-reference-title");
 
-    const closeDialog = () => {
-        if (dialog.open) dialog.close();
-    };
-
     dialog.innerHTML = `
         <div class="reference-popover__shell">
             <header class="reference-popover__header">
@@ -1544,62 +1558,11 @@ function renderLineTypeReferencePopover(lineTypeId, triggerElement) {
         </div>
     `;
 
-    dialog.querySelector("[data-line-type-reference-close]")?.addEventListener("click", closeDialog);
-    dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) closeDialog();
-    });
-    dialog.addEventListener("close", () => {
-        dialog.remove();
-        unlockReferencePopoverBackground();
-        triggerElement?.focus({ preventScroll: true });
-    });
-
-    document.body.append(dialog);
-    lockReferencePopoverBackground();
-    dialog.showModal();
+    showReferencePopoverDialog(dialog, triggerElement, "[data-line-type-reference-close]");
 }
 
-
-function buildFishTongueReferenceVisualMarkup(page) {
-    const patchMarkup = {
-        none: `
-            <text class="fish-tongue-reference__empty-label" x="180" y="108" text-anchor="middle">No distinct rough patch</text>
-        `,
-        rough: `
-            <g class="fish-tongue-reference__patch fish-tongue-reference__patch--rough" aria-hidden="true">
-                <ellipse cx="180" cy="105" rx="42" ry="28"></ellipse>
-                <circle cx="160" cy="94" r="3"></circle><circle cx="176" cy="91" r="3"></circle><circle cx="193" cy="96" r="3"></circle>
-                <circle cx="151" cy="108" r="3"></circle><circle cx="169" cy="108" r="3"></circle><circle cx="187" cy="108" r="3"></circle><circle cx="205" cy="108" r="3"></circle>
-                <circle cx="163" cy="121" r="3"></circle><circle cx="181" cy="120" r="3"></circle><circle cx="197" cy="119" r="3"></circle>
-            </g>
-        `,
-        single: `
-            <ellipse class="fish-tongue-reference__patch fish-tongue-reference__patch--single" cx="180" cy="105" rx="38" ry="28" aria-hidden="true"></ellipse>
-        `,
-        double: `
-            <g class="fish-tongue-reference__patch fish-tongue-reference__patch--double" aria-hidden="true">
-                <ellipse cx="157" cy="105" rx="19" ry="35"></ellipse>
-                <ellipse cx="203" cy="105" rx="19" ry="35"></ellipse>
-            </g>
-        `
-    }[page?.visualVariant] ?? "";
-
-    return `
-        <figure class="fish-tongue-reference">
-            <svg class="fish-tongue-reference__diagram" viewBox="0 0 360 210" role="img" aria-label="${page?.visualLabel ?? "Fish tongue tooth-patch reference schematic"}">
-                <path class="fish-tongue-reference__tongue" d="M95 46 C126 23 234 23 265 46 C289 65 294 124 270 158 C247 190 113 190 90 158 C66 124 71 65 95 46 Z"></path>
-                <path class="fish-tongue-reference__centerline" d="M180 45 L180 166"></path>
-                ${patchMarkup}
-            </svg>
-            <figcaption>${page?.visualCaption ?? "FCC-authored schematic reference; not to scale."}</figcaption>
-        </figure>
-    `;
-}
 
 function buildPagedReferenceVisualMarkup(page) {
-    if (page?.visualType === "fish-tongue-tooth-patch") {
-        return buildFishTongueReferenceVisualMarkup(page);
-    }
     if (page?.visualType !== "reel-capacity-diagram") return "";
     return `
         <figure class="reel-reference-diagram" aria-label="Example reel capacity marking">
@@ -1628,10 +1591,6 @@ function renderPagedReferencePopover({ eyebrow = "Reference", pages = [], initia
     dialog.dataset.pagedReferencePopover = "";
     dialog.setAttribute("aria-labelledby", "paged-reference-title");
     let activeIndex = Math.max(0, validPages.findIndex((page) => page.id === initialPageId));
-
-    const closeDialog = () => {
-        if (dialog.open) dialog.close();
-    };
 
     const renderPage = (focusDirection = null) => {
         const page = validPages[activeIndex];
@@ -1804,7 +1763,9 @@ function formatConditionCategory(category) {
         "waterbody": "Waterbody",
         "access-position": "Access / Position",
         "depth-zone": "Depth / Zone",
-        "cover-structure": "Cover / Structure",
+        "cover-exposure": "Cover / Exposure",
+        "structure-contour": "Structure / Contour",
+        "bottom-substrate": "Bottom / Substrate",
         "water-clarity": "Water Clarity",
         "current": "Current",
         "season": "Season",
@@ -1877,23 +1838,7 @@ function renderConditionPopover(conditionId, triggerElement) {
         </div>
     `;
 
-    const closeDialog = () => {
-        if (dialog.open) dialog.close();
-    };
-
-    dialog.querySelector("[data-condition-close]")?.addEventListener("click", closeDialog);
-    dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) closeDialog();
-    });
-    dialog.addEventListener("close", () => {
-        dialog.remove();
-        unlockReferencePopoverBackground();
-        triggerElement?.focus({ preventScroll: true });
-    });
-
-    document.body.append(dialog);
-    lockReferencePopoverBackground();
-    dialog.showModal();
+    showReferencePopoverDialog(dialog, triggerElement, "[data-condition-close]");
 }
 
 function initializeConditionLinks(appMain) {
@@ -1987,23 +1932,7 @@ function renderTechniquePopover(techniqueId, triggerElement) {
         </div>
     `;
 
-    const closeDialog = () => {
-        if (dialog.open) dialog.close();
-    };
-
-    dialog.querySelector("[data-technique-close]")?.addEventListener("click", closeDialog);
-    dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) closeDialog();
-    });
-    dialog.addEventListener("close", () => {
-        dialog.remove();
-        unlockReferencePopoverBackground();
-        triggerElement?.focus({ preventScroll: true });
-    });
-
-    document.body.append(dialog);
-    lockReferencePopoverBackground();
-    dialog.showModal();
+    showReferencePopoverDialog(dialog, triggerElement, "[data-technique-close]");
 }
 
 function initializeTechniqueLinks(appMain) {
@@ -2062,23 +1991,7 @@ function renderLureBaitReferencePopover(lureBaitId, triggerElement, requirement 
         </div>
     `;
 
-    const closeDialog = () => {
-        if (dialog.open) dialog.close();
-    };
-
-    dialog.querySelector("[data-lure-bait-close]")?.addEventListener("click", closeDialog);
-    dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) closeDialog();
-    });
-    dialog.addEventListener("close", () => {
-        dialog.remove();
-        unlockReferencePopoverBackground();
-        triggerElement?.focus({ preventScroll: true });
-    });
-
-    document.body.append(dialog);
-    lockReferencePopoverBackground();
-    dialog.showModal();
+    showReferencePopoverDialog(dialog, triggerElement, "[data-lure-bait-close]");
 }
 
 function initializeLureBaitReferenceLinks(appMain, lureBaitRequirements = []) {
@@ -2148,13 +2061,13 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
 
         const relatedRigs = getRelatedRigRecords(referenceRecord.id);
         const rigsMarkup = relatedRigs.length ? `
-            <section class="reference-popover__section">
+            <section class="reference-popover__section reference-popover__section--related">
                 <h3>Used In</h3>
-                <div class="compact-link-list reference-popover__link-list">
+                <div class="compact-link-list compact-link-list--divided reference-popover__link-list">
                     ${relatedRigs.map((rig) => `
                         <button class="compact-link-row" type="button" data-reference-rig-id="${rig.id}">
-                            <span>${rig.name}</span>
-                            <span class="link-arrow link-arrow--chevron" aria-hidden="true">&rsaquo;</span>
+                            <span class="compact-link-row__label">${rig.name}</span>
+                            <span class="compact-link-row__action">View Rig <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
                         </button>
                     `).join("")}
                 </div>
@@ -2162,16 +2075,16 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
         ` : "";
 
         const relatedTackleMarkup = referenceRecord.relatedTackleIds?.length ? `
-            <section class="reference-popover__section">
+            <section class="reference-popover__section reference-popover__section--related">
                 <h3>Related Components</h3>
-                <div class="compact-link-list reference-popover__link-list">
+                <div class="compact-link-list compact-link-list--divided reference-popover__link-list">
                     ${referenceRecord.relatedTackleIds.map((relatedId) => {
                         const related = findRecordById(TACKLE_DATA, relatedId);
                         if (!related || related.isActive !== true) return "";
                         return `
                             <button class="compact-link-row" type="button" data-related-reference-id="${related.id}">
-                                <span>${related.name}</span>
-                                <span class="link-arrow link-arrow--chevron" aria-hidden="true">&rsaquo;</span>
+                                <span class="compact-link-row__label">${related.name}</span>
+                                <span class="compact-link-row__action">View Component <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
                             </button>
                         `;
                     }).join("")}
@@ -2200,7 +2113,7 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
                 <div class="reference-popover__body">
                     <p class="reference-popover__summary">${referenceRecord.summary}</p>
                     <section class="reference-popover__section"><h3>What It Does</h3><p>${referenceRecord.purpose}</p></section>
-                    ${aliasesMarkup}${recognitionMarkup}${variantsMarkup}${rigsMarkup}${relatedTackleMarkup}
+                    ${aliasesMarkup}${recognitionMarkup}${variantsMarkup}${relatedTackleMarkup}${rigsMarkup}
                 </div>
             </div>
         `;
@@ -2208,21 +2121,22 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
         dialog.querySelector("[data-reference-close]")?.addEventListener("click", closeDialog);
         dialog.querySelector("[data-reference-back]")?.addEventListener("click", () => {
             const previousReferenceId = referenceHistory.pop();
-            if (previousReferenceId) renderReferenceContent(previousReferenceId, false);
+            if (previousReferenceId) {
+                renderReferenceContent(previousReferenceId, false);
+                (dialog.querySelector("[data-reference-back]") ?? dialog.querySelector("[data-reference-close]"))?.focus({ preventScroll: true });
+            }
         });
         dialog.querySelectorAll("[data-related-reference-id]").forEach((relatedButton) => {
             relatedButton.addEventListener("click", () => {
                 renderReferenceContent(relatedButton.dataset.relatedReferenceId, true);
+                (dialog.querySelector("[data-reference-back]") ?? dialog.querySelector("[data-reference-close]"))?.focus({ preventScroll: true });
             });
         });
         dialog.querySelectorAll("[data-reference-rig-id]").forEach((rigButton) => {
             rigButton.addEventListener("click", () => {
                 const nextRigId = rigButton.dataset.referenceRigId;
-                if (nextRigId === options.currentRigId) {
-                    closeDialog();
-                    return;
-                }
                 isNavigatingAway = true;
+                referenceHistory.length = 0;
                 closeDialog();
                 options.onRigSelect?.(nextRigId);
             });
@@ -2259,11 +2173,16 @@ function initializeReferenceLinks(appMain, options = {}) {
 
 function buildRigResultCardMarkup(rig) {
     const isCore = isCoreRigRecord(rig);
-    const classification = `${isCore ? "Core Rig • " : ""}${rig.difficulty}`;
+    const classificationMarkup = `
+        <span class="rig-result-card__classification">
+            ${isCore ? '<span class="rig-result-card__classification-core">Core Rig</span><span class="rig-result-card__classification-separator" aria-hidden="true">·</span>' : ""}
+            <span class="rig-result-card__classification-difficulty">${rig.difficulty}</span>
+        </span>
+    `;
 
     return `
         <button class="search-result-card search-result-card--rig${isCore ? " search-result-card--core" : ""}" type="button" data-result-id="${rig.id}">
-            <span class="rig-result-card__classification">${classification}</span>
+            ${classificationMarkup}
             <span class="rig-result-card__heading-row">
                 <span class="search-result-card__title">${rig.name}</span>
                 <span class="search-result-card__action">View Rig <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
@@ -2311,7 +2230,20 @@ function renderRigGuideLanding(appMain, config) {
         return;
     }
 
-    const browseMarkup = config.cards.map((card) => {
+    const coreCard = config.cards.find((card) => card.id === "browse-core-rigs");
+    const startHereMarkup = coreCard ? `
+        <section class="rig-guide-section rig-guide-start-section" aria-labelledby="rig-start-title">
+            <h3 id="rig-start-title">Start Here</h3>
+            <button class="dashboard-card guide-curated-card rig-guide-learn-core" type="button" data-card-id="${coreCard.id}" data-rig-card-id="${coreCard.id}">
+                <span class="guide-curated-card__eyebrow">Recommended First</span>
+                <span class="guide-card__heading-row">
+                    <span class="dashboard-card__title">${coreCard.title}</span>
+                    <span class="dashboard-card__action dashboard-card__action--link">Start Learning <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                </span>
+                <span class="dashboard-card__description">${coreCard.description}</span>
+            </button>
+        </section>` : "";
+    const browseMarkup = config.cards.filter((card) => card.id !== "browse-core-rigs").map((card) => {
         const className = [
             "dashboard-card",
             "guide-browse-card",
@@ -2351,6 +2283,7 @@ function renderRigGuideLanding(appMain, config) {
             </div>
             <div class="rig-guide-content" data-rig-guide-content>
                 <div data-rig-reel-setup-slot></div>
+                ${startHereMarkup}
                 <section class="rig-guide-section" aria-labelledby="rig-browse-title">
                     <h3 id="rig-browse-title">Browse Rigs</h3>
                     <div class="dashboard-grid rig-collection-grid">${browseMarkup}</div>
@@ -2442,13 +2375,13 @@ function buildRigKnotRecommendationMarkup(knotId) {
     const contextParts = [purpose, compatibility].filter(Boolean);
 
     return `
-        <button class="rig-knot-recommendation" type="button" data-rig-knot-id="${knot.id}">
+        <div class="rig-knot-recommendation">
             <span class="rig-knot-recommendation__heading">
                 <span class="rig-knot-recommendation__name">${knot.name}</span>
-                <span class="rig-knot-recommendation__action">View Knot <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                <button class="rig-knot-recommendation__action" type="button" data-rig-knot-id="${knot.id}">View Knot <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></button>
             </span>
             ${contextParts.length > 0 ? `<span class="rig-knot-recommendation__context">${contextParts.join(" ")}</span>` : ""}
-        </button>
+        </div>
     `;
 }
 
@@ -2534,7 +2467,7 @@ function buildRigReferenceLinks(record) {
         <p class="rig-reference-intro">Use these external sources for additional technical cross-checking.</p>
         <ul class="rig-reference-list">
             ${record.referenceLinks.map((reference) => `
-                <li><a class="rig-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer">${reference.label} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a></li>
+                <li><a class="rig-reference-link" href="${reference.url}" target="_blank" rel="noopener noreferrer"><span class="reference-source-name">${reference.label}</span><span class="reference-source-action">Visit Site <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></span></a></li>
             `).join("")}
         </ul>
     `;
@@ -2542,7 +2475,7 @@ function buildRigReferenceLinks(record) {
 
 function buildRigAboutTextList(items) {
     if (!Array.isArray(items) || items.length === 0) return "";
-    return `<ul class="rig-about-list">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+    return `<ul class="detail-list rig-about-list">${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 }
 
 const RIG_CONDITION_REFERENCE_IDS = Object.freeze({
@@ -2652,7 +2585,7 @@ function buildRigTutorialDisclosureBody(tutorial) {
                 <p class="rig-tutorial__creator">${tutorial.creator}</p>
             </div>
             <div class="rig-tutorial__player" data-rig-tutorial-player></div>
-            <a class="rig-tutorial__external" href="${tutorial.externalUrl}" target="_blank" rel="noopener noreferrer">Watch on YouTube <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
+            <a class="rig-tutorial__external" href="${tutorial.externalUrl}" target="_blank" rel="noopener noreferrer"><span>${tutorial.creator || "Video source"}</span><span class="reference-source-action">Visit Site <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></span></a>
         </div>
     `;
 }
@@ -2886,15 +2819,18 @@ function renderInstructionDetail(appMain, detailConfig) {
             expanded.has("rig-tutorial")
         )
         : "";
-    const commonMistakesMarkup = commonMistakes.length > 0
-        ? buildRigDetailDisclosureMarkup(
-            "common-mistakes",
-            "Common Mistakes",
-            `<ul class="detail-list">${commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>`,
-            expanded.has("common-mistakes")
-        )
+    const checkRigMarkup = commonMistakes.length > 0
+        ? `
+            <section class="detail-section rig-check-section" aria-labelledby="rig-check-title">
+                <h3 id="rig-check-title">Check Your Rig</h3>
+                <section class="rig-check-subsection" aria-labelledby="rig-common-mistakes-title">
+                    <h4 class="detail-subsection-heading" id="rig-common-mistakes-title">Common Mistakes</h4>
+                    <ul class="detail-list">${commonMistakes.map((mistake) => `<li>${mistake}</li>`).join("")}</ul>
+                </section>
+            </section>
+        `
         : "";
-    const buildSupportRowsMarkup = [tutorialMarkup, commonMistakesMarkup].filter(Boolean).join("");
+    const buildSupportRowsMarkup = [tutorialMarkup].filter(Boolean).join("");
     const buildSupportMarkup = buildSupportRowsMarkup
         ? `
             <section class="rig-build-subsection rig-build-subsection--support" aria-labelledby="rig-build-support-title">
@@ -2918,38 +2854,31 @@ function renderInstructionDetail(appMain, detailConfig) {
     const conditionsMarkup = buildRigConditionReferenceMarkup(effectiveRecord.conditionTags);
     const techniquesMarkup = buildRigTechniqueReferenceMarkup(record.id, selectedConfiguration?.lureBaitId ?? null);
     const aboutOverviewMarkup = buildRigAboutOverviewMarkup(useCasesMarkup, conditionsMarkup, techniquesMarkup);
-    const aboutMarkup = aboutOverviewMarkup ? `
-        <section class="rig-detail-group rig-detail-group--about" aria-labelledby="rig-about-title">
-            <h3 class="rig-detail-group__title" id="rig-about-title">About This Rig</h3>
-            <div class="rig-detail-group__shell">
-                ${buildRigDetailDisclosureMarkup(
-                    "about-rig-overview",
-                    "Rig Overview",
-                    aboutOverviewMarkup,
-                    expanded.has("about-rig-overview")
-                )}
-            </div>
-        </section>
-    ` : "";
-    const referencesBodyMarkup = buildRigReferenceLinks(effectiveRecord);
-    const moreHelpMarkup = [
+    const aboutRowsMarkup = [
+        aboutOverviewMarkup
+            ? buildRigDetailDisclosureMarkup(
+                "about-rig-overview",
+                "Rig Overview",
+                aboutOverviewMarkup,
+                expanded.has("about-rig-overview")
+            )
+            : "",
         setupNotes.length > 0
             ? buildRigDetailDisclosureMarkup(
                 "setup-notes",
                 "Setup Notes",
-                `<ul class="detail-list">${setupNotes.map((note) => `<li>${note}</li>`).join("")}</ul>`,
+                `<h4 class="detail-subsection-heading">Setup Notes</h4><ul class="detail-list">${setupNotes.map((note) => `<li>${note}</li>`).join("")}</ul>`,
                 expanded.has("setup-notes")
-            )
-            : "",
-        referencesBodyMarkup
-            ? buildRigDetailDisclosureMarkup(
-                "sources",
-                "Sources & References",
-                referencesBodyMarkup,
-                expanded.has("sources")
             )
             : ""
     ].filter(Boolean).join("");
+    const aboutMarkup = aboutRowsMarkup ? `
+        <section class="rig-detail-group rig-detail-group--about" aria-labelledby="rig-about-title">
+            <h3 class="rig-detail-group__title" id="rig-about-title">About This Rig</h3>
+            <div class="rig-detail-group__shell">${aboutRowsMarkup}</div>
+        </section>
+    ` : "";
+    const referencesBodyMarkup = buildRigReferenceLinks(effectiveRecord);
 
     appMain.innerHTML = `
         <article class="detail-view detail-view--rig-compact" aria-labelledby="rig-detail-title">
@@ -2975,15 +2904,22 @@ function renderInstructionDetail(appMain, detailConfig) {
             ${safetyNotes.length > 0 ? `
                 <section class="detail-section detail-section--supporting detail-section--safety">
                     <h3>Safety</h3>
-                    <ul class="detail-list">${safetyNotes.map((note) => `<li>${note}</li>`).join("")}</ul>
+                    <div class="safety-guidance">${safetyNotes.map((note) => `<p>${note}</p>`).join("")}</div>
                 </section>
             ` : ""}
             ${howToBuildMarkup}
+            ${checkRigMarkup}
             ${aboutMarkup}
-            ${moreHelpMarkup ? `
-                <section class="rig-detail-group rig-detail-group--more-help" aria-labelledby="rig-more-help-title">
-                    <h3 class="rig-detail-group__title" id="rig-more-help-title">More Help</h3>
-                    <div class="rig-detail-group__shell">${moreHelpMarkup}</div>
+            ${referencesBodyMarkup ? `
+                <section class="rig-detail-group rig-detail-group--sources" aria-label="Sources & References">
+                    <div class="rig-detail-group__shell">
+                        ${buildRigDetailDisclosureMarkup(
+                            "sources",
+                            "Sources & References",
+                            `<h4 class="detail-subsection-heading">Verified References</h4>${referencesBodyMarkup}`,
+                            expanded.has("sources")
+                        )}
+                    </div>
                 </section>
             ` : ""}
         </article>

@@ -33,7 +33,7 @@ const FISH_DATA = Object.freeze([
             "The two dorsal-fin sections are weakly connected and separated by a deep notch.",
             "Inspect the tongue inside the mouth. It usually lacks a rough tooth patch; color alone is not decisive."
         ],
-        habitatTags: ["Grass", "Timber", "Brush", "Shallow Water"],
+
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
     {
@@ -55,8 +55,8 @@ const FISH_DATA = Object.freeze([
             "The two dorsal-fin sections are connected rather than separated by a deep notch.",
             "Inspect the tongue inside the mouth. A rough tooth patch can support the identification but should not be used alone."
         ],
-        habitatTags: ["Rock", "Open Water", "Current"],
-        waterbodyTypes: ["Lake", "River", "Creek", "Reservoir"]
+
+        waterbodyTypes: ["Lake", "River", "Creek / Stream", "Reservoir"]
     },
     {
         id: "spotted-bass",
@@ -77,7 +77,7 @@ const FISH_DATA = Object.freeze([
             "The two dorsal-fin sections are connected without a deep separating notch.",
             "Inspect the tongue inside the mouth. A rough tooth patch can support the identification but should not be used alone."
         ],
-        habitatTags: ["Rock", "Current", "Channel", "Deep Water"],
+
         waterbodyTypes: ["Lake", "River", "Reservoir"]
     },
     {
@@ -98,8 +98,8 @@ const FISH_DATA = Object.freeze([
             "Inspect the tongue inside the mouth. One round or heart-shaped tooth patch is present.",
             "Horizontal side stripes support the identification, while the deep body and single tongue patch are stronger diagnostic features."
         ],
-        habitatTags: ["Open Water", "Current", "Deep Water"],
-        waterbodyTypes: ["Lake", "Reservoir", "River", "Creek"]
+
+        waterbodyTypes: ["Lake", "Reservoir", "River", "Creek / Stream"]
     },
     {
         id: "striped-bass",
@@ -119,7 +119,7 @@ const FISH_DATA = Object.freeze([
             "Strong horizontal side stripes are mostly continuous rather than broken.",
             "Inspect the tongue inside the mouth. Two distinct parallel tooth patches are present."
         ],
-        habitatTags: ["Open Water", "Deep Water", "Current"],
+
         waterbodyTypes: ["Lake", "Reservoir", "River"]
     },
     {
@@ -140,7 +140,7 @@ const FISH_DATA = Object.freeze([
             "Horizontal side stripes are commonly broken or discontinuous.",
             "Tongue-patch presentation varies and should be treated as supporting evidence rather than the sole identifier."
         ],
-        habitatTags: ["Open Water", "Current", "Deep Water"],
+
         waterbodyTypes: ["Lake", "Reservoir", "River"]
     },
     // Catfish
@@ -162,7 +162,7 @@ const FISH_DATA = Object.freeze([
             "Look at the lower edge of the anal fin on the underside of the fish; it forms a rounded curve rather than a straight edge.",
             "Dark side spots may be present, especially on smaller fish, but the spotting can become faint or absent."
         ],
-        habitatTags: ["Channel", "Current", "Timber", "Open Water"],
+
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
     {
@@ -183,7 +183,7 @@ const FISH_DATA = Object.freeze([
             "Look at the lower edge of the long anal fin on the underside of the fish; it runs comparatively straight rather than forming a rounded curve.",
             "The body is generally a plain blue-gray rather than strongly spotted."
         ],
-        habitatTags: ["Channel", "Current", "Deep Water", "Rock"],
+
         waterbodyTypes: ["River", "Reservoir"]
     },
     {
@@ -204,7 +204,7 @@ const FISH_DATA = Object.freeze([
             "The lower jaw projects beyond the upper jaw.",
             "The tail is not deeply forked; its rear edge does not form a deep V."
         ],
-        habitatTags: ["Timber", "Brush", "Channel", "Deep Water"],
+
         waterbodyTypes: ["River", "Reservoir"]
     },
     {
@@ -224,8 +224,8 @@ const FISH_DATA = Object.freeze([
             "The whisker-like barbels under the chin are dark gray to black.",
             "The tail is not forked and has a slight notch along the rear edge."
         ],
-        habitatTags: ["Mud", "Shallow Water"],
-        waterbodyTypes: ["Pond", "Lake", "Reservoir", "River", "Creek"]
+
+        waterbodyTypes: ["Pond", "Lake", "Reservoir", "River", "Creek / Stream"]
     },
     {
         id: "yellow-bullhead",
@@ -244,8 +244,8 @@ const FISH_DATA = Object.freeze([
             "The whisker-like barbels under the chin are white or yellow rather than dark.",
             "The tail is unforked, with a rear edge that is nearly straight."
         ],
-        habitatTags: ["Grass", "Shallow Water"],
-        waterbodyTypes: ["Pond", "Lake", "River", "Creek"]
+
+        waterbodyTypes: ["Pond", "Lake", "River", "Creek / Stream"]
     },
     // Crappie & Sunfish
     {
@@ -267,7 +267,7 @@ const FISH_DATA = Object.freeze([
             "The flap at the rear of the gill cover (opercular flap) is black, and a dark blotch marks the rear soft-rayed portion of the dorsal fin.",
             "Blue coloration is often visible on the chin and lower gill-cover area."
         ],
-        habitatTags: ["Grass", "Brush", "Timber", "Shallow Water"],
+
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
     {
@@ -288,7 +288,7 @@ const FISH_DATA = Object.freeze([
             "The black flap at the rear of the gill cover (opercular flap) has an orange or red spot at its rear edge.",
             "The sides are commonly golden to olive and may show darker vertical bars."
         ],
-        habitatTags: ["Grass", "Brush", "Shallow Water"],
+
         waterbodyTypes: ["Pond", "Lake", "Reservoir"]
     },
     {
@@ -310,8 +310,8 @@ const FISH_DATA = Object.freeze([
             "Blue facial markings are visible on the cheek and lower head.",
             "The fins often show pale or salmon-colored margins, and a dark blotch marks the rear soft-rayed portion of the dorsal fin."
         ],
-        habitatTags: ["Shallow Water"],
-        waterbodyTypes: ["Pond", "Lake", "River", "Creek"]
+
+        waterbodyTypes: ["Pond", "Lake", "River", "Creek / Stream"]
     },
     {
         id: "longear-sunfish",
@@ -331,8 +331,8 @@ const FISH_DATA = Object.freeze([
             "The side fin just behind the gill cover (pectoral fin) is rounded rather than long and pointed.",
             "The mouth is moderate in size rather than especially small or large."
         ],
-        habitatTags: ["Rock", "Grass"],
-        waterbodyTypes: ["Pond", "Lake", "River", "Creek", "Reservoir"]
+
+        waterbodyTypes: ["Pond", "Lake", "River", "Creek / Stream", "Reservoir"]
     },
     {
         id: "northern-rock-bass",
@@ -353,8 +353,8 @@ const FISH_DATA = Object.freeze([
             "The anal fin on the underside near the tail has 6 spines.",
             "Dark side spots tend to form distinct parallel rows."
         ],
-        habitatTags: ["Rock", "Timber", "Grass", "Deep Water"],
-        waterbodyTypes: ["River", "Creek", "Reservoir"]
+
+        waterbodyTypes: ["River", "Creek / Stream", "Reservoir"]
     },
     {
         id: "warmouth",
@@ -375,7 +375,7 @@ const FISH_DATA = Object.freeze([
             "The front spiny section of the dorsal fin on top of the fish has 10 spines.",
             "The anal fin on the underside near the tail has 3 spines."
         ],
-        habitatTags: ["Grass", "Shallow Water"],
+
         waterbodyTypes: ["Lake", "Reservoir", "River"]
     },
     {
@@ -396,8 +396,8 @@ const FISH_DATA = Object.freeze([
             "The body is slender and elongate for a sunfish, with a large mouth.",
             "The eyes are prominent but are typically smaller in proportion to the head than a Northern Rock Bass's."
         ],
-        habitatTags: ["Rock", "Deep Water"],
-        waterbodyTypes: ["River", "Creek"]
+
+        waterbodyTypes: ["River", "Creek / Stream"]
     },
     {
         id: "black-crappie",
@@ -416,7 +416,7 @@ const FISH_DATA = Object.freeze([
             "Dark speckles and blotches are scattered irregularly across the sides and fins.",
             "The front spiny section of the dorsal fin on top of the fish usually has 7 or 8 spines."
         ],
-        habitatTags: ["Brush", "Timber", "Grass", "Open Water"],
+
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
     {
@@ -436,7 +436,7 @@ const FISH_DATA = Object.freeze([
             "Five to 10 dark vertical bars commonly mark the sides.",
             "The front spiny section of the dorsal fin on top of the fish usually has 6 spines."
         ],
-        habitatTags: ["Brush", "Timber", "Open Water"],
+
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
     // Trout
@@ -459,8 +459,8 @@ const FISH_DATA = Object.freeze([
             "The tail fin is distinctly forked.",
             "The belly is silvery white."
         ],
-        habitatTags: ["Current", "Rock", "Cold Water", "Open Water"],
-        waterbodyTypes: ["Lake", "River", "Creek", "Reservoir"]
+
+        waterbodyTypes: ["Lake", "River", "Creek / Stream", "Reservoir"]
     },
     {
         id: "brown-trout",
@@ -481,8 +481,8 @@ const FISH_DATA = Object.freeze([
             "The tail usually has few or no dark spots.",
             "The tail is usually square to only slightly forked."
         ],
-        habitatTags: ["Current", "Timber", "Deep Water", "Cold Water"],
-        waterbodyTypes: ["Lake", "River", "Creek"]
+
+        waterbodyTypes: ["Lake", "River", "Creek / Stream"]
     },
     // Walleye & Sauger
     {
@@ -503,7 +503,7 @@ const FISH_DATA = Object.freeze([
             "Look at the cheek area directly behind and below the eye; it has few scales or may appear smooth.",
             "The eyes are large and reflective."
         ],
-        habitatTags: ["Rock", "Open Water", "Current", "Deep Water"],
+
         waterbodyTypes: ["Lake", "River", "Reservoir"]
     },
     {
@@ -524,7 +524,7 @@ const FISH_DATA = Object.freeze([
             "Look at the cheek area directly behind and below the eye; it is covered with scales.",
             "Dark saddle-like blotches cross the back and upper sides."
         ],
-        habitatTags: ["Current", "Channel", "Deep Water"],
+
         waterbodyTypes: ["River", "Reservoir", "Lake"]
     },
     {
@@ -545,7 +545,7 @@ const FISH_DATA = Object.freeze([
             "Look at the cheek area directly behind and below the eye; it is covered with scales.",
             "Gold-brown body blotching shows an intermediate mixed pattern."
         ],
-        habitatTags: ["Open Water", "Deep Water"],
+
         waterbodyTypes: ["Lake", "Reservoir"]
     },
     // Carp
@@ -568,7 +568,7 @@ const FISH_DATA = Object.freeze([
             "Large dark-edged scales create a crosshatched appearance along the body.",
             "The upper body is brassy olive and grades toward a yellowish-white belly."
         ],
-        habitatTags: ["Shallow Water", "Mud", "Grass", "Open Water"],
+
         waterbodyTypes: ["Pond", "Lake", "River", "Reservoir"]
     },
     // Drum
@@ -591,7 +591,7 @@ const FISH_DATA = Object.freeze([
             "The lips are milky white.",
             "The paired pelvic fins on the underside of the fish are white and may be tinged orange."
         ],
-        habitatTags: ["Rock", "Channel", "Deep Water", "Mud"],
+
         waterbodyTypes: ["Lake", "River", "Reservoir"]
     },
     // Gar
@@ -614,8 +614,8 @@ const FISH_DATA = Object.freeze([
             "Round dark spots mark the unpaired fins and may also occur on the body.",
             "The upper body is brown to dark olive and grades to a white belly."
         ],
-        habitatTags: ["Current", "Grass", "Deep Water"],
-        waterbodyTypes: ["Reservoir", "River", "Creek"]
+
+        waterbodyTypes: ["Reservoir", "River", "Creek / Stream"]
     },
     {
         id: "spotted-gar",
@@ -635,8 +635,8 @@ const FISH_DATA = Object.freeze([
             "Round dark spots are prominent on the paired side fins and the other fins.",
             "The upper body is brownish or olive and grades to white below."
         ],
-        habitatTags: ["Grass", "Timber"],
-        waterbodyTypes: ["River", "Creek"]
+
+        waterbodyTypes: ["River", "Creek / Stream"]
     },
     // Paddlefish
     {
@@ -658,7 +658,7 @@ const FISH_DATA = Object.freeze([
             "Small eyes point downward and forward near the front of the mouth.",
             "The tail is deeply forked, with the upper lobe longer than the lower lobe."
         ],
-        habitatTags: ["Current", "Open Water", "Deep Water"],
+
         waterbodyTypes: ["River", "Reservoir"]
     }
 

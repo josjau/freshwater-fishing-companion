@@ -37,7 +37,7 @@ const KNOT_COLLECTIONS = Object.freeze({
     }),
     intermediate: Object.freeze({
         title: "Intermediate Knots",
-        description: "Four specialized knots for loops, hook-specific tying, and leader connections.",
+        description: "Four knots for more specific applications: loops, hook-specific tying, and leader connections.",
         isAvailable: true
     })
 });
@@ -53,9 +53,9 @@ const KNOT_TASK_DEFINITIONS = Object.freeze([
         ])
     }),
     Object.freeze({
-        id: "terminal-attachment",
-        title: "Tie On a Hook, Swivel, or Lure",
-        description: "Choose a dependable knot for common terminal-tackle connections.",
+        id: "hook-attachment",
+        title: "Tie a Hook",
+        description: "Choose a dependable knot for attaching line to a hook.",
         knotIds: Object.freeze([
             "improved-clinch-knot",
             "palomar-knot",
@@ -64,9 +64,19 @@ const KNOT_TASK_DEFINITIONS = Object.freeze([
         ])
     }),
     Object.freeze({
+        id: "lure-attachment",
+        title: "Tie a Lure, Swivel, or Snap",
+        description: "Choose a dependable knot for attaching line to a lure, swivel, or snap.",
+        knotIds: Object.freeze([
+            "improved-clinch-knot",
+            "palomar-knot",
+            "uni-knot"
+        ])
+    }),
+    Object.freeze({
         id: "line-to-line",
-        title: "Connect Two Lines / Add a Leader",
-        description: "Join main line, leader, backing, or two line sections cleanly.",
+        title: "Tie Two Lines",
+        description: "Join two line sections, including main line, leader, or backing connections.",
         knotIds: Object.freeze([
             "double-uni-knot",
             "double-surgeons-knot",
@@ -93,25 +103,25 @@ const KNOT_LANDING_TASK_DEFINITIONS = Object.freeze([
         targetId: "core"
     }),
     Object.freeze({
-        id: "terminal-attachment",
-        title: "Tie On a Hook, Swivel, or Lure",
-        description: "Choose a dependable knot for common terminal-tackle connections.",
+        id: "hook-attachment",
+        title: "Tie a Hook",
+        description: "Tie line directly to a hook.",
         targetType: "task",
-        targetId: "terminal-attachment"
+        targetId: "hook-attachment"
+    }),
+    Object.freeze({
+        id: "lure-attachment",
+        title: "Tie a Lure, Swivel, or Snap",
+        description: "Tie line to a lure, swivel, or snap.",
+        targetType: "task",
+        targetId: "lure-attachment"
     }),
     Object.freeze({
         id: "line-to-line",
-        title: "Connect Two Lines / Add a Leader",
-        description: "Join main line, leader, backing, or two line sections cleanly.",
+        title: "Tie Two Lines",
+        description: "Connect two line sections, including a leader when needed.",
         targetType: "task",
         targetId: "line-to-line"
-    }),
-    Object.freeze({
-        id: "loop-connection",
-        title: "Make a Loop Connection",
-        description: "Choose between a free-moving terminal loop and an in-line branch loop.",
-        targetType: "task",
-        targetId: "loop-connection"
     })
 ]);
 
@@ -307,7 +317,7 @@ const KNOT_SEARCH_INTENTS = Object.freeze([
         ])
     }),
     Object.freeze({
-        id: "practical-lure-swivel-attachment",
+        id: "practical-lure-attachment",
         kind: "practical",
         terms: Object.freeze([
             "tie lure",

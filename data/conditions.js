@@ -119,8 +119,8 @@ const CONDITION_DATA = Object.freeze([
     {
         id: "open-water",
         name: "Open Water",
-        category: "cover-structure",
-        summary: "Water with little immediate cover or structure around the area being fished.",
+        category: "cover-exposure",
+        summary: "Water with little immediate cover around the area being fished.",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -128,7 +128,7 @@ const CONDITION_DATA = Object.freeze([
     {
         id: "light-cover",
         name: "Light Cover",
-        category: "cover-structure",
+        category: "cover-exposure",
         summary: "Scattered or moderately open cover that gives fish concealment while still leaving room to work a lure through or around it.",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
@@ -137,7 +137,7 @@ const CONDITION_DATA = Object.freeze([
     {
         id: "heavy-cover",
         name: "Heavy Cover",
-        category: "cover-structure",
+        category: "cover-exposure",
         summary: "Dense vegetation, wood, brush, or other obstruction where lure movement is restricted and snag risk is high.",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
@@ -146,7 +146,7 @@ const CONDITION_DATA = Object.freeze([
     {
         id: "vegetation",
         name: "Vegetation",
-        category: "cover-structure",
+        category: "cover-exposure",
         summary: "Living or dead aquatic plant growth such as grass, weeds, pads, or reeds.",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
@@ -155,17 +155,8 @@ const CONDITION_DATA = Object.freeze([
     {
         id: "wood-brush",
         name: "Wood / Brush",
-        category: "cover-structure",
+        category: "cover-exposure",
         summary: "Woody cover such as trees, limbs, brush piles, stumps, or submerged timber.",
-        createdVersion: "0.6.0",
-        lastModifiedVersion: "0.6.0",
-        isActive: true
-    },
-    {
-        id: "rock",
-        name: "Rock",
-        category: "cover-structure",
-        summary: "Natural rocky structure such as riprap, boulders, gravel, ledges, or rocky banks.",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
@@ -173,17 +164,71 @@ const CONDITION_DATA = Object.freeze([
     {
         id: "cover-dock-man-made",
         name: "Dock / Man-made Cover",
-        category: "cover-structure",
+        category: "cover-exposure",
         summary: "Human-built cover or structure such as docks, pilings, platforms, retaining features, or similar objects in the water.",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true
     },
     {
-        id: "drop-off-channel-deep-structure",
-        name: "Drop-off / Channel / Deep Structure",
-        category: "cover-structure",
-        summary: "Subsurface structural changes such as breaks, ledges, channels, humps, or other pronounced deep-water contours.",
+        id: "rock-boulder",
+        name: "Rock / Boulder Structure",
+        category: "structure-contour",
+        summary: "Hard rock structure such as boulders, rock piles, riprap, ledges, or rocky banks that provides cover, edges, current breaks, or fish-holding structure.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "channel",
+        name: "Channel",
+        category: "structure-contour",
+        summary: "A defined river, creek, or submerged former stream course, including a main channel or another distinct channel corridor within the waterbody.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "drop-off-deep-structure",
+        name: "Drop-off / Deep Structure",
+        category: "structure-contour",
+        summary: "A pronounced underwater depth or contour change such as a drop-off, ledge, break, hump, or similar subsurface structure, separate from a defined channel.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "pool-deep-hole",
+        name: "Pool / Deep Hole",
+        category: "structure-contour",
+        summary: "A localized pool, depression, scour, or hole that is distinctly deeper and often slower than the surrounding water, creating a distinct fish-holding, resting, or feeding area.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "bottom-rocky-gravel",
+        name: "Rocky / Gravel Bottom",
+        category: "bottom-substrate",
+        summary: "Bottom covered mainly in stones, rocks, or gravel, rather than soft sediment or sand.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "bottom-sandy",
+        name: "Sandy Bottom",
+        category: "bottom-substrate",
+        summary: "Bottom made mainly of sand, which can form underwater flats, bars, or gradual transitions.",
+        createdVersion: "0.6.0",
+        lastModifiedVersion: "0.6.0",
+        isActive: true
+    },
+    {
+        id: "bottom-muddy-silty",
+        name: "Muddy / Silty Bottom",
+        category: "bottom-substrate",
+        summary: "Soft bottom sediment made mainly of mud or silt, distinct from the visibility of the water above.",
         createdVersion: "0.6.0",
         lastModifiedVersion: "0.6.0",
         isActive: true

@@ -2,11 +2,11 @@
 
 
 **Document:** 09-RELATIONSHIPS.md  
-**Document Revision:** 0.9.15  
+**Document Revision:** 0.9.17  
 **Document Status:** Approved  
 **Implementation Status:** VALIDATED CURRENT RELATIONSHIPS + G7-XMAP IMPLEMENTED / APPROVED / VERIFIED — 20 Fish identification pairs; 27 Fish guidance records; 185 intrinsic Compatibility relationships (54/77/54) + 13 Canonical Requirement Satisfaction rules  
 **Decision Baseline:** D003, D024, D025, D026, D037, D043, D044, D056, D057–D061, D069, FISH-001–FISH-007  
-**Last Updated:** 2026-10-01
+**Last Updated:** 2026-10-08
 
 
 ---
@@ -210,6 +210,7 @@ Each real tied connection contains exactly:
 label
 connectionType
 recommendedKnotIds[]
+assemblyStepIndex
 notes
 ```
 
@@ -220,6 +221,7 @@ Rules:
 - Rig owns the physical connection context.
 - Only real tied connections receive an entry; hardware-only joins do not.
 - `recommendedKnotIds[]` is selective and nonempty.
+- `assemblyStepIndex` points to exactly one valid Build Step in the owning Rig or selected configuration.
 - Referenced Knot IDs resolve to active canonical Knot records.
 - Knot owns reusable tying instructions.
 - Rig `notes` contains only Rig-specific connection context.
@@ -229,7 +231,7 @@ Rules:
 Reverse Knot detail navigation such as **Where You'll Use It** is derived from active Rig Knot applications rather than stored again on Knot.
 
 
-The current 21-Rig library contains 32 real tied connection points.
+The current 23-Rig library contains 38 real tied connection points.
 
 
 ---
@@ -662,7 +664,7 @@ Future recommendation relationships should follow the same ownership test: conte
 ---
 
 
-# G4-RIF Habitat / Waterbody Correspondence — APPROVED / PENDING IMPLEMENTATION
+# G4-RIF Habitat / Waterbody Correspondence — IMPLEMENTED / LOCAL REVIEW PASS
 
 
 G4-RIF-1A approves explicit authored correspondence between stable Fish-owned environmental Reference Knowledge and current-context Conditions. These correspondence relationships are **not** Intrinsic Compatibility and carry no Fish preference, candidate eligibility, contextual suitability, weighting, ranking, confidence, or Recommendation score. Missing correspondence means only that no equivalence is authored; it is not incompatibility.
@@ -706,10 +708,10 @@ Fish waterbody correspondence is stored/treated separately from Habitat correspo
 | Creek / Stream | `creek-stream` |
 
 
-Fish `Creek` normalizes to **Creek / Stream** during the later migration. This bridge also conveys environmental equivalence only and must not create preference, ranking, weighting, eligibility, or score.
+Fish `Creek` was normalized to **Creek / Stream** by FCC 52A. This bridge also conveys environmental equivalence only and must not create preference, ranking, weighting, eligibility, or score.
 
 
-These approved correspondence sets are pending production implementation. Their physical storage shape and validator mechanics may be refined during migration so long as the exact semantics and stable IDs above are preserved. No runtime mapping by label, string similarity, or fuzzy inference is authorized.
+FCC 52A implements these approved correspondence sets in `data/environment-correspondence.js`, with the 13 Habitat-concept correspondences separate from the five Fish-waterbody bridges and with their exact IDs enforced by Repository Integrity. This environmental equivalence does not create Recommendation eligibility, strength, weighting, or ranking. No runtime mapping by label, string similarity, or fuzzy inference is authorized. Deployed actual-mobile validation remains OPEN.
 
 
 ---
@@ -1264,7 +1266,7 @@ Relationship validation should verify, where applicable:
 - Media owner references resolve appropriately,
 - Core registry membership and order resolve correctly,
 - every active Rig has a deliberate `knotApplications[]` audit result,
-- every Knot application has exactly the approved four fields,
+- every Knot application has exactly the approved five fields, including valid `assemblyStepIndex`,
 - Knot IDs resolve and hardware-only joins are excluded,
 - Rig-to-Knot reverse navigation is derived,
 - Fish identification relationships obey deterministic ID/order, pair uniqueness, participant resolution, and distinction coverage,

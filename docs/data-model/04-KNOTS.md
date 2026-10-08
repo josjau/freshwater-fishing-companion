@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 04-KNOTS.md  
-**Document Revision:** 0.3.4  
+**Document Revision:** 0.3.6  
 **Document Status:** Approved  
 **Implementation Status:** Knots Guide CP10 CLOSED / PASS; R2 approved, promoted, pushed, and Repository Integrity/Pages validated  
 **Decision Baseline:** D037, D044, D056
@@ -189,6 +189,14 @@ Current Knot-related Decision Knowledge is implemented separately from canonical
 ## Knot task guidance
 
 `data/knot-guidance.js` owns Guide curation and discovery: `CORE_KNOT_IDS`, static Knots collections, practical task-to-Knot mappings, visible landing-task definitions, and maintained Search-intent vocabulary. These Guide/workflow fields are not canonical Knot fields.
+
+The current beginner task taxonomy is intentionally limited to three discovery contexts:
+
+- **Tie a Hook** — Improved Clinch Knot, Palomar Knot, Uni Knot, and Snell Knot.
+- **Tie a Lure, Swivel, or Snap** — Improved Clinch Knot, Palomar Knot, and Uni Knot.
+- **Tie Two Lines** — Double Uni Knot, Double Surgeon’s Knot, and Alberto Knot.
+
+**Learn Core Knots** is a curated **Start Here** destination backed by `CORE_KNOT_IDS`; it is not a peer task or an ordinary Browse category. The Core collection remains the single reusable target for that learning path but is not duplicated as a Browse card. **Get Reel Ready** owns reel-attachment workflow navigation, while Search may still resolve reel-attachment language without creating a fourth Knot task. Non-Slip Loop Knot and Dropper Loop Knot remain discoverable through Search, Browse, and Knot detail without dedicated landing task cards.
 
 ## Reel & Line Setup guidance
 

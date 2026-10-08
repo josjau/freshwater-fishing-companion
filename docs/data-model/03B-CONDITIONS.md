@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion
 
 **Document:** 03B-CONDITIONS.md  
-**Document Revision:** 0.5.1  
+**Document Revision:** 0.5.2  
 **Document Status:** Approved  
-**Implementation Status:** IMPLEMENTED / VALIDATED / CLOSED — 35 active Condition records across 8 groups  
+**Implementation Status:** IMPLEMENTED / LOCAL REVIEW PASS — 40 active Condition records across 10 groups; actual-mobile validation OPEN  
 **Decision Baseline:** D004, D056, D069
-**Last Updated:** 2026-09-14
+**Last Updated:** 2026-10-08
 
 ---
 
@@ -60,9 +60,9 @@ isActive
 
 ---
 
-# Approved V1 Vocabulary and Schema Contract
+# Original 35-Record V1 Vocabulary and Schema Contract (historical RP-A baseline)
 
-Conditions V1 uses a flat canonical vocabulary grouped by:
+The original 35-record baseline grouped Conditions as follows. This historical category list was superseded by the FCC 52A G4-RIF-1A 40-record / 10-group implementation below:
 
 - **Waterbody:** Pond, Lake, Reservoir, River, Creek / Stream.
 - **Access / Position:** Bank, Dock, Boat, Kayak.
@@ -73,7 +73,7 @@ Conditions V1 uses a flat canonical vocabulary grouped by:
 - **Season:** Spring, Summer, Fall, Winter.
 - **Light / Sky:** Bright / Sunny, Overcast, Low Light, Night.
 
-The 35-record V1 vocabulary above is locked for this production pass. No parent hierarchy is required in V1.
+The original 35-record vocabulary was locked for its historical production pass. FCC 52A supersedes its membership/grouping as approved by G4-RIF-1A. No parent hierarchy is required in V1.
 
 Every canonical Condition inherits Foundation fields plus `category`:
 
@@ -91,7 +91,7 @@ Do not add recommendation weights, Fish/Rig/Lure/Technique suitability arrays, h
 
 `Not sure` is input-state absence, not a canonical Condition. Water temperature is optional numeric recommendation context rather than a V1 Condition band.
 
-Initial input cardinality is: exactly one Waterbody and Access/Position; zero-or-one Depth/Zone, Water Clarity, Current, Season, and Light/Sky; zero-to-two Cover/Structure values; optional numeric water temperature.
+The original input cardinality (historical RP-A contract) was: exactly one Waterbody and Access/Position; zero-or-one Depth/Zone, Water Clarity, Current, Season, and Light/Sky; zero-to-two Cover/Structure values; optional numeric water temperature. Under FCC 52A, Cover / Exposure is independently constrained (Open Water exclusive with other Cover / Exposure; Light/Heavy mutually exclusive), Structure / Contour is optional multi-select, and the arbitrary combined two-item cap is retired.
 
 Wind, precipitation, barometric pressure, fronts, air temperature, and Fishing Pressure are intentionally omitted from V1 until demonstrated recommendation value justifies them.
 
@@ -184,7 +184,7 @@ Any media-specific role or ordering semantics belong to Media or an explicitly j
 
 Current production satisfies the locked Conditions contract:
 
-1. `data/conditions.js` / `CONDITION_DATA` contains the exact 35-record vocabulary across the eight approved category literals;
+1. `data/conditions.js` / `CONDITION_DATA` contains the exact G4-RIF-1A 40-record vocabulary across ten approved category literals;
 2. records use Foundation fields plus `category` only;
 3. RP-A1 remains enforced: existing Rig `conditionTags[]` is frozen transitional metadata, no new values are authored, and no Rig `conditionIds[]` or Rig↔Condition relationship exists;
 4. no blind legacy-string-to-ID migration or contextual suitability arrays were introduced;
@@ -194,9 +194,9 @@ Current production satisfies the locked Conditions contract:
 
 The runtime presentation defects discovered during the Foundation review were repaired and accepted before the Foundation closed. Detailed review chronology remains in `workstreams/RECOMMENDATION-PREREQUISITES-FOUNDATION.md` and Git history rather than this canonical domain owner.
 
-# G4-RIF-1A Approved Migration Target — PENDING IMPLEMENTATION
+# G4-RIF-1A Condition Migration — IMPLEMENTED / LOCAL REVIEW PASS
 
-The current production contract above remains authoritative until migration. G4-RIF-1A closes the Fish Recommendation-input semantic review and approves a later Conditions migration from **35 records / 8 groups** to **40 records / 10 groups** without changing Condition ownership.
+FCC 52A implements the approved Conditions migration from **35 records / 8 groups** to **40 records / 10 groups** without changing Condition semantic ownership or adding Recommendation scoring.
 
 Approved target category IDs are:
 
@@ -228,7 +228,7 @@ The approved target summary for `open-water` is:
 
 This wording deliberately allows Open Water to coexist with independent Structure / Contour observations such as Channel, Rock / Boulder Structure, Drop-off / Deep Structure, or Pool / Deep Hole.
 
-The exact Habitat↔Condition and Fish-waterbody↔Condition correspondence set is owned by `09-RELATIONSHIPS.md`. Correspondence is environmental equivalence only; it is not suitability, preference, ranking, weighting, or score. Production source, validators, categories, IDs, and UI behavior remain unchanged until an explicit migration implementation/validation step is authorized.
+The exact Habitat↔Condition and Fish-waterbody↔Condition correspondence set is owned by `09-RELATIONSHIPS.md`. Correspondence is environmental equivalence only; it is not suitability, preference, ranking, weighting, or score. FCC 52A implements the explicit ID/group mapping in `data/conditions.js` and the environmental correspondence registries in `data/environment-correspondence.js`, with validated local review and updated Repository Integrity checks. Actual deployed-device validation remains OPEN.
 
 # Future Enhancements
 

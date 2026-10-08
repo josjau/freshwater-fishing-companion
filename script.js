@@ -584,85 +584,6 @@ function getFishRigRecommendationContexts(fishId) {
         .filter(Boolean);
 }
 
-const FISH_TONGUE_REFERENCE_CONTEXTS = Object.freeze({
-    "largemouth-bass": Object.freeze({
-        traitIndex: 3,
-        page: Object.freeze({
-            id: "largemouth-bass-tongue-reference",
-            title: "Largemouth Bass Tongue",
-            summary: "Inspect the tongue inside the mouth. It usually lacks a rough tooth patch; color alone is not decisive.",
-            visualType: "fish-tongue-tooth-patch",
-            visualVariant: "none",
-            visualLabel: "Schematic Largemouth Bass tongue showing no distinct rough tooth patch.",
-            visualCaption: "Reference schematic: no distinct rough tooth patch is shown. Use the full identification-trait set rather than this cue alone."
-        })
-    }),
-    "smallmouth-bass": Object.freeze({
-        traitIndex: 3,
-        page: Object.freeze({
-            id: "smallmouth-bass-tongue-reference",
-            title: "Smallmouth Bass Tongue",
-            summary: "Inspect the tongue inside the mouth. A rough tooth patch can support the identification but should not be used alone.",
-            visualType: "fish-tongue-tooth-patch",
-            visualVariant: "rough",
-            visualLabel: "Schematic Smallmouth Bass tongue showing a rough tooth patch.",
-            visualCaption: "Reference schematic: a rough tooth patch is shown as supporting evidence, not a stand-alone identifier."
-        })
-    }),
-    "spotted-bass": Object.freeze({
-        traitIndex: 3,
-        page: Object.freeze({
-            id: "spotted-bass-tongue-reference",
-            title: "Spotted Bass Tongue",
-            summary: "Inspect the tongue inside the mouth. A rough tooth patch can support the identification but should not be used alone.",
-            visualType: "fish-tongue-tooth-patch",
-            visualVariant: "rough",
-            visualLabel: "Schematic Spotted Bass tongue showing a rough tooth patch.",
-            visualCaption: "Reference schematic: a rough tooth patch is shown as supporting evidence, not a stand-alone identifier."
-        })
-    }),
-    "white-bass": Object.freeze({
-        traitIndex: 1,
-        page: Object.freeze({
-            id: "white-bass-tongue-reference",
-            title: "White Bass Tongue",
-            summary: "Inspect the tongue inside the mouth. One round or heart-shaped tooth patch is present.",
-            visualType: "fish-tongue-tooth-patch",
-            visualVariant: "single",
-            visualLabel: "Schematic White Bass tongue showing one tooth patch.",
-            visualCaption: "Reference schematic: one tooth patch is shown. Its exact outline may appear round or heart-shaped."
-        })
-    }),
-    "striped-bass": Object.freeze({
-        traitIndex: 2,
-        page: Object.freeze({
-            id: "striped-bass-tongue-reference",
-            title: "Striped Bass Tongue",
-            summary: "Inspect the tongue inside the mouth. Two distinct parallel tooth patches are present.",
-            visualType: "fish-tongue-tooth-patch",
-            visualVariant: "double",
-            visualLabel: "Schematic Striped Bass tongue showing two distinct parallel tooth patches.",
-            visualCaption: "Reference schematic: two distinct parallel tooth patches are shown."
-        })
-    })
-});
-
-function getFishTongueReferenceContext(fishId) {
-    return FISH_TONGUE_REFERENCE_CONTEXTS[fishId] ?? null;
-}
-
-function openFishTongueReference(fishId, traitIndex, triggerElement) {
-    const context = getFishTongueReferenceContext(fishId);
-    if (!context || context.traitIndex !== traitIndex) return;
-
-    renderPagedReferencePopover({
-        eyebrow: "Fish Identification Reference",
-        pages: [context.page],
-        initialPageId: context.page.id,
-        triggerElement
-    });
-}
-
 function renderFishDetailView(appMain) {
     const fish = findRecordById(getActiveFish(), selectedFishId);
     const returnContext = peekDetailNavigationContext();
@@ -680,7 +601,6 @@ function renderFishDetailView(appMain) {
         category: getFishCategory(getFishCategoryId(fish)),
         primaryMedia: getFishPrimaryMedia(fish.id),
         relationships: getFishRelationshipContexts(fish.id),
-        tongueReference: getFishTongueReferenceContext(fish.id),
         rigRecommendations: getFishRigRecommendationContexts(fish.id),
         specializedTargeting: FISH_SPECIALIZED_TARGETING[fish.id] ?? null,
         safetyGuidance: getFishSafetyGuidance(fish.id),
@@ -696,7 +616,6 @@ function renderFishDetailView(appMain) {
             };
         },
         onCompareSelect: openFishComparisonFromDetail,
-        onTongueReferenceSelect: (traitIndex, triggerElement) => openFishTongueReference(fish.id, traitIndex, triggerElement),
         onRigSelect: openRigDetailFromFish,
         onRegulationsSelect: openRegulationsFromFish
     });
@@ -1431,7 +1350,7 @@ function renderRigGuideView(appMain) {
         },
         cards: [
             { id: "browse-all-rigs", title: "All Rigs", description: "Browse every Rig in the guide." },
-            { id: "browse-core-rigs", title: "Core Rigs", description: "Six curated setups that form a broadly useful fishing toolkit." },
+            { id: "browse-core-rigs", title: "Learn Core Rigs", description: "Start with six versatile freshwater setups that build confidence before exploring more specialized rigs." },
             { id: "browse-beginner-rigs", title: "Beginner", description: "Seven simple rigs with forgiving assembly and broad usefulness." },
             { id: "browse-beginner-plus-rigs", title: "Beginner+", description: "Five approachable rigs that require a little more setup precision." },
             { id: "browse-intermediate-rigs", title: "Intermediate", description: "Four rigs that add leader management, bottom-contact precision, and multi-component setup." },
@@ -1613,25 +1532,9 @@ function openRigDetailFromKnot(rigId) {
 }
 
 function openRigDetailFromComponentReference(rigId) {
-    const currentRig = findRecordById(RIG_DATA, selectedRigId);
-    const nextRig = findRecordById(RIG_DATA, rigId);
-    if (!currentRig || currentRig.isActive !== true || !nextRig || nextRig.isActive !== true) {
-        console.warn(`Related Rig could not be opened: ${rigId}`);
-        return;
-    }
-
-    if (currentRig.id === nextRig.id) return;
-
-    pushDetailNavigationContext({
-        route: ROUTES.RIG_DETAIL,
-        label: currentRig.name,
-        state: captureRigDetailNavigationState()
-    });
-
-    selectedRigId = nextRig.id;
-    selectedRigCollectionKey = "all";
-    resetRigDetailState(nextRig.id);
-    showView(ROUTES.RIG_DETAIL);
+    // Used In is an entity navigation, not a nested popover/Rig history step.
+    // openRigDetail establishes a fresh Rigs Guide Parent context after clearing the stack.
+    openRigDetail(rigId, "guide");
 }
 
 function openKnotDetailFromRig(knotId) {
@@ -3042,7 +2945,12 @@ function openKnotDetail(knotId, source = "guide") {
         return;
     }
 
-    clearDetailNavigationStack();
+    // Retain the originating Knot when following its Common Task result list.
+    // Parent then unwinds Detail -> Task results -> originating Detail.
+    const fromKnotDetailTask = source === "browse" &&
+        selectedKnotBrowseKey === "task" &&
+        peekDetailNavigationContext()?.route === ROUTES.KNOT_DETAIL;
+    if (!fromKnotDetailTask) clearDetailNavigationStack();
     if (source === "browse") knotBrowseState.scrollY = window.scrollY;
     else knotGuideState.scrollY = window.scrollY;
     selectedKnotId = knotId;
@@ -3065,7 +2973,11 @@ function pushCurrentKnotDetailContext(restoreFocusTarget = null) {
 
 function openKnotTaskFromDetail(taskId) {
     const task = getKnotTask(taskId);
-    if (!task || !pushCurrentKnotDetailContext(`task:${taskId}`)) return;
+    if (!task) return;
+
+    // Preserve Detail return context when available, but never make the
+    // destination action a no-op merely because context capture failed.
+    pushCurrentKnotDetailContext(`task:${taskId}`);
 
     if (taskId === "attach-line-to-reel") {
         startNewReelSetup();
@@ -3075,6 +2987,7 @@ function openKnotTaskFromDetail(taskId) {
 
     selectedKnotBrowseKey = "task";
     selectedKnotTaskId = taskId;
+    knotBrowseState = { query: "", scrollY: 0 };
     showView(ROUTES.KNOT_BROWSE);
 }
 
@@ -3094,10 +3007,12 @@ function openKnotBrowse(collectionKey, taskId = null) {
 }
 
 function renderKnotsView(appMain) {
-    const collectionCards = Object.entries(KNOT_COLLECTIONS).map(([key, collection]) => ({
-        key,
-        ...collection
-    }));
+    const collectionCards = Object.entries(KNOT_COLLECTIONS)
+        .filter(([key]) => key !== "core")
+        .map(([key, collection]) => ({
+            key,
+            ...collection
+        }));
 
     renderKnotGuideLanding(appMain, {
         tasks: KNOT_LANDING_TASK_DEFINITIONS,

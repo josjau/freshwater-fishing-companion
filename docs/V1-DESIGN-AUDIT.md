@@ -1,11 +1,11 @@
-﻿# Freshwater Fishing Companion — Version 1 Design Audit
+# Freshwater Fishing Companion — Version 1 Design Audit
 
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.47  
+**Document Revision:** 1.0.55  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-09-30
+**Last Updated:** 2026-10-08
 
 
 # Purpose
@@ -32,7 +32,7 @@ Before Version 1 design is considered complete:
 4. Validate the resulting application in a **full-size desktop web browser** and on an **actual mobile device**. Desktop-wide fixes must not regress mobile behavior, and mobile fixes must not leave full desktop layouts visually broken or poorly proportioned.
 5. Preserve readable typography, practical touch targets, accessible focus/contrast behavior, and mobile field usability.
 6. Prefer reducing duplicated content, excess padding, excess margins, unnecessary container nesting, and redundant visual treatments before shrinking typography.
-7. In any section that contains multiple peer subsections, provide a clear visual divider between adjacent subsection groups. Audit every applicable Guide and non-Guide surface; Fish Guide and Knots Guide are known current gaps, while the current Rig Guide treatment is the comparison example. Validate the final divider treatment on full desktop and actual mobile.
+7. In any section that contains multiple named peer subsections, preserve a clear group boundary using the applicable Registry hierarchy/separator treatment when it materially clarifies the sibling groups. This is a **group-boundary** rule, not a per-item-divider rule: compact related-entity/task link lists do not receive separator lines between individual links. Audit every applicable Guide and non-Guide surface and validate the final treatment on full desktop and actual mobile.
 
 
 Design target:
@@ -49,7 +49,7 @@ Beginning with the Knots Guide refinement audit, each Guide-family audit creates
 
 ## Named Visual Pattern Mapping
 
-Guide-family audits must use the canonical **Visual Pattern Registry** in `UI_STANDARD.md` continuously during discovery, not only during final visual comparison. For every visible section/element under review:
+Guide-family audits and applicable non-Guide design audits must use the canonical **Visual Pattern Registry** in `UI_STANDARD.md` continuously during discovery, not only during final visual comparison. For every visible section/element under review:
 
 1. identify the semantic role first;
 2. assign the applicable named pattern or combination of patterns;
@@ -65,7 +65,7 @@ The end-of-rebuild screenshot comparison remains required as a final cross-Guide
 
 ## Guide-Family Comparison Matrix
 
-Beginning with FCC 50B-C, Guide-family reconciliation uses one explicit comparison matrix in addition to the Visual Pattern Registry. Fish remains starting evidence, but no Guide is automatically the final answer merely because it was built first. Equivalent semantic roles are compared across Guides and the best validated shared treatment becomes the Guide-family language; domain differences require a deliberate semantic reason.
+Beginning with FCC 50B-C, Guide-family reconciliation uses one explicit comparison matrix in addition to the Visual Pattern Registry. The **Visual Pattern Registry / shared semantic contract is the authority**; no Guide is automatically the final answer merely because it was built first. The completed Rig Guide at GitHub `main` commit `a63fbd1413499d8389d147310b66ce508d407a6f` is the current validated reference implementation for equivalent shared elements after the FCC 50B audit and Actual-Mobile approval, but it is not a monolithic template. Equivalent semantic roles start from the registry treatment, while Fish, Knots, Technique, Tackle, and later surfaces retain domain-specific information architecture where their semantics differ.
 
 The comparison matrix must evaluate, where applicable:
 
@@ -81,7 +81,7 @@ The comparison matrix must evaluate, where applicable:
 | **Production implementation** | Rendered appearance plus actual markup/CSS/component ownership. | Equivalent semantics converge in implementation, not only screenshots. |
 | **Data-shape dependency** | Whether UI behavior is being driven by correct semantic data rather than field presence alone. | Data correctness/ownership issues are surfaced as findings instead of being normalized visually. |
 
-The emerging Guide-family information architecture is **Detail Identity → visible primary task content → About/context knowledge → More Help/support**. This is a reconciliation model, not a requirement that every Guide expose all four layers or identical sections. Final family-level locking occurs only after the planned Rigs/Fish/Knots reconciliation passes validate the model.
+The emerging Guide-family information architecture is **Detail Identity → visible primary task content → immediate task verification/Safety when applicable → About/context knowledge → More Help/support and/or standalone Sources & References when applicable**. This remains a Guide-family reconciliation model only, not a requirement that every Guide expose every layer or identical sections and not a template for non-Guide pages. Safety may remain an independent visible block at the semantically appropriate point; Sources & References may stand alone rather than being forced into More Help. Empty architecture layers are omitted instead of preserved for symmetry. For non-Guide surfaces, apply only matrix dimensions and registry patterns that truthfully match the user-facing semantic role. Section/component treatment follows semantic role rather than field name, record type, source schema, or page label.
 
 
 ## Guide Data & Evidence Sweep Standard
@@ -109,6 +109,75 @@ The three-Guide convergence verifies information architecture, Visual Pattern Re
 This bounded sequence occurs before Technique under the current roadmap revision. It does **not** replace the later full Reference Knowledge Cohesion Review after Technique, Regulations, and Tackle are established, nor the final Version 1 site-wide design audit.
 
 
+## Approved Fish / Rig / Knot Detail Convergence Map - 2026-10-06
+
+**Status:** APPROVED / REVISION ALLOWED - FCC 52A-F desktop side-by-side Guide comparison.
+
+This map applies the Comparison Matrix to the current Fish, Rig, and Knot Detail layouts. It is the required implementation/review mapping for the next convergence correction pass. The Registry in `UI_STANDARD.md` remains the presentation authority; this section records where each current Guide section maps and which validated surface is the working reference.
+
+### Shared detail rules established by the comparison
+
+- **Standard Detail List:** use the colored marker treatment demonstrated by Fish **Key Identification Traits** and the current Knot detail lists.
+- **Safety / Warning Block:** safety body guidance is intentionally non-bulleted.
+- **Contextual Recommendation Row:** Fish **Rigs to Start With** is the reference baseline. On desktop, keep the established approximately two-thirds content-width measure rather than stretching rows to fill the page.
+- **Contextual Reference Cue / Surface:** every visible `ⓘ` opens an applicable contextual popover/reference surface with additional information for that exact term.
+- **Internal relationships:** canonical referenced text is followed closely by an explicit adjacent action such as `Compare →`, `View Rig →`, `View Knot →`, or `View Knots →`. The action label + arrow use the same accent color as shared detail-list markers and ordered-step numbers and are not pushed to the far-right edge. Compact relationship lists do not use per-item separator lines.
+- **External destinations:** preserve the source/media identity and use the adjacent action `Visit Site ↗`. Do not substitute internal `→` grammar, oversized source rows, or decorative full-width bands.
+- **Disclosure body hierarchy:** when an expanded disclosure contains a named internal content group, give that content a meaningful nested-subsection title instead of duplicating the outer disclosure label. Existing meaningful peer titles already satisfy this rule.
+- **Knot Detail Reel Setup:** Knot Detail does not display passive **Current Reel Setup** context.
+
+### Fish Detail - substantially accepted reference
+
+| Top-down Fish section | Matrix role | Registry mapping / baseline | Disposition |
+| --- | --- | --- | --- |
+| **Fish ID** | Detail Identity | **Detail Identity Header** | **KEEP / REFERENCE** - legitimate scientific name, family, aliases, and primary identification media remain Fish-specific identity content. |
+| **How to Identify This Fish** | Primary visible task | **Section / Subsection Hierarchy + Standard Detail List** | **KEEP / REFERENCE** - **Key Identification Traits** establishes the shared colored-bullet list treatment. |
+| **Safety & Handling** | Independent Safety content | **Safety / Warning Block** | **KEEP / REFERENCE** - conspicuous non-bulleted body guidance. |
+| **About This Fish** | About/context knowledge | **Disclosure Group + Section / Subsection Hierarchy** | **KEEP**. |
+| **Habitat & Water** | About/context Reference Knowledge | **Peer Subsection Group + Contextual Reference Cue / Surface** | **KEEP / REFERENCE** - Habitat/Common Waters terms with `ⓘ` remain functional Reference interactions. |
+| **Rigs to Start With** | Context-owned recommendation | **Contextual Recommendation Row** | **KEEP / PRIMARY REFERENCE** for recommendation-row hierarchy, reason text, action treatment, and constrained desktop measure. |
+| **Similar Fish** | Related internal knowledge/navigation | **Compact Internal Link List / internal relationship grammar** | **KEEP / REFERENCE** for lightweight relationship density; preserve explicit adjacent `Compare →` navigation. |
+
+Fish semantic/content approval remains intact. This convergence pass should make only concrete pattern-parity corrections demonstrated by the Matrix/Registry comparison.
+
+### Rig Detail - approved convergence target
+
+| Top-down Rig section | Matrix role | Registry mapping / baseline | Approved disposition |
+| --- | --- | --- | --- |
+| **Rig ID** | Detail Identity | **Detail Identity Header** | **KEEP** shared shell/classification hierarchy. |
+| **What You Need** | Primary visible task / readiness | **Section / Subsection Hierarchy + Semantic Status Panel + Contextual Reference Cue / Surface** | **KEEP** Rig-specific checklist interaction; every `ⓘ` remains functional. |
+| **Safety** | Independent Safety content | **Safety / Warning Block** | **CHANGE** - remove list bulleting; use non-bulleted Safety body guidance. |
+| **How to Build It** | Primary visible task | **Section / Subsection Hierarchy** | **KEEP** parent task section. |
+| **Knot Guidance > Knots You'll Tie** | Context-owned recommendation | **Contained Disclosure Row + Contextual Recommendation Row** | **CHANGE** - use Fish **Rigs to Start With** as the recommendation-row baseline and retain the approximately two-thirds desktop measure. |
+| **Build Steps** | Sequential instruction | **Ordered Instruction Steps** | **KEEP**. |
+| **Rig Tutorial** | Instructional support / external media destination | **Contained Disclosure Row + external-link grammar** | **CHANGE** outbound action to shared `Visit Site ↗` treatment. |
+| **Check Your Rig** | Immediate task verification | **Section / Subsection Hierarchy + Standard Detail List** | **ADD / MOVE** immediately after **How to Build It**. Move **Common Mistakes** here under its named nested subsection. Use shared colored list markers. Do **not** invent Final Checks merely to mirror Knots; add them only if independently supported later. |
+| **About This Rig** | About/context knowledge | **Disclosure Group + Section / Subsection Hierarchy** | **KEEP / REFINE**. Move **Setup Notes** here from More Help and render them with the shared colored Standard Detail List treatment. |
+| **Rig Overview > Use It For** | About/context explanatory knowledge | **Peer Subsection Group + Standard Detail List** | **ALIGN** to shared colored list-marker treatment. |
+| **Rig Overview > Good Conditions / Techniques** | About/context Reference Knowledge | **Peer Subsection Group + Contextual Reference Cue / Surface** | **KEEP**; each `ⓘ` opens applicable contextual information. |
+| **More Help** | Optional support layer | **Disclosure Group** | **REMOVE WHEN EMPTY** after Setup Notes/Common Mistakes move; do not retain an empty group for cross-Guide symmetry. |
+| **Sources & References** | Evidence/provenance support | **Reference / Source Links** | **MOVE / CHANGE** to a standalone top-level section matching Knot architecture; each source uses normal source density plus adjacent `Visit Site ↗`. |
+
+### Knot Detail - approved convergence target
+
+| Top-down Knot section | Matrix role | Registry mapping / baseline | Approved disposition |
+| --- | --- | --- | --- |
+| **Knot ID** | Detail Identity | **Detail Identity Header** | **CHANGE** classification/category visual language to the shared identity hierarchy; remove Knot-only identity-rail treatment. Core/difficulty remains subordinate classification text. |
+| **How to Tie It** | Primary visible task | **Section / Subsection Hierarchy** | **KEEP / REFINE**. |
+| **Visual Guide / Tying Animation** | Instructional media support | **Section / Subsection Hierarchy + media-owned treatment + external-link grammar** | **CHANGE** — written **TYING STEPS** remain the primary instruction. Supporting visual instruction moves under **BUILD SUPPORT** with **TYING ANIMATION** as the named subsection where applicable; **Visual Guide** + media-type chip share one line, followed by the named provider/source with adjacent `Visit Site ↗`. Do not retain or create a standalone Knot-only decorative Visual Guide container. |
+| **TYING STEPS** | Sequential instruction | **Section / Subsection Hierarchy + Ordered Instruction Steps** | **KEEP**. |
+| **Check Your Knot** | Immediate task verification | **Section / Subsection Hierarchy + Standard Detail List** | **KEEP / ALIGN** - **FINAL CHECKS** and **COMMON MISTAKES** remain named subsections using the shared colored markers. |
+| **About This Knot > Best For** | About/context explanatory knowledge | **Disclosure Group + Section / Subsection Hierarchy + Standard Detail List** | **CHANGE** expanded content to a meaningful internal subsection title such as **RECOMMENDED USES**, followed by the colored Standard Detail List. Do not duplicate **Best For** verbatim as the nested title. |
+| **About This Knot > Line Compatibility** | About/context Reference Knowledge | **Disclosure Group + Section / Subsection Hierarchy + Contextual Reference Cue / Surface** | **ALIGN** with a meaningful internal subsection title such as **COMPATIBLE LINE TYPES**; every line-type `ⓘ` opens applicable contextual information. Keep each compatibility entry/pairing on one line when width permits and wrap only between complete entries. A material relationship is not navigation: use neutral wording such as `Braid ⓘ to Fluorocarbon leader ⓘ`, not navigation arrow `→`. |
+| **About This Knot > Where You'll Use It > Common Tasks** | Related internal task/workflow navigation | **Peer Subsection Group + Compact Internal Link List** | **CHANGE** to the approved divided-row variant with a restrained tan separator between complete items. Ordinary Knot-task destinations reuse the canonical task title plus adjacent `View Knots →`; Arbor **Attach Line to a Reel** is the workflow exception and uses adjacent workflow-semantic `Get Reel Ready →`. Every visible action must navigate to its actual task/workflow destination. |
+| **About This Knot > Where You'll Use It > Rigs That Use This Knot** | Related internal entity navigation | **Peer Subsection Group + Compact Internal Link List** | **CHANGE** to the approved divided-row variant with canonical Rig text + adjacent `View Rig →` and a restrained tan separator between complete items. Preserve the documented high-cardinality rule: show up to two Rig relationships initially, then `See all N rigs` / `Show fewer` with the existing focus/viewport-restoration behavior. |
+| **Knot Detail passive Current Reel Setup** | Host workflow context | **Reel Setup Workflow Context** | **OMIT** - Knot Detail is not an approved host for passive Current Reel Setup. This does not by itself remove a separately approved factual Arbor workflow relationship/handoff. |
+| **More Help > When to Choose Another Knot** | Support/explanatory knowledge | **Disclosure Group + Section / Subsection Hierarchy + Standard Detail List** | **ALIGN** expanded content to a meaningful internal subsection title such as **WHEN TO SWITCH**, followed by the colored Standard Detail List. |
+| **Sources & References > Verified References** | Evidence/provenance support | **Reference / Source Links** | **CHANGE** to normal source/list density; remove oversized/banded link treatment and excess row spacing; each source keeps its identity followed by adjacent `Visit Site ↗`, with the shared restrained tan separator between repeated source rows. Keep Sources & References as a standalone top-level section. |
+
+The exact nested-subsection microcopy remains revision-allowed, but the approved semantic hierarchy does not. The next implementation pass must map every changed visible element to this table and to the current Registry before writing CSS/renderer code.
+
+
 ## Discussion-to-Approval Documentation Batching
 
 Guide/audit discussion should remain discussion until the user explicitly approves the checkpoint/gate or explicitly requests an immediate documentation update. Do **not** perform incremental Drive/documentation writes for each small discovery, preference, or refinement during an active discussion merely to preserve it. Hold those decisions in the active conversation and consolidate them into the next approval-gate documentation pass.
@@ -126,7 +195,7 @@ The temporary audit file must:
 - record every discovered actionable item with one explicit disposition such as **BUILD REQUIRED**, **BUILD TEST REQUIRED**, **VERIFY ONLY**, **DOC UPDATE**, **DEFERRED — named owner/gate**, or **CLOSED / PASS**;
 - capture approved decisions and newly discovered defects/carry-forward items at each approval gate rather than relying on later chat reconstruction;
 - retain source-owner/file-scope and validation requirements as they become known;
-- explicitly inherit and verify the current **Guide-family baseline** from `UI_STANDARD.md` for every equivalent component instead of depending on chat memory. For collection/browse cards, the audit must specifically carry the approved Fish grammar: **title + `Browse →` heading row, description below, whole-card interaction, lighter non-pill action, and left-aligned action wrap when the row no longer fits**; any exception must be deliberate, documented, and semantically justified;
+- explicitly inherit and verify the current **Visual Pattern Registry / shared semantic baseline** from `UI_STANDARD.md` for every equivalent component instead of depending on chat memory. For collection/browse cards, carry the registry-owned shared grammar: **title + `Browse →` heading row, description below, whole-card interaction, lighter non-pill action, and left-aligned action wrap when the row no longer fits**; any exception must be deliberate, documented, and semantically justified;
 - provide the implementation-scope lock/checklist before production work begins;
 - remain the line-by-line implementation/browser-validation closure checklist until every required item is implemented and validated or explicitly re-dispositioned; and
 - be retired/deleted after final Guide closeout only after durable decisions and non-closed carry-forward items have been promoted to their proper canonical owners.
@@ -134,13 +203,13 @@ The temporary audit file must:
 
 This standard exists specifically to prevent approved audit findings from being lost between discovery, build, browser review, and closeout. Tackle Guide, Technique Guide, Rig Guide, and later comparable Guide audits inherit this rule unless a future explicit governance decision replaces it.
 
-The same inheritance rule applies to **validated Fish baseline treatments**. Once an equivalent Fish component treatment is approved and promoted into `UI_STANDARD.md`, later Guide audits must start from that baseline, include an explicit verification/action item in their temporary audit file, and carry it through build/browser validation. Future Guide audits may challenge the baseline when their domain semantics justify a different treatment, but they may not silently omit it because a later chat failed to remember the Fish decision.
+The same inheritance rule applies to **all validated registry patterns**, regardless of which page first demonstrated them. Once a treatment is promoted into `UI_STANDARD.md`, later Guide and applicable non-Guide audits start from that shared contract, include an explicit verification/action item, and carry it through build/browser validation. The completed Rig Guide at `a63fbd1413499d8389d147310b66ce508d407a6f` is the current broad reference implementation for equivalent shared elements; use it as implementation evidence, not as a requirement to duplicate Rig-specific structure. A later validated surface may improve a shared pattern only by reconciling that improvement back into the registry.
 
 
-# Fish Guide Baseline — Validated
+# Fish Guide — Validated Historical Implementation Evidence
 
 
-Fish Guide Production Wave 1 was user-approved after mobile validation. Waves 2–4 subsequently validated additional Fish presentation refinements. The Fish Guide milestone is now closed; these Fish-specific results are established working standards unless the later site-wide audit demonstrates a cross-domain reason to normalize presentation without changing Fish semantic content.
+Fish Guide Production Wave 1 was user-approved after mobile validation. Waves 2–4 subsequently validated additional Fish presentation refinements. The Fish Guide milestone is now closed. This section preserves Fish-specific validated implementation evidence and historical decisions; it is **not** the current cross-domain presentation authority. Reusable treatments are governed by the Visual Pattern Registry in `UI_STANDARD.md`, while the later site-wide audit may still normalize equivalent presentation without changing Fish semantic content.
 
 
 - Common Carp, Freshwater Drum, and Paddlefish selection-card image framing is approved.
@@ -679,7 +748,7 @@ The canonical Habitat migration is **OUT OF SCOPE**. If the transitional Fish Ha
 The following bounded implementation/browser-review decisions intentionally remain open and must be decided from the actual build rather than guessed: Compare landing card normal width vs row span; desktop Search full width vs approximately 720px max; desktop Fish results two vs three columns; exact standard/special accent assignments; pill vs lighter action treatment; disclosure styling/spacing/prose measure/transition treatment; Habitat & Water one vs two internal desktop columns; scoped chooser heading-only anchor vs one compact current-Fish image; and pair-comparison image geometry/transition point/dividers/spacing/typography/narrow fallback.
 
 
-Explicitly outside this implementation package are the canonical Habitat migration; new Fish species/facts/relationships/Fish-to-Rig recommendations; media acquisition/replacement or broad reframing; other Guide redesigns; Regulations picker redesign; What Should I Throw/My Tackle changes; Dashboard/branding/Guide-decoration work; Theme/Light/Dark work; broad site-wide responsive cleanup; and broad `script.js`/`view-renderer.js` module splitting.
+Explicitly outside this implementation package are the canonical Habitat migration; new Fish species/facts/relationships/Fish-to-Rig recommendations; media acquisition/replacement or broad reframing; other Guide redesigns; Regulations picker redesign; What Should I Throw/My Tackle changes; Dashboard/branding/Guide-decoration work; Theme/Light/Dark work; broad site-wide responsive cleanup; and broad `script.js`/`view-renderer.js` module splitting. **Scope note:** this sentence records the historical FCC 48I Fish package boundary only; it does not exclude the later FCC 52A-F bounded Dashboard action/link-language correction approved during Guide-detail convergence.
 
 
 Any production file outside the 12-owner set is **READ/VERIFY ONLY** unless an implementation defect demonstrates a specific dependency and that dependency receives a separate disposition before editing.
@@ -802,6 +871,13 @@ At minimum inventory these semantic component classes:
 For each component class, identify all implementations across Fish, Rigs, Knots, Tackle, Reel Setup, Dashboard/landing pages, and any additional implemented Version 1 domains.
 
 
+### Persistent Page Navigation control sizing — REQUIRED UX AUDIT
+
+The final UX audit must evaluate the successful **compact visual sizing** currently used to accommodate selected long-name Parent/Home navigation states as the universal visual-size candidate for equivalent Persistent Page Navigation controls. Equivalent navigation controls should not visibly change size only because a particular destination name is longer.
+
+Validate the compact candidate across ordinary and long-name Parent/Home states on desktop and actual mobile. Preserve the approved navigation semantics, clear focus treatment, readable labels/wrapping, and a practical touch/click target even if the visible control chrome becomes uniformly smaller. If the compact visual treatment cannot preserve those interaction requirements universally, document the specific constraint rather than retaining unexplained entity-name-specific sizing.
+
+
 ## Guide-Family Side-by-Side Visual-Language Reconciliation — REQUIRED
 
 
@@ -820,12 +896,48 @@ Chip/pill use must be **deliberate and sparse**. A chip is not retained merely b
 Known comparison findings that must be included in this audit even if they are corrected earlier:
 
 
-- **Fish Detail — Current Reel Setup:** after the bounded Fish Detail Reel Setup decision is made, verify the resulting choice whether Reel Setup context is added or deliberately omitted. Confirm the decision is coherent with the tested Rigs pattern and does not create unexplained Guide-family inconsistency.
+- **Detail Reel Setup host decision:** preserve the settled host rule: Fish Detail and Rig Detail may show passive **Current Reel Setup** in the approved top utility context; Knot Detail omits passive Current Reel Setup. Verify the implementation does not reintroduce Knot-only workflow context or unexplained cross-Guide drift.
 - **Fish Detail — Compare Fish:** `View Comparison Fish` currently mixes chip and link visual language. Reconcile it to the approved link/component grammar.
 - **Fish Detail — Habitat & Water:** when Habitat and Common Water render as desktop side-by-side peer subsections, provide the approved subsection divider between them; preserve appropriate stacked/mobile behavior.
 - **Knots Detail — Sources & References:** source/reference destinations must use the standard link language rather than button-like formatting.
-- **Knots Detail — How to Tie It / Visual Guide:** Visual Guide should not be wrapped in an unnecessary container. Review the `Visual Guide` wording and its Reference-type chip on the same line, subject to final responsive validation.
-- **Knots Detail — Numbered Tying Steps:** use the same visual treatment family as Visual Guide so the two instructional aids read as peers, while preserving their different content semantics.
+- **Knots Detail — How to Tie It / Build Support / Tying Animation:** preserve **TYING STEPS** as the primary written instruction. Supporting visual instruction uses the Rig Tutorial structural reference: **BUILD SUPPORT** → **TYING ANIMATION** → **Visual Guide** + media-type chip on one line → named provider/source with adjacent `Visit Site ↗`. Do not retain or create a standalone Knot-only decorative Visual Guide container.
+- **Knots Detail — TYING STEPS:** preserve the approved nested-subsection hierarchy and **Ordered Instruction Steps** treatment; keep instructional media and ordered text visually coherent without implying that media and text must share identical mechanics.
+
+### FCC 52A-I — Current Convergence Scope Clarifications
+
+**Status:** APPROVED / REVISION ALLOWED — applies to the active FCC 52A-F Guide Detail Convergence review cycle.
+
+- **Dashboard action treatment is in scope.** Remove legacy bottom chip-style actions on the touched Dashboard cards and use the shared lightweight internal-link grammar adjacent to the card title, with the description below. Current explicit examples are **Regulations — Browse a State →**, **Fish Guide — Browse Fish →**, and **Knots Guide — Browse Knots →**. Remaining Dashboard action labels must describe their actual destinations rather than defaulting to generic `Browse`. This does **not** pull Dashboard branding, decorative imagery, or broader visual-flair redesign into FCC 52A-F.
+- **Fish tongue/tooth-patch Reference interaction is deferred.** No new tongue-patch media is part of FCC 52A-F R3. Do not render a tongue/tooth-patch `ⓘ`, Reference Link, or contextual Reference popover for the affected Fish identification traits in R3. Largemouth Bass therefore has no no-patch Reference surface. Smallmouth Bass and Spotted Bass may retain factual rough-tongue-patch wording only as supporting identification guidance, explicitly not as a stand-alone identifier, without a contextual Reference trigger. Reconsider tongue-patch media and Reference interaction only at the late complete-build / final UX phase unless separately reauthorized.
+- The TPWD bass-identification publication remains evidence/reference material only at this stage; FCC 52A-F R3 does not authorize image extraction, cropping, production media integration, or a new Reference surface from that publication.
+
+
+### FCC 52A-K — R4 Browser Defects / Cumulative R5 Review Correction
+
+**Status:** APPROVED / REVISION ALLOWED — R4 local Repository Integrity PASS 25/25; R4 browser defects require R5 correction. No production/source promotion or FINAL-LOCAL/commit/push.
+
+- **Shared navigation:** Reuse exactly one shared floating/sticky `.page-navigation-group` on each non-Dashboard view; Root = `← Home`; Nested/Detail = `← Parent` + `Home` together in that group. Controls must not become separately outlined/stacked pills or duplicate/nested shells. Parent returns to the originating route with prior state/scroll/focus where applicable; Home clears return context. Reel Setup retains step-aware Previous/Home semantics in the same shared shell.
+- **Knot relationship controller contract:** Common Tasks use the canonical task identifier, Rig links the canonical Rig identifier. Both must navigate and preserve the origin-aware return path, rather than rendering dead links.
+- **Arbor workflow:** `Attach Line to a Reel` is a distinct workflow relationship, using shared Workflow semantic `Get Reel Ready →` presentation and routing to Reel Setup; never ordinary `View Knots →`.
+- **Rig progressive disclosure:** `Rigs That Use This Knot` initially renders a maximum of two visible Rig relationships. `See all N rigs` reveals the hidden remainder; `Show fewer` hides them again, preserves keyboard focus, and restores the relationship-group viewport without sticky navigation obstruction.
+- **Divided rows:** Knot Common Tasks/Rigs That Use and Rig Component Reference `Used In`/`Related Components` use light-tan (not gold/action) separators between individual rows. Maintain the shared compact-link/nested-heading language; no gray row bands and no trailing divider.
+- **Scope:** cumulative R5 keeps the exact R4 twelve repository paths and no deletions. New runtime corrections target `view-renderer.js`, `script.js`, `forest-journal.css`, and `tools/validate_repository_integrity.js`; semantic-owner updates target this audit and `docs/UI_STANDARD.md`. R1-owned other files plus R4 data/HTML/04-KNOTS state are preserved. R5 must reproduce immutable expanded R1 plus cumulative documented approved corrections and verified new dependencies; R2 rejected, R3/R4 review evidence only.
+
+### FCC 52A-J — R3 Review Reconciliation / R4 Target
+
+**Status:** APPROVED / REVISION ALLOWED — R3 LOCAL REVIEW COMPLETE / R4 PRE-BUILD RECONCILIATION.
+
+- **Dashboard:** preserve the destination-specific lightweight title-row actions from R3, but restore Dashboard/main-card geometry: the action is right-aligned in the title row when it fits and remains right-aligned if content-fit moves it to a second line. This does not change the separate Guide browse-card wrapped-action rule.
+- **Fish Guide:** R3 user review PASS; no new Fish correction enters R4 from this review pass.
+- **Knot landing task identity:** canonical visible task names are **Tie a Hook**, **Tie a Lure, Swivel, or Snap**, and **Tie Two Lines**. These supersede the shortened `Hook` / `Lure` / `Lines` labels and the older `Tie On...` / `Connect Two Lines` wording. Reuse the canonical titles rather than maintaining a second landing-only naming set.
+- **Core visual language:** Knot/Rig cards that expose Core metadata use the same Core semantic split already accepted on Rig Detail identity: only `CORE KNOT` / `CORE RIG` uses the Core color; separator/difficulty/other metadata retains normal metadata treatment.
+- **Knot Line Compatibility:** keep complete entries/pairings inline when width permits; wrap only between complete entries as needed. Navigation arrow `→` is not a material-relationship delimiter; use neutral `to` wording for braid-to-leader pairings.
+- **Knot Where You'll Use It:** Common Tasks and Rigs That Use This Knot use the Compact Internal Link List divided-row variant with restrained tan separators. Ordinary Common Tasks navigate to the actual Knot task result; Arbor `Attach Line to a Reel` hands off to **Get Reel Ready →** using Workflow semantics. `Rigs That Use This Knot` keeps the documented two-Rig initial threshold and `See all N rigs` / `Show fewer` behavior.
+- **Knot/Rig Sources & References:** remove excess source-row spacing and use the shared restrained tan separator between repeated source rows while preserving named source + adjacent `Visit Site ↗` grammar.
+- **Rig Component Reference Popover:** restore the shared nested-subsection/reference presentation. `Used In` / `Related Components` keep the group headings and remove gray filled/banded per-item treatment; FCC 52A-K supersedes the R4 group-level-only division rule with a light-tan separator between individual rows. Preserve Rig navigation, in-reference Related Component traversal, Back behavior, focus restoration, and scroll containment.
+- **Rig Build Steps / Knot Guidance accuracy:** `assemblyStepIndex` remains the connection-to-step owner and `recommendedKnotIds[]` remains the sole Rig→Knot relationship owner. Build-step Knot options and Knots You'll Tie must derive from the same relationship set. Snell is a broad **Tie a Hook** discovery option, but Rig build guidance remains contextual; do not add Snell mechanically to every component that contains a hook.
+- **Bounded Snell relationship correction:** add **Snell Knot** to exactly these six generic Fishing Hook / bait-hook connections: **Fixed Bobber Rig — Main line to hook; Slip Bobber Rig — Main line to hook; Basic Bottom Rig — Leader to hook; Live-Bait Slip-Sinker Rig — Leader to hook; Three-Way Rig — Hook leader to hook; Split-Shot Bait Rig — Main line to hook**. Do not add Snell to swivel connections, jighead connections, offset-worm-hook connections, Wacky/Neko/Drop Shot finesse-hook connections, or Weighted Swimbait Hook connections merely because Snell is physically possible. Preserve Drop Shot's Palomar-only orientation rule.
+- **Punch / Pegged Texas Rig Snell boundary:** Snell evidence supports suitable straight-shank/flipping-hook geometry, but the current canonical Punch representation uses `offset-worm-hook` and does not model a dedicated straight-shank/flipping-hook concept. Keep FCC 52A R4 bounded: do **not** add Snell to Punch in this Build Unit. Carry the hook-model correction forward to the applicable Rig/Tackle data-model review rather than expanding R4. `data/rigs.js` remains the only new production-data dependency required by the bounded Snell correction.
 
 
 # Deferred Findings From Fish Wave 1 Mobile Review
@@ -837,7 +949,9 @@ The findings below are intentionally preserved for the final audit. Unless marke
 ## 1. Rig — What You Need
 
 
-**Status:** AUDIT / TRIAL REQUIRED
+**Status:** PARTIAL FCC 52A-F IMPLEMENTATION / MOBILE DENSITY TRIAL DEFERRED
+
+**FCC 52A-F disposition:** The contextual-reference cue portion is now governed by `UI_STANDARD.md`: place the functional `ⓘ` immediately adjacent to the exact component term, preserve the enlarged invisible hit area and focus-return contract, and keep the control visually distinct from readiness state. FCC 52A-F verifies this cue/popover alignment while touching Rig Detail. The broader one-column-versus-two-column mobile density trial remains a later actual-device UX item and is not required for this convergence candidate.
 
 
 - Place the contextual-information `ⓘ` immediately after the component name instead of aligning it at the far right of the row.
@@ -851,15 +965,18 @@ The findings below are intentionally preserved for the final audit. Unless marke
 ## 2. Component Popover — Used In / Related Components
 
 
-**Status:** AUDIT / VISUAL COMPARISON REQUIRED
+**Status:** FCC 52A-F IMPLEMENTATION / ACTUAL-MOBILE VALIDATION LATER
+
+**FCC 52A-J R4 historical disposition (separator clause superseded by FCC 52A-K):** The former pill/chip-versus-compact-link trial remains superseded by the Visual Pattern Registry. `Used In` and `Related Components` use the shared nested-subsection hierarchy and each canonical destination retains an adjacent action; no gray per-item bands or far-edge arrow. `Used In` navigates to the referenced Rig; Related Components preserve in-surface Back traversal.
+
+**FCC 52A-K R5 superseding disposition — APPROVED / REVISION ALLOWED:** Preserve those group headings and the shared compact internal-link grammar, but insert a **light-tan—not gold—separator between each successive `Used In` relationship row and each successive `Related Components` row**. No gray per-item bands, no trailing divider, no detached far-edge arrows. Use the Registry divided-row variant rather than a new popover-only pattern.
 
 
 - `Used In` must link to referenced canonical Rigs.
 - Related-component navigation must allow movement inside the existing contextual-information flow and provide a Back path to the prior component; users should not have to close the popover to recover context.
 - `Used In` and `Related Components` should have a shared, stronger subsection-heading treatment and a subtle divider that identifies the **group**.
-- Individual linked items inside a group should not each receive their own divider.
+- Individual linked items inside each `Used In` or `Related Components` group receive the FCC 52A-K light-tan divided-row treatment; earlier no-divider trial is superseded.
 - Compact text-link trial: left-align the destination label and place the internal-navigation icon immediately after the label; do not right-align the arrow at the far edge of the row.
-- Pill/chip comparison: use one representative Rig/component popover to compare pill/chip relationship links against compact text links on an actual mobile device. The user prefers the visual appearance of pills but does not want their space cost assumed acceptable without the comparison.
 - Slight popover typography/spacing reduction may be tested, but readability and touch interaction take precedence.
 - Instructional copy for component help must point to the actual `ⓘ` control rather than telling the user to select the item name.
 
@@ -867,7 +984,9 @@ The findings below are intentionally preserved for the final audit. Unless marke
 ## 3. Link Language and Semantics
 
 
-**Status:** ARROW GLYPH / WEIGHT STANDARD APPROVED / BROADER STANDARDIZATION REQUIRED
+**Status:** REGISTRY STANDARD ESTABLISHED / FCC 52A-F IMPLEMENTATION FOR TOUCHED SURFACES
+
+**FCC 52A-F disposition:** `UI_STANDARD.md` now owns the broader grammar. Internal relationship navigation uses canonical referenced text followed closely by an explicit adjacent action such as `View Rig →`, `View Knot →`, `View Knots →`, or `Compare →`; external evidence/media destinations use named source/destination text followed by adjacent `Visit Site ↗`; `ⓘ` is reserved for contextual reference. FCC 52A-F applies this standard to the touched Fish/Rig/Knot and Reference Popover surfaces. The final site-wide audit still verifies untouched surfaces but does not reopen the grammar itself.
 
 
 The application needs one recognizable cross-domain link grammar.
@@ -886,30 +1005,15 @@ Wave 2 desktop/mobile review validates these directional-icon semantics:
 - Directional glyphs should be separately wrapped/styled so arrow weight can remain consistent without unnecessarily changing the destination-label typography.
 
 
-The remaining audit work is to formalize the broader visual grammar:
-
-
-- Internal knowledge/navigation links use one consistent internal color family/treatment.
-- External links use a visually distinct external color/treatment.
-- Link **semantics** must remain recognizable even when the space-appropriate visual shape differs.
-
-
-The audit must deliberately decide where each of these shapes belongs:
-
-
-- card — major destination/workflow,
-- pill/chip — compact categorical/contextual item or deliberately chosen compact related-knowledge link,
-- compact text link — dense related-content lists,
-- ordinary inline link — prose/contextual navigation.
-
-
-Do not use shape alone to distinguish internal vs external destinations.
+Residual final-audit work is verification-only for untouched surfaces: confirm that established internal, external, workflow/card, compact-link, and contextual-reference roles have been applied consistently. Shape alone must not be used to distinguish internal versus external destinations.
 
 
 ## 4. Group/Subsection Heading Treatment
 
 
-**Status:** STANDARDIZATION REQUIRED
+**Status:** REGISTRY STANDARD ESTABLISHED / FCC 52A-F IMPLEMENTATION
+
+**FCC 52A-F disposition:** The shared nested-subsection treatment in `UI_STANDARD.md` is authoritative: meaningful smaller uppercase group title, restrained shared accent, and separator line beneath the title before content when a parent section/disclosure contains named peer groups. Do not repeat the outer disclosure label as a meaningless inner heading.
 
 
 The Knot **Best For** area currently demonstrates a cleaner hierarchy by visually differentiating subsection labels such as:
@@ -926,7 +1030,9 @@ Carry this concept into the audit. Reusable group headings such as `Used In`, `R
 ## 5. Knot Detail — Relationship-Link Consistency
 
 
-**Status:** AUDIT REQUIRED
+**Status:** FCC 52A-F IMPLEMENTATION
+
+**FCC 52A-J superseding disposition:** `Common Tasks` and `Rigs That Use This Knot` map to **Peer Subsection Group + Compact Internal Link List** using the Registry's approved divided-row variant. They use canonical destination text plus adjacent internal actions and a restrained tan separator between complete items. Ordinary Common Tasks use `View Knots →`; Arbor `Attach Line to a Reel` uses workflow-semantic `Get Reel Ready →`. `Rigs That Use This Knot` preserves the two-Rig initial density and `See all N rigs` / `Show fewer` behavior for high-cardinality relationships.
 
 
 Current Knot detail mixes relationship-link patterns in the same information area: Line Compatibility/Common Tasks use pill-style linking while Rigs That Use This Knot uses another treatment.
@@ -941,7 +1047,9 @@ The final audit must reconcile these based on semantic role and mobile density r
 ## 6. Rig — Knots You'll Tie
 
 
-**Status:** AUDIT REQUIRED
+**Status:** FCC 52A-F IMPLEMENTATION
+
+**FCC 52A-F disposition:** This surface maps to **Contained Disclosure Row + Contextual Recommendation Row**. Fish `Rigs to Start With` is the shared baseline for row hierarchy, adjacent action, reason/context text, and approximately two-thirds desktop measure. Connection/application wording remains context, while canonical Knot names are the internal destinations.
 
 
 Current implementations are inconsistent:
@@ -967,7 +1075,9 @@ Context labels and navigation targets should not become visually interchangeable
 ## 7. Information-Section Border / Accent Grammar
 
 
-**Status:** AUDIT REQUIRED
+**Status:** PARTIAL FCC 52A-F IMPLEMENTATION / BROADER SEMANTIC AUDIT REMAINS
+
+**FCC 52A-F disposition:** For Guide Detail identity, the Registry now settles the relevant question: Core/priority is classification inside the shared neutral **Detail Identity Header**, not permission for a Guide-specific identity rail or alternate shell. FCC 52A-F removes the Knot-only identity-rail treatment. Broader non-identity accent/border semantics outside the touched surfaces remain part of the final site-wide audit.
 
 
 Fish now uses plain/basic borders for normal information sections, while many Rig and Knot sections still use left-side accent/bloom treatment, especially on Core records.
@@ -993,7 +1103,9 @@ Audit hypothesis: **Core** describes the importance of the knowledge record and 
 ## 8. Knot Opening-Description Consistency
 
 
-**Status:** FULL KNOT AUDIT REQUIRED
+**Status:** FCC 52A-F IMPLEMENTATION / FULL-KNOT REGRESSION CHECK
+
+**FCC 52A-F disposition:** All Knot Detail records use the shared **Detail Identity Header** composition. Classification, including Core designation, is subordinate to the Knot name; the neutral complete-border shell is consistent across all ten Knot records. Candidate validation checks all Knot detail identities rather than preserving record-by-record styling exceptions.
 
 
 At least these Knot pages were observed without the same opening description border/accent treatment seen elsewhere:
@@ -1009,7 +1121,9 @@ The user intentionally stopped manually searching for additional cases. Audit **
 ## 9. Knot Visual Guide Treatment
 
 
-**Status:** AUDIT REQUIRED
+**Status:** PRESENTATION — FCC 52A-F IMPLEMENTATION / LOCAL MEDIA QUALITY — DEFERRED QUALITY GATE
+
+**FCC 52A-I superseding disposition for FCC 52A-F implementation:** Presentation is settled as **How to Tie It → TYING STEPS → BUILD SUPPORT → TYING ANIMATION → Visual Guide (media type) → named provider/source + adjacent `Visit Site ↗`**. Written tying steps remain the primary instruction. Visual instruction is supporting Build Support content and does not retain a standalone Knot-only decorative Visual Guide container. The separate local/offline visual-instruction quality gate below remains open and is not pulled into this convergence Build Unit.
 
 
 The Knot Visual Guide container appears to carry a left-side bloom/accent that other sections do not consistently use.
@@ -1018,7 +1132,7 @@ The Knot Visual Guide container appears to carry a left-side bloom/accent that o
 Determine whether instructional media has a deliberate semantic reason for a distinct treatment. If not, normalize it with the selected instructional-information standard.
 
 
-The Visual Guide belongs directly beneath **How to Tie It** in the instructional progression.
+For FCC 52A-F and later convergence work, the Visual Guide no longer sits directly beneath **How to Tie It** as a standalone presentation. It belongs under **BUILD SUPPORT → TYING ANIMATION** after the primary **TYING STEPS**.
 
 
 ### 2026-09-15 — Local Knot Visual Instruction Carry-Forward — APPROVED
@@ -1044,7 +1158,9 @@ Implementation is **conditional on the quality gate**. If acceptable local instr
 ## 10. Knot Empty Relationship Copy
 
 
-**Status:** AUDIT / COPY CLEANUP
+**Status:** FCC 52A-F IMPLEMENTATION
+
+**FCC 52A-F disposition:** Empty relationship groups/messages are omitted when absence is not useful knowledge. Do not render generic no-Rig or no-task filler solely to preserve a subsection.
 
 
 Example observed on Double Surgeon's Knot:
@@ -1059,12 +1175,14 @@ This line appears unnecessary when absence of a Rig relationship is not itself u
 ## 11. Knot Detail Density and Progression
 
 
-**Status:** AUDIT REQUIRED
+**Status:** FCC 52A-F IMPLEMENTATION / RESPONSIVE REVIEW REQUIRED
+
+**FCC 52A-F disposition:** The approved progression is Detail Identity → How to Tie It / TYING STEPS → Check Your Knot → About This Knot → optional More Help → standalone Sources & References. Related-link density, nested subsection hierarchy, and normal-density source treatment are implemented in 52A-F; desktop/narrow responsive review remains required for the candidate.
 
 
 - Knot metadata/reference tiles still use substantial vertical space on mobile.
 - Continue evaluating compact presentation for metadata/relationships before shrinking primary instructional text.
-- Preserve the approved instructional progression in which written tying steps and Visual Guide stay together, followed by verification/troubleshooting content.
+- Preserve the approved instructional progression in which written **TYING STEPS** remain primary and visual instruction appears as supporting **BUILD SUPPORT → TYING ANIMATION** content, followed by verification/troubleshooting content.
 - `Sources & References` should remain supporting provenance rather than interrupting the primary task; collapsed bottom-of-page presentation is the current accepted direction.
 
 
@@ -1089,7 +1207,7 @@ The final audit must:
 ## 13. Rig `useCases[]` Semantic Ownership / Fish-Specific Leakage
 
 
-**Status:** APPROVED / FCC 50B-D DISPOSITION — IMPLEMENTATION PENDING R6
+**Status:** CLOSED AS DESIGN QUESTION / OWNERSHIP CONTRACT RETAINED
 
 
 Fish applicability remains owned by `FISH_RIG_GUIDANCE` Decision Knowledge, not by canonical Rig records. The current Rig model intentionally does not define `targetFishIds[]`, and any reverse Fish presentation must derive from `FISH_RIG_GUIDANCE` rather than duplicating the relationship on Rig.
@@ -1114,7 +1232,9 @@ The original semantic-leakage issue is therefore no longer an open design questi
 ## 14. Knowledge Card Element Standardization
 
 
-**Status:** AUDIT REQUIRED / SITE-WIDE COMPONENT CONSISTENCY
+**Status:** PARTIAL FCC 52A-F CONVERGENCE / SITE-WIDE RESIDUAL AUDIT REMAINS
+
+**FCC 52A-F disposition:** The directly overlapping Guide/Reference elements are implemented against the current Registry in this Build Unit: nested subsection hierarchy, Contextual Reference Cue/Surface, Compact Internal Link List, Contextual Recommendation Row, Reference / Source Links, Standard Detail List, Detail Identity Header, and touched responsive density. The later site-wide audit remains responsible for untouched domains/elements and must verify rather than reinvent these established patterns.
 
 
 The Subphase B Conditions/Lure-Bait review exposed a broader cross-domain issue: equivalent information and interaction elements inside Reference Knowledge / knowledge-detail cards are not always presented consistently across card types. The final Version 1 UX Design Audit must therefore review **every element used on knowledge cards**, not only whole-card shells.
@@ -1191,7 +1311,9 @@ Variant imagery must not force creation of separate canonical Tackle or Lure/Bai
 ## 16. Repository Documentation + JavaScript Source Organization
 
 
-**Status:** REQUIRED / FULL REPOSITORY QUALITY AUDIT
+**Status:** FULL REPOSITORY AUDIT REMAINS REQUIRED / BOUNDED FCC 52A-F TOUCHED-SOURCE CLEANUP AUTHORIZED
+
+**FCC 52A-F disposition:** Because this convergence already modifies shared Guide renderer/CSS/validator surfaces, the Build Unit may perform behavior-preserving organization cleanup only inside files it must touch: centralize duplicated Reference Popover lifecycle/semantic ownership, consolidate shared recommendation/internal-link/source presentation instead of adding more Guide-specific overrides, and place new validator coverage in semantic Guide-convergence sections rather than chronological patch blocks. This does **not** authorize mass source reordering, broad module splitting, unrelated data reordering, or documentation churn outside the touched scope. The full repository-wide inventory below remains required for untouched source/documentation.
 
 
 The Version 1 completion audit must include a deliberate review of the **entire tracked repository**, not only user-facing runtime surfaces. The purpose is to ensure that the repository can be understood, maintained, reconstructed, and safely extended without relying on chat history or on a maintainer reverse-engineering where code and documentation belong.
@@ -1485,7 +1607,7 @@ The Version 1 design audit may close only when:
 11. Fish, Knots, Rigs, Tackle, and Technique have completed a deliberate side-by-side Guide comparison for semantically equivalent visible elements; unexplained differences are fixed or have a documented domain-specific reason.
 12. The Guide comparison includes the directly relevant production renderer/markup/CSS, not only rendered screenshots, and no known legacy or parallel visual language remains undispositioned.
 13. Every remaining chip/pill implementation has a specific documented semantic role; no chip treatment remains solely as decorative legacy styling or as a duplicate of standard link/action/reference language.
-14. The Fish Detail Reel Setup decision, Fish Compare/Habitat findings, and Knots Sources/Visual Guide/Numbered Tying Steps findings have explicit final-audit dispositions even if corrected before the final site-wide gate.
+14. The settled Detail Reel Setup host rule, Fish Compare/Habitat findings, and Knots Sources/Visual Guide/TYING STEPS findings have explicit final-audit dispositions even if corrected before the final site-wide gate.
 
 
 # Relationship to Active Development

@@ -1,12 +1,12 @@
-# Freshwater Fishing Companion
+﻿# Freshwater Fishing Companion
 
 
 **Document:** 02-FISH.md  
-**Document Revision:** 0.4.16  
+**Document Revision:** 0.4.17  
 **Document Status:** Approved — Production Baseline + Fish Production Contract  
-**Implementation Status:** Version 1 production migration COMPLETE / VALIDATED / CLOSED — 30 active Fish on the approved production schema  
+**Implementation Status:** Version 1 production migration COMPLETE / VALIDATED / CLOSED — 30 active Fish; FCC 52A G4-RIF Habitat migration LOCAL FINAL / MOBILE VALIDATION OPEN  
 **Decision Baseline:** D002, D009, D010, D016, D022, D047, D050, D056–D061, FISH-001–FISH-007  
-**Last Updated:** 2026-10-03
+**Last Updated:** 2026-10-08
 
 
 ---
@@ -30,7 +30,7 @@ Fish Guide Phase 0 and Version 1 production are closed. All 30 locked Version 1 
 # Current Production Schema — Migration Complete
 
 
-`data/fish.js` contains 30 active canonical Fish. All 30 use the approved production shape:
+`data/fish.js` contains 30 active canonical Fish. All 30 use the approved Fish entity shape; their species-intrinsic Habitat associations are now stored separately as stable-ID relationships in `data/fish-habitat.js` referencing `data/habitats.js`:
 
 
 ```text
@@ -45,7 +45,6 @@ categoryId
 family
 aliases[]
 identificationTraits[]
-habitatTags[]
 waterbodyTypes[]
 ```
 
@@ -59,7 +58,7 @@ The canonical Fish category registry, 20-pair Fish-identification relationship g
 # Approved Fish Production Target
 
 
-The approved canonical Fish record field order is:
+Historical pre-G4-RIF Fish field order (retained only as the earlier approved production target):
 
 
 ```text
@@ -85,7 +84,7 @@ Target-model changes relative to the legacy seed shape:
 - replace legacy `category` text with canonical `categoryId`,
 - add legitimate alternate common names through `aliases[]`,
 - add intrinsic observable identification guidance through `identificationTraits[]`,
-- preserve Fish-owned `habitatTags[]` and `waterbodyTypes[]`,
+- preserve Fish-owned Habitat and waterbody facts (the former `habitatTags[]` was superseded in FCC 52A by stable-ID external relationships; `waterbodyTypes[]` remains in Fish),
 - keep relationship, recommendation, Media, regulation, and source-provenance data outside canonical Fish.
 
 
@@ -144,8 +143,8 @@ Legitimate established alternate common names or regional terminology. Do not us
 Observable, beginner-readable, species-specific field-identification traits. Put the strongest useful diagnostic traits first; the current Fish Detail contract normally presents these as 2–4 short stacked statements under **Key Identification Traits ⓘ**. Accurate anatomical terminology may be used where useful, but the surrounding wording must remain understandable to a new angler. Explicit look-alike / Fish-versus-Fish distinctions belong to the identification-relationship owner rather than being duplicated here. Existing cross-species wording inside this field is a targeted semantic-cleanup requirement for the implementation/content pass: preserve the approved intrinsic fact, rewrite the species-owned statement intrinsically where practical, and retain pairwise wording in `FISH_IDENTIFICATION_RELATIONSHIPS`.
 
 
-### `habitatTags[]`
-Stable intrinsic habitat associations owned by Fish. Approved Version 1 vocabulary:
+### Legacy `habitatTags[]` — historical / superseded
+The following former Version 1 strings were Fish-owned evidence inputs, not the current Habitat runtime vocabulary. FCC 52A replaces this field with a 13-concept `HABITAT_DATA` registry and 136 explicit associations in `FISH_HABITAT_ASSOCIATIONS`:
 
 
 ```text
@@ -164,7 +163,7 @@ Channel
 
 
 ### `waterbodyTypes[]`
-General waterbody environments owned by Fish. Approved Version 1 vocabulary:
+General waterbody environments owned by Fish. Current Version 1 vocabulary after FCC 52A normalization:
 
 
 ```text
@@ -172,7 +171,7 @@ Pond
 Lake
 Reservoir
 River
-Creek
+Creek / Stream
 ```
 
 
@@ -755,10 +754,10 @@ The Version 1 Fish production migration is complete. Future Fish additions are n
 - `../../archive/workstreams/fish-guide/FISH-GUIDE-PHASE-0-AUDIT-REVISIONS.md`
 
 
-# Condition / Habitat Reference Presentation — Current
+# Condition / Habitat Reference Presentation — Historical Foundation Baseline
 
 
-Fish Guide Version 1 remains **CLOSED / PASS**. The completed Recommendation Prerequisites Foundation added presentation-only reference behavior without changing Fish facts, schema ownership, or recommendation semantics:
+Fish Guide Version 1 remains **CLOSED / PASS**. The following records historical Recommendation Prerequisites Foundation reference behavior before FCC 52A replaced legacy habitat-label presentation; these historical mappings are not the current G4-RIF Habitat registry:
 
 
 - semantically exact Fish habitat/water labels may open the shared canonical Condition reference popover;
@@ -771,10 +770,10 @@ Fish Guide Version 1 remains **CLOSED / PASS**. The completed Recommendation Pre
 The accepted UI keeps Fish reference chips in the clickable-knowledge visual family while preserving the semantic distinction between canonical Condition help and Fish-owned Habitat explanations. Detailed Foundation review chronology belongs in the closed Foundation workstream and Git history.
 
 
-## G4-RIF-1A Fish Migration Target — APPROVED / PENDING IMPLEMENTATION
+## G4-RIF-1A Fish Migration — IMPLEMENTED / LOCAL REVIEW PASS (FCC 52A)
 
 
-The legacy production `habitatTags[]` vocabulary and current presentation mappings above remain the runtime baseline until explicit migration. G4-RIF-1A has now CLOSED / PASS at the semantic-review level and approves the later Fish-side migration to:
+FCC 52A implements the G4-RIF-1A Fish-side migration from the retired `habitatTags[]` and historical presentation mappings to:
 
 
 - one canonical 13-concept physical Habitat registry;
@@ -784,4 +783,4 @@ The legacy production `habitatTags[]` vocabulary and current presentation mappin
 - the separate exact Fish waterbody bridge: Pond↔`pond`, Lake↔`lake`, Reservoir↔`reservoir`, River↔`river`, Creek / Stream↔`creek-stream`.
 
 
-The waterbody bridge and Habitat correspondence establish environmental equivalence only. They do not encode Fish preference strength, Recommendation eligibility, contextual suitability, ranking, weighting, or score. No Fish identity changes are required. Current production remains unchanged until the approved migration is implemented and validated.
+The waterbody bridge and Habitat correspondence establish environmental equivalence only. They do not encode Fish preference strength, Recommendation eligibility, contextual suitability, ranking, weighting, or score. No Fish identities were changed. FCC 52A includes the exact 30-Fish / 136-association migration, five-dimensional Fish Habitat & Water presentation with beginner-facing Habitat ⓘ explanations, and 12 Creek / Stream value normalizations. Local browser review and repository-integrity validation PASS; deployed actual-mobile validation remains OPEN.

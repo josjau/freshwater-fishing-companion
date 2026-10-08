@@ -90,7 +90,8 @@ const RIG_DATA = Object.freeze([
                 recommendedKnotIds: [
                     "improved-clinch-knot",
                     "palomar-knot",
-                    "uni-knot"
+                    "uni-knot",
+                    "snell-knot"
                 ],
                 assemblyStepIndex: 0,
                 notes: null
@@ -195,7 +196,8 @@ const RIG_DATA = Object.freeze([
                 recommendedKnotIds: [
                     "improved-clinch-knot",
                     "palomar-knot",
-                    "uni-knot"
+                    "uni-knot",
+                    "snell-knot"
                 ],
                 assemblyStepIndex: 4,
                 notes: null
@@ -326,7 +328,8 @@ const RIG_DATA = Object.freeze([
                 recommendedKnotIds: [
                     "improved-clinch-knot",
                     "palomar-knot",
-                    "uni-knot"
+                    "uni-knot",
+                    "snell-knot"
                 ],
                 assemblyStepIndex: 4,
                 notes: null
@@ -1332,7 +1335,8 @@ const RIG_DATA = Object.freeze([
                 recommendedKnotIds: [
                     "improved-clinch-knot",
                     "palomar-knot",
-                    "uni-knot"
+                    "uni-knot",
+                    "snell-knot"
                 ],
                 assemblyStepIndex: 4,
                 notes: null
@@ -1460,7 +1464,8 @@ const RIG_DATA = Object.freeze([
                 recommendedKnotIds: [
                     "improved-clinch-knot",
                     "palomar-knot",
-                    "uni-knot"
+                    "uni-knot",
+                    "snell-knot"
                 ],
                 assemblyStepIndex: 2,
                 notes: null
@@ -2240,7 +2245,8 @@ const RIG_DATA = Object.freeze([
                 recommendedKnotIds: [
                     "improved-clinch-knot",
                     "palomar-knot",
-                    "uni-knot"
+                    "uni-knot",
+                    "snell-knot"
                 ],
                 assemblyStepIndex: 0,
                 notes: null

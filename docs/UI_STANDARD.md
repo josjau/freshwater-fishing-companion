@@ -1,12 +1,12 @@
-﻿# Freshwater Fishing Companion — UI Standard
+# Freshwater Fishing Companion — UI Standard
 
 
 **Document:** UI_STANDARD.md  
-**Document Revision:** 1.3.35  
+**Document Revision:** 1.3.39  
 **Document Status:** Approved  
 **Role:** Canonical Version 1 site-wide semantic visual, component, navigation, interaction, mobile, and accessibility standard  
 **Decision Baseline:** D015, D020-D022, D030-D032, D035, D042, D046-D048, D050-D052, D061, D063  
-**Last Updated:** 2026-10-02
+**Last Updated:** 2026-10-08
 
 
 # Purpose
@@ -127,21 +127,21 @@ The registry is the authority; rendered pages are reference implementations. Whe
 | **Special / Task Navigation Card** | Opens a task-oriented workflow, curated collection, or other special destination that materially helps the user act without first knowing a canonical entity or collection. | Compact task-oriented whole-card navigation used only when it materially improves a real task; keep the title, concise explanation, and explicit action cue within one interaction; use reserved special/workflow accent semantics rather than ordinary collection-card accents; avoid duplicate destinations, decorative graphics, and forced row-spanning; preserve left-aligned action wrapping plus accessible whole-card focus/touch behavior. |
 | **Entity Result Card** | Represents one canonical entity in Search/Browse results. | Shared result-card hierarchy, whole-card action behavior where applicable, concise entity-specific action cue, responsive result-grid limits, and accessible interaction states. |
 | **Persistent Page Navigation** | Provides Parent/Home navigation and context restoration. | Shared floating navigation treatment with standard Parent/Home semantics and applicable state/scroll restoration. |
-| **Detail Identity Header** | Identifies the specific entity being viewed. | Familiar detail hierarchy: priority/core designation when applicable, classification, canonical title, concise description; avoid technical-metadata overload. |
-| **Section / Subsection Hierarchy** | Distinguishes a major content/task section from its named internal groups and their boundaries. | Parent and nested headings must read as different hierarchy levels. Named nested subsections use the approved restrained heading/separator treatment; avoid redundant divider lines immediately above and below the same heading. Neutral inter-group separators are used only when they clarify sibling boundaries. The hierarchy follows semantic structure, not the data domain. |
+| **Detail Identity Header** | Identifies the specific entity being viewed. | One shared complete neutral identity shell: priority/core designation when applicable, classification, canonical title, concise description, and legitimate domain-specific identity metadata/media. Classification remains subordinate to the canonical entity name. Do not add Guide-specific identity rails, badges, or alternate shell grammar solely because the domain differs. |
+| **Section / Subsection Hierarchy** | Distinguishes a major content/task section from its named internal groups and their boundaries. | Parent and nested headings must read as different hierarchy levels. Named nested subsections use the approved restrained heading/separator treatment; avoid redundant divider lines immediately above and below the same heading. When an expanded disclosure body contains a named internal content group, give that group a meaningful nested-subsection title rather than repeating the outer disclosure title verbatim. Existing meaningful peer-subsection titles satisfy this rule. Neutral inter-group separators are used only when they clarify sibling boundaries. The hierarchy follows semantic structure, not the data domain. |
 | **Peer Subsection Group** | Presents multiple named sibling concepts inside one larger section/disclosure. | Each peer keeps its own smaller uppercase nested-subsection heading, separator line directly beneath that heading, and associated content. Complete peers may sit side by side when space permits and stack intact on narrow screens. |
-| **Standard Detail List** | Presents unordered explanatory/supporting items. | Shared detail-list spacing, hierarchy, marker treatment, and readable density; preserve list semantics rather than flattening into paragraph text. |
+| **Standard Detail List** | Presents unordered explanatory/supporting items. | Use the shared colored marker treatment established by Fish **Key Identification Traits** and the current Knot detail lists, with common spacing, hierarchy, and readable density. Preserve list semantics rather than flattening explanatory/supporting items into paragraph text. This marker treatment does not apply to **Safety / Warning Block** body guidance. |
 | **Ordered Instruction Steps** | Presents ordered actions the user performs. | Use a clear dedicated step-number treatment, instruction text as the dominant content, aligned wrapped text, and readable vertical rhythm. Preserve one ordered vertical sequence at all widths; do not convert procedures into chips, unrelated per-step cards, or multi-column layouts. Routine dividers between every step are not required. |
-| **Compact Internal Link List** | Presents a compact set of related internal destinations. | Shared compact internal-link treatment; destination wording and `→` remain one visual unit; avoid unrelated pill/button styling unless semantics require it. |
-| **Contextual Recommendation Row** | Recommends one canonical internal entity from the current context and explains why it is useful here. | Reuse the canonical destination name; provide one clear internal action such as `View Rig →` or `View Knot →`; include a short evidence-supported/context-owned reason only when it materially helps the choice; use a compact bounded row/card treatment rather than a chip/pill; do not invent ranking, scores, best badges, availability, legality, personalization, or rationale that the owning guidance does not support. |
+| **Compact Internal Link List** | Presents a compact set of related internal destinations. | Present the canonical referenced text followed closely by an explicit internal action unit such as `View Rig →`, `View Knot →`, `View Knots →`, or `Compare →`. Keep the action slightly padded from the referenced text rather than pushing it to the far edge of the row. The action label + `→` use the same shared accent color as Standard Detail List markers and Ordered Instruction Step numbers. The default compact list has no per-item divider. An explicitly approved **divided-row variant** may use the shared restrained tan separator between complete items when additional scan separation is useful without introducing card/band chrome; current approved uses are Knot **Common Tasks**, **Rigs That Use This Knot**, and Rig Component Reference **Used In** / **Related Components** relationship lists. Separators in this divided variant must be light tan, never the gold/action-accent color. Do not add a trailing separator after the last item. Wrap naturally while keeping each referenced item and its adjacent action coherent. Avoid unrelated pill/button styling unless semantics require it. |
+| **Contextual Recommendation Row** | Recommends one canonical internal entity from the current context and explains why it is useful here. | Fish **Rigs to Start With** is the current visual/reference baseline. Reuse the canonical destination name; provide one clear adjacent internal action such as `View Rig →` or `View Knot →`; include a short evidence-supported/context-owned reason only when it materially helps the choice; use the shared compact bounded row/card treatment rather than a chip/pill. On desktop, keep the established constrained measure of approximately two-thirds of the content width, aligned with the constrained Guide Search measure where applicable; do not stretch recommendation rows merely to fill wide empty space. Do not invent ranking, scores, best badges, availability, legality, personalization, or rationale that the owning guidance does not support. |
 | **Disclosure Group** | Hides/reveals secondary supporting information. | Shared full-row disclosure grammar with `▾` / `▴`, independent keyboard/touch access, correct collapsed layout removal, and focus/viewport preservation when content closes. Compose with **Contained Disclosure Row** when discrete expanders need stronger actionable separation. |
 | **Contained Disclosure Row** | Presents one discrete secondary/support item as an actionable expander inside a larger section. | Use a neutral bordered/radius surface with the whole row as the interaction target, visible caret, and clear hover/focus/expanded feedback. Do not add a decorative semantic-color rail by default. Separate peer rows with spacing/contained boundaries rather than accidental double dividers. |
-| **Contextual Reference Cue** | Opens exact-term contextual Reference Knowledge without leaving the current task. | Plain referenced text plus immediately adjacent `ⓘ`; the cue is the Reference target, with invisible enlarged hit area where needed and explicit focus restoration. |
+| **Contextual Reference Cue** | Opens exact-term contextual Reference Knowledge without leaving the current task. | Plain referenced text plus immediately adjacent `ⓘ`; every visible `ⓘ` is a functional Reference interaction and opens an applicable contextual popover/surface containing additional information for that exact term. The cue is the Reference target, with invisible enlarged hit area where needed and explicit focus restoration. Do not use decorative/nonfunctional `ⓘ` glyphs. |
 | **Contextual Reference Surface** | Displays the contextual information opened by `ⓘ`. | Shared modal/sheet interaction grammar with one active surface, bounded internal scrolling, appropriate close behavior, background-state preservation, and focus return; content structure remains domain-appropriate. |
-| **Reference / Source Links** | Presents verified evidence, attribution, or provenance destinations that support the current content. | Use ordinary source/reference hierarchy with clearly named destination text; external destinations use `↗` and keep destination wording + glyph as one visual unit. Keep URLs/metadata visually secondary, do not restyle source links as workflow buttons/chips, and preserve evidence/media ownership in the canonical source owner. |
+| **Reference / Source Links** | Presents verified evidence, attribution, or provenance destinations that support the current content. | Use ordinary source/reference hierarchy with clearly named source/destination text followed by the shared adjacent external action `Visit Site ↗`. Keep `Visit Site` + `↗` together as one action unit and slightly padded from the referenced source text rather than pushed to the far edge. Use normal source/list density; for Guide-detail **Sources & References**, separate repeated source rows with the shared restrained tan separator instead of excess vertical spacing or decorative row bands. Do not add a trailing separator after the last source. Do not inflate source typography or restyle evidence links as workflow buttons/chips. Keep URLs/metadata visually secondary and preserve evidence/media ownership in the canonical source owner. |
 | **Semantic Status Panel** | Communicates readiness, completion, recovery, availability, or comparable current state. | State is communicated with text and semantics rather than color alone; treatment remains visually distinct from ordinary information and accessible to assistive technology. |
-| **Safety / Warning Block** | Surfaces material caution or safety guidance. | Conspicuous semantic warning treatment; material guidance is not hidden merely to reduce page length and does not collapse into ordinary body styling. |
-| **Reel Setup Workflow Context** | Shows retained Get Your Reel Ready data as passive, host-relevant context within another Guide surface. | Identify workflow provenance with the shared Workflow semantic color; show only retained Reel Setup fields materially useful to the host surface; keep values visually secondary; do not imply fit, compatibility, sizing, recommendation, or readiness; prefer compact side-by-side composition when it remains readable and stack only when content-fit requires it. |
+| **Safety / Warning Block** | Surfaces material caution or safety guidance. | Conspicuous semantic warning treatment with non-bulleted body guidance. Material safety guidance is not hidden merely to reduce page length and does not collapse into ordinary body styling. Do not apply Standard Detail List bullets inside the Safety / Warning Block. |
+| **Reel Setup Workflow Context** | Shows retained Get Your Reel Ready data as passive, host-relevant context within an approved host surface. | Identify workflow provenance with the shared Workflow semantic color; show only retained Reel Setup fields materially useful to the host surface; keep values visually secondary; do not imply fit, compatibility, sizing, recommendation, or readiness; prefer compact side-by-side composition when it remains readable and stack only when content-fit requires it. Fish Detail and Rig Detail are approved Version 1 hosts; Knot Detail does **not** display passive Current Reel Setup context. |
 
 Media-specific presentation remains owned by `MEDIA_GUIDE.md`; the registry references that owner rather than duplicating media rules. Directional/reference glyphs such as `→`, `↗`, and `ⓘ` are interaction semantics used inside patterns, not standalone core patterns.
 
@@ -163,6 +163,12 @@ The comparison/reconciliation vocabulary includes, as applicable:
 
 Semantic colors are reserved for real semantic meaning and must not become decorative body-text coloring. Color may reinforce meaning but may not be the sole cue. Exact token values and the final mapping from existing CSS variables to these roles remain **BUILD/RECONCILIATION OPEN** until the Guide-family comparison has enough cross-Guide evidence to choose the smallest coherent palette. Guide membership alone is never a reason to recolor ordinary body/instruction text or equivalent actions.
 
+For related internal navigation, the explicit action label + `→` uses the same shared accent color as Standard Detail List markers and Ordered Instruction Step numbers. The canonical referenced entity/task text may remain normal content text; the adjacent action unit carries the navigation emphasis. External evidence/media destinations use the shared `Visit Site ↗` treatment from **Reference / Source Links** rather than the internal-action grammar.
+
+`→` is an action/navigation glyph and must not be reused as a generic relationship delimiter. Non-navigation relationships use plain language or other non-action structure. For Knot **Line Compatibility** pairings, present the complete relationship on one line when width permits and wrap only between complete pairings when needed; use neutral wording such as `Braid ⓘ to Fluorocarbon leader ⓘ` rather than `Braid ⓘ → Fluorocarbon leader ⓘ`.
+
+When an internal action hands off from Reference Knowledge into a named workflow, make the workflow destination explicit and use the shared Workflow semantic color for the action unit. Example: Arbor Knot **Attach Line to a Reel** uses adjacent **`Get Reel Ready →`** to enter the Reel Setup workflow; it must not masquerade as `View Knot →` / `View Knots →`.
+
 ### Detail Identity Header composition — Guide-family baseline
 
 **Status:** APPROVED / REVISION ALLOWED — FCC 50A identity-section review. Exact geometry/color values remain build-review items where noted.
@@ -181,6 +187,8 @@ Core remains a meaningful semantic distinction for curated foundational material
 - do not use a Core-specific accent rail or bloom/gradient; and
 - a restrained stronger complete-border/surface emphasis may be browser-tested, but it must remain recognizably the same Detail Identity Header.
 
+When **Core** appears in compact card/result metadata rather than the Detail Identity Header, reuse the same semantic split: only the `CORE KNOT` / `CORE RIG` designation uses the shared Core semantic color. Adjacent separators, difficulty/classification text, and other metadata retain their normal metadata treatment. Do not tint the complete classification row merely because the record is Core.
+
 Exact Core color and whether that additional shell emphasis is useful remain **BUILD-REVIEW OPEN**.
 
 #### Reel Setup Workflow Context placement
@@ -188,6 +196,8 @@ Exact Core color and whether that additional shell emphasis is useful remain **B
 **Reel Setup Workflow Context** is retained workflow data, not entity identity. Its semantic treatment is shared, but its placement is host-layout dependent: it may be embedded inside a Detail Identity shell or composed with a nearby top utility/navigation region when that keeps entity identity cleaner and retained context readable. Placement does not change its semantics.
 
 For Fish Detail and Rig Detail, FCC 51A establishes the validated Version 1 placement: passive **Current Reel Setup** sits in the same initial top utility area as **Persistent Page Navigation** while remaining a separate semantic element. Parent/Home stays at the left and Current Reel Setup stays at the right at the validated desktop and mobile/narrow widths. The two elements share an initial visual row/region but do not share behavior: Parent/Home retains the established sticky navigation behavior, while Current Reel Setup remains attached to normal page flow and scrolls away with its original position above the Detail Identity Header.
+
+**Knot Detail is not a Reel Setup Workflow Context host.** Do not render passive **Current Reel Setup** on Knot Detail pages. This host-placement decision does not by itself remove a separately approved factual Knot-to-workflow relationship or internal workflow handoff; those remain governed by their own relationship/navigation semantics.
 
 For this validated placement:
 
@@ -293,7 +303,7 @@ Special navigation is optional and appears **after Search and before collection 
 - Do not add a second large domain graphic inside a workflow card merely because the Guide identity block already uses restrained visual flair.
 
 
-Current Knot examples: **Attach Line to a Reel** and **Tie On a Hook, Swivel, or Lure** are Important tasks; Connect Two Lines/Add a Leader and Make a Loop Connection are normal task cards.
+Current Knot examples: **Learn Core Knots** is a curated **Start Here** special destination; **Tie a Hook**, **Tie a Lure, Swivel, or Snap**, and **Tie Two Lines** are task cards under **What Are You Trying To Do?**. **Get Reel Ready** is a separate workflow destination rather than a Knot task card.
 
 
 # Card System
@@ -312,6 +322,10 @@ The Dashboard remains a visual reference for peer-choice card grids, but Guide b
 5. Guide/domain identity is not encoded as a fixed page/subpage color. Identity may appear through headings, imagery, restrained motifs, content structure, and other approved domain cues; standard peer-card accents still come from the shared multi-accent palette.
 6. Primary/Core/Important hierarchy is additive to the shared card system rather than a separate design language.
 7. Unavailable cards stay in the same visual family while removing misleading actionable affordances.
+
+### Dashboard / main-card title-row actions
+
+Dashboard main-card actions use the same lightweight non-pill internal-action grammar but retain their Dashboard heading-row geometry. When title and action fit, the destination-specific action is held at the **right side of the title row**. If content-fit forces the action onto a second line, keep that Dashboard action **right-aligned** rather than adopting the Guide browse-card rule that left-aligns a wrapped `Browse →` cue. This Dashboard alignment is a card-layout rule and does not override the adjacent-action rule for compact relationship lists.
 
 
 ## Guide browse-card shell and internals
@@ -666,11 +680,11 @@ Exact component styling, banner placement, iconography, ARIA/live-region mechani
 Every non-Dashboard standard application view uses the shared floating navigation system.
 
 
-The canonical shell is `.page-navigation-group`; renderer-based views should use `buildPageNavigationMarkup()` when practical.
+The canonical shell is `.page-navigation-group`; renderer-based views should use `buildPageNavigationMarkup()` when practical. Render one floating/sticky group per view, with adjacent flat controls inside the shared shell; do not add individually outlined/stacked pills or duplicate/nested navigation shells. Keep the controls together at narrow widths by constraining/truncating only the visual Parent label while preserving the accessible full label.
 
 
 - Root section pages use one non-duplicative `← Home` control.
-- Nested browse/search/detail pages use `← Parent` + `Home` in the same floating container.
+- Nested browse/search/detail pages use `← Parent` + `Home` side by side in the same floating container. Parent follows the actual origin (including Knot Search/Core/task, Rig, and Reel Setup contexts), not merely a static Guide fallback.
 - Bare sticky `.page-navigation` buttons are not the normal site-wide pattern.
 - Specialized workflows may replace the standard group when workflow state genuinely requires it, but should reuse the established floating-container visual language unless an explicit exception is approved.
 - Keep navigation keyboard accessible, touch usable, compact, responsive, and non-obscuring.
@@ -819,15 +833,15 @@ A successful Knots build test confirmed that user-controlled multi-page content 
 Directional/navigation semantics:
 
 
-- external verified destination → `↗`, opens externally, label names destination when practical;
-- internal directional navigation → `→` when an arrow cue is appropriate;
+- external verified destination → `Visit Site ↗`, opens externally; the source/media identity remains visible immediately before the adjacent action unit;
+- internal related-entity/task navigation → canonical referenced text followed closely by an explicit action unit such as `View Rig →`, `View Knot →`, `View Knots →`, or `Compare →`;
 - contextual information → `ⓘ`, never an external-navigation marker;
 - contextual/reference information uses an immediately adjacent `ⓘ` control as the **only Reference target**; the referenced text does not gain Reference behavior solely because the cue is present;
 - keep the visible `ⓘ` close to the exact term it explains rather than detached at the row edge; enlarge its independent touch/focus hit area when needed without letting the invisible hit area overlap the referenced text or neighboring controls;
 - referenced text retains its existing semantics: static text remains static, checkbox labels keep their selection behavior, navigation text keeps navigation behavior, and disclosure labels keep expand/collapse behavior;
 - Reference affordance is defined by the persistent `ⓘ` cue rather than by a mandatory chip/pill container or dedicated persistent Reference color. Exact neutral resting, hover, focus-visible, and pressed styling may be browser-refined, but color is supplementary and may not be the sole cue;
-- directional glyphs remain immediately adjacent to destination text rather than detached at row edge; treat destination wording + glyph as one visual unit;
-- directional glyphs normally inherit the same visible text color as their associated destination rather than using a separate arrow-only accent; hover/focus may change the destination and glyph together;
+- action labels and directional glyphs remain immediately adjacent to each other and close to the referenced text rather than detached at the row edge; keep the action as one visual unit and use only slight spacing from the referenced text;
+- internal action label + `→` use the same shared accent color as Standard Detail List markers and Ordered Instruction Step numbers; do not color only the arrow independently. External `Visit Site ↗` uses the shared external-link treatment. Hover/focus changes the full applicable action unit together;
 - use native Unicode glyphs rather than CSS-drawn arrows;
 - navigation-arrow glyph weight starts from the established `800` baseline for `←`, `→`, `↗`, and compact-row `›`; bounded components may increase weight when browser testing shows the cue needs stronger optical presence. Exact optical size/weight is refinement-allowed: equal numeric `em` sizing across different arrow glyphs does not guarantee equal perceived prominence. Wrap glyphs separately so label weight need not change.
 

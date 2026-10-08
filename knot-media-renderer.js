@@ -34,21 +34,22 @@ function buildKnotInstructionMediaMarkup(record) {
     const typeLabel = getKnotMediaTypeLabel(media.type);
 
     return `
-        <aside class="knot-instruction-media" aria-label="Visual Guide">
-            <p class="knot-instruction-media__title">Visual Guide</p>
-            <span class="knot-instruction-media__type">${typeLabel}</span>
-            <p class="knot-instruction-media__description">Visual instruction from <strong>${provider}</strong>.</p>
+        <div class="knot-instruction-media rig-tutorial" aria-label="Visual Guide">
+            <div class="knot-instruction-media__heading rig-tutorial__meta">
+                <span class="knot-instruction-media__type rig-tutorial__media-type">${typeLabel}</span>
+                <p class="knot-instruction-media__title rig-tutorial__title">Visual Guide</p>
+            </div>
             <a
-                class="knot-instruction-media__link"
+                class="knot-instruction-media__link rig-tutorial__external"
                 href="${media.externalUrl}"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="${actionLabel}: ${title}"
             >
-                <span>${actionLabel}</span>
-                <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span>
+                <span class="reference-source-name">${provider}</span>
+                <span class="reference-source-action">Visit Site <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></span>
             </a>
-        </aside>
+        </div>
     `;
 }
 

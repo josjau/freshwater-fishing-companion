@@ -482,7 +482,8 @@ function validateKnotGuidance(coreIds, collections, tasks, landingTasks, searchI
     const knotById = indexById(knots);
     const expectedTaskIds = [
         "attach-line-to-reel",
-        "terminal-attachment",
+        "hook-attachment",
+        "lure-attachment",
         "line-to-line",
         "loop-connection"
     ];
@@ -522,16 +523,20 @@ function validateKnotGuidance(coreIds, collections, tasks, landingTasks, searchI
 
     const expectedLandingTargets = [
         ["learn-core-knots", "collection", "core"],
-        ["terminal-attachment", "task", "terminal-attachment"],
-        ["line-to-line", "task", "line-to-line"],
-        ["loop-connection", "task", "loop-connection"]
+        ["hook-attachment", "task", "hook-attachment"],
+        ["lure-attachment", "task", "lure-attachment"],
+        ["line-to-line", "task", "line-to-line"]
     ];
     validateUniqueIds(landingTasks, "Knot landing task guidance");
     if (
         JSON.stringify(landingTasks.map((task) => [task?.id, task?.targetType, task?.targetId])) !==
         JSON.stringify(expectedLandingTargets)
     ) {
-        fail("Knot landing task guidance", "landing task order/targets do not match the approved four-entry hierarchy");
+        fail("Knot landing task guidance", "landing task order/targets do not match the approved Learn Core + Hook / Lure / Lines hierarchy");
+    }
+    const expectedLandingTitles = ["Learn Core Knots", "Tie a Hook", "Tie a Lure, Swivel, or Snap", "Tie Two Lines"];
+    if (JSON.stringify(landingTasks.map((task) => task?.title)) !== JSON.stringify(expectedLandingTitles)) {
+        fail("Knot landing task guidance", `landing task titles must be exactly ${expectedLandingTitles.join(" -> ")}`);
     }
     for (const task of landingTasks) {
         if (!isPlainObject(task)) continue;
@@ -653,8 +658,6 @@ function validateControlledArray(values, allowed, label) {
 }
 
 
-
-
 function validateExactFieldOrder(record, expectedFields, label) {
     if (!isPlainObject(record)) return;
     const actualFields = Object.keys(record);
@@ -726,7 +729,6 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         "family",
         "aliases",
         "identificationTraits",
-        "habitatTags",
         "waterbodyTypes"
     ];
     const legacyFishFields = [
@@ -773,7 +775,7 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         "Mud",
         "Channel"
     ]);
-    const waterbodyValues = new Set(["Pond", "Lake", "Reservoir", "River", "Creek"]);
+    const waterbodyValues = new Set(["Pond", "Lake", "Reservoir", "River", "Creek / Stream"]);
     const guidancePriorities = new Set(["Primary", "Alternative"]);
 
 
@@ -854,7 +856,10 @@ function validateFishProductionData(fish, categories, relationships, guidance, r
         if (typeof record.family !== "string" || record.family.trim() === "") {
             fail("Fish production schema", `${record.id}: family must be non-empty text`);
         }
-        validateControlledArray(record.habitatTags, habitatValues, `Fish ${record.id} habitatTags`);
+        if (isTargetRecord && Object.prototype.hasOwnProperty.call(record, "habitatTags")) {
+            fail("Fish Habitat migration", `${record.id}: deprecated habitatTags must not remain in the Fish record`);
+        }
+        if (!isTargetRecord) validateControlledArray(record.habitatTags, habitatValues, `Fish ${record.id} habitatTags`);
         validateControlledArray(record.waterbodyTypes, waterbodyValues, `Fish ${record.id} waterbodyTypes`);
     }
 
@@ -1208,8 +1213,6 @@ function validateFishSearchHelpers(canonicalData) {
 }
 
 
-
-
 function validateRegulationsData(buildInfo, states, resources, notices) {
     recordCheck("Regulations state/resource/notice schema, provenance, relationships, and freshness");
 
@@ -1346,12 +1349,91 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
 }
 
 
+
+function validateFishHabitatMigration(fish, habitats, associations, conditions, correspondences, waters) {
+    const expectedDimensions = {"cover": ["aquatic-vegetation", "wood-brush"], "water-zone": ["open-water", "shallow-water", "deep-water"], "water-movement": ["still-slow-water", "flowing-water"], "structure": ["rock-boulder-structure", "channel", "pool-deep-hole"], "bottom-substrate": ["rocky-gravel-bottom", "sandy-bottom", "muddy-silty-bottom"]};
+    const expectedHabitatIds = Object.values(expectedDimensions).flat();
+    const expectedConditionMap = {"aquatic-vegetation": ["vegetation"], "wood-brush": ["wood-brush"], "open-water": ["open-water"], "shallow-water": ["shallow"], "deep-water": ["deep"], "still-slow-water": ["current-none", "current-light"], "flowing-water": ["current-light", "current-moderate", "current-strong"], "rock-boulder-structure": ["rock-boulder"], "channel": ["channel"], "pool-deep-hole": ["pool-deep-hole"], "rocky-gravel-bottom": ["bottom-rocky-gravel"], "sandy-bottom": ["bottom-sandy"], "muddy-silty-bottom": ["bottom-muddy-silty"]};
+    const expectedWaterbodyMap = {"Pond": "pond", "Lake": "lake", "Reservoir": "reservoir", "River": "river", "Creek / Stream": "creek-stream"};
+    const fishIds = new Set(fish.filter((item) => item.isActive).map((item) => item.id));
+    const conditionIds = new Set(conditions.filter((item) => item.isActive).map((item) => item.id));
+    if (fishIds.size !== 30 || habitats.length !== 13 || associations.length !== 136) {
+        fail("Fish Habitat migration", `expected 30 Fish, 13 Habitat concepts and 136 associations; found ${fishIds.size}/${habitats.length}/${associations.length}`);
+    }
+    const actualHabitatIds = new Set();
+    for (const habitat of habitats) {
+        if (!isPlainObject(habitat)) continue;
+        validateExactFieldOrder(habitat, ["id", "name", "dimension", "summary", "createdVersion", "lastModifiedVersion", "isActive"], "Habitat registry");
+        if (!expectedHabitatIds.includes(habitat.id) || actualHabitatIds.has(habitat.id) ||
+            !expectedDimensions[habitat.dimension]?.includes(habitat.id)) {
+            fail("Habitat registry", `incorrect/duplicate concept or dimension: ${habitat.id}`);
+        }
+        if (typeof habitat.summary !== "string" || habitat.summary.length < 40 || habitat.summary.includes("FCC Conditions")) {
+            fail("Habitat registry", `${habitat.id}: explanatory summary must be useful to beginners`);
+        }
+        actualHabitatIds.add(habitat.id);
+    }
+    const pairs = new Set();
+    const actualFishCounts = new Map();
+    for (const link of associations) {
+        if (!isPlainObject(link)) continue;
+        validateExactFieldOrder(link, ["id", "fishId", "habitatId"], "Fish Habitat relationship");
+        const pair = `${link.fishId}|${link.habitatId}`;
+        if (!fishIds.has(link.fishId) || !actualHabitatIds.has(link.habitatId) || pairs.has(pair) ||
+            link.id !== `fish-habitat-${link.fishId}-to-${link.habitatId}`) {
+            fail("Fish Habitat relationship", `invalid/duplicate association ${pair}`);
+        }
+        pairs.add(pair);
+        actualFishCounts.set(link.fishId, (actualFishCounts.get(link.fishId) ?? 0) + 1);
+    }
+    if (actualFishCounts.size !== fishIds.size || [...actualFishCounts.values()].some((count) => count === 0)) {
+        fail("Fish Habitat relationship", "every active Fish must have an approved association");
+    }
+    const membershipSha = crypto.createHash("sha256").update([...pairs].sort().join("\n")).digest("hex");
+    if (membershipSha !== "3be3c19cd7f04ca9002428682a6ac75b11b798b38b19ec80948e3c76efa724e3") {
+        fail("Fish Habitat relationship", "136 Fish-to-Habitat tuples differ from approved D069 species-by-species baseline");
+    }
+    const actualBridge = {};
+    for (const bridge of correspondences) {
+        if (!isPlainObject(bridge) || typeof bridge.habitatId !== "string" || !Array.isArray(bridge.conditionIds) ||
+            Object.prototype.hasOwnProperty.call(actualBridge, bridge.habitatId)) {
+            fail("Environmental correspondence", "invalid/duplicate Habitat bridge");
+            continue;
+        }
+        actualBridge[bridge.habitatId] = bridge.conditionIds;
+        for (const id of bridge.conditionIds) if (!conditionIds.has(id)) fail("Environmental correspondence", `unknown Condition ${id}`);
+    }
+    if (JSON.stringify(Object.entries(actualBridge).sort()) !== JSON.stringify(Object.entries(expectedConditionMap).sort())) {
+        fail("Environmental correspondence", "Habitat↔Condition correspondence does not match approved D069 map");
+    }
+    const waterMap = {};
+    for (const link of waters) {
+        if (!isPlainObject(link) || Object.prototype.hasOwnProperty.call(waterMap, link.waterbody)) {
+            fail("Waterbody correspondence", "duplicate/invalid waterbody mapping");
+            continue;
+        }
+        waterMap[link.waterbody] = link.conditionId;
+    }
+    if (JSON.stringify(Object.entries(waterMap).sort()) !== JSON.stringify(Object.entries(expectedWaterbodyMap).sort())) {
+        fail("Waterbody correspondence", "waterbody bridge does not match five approved pairs");
+    }
+    if (fish.some((item) => (item.waterbodyTypes ?? []).includes("Creek") || Object.prototype.hasOwnProperty.call(item, "habitatTags"))) {
+        fail("Fish Habitat migration", "legacy Creek or habitatTags remains in Fish production data");
+    }
+    const channelFish = associations.filter((r) => r.habitatId === "channel").map((r) => r.fishId).sort();
+    if (JSON.stringify(channelFish) !== JSON.stringify(["blue-catfish", "sauger", "spotted-bass"])) {
+        fail("Fish Habitat relationship", "Channel association must be only Spotted Bass, Blue Catfish and Sauger");
+    }
+}
+
 function validateConditionsData(conditions, rigs) {
     const expectedByCategory = new Map([
         ["waterbody", ["pond", "lake", "reservoir", "river", "creek-stream"]],
         ["access-position", ["bank", "access-dock", "boat", "kayak"]],
         ["depth-zone", ["shallow", "mid-depth", "deep"]],
-        ["cover-structure", ["open-water", "light-cover", "heavy-cover", "vegetation", "wood-brush", "rock", "cover-dock-man-made", "drop-off-channel-deep-structure"]],
+        ["cover-exposure", ["open-water", "light-cover", "heavy-cover", "vegetation", "wood-brush", "cover-dock-man-made"]],
+        ["structure-contour", ["rock-boulder", "channel", "drop-off-deep-structure", "pool-deep-hole"]],
+        ["bottom-substrate", ["bottom-rocky-gravel", "bottom-sandy", "bottom-muddy-silty"]],
         ["water-clarity", ["water-clarity-clear", "water-clarity-stained", "water-clarity-muddy"]],
         ["current", ["current-none", "current-light", "current-moderate", "current-strong"]],
         ["season", ["spring", "summer", "fall", "winter"]],
@@ -1361,8 +1443,8 @@ function validateConditionsData(conditions, rigs) {
     const expectedFields = ["id", "name", "category", "summary", "createdVersion", "lastModifiedVersion", "isActive"];
 
 
-    if (conditions.length !== 35) {
-        fail("Condition registry", `expected exactly 35 records; found ${conditions.length}`);
+    if (conditions.length !== 40) {
+        fail("Condition registry", `expected exactly 40 records; found ${conditions.length}`);
     }
 
 
@@ -1428,8 +1510,6 @@ function validateConditionsData(conditions, rigs) {
         }
     }
 }
-
-
 
 
 function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, knots) {
@@ -1580,8 +1660,6 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
         fail("Configured Fish guidance", `expected only locked Inline Spinner migrations; found ${JSON.stringify(configuredGuidance)}`);
     }
 }
-
-
 
 
 function validateTechniqueAndCompatibilityFoundation(techniques, relationships, rigs, lureBait) {
@@ -2384,8 +2462,6 @@ function validateAvailabilityQuantityFoundation(rigs) {
         fail("G7-QTY Rig requirement", `quantity-2 requirements must remain the approved Double Jig Crappie Rig jighead + soft-plastic pair; found ${quantityTwoKeys.join(", ")}`);
     }
 }
-
-
 
 
 function validateAvailabilityAttentionFoundation() {
@@ -3604,8 +3680,6 @@ function validateCurrentContextSourceChangeFoundation() {
 }
 
 
-
-
 function validateCanonicalData() {
     recordCheck("Canonical registries, controlled values, Core registries, and relationships");
 
@@ -3623,6 +3697,9 @@ function validateCanonicalData() {
     );
     const rigBindings = loadBindings("data/rigs.js", ["RIG_DATA", "CORE_RIG_IDS"]);
     const conditionBindings = loadBindings("data/conditions.js", ["CONDITION_DATA"]);
+    const habitatBindings = loadBindings("data/habitats.js", ["HABITAT_DATA"]);
+    const fishHabitatBindings = loadBindings("data/fish-habitat.js", ["FISH_HABITAT_ASSOCIATIONS"]);
+    const environmentalBindings = loadBindings("data/environment-correspondence.js", ["HABITAT_CONDITION_CORRESPONDENCES", "FISH_WATERBODY_CONDITION_CORRESPONDENCES"]);
     const lureBaitBindings = loadBindings("data/lure-bait.js", ["LURE_BAIT_DATA"]);
     const techniqueBindings = loadBindings("data/techniques.js", ["TECHNIQUE_DATA"]);
     const compatibilityBindings = loadBindings("data/compatibility.js", ["COMPATIBILITY_RELATIONSHIPS"]);
@@ -3710,6 +3787,14 @@ function validateCanonicalData() {
     validateFishSpecializedGuidance(fishSpecializedGuidance, fishSafetyGuidance, fish);
     validateRegulationsData(regulationsBindings.REGULATIONS_DATA_BUILD_INFO, states, stateResources, stateNotices);
     validateConditionsData(conditions, rigs);
+    validateFishHabitatMigration(
+        fish,
+        requireArray(habitatBindings.HABITAT_DATA, "Habitat registry"),
+        requireArray(fishHabitatBindings.FISH_HABITAT_ASSOCIATIONS, "Fish Habitat relationship"),
+        conditions,
+        requireArray(environmentalBindings.HABITAT_CONDITION_CORRESPONDENCES, "Habitat correspondence"),
+        requireArray(environmentalBindings.FISH_WATERBODY_CONDITION_CORRESPONDENCES, "Waterbody correspondence")
+    );
     validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishRigGuidance, knots);
     validateTechniqueAndCompatibilityFoundation(techniques, compatibility, rigs, lureBait);
     validateCanonicalRequirementSatisfaction(canonicalRequirementSatisfaction, lureBait, tackle);
@@ -4194,9 +4279,42 @@ function validateRigR2DataSemantics(rigs) {
     if ((rigById.get("three-way-rig")?.knotApplications ?? []).length !== 5) {
         fail("R2 Rig Knot data", "Three-Way Rig must retain five real tied connection points");
     }
-    const serializedRigs = JSON.stringify(activeRigs);
-    if (serializedRigs.includes('"snell-knot"') || serializedRigs.includes('"non-slip-loop-knot"')) {
-        fail("R2 Rig Knot data", "Snell or Non-Slip Loop must not be globally introduced into Rig knotApplications");
+    const approvedSnellApplications = new Set([
+        "fixed-bobber-rig|Main line to hook",
+        "slip-bobber-rig|Main line to hook",
+        "basic-bottom-rig|Leader to hook",
+        "live-bait-slip-sinker-rig|Leader to hook",
+        "three-way-rig|Hook leader to hook",
+        "split-shot-bait-rig|Main line to hook"
+    ]);
+    const actualSnellApplications = new Set();
+    const collectSnellApplications = (scopeId, scopeRecord) => {
+        for (const application of Array.isArray(scopeRecord?.knotApplications) ? scopeRecord.knotApplications : []) {
+            const knotIds = Array.isArray(application?.recommendedKnotIds) ? application.recommendedKnotIds : [];
+            if (knotIds.includes("snell-knot")) actualSnellApplications.add(`${scopeId}|${application.label}`);
+            if (knotIds.includes("non-slip-loop-knot")) {
+                fail("R4 Rig Knot data", `${scopeId} / ${application.label}: Non-Slip Loop is not an approved Rig knotApplication`);
+            }
+        }
+    };
+    for (const rig of activeRigs) {
+        collectSnellApplications(rig.id, rig);
+        for (const configuration of Array.isArray(rig.configurations) ? rig.configurations : []) {
+            collectSnellApplications(`${rig.id}/${configuration.id}`, configuration);
+        }
+    }
+    for (const key of approvedSnellApplications) {
+        if (!actualSnellApplications.has(key)) fail("R4 Rig Knot data", `approved Snell relationship is missing: ${key}`);
+    }
+    for (const key of actualSnellApplications) {
+        if (!approvedSnellApplications.has(key)) fail("R4 Rig Knot data", `unapproved Snell relationship was introduced: ${key}`);
+    }
+    if (actualSnellApplications.size !== approvedSnellApplications.size) {
+        fail("R4 Rig Knot data", `expected exactly ${approvedSnellApplications.size} Snell relationships; found ${actualSnellApplications.size}`);
+    }
+    const punchHookKnots = rigById.get("punch-pegged-texas-rig")?.knotApplications?.find((application) => /hook/i.test(application.label))?.recommendedKnotIds ?? [];
+    if (punchHookKnots.includes("snell-knot")) {
+        fail("R4 Rig Knot data", "Punch / Pegged Texas must remain unchanged until straight-shank/flipping-hook modeling is addressed in its deferred owner");
     }
 }
 
@@ -4227,20 +4345,21 @@ function validateRigR2DetailPresentation() {
         "rig-requirements-section",
         "detail-section--safety",
         "${howToBuildMarkup}",
+        "${checkRigMarkup}",
         "${aboutMarkup}",
-        "rig-detail-group--more-help"
+        "rig-detail-group--sources"
     ];
     let lastIndex = -1;
     for (const token of hierarchyTokens) {
         const tokenIndex = rigDetailSource.indexOf(token);
         if (tokenIndex < 0 || tokenIndex <= lastIndex) {
-            fail("R2 Rig Detail hierarchy", "expected Identity -> Choose a Setup -> What You Need -> Safety -> How to Build It -> About This Rig -> More Help order");
+            fail("R2 Rig Detail hierarchy", "expected Identity -> Choose a Setup -> What You Need -> Safety -> How to Build It -> Check Your Rig -> About This Rig -> Sources & References order");
             break;
         }
         lastIndex = tokenIndex;
     }
 
-    for (const text of ["About This Rig", "What You Need", "How to Build It", "More Help"]) {
+    for (const text of ["About This Rig", "What You Need", "How to Build It", "Check Your Rig", "Sources & References"]) {
         if (!rigDetailSource.includes(text)) fail("R2 Rig Detail hierarchy", `missing ${text}`);
     }
     if (rigDetailSource.includes("At a Glance") || rigDetailSource.includes(">Best For<") || rigDetailSource.includes("rig-at-a-glance")) {
@@ -4453,7 +4572,7 @@ function validateRigR2KnotTutorialPresentation() {
         '"knot-guidance"',
         '"Knot Guidance"',
         'expanded.has("knot-guidance")',
-        'const buildSupportRowsMarkup = [tutorialMarkup, commonMistakesMarkup]',
+        'const buildSupportRowsMarkup = [tutorialMarkup].filter(Boolean).join("")',
         'class="rig-build-subsection rig-build-subsection--support"',
         'id="rig-build-support-title">Build Support</h4>'
     ]) {
@@ -4488,7 +4607,7 @@ function validateRigR2KnotTutorialPresentation() {
         'player.querySelector("iframe")',
         "setRigTutorialPlayerState(panel, nextExpanded);",
         "Video Tutorial",
-        "Watch on YouTube"
+        "Visit Site"
     ]) {
         if (!rigSource.includes(token)) fail("R2 Rig Tutorial", `missing ${token}`);
     }
@@ -4525,68 +4644,53 @@ function validateRigR2SupportPresentation() {
     const end = rendererSource.indexOf("\nfunction getRegulationsResourceActionLabel", start);
     const rigDetailSource = start >= 0 && end > start ? rendererSource.slice(start, end) : "";
 
-    // R5 Common Mistakes ownership + R2-C11 More Help / ordinary Sources links.
-    const buildSupportStart = rigDetailSource.indexOf("const tutorialBodyMarkup = buildRigTutorialDisclosureBody");
-    const buildSupportEnd = rigDetailSource.indexOf("const howToBuildMarkup = `", buildSupportStart);
-    const buildSupportSource = buildSupportStart >= 0 && buildSupportEnd > buildSupportStart
-        ? rigDetailSource.slice(buildSupportStart, buildSupportEnd)
-        : "";
+    // FCC 52A-F convergence: Common Mistakes moves to Check Your Rig; Setup Notes to About; Sources stand alone.
     for (const token of [
-        '"Rig Tutorial"',
-        '"Common Mistakes"',
-        'const buildSupportRowsMarkup = [tutorialMarkup, commonMistakesMarkup]',
-        'id="rig-build-support-title">Build Support</h4>'
+        'const checkRigMarkup = commonMistakes.length > 0',
+        'id="rig-check-title">Check Your Rig</h3>',
+        'id="rig-common-mistakes-title">Common Mistakes</h4>',
+        '"setup-notes"',
+        'id="rig-about-title">About This Rig</h3>',
+        'class="rig-detail-group rig-detail-group--sources"',
+        'buildRigDetailDisclosureMarkup(',
+        '"sources"',
+        '"Sources & References"',
+        '>Verified References</h4>',
+        'reference-source-action">Visit Site'
     ]) {
-        if (!buildSupportSource.includes(token)) fail("R5 Rig Build Support", `missing ${token}`);
+        if (!rigDetailSource.includes(token) && !rendererSource.includes(token)) fail("FCC 52A-F Rig convergence", `missing ${token}`);
     }
-    const supportOrder = ["tutorialMarkup", "commonMistakesMarkup"].map((token) => buildSupportSource.indexOf(token));
-    if (supportOrder.some((index) => index < 0) || supportOrder[0] >= supportOrder[1]) {
-        fail("R5 Rig Build Support", "Rig Tutorial must precede Common Mistakes under Build Support");
-    }
-
-    const moreHelpStart = rigDetailSource.indexOf("const moreHelpMarkup = [");
-    const moreHelpEnd = rigDetailSource.indexOf('].filter(Boolean).join(\"\");', moreHelpStart);
-    const moreHelpSource = moreHelpStart >= 0 && moreHelpEnd > moreHelpStart
-        ? rigDetailSource.slice(moreHelpStart, moreHelpEnd)
-        : "";
-    for (const label of ["Setup Notes", "Sources & References"]) {
-        if (!moreHelpSource.includes(`"${label}"`)) fail("R5 Rig More Help", `missing disclosure peer ${label}`);
-    }
-    if (moreHelpSource.includes('"Common Mistakes"')) {
-        fail("R5 Rig More Help", "Common Mistakes must be owned by Build Support, not More Help");
+    if (rigDetailSource.includes('rig-detail-group--more-help')) {
+        fail("FCC 52A-F Rig convergence", "empty More Help group must not remain after Setup Notes/Sources relocation");
     }
     if (!rigDetailSource.includes("referencesBodyMarkup") || !rigDetailSource.includes("buildRigReferenceLinks(effectiveRecord)")) {
-        fail("R2 Rig More Help", "Sources & References must derive from selected effective Rig/configuration references");
-    }
-    if (rigDetailSource.includes("sourcesMarkup") || rigDetailSource.includes("rig-detail-group--sources")) {
-        fail("R2 Rig More Help", "Sources & References must not remain a standalone top-level group");
+        fail("FCC 52A-F Rig Sources", "Sources & References must derive from selected effective Rig/configuration references");
     }
     if (!rendererSource.includes('<ul class="rig-reference-list">') || !rendererSource.includes('class="rig-reference-link" href=')) {
-        fail("R2 Rig Sources", "Sources must use ordinary external-link list markup");
+        fail("FCC 52A-F Rig Sources", "Sources must use normal-density external reference-list markup");
     }
     if (!rendererSource.includes("link-arrow link-arrow--external") || !rendererSource.includes('target="_blank" rel="noopener noreferrer"')) {
-        fail("R2 Rig Sources", "Sources must retain external-arrow and safe new-tab semantics");
+        fail("FCC 52A-F Rig Sources", "Sources must retain external-arrow and safe new-tab semantics");
+    }
+    if (!rigDetailSource.includes('class="safety-guidance"') || rigDetailSource.includes('<section class="detail-section detail-section--supporting detail-section--safety">\n                    <h3>Safety</h3>\n                    <ul')) {
+        fail("FCC 52A-F Rig Safety", "Safety guidance must use non-bulleted body presentation");
     }
 
     // R2-C12 no resting underline for Rig-detail internal/external navigation; glyphs remain semantic cue.
-    const sourceRule = styleSource.match(/\.rig-reference-link\s*\{([\s\S]*?)\}/);
-    if (!sourceRule) {
-        fail("R2 Rig Sources", "rig-reference-link CSS rule is missing");
-    } else {
-        const body = sourceRule[1];
-        for (const cardProperty of ["background:", "border:", "padding:", "border-radius:"]) {
-            if (body.includes(cardProperty)) fail("R2 Rig Sources", `ordinary source link retains card/button property ${cardProperty}`);
-        }
-        if (!body.includes("text-decoration: none")) fail("R2 Rig Sources", "Rig source links must remove resting underline decoration");
+    if (!styleSource.includes(".rig-reference-link, .knot-reference-link {") ||
+        !styleSource.includes("text-decoration: none;") ||
+        !styleSource.includes(".reference-source-action")) {
+        fail("FCC 52A-F Rig Sources", "Rig/Knot source links must use the shared normal-density source + adjacent Visit Site action treatment");
     }
     const tutorialRule = styleSource.match(/\.rig-tutorial__external\s*\{([\s\S]*?)\}/);
     if (!tutorialRule?.[1]?.includes("text-decoration: none")) {
         fail("R2 Rig links", "Rig Tutorial external link must remove resting underline decoration");
     }
-    if (!rendererSource.includes('class="rig-knot-recommendation"')
-        || !rendererSource.includes('rig-knot-recommendation__action">View Knot')
-        || !rendererSource.includes('link-arrow link-arrow--internal')) {
-        fail("R2 Rig links", "Rig internal Knot navigation must use the contained View Knot arrow-action contract");
+    if (!rendererSource.includes('<div class="rig-knot-recommendation">')
+        || rendererSource.includes('<button class="rig-knot-recommendation"')
+        || !rendererSource.includes('class="rig-knot-recommendation__action" type="button" data-rig-knot-id=')
+        || !rendererSource.includes('View Knot <span class="link-arrow link-arrow--internal"')) {
+        fail("R2 Rig links", "Rig Knot recommendation shell must remain static and only View Knot may navigate");
     }
 
     // R3/R4 local-review density, typography, and About composition checks.
@@ -4611,7 +4715,7 @@ function validateRigR2SupportPresentation() {
         || !knotCardRule[1].includes("min-height: var(--touch-target);")
         || !knotCardRule[1].includes("border: 1px solid var(--border);")
         || !knotCardRule[1].includes("background: var(--surface-elevated);")) {
-        fail("R4 Rig Knot presentation", "Knots You'll Tie recommendations must use the approved contained interactive-card treatment");
+        fail("R4 Rig Knot presentation", "Knots You'll Tie recommendations must use the approved contained recommendation-row treatment");
     }
     const knotActionRule = styleSource.match(/\.rig-knot-recommendation__action\s*\{([\s\S]*?)\}/);
     if (!knotActionRule || !knotActionRule[1].includes("color: var(--accent-knots);") || !knotActionRule[1].includes("font-weight: 800;")) {
@@ -4653,7 +4757,7 @@ function validateRigR2SupportPresentation() {
     }
     const groupTitleRule = styleSource.match(/\.rig-detail-group__title\s*\{([\s\S]*?)\}/);
     if (!groupTitleRule || !groupTitleRule[1].includes("color: var(--text-subtle);") || !groupTitleRule[1].includes("font-size: .82rem;") || !groupTitleRule[1].includes("text-transform: uppercase;")) {
-        fail("R4 About This Rig", "About/More Help section labels must share the Guide-family subdued uppercase title grammar");
+        fail("R4 About This Rig", "About section label must retain the Guide-family subdued uppercase title grammar");
     }
     const rowTriggerRule = styleSource.match(/\.rig-detail-row__trigger\s*\{([\s\S]*?)\}/);
     if (!rowTriggerRule || !rowTriggerRule[1].includes("color: var(--text);") || !rowTriggerRule[1].includes("font-weight: 800;")) {
@@ -4682,9 +4786,9 @@ function validateRigR2SupportPresentation() {
     if (!styleSource.includes(".detail-view--rig-compact .reference-info-button::before") || !styleSource.includes("width: var(--touch-target);") || !styleSource.includes("height: var(--touch-target);") || !styleSource.includes("transform: translate(-50%, -50%);")) {
         fail("R2/R3 Rig Reference cues", "Rig Detail Reference cues must retain the shared enlarged touch target centered on the visible cue");
     }
-    const preventScrollFocusCount = (rendererSource.match(/triggerElement\?\.focus\(\{ preventScroll: true \}\);/g) ?? []).length;
-    if (preventScrollFocusCount < 4) {
-        fail("R2 Rig Reference cues", `expected preventScroll focus restoration on Rig-used shared Reference surfaces; found ${preventScrollFocusCount}`);
+    if (!rendererSource.includes("function showReferencePopoverDialog(dialog, triggerElement, closeSelector)") ||
+        !rendererSource.includes("triggerElement?.focus({ preventScroll: true });")) {
+        fail("FCC 52A-F Reference surfaces", "shared Reference Popover lifecycle must restore focus without scrolling");
     }
 
     // R2-C13 responsive/readiness density and obsolete R1 presentation cleanup.
@@ -5130,6 +5234,285 @@ function validateReelGuidance() {
 }
 
 
+function validateGuideDetailConvergence() {
+    recordCheck("FCC 52A-F/R4 Guide Detail convergence, Dashboard actions, shared Reference language, and bounded Snell mapping");
+
+    const rendererSource = readText("view-renderer.js") ?? "";
+    const styleSource = readText("forest-journal.css") ?? "";
+    const knotMediaSource = readText("knot-media-renderer.js") ?? "";
+    const knotDataSource = readText("data/knots.js") ?? "";
+    const knotGuidanceSource = readText("data/knot-guidance.js") ?? "";
+    const controllerSource = readText("script.js") ?? "";
+    const indexSource = readText("index.html") ?? "";
+
+    for (const token of [
+        'class="detail-header knot-detail-header"',
+        '>Tying Steps</h4>',
+        '>Final Checks</h4>',
+        '>Common Mistakes</h4>',
+        '>Recommended Uses</h4>',
+        '>Compatible Line Types</h4>',
+        '>When to Switch</h4>',
+        'class="compact-link-row__action" type="button" data-knot-rig-id=',
+        'class="compact-link-row__action" type="button" data-knot-task-link-id=',
+        'class="knot-detail-group knot-detail-group--sources"',
+        '"sources",',
+        '"Sources & References",',
+        '>Verified References</h4>'
+    ]) {
+        if (!rendererSource.includes(token)) fail("FCC 52A-F Knot convergence", `missing ${token}`);
+    }
+    for (const stale of [
+        "knot-detail-header--core",
+        "Numbered Tying Steps",
+        "No Rig in the guide currently references this Knot."
+    ]) {
+        if (rendererSource.includes(stale)) fail("FCC 52A-F Knot convergence", `stale presentation remains: ${stale}`);
+    }
+
+    const knotDetailStart = rendererSource.indexOf("function renderKnotDetailView");
+    const knotDetailEnd = rendererSource.indexOf("/* ==========================================================\n   END KNOT GUIDE", knotDetailStart);
+    const knotDetailSource = knotDetailStart >= 0 && knotDetailEnd > knotDetailStart
+        ? rendererSource.slice(knotDetailStart, knotDetailEnd)
+        : rendererSource;
+    const tyingIndex = knotDetailSource.indexOf("tyingStepsLabelMarkup");
+    const supportIndex = knotDetailSource.indexOf("knot-build-subsection--support");
+    const animationIndex = knotDetailSource.indexOf('"Tying Animation"');
+    if (!(tyingIndex >= 0 && supportIndex > tyingIndex && animationIndex > supportIndex)) {
+        fail("FCC 52A-I Knot Visual Guide", "Tying Steps must precede Build Support -> Tying Animation");
+    }
+    if (!knotMediaSource.includes('class="knot-instruction-media__heading rig-tutorial__meta"') ||
+        !knotMediaSource.includes('reference-source-action">Visit Site') ||
+        !knotMediaSource.includes('if (type === "external-animation") return "Animation";')) {
+        fail("FCC 52A-I Knot Visual Guide", "Visual Guide must retain media type and named external Visit Site action inside Tying Animation support");
+    }
+
+    if (!rendererSource.includes("function buildFishHabitatGroups(fishId)") ||
+        !rendererSource.includes("FISH_HABITAT_DIMENSIONS") ||
+        !rendererSource.includes('data-fish-habitat-reference') ||
+        rendererSource.includes("FISH_INTRINSIC_REFERENCE_DETAILS") ||
+        rendererSource.includes("buildFishConditionTagList(record.habitatTags)")) {
+        fail("FCC 52A R6 Fish presentation", "canonical five-dimension Fish Habitat reference presentation not integrated");
+    }
+    if (!rendererSource.includes('class="dashboard-card guide-curated-card rig-guide-learn-core"') ||
+        !rendererSource.includes('class="guide-curated-card__eyebrow">Recommended First') ||
+        rendererSource.includes('class="dashboard-card dashboard-card--workflow rig-guide-learn-core"') ||
+        !rendererSource.includes('config.cards.filter((card) => card.id !== "browse-core-rigs")') ||
+        !styleSource.includes('.guide-curated-card .dashboard-card__action--link') ||
+        !styleSource.includes('var(--accent-fish); width: 100%;')) {
+        fail("FCC 52A R7 Core Rigs", "Learn Core Rigs must use Knots' non-pill curated emphasis without a duplicate destination");
+    }
+    if (/\.knot-task-card\s+\.guide-card__heading-row\s*\{[^}]*display:\s*grid/.test(styleSource) ||
+        !styleSource.includes('.guide-card__heading-row {') ||
+        !styleSource.includes('white-space: nowrap;')) {
+        fail("FCC 52A R7 Knot task cards", "Knot task actions must use responsive shared heading rows rather than forced single-column mobile layout");
+    }
+    const mediaTypeMarkupIndex = knotMediaSource.indexOf('class="knot-instruction-media__type rig-tutorial__media-type"');
+    const mediaTitleMarkupIndex = knotMediaSource.indexOf('class="knot-instruction-media__title rig-tutorial__title"');
+    if (mediaTypeMarkupIndex < 0 || mediaTitleMarkupIndex <= mediaTypeMarkupIndex ||
+        !styleSource.includes('.knot-instruction-media__heading.rig-tutorial__meta { display: grid;')) {
+        fail("FCC 52A R7 Knot animation", "Media type chip must appear above the Visual Guide title, matching Rig Tutorial's hierarchy");
+    }
+    if (!rendererSource.includes('${relatedTackleMarkup}${rigsMarkup}') ||
+        !rendererSource.includes('referenceHistory.length = 0;') ||
+        !readText("script.js").includes('openRigDetail(rigId, "guide");')) {
+        fail("FCC 52A R6 Component routing", "Related Components then Used In and fresh Rig navigation required");
+    }
+    if (!knotMediaSource.includes("rig-tutorial__meta") || !knotMediaSource.includes("rig-tutorial__external")) {
+        fail("FCC 52A R6 Build Support", "Knot Visual Guide must share Rig Tutorial presentation structure");
+    }
+
+    if (!rendererSource.includes("function showReferencePopoverDialog(dialog, triggerElement, closeSelector)") ||
+        (rendererSource.match(/showReferencePopoverDialog\(dialog, triggerElement/g) ?? []).length < 4) {
+        fail("FCC 52A-F Reference Popover", "simple Guide reference variants must use the shared popover lifecycle helper");
+    }
+    for (const token of [
+        'compact-link-row__action">View Rig',
+        'compact-link-row__action">View Component',
+        'data-reference-back'
+    ]) {
+        if (!rendererSource.includes(token)) fail("FCC 52A-F Component Popover", `missing ${token}`);
+    }
+
+    for (const token of [
+        'reference-popover__section reference-popover__section--related',
+        'compact-link-list compact-link-list--divided knot-usage-list',
+        'knot-result-card__classification-core',
+        'rig-result-card__classification-core',
+        'knot-detail-classification__core',
+        'knot-line-compatibility__pairing-separator">to</span>',
+        '>Get Reel Ready <span class="link-arrow link-arrow--internal"',
+        '`See all ${rigContexts.length} rigs`'
+    ]) {
+        if (!rendererSource.includes(token)) fail("FCC 52A-J R4 convergence", `missing ${token}`);
+    }
+    for (const stale of [
+        'knot-line-compatibility__pairing-arrow',
+        '>Get Your Reel Ready <span class="link-arrow link-arrow--internal"'
+    ]) {
+        if (rendererSource.includes(stale)) fail("FCC 52A-J R4 convergence", `stale R3 presentation remains: ${stale}`);
+    }
+    if (!controllerSource.includes('pushCurrentKnotDetailContext(`task:${taskId}`);') ||
+        controllerSource.includes('if (!task || !pushCurrentKnotDetailContext(`task:${taskId}`)) return;') ||
+        !controllerSource.includes('selectedKnotBrowseKey = "task";') ||
+        !controllerSource.includes('showView(ROUTES.KNOT_BROWSE);')) {
+        fail("FCC 52A-J Common Tasks", "Knot Detail Common Tasks must navigate even if return-context capture is unavailable");
+    }
+
+    for (const stale of [
+        "FISH_TONGUE_REFERENCE_CONTEXTS",
+        "getFishTongueReferenceContext",
+        "openFishTongueReference",
+        "data-fish-tongue-reference",
+        "fish-tongue-reference"
+    ]) {
+        if (controllerSource.includes(stale) || rendererSource.includes(stale) || styleSource.includes(stale)) {
+            fail("FCC 52A-I Fish tongue Reference deferment", `deferred tongue Reference behavior remains active: ${stale}`);
+        }
+    }
+
+    if (!rendererSource.includes('<span>Compare Fish</span> <span class="link-arrow link-arrow--internal"')) {
+        fail("FCC 52A-I Fish Similar Fish", "Fish Detail must use adjacent Compare Fish -> action language");
+    }
+    if (!rendererSource.includes('<div class="fish-rig-recommendation">') ||
+        rendererSource.includes('<button class="fish-rig-recommendation"') ||
+        !rendererSource.includes('class="fish-rig-recommendation__action" type="button"') ||
+        !rendererSource.includes('data-fish-rig-id=')) {
+        fail("FCC 52A-I Fish Rig recommendations", "recommendation shell must be static and only View Rig may navigate");
+    }
+    if (!rendererSource.includes('<div class="rig-knot-recommendation">') ||
+        rendererSource.includes('<button class="rig-knot-recommendation"') ||
+        !rendererSource.includes('class="rig-knot-recommendation__action" type="button" data-rig-knot-id=')) {
+        fail("FCC 52A-I Rig Knot recommendations", "recommendation shell must be static and only View Knot may navigate");
+    }
+
+    for (const token of [
+        ".compact-link-row__action",
+        ".compact-link-row--workflow .compact-link-row__action { color: var(--accent-workflow); }",
+        ".compact-link-list--divided > .compact-link-row + .compact-link-row",
+        "--separator-tan:",
+        "--semantic-core:",
+        ".detail-list li::marker { color: var(--accent); }",
+        ".knot-build-subsection--support",
+        ".knot-line-compatibility-list { display: flex; flex-wrap: wrap;",
+        ".knot-line-compatibility-item { display: inline-flex;",
+        ".knot-line-compatibility__pairing-separator",
+        ".reference-popover__section--related > h3",
+        ".rig-reference-list > li + li, .knot-reference-links > .knot-reference-link + .knot-reference-link",
+        ".rig-about-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }",
+        ".rig-knot-recommendation-list--unique,\n    .fish-rig-recommendation-list { width: calc(66.6667% - 5.333px); }"
+    ]) {
+        if (!styleSource.includes(token)) fail("FCC 52A-J shared visual language", `missing ${token}`);
+    }
+    if ((styleSource.match(/(?:^|\n)\.compact-link-row__action\s*\{/g) ?? []).length !== 1) {
+        fail("FCC 52A-I source organization", "compact internal action base style must have one semantic owner");
+    }
+
+    const dashboardLabels = [
+        ["Regulations", "Browse a State"],
+        ["Fish Guide", "Browse Fish"],
+        ["Knots Guide", "Browse Knots"],
+        ["Rigs Guide", "Browse Rigs"],
+        ["Tackle", "Browse Tackle"],
+        ["What Should I Throw?", "Get Recommendations"],
+        ["Catch Log", "View Catch Log"],
+        ["Favorites", "View Favorites"],
+        ["Settings", "Open Settings"]
+    ];
+    if ((indexSource.match(/dashboard-card--home/g) ?? []).length !== dashboardLabels.length ||
+        !styleSource.includes(".dashboard-card--home { justify-content: flex-start; }") ||
+        !styleSource.includes(".dashboard-card--home .dashboard-card__heading-row { justify-content: space-between; width: 100%; }") ||
+        !styleSource.includes(".dashboard-card--home .dashboard-card__action") ||
+        !styleSource.includes("margin-left: auto;")) {
+        fail("FCC 52A-J Dashboard", "home Dashboard title-row actions must retain the lightweight treatment and right alignment");
+    }
+    for (const [title, action] of dashboardLabels) {
+        if (!indexSource.includes(`<span class="dashboard-card__title">${title}</span>`) || !indexSource.includes(`>${action} <span class="link-arrow link-arrow--internal"`)) {
+            fail("FCC 52A-I Dashboard", `missing destination-specific action for ${title}: ${action}`);
+        }
+    }
+    if (indexSource.includes("Choose a State")) {
+        fail("FCC 52A-I Dashboard", "stale Regulations Choose a State wording remains");
+    }
+
+    if (knotDataSource.includes("specialized braid-to-leader connection") || knotDataSource.includes("more specialized knot is useful")) {
+        fail("FCC 52A-F Knot wording", "approved beginner-clear Alberto wording was not applied");
+    }
+    const requiredNonSlipQualifier = "For common freshwater leader sizes, wrap the tag end around the standing line five times; unusually light or heavy material may require a different wrap count.";
+    if (!knotDataSource.includes(requiredNonSlipQualifier)) {
+        fail("FCC 52A-F Knot wording", "approved Non-Slip Loop freshwater wrap-count qualifier is missing");
+    }
+    if (!knotGuidanceSource.includes("Four knots for more specific applications: loops, hook-specific tying, and leader connections.") ||
+        knotGuidanceSource.includes("Four specialized knots for loops, hook-specific tying, and leader connections.")) {
+        fail("FCC 52A-F Knot guidance", "approved Intermediate collection wording is not reconciled");
+    }
+    for (const token of [
+        'title: "Tie a Hook"',
+        'title: "Tie a Lure, Swivel, or Snap"',
+        'title: "Tie Two Lines"'
+    ]) {
+        if ((knotGuidanceSource.match(new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ?? []).length < 2) {
+            fail("FCC 52A-J Knot guidance", `canonical task and landing surfaces must both use ${token}`);
+        }
+    }
+    for (const stale of ['title: "Hook"', 'title: "Lure"', 'title: "Lines"', 'Tie On a Hook', 'Tie On a Lure, Swivel, or Snap', 'Connect Two Lines']) {
+        if (knotGuidanceSource.includes(stale)) fail("FCC 52A-J Knot guidance", `stale task wording remains: ${stale}`);
+    }
+    if (!rendererSource.includes('id="knot-start-title">Start Here</h3>') ||
+        !rendererSource.includes('id="knot-task-title">What Are You Trying to Do?</h3>') ||
+        !controllerSource.includes('.filter(([key]) => key !== "core")')) {
+        fail("FCC 52A-F Knot landing", "Learn Core must be the single Start Here Core presentation and Core must not be duplicated in Browse");
+    }
+    // FCC 52A-K: R4 browser-found defects are owned here by the existing
+    // Guide Detail/relationship validation group, not a detached patch check.
+    for (const token of [
+        'usage.taskId === "attach-line-to-reel"',
+        'usage.taskId !== "attach-line-to-reel"',
+        'data-knot-task-link-id="${usage.taskId}"',
+        'data-knot-task-link-id="${reelSetupTask.taskId}"',
+        'data-knot-rig-id="${usage.rigId}"',
+        'const KNOT_USAGE_VISIBLE_RIG_LIMIT = 2;',
+        'index >= KNOT_USAGE_VISIBLE_RIG_LIMIT',
+        'data-knot-rig-usage-extra',
+        'compact-link-list compact-link-list--divided reference-popover__link-list',
+        'class="page-navigation-group${groupClass}${workflowClass}"'
+    ]) {
+        if (!rendererSource.includes(token)) fail("FCC 52A-K relationships/navigation", `missing ${token}`);
+    }
+    if ((rendererSource.match(/compact-link-list compact-link-list--divided reference-popover__link-list/g) ?? []).length !== 2) {
+        fail("FCC 52A-K component relationships", "both Used In and Related Components must use light-tan divided rows");
+    }
+    for (const stale of [
+        'usage.id === "attach-line-to-reel"',
+        'usage.id !== "attach-line-to-reel"',
+        'data-knot-rig-id="${usage.id}"'
+    ]) {
+        if (rendererSource.includes(stale)) fail("FCC 52A-K relationship identifiers", `obsolete identifier ${stale}`);
+    }
+    for (const token of [
+        'fromKnotDetailTask',
+        'if (!fromKnotDetailTask) clearDetailNavigationStack();',
+        'knotBrowseState = { query: "", scrollY: 0 };',
+        'onRigSelect: openRigDetailFromKnot',
+        'onTaskSelect: openKnotTaskFromDetail',
+        'genericNavigationGroup.replaceWith(navigation);',
+        'clearDetailNavigationStack();'
+    ]) {
+        if (!controllerSource.includes(token)) fail("FCC 52A-K origin-aware navigation", `missing ${token}`);
+    }
+    for (const token of [
+        '--separator-tan: #baa88c;',
+        '.compact-link-row[hidden] { display: none; }',
+        '.page-navigation-group .page-navigation { min-width: 0; white-space: nowrap; }',
+        'flex-wrap: nowrap;',
+        '.compact-link-list--divided > .compact-link-row + .compact-link-row',
+        '.knot-usage-subsection--workflow .compact-link-row__action { color: var(--accent-workflow); }'
+    ]) {
+        if (!styleSource.includes(token)) fail("FCC 52A-K visual/accessibility", `missing ${token}`);
+    }
+}
+
+
 function validateMedia(canonicalData) {
     recordCheck("Media ownership, local assets, and orphan image detection");
 
@@ -5375,10 +5758,6 @@ function validateRepositoryHygiene() {
         }
     }
 }
-
-
-
-
 
 
 function validateRecommendationEngineContract() {
@@ -5979,6 +6358,7 @@ function main() {
     validateRigR2DetailPresentation();
     validateRigR2KnotTutorialPresentation();
     validateRigR2SupportPresentation();
+    validateGuideDetailConvergence();
     validateFishEvidence(canonicalData.fish, canonicalData.fishIdentification);
     validateFishSearchHelpers(canonicalData);
     validateReelGuidance();

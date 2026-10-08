@@ -358,7 +358,7 @@ const KNOT_DATA = Object.freeze([
         tyingSteps: [
             "Tie a loose overhand knot in the line, leaving enough tag end to complete the connection, then pass the tag end through the terminal eye.",
             "Bring the tag end back through the original overhand knot from the same side it first exited, then set the desired terminal-loop size.",
-            "Wrap the tag end around the standing line five times.",
+            "For common freshwater leader sizes, wrap the tag end around the standing line five times; unusually light or heavy material may require a different wrap count.",
             "Pass the tag end back through the original overhand knot from the same side used on the earlier return pass.",
             "Moisten the knot and pull the tag end and standing line in opposite directions to seat the knot while keeping the terminal loop open, then trim the excess tag end."
         ],
@@ -510,11 +510,11 @@ const KNOT_DATA = Object.freeze([
         ],
         bestFor: [
             "Connecting braided main line to a monofilament or fluorocarbon leader.",
-            "Braid-to-leader connections where the line materials or diameters differ enough that a more specialized knot is useful."
+            "Braid-to-leader connections where the line materials or diameters differ enough that a purpose-built braid-to-leader knot is useful."
         ],
         chooseAnotherKnot: [
             "Choose the Double Uni when you want a more general line-to-line connection, especially when the lines are similar or only moderately different in diameter.",
-            "Choose a simpler line-to-line knot if you do not need the Alberto's specialized braid-to-leader connection and want fewer wraps and routing steps."
+            "Choose a simpler line-to-line knot if you do not need the Alberto's purpose-built braid-to-leader connection and want fewer wraps and routing steps."
         ],
         tyingSteps: [
             "Fold the end of the monofilament or fluorocarbon leader to form a loop, then pass the braid tag end through that loop.",

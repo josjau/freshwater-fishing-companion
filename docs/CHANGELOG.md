@@ -1,14 +1,27 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.8.11  
+**Document Revision:** 3.8.13  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-10-01
+**Last Updated:** 2026-10-08
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, current-state/resume surface, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to the external Live Working State; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-10-08 — FCC 52A — Fish / Rigs / Knots Guide Convergence — Local Final Handoff
+
+- Browser-approved cumulative R7 was frozen for local final handoff: 30 canonical Fish with 13 physical Habitat concepts and 136 stable-ID Fish↔Habitat associations, Creek / Stream normalization, a 40-Condition / 10-group context vocabulary, and explicit 13 Habitat + five waterbody environmental correspondences without Recommendation weighting or eligibility.
+- Aligned Guide navigation, Knot task/action rows and Tying Animation support, curated Learn Core Rigs treatment, and Component Reference related/used-in navigation with the shared UI Standard. Preserved established Fish identification/media and Rig/Knot data semantics beyond the approved scope.
+- Cumulative FINAL-LOCAL includes the approved source/data/UI/validator corrections and reconciled durable Fish, Conditions, relationship, model index, active carry-forward, and changelog documentation. Local Repository Integrity and browser acceptance PASS; user Git push, CI/Pages verification, and actual-mobile validation remain OPEN. The Build Unit is not closed until deployed/mobile approval.
+
+# 2026-10-02 — FCC 50B-I — Shared Semantic UI Baseline Reconciliation
+
+- Superseded the historical Fish-first presentation baseline for current execution. `UI_STANDARD.md` now makes the **Visual Pattern Registry / shared semantic contract** the site-wide authority and records the completed Rig Guide at `a63fbd1413499d8389d147310b66ce508d407a6f` as the current validated reference implementation for equivalent shared elements, not as a Rig template.
+- Shared treatments now apply by **semantic role** across Guide and non-Guide surfaces regardless of field name, record type, source schema, or page label. Domain-specific information architecture remains local where semantics differ, and unmatched roles use **NO PATTERN MATCH - OPEN** rather than silent one-off styling.
+- Reconciled `V1-DESIGN-AUDIT.md` so Fish, Knots, and later audits compare against the registry/shared comparison contract; added explicit site-wide inheritance, responsive-pattern behavior, and reference/source-link treatment. `ROADMAP.md` now directs the Fish Matrix + Data Reconciliation Pass to that shared baseline and current Rig reference, while `ACTIVE-CHANGE-LEDGER.md` marks the old 2026-09-19 Fish-first checkpoint/resume as historical and superseded.
+- Documentation-only reconciliation: no production source/data/media/configuration behavior changed.
 
 # 2026-10-01 — Rig Guide R6 — Local Review Complete / Commit Candidate
 

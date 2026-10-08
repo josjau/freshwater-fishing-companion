@@ -1,11 +1,11 @@
 # Freshwater Fishing Companion — Data Model Index
 
 **Document:** data-model/README.md  
-**Document Revision:** 0.7.0  
+**Document Revision:** 0.7.1  
 **Document Status:** Approved  
 **Role:** Canonical data-model ownership map  
 **Decision Baseline:** D037, D056, D067, D069  
-**Last Updated:** 2026-08-30
+**Last Updated:** 2026-10-08
 
 # Purpose
 
@@ -29,10 +29,10 @@ This directory contains governing data-model documents divided by semantic owner
 | File | Role / current status |
 |---|---|
 | `01-FOUNDATION.md` | Foundational entity/field/ownership/search/recommendation/trust rules plus canonical architecture terminology. |
-| `02-FISH.md` | Current Fish schema plus explicitly separated approved/future Fish architecture. |
+| `02-FISH.md` | Implemented 30-Fish canonical entity schema, 13 Habitat concepts / 136 Fish-Habitat associations, and explicitly separate deferred Recommendation behavior. |
 | `03-RIGS.md` | Validated canonical Rig schema and ownership boundaries. |
 | `03A-TECHNIQUES.md` | Implemented canonical Technique domain; 16 active V1 records. |
-| `03B-CONDITIONS.md` | Implemented canonical Condition domain; 35 active V1 records across eight groups. |
+| `03B-CONDITIONS.md` | Implemented canonical Condition domain; 40 active V1 records across ten groups (FCC 52A). |
 | `03C-LURES-BAIT.md` | Implemented canonical Lure/Bait Reference domain; 13 active V1 identities. |
 | `04-KNOTS.md` | Validated canonical Knot schema/boundaries. |
 | `05-TACKLE.md` | Validated canonical functional Tackle schema plus the approved semantic boundary with Lure/Bait. |
