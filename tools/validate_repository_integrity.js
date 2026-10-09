@@ -4639,7 +4639,7 @@ function validateRigR2SupportPresentation() {
     recordCheck("R2 Rig More Help, Reference/link semantics, and responsive presentation");
 
     const rendererSource = readText("view-renderer.js") ?? "";
-    const styleSource = readText("forest-journal.css") ?? "";
+    const styleSource = (readText("forest-journal.css") ?? "").replace(/\r\n/g, "\n");
     const start = rendererSource.indexOf("function renderInstructionDetail(appMain, detailConfig) {");
     const end = rendererSource.indexOf("\nfunction getRegulationsResourceActionLabel", start);
     const rigDetailSource = start >= 0 && end > start ? rendererSource.slice(start, end) : "";
@@ -5238,7 +5238,7 @@ function validateGuideDetailConvergence() {
     recordCheck("FCC 52A-F/R4 Guide Detail convergence, Dashboard actions, shared Reference language, and bounded Snell mapping");
 
     const rendererSource = readText("view-renderer.js") ?? "";
-    const styleSource = readText("forest-journal.css") ?? "";
+    const styleSource = (readText("forest-journal.css") ?? "").replace(/\r\n/g, "\n");
     const knotMediaSource = readText("knot-media-renderer.js") ?? "";
     const knotDataSource = readText("data/knots.js") ?? "";
     const knotGuidanceSource = readText("data/knot-guidance.js") ?? "";

@@ -136,7 +136,7 @@ const FISH_DATA = Object.freeze([
         family: "Moronidae",
         aliases: ["Wiper", "Whiterock Bass"],
         identificationTraits: [
-            "The body has intermediate depth between White Bass and Striped Bass.",
+            "The body is relatively deep, with a slightly arched back.",
             "Horizontal side stripes are commonly broken or discontinuous.",
             "Tongue-patch presentation varies and should be treated as supporting evidence rather than the sole identifier."
         ],
@@ -394,7 +394,7 @@ const FISH_DATA = Object.freeze([
         identificationTraits: [
             "Dark side markings form an irregular freckled pattern.",
             "The body is slender and elongate for a sunfish, with a large mouth.",
-            "The eyes are prominent but are typically smaller in proportion to the head than a Northern Rock Bass's."
+            "The eyes are prominent."
         ],
 
         waterbodyTypes: ["River", "Creek / Stream"]

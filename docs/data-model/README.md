@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion — Data Model Index
 
 **Document:** data-model/README.md  
-**Document Revision:** 0.7.1  
+**Document Revision:** 0.7.2  
 **Document Status:** Approved  
 **Role:** Canonical data-model ownership map  
 **Decision Baseline:** D037, D056, D067, D069  
@@ -38,7 +38,7 @@ This directory contains governing data-model documents divided by semantic owner
 | `05-TACKLE.md` | Validated canonical functional Tackle schema plus the approved semantic boundary with Lure/Bait. |
 | `05A-INVENTORY.md` | Approved / Not Implemented My Tackle ownership boundary; detailed owned-item schema unresolved. |
 | `07-USER-DATA.md` | Active User Knowledge architecture owner; UD-1 synced-profile identity is locked with refinement allowed, while persistence/sync implementation details remain unresolved. |
-| `09-RELATIONSHIPS.md` | Validated current relationships including 177 implemented typed intrinsic Compatibility relationships, Decision Knowledge boundaries, and derived inverses. |
+| `09-RELATIONSHIPS.md` | Validated current relationships including 185 implemented typed intrinsic Compatibility relationships, Decision Knowledge boundaries, and derived inverses. |
 
 The former speculative Lure placeholder was retired during documentation consolidation, but D069 now establishes a genuinely approved Lure/Bait domain; `03C-LURES-BAIT.md` is therefore the new canonical owner rather than a restoration of the old speculative model. The former glossary and deferred Backup placeholder remain consolidated into `01-FOUNDATION.md` and `07-USER-DATA.md`; prior revisions remain recoverable in Git history.
 
@@ -46,7 +46,7 @@ The former speculative Lure placeholder was retired during documentation consoli
 
 Current production Reference Knowledge includes Fish, Rigs, Knots, Tackle, Media, Conditions, Lure/Bait, and Techniques. Intrinsic Compatibility relationships are implemented as their own typed Reference Knowledge relationship registry. Current Decision Knowledge includes Knot task guidance, Reel & Line Setup guidance, and Fish-to-Rig guidance.
 
-Authoritative My Tackle and general User Data persistence remain not-yet-implemented. The Settings / User Data Architecture gate is active; UD-1 establishes the persistent synced-profile direction while UD-2 and later decisions must settle the concrete identity/sync/persistence foundation before My Tackle becomes authoritative. What Should I Throw production remains behind User Data and scoped My Tackle Availability.
+Authoritative My Tackle and general User Data persistence remain not-yet-implemented. The Settings / User Data Architecture planning gate is CLOSED / PASS, with its architecture locked subject to allowed refinement. GATE-007 likewise closed the scoped Recommendation-facing My Tackle Availability Foundation; persistent My Tackle product UI/storage remains separate future work. My Tackle and the User Knowledge Platform are not hard prerequisites for What Should I Throw / Best Overall, but the minimum operational User Knowledge/My Tackle foundation is required for Best Currently Available and full approved WSIT closure.
 
 # Deferred Model Policy
 

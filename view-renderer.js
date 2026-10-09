@@ -420,7 +420,10 @@ function renderFishGuideLanding(appMain, config) {
         config.onQueryChange?.(query);
         const hasQuery = query.length > 0;
         if (searchRegion) searchRegion.hidden = !hasQuery;
-        if (guideContent) guideContent.hidden = hasQuery;
+        if (guideContent) {
+            guideContent.hidden = hasQuery;
+            guideContent.style.display = hasQuery ? "none" : "";
+        }
         if (!hasQuery) {
             const status = appMain.querySelector("[data-search-status]");
             const results = appMain.querySelector("[data-search-results]");
@@ -2984,6 +2987,9 @@ function renderInstructionDetail(appMain, detailConfig) {
 /* ==========================================================
    END RIG GUIDE — DETAIL RENDERING + READINESS
    ========================================================== */
+/* ==========================================================
+   REGULATIONS — GATEWAY + STATE RENDERING
+   ========================================================== */
 
 function getRegulationsResourceActionLabel(resource) {
     const capabilities = new Set(Array.isArray(resource?.capabilities) ? resource.capabilities : []);
@@ -3380,5 +3386,10 @@ function renderRegulationsStateView(appMain, config) {
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", config.onParent);
     initializeHomeNavigation(appMain);
 }
+
+
+/* ==========================================================
+   END REGULATIONS — GATEWAY + STATE RENDERING
+   ========================================================== */
 
 console.info(`[Loaded] ${VIEW_RENDERER_BUILD_INFO.file}`);

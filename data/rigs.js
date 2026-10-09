@@ -236,7 +236,7 @@ const RIG_DATA = Object.freeze([
         difficulty: "Beginner",
         useCases: [
             "Presenting bait near the bottom",
-            "Holding bait in place with a simple fixed-sinker setup"
+            "Letting the main line slide through the sinker when a fish takes the bait."
         ],
         conditionTags: [
             "Deep Water",
@@ -1870,7 +1870,7 @@ const RIG_DATA = Object.freeze([
         ],
         assemblySteps: [
             "Tie the lower Jighead to the end of the main line.",
-            "Move 12 to 18 inches up the main line and form a short dropper loop or loop-knot connection for the upper Jighead.",
+            "Move 12 to 18 inches up the main line and tie a Dropper Loop Knot to form a short side loop for the upper jighead.",
             "Attach the second Jighead to the upper loop so it hangs separately from the main line rather than directly against the lower jig.",
             "Thread one Soft Plastic Bait straight onto each jighead and keep both hook gaps usable.",
             "Hold the rig vertically and confirm that the two jigs remain separated rather than tangling together.",

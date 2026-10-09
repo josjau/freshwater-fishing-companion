@@ -2,10 +2,10 @@
 
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.15.12  
+**Document Revision:** 0.15.14  
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
-**Last Updated:** 2026-10-01
+**Last Updated:** 2026-10-06
 
 
 # Purpose
@@ -87,11 +87,15 @@ data/fish-categories.js
 data/fish.js
 data/rigs.js
 data/conditions.js
+data/habitats.js
+data/fish-habitat.js
+data/environment-correspondence.js
 data/lure-bait.js
 data/techniques.js
 data/compatibility.js
 data/fish-identification.js
 data/fish-rig-guidance.js
+data/fish-specialized-guidance.js
 data/knots.js
 data/knot-guidance.js
 data/reel-guidance.js
@@ -231,7 +235,7 @@ Fish identification media is accuracy-critical and follows `MEDIA_GUIDE.md`.
 
 
 - `data/knots.js` owns canonical per-Knot identity/content and stable metadata: summary, lifecycle state, difficulty, connection types, compatible line types, genuine aliases, best-for guidance, limitations, tying instructions, mistakes/checks, and references. Canonical Knot records do not own Guide-only Core membership, collection membership, landing-task curation, or Search-only keyword vocabulary.
-- `data/knot-guidance.js` owns Knots Guide curation/discovery data: `CORE_KNOT_IDS`, static collection definitions, practical task-to-Knot mappings, visible landing-task definitions, and maintained Search-intent vocabulary. **Learn Core Knots** derives membership from the single Core registry; **Attach Line to a Reel** may remain a practical/search/detail context without becoming a peer landing task.
+- `data/knot-guidance.js` owns Knots Guide curation/discovery data: `CORE_KNOT_IDS`, static collection definitions, practical task-to-Knot mappings, visible landing-task definitions, and maintained Search-intent vocabulary. The current Knot task set is **Tie a Hook**, **Tie a Lure, Swivel, or Snap**, and **Tie Two Lines**. **Learn Core Knots** derives membership from the single Core registry and is presented as a curated Start Here destination rather than an ordinary Browse collection. **Attach Line to a Reel** remains Reel Setup/Search context rather than a peer Knot task.
 - `search.js` owns Knot Search normalization, matching, scoring, and deterministic relevance ordering; it consumes canonical Knot identity/metadata plus Guide-owned intent vocabulary without becoming the owner of either data set.
 - `script.js` consumes Knots Guide configuration for state/controllers/routing and does not own static Knot collection curation.
 - `data/reel-guidance.js` owns Reel & Line Setup guidance for Spinning, Spincast, and Baitcasting.

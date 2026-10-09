@@ -1,20 +1,32 @@
 # Freshwater Fishing Companion — Changelog
 
 **Document:** CHANGELOG.md  
-**Document Revision:** 3.8.13  
+**Document Revision:** 3.8.15  
 **Document Status:** Approved  
 **Role:** Curated meaningful landed-change history  
-**Last Updated:** 2026-10-08
+**Last Updated:** 2026-10-09
 
 # Purpose
 
 This is a curated project changelog, not a second Working State, current-state/resume surface, decision log, or workstream archive. Git history and `archive/` retain detailed historical evidence. Current continuation belongs to the external Live Working State; non-closed carry-forward belongs to `ACTIVE-CHANGE-LEDGER.md`.
+
+# 2026-10-09 — FCC PI-01 — Production Integrity Corrections — Local Final Handoff
+
+- The approved cumulative R2 is frozen for final handoff: corrected the Hybrid Striped Bass/Ozark Bass identification wording and Basic Bottom Rig/Double-Jig Crappie Rig guidance; Fish Guide Search now hides its landing cards while results are shown and restores them when the query clears.
+- Clarified shared controller/renderer source-section ownership and reconciled the Architecture script-load order, canonical Knot landing-task names, Data Model index/relationship count, Ledger roadmap/history, and prior FCC 52A landed/mobile-closeout record. Made two repository-validator CSS-literal checks robust to Windows CRLF line endings without changing stylesheet bytes or their expected selectors.
+- Local Windows Repository Integrity passed 25/25, Fish Search was user-verified fixed, and the complete R2 received local approval. Forest Journal CSS, existing link/action/Workflow colors, and layout are unchanged; separately constrained contrast/color testing is deferred. Git commit/push, CI/Pages verification, and deployed actual-mobile approval remain OPEN pending user handoff.
 
 # 2026-10-08 — FCC 52A — Fish / Rigs / Knots Guide Convergence — Local Final Handoff
 
 - Browser-approved cumulative R7 was frozen for local final handoff: 30 canonical Fish with 13 physical Habitat concepts and 136 stable-ID Fish↔Habitat associations, Creek / Stream normalization, a 40-Condition / 10-group context vocabulary, and explicit 13 Habitat + five waterbody environmental correspondences without Recommendation weighting or eligibility.
 - Aligned Guide navigation, Knot task/action rows and Tying Animation support, curated Learn Core Rigs treatment, and Component Reference related/used-in navigation with the shared UI Standard. Preserved established Fish identification/media and Rig/Knot data semantics beyond the approved scope.
 - Cumulative FINAL-LOCAL includes the approved source/data/UI/validator corrections and reconciled durable Fish, Conditions, relationship, model index, active carry-forward, and changelog documentation. Local Repository Integrity and browser acceptance PASS; user Git push, CI/Pages verification, and actual-mobile validation remain OPEN. The Build Unit is not closed until deployed/mobile approval.
+
+# 2026-10-08 — FCC 52A — Landed and Actual-Mobile Closeout
+
+- The approved Fish / Rigs / Knots Guide convergence package was landed on GitHub `main` at `a256fc0071034d4da85c4dfb12c8cb19b3bc75c2`; repository-integrity CI (25/25) and Pages verification passed.
+- User-confirmed actual-mobile validation completed and FCC 52A closed / PASS. This later closeout record preserves the earlier Local Final Handoff entry as accurate history at that stage.
+
 
 # 2026-10-02 — FCC 50B-I — Shared Semantic UI Baseline Reconciliation
 

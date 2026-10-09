@@ -1708,11 +1708,12 @@ let selectedKnotTaskId = null;
 let selectedKnotDetailSource = "guide";
 let knotGuideState = { query: "", scrollY: 0 };
 let knotBrowseState = { query: "", scrollY: 0 };
-let reelSetupState = createInitialReelSetupState();
 
 /* ==========================================================
-   KNOTS GUIDE — GET YOUR REEL READY STATE + CONTROLLERS
+   REEL SETUP — STATE + CONTROLLERS (KNOTS GUIDE INTEGRATION)
    ========================================================== */
+
+let reelSetupState = createInitialReelSetupState();
 
 const COMPLETED_REEL_SETUP_STORAGE_KEY = "freshwaterFishingCompanion.completedReelSetup.v1";
 let completedReelSetupContext = null;
@@ -2838,6 +2839,9 @@ function renderReelSetupReadyStep(appMain) {
 /* ==========================================================
    END GET YOUR REEL READY
    ========================================================== */
+/* ==========================================================
+   KNOTS GUIDE — DETAIL STATE + CONTROLLERS
+   ========================================================== */
 
 function createInitialKnotDetailState(knotId) {
     return {
@@ -3264,6 +3268,9 @@ function renderKnotDetailView(appMain) {
 /* ==========================================================
    END KNOTS GUIDE
    ========================================================== */
+/* ==========================================================
+   REGULATIONS — STATE + ROUTE CONTROLLERS
+   ========================================================== */
 
 function getActiveRegulationStates() {
     if (typeof STATE_DATA === "undefined") return [];
@@ -3341,6 +3348,15 @@ function renderRegulationsStateRoute(appMain) {
     });
 }
 
+/* ==========================================================
+   END REGULATIONS — STATE + ROUTE CONTROLLERS
+   ========================================================== */
+
+
+/* ==========================================================
+   CATCH LOG — PLACEHOLDER ROUTE
+   ========================================================== */
+
 function renderCatchLogView(appMain) {
     renderView(appMain, {
         headingId: "catch-log-title",
@@ -3354,6 +3370,15 @@ function renderCatchLogView(appMain) {
         ]
     });
 }
+
+/* ==========================================================
+   END CATCH LOG — PLACEHOLDER ROUTE
+   ========================================================== */
+
+
+/* ==========================================================
+   FAVORITES — PLACEHOLDER ROUTE
+   ========================================================== */
 
 function renderFavoritesView(appMain) {
     renderView(appMain, {
@@ -3369,6 +3394,15 @@ function renderFavoritesView(appMain) {
     });
 }
 
+/* ==========================================================
+   END FAVORITES — PLACEHOLDER ROUTE
+   ========================================================== */
+
+
+/* ==========================================================
+   SETTINGS — PLACEHOLDER ROUTE
+   ========================================================== */
+
 function renderSettingsView(appMain) {
     renderView(appMain, {
         headingId: "settings-title",
@@ -3382,6 +3416,15 @@ function renderSettingsView(appMain) {
         ]
     });
 }
+
+/* ==========================================================
+   END SETTINGS — PLACEHOLDER ROUTE
+   ========================================================== */
+
+
+/* ==========================================================
+   SHARED APP — DASHBOARD ROUTING + INITIALIZATION
+   ========================================================== */
 
 function initializeDashboardRouting() {
     document.querySelectorAll("[data-route]").forEach((card) => {
@@ -3410,3 +3453,8 @@ function initializeApp() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeApp);
+
+/* ==========================================================
+   END SHARED APP — DASHBOARD ROUTING + INITIALIZATION
+   ========================================================== */
+
