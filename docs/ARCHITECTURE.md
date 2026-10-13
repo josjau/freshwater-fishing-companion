@@ -2,10 +2,10 @@
 
 
 **Document:** ARCHITECTURE.md  
-**Document Revision:** 0.15.14  
+**Document Revision:** 0.15.15
 **Document Status:** Approved  
 **Role:** Current technical/source architecture and durable ownership boundaries  
-**Last Updated:** 2026-10-06
+**Last Updated:** 2026-10-11
 
 
 # Purpose
@@ -353,6 +353,19 @@ Shared implementation files such as `script.js`, `view-renderer.js`, `search.js`
 
 
 User Knowledge/imported text is untrusted at rendering boundaries and must use safe DOM APIs unless a centrally owned sanitization path is explicitly approved.
+
+
+## Guide-Separated Source Architecture — Option B Implementation
+
+D071 approves **Option B / revision allowed** as the implemented source-ownership direction before further production implementation of the parked FCC 53A Techniques Guide. The migration retains plain HTML/CSS/classic JavaScript and separates `script.js` application bootstrap from Guide-specific controllers, while `view-renderer.js` retains shared presentation primitives. The descriptive repository-relative owner/dependency map is `SOURCE-FILE-MAP.md`. The earlier monolithic code structure was the migration baseline, not the organization described by this section. Deployment and actual-device validation remain independent operational gates.
+
+The implemented architecture gives each Guide or major feature clear controller, renderer, state and interaction ownership, while shared application infrastructure owns routing, Home/Parent return and navigation history. Guide state capture/restore/reset and rendering must use explicit public contracts rather than cross-file mutation of private state. Common navigation/search/disclosure UI and Reference modal lifecycle have one shared owner; specialized Reference types retain paged navigation, Tackle history, focus and accessibility behavior.
+
+**Independent cross-Guide Reel Setup:** The Reel Setup workflow owns draft and retained completed state, device-local persistence and shared read-only snapshot/formatting interfaces. Rigs and Knots preserve existing entry, Update/Clear and summary placements; Fish Detail and Rig Detail retain the passive compact Current Reel Setup in the existing top navigation-utility area, while Knot Detail does not acquire one. Leaving an unfinished workflow returns to the supported originating Guide; completing **Choose a Rig** navigates to Rigs as it does today. Origin-specific return-state capture belongs to each originating Guide; shared navigation retains and restores it.
+
+Canonical `data/*.js` and compatibility owners, approved Guide content, media, routes, search, responsive design, focus/scroll and Reference interactions remain unchanged. Internal helper-name collisions must be isolated, with explicit public interfaces and equivalent-or-stronger individual and combined classic-script validation. A bundler or ES-module conversion is **not** authorized by Option B.
+
+The migration may include a separately testable, visually equivalent **semantic CSS/theme-readiness preparation slice**, without changing the approved Forest Journal appearance. New themes, Light/Dark/System controls and Appearance settings remain deferred under D035 and the closed UD-11 decisions. Exact source filenames, migration slices and tests require separate scope and Planning-to-Build gates; architecture approval does not authorize production source edits or review ZIP creation.
 
 
 # Navigation / Context Architecture

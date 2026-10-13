@@ -7,6 +7,14 @@
 
 "use strict";
 
+
+/* ==========================================================
+   EXPLICIT FOUNDATION SERVICE / CLASSIC-SCRIPT COMPATIBILITY
+   Private validators and serializers remain closure-local.
+   Existing uniquely named consumers retain their stable API.
+   ========================================================== */
+const FCC_AVAILABILITY_QUANTITY_SERVICE = (() => {
+    "use strict";
 const AVAILABILITY_QUANTITY_BUILD_INFO = Object.freeze({
     file: "availability-quantity.js",
     milestone: "GATE-007 — My Tackle Availability Foundation"
@@ -124,3 +132,23 @@ function resolveQuantitySufficiency(requiredQuantity, contributions) {
 }
 
 console.info(`[Loaded] ${AVAILABILITY_QUANTITY_BUILD_INFO.file} | ${AVAILABILITY_QUANTITY_BUILD_INFO.milestone}`);
+
+    return Object.freeze({
+        AVAILABILITY_QUANTITY_BUILD_INFO,
+        QUANTITY_SUFFICIENCY_STATUS,
+        FUNCTIONAL_POOL_QUANTITY_STATUS,
+        QUANTITY_EVIDENCE_TYPE,
+        requirePositiveWholeNumber,
+        deriveFunctionalPoolQuantityStatus,
+        getQuantityContributionBounds,
+        resolveQuantitySufficiency
+    });
+})();
+const AVAILABILITY_QUANTITY_BUILD_INFO = FCC_AVAILABILITY_QUANTITY_SERVICE.AVAILABILITY_QUANTITY_BUILD_INFO;
+const QUANTITY_SUFFICIENCY_STATUS = FCC_AVAILABILITY_QUANTITY_SERVICE.QUANTITY_SUFFICIENCY_STATUS;
+const FUNCTIONAL_POOL_QUANTITY_STATUS = FCC_AVAILABILITY_QUANTITY_SERVICE.FUNCTIONAL_POOL_QUANTITY_STATUS;
+const QUANTITY_EVIDENCE_TYPE = FCC_AVAILABILITY_QUANTITY_SERVICE.QUANTITY_EVIDENCE_TYPE;
+function requirePositiveWholeNumber(...args) { return FCC_AVAILABILITY_QUANTITY_SERVICE.requirePositiveWholeNumber(...args); }
+function deriveFunctionalPoolQuantityStatus(...args) { return FCC_AVAILABILITY_QUANTITY_SERVICE.deriveFunctionalPoolQuantityStatus(...args); }
+function getQuantityContributionBounds(...args) { return FCC_AVAILABILITY_QUANTITY_SERVICE.getQuantityContributionBounds(...args); }
+function resolveQuantitySufficiency(...args) { return FCC_AVAILABILITY_QUANTITY_SERVICE.resolveQuantitySufficiency(...args); }

@@ -7,6 +7,14 @@
 
 "use strict";
 
+
+/* ==========================================================
+   EXPLICIT FOUNDATION SERVICE / CLASSIC-SCRIPT COMPATIBILITY
+   Private validators and serializers remain closure-local.
+   Existing uniquely named consumers retain their stable API.
+   ========================================================== */
+const FCC_AVAILABILITY_ATTENTION_SERVICE = (() => {
+    "use strict";
 const AVAILABILITY_ATTENTION_BUILD_INFO = Object.freeze({
     file: "availability-attention.js",
     milestone: "GATE-007 — My Tackle Availability Foundation"
@@ -226,3 +234,29 @@ function hasAttentionClass(diagnostics, attentionClass) {
 }
 
 console.info(`[Loaded] ${AVAILABILITY_ATTENTION_BUILD_INFO.file} | ${AVAILABILITY_ATTENTION_BUILD_INFO.milestone}`);
+
+    return Object.freeze({
+        AVAILABILITY_ATTENTION_BUILD_INFO,
+        ATTENTION_CLASS,
+        ATTENTION_CAPABILITY,
+        ATTENTION_CONDITION,
+        FORBIDDEN_PERSISTED_ATTENTION_FIELDS,
+        ATTENTION_RULES,
+        normalizeAttentionSubject,
+        assertNoPersistedAttentionAuthority,
+        deriveAttentionDiagnostic,
+        deriveNeedsAttentionDiagnostics,
+        hasAttentionClass
+    });
+})();
+const AVAILABILITY_ATTENTION_BUILD_INFO = FCC_AVAILABILITY_ATTENTION_SERVICE.AVAILABILITY_ATTENTION_BUILD_INFO;
+const ATTENTION_CLASS = FCC_AVAILABILITY_ATTENTION_SERVICE.ATTENTION_CLASS;
+const ATTENTION_CAPABILITY = FCC_AVAILABILITY_ATTENTION_SERVICE.ATTENTION_CAPABILITY;
+const ATTENTION_CONDITION = FCC_AVAILABILITY_ATTENTION_SERVICE.ATTENTION_CONDITION;
+const FORBIDDEN_PERSISTED_ATTENTION_FIELDS = FCC_AVAILABILITY_ATTENTION_SERVICE.FORBIDDEN_PERSISTED_ATTENTION_FIELDS;
+const ATTENTION_RULES = FCC_AVAILABILITY_ATTENTION_SERVICE.ATTENTION_RULES;
+function normalizeAttentionSubject(...args) { return FCC_AVAILABILITY_ATTENTION_SERVICE.normalizeAttentionSubject(...args); }
+function assertNoPersistedAttentionAuthority(...args) { return FCC_AVAILABILITY_ATTENTION_SERVICE.assertNoPersistedAttentionAuthority(...args); }
+function deriveAttentionDiagnostic(...args) { return FCC_AVAILABILITY_ATTENTION_SERVICE.deriveAttentionDiagnostic(...args); }
+function deriveNeedsAttentionDiagnostics(...args) { return FCC_AVAILABILITY_ATTENTION_SERVICE.deriveNeedsAttentionDiagnostics(...args); }
+function hasAttentionClass(...args) { return FCC_AVAILABILITY_ATTENTION_SERVICE.hasAttentionClass(...args); }

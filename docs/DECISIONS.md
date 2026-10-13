@@ -2,10 +2,10 @@
 
 
 **Document:** DECISIONS.md  
-**Document Revision:** 0.8.2  
+**Document Revision:** 0.8.3
 **Document Status:** Approved  
 **Role:** Compact canonical decision index  
-**Last Updated:** 2026-09-27
+**Last Updated:** 2026-10-11
 
 
 # Purpose
@@ -103,3 +103,4 @@ Decision IDs are permanent. The decomposition does not renumber existing decisio
 | D068 | Drive-First Complete Working Tree and ChatGPT Project Workflow Performance Standard | Approved | [`decisions/workflow.md`](decisions/workflow.md#d068--drive-first-complete-working-tree-and-chatgpt-project-workflow-performance-standard) |
 | D069 | What Should I Throw Prerequisite Architecture and Phase 0 Handoff | Approved | [`decisions/product.md`](decisions/product.md#d069--what-should-i-throw-prerequisite-architecture-and-phase-0-handoff) |
 | D070 | Live Working State Project Resume and External Active Workstream Continuity | Approved | [`decisions/workflow.md`](decisions/workflow.md#d070--live-working-state-project-resume-and-external-active-workstream-continuity) |
+| D071 | Guide-Separated Source Architecture and Shared Feature Contracts | Approved | [`decisions/architecture.md`](decisions/architecture.md#d071---guide-separated-source-architecture-and-shared-feature-contracts) |

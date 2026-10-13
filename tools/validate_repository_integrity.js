@@ -285,15 +285,134 @@ function validateEntrypoint() {
     }
 
 
+
+    // Option B migration validation: every data, shared, Guide, feature and bootstrap
+    // script is a classic script with an exact dependency order (not only seven markers).
+    const optionBOrder = [
+        "data/fish-categories.js", "data/fish.js", "data/rigs.js", "data/conditions.js",
+        "data/habitats.js", "data/fish-habitat.js", "data/environment-correspondence.js",
+        "data/lure-bait.js", "data/techniques.js", "data/compatibility.js",
+        "data/fish-identification.js", "data/fish-rig-guidance.js",
+        "data/fish-specialized-guidance.js", "data/knots.js", "data/knot-guidance.js",
+        "data/reel-guidance.js", "data/tackle.js", "data/canonical-requirement-satisfaction.js",
+        "data/media.js", "data/regulations.js", "app-core.js", "availability-quantity.js",
+        "availability-attention.js", "my-tackle-reconciliation.js",
+        "current-context-source-change.js", "recommendation-engine.js", "search.js",
+        "view-renderer.js", "knot-media-renderer.js", "reference-popovers.js",
+        "features/reel-setup-renderer.js", "guides/fish-guide-renderer.js",
+        "guides/rig-guide-renderer.js", "guides/knots-guide-renderer.js",
+        "features/regulations-renderer.js", "features/reel-setup-controller.js",
+        "guides/fish-guide-controller.js", "guides/rig-guide-controller.js",
+        "guides/knots-guide-controller.js", "features/regulations-controller.js",
+        "script.js"
+    ];
+    if (JSON.stringify(refs.scriptRefs) !== JSON.stringify(optionBOrder)) {
+        fail("Option B entrypoint", "all 41 classic JavaScript paths must retain the approved exact load order");
+    }
+    validateOptionBRegistrationAndGlobals(refs.scriptRefs);
     return refs;
 }
 
 
+function validateOptionBRegistrationAndGlobals(loadedScripts) {
+    const sources = loadedScripts.map((relativePath) => ({
+        relativePath,
+        code: readText(relativePath)
+    }));
+    if (sources.some((item) => item.code === null)) return;
+
+    const silentConsole = Object.freeze({ log() {}, warn() {}, error() {}, info() {} });
+    const documentStub = {
+        addEventListener() {},
+        querySelector() { return null; },
+        querySelectorAll() { return []; }
+    };
+    const storageStub = { getItem() { return null; }, setItem() {}, removeItem() {} };
+    const context = vm.createContext({
+        console: silentConsole,
+        document: documentStub,
+        window: {},
+        localStorage: storageStub,
+        sessionStorage: storageStub
+    });
+    try {
+        for (const { relativePath, code } of sources) {
+            new vm.Script(code, { filename: relativePath }).runInContext(context, { timeout: 4000 });
+        }
+        const actual = vm.runInContext(`(() => {
+            registerAppRouteProviders();
+            const routes = Object.values(FCC_APP.ROUTES);
+            return {
+                routeCount: routes.length,
+                registeredCount: routes.filter((route) => FCC_APP.hasRoute(route)).length,
+                ownerFish: FCC_APP.getRouteOwner(ROUTES.FISH_DETAIL),
+                ownerRig: FCC_APP.getRouteOwner(ROUTES.RIG_DETAIL),
+                ownerKnot: FCC_APP.getRouteOwner(ROUTES.KNOT_DETAIL),
+                ownerReel: FCC_APP.getRouteOwner(ROUTES.REEL_SETUP),
+                ownerRegulations: FCC_APP.getRouteOwner(ROUTES.REGULATIONS_STATE),
+                ownerDashboard: FCC_APP.getRouteOwner(ROUTES.DASHBOARD),
+                leakedHelpers: ["requireObject", "requireNonEmptyText", "requireNonNegativeWholeNumber", "stableSerialize"].filter((name) => typeof globalThis[name] !== "undefined"),
+                rejectsNonFinite: (() => { try { hashMaterialValue({ a: Infinity }); return false; } catch { return true; } })()
+            };
+        })()`, context, { timeout: 4000 });
+        const expectedOwners = {
+            ownerFish: "fish-guide", ownerRig: "rig-guide", ownerKnot: "knot-guide",
+            ownerReel: "reel-setup", ownerRegulations: "regulations", ownerDashboard: "shared-app"
+        };
+        if (actual.routeCount !== 21 || actual.registeredCount !== 21) {
+            fail("Option B providers", `expected exactly 21 distinct registered routes, found ${actual.registeredCount}/${actual.routeCount}`);
+        }
+        for (const [name, owner] of Object.entries(expectedOwners)) {
+            if (actual[name] !== owner) fail("Option B providers", `${name}: expected ${owner}, found ${actual[name]}`);
+        }
+        if (actual.leakedHelpers.length !== 0) {
+            fail("Option B private helpers", `private global names leaked: ${actual.leakedHelpers.join(", ")}`);
+        }
+        if (actual.rejectsNonFinite !== true) fail("Option B private helpers", "combined load must reject nonfinite Source Change hash input");
+    } catch (error) {
+        fail("Option B providers", `ordered combined classic-script runtime failed: ${error.message}`);
+    }
+
+    // A fresh, nonregistered core must fail closed and register atomically.
+    const coreSource = readText("app-core.js");
+    if (!coreSource) return;
+    const negative = vm.createContext({ console: silentConsole });
+    try {
+        new vm.Script(coreSource, { filename: "app-core.js" }).runInContext(negative, { timeout: 2000 });
+        const result = vm.runInContext(`(() => {
+            const core = FCC_APP;
+            const routes = core.ROUTES;
+            const rejected = (action) => { try { action(); return false; } catch { return true; } };
+            const missingRoute = rejected(() => core.renderRoute(routes.FISH, {}));
+            const unknownRoute = rejected(() => core.registerProvider("unknown", { "not-a-route": { render() {} } }));
+            const invalidAtomic = rejected(() => core.registerProvider("partial", {
+                [routes.FISH]: { render() {} }, [routes.RIGS]: { render: null }
+            })) && !core.hasRoute(routes.FISH) && !core.hasRoute(routes.RIGS);
+            core.registerProvider("good", { [routes.FISH]: { render() {} } });
+            const duplicateProvider = rejected(() => core.registerProvider("good", { [routes.KNOTS]: { render() {} } }));
+            const duplicateRoute = rejected(() => core.registerProvider("other", { [routes.FISH]: { render() {} } }));
+            return { missingRoute, unknownRoute, invalidAtomic, duplicateProvider, duplicateRoute };
+        })()`, negative, { timeout: 2000 });
+        for (const [name, passed] of Object.entries(result)) {
+            if (!passed) fail("Option B provider negatives", `${name} must fail closed`);
+        }
+    } catch (error) {
+        fail("Option B provider negatives", `isolated registry test failed: ${error.message}`);
+    }
+}
+
+function readOwnerSources(relativePaths) {
+    const paths = Array.isArray(relativePaths) ? relativePaths : [relativePaths];
+    return paths.map((relativePath) => readText(relativePath) ?? "").join("\n\n");
+}
+
 function loadBindings(relativePath, names) {
-    const source = readText(relativePath);
-    if (source === null) {
+    const paths = Array.isArray(relativePath) ? relativePath : [relativePath];
+    const sources = paths.map((file) => readText(file));
+    if (sources.some((source) => source === null)) {
         return {};
     }
+    const source = sources.join("\n\n");
 
 
     const context = vm.createContext({
@@ -310,7 +429,7 @@ function loadBindings(relativePath, names) {
 
 
     try {
-        const script = new vm.Script(exportSource, { filename: relativePath });
+        const script = new vm.Script(exportSource, { filename: paths.join(",") });
         script.runInContext(context, { timeout: 2000 });
         return context.__REPOSITORY_VALIDATOR_EXPORTS__ || {};
     } catch (error) {
@@ -1175,7 +1294,7 @@ function validateFishEvidence(fish, relationships) {
 
 function validateFishSearchHelpers(canonicalData) {
     recordCheck("Fish scoped-search helper validity");
-    const bindings = loadBindings("search.js", ["FISH_SEARCH_HELPERS", "searchFishRecords"]);
+    const bindings = loadBindings(["search.js", "guides/fish-guide-controller.js"], ["FISH_SEARCH_HELPERS", "searchFishRecords"]);
     const helpers = bindings.FISH_SEARCH_HELPERS;
     const searchFishRecords = bindings.searchFishRecords;
     if (!isPlainObject(helpers) || typeof searchFishRecords !== "function") {
@@ -2010,7 +2129,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
     }
 
 
-    const rendererText = readText("view-renderer.js");
+    const rendererText = readOwnerSources(["reference-popovers.js", "guides/rig-guide-renderer.js"]);
     if (rendererText) {
         if (!rendererText.includes('function getRigTechniqueRecords(rigId, lureBaitId = null)')) {
             fail("Direct-Tie Technique presentation", "renderer must accept selected Lure/Bait when resolving Rig Techniques");
@@ -4329,11 +4448,10 @@ function validateRigR2DataSemantics(rigs) {
 function validateRigR2DetailPresentation() {
     recordCheck("R2 Rig Detail identity, readiness, About disclosures, Reference cues, and effective ownership");
 
-    const rendererSource = readText("view-renderer.js") ?? "";
+    const rendererSource = readOwnerSources(["guides/rig-guide-renderer.js"]);
     const styleSource = readText("forest-journal.css") ?? "";
     const start = rendererSource.indexOf("function renderInstructionDetail(appMain, detailConfig) {");
-    const end = rendererSource.indexOf("\nfunction getRegulationsResourceActionLabel", start);
-    const rigDetailSource = start >= 0 && end > start ? rendererSource.slice(start, end) : "";
+    const rigDetailSource = start >= 0 ? rendererSource.slice(start) : "";
     if (!rigDetailSource) {
         fail("R2 Rig Detail hierarchy", "Rig Detail renderer must exist");
         return;
@@ -4381,8 +4499,9 @@ function validateRigR2DetailPresentation() {
     if (/(?:class=\\?"[^\"]*\bdetail-header--core\b)|detail-core-badge/.test(rigDetailSource)) {
         fail("R2 Rig identity", "legacy Core badge/header-core identity language remains on Rig Detail");
     }
-    if (!rendererSource.includes('function buildDetailReelSetupContextMarkup(lines)') ||
-        !rendererSource.includes('aria-label="Current Reel Setup"')) {
+    const passiveReelOwner = readText("features/reel-setup-renderer.js") ?? "";
+    if (!passiveReelOwner.includes('function buildDetailReelSetupContextMarkup(lines)') ||
+        !passiveReelOwner.includes('aria-label="Current Reel Setup"')) {
         fail("FCC 51A Rig workflow context", "shared passive Current Reel Setup context renderer must exist");
     }
     const navigationIndex = rigDetailSource.indexOf('buildPageNavigationMarkup(detailConfig.parentLabel, "", reelSetupMarkup)');
@@ -4513,11 +4632,10 @@ function validateRigR2DetailPresentation() {
 function validateRigR2KnotTutorialPresentation() {
     recordCheck("R2 Rig unique Knot learning list, per-step Knot options, and Tutorial lifecycle");
 
-    const rendererSource = readText("view-renderer.js") ?? "";
+    const rendererSource = readOwnerSources(["guides/rig-guide-renderer.js"]);
     const styleSource = readText("forest-journal.css") ?? "";
     const rigStart = rendererSource.indexOf("RIG GUIDE — KNOT APPLICATION PRESENTATION");
-    const rigEnd = rendererSource.indexOf("function getRegulationsResourceActionLabel", rigStart);
-    const rigSource = rigStart >= 0 && rigEnd > rigStart ? rendererSource.slice(rigStart, rigEnd) : "";
+    const rigSource = rigStart >= 0 ? rendererSource.slice(rigStart) : "";
     if (!rigSource) {
         fail("R2 Rig Knot/Tutorial", "could not isolate Rig renderer ownership region");
         return;
@@ -4638,11 +4756,10 @@ function validateRigR2KnotTutorialPresentation() {
 function validateRigR2SupportPresentation() {
     recordCheck("R2 Rig More Help, Reference/link semantics, and responsive presentation");
 
-    const rendererSource = readText("view-renderer.js") ?? "";
+    const rendererSource = readOwnerSources(["guides/rig-guide-renderer.js"]);
     const styleSource = (readText("forest-journal.css") ?? "").replace(/\r\n/g, "\n");
     const start = rendererSource.indexOf("function renderInstructionDetail(appMain, detailConfig) {");
-    const end = rendererSource.indexOf("\nfunction getRegulationsResourceActionLabel", start);
-    const rigDetailSource = start >= 0 && end > start ? rendererSource.slice(start, end) : "";
+    const rigDetailSource = start >= 0 ? rendererSource.slice(start) : "";
 
     // FCC 52A-F convergence: Common Mistakes moves to Check Your Rig; Setup Notes to About; Sources stand alone.
     for (const token of [
@@ -4786,8 +4903,9 @@ function validateRigR2SupportPresentation() {
     if (!styleSource.includes(".detail-view--rig-compact .reference-info-button::before") || !styleSource.includes("width: var(--touch-target);") || !styleSource.includes("height: var(--touch-target);") || !styleSource.includes("transform: translate(-50%, -50%);")) {
         fail("R2/R3 Rig Reference cues", "Rig Detail Reference cues must retain the shared enlarged touch target centered on the visible cue");
     }
-    if (!rendererSource.includes("function showReferencePopoverDialog(dialog, triggerElement, closeSelector)") ||
-        !rendererSource.includes("triggerElement?.focus({ preventScroll: true });")) {
+    const sharedReferenceOwner = readText("reference-popovers.js") ?? "";
+    if (!sharedReferenceOwner.includes("function showReferencePopoverDialog(dialog, triggerElement, closeSelector)") ||
+        !sharedReferenceOwner.includes("triggerElement?.focus({ preventScroll: true });")) {
         fail("FCC 52A-F Reference surfaces", "shared Reference Popover lifecycle must restore focus without scrolling");
     }
 
@@ -5036,8 +5154,8 @@ function validateReelGuidance() {
     }
 
 
-    const controllerSource = readText("script.js") ?? "";
-    const rendererSource = readText("view-renderer.js") ?? "";
+    const controllerSource = readOwnerSources(["features/reel-setup-controller.js", "features/reel-setup-renderer.js", "guides/rig-guide-controller.js", "guides/rig-guide-renderer.js", "guides/knots-guide-controller.js", "guides/knots-guide-renderer.js", "script.js"]);
+    const rendererSource = readOwnerSources(["reference-popovers.js", "features/reel-setup-renderer.js", "guides/rig-guide-renderer.js", "guides/knots-guide-renderer.js"]);
     const styleSource = readText("forest-journal.css") ?? "";
     if (controllerSource.includes("renderReelLineSystem") || controllerSource.includes("Your Line System")) {
         fail("Reel Setup presentation", "redundant Your Line System presentation must remain removed after browser review");
@@ -5237,12 +5355,12 @@ function validateReelGuidance() {
 function validateGuideDetailConvergence() {
     recordCheck("FCC 52A-F/R4 Guide Detail convergence, Dashboard actions, shared Reference language, and bounded Snell mapping");
 
-    const rendererSource = readText("view-renderer.js") ?? "";
+    const rendererSource = readOwnerSources(["view-renderer.js", "guides/fish-guide-renderer.js", "guides/rig-guide-renderer.js", "guides/knots-guide-renderer.js", "features/reel-setup-renderer.js", "reference-popovers.js"]);
     const styleSource = (readText("forest-journal.css") ?? "").replace(/\r\n/g, "\n");
     const knotMediaSource = readText("knot-media-renderer.js") ?? "";
     const knotDataSource = readText("data/knots.js") ?? "";
     const knotGuidanceSource = readText("data/knot-guidance.js") ?? "";
-    const controllerSource = readText("script.js") ?? "";
+    const controllerSource = readOwnerSources(["script.js", "app-core.js", "guides/fish-guide-controller.js", "guides/rig-guide-controller.js", "guides/knots-guide-controller.js", "features/reel-setup-controller.js", "features/regulations-controller.js"]);
     const indexSource = readText("index.html") ?? "";
 
     for (const token of [
@@ -5270,11 +5388,7 @@ function validateGuideDetailConvergence() {
         if (rendererSource.includes(stale)) fail("FCC 52A-F Knot convergence", `stale presentation remains: ${stale}`);
     }
 
-    const knotDetailStart = rendererSource.indexOf("function renderKnotDetailView");
-    const knotDetailEnd = rendererSource.indexOf("/* ==========================================================\n   END KNOT GUIDE", knotDetailStart);
-    const knotDetailSource = knotDetailStart >= 0 && knotDetailEnd > knotDetailStart
-        ? rendererSource.slice(knotDetailStart, knotDetailEnd)
-        : rendererSource;
+    const knotDetailSource = readText("guides/knots-guide-renderer.js") ?? "";
     const tyingIndex = knotDetailSource.indexOf("tyingStepsLabelMarkup");
     const supportIndex = knotDetailSource.indexOf("knot-build-subsection--support");
     const animationIndex = knotDetailSource.indexOf('"Tying Animation"');
@@ -5313,9 +5427,12 @@ function validateGuideDetailConvergence() {
         !styleSource.includes('.knot-instruction-media__heading.rig-tutorial__meta { display: grid;')) {
         fail("FCC 52A R7 Knot animation", "Media type chip must appear above the Visual Guide title, matching Rig Tutorial's hierarchy");
     }
-    if (!rendererSource.includes('${relatedTackleMarkup}${rigsMarkup}') ||
-        !rendererSource.includes('referenceHistory.length = 0;') ||
-        !readText("script.js").includes('openRigDetail(rigId, "guide");')) {
+    const componentReferenceOwner = readText("reference-popovers.js") ?? "";
+    const componentRigNavigationOwner = readText("guides/rig-guide-controller.js") ?? "";
+    if (!componentReferenceOwner.includes('${relatedTackleMarkup}${rigsMarkup}') ||
+        !componentReferenceOwner.includes('referenceHistory.length = 0;') ||
+        !componentReferenceOwner.includes('options.onRigSelect?.(nextRigId, { sourceReferenceId, originScrollY });') ||
+        !componentRigNavigationOwner.includes('function openRigDetailFromComponentReference(')) {
         fail("FCC 52A R6 Component routing", "Related Components then Used In and fresh Rig navigation required");
     }
     if (!knotMediaSource.includes("rig-tutorial__meta") || !knotMediaSource.includes("rig-tutorial__external")) {
@@ -5498,7 +5615,9 @@ function validateGuideDetailConvergence() {
         'genericNavigationGroup.replaceWith(navigation);',
         'clearDetailNavigationStack();'
     ]) {
-        if (!controllerSource.includes(token)) fail("FCC 52A-K origin-aware navigation", `missing ${token}`);
+        const ownerText = token === 'genericNavigationGroup.replaceWith(navigation);'
+            ? (readText("features/reel-setup-renderer.js") ?? "") : controllerSource;
+        if (!ownerText.includes(token)) fail("FCC 52A-K origin-aware navigation", `missing ${token}`);
     }
     for (const token of [
         '--separator-tan: #baa88c;',
@@ -6064,7 +6183,8 @@ function validateDocumentationGovernance() {
         "docs/decisions/media.md",
         "docs/decisions/product.md",
         "docs/decisions/ux-navigation.md",
-        "docs/decisions/workflow.md"
+        "docs/decisions/workflow.md",
+        "docs/SOURCE-FILE-MAP.md"
     ];
 
 
@@ -6101,6 +6221,50 @@ function validateDocumentationGovernance() {
         }
     }
 
+
+
+    // D071: the new descriptive Source File Map must reflect real owner files.
+    // It is subordinate to architecture/governance and not a competing procedure.
+    const map = docs.get("docs/SOURCE-FILE-MAP.md") ?? "";
+    const expectedOwnerFiles = [
+        "app-core.js", "reference-popovers.js",
+        "guides/fish-guide-controller.js", "guides/fish-guide-renderer.js",
+        "guides/rig-guide-controller.js", "guides/rig-guide-renderer.js",
+        "guides/knots-guide-controller.js", "guides/knots-guide-renderer.js",
+        "features/reel-setup-controller.js", "features/reel-setup-renderer.js",
+        "features/regulations-controller.js", "features/regulations-renderer.js",
+        "script.js", "view-renderer.js", "search.js", "forest-journal.css",
+        "tools/validate_repository_integrity.js"
+    ];
+    for (const relativePath of expectedOwnerFiles) {
+        if (!fileExists(relativePath)) fail("Option B source ownership", `missing required owner file ${relativePath}`);
+        if (map && !map.includes(`\`${relativePath}\``)) {
+            fail("Option B source map", `unmapped expected source owner: ${relativePath}`);
+        }
+    }
+    if (map && (!map.includes("not an alternative workflow authority") ||
+            map.includes("not yet deployed or locally approved"))) {
+        fail("Option B source map", "Source File Map must remain descriptive and accurately reflect approved local review state");
+    }
+    const requiredDefinitions = {
+        "app-core.js": "const FCC_APP = (() => {",
+        "reference-popovers.js": "function renderReferencePopover(",
+        "guides/fish-guide-controller.js": "function searchFishRecords(",
+        "guides/fish-guide-renderer.js": "function renderFishGuideLanding(",
+        "guides/rig-guide-controller.js": "function openRigDetailFromComponentReference(",
+        "guides/rig-guide-renderer.js": "function renderInstructionDetail(",
+        "guides/knots-guide-controller.js": "function renderKnotDetailView(",
+        "guides/knots-guide-renderer.js": "function renderKnotGuideLanding(",
+        "features/reel-setup-controller.js": "function createInitialReelSetupState(",
+        "features/reel-setup-renderer.js": "function buildDetailReelSetupContextMarkup(",
+        "features/regulations-controller.js": "function registerRegulationsRoutes(",
+        "features/regulations-renderer.js": "function getRegulationsResourceActionLabel("
+    };
+    for (const [ownerPath, declaration] of Object.entries(requiredDefinitions)) {
+        if (!(readText(ownerPath) ?? "").includes(declaration)) {
+            fail("Option B source ownership", `${ownerPath} does not declare its required ${declaration}`);
+        }
+    }
 
     for (const relativePath of retiredDocs) {
         if (fileExists(relativePath)) {

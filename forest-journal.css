@@ -28,6 +28,11 @@
     --accent-workflow: #6f99ad;
     --semantic-core: var(--accent-rigs);
     --separator-tan: #baa88c;
+    /* D071 shared semantic aliases: each resolves to the existing
+       Forest Journal token without introducing a new theme. */
+    --ui-floating-navigation-surface: color-mix(in srgb, var(--background) 92%, transparent);
+    --ui-tan-row-separator: var(--separator-tan);
+    --ui-reference-image-surface: var(--reference-media-surface);
     --success: #809a67;
     --warning: #cda052;
     --danger: #b86b58;
@@ -101,7 +106,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     padding: var(--space-1);
     border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--background) 92%, transparent);
+    background: var(--ui-floating-navigation-surface);
     box-shadow: 0 5px 16px rgba(14, 18, 13, 0.22);
     backdrop-filter: blur(8px);
 }
@@ -886,13 +891,13 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 .reference-popover__section p, .reference-popover__section ul { color: var(--text-muted); font-size: .92rem; line-height: 1.45; }
 .reference-popover__section ul { margin: 0; padding-left: 1.15rem; }
 .reference-popover__link-list { border-top: 0; }
-.reference-popover__section--related > h3 { padding-bottom: var(--space-2); border-bottom: 1px solid var(--separator-tan); color: var(--accent); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.reference-popover__section--related > h3 { padding-bottom: var(--space-2); border-bottom: 1px solid var(--ui-tan-row-separator); color: var(--accent); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 
 .compact-link-list { display: grid; margin: 0; padding: 0; list-style: none; }
 .compact-link-row[hidden] { display: none; }
 .compact-link-row { display: flex; min-height: 42px; width: 100%; flex-wrap: wrap; align-items: baseline; justify-content: flex-start; gap: var(--space-1) var(--space-3); margin: 0; padding: 7px 2px; border: 0; background: transparent; color: var(--text); font: inherit; font-size: .9rem; font-weight: 700; line-height: 1.25; text-align: left; }
 button.compact-link-row { cursor: pointer; }
-.compact-link-list--divided > .compact-link-row + .compact-link-row { border-top: 1px solid var(--separator-tan); }
+.compact-link-list--divided > .compact-link-row + .compact-link-row { border-top: 1px solid var(--ui-tan-row-separator); }
 .compact-link-row__action { display: inline-flex; min-height: 40px; flex: 0 0 auto; align-items: center; gap: .25em; margin: -7px 0; padding: 7px 2px; border: 0; background: transparent; color: var(--accent); font: inherit; font-size: .86rem; font-weight: 800; white-space: nowrap; cursor: pointer; }
 .compact-link-row__action:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
 .compact-link-row__action:focus-visible { position: relative; z-index: 1; border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 1px; }
@@ -1966,6 +1971,7 @@ button.compact-link-row { cursor: pointer; }
     .fish-collection-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .fish-guide-search-form,
     .fish-browse-view .search-form,
+    .rig-guide-search-form,
     .knot-guide-search-form,
     .knot-browse-view .search-form { width: calc(66.6667% - 5.333px); }
     .knot-result-card__heading-row {
@@ -1982,10 +1988,6 @@ button.compact-link-row { cursor: pointer; }
     .fish-result-card__heading-row .search-result-card__action { white-space: nowrap; }
     .fish-primary-media { padding: var(--space-5); }
     .fish-habitat-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .fish-habitat-group + .fish-habitat-group {
-        padding-left: var(--space-4);
-        border-left: 1px solid var(--border);
-    }
 }
 
 /* ==========================================================
@@ -2852,7 +2854,7 @@ body.reel-line-weight-picker-open { overflow: hidden; }
 /* FCC 52A-F — shared Guide-detail convergence */
 .rig-reference-list, .knot-reference-links { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
 .rig-reference-list > li, .knot-reference-links > .knot-reference-link { padding-block: var(--space-2); }
-.rig-reference-list > li + li, .knot-reference-links > .knot-reference-link + .knot-reference-link { border-top: 1px solid var(--separator-tan); }
+.rig-reference-list > li + li, .knot-reference-links > .knot-reference-link + .knot-reference-link { border-top: 1px solid var(--ui-tan-row-separator); }
 .rig-reference-link, .knot-reference-link { display: inline-flex; min-height: 36px; width: fit-content; max-width: 100%; flex-wrap: wrap; align-items: baseline; gap: 0; padding: 0; border: 0; background: transparent; color: inherit; text-decoration: none; }
 .rig-reference-link:hover .reference-source-action, .knot-reference-link:hover .reference-source-action, .knot-instruction-media__link:hover .reference-source-action { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
 .rig-reference-link:focus-visible, .knot-reference-link:focus-visible { border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 3px; }
@@ -2867,6 +2869,10 @@ body.reel-line-weight-picker-open { overflow: hidden; }
 .fish-habitat-group .fish-reference-info-button { flex-shrink: 0; }
 @media (min-width: 760px) {
     .fish-habitat-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-5); }
+    .fish-habitat-groups > .fish-habitat-group:nth-child(even) {
+        padding-left: var(--space-4);
+        border-left: 1px solid var(--border);
+    }
 }
 /* Core Rigs shares the Knots curated emphasis, not the blue workflow treatment. */
 .rig-guide-start-section .rig-guide-learn-core { --card-accent: var(--accent-fish); width: 100%; text-align: left; }
@@ -2882,3 +2888,20 @@ body.reel-line-weight-picker-open { overflow: hidden; }
 .knot-instruction-media__title.rig-tutorial__title { color: var(--text); font-size: .9rem; letter-spacing: normal; text-transform: none; }
 .knot-instruction-media__type.rig-tutorial__media-type { min-height: 0; padding: 3px 8px; border: 1px solid var(--border-strong); background: transparent; font-size: .74rem; letter-spacing: .04em; }
 .knot-instruction-media__link.rig-tutorial__external { gap: var(--space-2); font-size: .9rem; }
+
+/* ARCH-B R2 — completed Reel Setup and Learn Core Rigs follow the same card columns. */
+@media (min-width: 640px) {
+    .rig-guide-start-section .rig-guide-learn-core,
+    .rig-guide-view .rig-reel-setup-context,
+    .knot-guide-view .knot-reel-setup-context {
+        width: 100%;
+        max-width: calc((100% - var(--space-4)) / 2);
+    }
+}
+@media (min-width: 900px) {
+    .rig-guide-start-section .rig-guide-learn-core,
+    .rig-guide-view .rig-reel-setup-context,
+    .knot-guide-view .knot-reel-setup-context {
+        max-width: calc((100% - (2 * var(--space-4))) / 3);
+    }
+}

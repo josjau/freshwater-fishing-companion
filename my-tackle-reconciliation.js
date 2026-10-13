@@ -7,6 +7,14 @@
 
 "use strict";
 
+
+/* ==========================================================
+   EXPLICIT FOUNDATION SERVICE / CLASSIC-SCRIPT COMPATIBILITY
+   Private validators and serializers remain closure-local.
+   Existing uniquely named consumers retain their stable API.
+   ========================================================== */
+const FCC_MY_TACKLE_RECONCILIATION_SERVICE = (() => {
+    "use strict";
 const MY_TACKLE_RECONCILIATION_BUILD_INFO = Object.freeze({
     file: "my-tackle-reconciliation.js",
     milestone: "GATE-007 — My Tackle Availability Foundation"
@@ -612,3 +620,65 @@ function reconcileCanonicalReferenceMapping(mapping, isReferenceActive) {
 console.info(`[Loaded] ${MY_TACKLE_RECONCILIATION_BUILD_INFO.file} | ${
     MY_TACKLE_RECONCILIATION_BUILD_INFO.milestone
 }`);
+
+    return Object.freeze({
+        MY_TACKLE_RECONCILIATION_BUILD_INFO,
+        RECONCILIATION_STATUS,
+        RECONCILIATION_ISSUE,
+        CANONICAL_REFERENCE_MIGRATIONS,
+        normalizeKnownOrUnknownQuantity,
+        freezeIssue,
+        freezeResult,
+        normalizeUniqueTextList,
+        normalizeReferenceMappings,
+        combineKnownOrUnknownQuantities,
+        normalizeLocationAllocations,
+        mergeLocationAllocations,
+        normalizeDirectAvailability,
+        mergeDirectCurrentAvailability,
+        planMergeIdentity,
+        rebindMergedReference,
+        assertRetiredIdNotRecreated,
+        planMergeReferenceMappings,
+        planMergeScopedRestrictions,
+        normalizeResultIds,
+        validateSplitQuantityDistribution,
+        validateSplitLocationDistribution,
+        planSplitReferenceMappings,
+        normalizeSourceExceptions,
+        planSplitCurrentAvailability,
+        evaluateReconciliationRevisionPreconditions,
+        resolveRetiredMyTackleReference,
+        findApprovedCanonicalReferenceMigration,
+        reconcileCanonicalReferenceMapping
+    });
+})();
+const MY_TACKLE_RECONCILIATION_BUILD_INFO = FCC_MY_TACKLE_RECONCILIATION_SERVICE.MY_TACKLE_RECONCILIATION_BUILD_INFO;
+const RECONCILIATION_STATUS = FCC_MY_TACKLE_RECONCILIATION_SERVICE.RECONCILIATION_STATUS;
+const RECONCILIATION_ISSUE = FCC_MY_TACKLE_RECONCILIATION_SERVICE.RECONCILIATION_ISSUE;
+const CANONICAL_REFERENCE_MIGRATIONS = FCC_MY_TACKLE_RECONCILIATION_SERVICE.CANONICAL_REFERENCE_MIGRATIONS;
+function normalizeKnownOrUnknownQuantity(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.normalizeKnownOrUnknownQuantity(...args); }
+function freezeIssue(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.freezeIssue(...args); }
+function freezeResult(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.freezeResult(...args); }
+function normalizeUniqueTextList(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.normalizeUniqueTextList(...args); }
+function normalizeReferenceMappings(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.normalizeReferenceMappings(...args); }
+function combineKnownOrUnknownQuantities(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.combineKnownOrUnknownQuantities(...args); }
+function normalizeLocationAllocations(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.normalizeLocationAllocations(...args); }
+function mergeLocationAllocations(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.mergeLocationAllocations(...args); }
+function normalizeDirectAvailability(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.normalizeDirectAvailability(...args); }
+function mergeDirectCurrentAvailability(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.mergeDirectCurrentAvailability(...args); }
+function planMergeIdentity(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.planMergeIdentity(...args); }
+function rebindMergedReference(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.rebindMergedReference(...args); }
+function assertRetiredIdNotRecreated(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.assertRetiredIdNotRecreated(...args); }
+function planMergeReferenceMappings(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.planMergeReferenceMappings(...args); }
+function planMergeScopedRestrictions(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.planMergeScopedRestrictions(...args); }
+function normalizeResultIds(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.normalizeResultIds(...args); }
+function validateSplitQuantityDistribution(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.validateSplitQuantityDistribution(...args); }
+function validateSplitLocationDistribution(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.validateSplitLocationDistribution(...args); }
+function planSplitReferenceMappings(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.planSplitReferenceMappings(...args); }
+function normalizeSourceExceptions(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.normalizeSourceExceptions(...args); }
+function planSplitCurrentAvailability(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.planSplitCurrentAvailability(...args); }
+function evaluateReconciliationRevisionPreconditions(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.evaluateReconciliationRevisionPreconditions(...args); }
+function resolveRetiredMyTackleReference(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.resolveRetiredMyTackleReference(...args); }
+function findApprovedCanonicalReferenceMigration(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.findApprovedCanonicalReferenceMigration(...args); }
+function reconcileCanonicalReferenceMapping(...args) { return FCC_MY_TACKLE_RECONCILIATION_SERVICE.reconcileCanonicalReferenceMapping(...args); }

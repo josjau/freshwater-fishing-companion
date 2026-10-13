@@ -8,6 +8,14 @@
 
 "use strict";
 
+
+/* ==========================================================
+   EXPLICIT FOUNDATION SERVICE / CLASSIC-SCRIPT COMPATIBILITY
+   Private validators and serializers remain closure-local.
+   Existing uniquely named consumers retain their stable API.
+   ========================================================== */
+const FCC_RECOMMENDATION_SERVICE = (() => {
+    "use strict";
 const RECOMMENDATION_ENGINE_BUILD_INFO = Object.freeze({
     file: "recommendation-engine.js",
     milestone: "GATE-004 — What Should I Throw"
@@ -310,3 +318,45 @@ function deriveRecommendationResultInvalidation(input) {
         bestCurrentlyAvailableStale: bestOverallStale || availabilityChanged
     });
 }
+
+    return Object.freeze({
+        RECOMMENDATION_ENGINE_BUILD_INFO,
+        RECOMMENDATION_EXECUTABILITY_STATUS,
+        RECOMMENDATION_REQUIREMENT_PROOF_STATUS,
+        RECOMMENDATION_LEGAL_STATUS,
+        RECOMMENDATION_SIMPLICITY_PREFERENCE,
+        CANONICAL_ID_PATTERN,
+        requirePlainObject,
+        requireExactObjectKeys,
+        requireCanonicalId,
+        requireOptionalCanonicalId,
+        requireBoolean,
+        normalizeJsonValue,
+        hashStableValue,
+        createRecommendationCandidateIdentity,
+        deriveRecommendationExecutability,
+        deriveRecommendationLegalEvaluation,
+        deriveSimplicityPreference,
+        evaluateRecommendationContextFreshness,
+        deriveRecommendationResultInvalidation
+    });
+})();
+const RECOMMENDATION_ENGINE_BUILD_INFO = FCC_RECOMMENDATION_SERVICE.RECOMMENDATION_ENGINE_BUILD_INFO;
+const RECOMMENDATION_EXECUTABILITY_STATUS = FCC_RECOMMENDATION_SERVICE.RECOMMENDATION_EXECUTABILITY_STATUS;
+const RECOMMENDATION_REQUIREMENT_PROOF_STATUS = FCC_RECOMMENDATION_SERVICE.RECOMMENDATION_REQUIREMENT_PROOF_STATUS;
+const RECOMMENDATION_LEGAL_STATUS = FCC_RECOMMENDATION_SERVICE.RECOMMENDATION_LEGAL_STATUS;
+const RECOMMENDATION_SIMPLICITY_PREFERENCE = FCC_RECOMMENDATION_SERVICE.RECOMMENDATION_SIMPLICITY_PREFERENCE;
+const CANONICAL_ID_PATTERN = FCC_RECOMMENDATION_SERVICE.CANONICAL_ID_PATTERN;
+function requirePlainObject(...args) { return FCC_RECOMMENDATION_SERVICE.requirePlainObject(...args); }
+function requireExactObjectKeys(...args) { return FCC_RECOMMENDATION_SERVICE.requireExactObjectKeys(...args); }
+function requireCanonicalId(...args) { return FCC_RECOMMENDATION_SERVICE.requireCanonicalId(...args); }
+function requireOptionalCanonicalId(...args) { return FCC_RECOMMENDATION_SERVICE.requireOptionalCanonicalId(...args); }
+function requireBoolean(...args) { return FCC_RECOMMENDATION_SERVICE.requireBoolean(...args); }
+function normalizeJsonValue(...args) { return FCC_RECOMMENDATION_SERVICE.normalizeJsonValue(...args); }
+function hashStableValue(...args) { return FCC_RECOMMENDATION_SERVICE.hashStableValue(...args); }
+function createRecommendationCandidateIdentity(...args) { return FCC_RECOMMENDATION_SERVICE.createRecommendationCandidateIdentity(...args); }
+function deriveRecommendationExecutability(...args) { return FCC_RECOMMENDATION_SERVICE.deriveRecommendationExecutability(...args); }
+function deriveRecommendationLegalEvaluation(...args) { return FCC_RECOMMENDATION_SERVICE.deriveRecommendationLegalEvaluation(...args); }
+function deriveSimplicityPreference(...args) { return FCC_RECOMMENDATION_SERVICE.deriveSimplicityPreference(...args); }
+function evaluateRecommendationContextFreshness(...args) { return FCC_RECOMMENDATION_SERVICE.evaluateRecommendationContextFreshness(...args); }
+function deriveRecommendationResultInvalidation(...args) { return FCC_RECOMMENDATION_SERVICE.deriveRecommendationResultInvalidation(...args); }

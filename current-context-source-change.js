@@ -7,6 +7,14 @@
 
 "use strict";
 
+
+/* ==========================================================
+   EXPLICIT FOUNDATION SERVICE / CLASSIC-SCRIPT COMPATIBILITY
+   Private validators and serializers remain closure-local.
+   Existing uniquely named consumers retain their stable API.
+   ========================================================== */
+const FCC_SOURCE_CHANGE_SERVICE = (() => {
+    "use strict";
 const CURRENT_CONTEXT_SOURCE_CHANGE_BUILD_INFO = Object.freeze({
     file: "current-context-source-change.js",
     milestone: "GATE-007 — My Tackle Availability Foundation"
@@ -270,3 +278,39 @@ function advanceSourceObservationBaseline({
         staleReasons: Object.freeze([])
     });
 }
+
+    return Object.freeze({
+        CURRENT_CONTEXT_SOURCE_CHANGE_BUILD_INFO,
+        SOURCE_CHANGE_STATUS,
+        SOURCE_ACKNOWLEDGEMENT_STATUS,
+        CONTEXT_INTENT_STATUS,
+        MATERIAL_FACT_DIMENSION,
+        SOURCE_ACKNOWLEDGEMENT_STALE_REASON,
+        MATERIAL_FACT_DIMENSIONS,
+        requireRevisionToken,
+        hashMaterialValue,
+        normalizeMaterialFacts,
+        captureSourceObservation,
+        normalizeSourceObservation,
+        deriveChangedMaterialDimensions,
+        normalizeDeltaDetails,
+        evaluateSourceChange,
+        advanceSourceObservationBaseline
+    });
+})();
+const CURRENT_CONTEXT_SOURCE_CHANGE_BUILD_INFO = FCC_SOURCE_CHANGE_SERVICE.CURRENT_CONTEXT_SOURCE_CHANGE_BUILD_INFO;
+const SOURCE_CHANGE_STATUS = FCC_SOURCE_CHANGE_SERVICE.SOURCE_CHANGE_STATUS;
+const SOURCE_ACKNOWLEDGEMENT_STATUS = FCC_SOURCE_CHANGE_SERVICE.SOURCE_ACKNOWLEDGEMENT_STATUS;
+const CONTEXT_INTENT_STATUS = FCC_SOURCE_CHANGE_SERVICE.CONTEXT_INTENT_STATUS;
+const MATERIAL_FACT_DIMENSION = FCC_SOURCE_CHANGE_SERVICE.MATERIAL_FACT_DIMENSION;
+const SOURCE_ACKNOWLEDGEMENT_STALE_REASON = FCC_SOURCE_CHANGE_SERVICE.SOURCE_ACKNOWLEDGEMENT_STALE_REASON;
+const MATERIAL_FACT_DIMENSIONS = FCC_SOURCE_CHANGE_SERVICE.MATERIAL_FACT_DIMENSIONS;
+function requireRevisionToken(...args) { return FCC_SOURCE_CHANGE_SERVICE.requireRevisionToken(...args); }
+function hashMaterialValue(...args) { return FCC_SOURCE_CHANGE_SERVICE.hashMaterialValue(...args); }
+function normalizeMaterialFacts(...args) { return FCC_SOURCE_CHANGE_SERVICE.normalizeMaterialFacts(...args); }
+function captureSourceObservation(...args) { return FCC_SOURCE_CHANGE_SERVICE.captureSourceObservation(...args); }
+function normalizeSourceObservation(...args) { return FCC_SOURCE_CHANGE_SERVICE.normalizeSourceObservation(...args); }
+function deriveChangedMaterialDimensions(...args) { return FCC_SOURCE_CHANGE_SERVICE.deriveChangedMaterialDimensions(...args); }
+function normalizeDeltaDetails(...args) { return FCC_SOURCE_CHANGE_SERVICE.normalizeDeltaDetails(...args); }
+function evaluateSourceChange(...args) { return FCC_SOURCE_CHANGE_SERVICE.evaluateSourceChange(...args); }
+function advanceSourceObservationBaseline(...args) { return FCC_SOURCE_CHANGE_SERVICE.advanceSourceObservationBaseline(...args); }
