@@ -2,11 +2,11 @@
 
 
 **Document:** ACTIVE-CHANGE-LEDGER.md  
-**Document Revision:** 1.10.161  
+**Document Revision:** 1.10.162  
 **Document Status:** Approved  
 **Role:** Single formal GitHub owner of material non-closed carry-forward items  
-**Reconciliation Baseline:** GitHub `main` commit `a63fbd1413499d8389d147310b66ce508d407a6f`  
-**Last Updated:** 2026-10-09
+**Reconciliation Baseline:** GitHub `main` commit `7cfb6322bcec4caef9beca20f32e8c88f8bd8832`  
+**Last Updated:** 2026-10-12
 
 
 # Purpose
@@ -40,7 +40,12 @@ Closed, superseded, rejected, and deliberate non-action items are not maintained
 # Workflow Transition
 
 
-No active workflow-transition item remains. The 2026-08-25 Workflow Performance Refactor is closed; D068/D070 and `PROJECT-RULES.md` own the settled operating model. Closure history remains in `CHANGELOG.md`, D068, and Git history.
+The 2026-08-25 Workflow Performance Refactor is closed; D068/D070 and `PROJECT-RULES.md` own the settled operating model. Closure history remains in `CHANGELOG.md`, D068, and Git history.
+
+
+| ID | Status | Item | Canonical detail / gate | Next action |
+|---|---|---|---|---|
+| GOV-ZIP-01 | IMPLEMENTED / APPROVED / PENDING COMMIT | Native ChatGPT ZIP attachment delivery procedure | `docs/PROJECT-RULES.md` revision 1.2.11, approved and read back in Drive Current; specifically excluded by user-approved carry-forward from FCC-ARCH-B-MIGRATION commit `7cfb6322bcec4caef9beca20f32e8c88f8bd8832` | At the next appropriate separately authorized repository commit gate, validate and include the approved Drive Current procedure revision. Do not alter the completed Architecture migration commit, silently add it to that payload, or create a workaround documentation-only commit solely for this carry-forward. Close this item only after GitHub landing and required validation. |
 
 
 # Cross-Domain UX / Source Follow-Ups

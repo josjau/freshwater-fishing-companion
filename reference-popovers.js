@@ -440,6 +440,14 @@ function renderTechniquePopover(techniqueId, triggerElement) {
         `;
     };
 
+    // The FCC 53A canonical schema stores each mistake with its correction.
+    // Keep the existing compact Reference view readable until the full Detail
+    // route is added; an object must never render as [object Object].
+    const mistakeSummaries = Array.isArray(technique.commonMistakes)
+        ? technique.commonMistakes.map(({ mistake, correction }) =>
+            `${mistake} <strong>Correction:</strong> ${correction}`)
+        : [];
+
     const dialog = document.createElement("dialog");
     dialog.className = "reference-popover";
     dialog.dataset.techniquePopover = "";
@@ -455,9 +463,9 @@ function renderTechniquePopover(techniqueId, triggerElement) {
             </header>
             <div class="reference-popover__body">
                 <p class="reference-popover__summary">${technique.summary}</p>
-                ${buildListSection("How to Present", technique.presentationSteps, true)}
+                ${buildListSection("How to Fish It", technique.presentationSteps, true)}
                 ${buildListSection("Strike Cues", technique.strikeCues)}
-                ${buildListSection("Common Mistakes", technique.commonMistakes)}
+                ${buildListSection("Common Mistakes and Corrections", mistakeSummaries)}
                 ${buildListSection("Beginner Tips", technique.beginnerTips)}
             </div>
         </div>
@@ -475,27 +483,75 @@ function initializeTechniqueLinks(appMain) {
 }
 
 
-function renderLureBaitReferencePopover(lureBaitId, triggerElement, requirement = null) {
+// Lure/Bait inverse Rig links are projections of the existing authored edges,
+// never a second compatibility registry or an unconditional list of parts.
+function getRelatedLureBaitRigRecords(lureBaitId) {
+    if (typeof RIG_DATA === "undefined") return [];
+    const rigIds = new Set(getActiveCompatibilityRelationships("rig-lure-bait")
+        .filter((edge) => edge.sourceType === "rig" && edge.targetType === "lure-bait"
+            && edge.targetId === lureBaitId)
+        .map((edge) => edge.sourceId));
+    return RIG_DATA.filter((rig) => rig.isActive === true && rigIds.has(rig.id));
+}
+
+function renderLureBaitReferencePopover(lureBaitId, triggerElement, requirement = null, options = {}) {
     const lureBaitRecord = getLureBaitRecord(lureBaitId);
     if (!lureBaitRecord) {
         console.warn(`Canonical Lure/Bait record was not found: ${lureBaitId}`);
         return;
     }
-
     removeOpenReferencePopovers();
 
     const dialog = document.createElement("dialog");
     dialog.className = "reference-popover";
     dialog.dataset.lureBaitPopover = "";
     dialog.setAttribute("aria-labelledby", "lure-bait-popover-title");
-
     const mediaMarkup = buildLureBaitReferenceImageMarkup(lureBaitId);
+    const listSection = (label, items) => Array.isArray(items) && items.length ? `
+        <section class="reference-popover__section"><h3>${label}</h3><ul>
+            ${items.map((text) => `<li>${text}</li>`).join("")}
+        </ul></section>` : "";
+    const aliasesMarkup = Array.isArray(lureBaitRecord.aliases) && lureBaitRecord.aliases.length
+        ? `<section class="reference-popover__section"><h3>Also Called</h3><p>${lureBaitRecord.aliases.join(", ")}</p></section>` : "";
+    const variantsMarkup = Array.isArray(lureBaitRecord.commonVariants) && lureBaitRecord.commonVariants.length
+        ? `<section class="reference-popover__section"><h3>Common Variants</h3><p>${lureBaitRecord.commonVariants.join(", ")}</p></section>` : "";
+    const related = (lureBaitRecord.relatedTackleIds ?? []).map(getTackleRecord).filter(Boolean);
+    const relatedMarkup = related.length ? `
+        <section class="reference-popover__section reference-popover__section--related">
+            <h3>Related Components</h3>
+            <p class="reference-popover__related-note">Related equipment varies by setup. See the Rig's What You Need for actual requirements.</p>
+            <div class="compact-link-list compact-link-list--divided reference-popover__link-list">
+                ${related.map((item) => `
+                    <button class="compact-link-row" type="button" data-lure-bait-related-tackle-id="${item.id}">
+                        <span class="compact-link-row__label">${item.name}${item.id === "split-ring"
+                            ? '<small class="reference-popover__related-note">Only when fitted at the intended line-tie</small>'
+                            : item.id === "spinner-harness"
+                            ? '<small class="reference-popover__related-note">For crawler-harness presentations</small>' : ""}</span>
+                        <span class="compact-link-row__action">View Component <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                    </button>`).join("")}
+            </div>
+        </section>` : "";
+    const rigs = getRelatedLureBaitRigRecords(lureBaitId);
+    const rigLimit = 4;
+    const rigsMarkup = rigs.length ? `
+        <section class="reference-popover__section reference-popover__section--related">
+            <h3>Used In</h3>
+            <div class="compact-link-list compact-link-list--divided reference-popover__link-list">
+                ${rigs.map((rig, i) => `
+                    <button class="compact-link-row" type="button" data-lure-bait-rig-id="${rig.id}"
+                        ${i >= rigLimit ? "data-lure-bait-rigs-extra hidden" : ""}>
+                        <span class="compact-link-row__label">${rig.name}</span>
+                        <span class="compact-link-row__action">View Rig <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                    </button>`).join("")}
+            </div>
+            ${rigs.length > rigLimit ? `<button class="technique-usage-expand" type="button"
+                data-lure-bait-rigs-toggle aria-expanded="false">See all ${rigs.length} rigs</button>` : ""}
+        </section>` : "";
     const requirementMarkup = requirement?.notes ? `
         <section class="reference-popover__section">
             <h3>For This Rig</h3>
             <p>${requirement.notes}</p>
-        </section>
-    ` : "";
+        </section>` : "";
 
     dialog.innerHTML = `
         <div class="reference-popover__shell">
@@ -509,30 +565,64 @@ function renderLureBaitReferencePopover(lureBaitId, triggerElement, requirement 
             ${mediaMarkup}
             <div class="reference-popover__body">
                 <p class="reference-popover__summary">${lureBaitRecord.summary}</p>
-                <section class="reference-popover__section">
-                    <h3>Type</h3>
-                    <p>${formatLureBaitPresentationType(lureBaitRecord.presentationType)}</p>
-                </section>
-                <section class="reference-popover__section">
-                    <h3>Category</h3>
-                    <p>${formatLureBaitCategory(lureBaitRecord.category)}</p>
-                </section>
-                ${requirementMarkup}
+                <section class="reference-popover__section"><h3>Type</h3><p>${formatLureBaitPresentationType(lureBaitRecord.presentationType)}</p></section>
+                <section class="reference-popover__section"><h3>Category</h3><p>${formatLureBaitCategory(lureBaitRecord.category)}</p></section>
+                <section class="reference-popover__section"><h3>What It Does</h3><p>${lureBaitRecord.purpose}</p></section>
+                ${aliasesMarkup}
+                ${listSection("How to Recognize It", lureBaitRecord.recognitionNotes)}
+                ${variantsMarkup}
+                ${requirementMarkup}${relatedMarkup}${rigsMarkup}
             </div>
-        </div>
-    `;
+        </div>`;
 
+    dialog.querySelectorAll("[data-lure-bait-related-tackle-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const tackleId = button.dataset.lureBaitRelatedTackleId;
+            dialog.remove();
+            unlockReferencePopoverBackground();
+            renderReferencePopover(tackleId, triggerElement, {
+                backToLureBaitName: lureBaitRecord.name,
+                onBackToLureBait: () => renderLureBaitReferencePopover(lureBaitId, triggerElement,
+                    requirement, { ...options, focusRelatedTackleId: tackleId }),
+                onRigSelect: (rigId, origin) => options.onRigSelect?.(rigId,
+                    { ...origin, sourceBaitId: lureBaitId })
+            });
+        });
+    });
+    dialog.querySelectorAll("[data-lure-bait-rig-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const originScrollY = Number.isFinite(referencePopoverScrollY)
+                ? referencePopoverScrollY : window.scrollY;
+            dialog.remove();
+            unlockReferencePopoverBackground();
+            options.onRigSelect?.(button.dataset.lureBaitRigId,
+                { sourceBaitId: lureBaitId, originScrollY });
+        });
+    });
+    const toggle = dialog.querySelector("[data-lure-bait-rigs-toggle]");
+    toggle?.addEventListener("click", () => {
+        const expanded = toggle.getAttribute("aria-expanded") !== "true";
+        dialog.querySelectorAll("[data-lure-bait-rigs-extra]").forEach((row) => { row.hidden = !expanded; });
+        toggle.setAttribute("aria-expanded", String(expanded));
+        toggle.textContent = expanded ? "Show fewer" : `See all ${rigs.length} rigs`;
+    });
     showReferencePopoverDialog(dialog, triggerElement, "[data-lure-bait-close]");
+    if (options.focusRelatedTackleId) {
+        Array.from(dialog.querySelectorAll("[data-lure-bait-related-tackle-id]"))
+            .find((button) => button.dataset.lureBaitRelatedTackleId === options.focusRelatedTackleId)
+            ?.focus({ preventScroll: true });
+    }
 }
 
-function initializeLureBaitReferenceLinks(appMain, lureBaitRequirements = []) {
+function initializeLureBaitReferenceLinks(appMain, lureBaitRequirements = [], options = {}) {
     const requirementsById = new Map(
         lureBaitRequirements.map((requirement) => [requirement.lureBaitId, requirement])
     );
     appMain.querySelectorAll("[data-lure-bait-reference-id]").forEach((referenceLink) => {
         referenceLink.addEventListener("click", () => {
             const lureBaitId = referenceLink.dataset.lureBaitReferenceId;
-            renderLureBaitReferencePopover(lureBaitId, referenceLink, requirementsById.get(lureBaitId));
+            renderLureBaitReferencePopover(lureBaitId, referenceLink,
+                requirementsById.get(lureBaitId), options);
         });
     });
 }
@@ -628,7 +718,9 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
             : null;
         const backMarkup = previousReference
             ? `<button class="reference-popover__back" type="button" data-reference-back><span class="link-arrow link-arrow--back" aria-hidden="true">&larr;</span> Back to ${previousReference.name}</button>`
-            : "";
+            : options.onBackToLureBait
+                ? `<button class="reference-popover__back" type="button" data-reference-back><span class="link-arrow link-arrow--back" aria-hidden="true">&larr;</span> Back to ${options.backToLureBaitName}</button>`
+                : "";
 
         dialog.innerHTML = `
             <div class="reference-popover__shell">
@@ -655,6 +747,11 @@ function renderReferencePopover(referenceId, triggerElement, options = {}) {
             if (previousReferenceId) {
                 renderReferenceContent(previousReferenceId, false);
                 (dialog.querySelector("[data-reference-back]") ?? dialog.querySelector("[data-reference-close]"))?.focus({ preventScroll: true });
+            } else if (options.onBackToLureBait) {
+                isNavigatingAway = true;
+                dialog.remove();
+                unlockReferencePopoverBackground();
+                options.onBackToLureBait();
             }
         });
         dialog.querySelectorAll("[data-related-reference-id]").forEach((relatedButton) => {

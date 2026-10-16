@@ -69,6 +69,9 @@ function createInitialRigDetailState(rigId, selectedConfigurationId = null) {
     return {
         rigId,
         selectedConfigurationId,
+        // Technique teaching is separate from assembly/readiness checkboxes.
+        selectedBaitId: null,
+        otherTechniquesExpanded: false,
         expandedDisclosureIds: [],
         scrollY: 0,
         restoreScroll: false,
@@ -140,6 +143,15 @@ function restoreRigFocus(appMain, focusTarget) {
             target = Array.from(appMain.querySelectorAll("[data-rig-knot-id]")).find((element) =>
                 element.dataset.rigKnotId === id
             );
+        } else if (kind === "technique" && id) {
+            target = Array.from(appMain.querySelectorAll("[data-rig-view-technique-id]")).find((element) =>
+                element.dataset.rigViewTechniqueId === id
+            );
+        } else if (kind === "bait" && id) {
+            target = Array.from(appMain.querySelectorAll("[data-lure-bait-reference-id]"))
+                .find((element) => element.dataset.lureBaitReferenceId === id);
+        } else if (focusTarget === "setup-selector") {
+            target = appMain.querySelector("[data-rig-configuration-select], [data-rig-bait-select]");
         } else if (kind === "reference" && id) {
             target = Array.from(appMain.querySelectorAll("[data-reference-id]")).find((element) =>
                 element.dataset.referenceId === id
@@ -261,17 +273,153 @@ function getRigSelectedConfiguration(rig) {
     const selectedConfigurationId = rigDetailState.rigId === rig.id
         ? rigDetailState.selectedConfigurationId
         : null;
-    return configurations.find((configuration) => configuration.id === selectedConfigurationId) ?? configurations[0];
+    return configurations.find((configuration) => configuration.id === selectedConfigurationId) ?? null;
+}
+
+// The page has ONE explicit configuration/bait choice. Direct-Tie uses its
+// authored configuration; the four multi-bait Rigs use a selected canonical
+// Lure/Bait ID. Readiness remains an independent session inventory pool.
+function getRigSelectedBaitId(rig) {
+    const configurations = Array.isArray(rig?.configurations) ? rig.configurations : [];
+    if (configurations.length > 0) return getRigSelectedConfiguration(rig)?.lureBaitId ?? null;
+    if (rigDetailState.rigId !== rig?.id) return null;
+    return rigDetailState.selectedBaitId ?? null;
+}
+
+// Only these four existing single-bait Rigs replace the generic soft-
+// plastic checklist label. Identity derives from authored compatibility;
+// absence of another Rig-Bait edge never creates an inferred selection.
+function getRigFixedBaitId(rig) {
+    if (!["wacky-rig", "ned-rig", "neko-rig", "shaky-head-rig"].includes(rig?.id)) return null;
+    const ids = getCompatibleTargetIds("rig-lure-bait", "rig", rig.id, "lure-bait")
+        .filter((id) => getLureBaitRecord(id)?.isActive === true);
+    return ids.length === 1 && ids[0] === "stick-worm" ? ids[0] : null;
+}
+
+function getRigRequirementPresentation(rig) {
+    const configurations = Array.isArray(rig?.configurations) ? rig.configurations : [];
+    const configuration = getRigSelectedConfiguration(rig);
+    if (configurations.length > 0 && !configuration) {
+        return { componentRequirements: [], lureBaitRequirements: [], rows: [], awaitingSetup: true };
+    }
+    const source = configuration ?? rig;
+    const components = Array.isArray(source?.componentRequirements) ? source.componentRequirements : [];
+    const baits = Array.isArray(source?.lureBaitRequirements) ? source.lureBaitRequirements : [];
+    const baitId = getRigSelectedBaitId(rig);
+    const guidance = RIG_TECHNIQUE_LEARNING_GUIDANCE.find((item) => item.rigId === rig?.id);
+    const validSelectedBait = guidance?.selectionMode === "explicit" &&
+        guidance.baitLessons?.some((lesson) => lesson.lureBaitId === baitId) &&
+        getCompatibleTargetIds("rig-lure-bait", "rig", rig.id, "lure-bait").includes(baitId) &&
+        getLureBaitRecord(baitId)?.isActive === true;
+    const fixedBaitId = getRigFixedBaitId(rig);
+    const presentedBaitId = validSelectedBait ? baitId : fixedBaitId;
+    const baitRequirementNote = (id) =>
+        rig.baitSpecificRequirementNotes?.find((entry) => entry.lureBaitId === id)?.text ?? null;
+    const rows = [];
+    const projectedComponents = [];
+    const projectedBaits = [...baits];
+    // Only the approved generic Soft Plastic requirement is substituted.
+    // Never change canonical source requirements or infer bait ownership.
+    components.forEach((requirement) => {
+        if (presentedBaitId && requirement.tackleId === "soft-plastic") {
+            const substitute = {
+                lureBaitId: presentedBaitId,
+                quantity: requirement.quantity,
+                required: requirement.required,
+                notes: baitRequirementNote(presentedBaitId)
+            };
+            projectedBaits.push(substitute);
+            rows.push({ type: "lure-bait", requirement: substitute });
+        } else {
+            projectedComponents.push(requirement);
+            rows.push({ type: "tackle", requirement });
+        }
+    });
+    // Configured Rigs already own specific Lure/Bait requirements.
+    baits.forEach((requirement) => rows.unshift({ type: "lure-bait", requirement }));
+    return { componentRequirements: projectedComponents,
+        lureBaitRequirements: projectedBaits, rows, awaitingSetup: false };
+}
+
+// The sole learning copy and lead ids live in data/technique-guidance.js.
+// This projection owns no relationships: every selected-bait option must be
+// supported by an active Rig-Bait + Rig-Technique + Bait-Technique triple.
+function getRigTechniqueLearningContext(rig) {
+    const guidance = RIG_TECHNIQUE_LEARNING_GUIDANCE.find((item) => item.rigId === rig?.id);
+    if (!guidance || rig?.isActive !== true) return null;
+    const rigTechniqueIds = getCompatibleTargetIds("rig-technique", "rig", rig.id, "technique");
+    const baitIds = getCompatibleTargetIds("rig-lure-bait", "rig", rig.id, "lure-bait")
+        .filter((id) => getLureBaitRecord(id)?.isActive === true);
+    const baitTechniqueIds = (baitId) => new Set(
+        getCompatibleTargetIds("lure-bait-technique", "lure-bait", baitId, "technique")
+    );
+    const intersectionForBait = (baitId) => {
+        const eligible = baitTechniqueIds(baitId);
+        return rigTechniqueIds.filter((id) => eligible.has(id) && getTechniqueRecord(id));
+    };
+    const toTechnique = (techniqueId) => getTechniqueRecord(techniqueId);
+
+    if (guidance.selectionMode === "explicit") {
+        const choices = (guidance.baitLessons ?? [])
+            .filter((lesson) => baitIds.includes(lesson.lureBaitId)
+                && intersectionForBait(lesson.lureBaitId).includes(lesson.techniqueId))
+            .map((lesson) => ({ ...lesson, bait: getLureBaitRecord(lesson.lureBaitId) }));
+        const selected = choices.find((choice) => choice.lureBaitId === getRigSelectedBaitId(rig)) ?? null;
+        const lesson = selected ?? guidance.initialLesson;
+        const lead = lesson?.techniqueId && rigTechniqueIds.includes(lesson.techniqueId)
+            ? toTechnique(lesson.techniqueId) : null;
+        const others = selected
+            ? intersectionForBait(selected.lureBaitId).filter((id) => id !== lead?.id).map(toTechnique).filter(Boolean)
+            : [];
+        return {
+            selectionMode: "explicit", isExample: !selected && Boolean(guidance.initialLesson?.exampleLureBaitId),
+            selectedBait: selected?.bait ?? null, choices, lead, why: lesson?.why ?? "",
+            exampleBait: !selected && guidance.initialLesson?.exampleLureBaitId
+                ? getLureBaitRecord(guidance.initialLesson.exampleLureBaitId) : null,
+            others
+        };
+    }
+
+    // Rig-level lessons with authored baits use the set shared by *all* those
+    // baits; Double-Jig has no authored bait and legitimately uses Rig-only links.
+    const eligibleIds = baitIds.length
+        ? rigTechniqueIds.filter((id) => baitIds.every((baitId) => baitTechniqueIds(baitId).has(id)))
+        : rigTechniqueIds;
+    const lead = eligibleIds.includes(guidance.defaultLesson?.techniqueId)
+        ? toTechnique(guidance.defaultLesson.techniqueId) : null;
+    return {
+        selectionMode: "rig", isExample: false, selectedBait: null, choices: [],
+        lead, why: guidance.defaultLesson?.why ?? "",
+        others: eligibleIds.filter((id) => id !== lead?.id).map(toTechnique).filter(Boolean),
+        rigOnly: baitIds.length === 0
+    };
 }
 
 function getRigActiveReadinessRequirements(rig) {
-    return buildRigReadinessRequirementEntries(getRigSelectedConfiguration(rig) ?? rig);
+    return buildRigReadinessRequirementEntries(getRigRequirementPresentation(rig));
 }
 
 function getRigAllReadinessRequirements(rig) {
     const configurations = Array.isArray(rig?.configurations) ? rig.configurations : [];
-    if (configurations.length === 0) return buildRigReadinessRequirementEntries(rig);
-    return configurations.flatMap(buildRigReadinessRequirementEntries);
+    if (configurations.length > 0) return configurations.flatMap(buildRigReadinessRequirementEntries);
+    const original = buildRigReadinessRequirementEntries(rig);
+    const guidance = RIG_TECHNIQUE_LEARNING_GUIDANCE.find((item) => item.rigId === rig?.id);
+    if (guidance?.selectionMode !== "explicit") {
+        const fixedBaitId = getRigFixedBaitId(rig);
+        if (!fixedBaitId) return original;
+        const softPlastic = rig.componentRequirements?.find((item) => item.tackleId === "soft-plastic");
+        return [...original, {
+            selectionId: `lure-bait:${fixedBaitId}`,
+            poolKey: `lure-bait:${fixedBaitId}`,
+            quantity: getRigRequirementQuantity(softPlastic)
+        }];
+    }
+    // Specific bait checks are tracked separately from generic Soft Plastic.
+    return [...original, ...(guidance.baitLessons ?? []).map((lesson) => ({
+        selectionId: `lure-bait:${lesson.lureBaitId}`,
+        poolKey: `lure-bait:${lesson.lureBaitId}`,
+        quantity: getRigRequirementQuantity(rig.componentRequirements?.find((item) => item.tackleId === "soft-plastic"))
+    }))];
 }
 
 function getRigReadinessSelections(rigId) {
@@ -588,6 +736,26 @@ function openRigDetail(rigId, collectionKey = selectedRigCollectionKey) {
     showView(ROUTES.RIG_DETAIL);
 }
 
+// Cross-Guide entry owned by the destination Rig Guide. The Technique Guide
+// supplies the return snapshot; the Rig Guide alone changes its private state.
+function openRigDetailFromTechnique(rigId, { sourceBaitId = null } = {}) {
+    const rig = findRecordById(RIG_DATA, rigId);
+    const technique = findRecordById(TECHNIQUE_DATA, selectedTechniqueId);
+    if (!rig || rig.isActive !== true || !technique || technique.isActive !== true) {
+        console.warn(`Related Rig or Technique could not be opened: ${rigId}`);
+        return;
+    }
+    if (!pushDetailNavigationContext({
+        route: ROUTES.TECHNIQUE_DETAIL,
+        label: technique.name,
+        state: captureTechniqueDetailNavigationState(sourceBaitId ? `bait:${sourceBaitId}` : `rig:${rigId}`)
+    })) return;
+    selectedRigId = rig.id;
+    selectedRigCollectionKey = "all";
+    resetRigDetailState(rig.id);
+    showView(ROUTES.RIG_DETAIL);
+}
+
 function openRigDetailFromKnot(rigId) {
     const rig = findRecordById(RIG_DATA, rigId);
     const knot = findRecordById(KNOT_DATA, selectedKnotId);
@@ -608,7 +776,7 @@ function openRigDetailFromKnot(rigId) {
     showView(ROUTES.RIG_DETAIL);
 }
 
-function openRigDetailFromComponentReference(rigId, { sourceReferenceId = null, originScrollY = null } = {}) {
+function openRigDetailFromComponentReference(rigId, { sourceReferenceId = null, sourceBaitId = null, originScrollY = null } = {}) {
     const nextRig = findRecordById(RIG_DATA, rigId);
     const originRig = findRecordById(RIG_DATA, selectedRigId);
     if (!nextRig || nextRig.isActive !== true || !originRig || originRig.isActive !== true) {
@@ -620,7 +788,8 @@ function openRigDetailFromComponentReference(rigId, { sourceReferenceId = null, 
     // Approved Option A: a full-page Rig handoff, with Parent returning to
     // the originating Rig detail and scroll position, not reopening the dialog.
     const originState = captureRigDetailNavigationState(
-        sourceReferenceId ? `reference:${sourceReferenceId}` : null
+        sourceBaitId ? `bait:${sourceBaitId}` :
+            sourceReferenceId ? `reference:${sourceReferenceId}` : null
     );
     if (Number.isFinite(originScrollY) && originScrollY >= 0) {
         originState.rigDetailState.scrollY = originScrollY;
@@ -722,12 +891,39 @@ function renderRigDetailView(appMain) {
         selections: getRigReadinessSelections(rig.id),
         reelSetupContextLines: getDetailReelSetupContextLines(),
         selectedConfigurationId: rigDetailState.selectedConfigurationId,
+        selectedBaitId: getRigSelectedBaitId(rig),
+        requirementPresentation: getRigRequirementPresentation(rig),
         expandedDisclosureIds: rigDetailState.expandedDisclosureIds,
-        onConfigurationChange: (configurationId) => {
+        techniqueLearning: getRigTechniqueLearningContext(rig),
+        otherTechniquesExpanded: rigDetailState.otherTechniquesExpanded === true,
+        onTechniqueSelect: openTechniqueDetailFromRig,
+        onBaitChange: (baitId) => {
+            const choices = getRigTechniqueLearningContext(rig)?.choices ?? [];
+            if (baitId && !choices.some((choice) => choice.lureBaitId === baitId)) return;
             rigDetailState = {
                 ...rigDetailState,
-                rigId: rig.id,
-                selectedConfigurationId: configurationId
+                selectedBaitId: baitId || null,
+                otherTechniquesExpanded: false,
+                scrollY: window.scrollY,
+                restoreScroll: true,
+                restoreFocusTarget: "setup-selector"
+            };
+            renderRigDetailView(appMain);
+        },
+        onOtherTechniquesStateChange: (expanded) => {
+            rigDetailState = { ...rigDetailState, otherTechniquesExpanded: expanded === true };
+        },
+        onConfigurationChange: (configurationId) => {
+            const configurationExists = (rig.configurations ?? []).some((item) => item.id === configurationId);
+            if (configurationId && !configurationExists) return;
+            rigDetailState = {
+                ...rigDetailState,
+                selectedConfigurationId: configurationId || null,
+                selectedBaitId: null,
+                otherTechniquesExpanded: false,
+                scrollY: window.scrollY,
+                restoreScroll: true,
+                restoreFocusTarget: "setup-selector"
             };
             renderRigDetailView(appMain);
         },

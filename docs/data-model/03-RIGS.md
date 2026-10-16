@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 03-RIGS.md  
-**Document Revision:** 0.5.15  
+**Document Revision:** 0.5.17  
 **Document Status:** Approved  
 **Implementation Status:** IMPLEMENTED / VALIDATED CURRENT — 23 active canonical Rigs including Direct-Tie Lure Setup, Weighted Swimbait Hook Rig, and Tube Jig Rig  
 **Decision Baseline:** D024, D025, D026, D027, D028, D042-D049, D056, D057, D065
@@ -134,11 +134,11 @@ Rules:
 
 The validated 23-Rig library contains 38 current Rig-owned tied-connection records, including Direct-Tie configuration connections.
 
-### R2 approved knot-to-build-step mapping — pending implementation
+### Knot-to-build-step mapping — implemented
 
-FCC 50B-E approves one minimal schema extension for the R2 Rig-detail correction: each `knotApplications[]` entry will add required `assemblyStepIndex`. This field is approved canonical direction but is not part of the current production source until the R2 candidate is implemented, reviewed, and promoted.
+FCC 50B-E introduced one minimal schema extension for Rig detail: every current `knotApplications[]` entry includes required `assemblyStepIndex`. The field is implemented in current production source and validated across all 38 tied-connection records.
 
-The R2 application shape is:
+The current application shape is:
 
 ```text
 label
@@ -308,6 +308,16 @@ Rig owns physical component sequence, connections, orientation, setup measuremen
 Technique owns reusable presentation behavior such as retrieve cadence, rod/reel movement, dragging, hopping, swimming, twitching, pausing, strike detection, and similar instruction when it generalizes across compatible setups.
 
 D069 and RP-C4 now assign intrinsic Rig↔Technique compatibility to the typed Compatibility Relationship domain in `09-RELATIONSHIPS.md`; Rig does not store inverse Technique IDs.
+
+---
+
+# FCC 53A — Rig Detail Technique Learning and Readiness
+
+The Rig Guide provides a **Learn First** Technique lesson with a brief Rig-specific explanation and expandable **Other Compatible Techniques**. These links use canonical Technique Detail, not embedded replacement Technique instructions. `data/technique-guidance.js` owns one introductory teaching lesson per active Rig; intrinsic eligibility remains derived from `data/compatibility.js`. Editorial lesson order is neither a Recommendation rank nor a new canonical Technique field.
+
+For the nine selector-enabled Rigs, an example lesson must **not** silently select bait. The angler explicitly chooses **Use This Bait**; the chosen canonical Lure/Bait then determines eligible Rig + Bait + Technique teaching and the displayed component guidance. Rig-only lessons do not imply a validated bait pairing. Direct-Tie configuration selection remains physical Rig setup selection and is not replaced by Technique teaching.
+
+**What You Need** contains the existing Setup/Bait selector **above** the live required-component readiness summary. Component availability and the selected teaching bait remain distinct states. **How to Build It** retains the visible numbered Rig-owned assembly steps, Knot guidance without duplicated Knot navigation inside steps, and setup-support details. Tube assembly-specific notes stay in Rig setup guidance, not in general Technique data. No persistent My Tackle inventory is written by this teaching flow.
 
 ---
 

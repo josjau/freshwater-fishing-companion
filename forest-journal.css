@@ -201,9 +201,16 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .dashboard-card__description { display: block; color: var(--text-muted); font-size: 0.95rem; }
 .dashboard-card__action { display: inline-flex; align-self: flex-start; margin-top: var(--space-5); padding: 4px 10px; border: 1px solid color-mix(in srgb, var(--card-accent) 45%, white 15%); border-radius: 999px; background: color-mix(in srgb, var(--card-accent) 12%, transparent); font-weight: 700; }
 .dashboard-card--home { justify-content: flex-start; }
-.dashboard-card--home .dashboard-card__heading-row { justify-content: space-between; width: 100%; }
+.dashboard-card--home .dashboard-card__heading-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: start;
+    justify-items: start;
+    gap: var(--space-2);
+    width: 100%;
+}
 .dashboard-card--home .dashboard-card__title { margin-bottom: 0; }
-.dashboard-card--home .dashboard-card__action { align-items: baseline; gap: .25em; margin-top: 0; margin-left: auto; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--card-accent); font-size: .9rem; font-weight: 800; line-height: 1.2; }
+.dashboard-card--home .dashboard-card__action { align-items: baseline; gap: .25em; margin-top: 0; margin-left: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--card-accent); font-size: .9rem; font-weight: 800; line-height: 1.2; white-space: nowrap; }
 .dashboard-card--unavailable { cursor: default; }
 .dashboard-card--unavailable:hover,
 .dashboard-card--unavailable:active {
@@ -895,16 +902,20 @@ body.reference-popover-open { position: fixed; left: 0; right: 0; width: 100%; o
 
 .compact-link-list { display: grid; margin: 0; padding: 0; list-style: none; }
 .compact-link-row[hidden] { display: none; }
-.compact-link-row { display: flex; min-height: 42px; width: 100%; flex-wrap: wrap; align-items: baseline; justify-content: flex-start; gap: var(--space-1) var(--space-3); margin: 0; padding: 7px 2px; border: 0; background: transparent; color: var(--text); font: inherit; font-size: .9rem; font-weight: 700; line-height: 1.25; text-align: left; }
+.compact-link-row { display: grid; grid-template-columns: minmax(0, 1fr) max-content; min-height: 42px; width: 100%; align-items: center; gap: var(--space-1) var(--space-3); margin: 0; padding: 7px 2px; border: 0; background: transparent; color: var(--text); font: inherit; font-size: .9rem; font-weight: 700; line-height: 1.25; text-align: left; }
 button.compact-link-row { cursor: pointer; }
 .compact-link-list--divided > .compact-link-row + .compact-link-row { border-top: 1px solid var(--ui-tan-row-separator); }
 .compact-link-row__action { display: inline-flex; min-height: 40px; flex: 0 0 auto; align-items: center; gap: .25em; margin: -7px 0; padding: 7px 2px; border: 0; background: transparent; color: var(--accent); font: inherit; font-size: .86rem; font-weight: 800; white-space: nowrap; cursor: pointer; }
 .compact-link-row__action:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
 .compact-link-row__action:focus-visible { position: relative; z-index: 1; border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 1px; }
-.compact-link-row__label { min-width: 0; color: var(--text); }
+.compact-link-row__label { min-width: 0; overflow-wrap: anywhere; color: var(--text); }
 .compact-link-row--workflow .compact-link-row__action { color: var(--accent-workflow); }
 .reference-popover .compact-link-row__action:hover { color: color-mix(in srgb, var(--accent-tackle) 82%, white 18%); }
 .reference-popover .compact-link-row__action:focus-visible { outline-color: var(--accent-tackle); }
+.reference-popover__related-note { font-size: .82rem; color: var(--text-muted); margin: var(--space-1) 0; }
+.reference-popover .compact-link-row__label > .reference-popover__related-note { display: block; font-weight: 400; }
+.reference-popover [data-lure-bait-rigs-extra][hidden] { display: none; }
+
 
 
 /* =========================================================
@@ -963,6 +974,11 @@ button.compact-link-row { cursor: pointer; }
     gap: var(--space-2);
     margin-bottom: var(--space-3);
 }
+/* R9: In What You Need, the Setup/Bait picker precedes the readiness summary
+   on desktop and mobile. No readiness or selection state is changed. */
+.rig-requirements-section__controls { display: grid; min-width: 0; align-content: start; gap: var(--space-3); }
+.rig-requirements-section__controls .rig-configuration-section { padding: 0; }
+.rig-requirements-section__controls .rig-configuration-control { grid-template-columns: minmax(0, 1fr); }
 .rig-requirements-section__header h3 { margin-bottom: var(--space-2); }
 .rig-requirements-section__header p { margin-bottom: 0; color: var(--text-muted); }
 .readiness-status {
@@ -1135,29 +1151,45 @@ button.compact-link-row { cursor: pointer; }
 .knot-collection-card:hover { border-color: var(--card-accent); }
 .knot-task-card:active,
 .knot-collection-card:active { background: var(--surface-active); transform: scale(.99); }
-.search-result-card--knot {
+.search-result-card--knot,
+.search-result-card--technique {
     --card-accent: var(--accent-fish);
     min-height: 146px;
     border-left-color: var(--card-accent);
     background: var(--surface-elevated);
 }
-.search-result-card--knot:hover { border-color: var(--card-accent); }
-.search-result-card--knot:active { background: var(--surface-active); transform: scale(.99); }
-.search-result-card--knot:focus-visible { outline-color: var(--card-accent); }
-.search-result-card--knot:nth-child(9n + 1) { --card-accent: var(--accent-fish); }
-.search-result-card--knot:nth-child(9n + 2) { --card-accent: var(--accent-rigs); }
-.search-result-card--knot:nth-child(9n + 3) { --card-accent: var(--accent-recommendations); }
-.search-result-card--knot:nth-child(9n + 4) { --card-accent: var(--accent-tackle); }
-.search-result-card--knot:nth-child(9n + 5) { --card-accent: var(--accent-knots); }
-.search-result-card--knot:nth-child(9n + 6) { --card-accent: var(--accent-catch-log); }
-.search-result-card--knot:nth-child(9n + 7) { --card-accent: var(--accent-favorites); }
-.search-result-card--knot:nth-child(9n + 8) { --card-accent: var(--accent-regulations); }
-.search-result-card--knot:nth-child(9n + 9) { --card-accent: var(--accent-settings); }
-.knot-result-card__classification { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35em; margin-bottom: var(--space-2); color: var(--text-muted); font-size: .84rem; font-weight: 800; letter-spacing: .025em; }
-.knot-result-card__classification-core { color: var(--semantic-core); }
+.search-result-card--knot:hover,
+.search-result-card--technique:hover { border-color: var(--card-accent); }
+.search-result-card--knot:active,
+.search-result-card--technique:active { background: var(--surface-active); transform: scale(.99); }
+.search-result-card--knot:focus-visible,
+.search-result-card--technique:focus-visible { outline-color: var(--card-accent); }
+.search-result-card--knot:nth-child(9n + 1),
+.search-result-card--technique:nth-child(9n + 1) { --card-accent: var(--accent-fish); }
+.search-result-card--knot:nth-child(9n + 2),
+.search-result-card--technique:nth-child(9n + 2) { --card-accent: var(--accent-rigs); }
+.search-result-card--knot:nth-child(9n + 3),
+.search-result-card--technique:nth-child(9n + 3) { --card-accent: var(--accent-recommendations); }
+.search-result-card--knot:nth-child(9n + 4),
+.search-result-card--technique:nth-child(9n + 4) { --card-accent: var(--accent-tackle); }
+.search-result-card--knot:nth-child(9n + 5),
+.search-result-card--technique:nth-child(9n + 5) { --card-accent: var(--accent-knots); }
+.search-result-card--knot:nth-child(9n + 6),
+.search-result-card--technique:nth-child(9n + 6) { --card-accent: var(--accent-catch-log); }
+.search-result-card--knot:nth-child(9n + 7),
+.search-result-card--technique:nth-child(9n + 7) { --card-accent: var(--accent-favorites); }
+.search-result-card--knot:nth-child(9n + 8),
+.search-result-card--technique:nth-child(9n + 8) { --card-accent: var(--accent-regulations); }
+.search-result-card--knot:nth-child(9n + 9),
+.search-result-card--technique:nth-child(9n + 9) { --card-accent: var(--accent-settings); }
+.knot-result-card__classification,
+.technique-result-card__classification { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35em; margin-bottom: var(--space-2); color: var(--text-muted); font-size: .84rem; font-weight: 800; letter-spacing: .025em; }
+.knot-result-card__classification-core,
+.technique-result-card__classification-core { color: var(--semantic-core); }
 .knot-result-card__classification-separator { color: var(--text-subtle); }
 .knot-result-card__classification-difficulty { color: var(--text-muted); }
-.knot-result-card__heading-row {
+.knot-result-card__heading-row,
+.technique-result-card__heading-row {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -1165,7 +1197,8 @@ button.compact-link-row { cursor: pointer; }
     gap: var(--space-2) var(--space-3);
     width: 100%;
 }
-.knot-result-card__heading-row .search-result-card__action {
+.knot-result-card__heading-row .search-result-card__action,
+.technique-result-card__heading-row .search-result-card__action {
     margin-top: 0;
     padding-top: 0;
     color: var(--card-accent);
@@ -1177,34 +1210,48 @@ button.compact-link-row { cursor: pointer; }
     color: var(--text-subtle);
     font-size: .88rem;
 }
-.search-result-card--knot .search-result-card__summary { margin-top: var(--space-3); }
-.search-result-card--knot.search-result-card--core {
+.search-result-card--knot .search-result-card__summary,
+.search-result-card--technique .search-result-card__summary { margin-top: var(--space-3); }
+.search-result-card--knot.search-result-card--core,
+.search-result-card--technique.search-result-card--core {
     border-color: var(--border-strong);
     border-left-color: var(--card-accent);
     border-right: 2px solid var(--card-accent);
 }
-.search-result-card--knot.search-result-card--core .search-result-card__title { font-weight: 800; }
-.detail-view--knot .detail-eyebrow { color: var(--text-subtle); }
-.detail-view--knot .detail-header { margin-bottom: var(--space-4); }
-.detail-view--knot .detail-section { margin-bottom: var(--space-4); padding: var(--space-4); }
+.search-result-card--knot.search-result-card--core .search-result-card__title,
+.search-result-card--technique.search-result-card--core .search-result-card__title { font-weight: 800; }
+.detail-view--knot .detail-eyebrow,
+.detail-view--technique .detail-eyebrow { color: var(--text-subtle); }
+.detail-view--knot .detail-header,
+.detail-view--technique .detail-header { margin-bottom: var(--space-4); }
+.detail-view--knot .detail-section,
+.detail-view--technique .detail-section { margin-bottom: var(--space-4); padding: var(--space-4); }
 .detail-view--knot .detail-list li,
-.detail-view--knot .detail-steps li { margin-bottom: var(--space-2); }
+.detail-view--knot .detail-steps li,
+.detail-view--technique .detail-list li,
+.detail-view--technique .detail-steps li { margin-bottom: var(--space-2); }
 .detail-view--knot .detail-list li::marker,
-.detail-view--knot .detail-steps li::marker { color: var(--accent); }
-.knot-detail-header {
+.detail-view--knot .detail-steps li::marker,
+.detail-view--technique .detail-list li::marker,
+.detail-view--technique .detail-steps li::marker { color: var(--accent); }
+.knot-detail-header,
+.technique-detail-header {
     padding: var(--space-4);
     border: 1px solid var(--border-strong);
     border-radius: var(--radius-large);
     background: var(--surface);
 }
-.knot-detail-header > p:last-child { margin-bottom: 0; }
+.knot-detail-header > p:last-child,
+.technique-detail-header > p:last-child { margin-bottom: 0; }
 .knot-detail-classification { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35em; color: var(--text-subtle); }
 .knot-detail-classification__core { color: var(--semantic-core); }
 .knot-detail-classification__separator { color: var(--text-subtle); }
 .knot-detail-classification__difficulty { color: var(--text-muted); }
 .knot-aliases { margin-bottom: 0; color: var(--text-muted); font-size: .92rem; }
-.knot-detail-group { margin-bottom: var(--space-4); }
-.knot-detail-group__title {
+.knot-detail-group,
+.technique-detail-group { margin-bottom: var(--space-4); }
+.knot-detail-group__title,
+.technique-detail-group__title {
     margin-bottom: var(--space-2);
     color: var(--text-subtle);
     font-size: .82rem;
@@ -1212,14 +1259,17 @@ button.compact-link-row { cursor: pointer; }
     letter-spacing: .08em;
     text-transform: uppercase;
 }
-.knot-detail-group__shell {
+.knot-detail-group__shell,
+.technique-detail-group__shell {
     overflow: hidden;
     border: 1px solid var(--border);
     border-radius: var(--radius-section);
     background: var(--surface);
 }
-.knot-detail-row + .knot-detail-row { border-top: 1px solid var(--border); }
-.knot-detail-row__trigger {
+.knot-detail-row + .knot-detail-row,
+.technique-detail-row + .technique-detail-row { border-top: 1px solid var(--border); }
+.knot-detail-row__trigger,
+.technique-detail-row__trigger {
     display: flex;
     min-height: var(--touch-target);
     width: 100%;
@@ -1236,19 +1286,27 @@ button.compact-link-row { cursor: pointer; }
     text-align: left;
     cursor: pointer;
 }
-.knot-detail-row__trigger:hover { background: var(--surface-hover); }
-.knot-detail-row__trigger:focus-visible { position: relative; z-index: 1; outline: 3px solid var(--accent); outline-offset: -3px; }
-.knot-detail-row__trigger:active { background: var(--surface-active); }
-.knot-detail-row__state { flex: 0 0 auto; color: var(--text-subtle); font-weight: 800; }
-.knot-detail-row__panel { padding: var(--space-2) var(--space-4) var(--space-4); color: var(--text-muted); }
-.knot-detail-row__panel[hidden] { display: none; }
-.knot-detail-row__panel > :last-child { margin-bottom: 0; }
+.knot-detail-row__trigger:hover,
+.technique-detail-row__trigger:hover { background: var(--surface-hover); }
+.knot-detail-row__trigger:focus-visible,
+.technique-detail-row__trigger:focus-visible { position: relative; z-index: 1; outline: 3px solid var(--accent); outline-offset: -3px; }
+.knot-detail-row__trigger:active,
+.technique-detail-row__trigger:active { background: var(--surface-active); }
+.knot-detail-row__state,
+.technique-detail-row__state { flex: 0 0 auto; color: var(--text-subtle); font-weight: 800; }
+.knot-detail-row__panel,
+.technique-detail-row__panel { padding: var(--space-2) var(--space-4) var(--space-4); color: var(--text-muted); }
+.knot-detail-row__panel[hidden],
+.technique-detail-row__panel[hidden] { display: none; }
+.knot-detail-row__panel > :last-child,
+.technique-detail-row__panel > :last-child { margin-bottom: 0; }
 .knot-usage-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
 .knot-usage-subsection + .knot-usage-subsection { margin-top: var(--space-4); }
 .knot-usage-subsection--workflow .compact-link-row__action { color: var(--accent-workflow); }
 .knot-usage-subsection { scroll-margin-top: 84px; }
 .knot-usage-link .link-arrow--internal { margin-left: .18em; color: inherit; font-size: 1.1em; font-weight: 900; }
-.knot-usage-expand {
+.knot-usage-expand,
+.technique-usage-expand {
     min-height: 40px;
     margin-top: var(--space-2);
     padding: 6px 12px;
@@ -1259,8 +1317,10 @@ button.compact-link-row { cursor: pointer; }
     font-weight: 800;
     cursor: pointer;
 }
-.knot-usage-expand:hover { background: color-mix(in srgb, var(--accent) 20%, transparent); }
-.knot-usage-expand:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.knot-usage-expand:hover,
+.technique-usage-expand:hover { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+.knot-usage-expand:focus-visible,
+.technique-usage-expand:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .knot-line-compatibility-list { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-4); margin: 0; padding: 0; list-style: none; }
 .knot-line-compatibility-item { display: inline-flex; min-height: 40px; align-items: center; gap: 0; color: var(--text); font-size: .9rem; font-weight: 700; line-height: 1.3; white-space: nowrap; }
 .knot-line-compatibility__label { display: inline; }
@@ -1309,8 +1369,11 @@ button.compact-link-row { cursor: pointer; }
 @media (min-width: 900px) {
     .dashboard-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
     .rig-knot-recommendation-list--unique,
-    .fish-rig-recommendation-list { width: calc(66.6667% - 5.333px); }
+    .fish-rig-recommendation-list,
+    .technique-rig-card-list { width: calc(66.6667% - 5.333px); }
     .rig-about-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .rig-about-subsection--techniques { grid-column: 1 / -1; }
+    .rig-technique-learning { width: calc(66.6667% - 5.333px); }
     .rig-component-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .app-header { padding-top: var(--space-12); }
 }
@@ -1736,8 +1799,12 @@ button.compact-link-row { cursor: pointer; }
 .fish-rig-recommendation-group + .fish-rig-recommendation-group {
     margin-top: var(--space-4);
 }
-.fish-rig-recommendation-list { display: grid; gap: var(--space-2); }
-.fish-rig-recommendation {
+.fish-rig-recommendation-list,
+.rig-technique-lesson-card-list,
+.technique-rig-card-list { display: grid; gap: var(--space-2); }
+.fish-rig-recommendation,
+.rig-technique-lesson-card,
+.technique-rig-card {
     display: grid;
     gap: var(--space-2);
     width: 100%;
@@ -1749,12 +1816,50 @@ button.compact-link-row { cursor: pointer; }
     color: var(--text);
     text-align: left;
 }
-.fish-rig-recommendation__heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-start; gap: var(--space-1) var(--space-3); }
-.fish-rig-recommendation__name { font-weight: 800; }
-.fish-rig-recommendation__action { display: inline-flex; min-height: 40px; align-items: center; gap: .25em; margin: -7px 0; padding: 7px 2px; border: 0; background: transparent; color: var(--accent); font: inherit; font-size: .86rem; font-weight: 800; white-space: nowrap; cursor: pointer; }
-.fish-rig-recommendation__action:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
-.fish-rig-recommendation__action:focus-visible { border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 2px; }
-.fish-rig-recommendation__reason { color: var(--text-muted); font-size: .9rem; line-height: 1.4; }
+.fish-rig-recommendation__heading,
+.rig-technique-lesson-card__heading,
+.technique-rig-card__heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-start; gap: var(--space-1) var(--space-3); }
+.fish-rig-recommendation__name,
+.rig-technique-lesson-card__name,
+.technique-rig-card__name { font-weight: 800; }
+.fish-rig-recommendation__action,
+.rig-technique-lesson-card__action,
+.technique-rig-card__action { display: inline-flex; min-height: 40px; align-items: center; gap: .25em; margin: -7px 0; padding: 7px 2px; border: 0; background: transparent; color: var(--accent); font: inherit; font-size: .86rem; font-weight: 800; white-space: nowrap; cursor: pointer; }
+.fish-rig-recommendation__action:hover,
+.rig-technique-lesson-card__action:hover,
+.technique-rig-card__action:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
+.fish-rig-recommendation__action:focus-visible,
+.rig-technique-lesson-card__action:focus-visible,
+.technique-rig-card__action:focus-visible { border-radius: 4px; outline: 3px solid var(--accent); outline-offset: 2px; }
+.fish-rig-recommendation__reason,
+.rig-technique-lesson-card__why,
+.technique-rig-card__context { color: var(--text-muted); font-size: .9rem; line-height: 1.4; }
+
+
+/* FCC 53A — Rig teaching follows the shared Registry/Matrix patterns:
+   Fish-style explained lead, uppercase peer headings, Knot-style divided links
+   and established progressive disclosure. The ONE existing Rig Setup/Bait
+   dropdown is inside What You Need; no independent teaching picker/dialog. */
+.rig-technique-learning { display: grid; gap: var(--space-4); }
+.rig-technique-learn-first,
+.rig-technique-others { display: grid; gap: var(--space-2); }
+.rig-technique-learn-first .detail-subsection-heading,
+.rig-technique-others .detail-subsection-heading { margin-bottom: var(--space-1); }
+.rig-technique-lesson-card__why { margin: 0; }
+.rig-technique-example-label,
+.rig-technique-rig-only { margin: 0; font-size: .88rem; color: var(--text-muted); }
+.rig-technique-other-list { display: grid; gap: 0; }
+.rig-technique-other-list[hidden] { display: none; }
+.rig-technique-others .knot-usage-expand { justify-self: start; }
+.rig-build-step__context-note {
+    margin: var(--space-2) 0 0;
+    padding: var(--space-2) var(--space-3);
+    border-left: 3px solid var(--accent-rigs);
+    background: color-mix(in srgb, var(--accent-rigs) 8%, transparent);
+    color: var(--text-muted);
+    font-size: .9rem;
+    line-height: 1.45;
+}
 
 .fish-specialized-body { max-width: 720px; }
 .fish-learn-more { margin-top: var(--space-4); }
@@ -2875,7 +2980,7 @@ body.reel-line-weight-picker-open { overflow: hidden; }
     }
 }
 /* Core Rigs shares the Knots curated emphasis, not the blue workflow treatment. */
-.rig-guide-start-section .rig-guide-learn-core { --card-accent: var(--accent-fish); width: 100%; text-align: left; }
+.rig-guide-start-section .rig-guide-learn-core { --card-accent: var(--accent-fish); text-align: left; }
 .rig-guide-start-section .rig-guide-learn-core .dashboard-card__description { margin-top: var(--space-2); }
 /* Use the same structural grammar for Rig Tutorial and Knot Tying Animation. */
 .knot-build-subsection--support .knot-detail-row__trigger {
@@ -2891,7 +2996,6 @@ body.reel-line-weight-picker-open { overflow: hidden; }
 
 /* ARCH-B R2 — completed Reel Setup and Learn Core Rigs follow the same card columns. */
 @media (min-width: 640px) {
-    .rig-guide-start-section .rig-guide-learn-core,
     .rig-guide-view .rig-reel-setup-context,
     .knot-guide-view .knot-reel-setup-context {
         width: 100%;
@@ -2899,9 +3003,55 @@ body.reel-line-weight-picker-open { overflow: hidden; }
     }
 }
 @media (min-width: 900px) {
-    .rig-guide-start-section .rig-guide-learn-core,
     .rig-guide-view .rig-reel-setup-context,
     .knot-guide-view .knot-reel-setup-context {
         max-width: calc((100% - (2 * var(--space-4))) / 3);
     }
+}
+
+/* FCC 53A R3 - Techniques render the established Guide-family semantic patterns. */
+.technique-guide-identity { max-width: 760px; margin-bottom: var(--space-4); }
+.technique-guide-identity > h2 { margin-bottom: var(--space-2); }
+.technique-guide-identity > p { margin-bottom: 0; color: var(--text-muted); }
+.technique-guide-content { display: grid; gap: var(--space-8); }
+.technique-guide-content[hidden] { display: none; }
+.technique-guide-section > h3 { margin-bottom: var(--space-3); }
+.technique-guide-search-form,
+.technique-browse-view .search-form { width: 100%; }
+.technique-guide-view .search-label,
+.technique-browse-view .search-label { margin-bottom: var(--space-1); }
+.technique-guide-view .search-controls,
+.technique-browse-view .search-controls { grid-template-columns: minmax(0, 1fr); }
+.technique-guide-view .search-input,
+.technique-browse-view .search-input { padding-right: 58px; }
+.technique-guide-view .search-input:focus-visible,
+.technique-browse-view .search-input:focus-visible,
+.technique-guide-view .search-clear-button:focus-visible,
+.technique-browse-view .search-clear-button:focus-visible { outline-color: var(--accent); }
+.technique-guide-view .search-clear-button,
+.technique-browse-view .search-clear-button { width: var(--touch-target); min-height: var(--touch-target); }
+.technique-guide-learn-core { --card-accent: var(--accent-fish); text-align: left; }
+.technique-guide-learn-core .dashboard-card__description,
+.technique-guide-browse-all .dashboard-card__description { margin-top: var(--space-2); }
+.technique-result-card__classification-type { color: var(--text-muted); }
+.technique-detail-classification__core { color: var(--semantic-core); }
+.technique-detail-classification__type { color: var(--text-subtle); }
+.technique-detail-header h2 { margin-bottom: var(--space-3); }
+.technique-detail-summary { margin-bottom: 0; color: var(--text-muted); line-height: 1.55; }
+.technique-detail-section > h3 { margin-bottom: var(--space-3); }
+.technique-detail-section > p:last-child,
+.technique-detail-subsection > p:last-child { margin-bottom: 0; }
+.technique-detail-subsection + .technique-detail-subsection { margin-top: var(--space-4); }
+.technique-mistake-list p { margin: 0; }
+.technique-mistake-list .technique-correction { margin-top: var(--space-2); color: var(--text-muted); }
+.technique-usage { display: grid; min-width: 0; gap: var(--space-4); }
+.technique-usage__note { max-width: 70ch; margin-bottom: 0; color: var(--text-muted); font-size: .9rem; }
+.technique-usage-group { min-width: 0; scroll-margin-top: 84px; }
+.technique-usage-group .compact-link-list,
+.technique-usage-group .technique-rig-card-list { margin-top: var(--space-3); }
+.technique-usage-group .compact-link-row__label { overflow-wrap: anywhere; }
+.technique-rig-card[hidden] { display: none; }
+@media (min-width: 900px) {
+    .technique-guide-search-form,
+    .technique-browse-view .search-form { width: calc(66.6667% - 5.333px); }
 }

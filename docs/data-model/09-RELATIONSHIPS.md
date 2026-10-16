@@ -776,10 +776,10 @@ Fish ↔ Technique, Fish ↔ Lure/Bait, and Condition-specific Fish/Rig/Lure/Bai
 My Tackle owned-item mappings and current-availability state are User Knowledge and remain separate from Reference compatibility. Search or UI needs do not authorize inverse compatibility arrays on participating entities.
 
 
-## Locked authored scope — 185 exact V1 records
+## Locked V1 Foundation authored scope — 185 records (pre-FCC 53A)
 
 
-The complete V1 Compatibility production set is exactly **185 active intrinsic relationships**: **54 `rig-lure-bait` + 77 `rig-technique` + 54 `lure-bait-technique`**. `data/compatibility.js` implements that exact set; this document owns the canonical relationship contract.
+The original V1 Foundation Compatibility baseline contains **185 active intrinsic relationships**: **54 `rig-lure-bait` + 77 `rig-technique` + 54 `lure-bait-technique`**. FCC 53A adds exactly four approved compatible pairs; the current locally reviewed production candidate has **189 active intrinsic relationships**: **54 Rig↔Lure/Bait + 79 Rig↔Technique + 56 Lure/Bait↔Technique**. Existing 185 records remain intact, and the four additions are not Recommendation ranking. `data/compatibility.js` implements that exact set; this document owns the canonical relationship contract.
 
 FCC 50B reconciles legacy Rig `Bottom Fishing` semantics to the existing canonical **Bottom Presentation** Technique rather than to a Condition. Eight additional intrinsic Rig↔Technique relationships are active for Drop Shot Rig, Carolina Rig, Neko Rig, Shaky Head Rig, Free Rig, Jika Rig, Punch / Pegged Texas Rig, and Bottom-Bouncer / Spinner Rig. This reconciliation creates no new Technique vocabulary, Condition, schema field, Fish-position/state domain, or contextual recommendation weighting.
 
@@ -802,7 +802,7 @@ FCC 50B reconciles legacy Rig `Bottom Fishing` semantics to the existing canonic
 - Cricket → Fixed Bobber Rig; Slip Bobber Rig; Basic Bottom Rig; Split-Shot Bait Rig.
 
 
-### Rig ↔ Technique — exactly 77
+### Rig ↔ Technique — original 77; current 79
 
 
 - Fixed Bobber Rig → Float Presentation; Natural Drift.
@@ -830,7 +830,7 @@ FCC 50B reconciles legacy Rig `Bottom Fishing` semantics to the existing canonic
 - Tube Jig Rig → Hop; Drag; Lift and Fall; Vertical Jig; Swim.
 
 
-### Lure/Bait ↔ Technique — exactly 54
+### Lure/Bait ↔ Technique — original 54; current 56
 
 
 - Stick Worm → Deadstick; Shake; Hop; Drag; Swim; Twitch and Pause.
@@ -847,6 +847,15 @@ FCC 50B reconciles legacy Rig `Bottom Fishing` semantics to the existing canonic
 - Nightcrawler → Natural Drift; Float Presentation; Tight-Line Presentation; Bottom Presentation; Drift; Troll.
 - Cricket → Natural Drift; Float Presentation; Tight-Line Presentation; Bottom Presentation.
 
+
+**FCC 53A four added intrinsic compatibility records (approved current candidate):**
+
+- `rig-technique-texas-rig-swim` — Texas Rig ↔ Swim.
+- `rig-technique-jighead-soft-plastic-drag` — Jighead Soft-Plastic Rig ↔ Drag.
+- `lure-bait-technique-stick-worm-lift-and-fall` — Stick Worm ↔ Lift and Fall.
+- `lure-bait-technique-tube-shake` — Tube ↔ Shake.
+
+These are additional eligible pairwise edges. They do not create unconditional Rig + Bait + Technique triplets; the eligible three-way combinations are the runtime intersection of matching active Rig↔Bait, Rig↔Technique, and Bait↔Technique relationships. `data/technique-guidance.js` supplies curated first-learning explanations separately and does not change intrinsic compatibility semantics.
 
 These scopes represent normal reusable compatibility, not all mechanically possible manipulation.
 

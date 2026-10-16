@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — Project Rules
 
 **Document:** PROJECT-RULES.md  
-**Document Revision:** 1.2.5  
+**Document Revision:** 1.2.11  
 **Document Status:** Approved  
 **Role:** Single canonical current FCC procedural owner  
-**Last Updated:** 2026-10-02
+**Last Updated:** 2026-10-12
 
 # Purpose
 
@@ -16,6 +16,7 @@ This document owns the current execution procedure for Freshwater Fishing Compan
 - Google Drive `Working Source/Current` is the complete editable repository working tree and owns approved uncommitted **durable repository** changes. It mirrors the class of files that may legitimately land in Git; temporary operational records stay outside the repo tree.
 - The external Live Working State is the sole **project-level resume/index** surface. It owns the active Build Unit/workstream identity, current GitHub/Drive lineage, material gate state, candidate pointer, and exact next action.
 - Each active Build Unit may have one external temporary audit/workstream record outside `Working Source/Current`. That record owns detailed operational traceability: exact approved decision text, findings/dispositions, slice status, candidate lineage, and unresolved discussion state. It is not repository authority, is never included in review ZIPs, and is never committed to Git.
+- All FCC-related Google Drive files and folders must reside within `My Drive/Freshwater Fishing Companion`. Operational records, including Live Working State, active temporary audits/workstreams, historical records, and temporary review ZIPs, must remain outside `Working Source/Current` but inside the FCC project folder. Preserve existing file IDs, authority boundaries, and continuity references when relocating files.
 - `docs/ACTIVE-CHANGE-LEDGER.md` owns material non-closed cross-workstream carry-forward. `docs/ROADMAP.md` owns product order/future direction. Git history and `docs/CHANGELOG.md` own landed history. Historical Archive is historical evidence only and is outside normal startup/current-source lookup.
 - ChatGPT Work is not part of the FCC workflow. Never suggest, invoke, request, or redirect FCC work to ChatGPT Work.
 
@@ -29,6 +30,23 @@ Before substantive work in every new FCC chat:
 6. Read this file and only directly relevant durable semantic owners. Read `ACTIVE-CHANGE-LEDGER.md` only when the requested scope can intersect open carry-forward.
 
 If prior writes/readbacks/validation are incomplete, or authorities conflict, perform recovery only until the smallest authoritative reconciliation closes the gap. A new chat title or remembered resume point never overrides an open gate.
+
+## Startup Context / Connector Discipline — Hard Limit
+
+These are mandatory FCC execution constraints, not optional efficiency guidance. They govern how every other FCC read/verify instruction is executed. **No other FCC rule, request for safety, or desire for more context authorizes bypassing them.** A violation is an execution/recovery defect and blocks substantive continuation until the smallest safe continuity state is preserved.
+
+1. **Pointer-driven startup only.** Routine startup may access only the exact current pointers needed for the startup checks: current GitHub `main` metadata; the exact Live Working State; the exact Live Working State-named external workstream; the recorded Drive Current lineage; this file; and only directly relevant durable semantic owners. Do not inventory GitHub, Drive, folders, repository trees, history, Project files, adjacent audits, or retired material merely to gain context.
+2. **Metadata before content.** Authority/currency verification must use the smallest sufficient metadata such as SHA, file ID, revision, hash, modified time, path, or candidate identity. Do not load a file body merely to prove that the file/version is current.
+3. **Tool-catalog and schema enumeration is prohibited.** Never enumerate, print, or load `ALL_TOOLS`, connector catalogs, bulk action descriptions/schemas, plugin/tool indexes, or equivalent broad capability inventories in an FCC chat. If an exact required action name is genuinely unknown, the only permitted discovery path is a narrowly filtered **name-only** lookup for that provider/function returning at most 10 action names, followed by schema inspection of only the one exact selected action if its call shape is still required.
+4. **Reduce tool output before model-visible context.** Any connector/tool response that can be large must be filtered inside the orchestration call to only the fields, lines, ranges, or compact state required for the current step before it is emitted into model-visible context. Never emit raw large response objects, full schemas, full folder/repository listings, or full documents when metadata or a targeted range is sufficient.
+5. **Bound every startup read.** Live Working State startup reads are limited to current lineage, active Build Unit/workstream pointer, gate/candidate state, and exact resume. Active-workstream startup reads are limited to the current/relevant slice, unresolved findings, candidate lineage, and exact continuation state. For `PROJECT-RULES.md`, verify the current revision and read Block 1 plus only the directly applicable block(s); a full-file read is permitted only when the file itself is being edited or a governance/recovery conflict requires whole-file reconciliation. Durable owners are read by targeted section/range. Full-document, history, repository-tree, or folder-wide reads are recovery operations, not routine startup.
+6. **No redundant rereads.** Once an authority has been verified in the current chat, keep its ID/SHA/revision/hash as the chat snapshot and reuse it until a write, observed external change, conflict, connector error/runtime reset, or missing required field makes that snapshot stale. Do not reread verified material for reassurance, generic freshness, or repeated phase transitions.
+7. **Hard model-visible startup output ceiling.** No routine startup connector/tool result may intentionally emit more than 4,000 characters into model-visible context. If more source material is needed, retrieve it in later targeted ranges after startup. Parallel calls do not combine or waive this limit; every individual result must independently comply.
+8. **Unexpected bloat is a stop condition.** If a result unexpectedly expands into unrelated bulk content, schemas, catalogs, or a large/truncated payload, stop further substantive connector activity immediately. Do not compensate with more searches or rereads. Preserve only the minimum continuity/recovery state and, if the chat context has been materially polluted, close the chat and resume from the durable state in a fresh chat.
+9. **Substantive review context has priority.** User decisions, screenshots, review findings, and the exact active candidate state are the context worth preserving. Startup succeeds when current authority and resume state are established; it is not permission to reconstruct project history.
+10. **No discovery loophole.** Phrases or rationales such as “be safe,” “validate everything,” “check what is available,” “refresh context,” “new chat validation,” “inspect the environment,” or “tool uncertainty” never justify prohibited broad discovery. If an exact pointer or action cannot be resolved through the bounded paths above, stop and enter recovery rather than widening the search surface.
+
+Whenever another FCC rule says to `read`, `verify`, `inspect`, or `reconcile`, interpret that instruction as **the smallest sufficient bounded read that proves the required fact**. It never implicitly authorizes broad discovery, full-document loading, catalog/schema enumeration, or repeated reads.
 
 # Block 2 — Approval Classes, Decision Capture, and Receipts
 
@@ -124,6 +142,13 @@ Do not substitute a runtime `file_...` handle, the full `file_uri` object, a sig
 
 # Block 6 — Review Cycle, ZIPs, Commit, Push, and CI
 
+## ZIP delivery as a native ChatGPT attachment
+
+- Every FCC review/final ZIP handoff must include an **actual uploaded ZIP file reference in the user-facing response**, linked to the exact verified package. The expected user flow is the native ChatGPT file viewer, then **Open → Save as**. Cite/reference the uploaded file in the response itself, along with its verified filename and SHA-256.
+- A ZIP generated in the working container, archived in Drive, or registered by a tool is **not delivered** merely because the bytes exist. The uploaded-file reference must be included in the response; otherwise the delivery gate remains OPEN.
+- Do **not** substitute `sandbox:/mnt/data/...` hyperlinks, custom download buttons/cards, Drive links, or a plain filename for the native attachment. External Drive ZIP archival remains a separate requirement, never the user-facing substitute.
+- If the native attachment reference cannot be surfaced, or the user reports it does not open in the established viewer, record **ZIP DELIVERY OPEN**, clearly disclose the blocker, and preserve the verified package for recovery. Do not claim delivery PASS or rebuild an otherwise-valid ZIP solely to change its presentation. Resume the user extraction/validation handoff only once the native presentation is resolved.
+
 ## First review revision (R1)
 
 - Drive Current remains authoritative for approved uncommitted repository work. A review ZIP is a bounded candidate/transport artifact, not general repository authority.
@@ -137,7 +162,7 @@ Do not substitute a runtime `file_...` handle, the full `file_uri` object, a sig
 
 - Within the same unchanged review cycle, subsequent candidate ZIPs are built against the immutable R1 baseline plus the cumulative documented corrections for that cycle. Do not use an arbitrary prior ZIP, chat reconstruction, memory, or an unrelated historical package as source.
 - Record each review finding concisely in the external active audit/workstream record: finding, exact approved disposition when applicable, affected files, validation state, and resulting review revision. Preserve approved operative wording; omit unnecessary design-conversation detail.
-- Intermediate review ZIPs are disposable. Normally retain only R1 and, when cross-chat/session continuity requires it, the latest active candidate. Older superseded candidate ZIPs may be deleted after their revision identity/hash and applied changes are recorded.
+- Every review ZIP in an active Build Unit (`R1`, every `R2+`, and any later local-review or mobile-review revision) must be copied to one external temporary Drive review-ZIP folder outside `Working Source/Current` as soon as it is created. Retain all review ZIPs for that Build Unit through local review, Final Local handoff, commit/push, and actual-mobile validation; do not delete superseded review ZIPs merely because a newer candidate exists.
 - A candidate ZIP owns only the exact unapproved review candidate for that active cycle. It does not replace GitHub or Drive authority, authorize dependent scope, or become a general source for future work.
 - If GitHub `main`, relevant Drive Current files, scope, or an owning contract advances unexpectedly, invalidate package-based iteration and compile a fresh R1 from verified authority before continuing.
 - While a local review ZIP cycle is active, GitHub `main` must not move silently. Any legitimate baseline change must be disclosed to the user with old/new SHA, changed scope, pull/reapply guidance, and candidate invalidation/rebuild disposition before further ZIP application.
@@ -158,7 +183,7 @@ Do not substitute a runtime `file_...` handle, the full `file_uri` object, a sig
 - After push, verify the landed GitHub SHA and exact file scope plus required CI/Pages. Status is then **Local Review PASS / Actual-Mobile Validation OPEN** until the required deployed-device review finishes. Actual-mobile review is a validation step by default, used to confirm that the deployed application behaves and renders correctly on a real mobile device after local desktop-browser mobile emulation.
 - If actual-mobile validation passes without requiring any change from the landed Final Local commit, create **no mobile correction ZIP, no MOBILE-FINAL ZIP, and no additional Git commit**. Proceed directly to Actual-Mobile Final Approval / Build Unit closeout.
 - Only if actual-mobile review finds a defect that requires a repository change does a bounded mobile correction candidate cycle begin from the newly verified GitHub baseline. Conditional mobile review packages use `FCC-<workstream>-<Build-Unit>-MOBILE-R<n>.zip` naming and are cumulative against that new GitHub baseline. Intermediate mobile correction ZIPs do not promote production/source files to Drive Current. When a mobile correction is locally approved for commit, freeze/promote/read back that exact correction candidate, include any durable documentation affected by the correction, and hand off a fresh `FCC-<workstream>-<Build-Unit>-MOBILE-FINAL.zip` plus the Commit Preview. `MOBILE-FINAL` exists only when a real post-GitHub correction is ready to be committed. Additional Git commits are therefore justified by deployed/mobile defects, not by routine validation or bookkeeping.
-- **Actual-Mobile Final Approval** triggers full Build Unit closeout. The normal target is that no further repository commit is needed at closeout because durable repository documentation already traveled with the Final Local/mobile correction commits. A newly discovered stale durable document is a closeout defect to repair, not an expected extra documentation-commit phase.
+- **Actual-Mobile Final Approval** triggers full Build Unit closeout. The normal target is that no further repository commit is needed at closeout because durable repository documentation already traveled with the Final Local/mobile correction commits. A newly discovered stale durable document is a closeout defect to repair, not an expected extra documentation-commit phase. After Actual-Mobile Final Approval and after the final applicable ZIP has been applied/loaded and verified, delete the temporary Drive review-ZIP copies for that Build Unit before moving to the next section or dependent Build Unit. Review-ZIP archive cleanup is part of closeout; until it completes, do not report the Build Unit `CLOSED / PASS`.
 
 # Block 7 — Validation, Closeout, and Failure Recovery
 
@@ -200,4 +225,10 @@ Do not substitute a runtime `file_...` handle, the full `file_uri` object, a sig
 
 ## Chat presentation
 
-Routine FCC discussion, status, review guidance, and gate receipts must not use the Files retrieval path, `filecite`, file navlists, file tiles/cards, or other file-reference UI when authoritative GitHub/Drive connector reads are available. Use those authoritative connector reads and, when exact source context materially helps, quote only the smallest relevant code/text excerpt inline. Use file-reference/navigation UI only when the user explicitly asks to locate, open, download, inspect, or navigate a file, or when no authoritative connector path exists for requested file content. Direct sandbox download links are allowed for review ZIPs and other user-requested generated artifacts.
+Routine FCC discussion, status, review guidance, and gate receipts must not use the Files retrieval path, `filecite`, file navlists, file tiles/cards, or other file-reference UI when authoritative GitHub/Drive connector reads are available. Use those authoritative connector reads and, when exact source context materially helps, quote only the smallest relevant code/text excerpt inline. Use file-reference/navigation UI only when the user explicitly asks to locate, open, download, inspect, or navigate a file, or when no authoritative connector path exists for requested file content. FCC review and final ZIP handoffs instead require the native uploaded-file reference specified in Block 6; sandbox links remain permitted only for other user-requested artifacts when otherwise appropriate.
+
+## Processing Updates and Final Reporting
+
+- During tool execution, temporary progress messages describe ongoing work only. Do not place findings summaries, conclusions, gate receipts, or action-item lists in temporary processing messages: those messages may collapse or disappear when processing concludes.
+- Capture important approved decisions and material findings promptly in the designated external active audit/workstream, following the existing owner and readback rules. Never rely on a temporary progress message as the sole record **or** presentation of a material result.
+- When processing concludes, provide one consolidated final response covering **results, validation status (PASS / FAIL / OPEN), unresolved issues, and exact next actions**. Do not publish a provisional results summary as a temporary progress update and rely on it remaining visible. If processing is blocked, give the unresolved state and exact resume action in that final response.

@@ -80,14 +80,16 @@ function renderRigGuideLanding(appMain, config) {
     const startHereMarkup = coreCard ? `
         <section class="rig-guide-section rig-guide-start-section" aria-labelledby="rig-start-title">
             <h3 id="rig-start-title">Start Here</h3>
-            <button class="dashboard-card guide-curated-card rig-guide-learn-core" type="button" data-card-id="${coreCard.id}" data-rig-card-id="${coreCard.id}">
-                <span class="guide-curated-card__eyebrow">Recommended First</span>
-                <span class="guide-card__heading-row">
-                    <span class="dashboard-card__title">${coreCard.title}</span>
-                    <span class="dashboard-card__action dashboard-card__action--link">Start Learning <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
-                </span>
-                <span class="dashboard-card__description">${coreCard.description}</span>
-            </button>
+            <div class="dashboard-grid rig-guide-core-grid">
+                <button class="dashboard-card guide-curated-card rig-guide-learn-core" type="button" data-card-id="${coreCard.id}" data-rig-card-id="${coreCard.id}">
+                    <span class="guide-curated-card__eyebrow">Recommended First</span>
+                    <span class="guide-card__heading-row">
+                            <span class="dashboard-card__title">${coreCard.title}</span>
+                        <span class="dashboard-card__action dashboard-card__action--link">Start Learning <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span></span>
+                    </span>
+                    <span class="dashboard-card__description">${coreCard.description}</span>
+                </button>
+            </div>
         </section>` : "";
     const browseMarkup = config.cards.filter((card) => card.id !== "browse-core-rigs").map((card) => {
         const className = [
@@ -290,12 +292,17 @@ function buildRigBuildStepKnotOptionsMarkup(record, stepIndex) {
     `;
 }
 
-function buildRigBuildStepsMarkup(record) {
+function buildRigBuildStepsMarkup(record, selectedBaitId = null) {
     const steps = Array.isArray(record?.assemblySteps) ? record.assemblySteps : [];
+    const contextualNotes = selectedBaitId === "tube" && Array.isArray(record?.baitSpecificAssemblyNotes)
+        ? record.baitSpecificAssemblyNotes.filter((note) => note.lureBaitId === selectedBaitId)
+        : [];
     return `<ol class="detail-steps rig-build-steps">${steps.map((step, stepIndex) => `
         <li class="rig-build-step">
             <div class="rig-build-step__instruction">${step}</div>
             ${buildRigBuildStepKnotOptionsMarkup(record, stepIndex)}
+            ${contextualNotes.filter((note) => note.afterStepIndex === stepIndex)
+                .map((note) => `<p class="rig-build-step__context-note" data-rig-bait-build-note="tube">${note.text}</p>`).join("")}
         </li>
     `).join("")}</ol>`;
 }
@@ -378,6 +385,77 @@ function buildRigTechniqueReferenceMarkup(rigId, lureBaitId = null) {
     `).join("")}</ul>`;
 }
 
+// One visible teaching lead, with only source-derived alternatives. The
+// compatibility projection is supplied by the Rig Guide controller.
+function buildRigTechniqueLearningMarkup(context, expanded = false) {
+    if (!context?.lead) return "";
+    const leadMarkup = `
+        <div class="rig-technique-lesson-card">
+            <div class="rig-technique-lesson-card__heading">
+                <strong class="rig-technique-lesson-card__name">${context.lead.name}</strong>
+                <button class="rig-technique-lesson-card__action" type="button"
+                    data-rig-view-technique-id="${context.lead.id}">View Technique
+                    <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
+                </button>
+            </div>
+            <p class="rig-technique-lesson-card__why">${context.why}</p>
+        </div>`;
+    const exampleMarkup = context.isExample
+        ? `<p class="rig-technique-example-label">Teaching example only — no bait selected${context.exampleBait
+            ? `: ${context.lead.name} with a ${context.exampleBait.name}` : ""}.</p>` : "";
+    const extraTechniqueCount = Math.max(0, context.others.length - 1);
+    const alternativeRow = (technique) => `
+        <div class="compact-link-row">
+            <span class="compact-link-row__label">${technique.name}</span>
+            <button class="compact-link-row__action" type="button"
+                data-rig-view-technique-id="${technique.id}">View Technique
+                <span class="link-arrow link-arrow--internal" aria-hidden="true">→</span>
+            </button>
+        </div>`;
+    const alternativesMarkup = context.others.length > 0 ? `
+        <section class="rig-technique-others" aria-labelledby="rig-technique-others-title">
+            <h5 id="rig-technique-others-title" class="detail-subsection-heading">Other Compatible Techniques</h5>
+            <div class="compact-link-list compact-link-list--divided">${alternativeRow(context.others[0])}</div>
+            ${extraTechniqueCount ? `
+                <button class="knot-usage-expand" type="button" data-rig-technique-toggle-more
+                    aria-expanded="${expanded ? "true" : "false"}"
+                    aria-controls="rig-technique-other-list">${expanded ? "Show fewer" : `Show ${extraTechniqueCount} more ${extraTechniqueCount === 1 ? "technique" : "techniques"}`}</button>
+                <div class="compact-link-list compact-link-list--divided rig-technique-other-list"
+                    id="rig-technique-other-list" data-rig-technique-other-list${expanded ? "" : " hidden"}>
+                    ${context.others.slice(1).map(alternativeRow).join("")}
+                </div>` : ""}
+        </section>` : "";
+    return `
+        <div class="rig-technique-learning" data-rig-technique-learning>
+            <section class="rig-technique-learn-first" aria-labelledby="rig-technique-learn-first-title">
+                <h5 id="rig-technique-learn-first-title" class="detail-subsection-heading">Learn First</h5>
+                ${exampleMarkup}
+                ${leadMarkup}
+            </section>
+            ${context.rigOnly ? `<p class="rig-technique-rig-only">These Technique connections are verified for the Rig; no specific bait pairing has been established.</p>` : ""}
+            ${alternativesMarkup}
+        </div>`;
+}
+
+function initializeRigTechniqueLearningControls(appMain, detailConfig) {
+    const panel = appMain.querySelector("[data-rig-technique-learning]");
+    if (!panel) return;
+    panel.querySelectorAll("[data-rig-view-technique-id]").forEach((button) => {
+        button.addEventListener("click", () => detailConfig.onTechniqueSelect?.(button.dataset.rigViewTechniqueId));
+    });
+    const toggle = panel.querySelector("[data-rig-technique-toggle-more]");
+    const alternatives = panel.querySelector("[data-rig-technique-other-list]");
+    toggle?.addEventListener("click", () => {
+        if (!alternatives) return;
+        const nextExpanded = toggle.getAttribute("aria-expanded") !== "true";
+        toggle.setAttribute("aria-expanded", String(nextExpanded));
+        const remaining = detailConfig.techniqueLearning.others.length - 1;
+        toggle.textContent = nextExpanded ? "Show fewer" : `Show ${remaining} more ${remaining === 1 ? "technique" : "techniques"}`;
+        alternatives.hidden = !nextExpanded;
+        detailConfig.onOtherTechniquesStateChange?.(nextExpanded);
+    });
+}
+
 function buildRigAboutOverviewMarkup(useCasesMarkup, conditionsMarkup, techniquesMarkup) {
     const groups = [
         useCasesMarkup ? `
@@ -393,7 +471,7 @@ function buildRigAboutOverviewMarkup(useCasesMarkup, conditionsMarkup, technique
             </section>
         ` : "",
         techniquesMarkup ? `
-            <section class="rig-about-subsection" aria-labelledby="rig-about-techniques-title">
+            <section class="rig-about-subsection rig-about-subsection--techniques" aria-labelledby="rig-about-techniques-title">
                 <h4 class="detail-subsection-heading" id="rig-about-techniques-title">Techniques</h4>
                 ${techniquesMarkup}
             </section>
@@ -506,7 +584,7 @@ function renderInstructionDetail(appMain, detailConfig) {
     const selections = detailConfig.selections ?? {};
     const configurations = Array.isArray(record.configurations) ? record.configurations : [];
     const selectedConfiguration = configurations.length > 0
-        ? configurations.find((configuration) => configuration.id === detailConfig.selectedConfigurationId) ?? configurations[0]
+        ? configurations.find((configuration) => configuration.id === detailConfig.selectedConfigurationId) ?? null
         : null;
     const effectiveRecord = selectedConfiguration
         ? {
@@ -523,8 +601,13 @@ function renderInstructionDetail(appMain, detailConfig) {
             tutorialVideo: selectedConfiguration.tutorialVideo ?? null
         }
         : record;
-    const componentRequirements = Array.isArray(effectiveRecord.componentRequirements) ? effectiveRecord.componentRequirements : [];
-    const lureBaitRequirements = Array.isArray(effectiveRecord.lureBaitRequirements) ? effectiveRecord.lureBaitRequirements : [];
+    const presentation = detailConfig.requirementPresentation ?? {};
+    const componentRequirements = presentation.componentRequirements ?? effectiveRecord.componentRequirements ?? [];
+    const lureBaitRequirements = presentation.lureBaitRequirements ?? effectiveRecord.lureBaitRequirements ?? [];
+    const requirementRows = presentation.rows ?? [
+        ...lureBaitRequirements.map((requirement) => ({ type: "lure-bait", requirement })),
+        ...componentRequirements.map((requirement) => ({ type: "tackle", requirement }))
+    ];
     const safetyNotes = Array.isArray(effectiveRecord.safetyNotes) ? effectiveRecord.safetyNotes : [];
     const setupNotes = Array.isArray(effectiveRecord.setupNotes) ? effectiveRecord.setupNotes : [];
     const commonMistakes = Array.isArray(effectiveRecord.commonMistakes) ? effectiveRecord.commonMistakes : [];
@@ -542,20 +625,31 @@ function renderInstructionDetail(appMain, detailConfig) {
     const reelSetupLines = Array.isArray(detailConfig.reelSetupContextLines)
         ? detailConfig.reelSetupContextLines.filter((line) => Array.isArray(line) && line.length > 0)
         : [];
-    const configurationMarkup = configurations.length > 0 ? `
-        <section class="detail-section rig-configuration-section">
+    const baitChoices = detailConfig.techniqueLearning?.selectionMode === "explicit"
+        ? detailConfig.techniqueLearning.choices : [];
+    const isConfiguredRig = configurations.length > 0;
+    const hasBaitSelector = !isConfiguredRig && baitChoices.length > 0;
+    const configOptions = isConfiguredRig
+        ? configurations.map((configuration) => ({ id: configuration.id, label: configuration.name }))
+        : baitChoices.map((choice) => ({ id: choice.lureBaitId, label: choice.bait.name }));
+    const selectedOptionId = isConfiguredRig ? detailConfig.selectedConfigurationId : detailConfig.selectedBaitId;
+    const selectLabel = isConfiguredRig ? "Choose a Setup" : "Choose a Bait";
+    const configurationMarkup = isConfiguredRig || hasBaitSelector ? `
+        <div class="rig-configuration-section">
             <div class="rig-configuration-control">
-                <label class="rig-configuration-control__label" for="rig-configuration-select">Choose a Setup</label>
+                <label class="rig-configuration-control__label" for="rig-configuration-select">${selectLabel}</label>
                 <div class="rig-configuration-control__select-shell">
-                    <select class="rig-configuration-control__select" id="rig-configuration-select" data-rig-configuration-select>
-                        ${configurations.map((configuration) => `
-                            <option value="${configuration.id}" ${configuration.id === selectedConfiguration?.id ? "selected" : ""}>${configuration.name}</option>
+                    <select class="rig-configuration-control__select" id="rig-configuration-select"
+                        ${isConfiguredRig ? "data-rig-configuration-select" : "data-rig-bait-select"}>
+                        <option value="" ${!selectedOptionId ? "selected" : ""}>Select a ${isConfiguredRig ? "setup" : "bait"}…</option>
+                        ${configOptions.map((option) => `
+                            <option value="${option.id}" ${option.id === selectedOptionId ? "selected" : ""}>${option.label}</option>
                         `).join("")}
                     </select>
                     <span class="rig-configuration-control__chevron" aria-hidden="true">⌄</span>
                 </div>
             </div>
-        </section>
+        </div>
     ` : "";
     const reelSetupMarkup = buildDetailReelSetupContextMarkup(reelSetupLines);
     const getQuantity = (requirement) => {
@@ -566,82 +660,53 @@ function renderInstructionDetail(appMain, detailConfig) {
         const typeLabel = required ? "Required" : "Optional";
         return quantity > 1 ? `${typeLabel} · Qty ${quantity}` : typeLabel;
     };
-    const componentsMarkup = componentRequirements.map((component) => {
+    const componentsMarkup = requirementRows.map((row) => {
+        if (row.type === "lure-bait") {
+            const requirement = row.requirement;
+            const lureBaitRecord = getLureBaitRecord(requirement.lureBaitId);
+            const displayName = lureBaitRecord?.name ?? requirement.lureBaitId;
+            const selectionId = `lure-bait:${requirement.lureBaitId}`;
+            const checkboxId = `rig-lure-bait-owned-${record.id}-${selectedConfiguration?.id ?? "base"}-${requirement.lureBaitId}`;
+            return `
+                <li class="rig-component-item" data-lure-bait-requirement="${requirement.lureBaitId}">
+                    <div class="rig-component-item__row"><div class="rig-component-reference-cluster">
+                        <label class="rig-component-owned" for="${checkboxId}">
+                            <input id="${checkboxId}" class="rig-component-owned__checkbox" type="checkbox"
+                                data-lure-bait-owned-id="${requirement.lureBaitId}"
+                                data-readiness-selection-id="${selectionId}" ${selections[selectionId] ? "checked" : ""}>
+                            <span class="rig-component-owned__name">${displayName}</span>
+                        </label>
+                        <button class="reference-info-button" type="button"
+                            data-lure-bait-reference-id="${requirement.lureBaitId}"
+                            aria-label="Learn about ${displayName}"><span aria-hidden="true">&#9432;</span></button>
+                        <span class="rig-component-item__metadata ${requirement.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(requirement.required === true, getQuantity(requirement))}</span>
+                    </div></div>
+                    ${requirement.notes ? `<p>${requirement.notes}</p>` : ""}
+                </li>`;
+        }
+        const component = row.requirement;
         const tackleRecord = getTackleRecord(component.tackleId);
         const componentName = tackleRecord?.name ?? component.tackleId;
-        const isOwned = selections[component.tackleId] === true;
-        const quantity = getQuantity(component);
         const checkboxId = `rig-component-owned-${record.id}-${selectedConfiguration?.id ?? "base"}-${component.tackleId}`;
-
-        if (!tackleRecord) {
-            console.warn(`Canonical Tackle record was not found: ${component.tackleId}`);
-        }
-
         return `
             <li class="rig-component-item">
                 <div class="rig-component-item__row">
                     <div class="rig-component-reference-cluster">
                         <label class="rig-component-owned" for="${checkboxId}">
-                            <input
-                                id="${checkboxId}"
-                                class="rig-component-owned__checkbox"
-                                type="checkbox"
+                            <input id="${checkboxId}" class="rig-component-owned__checkbox" type="checkbox"
                                 data-component-owned-id="${component.tackleId}"
                                 data-readiness-selection-id="${component.tackleId}"
-                                ${isOwned ? "checked" : ""}
-                            >
+                                ${selections[component.tackleId] ? "checked" : ""}>
                             <span class="rig-component-owned__name">${componentName}</span>
                         </label>
-                        <button
-                            class="reference-info-button"
-                            type="button"
+                        <button class="reference-info-button" type="button"
                             data-reference-id="${component.tackleId}"
-                            aria-label="Learn about ${componentName}"
-                        ><span aria-hidden="true">&#9432;</span></button>
-                        <span class="rig-component-item__metadata ${component.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(component.required === true, quantity)}</span>
+                            aria-label="Learn about ${componentName}"><span aria-hidden="true">&#9432;</span></button>
+                        <span class="rig-component-item__metadata ${component.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(component.required === true, getQuantity(component))}</span>
                     </div>
                 </div>
                 ${component.notes ? `<p>${component.notes}</p>` : ""}
-            </li>
-        `;
-    }).join("");
-    const lureBaitMarkup = lureBaitRequirements.map((requirement) => {
-        const lureBaitRecord = getLureBaitRecord(requirement.lureBaitId);
-        const displayName = lureBaitRecord?.name ?? requirement.lureBaitId;
-        const selectionId = `lure-bait:${requirement.lureBaitId}`;
-        const isAvailable = selections[selectionId] === true;
-        const quantity = getQuantity(requirement);
-        const checkboxId = `rig-lure-bait-owned-${record.id}-${selectedConfiguration?.id ?? "base"}-${requirement.lureBaitId}`;
-        if (!lureBaitRecord) {
-            console.warn(`Canonical Lure/Bait record was not found: ${requirement.lureBaitId}`);
-        }
-        return `
-            <li class="rig-component-item" data-lure-bait-requirement="${requirement.lureBaitId}">
-                <div class="rig-component-item__row">
-                    <div class="rig-component-reference-cluster">
-                        <label class="rig-component-owned" for="${checkboxId}">
-                            <input
-                                id="${checkboxId}"
-                                class="rig-component-owned__checkbox"
-                                type="checkbox"
-                                data-lure-bait-owned-id="${requirement.lureBaitId}"
-                                data-readiness-selection-id="${selectionId}"
-                                ${isAvailable ? "checked" : ""}
-                            >
-                            <span class="rig-component-owned__name">${displayName}</span>
-                        </label>
-                        <button
-                            class="reference-info-button"
-                            type="button"
-                            data-lure-bait-reference-id="${requirement.lureBaitId}"
-                            aria-label="Learn about ${displayName}"
-                        ><span aria-hidden="true">&#9432;</span></button>
-                        <span class="rig-component-item__metadata ${requirement.required ? "rig-component-item__required" : "detail-list__optional"}">${buildRequirementTypeLabel(requirement.required === true, quantity)}</span>
-                    </div>
-                </div>
-                ${requirement.notes ? `<p>${requirement.notes}</p>` : ""}
-            </li>
-        `;
+            </li>`;
     }).join("");
     const knotsMarkup = buildRigKnotApplicationsMarkup(effectiveRecord);
     const knotGuidanceMarkup = knotsMarkup
@@ -685,20 +750,23 @@ function renderInstructionDetail(appMain, detailConfig) {
             </section>
         `
         : "";
-    const howToBuildMarkup = `
+    const howToBuildMarkup = Array.isArray(effectiveRecord.assemblySteps) && effectiveRecord.assemblySteps.length > 0 ? `
         <section class="detail-section rig-build-section" aria-labelledby="rig-build-title">
             <h3 id="rig-build-title">How to Build It</h3>
             ${knotGuidanceMarkup}
             <section class="rig-build-subsection rig-build-subsection--steps" aria-labelledby="rig-build-steps-title">
                 <h4 class="detail-subsection-heading" id="rig-build-steps-title">Build Steps</h4>
-                ${buildRigBuildStepsMarkup(effectiveRecord)}
+                ${buildRigBuildStepsMarkup(effectiveRecord, detailConfig.selectedBaitId)}
             </section>
             ${buildSupportMarkup}
         </section>
-    `;
+    ` : "";
     const useCasesMarkup = buildRigAboutTextList(effectiveRecord.useCases);
     const conditionsMarkup = buildRigConditionReferenceMarkup(effectiveRecord.conditionTags);
-    const techniquesMarkup = buildRigTechniqueReferenceMarkup(record.id, selectedConfiguration?.lureBaitId ?? null);
+    const techniquesMarkup = buildRigTechniqueLearningMarkup(
+        detailConfig.techniqueLearning,
+        detailConfig.otherTechniquesExpanded === true
+    );
     const aboutOverviewMarkup = buildRigAboutOverviewMarkup(useCasesMarkup, conditionsMarkup, techniquesMarkup);
     const aboutRowsMarkup = [
         aboutOverviewMarkup
@@ -736,16 +804,18 @@ function renderInstructionDetail(appMain, detailConfig) {
                 </div>
                 <p class="rig-detail-header__summary">${record.summary}</p>
             </header>
-            ${configurationMarkup}
             <section class="detail-section rig-requirements-section">
                 <div class="rig-requirements-section__header">
                     <div>
                         <h3>What You Need</h3>
                         <p>Mark each component you have available for this setup right now. Optional components do not block readiness.</p>
                     </div>
-                    <div class="readiness-status" data-readiness-status aria-live="polite"></div>
+                    <div class="rig-requirements-section__controls">
+                        ${configurationMarkup}
+                        <div class="readiness-status" data-readiness-status aria-live="polite"></div>
+                    </div>
                 </div>
-                <ul class="rig-component-list">${lureBaitMarkup}${componentsMarkup}</ul>
+                <ul class="rig-component-list">${componentsMarkup}</ul>
             </section>
             ${safetyNotes.length > 0 ? `
                 <section class="detail-section detail-section--supporting detail-section--safety">
@@ -791,6 +861,11 @@ function renderInstructionDetail(appMain, detailConfig) {
         const status = appMain.querySelector("[data-readiness-status]");
         if (!status) return;
 
+        if (presentation.awaitingSetup === true) {
+            status.className = "readiness-status";
+            status.innerHTML = '<strong class="readiness-status__primary">Choose a Setup</strong><span class="readiness-status__detail">Select a lure setup to see its requirements and build steps.</span>';
+            return;
+        }
         if (missingRequired.length === 0) {
             status.className = "readiness-status readiness-status--ready";
             status.innerHTML = `<strong class="readiness-status__primary">Ready to Assemble</strong><span class="readiness-status__detail">All required components are marked available.</span>`;
@@ -808,6 +883,9 @@ function renderInstructionDetail(appMain, detailConfig) {
     appMain.querySelector("[data-rig-configuration-select]")?.addEventListener("change", (event) => {
         detailConfig.onConfigurationChange?.(event.currentTarget.value);
     });
+    appMain.querySelector("[data-rig-bait-select]")?.addEventListener("change", (event) => {
+        detailConfig.onBaitChange?.(event.currentTarget.value);
+    });
     appMain.querySelectorAll("[data-rig-knot-id]").forEach((button) => {
         button.addEventListener("click", () => detailConfig.onKnotSelect?.(button.dataset.rigKnotId));
     });
@@ -819,8 +897,9 @@ function renderInstructionDetail(appMain, detailConfig) {
     });
 
     initializeRigDetailDisclosures(appMain, detailConfig, expandedDisclosureIds);
+    initializeRigTechniqueLearningControls(appMain, detailConfig);
     initializeReferenceLinks(appMain, { onRigSelect: detailConfig.onRigSelect, currentRigId: record.id });
-    initializeLureBaitReferenceLinks(appMain, lureBaitRequirements);
+    initializeLureBaitReferenceLinks(appMain, lureBaitRequirements, { onRigSelect: detailConfig.onRigSelect });
     initializeConditionLinks(appMain);
     initializeTechniqueLinks(appMain);
     initializeHomeNavigation(appMain);

@@ -1,7 +1,7 @@
 # Freshwater Fishing Companion
 
 **Document:** 03C-LURES-BAIT.md  
-**Document Revision:** 0.3.8  
+**Document Revision:** 0.3.9  
 **Document Status:** Approved  
 **Implementation Status:** IMPLEMENTED / VALIDATED / CLOSED — 13 active Lure/Bait identities  
 **Decision Baseline:** D043, D056, D069
@@ -87,7 +87,7 @@ profile?
 aliases[]?
 ```
 
-`presentationType` and broad functional `category` are required. `profile` and aliases are used only when meaningful. Sparse subtype-specific intrinsic fields may be added only when the authored record demonstrates reusable reference value. Do not add universal `sizeRange`, `weightRange`, or `actionCharacteristics[]` fields in V1. Exact context-specific size, weight, color/pattern, action, and presentation remain Recommendation Decision Knowledge.
+`presentationType` and broad functional `category` remain required. FCC 53A introduces reusable Reference Knowledge fields `purpose`, `recognitionNotes`, optional `commonVariants[]`, and optional `relatedTackleIds[]` to the approved 13 identities; these provide practical recognition, common form variations, and curated related equipment reference links. They are not commercial variants, canonical Rig requirements, inventory mappings, or compatibility edges. `profile` and aliases remain earlier optional Foundation examples rather than FCC 53A production fields. Sparse subtype-specific intrinsic fields may be added only when the authored record demonstrates reusable reference value. Do not add universal `sizeRange`, `weightRange`, or `actionCharacteristics[]` fields in V1. Exact context-specific size, weight, color/pattern, action, and presentation remain Recommendation Decision Knowledge.
 
 Natural bait records must not be forced to carry meaningless artificial-lure fields.
 
@@ -117,6 +117,14 @@ Intrinsic compatibility is stored once under the typed Compatibility Relationshi
 Lure/Bait records do not store inverse `compatibleRigIds[]`, `compatibleTechniqueIds[]`, Fish recommendation arrays, Condition suitability arrays, scores, or rankings. Reverse navigation is derived.
 
 Fish/Condition-specific lure suitability is Recommendation Decision Knowledge.
+
+---
+
+# FCC 53A — Lure/Bait Recognition and Teaching Integration
+
+The canonical 13-record Lure/Bait registry now supports novice-readable **purpose** and **recognitionNotes** for each entry, with `commonVariants[]` only where representative shapes add genuine identification value. `relatedTackleIds[]` are curated outbound Tackle references within canonical Lure/Bait knowledge, not inverse `rigIds[]`, automatic requirements, Rig readiness authority, or new Compatibility records.
+
+Rig Detail **Use This Bait** explicitly selects a compatible canonical bait for Technique teaching when the applicable Rig has a teaching selector. A displayed bait/example before that action must not silently become a selected active bait. Lure/Bait↔Technique eligibility remains owned exclusively by `data/compatibility.js`, with contextual Rig + Bait + Technique intersection derived at runtime. The Reference popup may display intrinsic related Tackle without promoting an arbitrary presentation into a Recommendation.
 
 ---
 

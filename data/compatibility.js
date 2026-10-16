@@ -674,6 +674,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             isActive: true
     },
     {
+            id: "rig-technique-texas-rig-swim",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "texas-rig",
+            targetType: "technique",
+            targetId: "swim",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
             id: "rig-technique-texas-rig-hop",
             relationshipType: "rig-technique",
             sourceType: "rig",
@@ -724,6 +735,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             sourceId: "jighead-soft-plastic",
             targetType: "technique",
             targetId: "swim",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
+            id: "rig-technique-jighead-soft-plastic-drag",
+            relationshipType: "rig-technique",
+            sourceType: "rig",
+            sourceId: "jighead-soft-plastic",
+            targetType: "technique",
+            targetId: "drag",
             createdVersion: "0.7.0",
             lastModifiedVersion: "0.7.0",
             isActive: true
@@ -1455,6 +1477,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             isActive: true
     },
     {
+            id: "lure-bait-technique-stick-worm-lift-and-fall",
+            relationshipType: "lure-bait-technique",
+            sourceType: "lure-bait",
+            sourceId: "stick-worm",
+            targetType: "technique",
+            targetId: "lift-and-fall",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
             id: "lure-bait-technique-stick-worm-deadstick",
             relationshipType: "lure-bait-technique",
             sourceType: "lure-bait",
@@ -1659,6 +1692,17 @@ const COMPATIBILITY_RELATIONSHIPS = Object.freeze([
             sourceId: "paddle-tail-swimbait",
             targetType: "technique",
             targetId: "stop-and-go-retrieve",
+            createdVersion: "0.7.0",
+            lastModifiedVersion: "0.7.0",
+            isActive: true
+    },
+    {
+            id: "lure-bait-technique-tube-shake",
+            relationshipType: "lure-bait-technique",
+            sourceType: "lure-bait",
+            sourceId: "tube",
+            targetType: "technique",
+            targetId: "shake",
             createdVersion: "0.7.0",
             lastModifiedVersion: "0.7.0",
             isActive: true

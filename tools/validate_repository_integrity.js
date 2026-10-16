@@ -291,7 +291,7 @@ function validateEntrypoint() {
     const optionBOrder = [
         "data/fish-categories.js", "data/fish.js", "data/rigs.js", "data/conditions.js",
         "data/habitats.js", "data/fish-habitat.js", "data/environment-correspondence.js",
-        "data/lure-bait.js", "data/techniques.js", "data/compatibility.js",
+        "data/lure-bait.js", "data/techniques.js", "data/compatibility.js", "data/technique-guidance.js",
         "data/fish-identification.js", "data/fish-rig-guidance.js",
         "data/fish-specialized-guidance.js", "data/knots.js", "data/knot-guidance.js",
         "data/reel-guidance.js", "data/tackle.js", "data/canonical-requirement-satisfaction.js",
@@ -300,14 +300,14 @@ function validateEntrypoint() {
         "current-context-source-change.js", "recommendation-engine.js", "search.js",
         "view-renderer.js", "knot-media-renderer.js", "reference-popovers.js",
         "features/reel-setup-renderer.js", "guides/fish-guide-renderer.js",
-        "guides/rig-guide-renderer.js", "guides/knots-guide-renderer.js",
+        "guides/rig-guide-renderer.js", "guides/techniques-guide-renderer.js", "guides/knots-guide-renderer.js",
         "features/regulations-renderer.js", "features/reel-setup-controller.js",
         "guides/fish-guide-controller.js", "guides/rig-guide-controller.js",
-        "guides/knots-guide-controller.js", "features/regulations-controller.js",
+        "guides/techniques-guide-controller.js", "guides/knots-guide-controller.js", "features/regulations-controller.js",
         "script.js"
     ];
     if (JSON.stringify(refs.scriptRefs) !== JSON.stringify(optionBOrder)) {
-        fail("Option B entrypoint", "all 41 classic JavaScript paths must retain the approved exact load order");
+        fail("Option B entrypoint", "all 44 classic JavaScript paths must retain the approved exact load order");
     }
     validateOptionBRegistrationAndGlobals(refs.scriptRefs);
     return refs;
@@ -347,6 +347,7 @@ function validateOptionBRegistrationAndGlobals(loadedScripts) {
                 registeredCount: routes.filter((route) => FCC_APP.hasRoute(route)).length,
                 ownerFish: FCC_APP.getRouteOwner(ROUTES.FISH_DETAIL),
                 ownerRig: FCC_APP.getRouteOwner(ROUTES.RIG_DETAIL),
+                ownerTechnique: FCC_APP.getRouteOwner(ROUTES.TECHNIQUE_DETAIL),
                 ownerKnot: FCC_APP.getRouteOwner(ROUTES.KNOT_DETAIL),
                 ownerReel: FCC_APP.getRouteOwner(ROUTES.REEL_SETUP),
                 ownerRegulations: FCC_APP.getRouteOwner(ROUTES.REGULATIONS_STATE),
@@ -356,11 +357,11 @@ function validateOptionBRegistrationAndGlobals(loadedScripts) {
             };
         })()`, context, { timeout: 4000 });
         const expectedOwners = {
-            ownerFish: "fish-guide", ownerRig: "rig-guide", ownerKnot: "knot-guide",
+            ownerFish: "fish-guide", ownerRig: "rig-guide", ownerTechnique: "techniques-guide", ownerKnot: "knot-guide",
             ownerReel: "reel-setup", ownerRegulations: "regulations", ownerDashboard: "shared-app"
         };
-        if (actual.routeCount !== 21 || actual.registeredCount !== 21) {
-            fail("Option B providers", `expected exactly 21 distinct registered routes, found ${actual.registeredCount}/${actual.routeCount}`);
+        if (actual.routeCount !== 24 || actual.registeredCount !== 24) {
+            fail("Option B providers", `expected exactly 24 distinct registered routes, found ${actual.registeredCount}/${actual.routeCount}`);
         }
         for (const [name, owner] of Object.entries(expectedOwners)) {
             if (actual[name] !== owner) fail("Option B providers", `${name}: expected ${owner}, found ${actual[name]}`);
@@ -1647,7 +1648,9 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
         ["nightcrawler", "natural-bait", "worm"],
         ["cricket", "natural-bait", "insect"]
     ];
-    const expectedFields = ["id", "name", "summary", "createdVersion", "lastModifiedVersion", "isActive", "presentationType", "category"];
+    // FCC 53A R8 adds intrinsic teaching fields and curated educational
+    // related-Tackle links; the eight original identity fields remain intact.
+    const identityFields = ["createdVersion", "lastModifiedVersion", "isActive", "presentationType", "category"];
     if (lureBait.length !== expectedLureBait.length) {
         fail("Lure/Bait registry", `expected exactly ${expectedLureBait.length} records; found ${lureBait.length}`);
     }
@@ -1658,7 +1661,21 @@ function validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishGuidance, 
             fail("Lure/Bait registry", `missing approved V1 identity ${id}`);
             continue;
         }
+        const expectedFields = ["id", "name", "summary", "purpose", "recognitionNotes",
+            ...(record.commonVariants !== undefined ? ["commonVariants"] : []),
+            ...(record.relatedTackleIds !== undefined ? ["relatedTackleIds"] : []),
+            ...identityFields];
         validateExactFieldOrder(record, expectedFields, "Lure/Bait registry");
+        if (typeof record.purpose !== "string" || !record.purpose.trim() ||
+                !Array.isArray(record.recognitionNotes) || record.recognitionNotes.length < 1 ||
+                record.recognitionNotes.some((note) => typeof note !== "string" || !note.trim())) {
+            fail("Lure/Bait registry", `${id}: missing intrinsic purpose or approved recognition cues`);
+        }
+        if (record.commonVariants !== undefined && (!Array.isArray(record.commonVariants) ||
+                record.commonVariants.length === 0 ||
+                record.commonVariants.some((value) => typeof value !== "string" || !value.trim()))) {
+            fail("Lure/Bait registry", `${id}: invalid optional Common Variants`);
+        }
         if (record.presentationType !== presentationType) fail("Lure/Bait registry", `${id}: expected presentationType ${presentationType}`);
         if (record.category !== category) fail("Lure/Bait registry", `${id}: expected category ${category}`);
         if (record.isActive !== true) fail("Lure/Bait registry", `${id}: V1 identity must be active`);
@@ -1814,11 +1831,16 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
     validateUniqueIds(techniques, "Technique production");
     const techniqueFields = [
         "id", "name", "summary", "createdVersion", "lastModifiedVersion", "isActive",
-        "presentationSteps", "strikeCues", "commonMistakes", "beginnerTips"
+        "aboutTechnique", "presentationSteps", "readingPresentation", "strikeCues", "commonMistakes", "beginnerTips"
     ];
     for (const technique of techniques) {
         if (!isPlainObject(technique)) continue;
-        validateExactFieldOrder(technique, techniqueFields, `Technique ${technique.id}`);
+        validateExactFieldOrder(
+            technique,
+            Object.prototype.hasOwnProperty.call(technique, "applicationGuidance")
+                ? [...techniqueFields, "applicationGuidance"] : techniqueFields,
+            `Technique ${technique.id}`
+        );
         if (technique.name !== expectedTechniqueNames.get(technique.id)) {
             fail("Technique production", `${technique.id}: unexpected name ${JSON.stringify(technique.name)}`);
         }
@@ -1826,9 +1848,30 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
             fail("Technique production", `${technique.id}: summary must be meaningful text`);
         }
         if (technique.isActive !== true) fail("Technique production", `${technique.id}: approved V1 Technique must be active`);
+        for (const key of ["aboutTechnique", "readingPresentation"]) {
+            if (typeof technique[key] !== "string" || !technique[key].trim()) {
+                fail("Technique production", `${technique.id}: ${key} must contain useful instructional text`);
+            }
+        }
+        if (Object.prototype.hasOwnProperty.call(technique, "applicationGuidance") &&
+            (typeof technique.applicationGuidance !== "string" || !technique.applicationGuidance.trim())) {
+            fail("Technique production", `${technique.id}: applicationGuidance must not be empty`);
+        }
         validateTextArray(technique.presentationSteps, `Technique ${technique.id} presentationSteps`, false);
+        if (technique.presentationSteps?.length !== 4) {
+            fail("Technique production", `${technique.id}: expected four complete How to Fish It steps`);
+        }
         validateTextArray(technique.strikeCues, `Technique ${technique.id} strikeCues`, false);
-        validateTextArray(technique.commonMistakes, `Technique ${technique.id} commonMistakes`, false);
+        for (const entry of requireArray(technique.commonMistakes, `Technique ${technique.id} commonMistakes`)) {
+            validateExactFieldOrder(entry, ["mistake", "correction"], `Technique ${technique.id} mistake/correction`);
+            if (!entry || typeof entry.mistake !== "string" || !entry.mistake.trim() ||
+                typeof entry.correction !== "string" || !entry.correction.trim()) {
+                fail("Technique production", `${technique.id}: each mistake needs a specific correction`);
+            }
+        }
+        if (!technique.commonMistakes?.length) {
+            fail("Technique production", `${technique.id}: no common mistake and correction`);
+        }
         validateTextArray(technique.beginnerTips, `Technique ${technique.id} beginnerTips`, false);
     }
 
@@ -1837,15 +1880,28 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         id: technique.id,
         name: technique.name,
         summary: technique.summary,
+        aboutTechnique: technique.aboutTechnique,
         presentationSteps: technique.presentationSteps,
+        readingPresentation: technique.readingPresentation,
         strikeCues: technique.strikeCues,
         commonMistakes: technique.commonMistakes,
-        beginnerTips: technique.beginnerTips
+        beginnerTips: technique.beginnerTips,
+        applicationGuidance: technique.applicationGuidance ?? null
     }));
     const contentHash = crypto.createHash("sha256").update(JSON.stringify(contentProjection), "utf8").digest("hex");
-    const expectedContentHash = "e1aeae83ec43403e8c7d5f6f01bdb43a968408d81c17c52849fc6b934a8f48f6";
+    const expectedContentHash = "b7e95069ecd4c82d88c9094cfa514cf0d09eb48e814dedc9a5d4028bd7550ddc";
     if (contentHash !== expectedContentHash) {
-        fail("Technique production", `approved C2 exact-content lock mismatch: ${contentHash}`);
+        fail("Technique production", `FCC 53A approved educational-content digest mismatch: ${contentHash}`);
+    }
+
+
+    // Locks untouched pre-53A C2 strike indicators and beginner guidance.
+    const retainedC2 = techniques.map((technique) => ({
+        id: technique.id, strikeCues: technique.strikeCues, beginnerTips: technique.beginnerTips
+    }));
+    const retainedC2Hash = crypto.createHash("sha256").update(JSON.stringify(retainedC2), "utf8").digest("hex");
+    if (retainedC2Hash !== "0b679423da239531f5658d1fed87eeda9d44589f24cca24ec885536df59fcee4") {
+        fail("Technique production", "pre-53A C2 strike cues or beginner tips were lost");
     }
 
 
@@ -1910,11 +1966,13 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         "rig-technique-slip-bobber-rig-natural-drift",
         "rig-technique-basic-bottom-rig-bottom-presentation",
         "rig-technique-basic-bottom-rig-tight-line",
+        "rig-technique-texas-rig-swim",
         "rig-technique-texas-rig-hop",
         "rig-technique-texas-rig-drag",
         "rig-technique-texas-rig-shake",
         "rig-technique-texas-rig-deadstick",
         "rig-technique-jighead-soft-plastic-swim",
+        "rig-technique-jighead-soft-plastic-drag",
         "rig-technique-jighead-soft-plastic-hop",
         "rig-technique-jighead-soft-plastic-lift-and-fall",
         "rig-technique-jighead-soft-plastic-vertical-jig",
@@ -1981,6 +2039,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         "rig-technique-tube-jig-rig-lift-and-fall",
         "rig-technique-tube-jig-rig-vertical-jig",
         "rig-technique-tube-jig-rig-swim",
+        "lure-bait-technique-stick-worm-lift-and-fall",
         "lure-bait-technique-stick-worm-deadstick",
         "lure-bait-technique-stick-worm-shake",
         "lure-bait-technique-stick-worm-hop",
@@ -2000,6 +2059,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         "lure-bait-technique-paddle-tail-swimbait-swim",
         "lure-bait-technique-paddle-tail-swimbait-steady-retrieve",
         "lure-bait-technique-paddle-tail-swimbait-stop-and-go-retrieve",
+        "lure-bait-technique-tube-shake",
         "lure-bait-technique-tube-hop",
         "lure-bait-technique-tube-drag",
         "lure-bait-technique-tube-lift-and-fall",
@@ -2036,7 +2096,7 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         "lure-bait-technique-cricket-tight-line",
         "lure-bait-technique-cricket-bottom-presentation"
 ]);
-    if (relationships.length !== 185) fail("Compatibility production", `expected 185 records; found ${relationships.length}`);
+    if (relationships.length !== 189) fail("Compatibility production", `expected 189 records; found ${relationships.length}`);
     validateUniqueIds(relationships, "Compatibility production");
     const expectedFields = [
         "id", "relationshipType", "sourceType", "sourceId", "targetType", "targetId",
@@ -2044,8 +2104,8 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
     ];
     const familyDefinitions = {
         "rig-lure-bait": { sourceType: "rig", targetType: "lure-bait", expectedCount: 54 },
-        "rig-technique": { sourceType: "rig", targetType: "technique", expectedCount: 77 },
-        "lure-bait-technique": { sourceType: "lure-bait", targetType: "technique", expectedCount: 54 }
+        "rig-technique": { sourceType: "rig", targetType: "technique", expectedCount: 79 },
+        "lure-bait-technique": { sourceType: "lure-bait", targetType: "technique", expectedCount: 56 }
     };
     const rigById = indexById(rigs);
     const lureById = indexById(lureBait);
@@ -2140,9 +2200,90 @@ function validateTechniqueAndCompatibilityFoundation(techniques, relationships, 
         if (!rendererText.includes('getCompatibleTargetIds("lure-bait-technique", "lure-bait", lureBaitId, "technique")')) {
             fail("Direct-Tie Technique presentation", "renderer must intersect Direct-Tie Rig Techniques with selected Lure/Bait Technique compatibility");
         }
-        if (!rendererText.includes('buildRigTechniqueReferenceMarkup(record.id, selectedConfiguration?.lureBaitId ?? null)')) {
-            fail("Direct-Tie Technique presentation", "Rig Detail must pass the selected Direct-Tie Lure/Bait configuration into Technique rendering");
+        const rigControllerSource = readText("guides/rig-guide-controller.js");
+        if (!rendererText.includes('buildRigTechniqueLearningMarkup(') ||
+                !rigControllerSource?.includes('getRigTechniqueLearningContext(rig)') ||
+                !rigControllerSource?.includes('function getRigSelectedBaitId(rig) {') ||
+                !rigControllerSource?.includes('return getRigSelectedConfiguration(rig)?.lureBaitId ?? null;') ||
+                !rigControllerSource?.includes('selectedConfigurationId: configurationId || null')) {
+            fail("Direct-Tie Technique presentation", "main Setup selection must itself drive Lure/Bait Technique context, without a second picker");
         }
+    }
+}
+
+
+function validateTechniqueLearningGuidance(coreTechniqueIds, rigGuidance, techniques, relationships, rigs) {
+    recordCheck("FCC 53A Core curriculum and contextual Rig lessons");
+    const coreSeven = [
+        "float-presentation", "bottom-presentation", "tight-line", "steady-retrieve",
+        "swim", "hop", "drag"
+    ];
+    if (JSON.stringify(coreTechniqueIds) !== JSON.stringify(coreSeven)) {
+        fail("Technique learning", "Core list must contain the seven approved canonical IDs in order");
+    }
+    const activeTechniques = new Set(techniques.filter((t) => t?.isActive === true).map((t) => t.id));
+    if (coreTechniqueIds.some((id) => !activeTechniques.has(id))) {
+        fail("Technique learning", "Core list contains an unresolved Technique ID");
+    }
+    const rigIds = new Set(rigs.filter((r) => r?.isActive === true).map((r) => r.id));
+    if (rigGuidance.length !== 23 || new Set(rigGuidance.map((g) => g?.rigId)).size !== 23 ||
+        rigGuidance.some((g) => !rigIds.has(g?.rigId))) {
+        fail("Technique learning", "all 23 active Rigs require one contextual first lesson");
+    }
+    const contains = (type, source, target) => relationships.some((edge) =>
+        edge.isActive === true && edge.relationshipType === type &&
+        edge.sourceId === source && edge.targetId === target);
+    const baitIds = (rigId) => relationships
+        .filter((edge) => edge.isActive === true && edge.relationshipType === "rig-lure-bait" && edge.sourceId === rigId)
+        .map((edge) => edge.targetId);
+    const triple = (rigId, baitId, techniqueId) => contains("rig-lure-bait", rigId, baitId) &&
+        contains("rig-technique", rigId, techniqueId) && contains("lure-bait-technique", baitId, techniqueId);
+    let explicitlySelected = 0;
+    for (const guidance of rigGuidance) {
+        if (!isPlainObject(guidance)) continue;
+        const rigId = guidance.rigId;
+        const baits = baitIds(rigId);
+        const check = (lesson, baitId = null) => {
+            if (!isPlainObject(lesson) || typeof lesson.why !== "string" || !lesson.why.trim() ||
+                !activeTechniques.has(lesson.techniqueId) || !contains("rig-technique", rigId, lesson.techniqueId)) {
+                fail("Technique learning", `${rigId}: unresolved initial lesson, WHY, or Rig eligibility`);
+            } else if (baitId && !triple(rigId, baitId, lesson.techniqueId)) {
+                fail("Technique learning", `${rigId}+${baitId}: lead Technique lacks true three-way compatibility`);
+            }
+        };
+        if (guidance.selectionMode === "explicit") {
+            explicitlySelected += 1;
+            const choices = requireArray(guidance.baitLessons, `Technique ${rigId} bait choices`);
+            if (guidance.defaultLesson || choices.length !== baits.length ||
+                new Set(choices.map((item) => item?.lureBaitId)).size !== baits.length) {
+                fail("Technique learning", `${rigId}: explicit bait guidance must cover each authored bait exactly once`);
+            }
+            check(guidance.initialLesson, guidance.initialLesson?.exampleLureBaitId);
+            for (const choice of choices) {
+                if (!baits.includes(choice?.lureBaitId)) fail("Technique learning", `${rigId}: invented bait selection`);
+                check(choice, choice?.lureBaitId);
+            }
+        } else if (guidance.selectionMode === "rig") {
+            if (guidance.initialLesson || guidance.baitLessons || !guidance.defaultLesson) {
+                fail("Technique learning", `${rigId}: rig-level lesson must not imply a selected bait`);
+            }
+            if (baits.length) for (const bait of baits) check(guidance.defaultLesson, bait);
+            else check(guidance.defaultLesson);
+        } else {
+            fail("Technique learning", `${rigId}: invalid explicit/rig selection mode`);
+        }
+    }
+    if (explicitlySelected !== 9) {
+        fail("Technique learning", `expected nine explicitly selectable Rig teaching contexts; found ${explicitlySelected}`);
+    }
+    const drift = techniques.find((t) => t?.id === "drift");
+    const exactDriftStep = "Cast or lower the presentation into the intended drift path, whether the movement comes from water current or a drifting craft.";
+    if (drift?.presentationSteps?.[0] !== exactDriftStep) {
+        fail("Technique learning", "approved 53A Drift first-step correction was lost");
+    }
+    const twitch = techniques.find((t) => t?.id === "twitch-and-pause");
+    if (typeof twitch?.applicationGuidance !== "string" || !twitch.applicationGuidance.includes("With a Jerkbait:")) {
+        fail("Technique learning", "jerkbait-controlled-slack guidance must stay conditional");
     }
 }
 
@@ -3821,6 +3962,7 @@ function validateCanonicalData() {
     const environmentalBindings = loadBindings("data/environment-correspondence.js", ["HABITAT_CONDITION_CORRESPONDENCES", "FISH_WATERBODY_CONDITION_CORRESPONDENCES"]);
     const lureBaitBindings = loadBindings("data/lure-bait.js", ["LURE_BAIT_DATA"]);
     const techniqueBindings = loadBindings("data/techniques.js", ["TECHNIQUE_DATA"]);
+    const techniqueGuidanceBindings = loadBindings("data/technique-guidance.js", ["CORE_TECHNIQUE_IDS", "RIG_TECHNIQUE_LEARNING_GUIDANCE"]);
     const compatibilityBindings = loadBindings("data/compatibility.js", ["COMPATIBILITY_RELATIONSHIPS"]);
     const canonicalRequirementSatisfactionBindings = loadBindings(
         "data/canonical-requirement-satisfaction.js",
@@ -3860,6 +4002,8 @@ function validateCanonicalData() {
     const conditions = requireArray(conditionBindings.CONDITION_DATA, "Condition registry");
     const lureBait = requireArray(lureBaitBindings.LURE_BAIT_DATA, "Lure/Bait registry");
     const techniques = requireArray(techniqueBindings.TECHNIQUE_DATA, "Technique registry");
+    const coreTechniqueIds = requireArray(techniqueGuidanceBindings.CORE_TECHNIQUE_IDS, "Core Technique curriculum");
+    const rigTechniqueLearning = requireArray(techniqueGuidanceBindings.RIG_TECHNIQUE_LEARNING_GUIDANCE, "Rig Technique learning guidance");
     const compatibility = requireArray(compatibilityBindings.COMPATIBILITY_RELATIONSHIPS, "Compatibility registry");
     const canonicalRequirementSatisfaction = requireArray(
         canonicalRequirementSatisfactionBindings.CANONICAL_REQUIREMENT_SATISFACTION_RELATIONSHIPS,
@@ -3916,6 +4060,7 @@ function validateCanonicalData() {
     );
     validateLureBaitAndRigFoundation(lureBait, rigs, tackle, fishRigGuidance, knots);
     validateTechniqueAndCompatibilityFoundation(techniques, compatibility, rigs, lureBait);
+    validateTechniqueLearningGuidance(coreTechniqueIds, rigTechniqueLearning, techniques, compatibility, rigs);
     validateCanonicalRequirementSatisfaction(canonicalRequirementSatisfaction, lureBait, tackle);
     validateAvailabilityQuantityFoundation(rigs);
     validateAvailabilityAttentionFoundation();
@@ -4449,6 +4594,7 @@ function validateRigR2DetailPresentation() {
     recordCheck("R2 Rig Detail identity, readiness, About disclosures, Reference cues, and effective ownership");
 
     const rendererSource = readOwnerSources(["guides/rig-guide-renderer.js"]);
+    const rigControllerSource = readText("guides/rig-guide-controller.js") ?? "";
     const styleSource = readText("forest-journal.css") ?? "";
     const start = rendererSource.indexOf("function renderInstructionDetail(appMain, detailConfig) {");
     const rigDetailSource = start >= 0 ? rendererSource.slice(start) : "";
@@ -4459,7 +4605,6 @@ function validateRigR2DetailPresentation() {
 
     const hierarchyTokens = [
         "rig-detail-header",
-        "${configurationMarkup}",
         "rig-requirements-section",
         "detail-section--safety",
         "${howToBuildMarkup}",
@@ -4475,6 +4620,29 @@ function validateRigR2DetailPresentation() {
             break;
         }
         lastIndex = tokenIndex;
+    }
+
+    // FCC 53A R9: Setup/Bait chooser is inside What You Need, above the
+    // readiness status, while the rest of the Rig section hierarchy is unchanged.
+    const requirementsStart = rigDetailSource.indexOf('<section class="detail-section rig-requirements-section">');
+    const requirementsEnd = requirementsStart < 0 ? -1 : rigDetailSource.indexOf('</section>', requirementsStart);
+    const requirementsSource = requirementsEnd > requirementsStart
+        ? rigDetailSource.slice(requirementsStart, requirementsEnd) : "";
+    const requirementTokens = [
+        '<h3>What You Need</h3>',
+        'class="rig-requirements-section__controls"',
+        "${configurationMarkup}",
+        '<div class="readiness-status"',
+        '<ul class="rig-component-list"'
+    ];
+    let requirementOrder = -1;
+    for (const token of requirementTokens) {
+        const next = requirementsSource.indexOf(token);
+        if (next < 0 || next <= requirementOrder) {
+            fail("R2 Rig Detail hierarchy", "What You Need must contain Setup/Bait chooser, readiness, then component rows in that order");
+            break;
+        }
+        requirementOrder = next;
     }
 
     for (const text of ["About This Rig", "What You Need", "How to Build It", "Check Your Rig", "Sources & References"]) {
@@ -4595,8 +4763,15 @@ function validateRigR2DetailPresentation() {
             fail("R2 Direct-Tie presentation", `selected configuration must own ${field}`);
         }
     }
-    if (!rigDetailSource.includes("buildRigTechniqueReferenceMarkup(record.id, selectedConfiguration?.lureBaitId ?? null)")) {
-        fail("R2 Direct-Tie presentation", "Techniques must remain derived from selected Direct-Tie Lure/Bait compatibility");
+    // Techniques are now projected by the controller's three-way compatibility
+    // intersection, which uses the current Direct-Tie setup's actual Lure/Bait.
+    if (!rigDetailSource.includes('buildRigTechniqueLearningMarkup(') ||
+            !rigDetailSource.includes('detailConfig.techniqueLearning,') ||
+            !rigControllerSource.includes('function getRigTechniqueLearningContext(rig) {') ||
+            !rigControllerSource.includes('if (configurations.length > 0) return getRigSelectedConfiguration(rig)?.lureBaitId ?? null;') ||
+            !rigControllerSource.includes('const selected = choices.find((choice) => choice.lureBaitId === getRigSelectedBaitId(rig)) ?? null;') ||
+            !rigControllerSource.includes('getCompatibleTargetIds("lure-bait-technique", "lure-bait", baitId, "technique")')) {
+        fail("R2 Direct-Tie presentation", "Techniques must remain derived from the selected Direct-Tie setup's supported Lure/Bait intersections");
     }
 
     for (const marker of [
@@ -4653,7 +4828,7 @@ function validateRigR2KnotTutorialPresentation() {
         'const label = knotIds.length === 1 ? "Knot:" : "Knot options:"',
         "rig-build-step__knot-name",
         "rig-build-step__knot-names",
-        "function buildRigBuildStepsMarkup(record)",
+        "function buildRigBuildStepsMarkup(record, selectedBaitId = null)",
         "buildRigBuildStepKnotOptionsMarkup(record, stepIndex)"
     ]) {
         if (!rigSource.includes(token)) fail("R2 Rig Knot presentation", `missing ${token}`);
@@ -4674,11 +4849,12 @@ function validateRigR2KnotTutorialPresentation() {
     }
 
     const buildStepKnotStart = rigSource.indexOf("function buildRigBuildStepKnotOptionsMarkup(record, stepIndex) {");
-    const buildStepKnotEnd = rigSource.indexOf("function buildRigBuildStepsMarkup(record)", buildStepKnotStart);
+    const buildStepKnotEnd = rigSource.indexOf("function buildRigBuildStepsMarkup(record, selectedBaitId = null)", buildStepKnotStart);
     const buildStepKnotSource = buildStepKnotStart >= 0 && buildStepKnotEnd > buildStepKnotStart
         ? rigSource.slice(buildStepKnotStart, buildStepKnotEnd)
         : "";
-    if (!buildStepKnotSource || buildStepKnotSource.includes("buildRigKnotNavigationMarkup") || buildStepKnotSource.includes("data-rig-knot-id")) {
+    if (!buildStepKnotSource || buildStepKnotSource.includes("buildRigKnotNavigationMarkup") ||
+            /<a\b|<button\b|data-rig-knot-id/.test(buildStepKnotSource)) {
         fail("R3 Rig Build-Step Knots", "Build-Step Knot names must be plain text; navigation remains owned by Knots You'll Tie");
     }
 
@@ -4700,7 +4876,8 @@ function validateRigR2KnotTutorialPresentation() {
     if (knotGuidanceIdCount !== 2) {
         fail("R5 Rig Knot Guidance", `expected one Knot Guidance disclosure state ID used for render + state lookup; found ${knotGuidanceIdCount}`);
     }
-    const howStart = renderSource.indexOf("const howToBuildMarkup = `");
+    // FCC 53A: Rigs without authored assembly steps omit the whole section.
+    const howStart = renderSource.indexOf("const howToBuildMarkup =");
     const howEnd = renderSource.indexOf("const useCasesMarkup", howStart);
     const howSource = howStart >= 0 && howEnd > howStart ? renderSource.slice(howStart, howEnd) : "";
     const howTokens = ["${knotGuidanceMarkup}", "Build Steps", "${buildSupportMarkup}"];
@@ -5412,9 +5589,10 @@ function validateGuideDetailConvergence() {
         !rendererSource.includes('class="guide-curated-card__eyebrow">Recommended First') ||
         rendererSource.includes('class="dashboard-card dashboard-card--workflow rig-guide-learn-core"') ||
         !rendererSource.includes('config.cards.filter((card) => card.id !== "browse-core-rigs")') ||
+        !rendererSource.includes('class="dashboard-grid rig-guide-core-grid"') ||
         !styleSource.includes('.guide-curated-card .dashboard-card__action--link') ||
-        !styleSource.includes('var(--accent-fish); width: 100%;')) {
-        fail("FCC 52A R7 Core Rigs", "Learn Core Rigs must use Knots' non-pill curated emphasis without a duplicate destination");
+        !styleSource.includes('.rig-guide-start-section .rig-guide-learn-core { --card-accent: var(--accent-fish); text-align: left; }')) {
+        fail("FCC 52A R7 Core Rigs", "Learn Core Rigs must use the shared Knots/Techniques curated grid and non-pill emphasis without a duplicate destination");
     }
     if (/\.knot-task-card\s+\.guide-card__heading-row\s*\{[^}]*display:\s*grid/.test(styleSource) ||
         !styleSource.includes('.guide-card__heading-row {') ||
@@ -5517,7 +5695,7 @@ function validateGuideDetailConvergence() {
         ".reference-popover__section--related > h3",
         ".rig-reference-list > li + li, .knot-reference-links > .knot-reference-link + .knot-reference-link",
         ".rig-about-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }",
-        ".rig-knot-recommendation-list--unique,\n    .fish-rig-recommendation-list { width: calc(66.6667% - 5.333px); }"
+        ".rig-knot-recommendation-list--unique,\n    .fish-rig-recommendation-list,\n    .technique-rig-card-list { width: calc(66.6667% - 5.333px); }"
     ]) {
         if (!styleSource.includes(token)) fail("FCC 52A-J shared visual language", `missing ${token}`);
     }
@@ -5530,6 +5708,7 @@ function validateGuideDetailConvergence() {
         ["Fish Guide", "Browse Fish"],
         ["Knots Guide", "Browse Knots"],
         ["Rigs Guide", "Browse Rigs"],
+        ["Techniques Guide", "Browse Techniques"],
         ["Tackle", "Browse Tackle"],
         ["What Should I Throw?", "Get Recommendations"],
         ["Catch Log", "View Catch Log"],
@@ -5538,15 +5717,23 @@ function validateGuideDetailConvergence() {
     ];
     if ((indexSource.match(/dashboard-card--home/g) ?? []).length !== dashboardLabels.length ||
         !styleSource.includes(".dashboard-card--home { justify-content: flex-start; }") ||
-        !styleSource.includes(".dashboard-card--home .dashboard-card__heading-row { justify-content: space-between; width: 100%; }") ||
-        !styleSource.includes(".dashboard-card--home .dashboard-card__action") ||
-        !styleSource.includes("margin-left: auto;")) {
-        fail("FCC 52A-J Dashboard", "home Dashboard title-row actions must retain the lightweight treatment and right alignment");
+        !/\.dashboard-card--home \.dashboard-card__heading-row\s*\{[^}]*display:\s*grid;[^}]*justify-items:\s*start;/s.test(styleSource) ||
+        !/\.dashboard-card--home \.dashboard-card__action\s*\{[^}]*margin-left:\s*0;[^}]*white-space:\s*nowrap;/s.test(styleSource)) {
+        fail("FCC 52A-J Dashboard", "all ten Dashboard cards require a shared title, left action and description hierarchy");
     }
     for (const [title, action] of dashboardLabels) {
         if (!indexSource.includes(`<span class="dashboard-card__title">${title}</span>`) || !indexSource.includes(`>${action} <span class="link-arrow link-arrow--internal"`)) {
             fail("FCC 52A-I Dashboard", `missing destination-specific action for ${title}: ${action}`);
         }
+    }
+    const dashboardRoutes = ["regulations", "fish", "knots", "rigs", "techniques", "tackle", "recommendations", "catch-log", "favorites", "settings"];
+    for (const route of dashboardRoutes) {
+        if (!indexSource.includes(`dashboard-card--home" type="button" data-route="${route}"`)) {
+            fail("FCC 53A R5 Dashboard", `${route}: missing shared ten-card Dashboard hierarchy`);
+        }
+    }
+    if (indexSource.includes("dashboard-card--browse") || styleSource.includes(".dashboard-card--home.dashboard-card--browse")) {
+        fail("FCC 53A R5 Dashboard", "obsolete six-card-only Browse layout must not survive");
     }
     if (indexSource.includes("Choose a State")) {
         fail("FCC 52A-I Dashboard", "stale Regulations Choose a State wording remains");
@@ -5596,8 +5783,18 @@ function validateGuideDetailConvergence() {
     ]) {
         if (!rendererSource.includes(token)) fail("FCC 52A-K relationships/navigation", `missing ${token}`);
     }
-    if ((rendererSource.match(/compact-link-list compact-link-list--divided reference-popover__link-list/g) ?? []).length !== 2) {
-        fail("FCC 52A-K component relationships", "both Used In and Related Components must use light-tan divided rows");
+    // Tackle and Lure/Bait Reference popovers each own Used In + Related
+    // Components. Count their actual related sections, not arbitrary matches
+    // across concatenated renderers and new Guide-family surfaces.
+    const relationSections = [...componentReferenceOwner.matchAll(
+        /<section class="reference-popover__section reference-popover__section--related">\s*<h3>(Used In|Related Components)<\/h3>[\s\S]*?<\/section>/g
+    )];
+    const dividedSections = relationSections.filter((match) =>
+        match[0].includes('class="compact-link-list compact-link-list--divided reference-popover__link-list"'));
+    const usedInCount = dividedSections.filter((match) => match[1] === "Used In").length;
+    const relatedCount = dividedSections.filter((match) => match[1] === "Related Components").length;
+    if (relationSections.length !== 4 || dividedSections.length !== 4 || usedInCount !== 2 || relatedCount !== 2) {
+        fail("FCC 52A-K component relationships", "Tackle and Lure/Bait popovers must each use divided rows for both Used In and Related Components");
     }
     for (const stale of [
         'usage.id === "attach-line-to-reel"',
@@ -6511,6 +6708,267 @@ function validateDocumentationGovernance() {
 }
 
 
+function validateTechniqueGuideVisualPatterns() {
+    recordCheck("FCC 53A Guide-family visual patterns");
+    const renderer = readText("guides/techniques-guide-renderer.js");
+    const controller = readText("guides/techniques-guide-controller.js");
+    const rigRenderer = readText("guides/rig-guide-renderer.js");
+    const knotRenderer = readText("guides/knots-guide-renderer.js");
+    const css = readText("forest-journal.css");
+    if ([renderer, controller, rigRenderer, knotRenderer, css].some((text) => text === null)) return;
+    const group = "FCC 53A Guide-family visual patterns";
+    const required = [
+        [renderer, 'aria-labelledby="technique-guide-search-title"', "named Guide Search form"],
+        [renderer, 'label: "Search Techniques"', "shared searchable-Guide heading grammar"],
+        [renderer, 'technique-result-card__classification-core', "Core result classification"],
+        [renderer, 'technique-detail-classification__core', "Core Detail classification"],
+        [renderer, 'class="detail-header technique-detail-header"', "neutral Detail identity shell"],
+        [renderer, 'buildTechniqueTextListMarkup("Presentation Steps", technique.presentationSteps, true)', "primary instruction sequence"],
+        [renderer, 'buildTechniqueTextListMarkup("Strike Cues", technique.strikeCues)', "strike cues preserved"],
+        [renderer, 'buildTechniqueMistakesMarkup(technique.commonMistakes)', "mistake/correction guidance preserved"],
+        [renderer, '"beginner-tips", "Beginner Tips"', "beginner tips disclosure preserved"],
+        [renderer, '"where-it-fits", "Where It Fits"', "conditional application guidance preserved"],
+        [renderer, '"how-it-works", "How It Works"', "About overview disclosure"],
+        [renderer, `"where-used", "Where You'll Use It"`, "related-knowledge disclosure"],
+        [renderer, 'id="technique-reading-title">Check Your Presentation', "visible feedback section title"],
+        [renderer, 'aria-label="Common Mistakes &amp; Corrections"', "approved paired correction subsection title"],
+        [renderer, 'data-technique-disclosure-id=', "shared disclosure controls"],
+        [controller, 'expandedDisclosureIds: [...(state.techniqueDetailState.expandedDisclosureIds ?? [])]', "disclosure state and origin restoration"],
+        [css, '.technique-detail-row__trigger', "shared Knot-family disclosure trigger styling"],
+        [css, '.technique-detail-row__panel[hidden]', "actual hidden panel state"],
+        [renderer, 'data-technique-usage-toggle', "high-cardinality related Rig disclosure"],
+        [renderer, 'class="technique-rig-card-list"', "Technique Rig cards use contained Fish-style relationship rows"],
+        [renderer, 'class="technique-rig-card__heading"', "Rig name and adjacent View Rig action share one heading group"],
+        [renderer, 'class="technique-rig-card__context"', "only verified Rig/bait context displayed"],
+        [css, '.fish-rig-recommendation,\n.rig-technique-lesson-card,\n.technique-rig-card {', "Technique and Rig relationship cards share Fish card shell"],
+        [css, '.technique-rig-card[hidden] { display: none; }', "additional Rig relationships truly hide"],
+        [controller, 'rigsExpanded: techniqueDetailState.rigsExpanded === true', "related Rig expansion state"],
+        [rigRenderer, 'dashboard-grid rig-guide-core-grid', "shared Rig Core grid"],
+        [knotRenderer, 'dashboard-grid knot-task-grid', "existing Knot Core grid"],
+        [css, '.technique-guide-search-form,', "shared Guide Search width"],
+        [css, '.technique-browse-view .search-form { width: calc(66.6667% - 5.333px); }', "constrained desktop search"],
+        [css, '.technique-detail-header {', "shared Detail shell CSS"],
+        [css, '.technique-usage-expand {', "shared related-knowledge disclosure CSS"]
+    ];
+    for (const [text, marker, label] of required) {
+        if (!text.includes(marker)) fail(group, `missing ${label}`);
+    }
+    for (let position = 1; position <= 9; position++) {
+        if (!css.includes(`.search-result-card--technique:nth-child(9n + ${position})`)) {
+            fail(group, `missing card-accent cycle position ${position}`);
+        }
+    }
+    const detail = renderer.slice(renderer.indexOf('function renderTechniqueInstructionDetail('));
+    if (detail.indexOf('id="technique-how-title"') < 0 ||
+            detail.indexOf('id="technique-about-title"') < 0 ||
+            detail.indexOf('id="technique-how-title"') > detail.indexOf('id="technique-about-title"')) {
+        fail(group, "visible How to Fish It must precede About This Technique");
+    }
+    const approvedTitleHierarchy = [
+        'id="technique-how-title">How to Fish It',
+        'id="technique-reading-title">Check Your Presentation',
+        'id="technique-about-title">About This Technique',
+        'id="technique-more-help-title">More Help'
+    ];
+    if (approvedTitleHierarchy.some((title) => !detail.includes(title))) {
+        fail(group, "missing approved primary title hierarchy");
+    }
+    if (detail.includes('>Read and Adjust</h3>') || detail.includes('id="technique-usage-title"')) {
+        fail(group, "obsolete visible About/usage sections remain outside the approved disclosure hierarchy");
+    }
+    if (renderer.includes('class="detail-core-badge"') ||
+            renderer.includes('class="search-result-card__badge"')) {
+        fail(group, "Core designation must be inline classification, not a decorative pill");
+    }
+    if (/\.search-result-card--technique\s*\{[^}]*var\(--accent-rigs\)/.test(css)) {
+        fail(group, "Technique result cards must use shared rotating accents, not one Guide color");
+    }
+}
+
+function validateRigTubeConditionalAssemblyNotes(rigs) {
+    recordCheck("FCC 53A three exact Tube build notes in canonical Rig owner");
+    const notes = new Map([
+        ["texas-rig", [5, "When using a Tube: Choose an offset hook with enough gap for its hollow body. After seating the Tube's nose at the hook offset, pass the hook point completely through both walls of the Tube just ahead of the tentacles. Lay the point flush against the Tube's back or barely skin-hook it. Do not leave the point buried inside the hollow cavity. Confirm that the Tube lies straight."]],
+        ["weightless-soft-plastic-rig", [4, "When using a Tube: Match the offset hook to the hollow body. After seating the nose, bring the hook point through both walls just ahead of the tentacles. Lay the point flush against the back or lightly skin-hook it, keeping the Tube straight and the hook gap clear. Do not add a sinker."]],
+        ["drop-shot-rig", [3, "When using a Tube: For the standard exposed-hook Drop Shot setup, lightly pierce the Tube near its nose with the finesse hook. Leave the hook point and gap exposed, allowing the hollow body and tentacles to hang freely above the weight. Avoid threading so much plastic onto the hook that the gap becomes obstructed."]]
+    ]);
+    const group = "FCC 53A Tube build notes";
+    for (const rig of rigs) {
+        const actual = rig?.baitSpecificAssemblyNotes;
+        const expected = notes.get(rig?.id);
+        if (!expected) {
+            if (actual !== undefined) fail(group, `${rig.id}: unapproved bait-specific note field`);
+            continue;
+        }
+        if (!Array.isArray(actual) || actual.length !== 1) {
+            fail(group, `${rig.id}: exactly one Tube note required`);
+            continue;
+        }
+        const [note] = actual;
+        const [index, text] = expected;
+        if (note?.lureBaitId !== "tube" || note?.afterStepIndex !== index || note?.text !== text ||
+                Object.keys(note).sort().join(",") !== "afterStepIndex,lureBaitId,text") {
+            fail(group, `${rig.id}: note's exact approved Tube, step index, wording, or schema changed`);
+        }
+        if (!Array.isArray(rig.assemblySteps) || index < 0 || index >= rig.assemblySteps.length) {
+            fail(group, `${rig.id}: Tube note points outside canonical Build Steps`);
+        }
+        const expectedCounts = { "texas-rig": 7, "weightless-soft-plastic-rig": 6, "drop-shot-rig": 6 };
+        if (rig.assemblySteps.length !== expectedCounts[rig.id]) {
+            fail(group, `${rig.id}: existing numbered Build Step count changed`);
+        }
+    }
+    for (const rigId of notes.keys()) {
+        if (!rigs.some((rig) => rig?.id === rigId && rig.isActive)) fail(group, `${rigId}: absent active canonical Rig`);
+    }
+}
+
+function validateRigTechniqueLearningPresentation() {
+    recordCheck("FCC 53A Rig-to-Technique contextual presentation");
+    const controller = readText("guides/rig-guide-controller.js");
+    const renderer = readText("guides/rig-guide-renderer.js");
+    const destination = readText("guides/techniques-guide-controller.js");
+    const style = readText("forest-journal.css");
+    const guidance = readText("data/technique-guidance.js");
+    if ([controller, renderer, destination, style, guidance].some((source) => source === null)) return;
+    const group = "FCC 53A Rig-to-Technique contextual presentation";
+    const required = [
+        [controller, 'function getRigTechniqueLearningContext(rig) {', "canonical contextual mapping"],
+        [controller, 'getCompatibleTargetIds("rig-lure-bait", "rig", rig.id, "lure-bait")', "active Rig-Bait relation"],
+        [controller, 'getCompatibleTargetIds("rig-technique", "rig", rig.id, "technique")', "active Rig-Technique relation"],
+        [controller, 'getCompatibleTargetIds("lure-bait-technique", "lure-bait", baitId, "technique")', "active Bait-Technique relation"],
+        [controller, 'baitIds.every((baitId) => baitTechniqueIds(baitId).has(id))', "Rig-level lesson stays common to authored baits"],
+        [controller, 'selectedBaitId: null', "no implicit bait on entry"],
+        [controller, 'selectedBaitId: baitId || null', "single top-level selected Bait transition"],
+        [controller, 'function getRigSelectedBaitId(rig) {', "canonical single Rig page bait context"],
+        [controller, 'function getRigRequirementPresentation(rig) {', "selected bait updates What You Need"],
+        [controller, 'selectedConfigurationId: configurationId || null', "main Direct-Tie setup owns selected lure"],
+        [controller, 'getRigRequirementPresentation(rig)', "readiness uses displayed exact bait requirement"],
+        [controller, 'getCompatibleTargetIds("rig-lure-bait", "rig", rig.id, "lure-bait")', "verified bait substitution"],
+        [controller, 'otherTechniquesExpanded: false', "reset alternatives when selecting bait"],
+        [controller, 'restoreFocusTarget: "setup-selector"', "single selector focus restoration"],
+        [controller, 'onOtherTechniquesStateChange:', "Other Compatible disclosure state owner"],
+        [renderer, 'function buildRigTechniqueLearningMarkup(context, expanded = false)', "shared context row rendering"],
+        [renderer, 'data-rig-bait-select', "single What You Need Bait selector"],
+        [renderer, 'data-rig-configuration-select', "single What You Need Setup selector"],
+        [renderer, '<option value="" ${!selectedOptionId ? "selected" : ""}>', "initial unselected state"],
+        [renderer, 'data-lure-bait-reference-id', "canonical selected Bait Reference popover"],
+        [renderer, 'data-readiness-selection-id="${selectionId}"', "exact selected bait readiness"],
+        [renderer, 'class="detail-subsection-heading">Learn First', "approved peer subsection visual"],
+        [renderer, 'class="compact-link-list compact-link-list--divided rig-technique-other-list"', "shared Knots-style alternatives"],
+        [renderer, 'class="knot-usage-expand"', "existing Guide progressive disclosure"],
+        [renderer, 'data-rig-technique-toggle-more', "conditional alternatives action"],
+        [renderer, 'aria-controls="rig-technique-other-list"', "accessible Show More panel"],
+        [renderer, 'data-rig-view-technique-id', "direct canonical View Technique links"],
+        [renderer, 'buildRigTechniqueLearningMarkup(', "Rig Overview integration"],
+        [renderer, 'initializeRigTechniqueLearningControls(appMain, detailConfig)', "event hookup"],
+        [destination, 'function openTechniqueDetailFromRig(techniqueId)', "destination-owned cross-Guide routing"],
+        [destination, 'route: ROUTES.RIG_DETAIL', "origin Rig parent"],
+        [destination, 'captureRigDetailNavigationState(`technique:${techniqueId}`)', "return configuration/scroll/focus"],
+        [style, '.rig-technique-lesson-card,', "Fish-family contained teaching row"],
+        [style, '.rig-about-subsection--techniques { grid-column: 1 / -1; }', "desktop shared row measure"],
+        [style, '.rig-technique-other-list[hidden] { display: none; }', "true progressive disclosure"],
+        [guidance, 'selectionMode: "explicit"', "approved explicit contexts"],
+        [guidance, 'selectionMode: "rig"', "approved Rig-level contexts"]
+    ];
+    for (const [source, token, label] of required) {
+        if (!source.includes(token)) fail(group, `missing ${label}`);
+    }
+    if (renderer.includes('data-technique-id="${technique.id}"') &&
+            renderer.includes('buildRigTechniqueReferenceMarkup(record.id')) {
+        fail(group, "Rig Overview still routes all Techniques to the old reference popover");
+    }
+    if ([renderer, controller, style].some((source) => source.includes('rig-technique-bait-dialog') ||
+            source.includes('selectedTechniqueBaitId') || source.includes('data-rig-technique-choose-bait'))) {
+        fail(group, "obsolete independent Technique bait picker/state must be removed");
+    }
+    if ((renderer.match(/data-rig-bait-select/g) ?? []).length !== 2) {
+        fail(group, "one shared bait dropdown and its change listener must both exist");
+    }
+    if (!renderer.includes('buildRigBuildStepsMarkup(effectiveRecord, detailConfig.selectedBaitId)') ||
+            !renderer.includes('data-rig-bait-build-note="tube"') ||
+            !renderer.includes('selectedBaitId === "tube"')) {
+        fail(group, "only selected Tube may reveal its approved in-step note");
+    }
+}
+
+function validateR8LureBaitAndRigScope(canonical) {
+    recordCheck("FCC 53A R8 canonical bait education, rig contexts and UX bounds");
+    const bait = canonical.lureBait;
+    const rigs = canonical.rigs;
+    const tackleIds = new Set(canonical.tackle.filter((item) => item.isActive).map((item) => item.id));
+    const group = "FCC 53A R8 bounded review scope";
+    if (bait.length !== 13 || rigs.length !== 23) fail(group, "canonical bait/Rig identity counts changed");
+    const lureProjection = bait.map(({id, purpose, recognitionNotes, commonVariants, relatedTackleIds}) =>
+        ({id, purpose, recognitionNotes, commonVariants: commonVariants ?? null,
+            relatedTackleIds: relatedTackleIds ?? []}));
+    const lureHash = crypto.createHash("sha256").update(JSON.stringify(lureProjection), "utf8").digest("hex");
+    if (lureHash !== "e4cd959200a845807dfa517cdc072ce162a855b093fdd936d852cb04122221a3") {
+        fail(group, "approved 13 Lure/Bait education + 19 component links changed");
+    }
+    const relationCount = bait.reduce((count, item) => {
+        const ids = item.relatedTackleIds ?? [];
+        if (ids.length !== new Set(ids).size || ids.some((id) => !tackleIds.has(id))) {
+            fail(group, `${item.id}: duplicate or missing related Tackle identity`);
+        }
+        return count + ids.length;
+    }, 0);
+    if (relationCount !== 19) fail(group, `expected 19 curated component links, got ${relationCount}`);
+    const approvedRigIds = ["texas-rig", "jighead-soft-plastic", "drop-shot-rig",
+        "weightless-soft-plastic-rig", "carolina-rig", "free-rig", "jika-rig",
+        "punch-pegged-texas-rig", "wacky-rig", "ned-rig", "neko-rig", "shaky-head-rig"];
+    const notes = rigs.filter((r) => Array.isArray(r.baitSpecificRequirementNotes))
+        .map(({id, baitSpecificRequirementNotes}) => ({id, baitSpecificRequirementNotes}));
+    const notesHash = crypto.createHash("sha256").update(JSON.stringify(notes), "utf8").digest("hex");
+    if (notesHash !== "4f92e7de12d374f19e14f6677f16b3fc4d760f3525fc5cfe0f8651950c69ff2e" ||
+            JSON.stringify(notes.map((r) => r.id).sort()) !== JSON.stringify([...approvedRigIds].sort())) {
+        fail(group, "29 exact approved Rig/Bait note copies or ownership changed");
+    }
+    if (notes.reduce((n, r) => n + r.baitSpecificRequirementNotes.length, 0) !== 29) {
+        fail(group, "29 contextual Rig/Bait notes required");
+    }
+    const guide = readText("data/technique-guidance.js");
+    const rigController = readText("guides/rig-guide-controller.js");
+    const rigRenderer = readText("guides/rig-guide-renderer.js");
+    const techniqueRenderer = readText("guides/techniques-guide-renderer.js");
+    const refRenderer = readText("reference-popovers.js");
+    if (![guide, rigController, rigRenderer, techniqueRenderer, refRenderer].every(Boolean)) return;
+    const context = vm.createContext({ console: { info() {}, warn() {} } });
+    vm.runInContext(guide, context, { filename: "data/technique-guidance.js" });
+    const guidanceContext = vm.runInContext("RIG_TECHNIQUE_LEARNING_GUIDANCE", context);
+    const newIds = ["carolina-rig", "free-rig", "jika-rig", "punch-pegged-texas-rig"];
+    const lessons = guidanceContext?.filter((item) => newIds.includes(item.rigId))
+        .map(({rigId, selectionMode, initialLesson, baitLessons}) =>
+            ({rigId, selectionMode, initialLesson, baitLessons}));
+    if (!lessons || lessons.length !== 4) {
+        fail(group, "four additional selectable Rig teaching records missing");
+    } else {
+        const digest = crypto.createHash("sha256").update(JSON.stringify(lessons), "utf8").digest("hex");
+        if (digest !== "7acaf134b712d5dce9cb267849884bed2cf53d0a5ab83d2fc100f53142d7aca0") {
+            fail(group, "12 candidate Rig/Bait teaching lessons changed without review");
+        }
+    }
+    for (const [content, needed, label] of [
+        [rigController, 'function getRigFixedBaitId(rig)', "four fixed Rig identity projection"],
+        [rigRenderer, 'class="rig-requirements-section__controls"', "What You Need selector controls"],
+        [rigRenderer, 'const extraTechniqueCount = Math.max(0, context.others.length - 1)', "two-visible total Technique UX"],
+        [techniqueRenderer, 'Search by technique or action (e.g., retrieve, hop, drift)', "approved Technique Search"],
+        [techniqueRenderer, 'data-technique-bait-id=', "Technique bait Reference cue"],
+        [refRenderer, 'getRelatedLureBaitRigRecords(lureBaitId)', "Used In derived Rig list"],
+        [refRenderer, 'data-lure-bait-related-tackle-id=', "curated Related Components controls"],
+        [refRenderer, 'onBackToLureBait', "reversible related component navigation"]
+    ]) if (!content.includes(needed)) fail(group, `missing ${label}`);
+    const sectionStart = rigRenderer.indexOf('<section class="detail-section rig-requirements-section">');
+    const sectionEnd = sectionStart < 0 ? -1 : rigRenderer.indexOf('</section>', sectionStart);
+    const section = sectionEnd > sectionStart ? rigRenderer.slice(sectionStart, sectionEnd) : "";
+    const selectorIndex = section.indexOf("${configurationMarkup}");
+    const statusIndex = section.indexOf('class="readiness-status"');
+    const rowsIndex = section.indexOf('<ul class="rig-component-list"');
+    if (!(selectorIndex >= 0 && statusIndex > selectorIndex && rowsIndex > statusIndex)) {
+        fail(group, "Setup/Bait selector must precede readiness and component rows inside What You Need");
+    }
+}
+
 function main() {
     console.log("REPOSITORY INTEGRITY VALIDATION");
     console.log(`Root: ${ROOT}`);
@@ -6523,6 +6981,10 @@ function main() {
     validateRigR2KnotTutorialPresentation();
     validateRigR2SupportPresentation();
     validateGuideDetailConvergence();
+    validateTechniqueGuideVisualPatterns();
+    validateRigTechniqueLearningPresentation();
+    validateR8LureBaitAndRigScope(canonicalData);
+    validateRigTubeConditionalAssemblyNotes(canonicalData.rigs);
     validateFishEvidence(canonicalData.fish, canonicalData.fishIdentification);
     validateFishSearchHelpers(canonicalData);
     validateReelGuidance();

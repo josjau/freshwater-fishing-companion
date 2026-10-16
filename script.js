@@ -57,6 +57,7 @@ function renderDashboardRoute(appMain) {
     clearDetailNavigationStack();
     resetFishGuideForHome();
     resetRigGuideForHome();
+    resetTechniqueGuideForHome();
     resetKnotGuideForHome();
     resetRegulationsForHome();
     appMain.innerHTML = dashboardMarkup;
@@ -76,6 +77,8 @@ function registerAppRouteProviders() {
     registerFishGuideRoutes();
 
     registerRigGuideRoutes();
+
+    registerTechniqueGuideRoutes();
 
     registerKnotGuideRoutes();
 

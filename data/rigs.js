@@ -419,6 +419,13 @@ const RIG_DATA = Object.freeze([
                 notes: "Optional for keeping the weight close to the bait."
             }
         ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Use a stick worm that fits the offset hook and stays straight." },
+            { lureBaitId: "craw", text: "Match the craw body to the hook; leave the claws free." },
+            { lureBaitId: "creature-bait", text: "Fit the body to the hook without trapping its appendages." },
+            { lureBaitId: "paddle-tail-swimbait", text: "Match the hook gap to the body; leave the paddle tail free." },
+            { lureBaitId: "tube", text: "Choose a hollow Tube that fits the offset hook without crowding the gap." }
+        ],
         knotApplications: [
             {
                 label: "Main line to hook",
@@ -440,6 +447,9 @@ const RIG_DATA = Object.freeze([
             "Lay the hook against the bait and note where the hook point naturally meets the body; this is the re-entry point.",
             "Push the hook point straight through the bait at the re-entry point until the point reaches the opposite side.",
             "For a weedless finish, lightly skin-hook the point so it is barely exposed or just under the surface while the bait remains straight."
+        ],
+        baitSpecificAssemblyNotes: [
+            { lureBaitId: "tube", afterStepIndex: 5, text: "When using a Tube: Choose an offset hook with enough gap for its hollow body. After seating the Tube's nose at the hook offset, pass the hook point completely through both walls of the Tube just ahead of the tentacles. Lay the point flush against the Tube's back or barely skin-hook it. Do not leave the point buried inside the hollow cavity. Confirm that the Tube lies straight." }
         ],
         setupNotes: [
             "The bait should hang straight without twisting.",
@@ -504,6 +514,11 @@ const RIG_DATA = Object.freeze([
                 required: true,
                 notes: "Small grubs, minnows, paddletails, and worms are practical choices."
             }
+        ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Choose a stick worm that threads straight onto the jighead." },
+            { lureBaitId: "craw", text: "Choose a craw that fits the jighead hook and rigs straight." },
+            { lureBaitId: "paddle-tail-swimbait", text: "Fit the body straight on the jighead; leave the paddle tail free." }
         ],
         knotApplications: [
             {
@@ -803,6 +818,9 @@ const RIG_DATA = Object.freeze([
                 notes: "Optional; an O-ring can reduce bait tearing while keeping the midpoint presentation."
             }
         ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Choose a flexible stick worm that hangs evenly when hooked near its middle." }
+        ],
         knotApplications: [
             {
                 label: "Main line or leader to hook",
@@ -886,6 +904,9 @@ const RIG_DATA = Object.freeze([
                 required: true,
                 notes: "A roughly 2.75-inch stick-style finesse bait is a standard beginner example; other compact Ned-sized plastics also work."
             }
+        ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Use a short stick worm that fits the Ned jighead without crowding the hook gap." }
         ],
         knotApplications: [
             {
@@ -972,6 +993,11 @@ const RIG_DATA = Object.freeze([
                 notes: "Stick worms, flukes, and other soft plastics can be rigged weightless."
             }
         ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Use a stick worm sized to the offset hook and heavy enough to cast." },
+            { lureBaitId: "paddle-tail-swimbait", text: "Fit the body straight on the offset hook; keep the paddle tail free." },
+            { lureBaitId: "tube", text: "Choose a Tube that fits the offset hook and hangs straight without added weight." }
+        ],
         knotApplications: [
             {
                 label: "Main line or leader to hook",
@@ -992,6 +1018,9 @@ const RIG_DATA = Object.freeze([
             "Lay the hook alongside the bait to locate the natural re-entry point without stretching or bunching the plastic.",
             "Push the hook point straight through the bait at that point so the body hangs straight.",
             "For a weedless finish, lightly skin-hook the point while keeping the bait straight and the hook gap usable."
+        ],
+        baitSpecificAssemblyNotes: [
+            { lureBaitId: "tube", afterStepIndex: 4, text: "When using a Tube: Match the offset hook to the hollow body. After seating the nose, bring the hook point through both walls just ahead of the tentacles. Lay the point flush against the back or lightly skin-hook it, keeping the Tube straight and the hook gap clear. Do not add a sinker." }
         ],
         setupNotes: [
             "The absence of a sinker is part of the setup; the soft plastic provides the casting weight and fall rate.",
@@ -1063,6 +1092,10 @@ const RIG_DATA = Object.freeze([
                 notes: "Use the lightest drop-shot weight that maintains bottom contact."
             }
         ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Choose a slim stick worm that nose-hooks without blocking the hook gap." },
+            { lureBaitId: "tube", text: "Choose a small Tube that nose-hooks securely without covering the hook point." }
+        ],
         knotApplications: [
             {
                 label: "Main line to drop-shot hook",
@@ -1081,6 +1114,9 @@ const RIG_DATA = Object.freeze([
             "Nose-hook or lightly thread the soft plastic so the hook gap and point remain exposed for the standard open-water setup.",
             "Hold the line vertically and confirm that the bait sits above the weight and the hook rides point-up.",
             "Adjust the hook-to-weight spacing to keep the bait above bottom clutter or vegetation."
+        ],
+        baitSpecificAssemblyNotes: [
+            { lureBaitId: "tube", afterStepIndex: 3, text: "When using a Tube: For the standard exposed-hook Drop Shot setup, lightly pierce the Tube near its nose with the finesse hook. Leave the hook point and gap exposed, allowing the hollow body and tentacles to hang freely above the weight. Avoid threading so much plastic onto the hook that the gap becomes obstructed." }
         ],
         setupNotes: [
             "A 12- to 18-inch hook-to-weight spacing is a practical starting range; adjust it to the fish and bottom cover.",
@@ -1171,6 +1207,11 @@ const RIG_DATA = Object.freeze([
                 required: true,
                 notes: "Worms, lizards, creature baits, and other soft plastics are common choices."
             }
+        ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Choose a stick worm that sits straight on the hook at the leader's end." },
+            { lureBaitId: "craw", text: "Match the craw body to the hook; leave the claws free behind the weight." },
+            { lureBaitId: "creature-bait", text: "Use a creature bait that fits the hook and trails with appendages free." }
         ],
         knotApplications: [
             {
@@ -1581,6 +1622,9 @@ const RIG_DATA = Object.freeze([
                 notes: "Optional but useful for securing the hook while reducing damage to the soft plastic."
             }
         ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Choose a stick worm that accepts a nail weight in one end and bends freely." }
+        ],
         knotApplications: [
             {
                 label: "Main line or leader to hook",
@@ -1667,6 +1711,9 @@ const RIG_DATA = Object.freeze([
                 required: true,
                 notes: "Straight-tail finesse worms are a common starting point."
             }
+        ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Choose a straight stick worm that secures to the shaky-head keeper without bunching." }
         ],
         knotApplications: [
             {
@@ -1758,6 +1805,11 @@ const RIG_DATA = Object.freeze([
                 required: true,
                 notes: "Worms, creatures, craws, and other Texas-riggable plastics can be used."
             }
+        ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Rig the stick worm straight; keep the ringed sinker free to slide." },
+            { lureBaitId: "craw", text: "Fit the craw on the hook without restricting its claws during the fall." },
+            { lureBaitId: "creature-bait", text: "Choose a creature bait that rigs straight and leaves its flaps free." }
         ],
         knotApplications: [
             {
@@ -1954,6 +2006,11 @@ const RIG_DATA = Object.freeze([
                 notes: "Texas-rig the soft plastic weedless on the offset hook."
             }
         ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Fit the stick worm straight without interfering with the hanging weight." },
+            { lureBaitId: "craw", text: "Choose a craw that clears the hanging weight and leaves the claws free." },
+            { lureBaitId: "creature-bait", text: "Fit the creature bait straight without fouling the hanging weight." }
+        ],
         knotApplications: [
             {
                 label: "Main line or leader to split ring",
@@ -2049,6 +2106,11 @@ const RIG_DATA = Object.freeze([
                 required: true,
                 notes: "Compact creature, craw, and streamlined soft plastics move through cover efficiently."
             }
+        ],
+        baitSpecificRequirementNotes: [
+            { lureBaitId: "stick-worm", text: "Use a streamlined stick worm that can pass through dense vegetation." },
+            { lureBaitId: "craw", text: "Choose a compact craw that rigs straight and moves through heavy cover." },
+            { lureBaitId: "creature-bait", text: "Use a compact creature bait whose appendages pass through thick cover." }
         ],
         knotApplications: [
             {

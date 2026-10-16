@@ -1,9 +1,9 @@
 # Freshwater Fishing Companion
 
 **Document:** 03A-TECHNIQUES.md  
-**Document Revision:** 0.6.1  
+**Document Revision:** 0.6.2  
 **Document Status:** Approved  
-**Implementation Status:** IMPLEMENTED / VALIDATED / CLOSED — 16 active Technique records; 77 Rig↔Technique + 54 Lure/Bait↔Technique Compatibility relationships active  
+**Implementation Status:** IMPLEMENTED / LOCALLY VALIDATED — 16 Technique identities; FCC 53A detailed lessons and Techniques Guide; 79 Rig↔Technique + 56 Lure/Bait↔Technique current intrinsic relationships  
 **Decision Baseline:** D003, D024, D056, D069
 
 ---
@@ -20,7 +20,7 @@ Current `main` implements the locked V1 Technique vocabulary in `data/techniques
 
 # Current Status
 
-**Implemented / Validated / Closed.**
+**Foundation implemented / validated / closed; FCC 53A locally reviewed for the expanded instructional presentation.**
 
 The Technique domain is implemented under D003. D024 assigns reusable presentation behavior to Technique and physical assembly/configuration to Rig. D056 assigns each Technique fact/relationship one semantic owner.
 
@@ -60,13 +60,13 @@ lastModifiedVersion
 isActive
 ```
 
-Optional instructional fields are allowed only when the authored Technique demonstrates reusable value. Do not pre-populate empty placeholders.
+The FCC 53A instructional revision supplies `aboutTechnique`, four complete `presentationSteps[]` per Technique, `readingPresentation`, `strikeCues[]`, `commonMistakes[]` as specific `{ mistake, correction }` pairs, and `beginnerTips[]`; `applicationGuidance` is optional where a distinct intrinsic use clarification is needed. These values remain reusable Technique Reference Knowledge, not Rig assembly or Recommendation-specific ranking. Do not pre-populate empty placeholders.
 
 ---
 
-# Approved V1 Instructional Contract — C2 LOCKED
+# Approved V1 Instructional Contract — C2 Foundation Baseline
 
-Technique records use Foundation fields plus required `presentationSteps[]`. Sparse optional production fields are limited to `strikeCues[]`, `commonMistakes[]`, and `beginnerTips[]` when the approved record demonstrates reusable value. Separate `movementType`, `cadence`, `rodAction`, and `reelAction` fields are deferred for V1 because the approved production content does not require them and duplicating their information risks encoding contextual cadence as intrinsic Technique data.
+The original C2 Foundation contract required `presentationSteps[]` and allowed sparse `strikeCues[]`, `commonMistakes[]`, and `beginnerTips[]`. FCC 53A subsequently approved detailed expansion of these instructional fields and the new `aboutTechnique` / `readingPresentation` / optional `applicationGuidance` content; the original C2 restrictions are a prior baseline, not a reason to remove the approved FCC 53A lessons. Separate `movementType`, `cadence`, `rodAction`, and `reelAction` fields are deferred for V1 because the approved production content does not require them and duplicating their information risks encoding contextual cadence as intrinsic Technique data.
 
 No Technique category hierarchy is required in V1. RP-C1 locks the exact V1 vocabulary below; changing that vocabulary requires reopening the bounded Technique planning gate. Context-specific adjustments such as retrieve speed, countdown/depth, float-depth adjustment, weighting, current orientation, back-trolling direction, flutter-fall, or “slow the cadence in cold water” remain Recommendation Decision Knowledge or contextual modifiers rather than new Technique entities or intrinsic Technique fields.
 
@@ -149,7 +149,9 @@ Rig↔Technique and Lure/Bait↔Technique authored scopes are canonical Compatib
 
 FCC 50B reconciles legacy Rig `Bottom Fishing` semantics to the existing canonical `bottom-presentation` Technique. The active Compatibility set adds Bottom Presentation for Drop Shot Rig, Carolina Rig, Neko Rig, Shaky Head Rig, Free Rig, Jika Rig, Punch / Pegged Texas Rig, and Bottom-Bouncer / Spinner Rig. This changes relationship coverage only: no new Technique vocabulary, Technique schema, Condition, or recommendation field is created.
 
-# Locked V1 Production Content — C2 EXACT CONTENT LOCK
+The following original C2 copy is retained as the **pre-FCC 53A exact-content baseline**, not a competing current source of detailed instructions. FCC 53A replaces/supplements the lessons in `data/techniques.js` while explicitly retaining the approved C2 `strikeCues[]` and `beginnerTips[]`. The updated 16-record content projection is validated by `tools/validate_repository_integrity.js`.
+
+# Locked V1 Production Content — C2 EXACT CONTENT LOCK (Historical Baseline)
 
 The following 16 records are the approved production copy for `TECHNIQUE_DATA`. Foundation lifecycle values are supplied in production; the content below locks `summary` and the approved sparse instructional arrays. `presentationSteps[]` is required. `strikeCues[]`, `commonMistakes[]`, and `beginnerTips[]` are included only where approved. Separate `movementType`, `cadence`, `rodAction`, and `reelAction` fields are deferred for V1.
 
@@ -488,6 +490,18 @@ The following 16 records are the approved production copy for `TECHNIQUE_DATA`. 
 **beginnerTips[]**
 - Focus on line management rather than creating the movement yourself.
 - Distinguish Drift from Natural Drift: Drift describes the presentation being carried with the moving platform/water while the angler manages line; Natural Drift specifically relies on current to carry the presentation with minimal imposed movement.
+
+# FCC 53A — Current Detailed Teaching and Guide Contract
+
+`data/techniques.js` remains the single canonical home for the **16 unchanged Technique identities** and their reusable instruction. Each current Technique includes `aboutTechnique`, four ordered **How to Fish It** steps, `readingPresentation`, strike cues, beginner guidance, and mistake/correction pairs. Optional `applicationGuidance` clarifies particular intrinsic use only where authored. Existing C2 strike cues and beginner tips are retained verbatim; the prior C2 prose above remains a traceable baseline rather than a second active content store. Technique data contains no new Fish/Condition-specific recommendation ranking.
+
+`data/technique-guidance.js` is a separate **editorial curriculum** owner: seven curated `CORE_TECHNIQUE_IDS` and one contextual **Learn First** lesson per each of 23 active Rigs. Its `selectionMode` is either `rig` (Rig-level lesson) or `explicit` (the user chooses a compatible bait for a specific lesson); a teaching example must not create a selected bait automatically. Rig + Lure/Bait + Technique eligibility and the **Other Compatible Techniques** list are computed from the three active canonical pairwise Compatibility families, never duplicated as an intrinsic triplet registry or inferred from a high-level Rig-only relationship. The twelve approved bait-specific sentences for Carolina, Free, Jika, and Punch / Pegged Texas Rigs are part of this curriculum.
+
+The independent Techniques Guide is owned by `guides/techniques-guide-controller.js` and `guides/techniques-guide-renderer.js`. It exposes live **Search Techniques**, **Start Here → Learn Core Techniques**, **Browse Techniques → All Techniques**, detail **How to Fish It** instruction, and canonical Rig/Bait reference links. Rig Detail links enter canonical Technique Detail through origin-state-preserving navigation. Cross-Guide visual primitives and reference-popover behavior remain shared. This Guide is a Reference Knowledge learning surface; it does not publish a Best/Recommended Technique effectiveness ranking.
+
+At FCC 53A Local Final, repository integrity validation was reported PASS across 30 groups on the cumulative R10 candidate; local visual review and editorial approval are recorded in the external Build Unit workstream. Deployed/real-device validation remains a subsequent acceptance step.
+
+---
 
 # Future Enhancements
 

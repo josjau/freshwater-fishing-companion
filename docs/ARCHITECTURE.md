@@ -52,6 +52,8 @@ script.js
 archive/
 themes/
 data/
+guides/
+features/
 images/
 tools/
 docs/
@@ -93,6 +95,7 @@ data/environment-correspondence.js
 data/lure-bait.js
 data/techniques.js
 data/compatibility.js
+data/technique-guidance.js
 data/fish-identification.js
 data/fish-rig-guidance.js
 data/fish-specialized-guidance.js
@@ -356,6 +359,8 @@ User Knowledge/imported text is untrusted at rendering boundaries and must use s
 
 
 ## Guide-Separated Source Architecture — Option B Implementation
+**FCC 53A Guide implementation within D071 (no new architecture decision):** `guides/techniques-guide-controller.js` and `guides/techniques-guide-renderer.js` own the Techniques Guide's three routes and learning UI. `data/techniques.js` owns the 16 reusable detailed instructional records; `data/technique-guidance.js` owns seven Core Technique curation and per-Rig Learn First context; `data/compatibility.js` continues to own pairwise intrinsic Rig/Lure/Bait/Technique relationships. The new data and Guide scripts are loaded as classic scripts by `index.html` in validated dependency order, for 44 active scripts. No Technique entity stores inverse relationships or contextual Recommendation rankings. `SOURCE-FILE-MAP.md` owns the full current dependency/role inventory.
+
 
 D071 approves **Option B / revision allowed** as the implemented source-ownership direction before further production implementation of the parked FCC 53A Techniques Guide. The migration retains plain HTML/CSS/classic JavaScript and separates `script.js` application bootstrap from Guide-specific controllers, while `view-renderer.js` retains shared presentation primitives. The descriptive repository-relative owner/dependency map is `SOURCE-FILE-MAP.md`. The earlier monolithic code structure was the migration baseline, not the organization described by this section. Deployment and actual-device validation remain independent operational gates.
 
