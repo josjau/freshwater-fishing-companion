@@ -917,7 +917,6 @@ button.compact-link-row { cursor: pointer; }
 .reference-popover [data-lure-bait-rigs-extra][hidden] { display: none; }
 
 
-
 /* =========================================================
    RIG GUIDE — CONFIGURATION + READINESS
    ========================================================= */
@@ -2099,6 +2098,27 @@ button.compact-link-row { cursor: pointer; }
    REGULATIONS — STATE RESOURCE GATEWAY
    ========================================================== */
 
+.regulations-gateway-view {
+    width: min(100%, 1040px);
+    margin-inline: auto;
+}
+
+/* The first R1 review uses a centered ~2/3 reading width on tablets/desktops. */
+@media (min-width: 700px) {
+    .regulations-state-view {
+        width: 66.6667%;
+        max-width: 1000px;
+        margin-inline: auto;
+    }
+}
+
+@media (max-width: 699px) {
+    .regulations-state-view {
+        width: 100%;
+    }
+}
+
+
 .regulations-authority-note,
 .regulations-search-help,
 .regulations-agency-attribution {
@@ -2116,8 +2136,8 @@ button.compact-link-row { cursor: pointer; }
 .regulations-selector {
     display: grid;
     gap: var(--space-4);
-    max-width: 720px;
-    margin-top: var(--space-6);
+    width: min(100%, 740px);
+    margin: var(--space-6) 0 0;
     padding: var(--space-5);
     border: 1px solid var(--border);
     border-radius: var(--radius-section);
@@ -2189,106 +2209,190 @@ button.compact-link-row { cursor: pointer; }
     margin-bottom: 0;
 }
 
-.regulations-agency-attribution a,
-.regulations-notice a {
+.regulations-agency-link {
+    display: inline;
+    color: inherit;
     font-weight: 700;
-    text-underline-offset: 3px;
+    text-decoration: none;
+}
+.regulations-agency-link__action {
+    display: inline-flex;
+    gap: 0.22em;
+    margin-left: 0.5em;
+    color: var(--accent);
+    font-weight: 800;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.regulations-agency-link:hover .regulations-agency-link__action { color: var(--accent-hover); }
+.regulations-agency-link .link-arrow { color: inherit; text-decoration: none; }
+
+.regulations-standing-notice {
+    margin: 0 0 var(--space-6);
+    padding: var(--space-4);
 }
 
-.regulations-notices {
-    margin-bottom: var(--space-6);
-}
-
-.regulations-notice {
-    margin-bottom: 0;
-}
-
-.regulations-notice h3 {
+.regulations-standing-notice h3 {
     margin-bottom: var(--space-3);
 }
 
-.regulations-notice__title {
-    display: block;
-    margin-bottom: var(--space-2);
-}
-
-.regulations-notice p {
+.regulations-standing-notice p {
     margin-bottom: var(--space-3);
     color: var(--text-muted);
 }
 
-.regulations-resource-section {
-    margin-top: var(--space-6);
+.regulations-notice-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    color: var(--accent);
+    font-weight: 800;
+    text-decoration: none;
 }
+.regulations-notice-link:hover { color: var(--accent-hover); }
+.regulations-notice-link .link-arrow { color: inherit; text-decoration: none; }
 
-.regulations-resource-section h3 {
-    margin-bottom: var(--space-3);
-    font-size: 0.95rem;
-    letter-spacing: 0.08em;
+/* Regulations composes the shared Detail Section / nested Subsection hierarchy.
+   Its supporting group follows Fish ABOUT THIS FISH: one shell, independent full-row
+   disclosures, and NO nested toggles or single-item visible interruptions. */
+.regulations-resource-section { margin-top: var(--space-5); }
+.regulations-resource-section > h3 {
+    margin-bottom: var(--space-4);
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: normal;
+    text-transform: none;
+}
+.regulations-category-group + .regulations-category-group { margin-top: var(--space-5); }
+.regulations-category-heading.detail-subsection-heading { margin: 0 0 var(--space-2); }
+.regulations-supporting { margin: 0 0 var(--space-5); }
+.regulations-supporting__title {
+    margin-bottom: var(--space-2);
+    color: var(--text-subtle);
+    font-size: .82rem;
+    font-weight: 800;
+    letter-spacing: .08em;
     text-transform: uppercase;
 }
-
-.regulations-resource-card {
-    --card-accent: var(--accent);
+.regulations-supporting__shell {
     overflow: hidden;
     border: 1px solid var(--border);
-    border-left: 5px solid var(--card-accent);
-    border-radius: var(--radius);
-    background: var(--surface-elevated);
-    box-shadow: var(--shadow-card);
+    border-radius: var(--radius-section);
+    background: var(--surface);
 }
-
-.regulations-before-you-fish .regulations-resource-card { --card-accent: var(--accent-fish); }
-.regulations-plan-your-trip .regulations-resource-card { --card-accent: var(--accent-rigs); }
-
-.regulations-resource-link {
+.regulations-supporting-row + .regulations-supporting-row { border-top: 1px solid var(--border); }
+.regulations-supporting-row__heading { margin: 0; }
+.regulations-supporting-row__trigger {
     display: flex;
+    min-height: var(--touch-target);
+    width: 100%;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
-    min-height: var(--touch-target);
-    padding: var(--space-3) var(--space-4);
-    border-bottom: 1px solid var(--border);
+    gap: var(--space-3);
+    padding: 12px var(--space-4);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     color: var(--text);
+    font: inherit;
+    font-weight: 800;
+    text-align: left;
+    cursor: pointer;
+}
+.regulations-supporting-row__trigger:hover { background: var(--surface-hover); }
+.regulations-supporting-row__trigger:focus-visible { position: relative; z-index: 1; outline: 3px solid var(--accent); outline-offset: -3px; }
+.regulations-supporting-row__trigger:active { background: var(--surface-active); }
+.regulations-supporting-row__state { flex: 0 0 auto; color: var(--text-subtle); font-weight: 800; }
+.regulations-supporting-row__panel { padding: var(--space-2) var(--space-4) var(--space-4); }
+.regulations-supporting-row__panel[hidden] { display: none; }
+.regulations-supporting-row__panel > :last-child { margin-bottom: 0; }
+
+/* Official resource: compact, contained whole-row external navigation. */
+.regulations-resource-card {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.regulations-resource-link {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    min-height: var(--touch-target);
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+    background: var(--surface-elevated);
+    color: var(--text);
+    text-align: left;
     text-decoration: none;
 }
 
-.regulations-resource-link:last-child {
-    border-bottom: 0;
-}
-
 .regulations-resource-link:hover {
-    background: color-mix(in srgb, var(--card-accent) 12%, var(--surface-hover));
+    border-color: var(--border-strong);
+    background: var(--surface-hover);
+    text-decoration: none;
 }
 
+.regulations-resource-link:active { background: var(--surface-active); }
 .regulations-resource-link:focus-visible {
-    outline: 3px solid var(--card-accent);
-    outline-offset: -3px;
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
 }
 
-.regulations-resource-link__content {
-    display: grid;
+.regulations-resource-link__heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: var(--space-1) var(--space-3);
     min-width: 0;
-    gap: var(--space-1);
 }
 
 .regulations-resource-link__title {
+    min-width: 0;
     font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.regulations-resource-link__description {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
 }
 
 .regulations-resource-link__action {
     display: inline-flex;
-    align-items: center;
+    align-items: baseline;
+    gap: 0.25em;
     flex: 0 0 auto;
-    gap: var(--space-1);
-    color: var(--text-muted);
-    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.86rem;
+    font-weight: 800;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.regulations-resource-link__action .link-arrow {
+    color: inherit;
+    text-decoration: none;
+}
+.regulations-resource-link:hover .regulations-resource-link__action { color: var(--accent-hover); }
+
+/* On phone widths, official resource actions always follow the title. */
+@media (max-width: 639px) {
+    .regulations-resource-link__heading {
+        flex-direction: column;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+        gap: var(--space-1);
+    }
 }
 
 .regulations-resource-status {
     display: inline-flex;
     width: fit-content;
-    margin-top: var(--space-1);
     padding: 1px 7px;
     border: 1px solid color-mix(in srgb, var(--warning) 60%, var(--border));
     border-radius: 999px;
@@ -2308,7 +2412,7 @@ button.compact-link-row { cursor: pointer; }
     display: none;
 }
 
-@media (max-width: 699px) {
+@media (max-width: 1180px) {
     body.regulations-picker-open {
         overflow: hidden;
     }
@@ -2536,22 +2640,11 @@ button.compact-link-row { cursor: pointer; }
     }
 }
 
-@media (max-width: 539px) {
-    .regulations-resource-link {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: var(--space-2);
-    }
 
-    .regulations-resource-link__action {
-        align-self: flex-start;
-    }
-}
-
-@media (min-width: 700px) {
+@media (min-width: 1181px) {
     .regulations-selector {
-        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.65fr);
-        align-items: end;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
     }
 
     .regulations-open-state,
@@ -2559,9 +2652,6 @@ button.compact-link-row { cursor: pointer; }
         grid-column: 1 / -1;
     }
 
-    .regulations-resource-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
 }
 
 

@@ -10,47 +10,31 @@
    REGULATIONS — GATEWAY + STATE RENDERING
    ========================================================== */
 
-function getRegulationsResourceActionLabel(resource) {
-    const capabilities = new Set(Array.isArray(resource?.capabilities) ? resource.capabilities : []);
-    const title = String(resource?.title ?? "Official Resource");
+function escapeRegulationsHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[character]));
+}
 
-    switch (resource?.primaryCategory) {
-        case "regulations":
-            return "View Fishing Regulations";
-        case "licenses-permits":
-            if (capabilities.has("license-purchase") && !capabilities.has("license-information")) {
-                return "Buy Fishing License";
-            }
-            if (capabilities.has("license-purchase")) {
-                return "View Licenses & Purchase Options";
-            }
-            return "View License Information";
-        case "special-regulations":
-            return "View Special Regulations";
-        case "where-to-fish":
-            if (!/^where to fish/i.test(title) && capabilities.size >= 4) {
-                return `Explore ${title}`;
-            }
-            if (capabilities.has("fishing-forecasts")) {
-                return "Find Waters & Forecasts";
-            }
-            if (capabilities.has("waterbody-regulations")) {
-                return "Find Waters & Regulations";
-            }
-            if (capabilities.has("lake-information")) {
-                return "Find Waters & Lake Info";
-            }
-            return "Find Fishing Locations";
-        case "public-access":
-            return "View Public Access";
-        case "stocking":
-            return "View Stocking Information";
-        case "reports-forecasts":
-            if (capabilities.has("fishing-reports")) return "View Fishing Reports";
-            if (capabilities.has("fishing-forecasts")) return "View Fishing Forecasts";
-            return "View Reports & Forecasts";
+function getRegulationsResourceActionLabel(resource) {
+    // Describe the destination that opens, not a downstream button or feature.
+    switch (resource?.experienceType) {
+        case "pdf": return "Download PDF";
+        case "interactive-map": return "Open Official Map";
+        case "interactive-tool": return "Open Official Tool";
+        case "external-portal":
+            return resource.primaryCategory === "licenses-permits" ? "Open License Portal" : "Open Official Portal";
         default:
-            return `Open ${title}`;
+            switch (resource?.primaryCategory) {
+                case "regulations": return "View Regulations";
+                case "licenses-permits": return "View License Information";
+                case "special-regulations": return "View Special Rules";
+                case "where-to-fish": return "Explore Fishing Waters";
+                case "public-access": return "View Access Information";
+                case "stocking": return "View Stocking Information";
+                case "reports-forecasts": return "View Reports & Forecasts";
+                default: return "View Official Resource";
+            }
     }
 }
 
@@ -283,6 +267,21 @@ function renderRegulationsGatewayView(appMain, config) {
         if (event.key === "Escape") {
             event.preventDefault();
             closePicker();
+            return;
+        }
+        if (event.key !== "Tab") return;
+        // Confine keyboard focus to the active modal without trapping Escape.
+        const focusables = Array.from(picker.querySelectorAll('button:not([disabled]), [tabindex="0"]'))
+            .filter((item) => item !== picker.querySelector("[data-regulations-picker-cancel][tabindex='-1']"));
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (event.shiftKey && (document.activeElement === first || !picker.contains(document.activeElement))) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && (document.activeElement === last || !picker.contains(document.activeElement))) {
+            event.preventDefault();
+            first.focus();
         }
     });
     wheel?.addEventListener("click", (event) => {
@@ -333,79 +332,174 @@ function renderRegulationsGatewayView(appMain, config) {
 }
 
 function renderRegulationsStateView(appMain, config) {
-    if (!appMain || !config?.state || !Array.isArray(config.resources) || !Array.isArray(config.notices)) {
+    if (!appMain || !config?.state || !Array.isArray(config.resources)) {
         console.error("A valid Regulations state configuration is required.");
         return;
     }
 
-    const categoryPriority = new Map([
-        ["regulations", 0],
-        ["licenses-permits", 1]
-    ]);
-    const resources = [...config.resources].sort((first, second) =>
-        (categoryPriority.get(first.primaryCategory) ?? 10) - (categoryPriority.get(second.primaryCategory) ?? 10)
-    );
-    const beforeYouFish = resources.filter((resource) => resource.section === "before-you-fish");
-    const planYourTrip = resources.filter((resource) => resource.section === "plan-your-trip");
+    // Approved Registry composition: visible primary obligations precede a single
+    // grouped supporting disclosure area. Internal headings are peer subsections,
+    // never additional nested expanders or count-dependent visible exceptions.
+    const primaryCategories = [
+        { id: "regulations", label: "Fishing Regulations" },
+        { id: "licenses-permits", label: "Licenses & Permits" }
+    ];
+    const guidanceCategories = [
+        { id: "special-regulations", label: "Special Regulations" },
+        { id: "invasive-bait-guidance", label: "Invasive Species & Bait Guidance" },
+        { id: "additional-guidance", label: "Additional Official Guidance" }
+    ];
+    const tripCategories = [
+        { id: "fishing-hubs", label: "Fishing Hubs" },
+        { id: "where-to-fish", label: "Where to Fish" },
+        { id: "public-access", label: "Public Access & Launches" },
+        { id: "maps-waterbody-tools", label: "Maps & Waterbody Tools" },
+        { id: "stocking", label: "Fish Stocking" },
+        { id: "reports-forecasts", label: "Reports & Forecasts" },
+        { id: "additional-guidance", label: "Additional Official Guidance" }
+    ];
+    const resources = config.resources.filter((resource) => resource.status !== "retired");
+
+    // A resource's Fishing Hub role is canonically typed in data/regulations.js;
+    // title copy never controls which supporting subsection contains the link.
+    const isFishingHub = (resource) => resource.section === "plan-your-trip" &&
+        Array.isArray(resource.capabilities) && resource.capabilities.includes("fishing-hub");
+
+    const displayCategory = (resource) => {
+        if (isFishingHub(resource)) return "fishing-hubs";
+        if (resource.primaryCategory !== "other-official-resource") return resource.primaryCategory;
+        const capabilities = Array.isArray(resource.capabilities) ? resource.capabilities : [];
+        if (resource.section === "before-you-fish" &&
+            (capabilities.includes("aquatic-invasive-species") || capabilities.includes("bait-transport"))) {
+            return "invasive-bait-guidance";
+        }
+        if (resource.section === "plan-your-trip" &&
+            (resource.experienceType === "interactive-map" || resource.experienceType === "interactive-tool")) {
+            return "maps-waterbody-tools";
+        }
+        return "additional-guidance";
+    };
 
     const buildResourceLinks = (records) => records.map((resource) => {
         const unavailableMarkup = resource.status === "temporarily-unavailable"
-            ? '<span class="regulations-resource-status">Temporarily unavailable / limited</span>'
+            ? '<span class="regulations-resource-status">Limited access \u2014 check agency site</span>'
             : "";
-        const actionLabel = getRegulationsResourceActionLabel(resource);
         return `
-            <a class="regulations-resource-link" href="${resource.url}" target="_blank" rel="noopener noreferrer">
-                <span class="regulations-resource-link__content">
-                    <span class="regulations-resource-link__title">${resource.title}</span>
-                    ${unavailableMarkup}
+            <a class="regulations-resource-link" href="${escapeRegulationsHtml(resource.url)}" target="_blank" rel="noopener noreferrer">
+                <span class="regulations-resource-link__heading">
+                    <span class="regulations-resource-link__title">${escapeRegulationsHtml(resource.title)}</span>
+                    <span class="regulations-resource-link__action">${escapeRegulationsHtml(getRegulationsResourceActionLabel(resource))} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></span>
                 </span>
-                <span class="regulations-resource-link__action">${actionLabel} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></span>
+                <span class="regulations-resource-link__description">${escapeRegulationsHtml(resource.description)}</span>
+                ${unavailableMarkup}
             </a>
         `;
     }).join("");
 
-    const noticesMarkup = config.notices.length > 0 ? `
-        <div class="regulations-notices" aria-label="Current official notices">
-            ${config.notices.map((notice) => `
-                <aside class="detail-section detail-section--safety regulations-notice">
-                    <h3>Special Alert</h3>
-                    <strong class="regulations-notice__title">${notice.title}</strong>
-                    <p>${notice.summary}</p>
-                    <a href="${notice.url}" target="_blank" rel="noopener noreferrer">Read official notice <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>
-                </aside>
-            `).join("")}
-        </div>
-    ` : "";
+    const buildSubsections = (entries, categories, idPrefix, headingLevel) => categories.map((category) => {
+        const records = entries.filter((resource) => displayCategory(resource) === category.id);
+        if (records.length === 0) return "";
+        const headingId = `${idPrefix}-${category.id}-heading`;
+        const rows = `<div class="regulations-resource-card">${buildResourceLinks(records)}</div>`;
+        return `
+            <section class="regulations-category-group" aria-labelledby="${headingId}">
+                <h${headingLevel} id="${headingId}" class="detail-subsection-heading regulations-category-heading">${escapeRegulationsHtml(category.label)}</h${headingLevel}>
+                ${rows}
+            </section>
+        `;
+    }).join("");
 
-    const sectionMarkup = (title, records, sectionClass) => records.length > 0 ? `
-        <section class="regulations-resource-section ${sectionClass}" aria-labelledby="${sectionClass}-title">
-            <h3 id="${sectionClass}-title">${title}</h3>
-            <div class="regulations-resource-card">
-                ${buildResourceLinks(records)}
-            </div>
+    // The two primary legal destinations always remain visible. Do not allow
+    // secondary one-link groups to interrupt the subsequent disclosure sequence.
+    const beforeResources = resources.filter((resource) => resource.section === "before-you-fish");
+    const primaryIds = new Set(primaryCategories.map((category) => category.id));
+    const primaryResources = beforeResources.filter((resource) => primaryIds.has(displayCategory(resource)));
+    const guidanceResources = beforeResources.filter((resource) => !primaryIds.has(displayCategory(resource)));
+    const tripResources = resources.filter((resource) => resource.section === "plan-your-trip");
+    const primaryMarkup = primaryResources.length ? `
+        <section class="detail-section regulations-resource-section regulations-before-you-fish" aria-labelledby="regulations-before-you-fish-title">
+            <h3 id="regulations-before-you-fish-title">Before You Fish</h3>
+            ${buildSubsections(primaryResources, primaryCategories, "regulations-primary", 4)}
         </section>
     ` : "";
+
+    // One contained group, independent disclosure rows, named peer subsections
+    // within each open panel. Always render both rows CLOSED on fresh entry.
+    const disclosureMarkup = (key, label, entries, categories) => {
+        if (entries.length === 0) return "";
+        const headingId = `regulations-${key}-heading`;
+        const panelId = `regulations-${key}-panel`;
+        return `
+            <section class="regulations-supporting-row" aria-labelledby="${headingId}">
+                <h4 id="${headingId}" class="regulations-supporting-row__heading">
+                    <button type="button" class="regulations-supporting-row__trigger" data-regulations-disclosure-toggle
+                        aria-expanded="false" aria-controls="${panelId}">
+                        <span>${escapeRegulationsHtml(label)}</span>
+                        <span class="regulations-supporting-row__state" aria-hidden="true">▾</span>
+                    </button>
+                </h4>
+                <div class="regulations-supporting-row__panel" id="${panelId}" role="region"
+                     aria-labelledby="${headingId}" hidden>
+                    ${buildSubsections(entries, categories, `regulations-${key}`, 5)}
+                </div>
+            </section>
+        `;
+    };
+    const supportingRows = [
+        disclosureMarkup("additional-guidance", "Additional Rules & Guidance", guidanceResources, guidanceCategories),
+        disclosureMarkup("plan-your-trip", "Plan Your Trip", tripResources, tripCategories)
+    ].filter(Boolean).join("");
+    const supportingMarkup = supportingRows ? `
+        <section class="regulations-supporting" aria-labelledby="regulations-supporting-title">
+            <h3 id="regulations-supporting-title" class="regulations-supporting__title">Additional Official Resources</h3>
+            <div class="regulations-supporting__shell">${supportingRows}</div>
+        </section>
+    ` : "";
+
+    // A standing reminder always remains visible; FCC does not curate event notices.
+    const updates = config.officialUpdatesResource;
+    const officialUpdatesLink = updates && updates.status === "active" &&
+        Array.isArray(updates.capabilities) && updates.capabilities.includes("official-rule-updates") &&
+        updates.experienceType === "web-page"
+        ? `<a class="regulations-notice-link" href="${escapeRegulationsHtml(updates.url)}" target="_blank" rel="noopener noreferrer">View Official Notices & Updates <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a>`
+        : "";
 
     appMain.innerHTML = `
         <article class="content-view regulations-state-view" aria-labelledby="regulations-state-title">
             ${buildPageNavigationMarkup("Regulations")}
             <header class="regulations-state-header">
-                <h2 id="regulations-state-title">${config.state.name}</h2>
+                <h2 id="regulations-state-title">${escapeRegulationsHtml(config.state.name)}</h2>
                 <p class="regulations-state-subtitle">Fishing Regulations & Resources</p>
             </header>
-            ${noticesMarkup}
-            ${sectionMarkup("Before You Fish", beforeYouFish, "regulations-before-you-fish")}
-            ${sectionMarkup("Plan Your Trip", planYourTrip, "regulations-plan-your-trip")}
+            <aside class="detail-section detail-section--safety regulations-standing-notice" aria-label="Fishing rule changes reminder">
+                <h3>Check for Current Rule Changes</h3>
+                <p>Before fishing, check the state agency for emergency orders, temporary closures, and special notices that may affect where you plan to fish. Official rules and updates take precedence.</p>
+                ${officialUpdatesLink}
+            </aside>
+            ${primaryMarkup}
+            ${supportingMarkup}
             <footer class="regulations-agency-footer">
-                <p class="regulations-agency-attribution">Official resources from <a href="${config.state.agencyUrl}" target="_blank" rel="noopener noreferrer">${config.state.agencyName} <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></a></p>
+                <p class="regulations-agency-attribution">Official resources from <a class="regulations-agency-link" href="${escapeRegulationsHtml(config.state.agencyUrl)}" target="_blank" rel="noopener noreferrer"><span class="regulations-agency-link__name">${escapeRegulationsHtml(config.state.agencyName)}</span><span class="regulations-agency-link__action">Visit Site <span class="link-arrow link-arrow--external" aria-hidden="true">↗</span></span></a></p>
             </footer>
         </article>
     `;
 
+    appMain.querySelectorAll("[data-regulations-disclosure-toggle]").forEach((toggle) => {
+        const panel = appMain.querySelector(`#${toggle.getAttribute("aria-controls")}`);
+        const caret = toggle.querySelector(".regulations-supporting-row__state");
+        if (!panel) return;
+        toggle.addEventListener("click", () => {
+            const expanding = toggle.getAttribute("aria-expanded") !== "true";
+            toggle.setAttribute("aria-expanded", String(expanding));
+            panel.hidden = !expanding;
+            if (caret) caret.textContent = expanding ? "▴" : "▾";
+            if (!expanding) toggle.scrollIntoView({ block: "nearest" });
+        });
+    });
+
     appMain.querySelector("[data-parent-navigation]")?.addEventListener("click", config.onParent);
     initializeHomeNavigation(appMain);
 }
-
 
 /* ==========================================================
    END REGULATIONS — GATEWAY + STATE RENDERING

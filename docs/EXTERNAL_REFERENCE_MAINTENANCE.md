@@ -1,10 +1,10 @@
 # Freshwater Fishing Companion — External Reference Maintenance
 
 **Document:** EXTERNAL_REFERENCE_MAINTENANCE.md  
-**Document Revision:** 1.3.1  
+**Document Revision:** 1.3.3  
 **Document Status:** Approved  
 **Role:** Permanent maintenance standard for external references and externally hosted instructional media  
-**Last Updated:** 2026-09-15
+**Last Updated:** 2026-10-18
 
 # Purpose
 
@@ -18,7 +18,7 @@ Recurring automated checks currently cover active external destinations used by:
 - canonical Rig tutorial external URLs,
 - active external instructional Media destinations in `data/media.js`.
 
-**Current Regulations implementation:** canonical Regulations maintenance covers active State agency URLs, StateResource destinations, officially-designated-external `designationUrl` evidence, and active StateNotice destinations. Regulations uses a separate monthly maintenance workflow because its freshness/authority requirements are stricter than the existing Rig/Media cadence.
+**Current Regulations implementation:** canonical Regulations maintenance covers active State agency URLs, StateResource destinations, officially-designated-external `designationUrl` evidence, and any qualified stable official rule-update destination represented by a StateResource capability; no individual incident-notice registry is maintained. Regulations uses a separate monthly maintenance workflow because its freshness/authority requirements are stricter than the existing Rig/Media cadence.
 
 Geometry/provenance URLs used only as evidence for an already-approved local project asset are not recurring link-check targets. Recheck those sources when the local asset is edited/replaced or when its provenance is questioned.
 
@@ -49,7 +49,7 @@ Regulations uses a separate monthly maintenance workflow. It combines two differ
 
 The Regulations checker may report success, redirects, 404/410, server errors, timeout/DNS, 401/403/405/429, and final URL. A changed redirect destination is surfaced for human redirect review even when the final response succeeds.
 
-Network findings must never automatically replace a URL, disable/remove a resource, change authority/category/capabilities, create/deactivate a notice, or interpret legal meaning.
+Network findings must never automatically replace a URL, disable/remove a resource, change authority/category/capabilities, recreate an incident-notice feed, or interpret legal meaning.
 
 Detected technical concerns produce clear GitHub Actions warnings/run summaries and create or update one persistent Regulations maintenance issue as the authoritative human review queue. GitHub Actions email notifications are the approved initial external alert channel. A separate mail service is not required unless GitHub-native notification behavior later proves insufficient.
 
@@ -85,13 +85,22 @@ HTTP success alone does not satisfy human review.
 For Regulations:
 
 - complete State/StateResource human freshness review at least every **90 days**;
-- active StateNotice human review at least every **30 days**;
+- verify the standing generic safety advisory remains present and any conditional official-updates CTA still points to a qualified agency destination during the StateResource review;
 - perform a formal pre-release review whenever the existing review is stale or otherwise insufficient;
 - review user-reported concerns as received.
 
 Regulations human review confirms destination existence, responsible authority, intended purpose, canonical URL/redirect legitimacy, title/description accuracy, current PDF/tool behavior, provenance chain, and whether a materially better official replacement exists.
 
-State and active/temporarily-unavailable StateResource records older than 90 days fail freshness validation. Active StateNotice records older than 30 days fail. Retired resources are excluded from recurring freshness enforcement. A known passed official notice expiry prevents rendering and should surface cleanup if the record remains active.
+State and active/temporarily-unavailable StateResource records older than 90 days fail freshness validation. Retired resources are excluded from recurring freshness enforcement. No 30-day incident-notice expiry/freshness contract remains. The standing generic reminder never claims to mirror live rule changes; an optional official-updates CTA is an ordinary separately-reviewed StateResource URL.
+
+### FCC 54A one-time qualified-evidence transition — approved 2026-10-18
+
+The approved Regulations launch retains **618 resource IDs and URLs** and explicitly qualifies the **239 pre-existing active resources** whose provenance or individual human review is incomplete: **155 missing only a `verifiedDate`, 52 missing only an official-designation `designationUrl`, and 32 missing both**. These are **PENDING / NOT VERIFIED**, not confirmed broken and not human-validated. The originally documented 16 access-limited URLs and all functional limitations remain separately qualified. The approved standing generic check-current-agency-rules advisory is retained; do not reproduce current notices or imply this queue certifies legal accuracy.
+
+- `data/regulations.js` is the per-resource maintenance queue: only affected records carry `evidenceStatus: "pending"`. Its existing null `verifiedDate` and/or `designationUrl` show exactly what remains missing. A stored date may only come from source-specific human verification; a designation URL must link to an agency's express endorsement of that external destination. The resource title, ID, URL, authority, and section are not replaced merely to clear a pending flag.
+- `tools/validate_repository_integrity.js` pins the original 239-record ID/missing-field cohort from R5. This one-time grandfathered cohort **cannot grow**, and additional missing date/provenance fields outside each record's originally qualified gaps cause a validation failure. Correctly dated active State/StateResource records remain subject to the existing strict **90-day** freshness validation, and invalid or expired evidence still fails.
+- **Due by 2026-11-17:** resolve each pending gap through a documented source-specific agency/human review or place the concerned destination through a separately approved normal source lifecycle disposition. The validator fails future releases after this date while any pending record remains. This deadline is a queue/remediation target, **not** a synthetic verification date or evidence of authority.
+- The established single `[Maintenance] Regulations resource review` issue is the human operational queue; track remaining IDs and verified dispositions without generating a parallel source of truth. Automated link results are diagnostic only. Do not mark the 239 as `PASS`, update `REGULATIONS_DATA_BUILD_INFO.externalReferenceReviewedDate`, or declare the national resource audit fully reviewed until complete authoritative evidence exists.
 
 # Review-Date Ownership
 
@@ -119,10 +128,10 @@ When such an asset is intentionally edited or replaced, re-establish the necessa
 
 Current:
 
-- `tools/check_external_references.js` — report-only external destination health check. Its default mode preserves the existing Rig/Media surface; `--regulations` checks Regulations State agency URLs, StateResource/StateNotice destinations, and `designationUrl` evidence, reports changed redirects/access limits/failures for human review, and emits the Regulations maintenance report/concern count.
+- `tools/check_external_references.js` — report-only external destination health check. Its default mode preserves the existing Rig/Media surface; `--regulations` checks Regulations State agency URLs, StateResource destinations, and `designationUrl` evidence, reports changed redirects/access limits/failures for human review, and emits the Regulations maintenance report/concern count.
 - `.github/workflows/external-reference-health.yml` — unchanged quarterly/manual GitHub Actions wrapper for the general Rig/Media surface.
 - `.github/workflows/regulations-maintenance.yml` — separate monthly/manual Regulations workflow. It runs repository/freshness validation plus `check_external_references.js --regulations`, writes run warnings/summary output, and creates or updates the single persistent `[Maintenance] Regulations resource review` issue when human attention is required. It does not auto-close the issue on a clean run.
-- `tools/validate_repository_integrity.js` — deterministic repository-integrity validator, including Regulations schema/provenance/relationship and approved 90-day State/StateResource / 30-day active StateNotice freshness enforcement.
+- `tools/validate_repository_integrity.js` — deterministic repository-integrity validator, including Regulations schema/provenance/relationship and approved 90-day State/StateResource freshness enforcement, 180 original-ID retention and 618-resource initial-release ceiling.
 
 The Regulations workflow requires only `contents: read` and `issues: write`. GitHub Actions email notifications remain the approved initial external alert channel; setup guidance must ensure the user has repository/Actions notification settings configured to receive maintenance activity.
 

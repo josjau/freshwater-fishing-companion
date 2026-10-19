@@ -26,7 +26,7 @@
 | `guides/techniques-guide-controller.js` | `guides/techniques-guide-renderer.js` | Techniques Guide live search, Core/All collection browse, detailed How to Fish It learning, canonical usage references and origin-state-preserving navigation; three Technique routes. | Consumes 16 `data/techniques.js` records and curated `data/technique-guidance.js`; obtains Rig/Bait validity from `data/compatibility.js` instead of copying relationships. Registers `techniques-guide` routes. |
 | `guides/knots-guide-controller.js` | `guides/knots-guide-renderer.js` | Knot landing, browse, detail and curated Knot-specific search; three Knot routes. | Rig-used-in relationships, Reel Setup workflow handoff and return, knot-media renderer; preserved source-owned `data/knot-guidance.js` intents. Registers `knot-guide` routes. |
 | `features/reel-setup-controller.js` | `features/reel-setup-renderer.js` | Reel Setup step state, draft vs completed device-local context, Reel/Line/Equipment/Spool/Ready flow, route, clear/reload and origin return; one route. | One retained completed setup context (`freshwaterFishingCompanion.completedReelSetup.v1`), independent of My Tackle readiness; Rigs/Knots full workflow entry, Fish/Rig Details passive context only, no Knot Detail passive context. Registers `reel-setup` route. |
-| `features/regulations-controller.js` | `features/regulations-renderer.js` | Regulation gateway and state resource navigation; two routes. | Official agency links/state notices from immutable `data/regulations.js`; Fish-origin return. Registers `regulations` routes. |
+| `features/regulations-controller.js` | `features/regulations-renderer.js` | Regulation gateway and state resource navigation; two routes. | Official agency/state-resource links and standing rule-change reminder (no event notice feed) from immutable `data/regulations.js`; Fish-origin return. Registers `regulations` routes. |
 
 The shared app also owns routes for Dashboard, What Should I Throw, Tackle, Catch Log, Favorites, and Settings. These are present routes, not claims that deferred capability content is implemented.
 
@@ -42,7 +42,7 @@ The D071 source-architecture migration preserved its then-current 20 canonical d
 | `data/technique-guidance.js` | FCC 53A instructional curriculum: seven Core Techniques; Rig-specific Learn First / bait-specific why text for 23 Rigs; does not own intrinsic Compatibility or ranked Recommendations. |
 | `data/reel-guidance.js` | Reel Setup phase, choice, line/backing and stage-specific guidance; used by Reel feature. |
 | `data/media.js` | Cross-entity owned media and provenance; renderer paths resolve to image files under `images/`. |
-| `data/regulations.js` | Official state resource metadata, status/notices; consumed by Regulations feature. |
+| `data/regulations.js` | Official state/resource metadata, status and verified source provenance; 180 original identities retained, NM-13 consumption-only source excluded from initial release; consumed by Regulations feature. No event-notice registry. |
 
 | Root foundation service | Contract |
 | --- | --- |

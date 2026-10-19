@@ -285,7 +285,6 @@ function validateEntrypoint() {
     }
 
 
-
     // Option B migration validation: every data, shared, Guide, feature and bootstrap
     // script is a classic script with an exact dependency order (not only seven markers).
     const optionBOrder = [
@@ -1333,19 +1332,264 @@ function validateFishSearchHelpers(canonicalData) {
 }
 
 
-function validateRegulationsData(buildInfo, states, resources, notices) {
-    recordCheck("Regulations state/resource/notice schema, provenance, relationships, and freshness");
+function validateRegulationsData(buildInfo, states, resources) {
+    recordCheck("Regulations state/resource schema, original identities, provenance, relationships, and 90-day freshness");
 
 
     const stateFields = ["id", "name", "abbreviation", "agencyName", "agencyUrl", "verifiedDate", "active"];
     const resourceFields = ["id", "stateId", "section", "primaryCategory", "capabilities", "title", "description", "url", "experienceType", "status", "authorityName", "authorityUrl", "sourceRelationship", "designationUrl", "verifiedDate"];
-    const noticeFields = ["id", "stateId", "title", "summary", "url", "authorityName", "authorityUrl", "sourceRelationship", "designationUrl", "createdDate", "verifiedDate", "expiresDate", "active"];
     const sections = new Set(["before-you-fish", "plan-your-trip"]);
     const categories = new Set(["regulations", "licenses-permits", "special-regulations", "where-to-fish", "public-access", "stocking", "reports-forecasts", "other-official-resource"]);
-    const capabilities = new Set(["statewide-regulations", "waterbody-regulations", "species-regulations", "seasons", "size-limits", "bag-limits", "legal-methods", "special-permits", "license-information", "license-purchase", "where-to-fish", "public-access", "interactive-map", "stocking", "fishing-reports", "fishing-forecasts", "lake-information", "fish-surveys"]);
+    const capabilities = new Set(["statewide-regulations", "waterbody-regulations", "species-regulations", "seasons", "size-limits", "bag-limits", "legal-methods", "special-permits", "license-information", "license-purchase", "where-to-fish", "public-access", "interactive-map", "stocking", "fishing-reports", "fishing-forecasts", "lake-information", "fish-surveys", "aquatic-invasive-species", "water-safety-guidance", "official-rule-updates", "fishing-hub"]);
     const experienceTypes = new Set(["web-page", "pdf", "interactive-tool", "interactive-map", "external-portal"]);
     const statuses = new Set(["active", "temporarily-unavailable", "retired"]);
     const sourceRelationships = new Set(["direct", "officially-designated-external"]);
+    // FCC 54A one-time release transition: this frozen ID/missing-field cohort is
+    // test evidence, not a second data owner. Future gaps must fail validation.
+    // D = missing human verification date; P = missing provider designation proof.
+    const approvedLegacyPendingEvidence = new Map([
+        ["arkansas-1r7cp-vfg8hg1doi8wazhpnhyviimne4e-view", "DP"],
+        ["arkansas-1segfolpmjeyzhpxwrlikrzztq-jklejb-view", "DP"],
+        ["arkansas-1ykuno271elyomaazpb7bk5rzh9ndsvdq-view", "DP"],
+        ["arkansas-education-aquatic-nuisance-species", "D"],
+        ["arkansas-education-fisheries-scientific-reports-and-management-plan", "D"],
+        ["arkansas-fishing", "D"],
+        ["arkansas-fishing-trout", "D"],
+        ["arkansas-licensing-agfc-owned-wma-lake-conservation-permit-wmc", "D"],
+        ["arkansas-maps", "D"],
+        ["arkansas-maps-arkansas-lake-maps", "D"],
+        ["arkansas-news", "D"],
+        ["arkansas-regulations-general-wma-regulations", "D"],
+        ["arkansas-resource-07", "DP"],
+        ["arkansas-resource-10", "D"],
+        ["arkansas-resources-code-of-regulations", "D"],
+        ["arkansas-state-arkansas", "D"],
+        ["arkansas-things-to-do-state-fish-hatcheries", "D"],
+        ["arkansas-where-to-fish-family-and-community-fishing-program-stocked", "D"],
+        ["arkansas-where-to-fish-fish-attractors", "D"],
+        ["arkansas-where-to-fish-public-fishing-areas", "D"],
+        ["arkansas-where-to-fish-trout-waters", "D"],
+        ["delaware-delaware-fishing-guide", "P"],
+        ["delaware-non-tidal-fishing-regulations", "P"],
+        ["florida-agency-designated-go-outdoors-florida-license-portal", "P"],
+        ["georgia-go-outdoors-georgia-license-purchase-portal", "P"],
+        ["georgia-guide", "P"],
+        ["idaho-go-outdoors-idaho-official-license-purchase-entry-no-check", "P"],
+        ["illinois-exploremoreil-current-license-purchasing-portal", "P"],
+        ["illinois-fish-stocking-records", "P"],
+        ["illinois-lakes-and-reservoirs-waterbody-directory", "P"],
+        ["illinois-rivers-and-streams-directory-agency-navigation-confirmed-b", "P"],
+        ["illinois-trout-fishing-sites", "P"],
+        ["indiana-direct-where-to-fish-arcgis-application", "P"],
+        ["indiana-go-outdoors-indiana-purchasing", "P"],
+        ["iowa-go-outdoors-iowa-current-license-portal", "P"],
+        ["kansas-26-public-fishing-access-interactive-map", "P"],
+        ["kansas-aquatic-invasive-species-aquatic-invasive-species-designat", "D"],
+        ["kansas-bathymetric-lake-maps-pdf-index-not-individual-pdf", "D"],
+        ["kansas-discover-learn-aquatic-invasive-species", "D"],
+        ["kansas-file-atlas-fishing-2026-eng-web-pdf", "D"],
+        ["kansas-file-ks-fishing-regulations-26-pdf", "D"],
+        ["kansas-fish-stocking-needs-update-urban-fish-stocking", "D"],
+        ["kansas-fishing-in-kansas-fish-bait", "D"],
+        ["kansas-fishing-in-kansas-fishing-forecast-by-species", "D"],
+        ["kansas-fishing-in-kansas-fishing-reports-by-reservoir", "D"],
+        ["kansas-fishing-in-kansas-what-to-fish", "D"],
+        ["kansas-fishing-in-kansas-when-to-fish", "D"],
+        ["kansas-licensing-customerlookup-aspx", "D"],
+        ["kansas-official-special-size-creel-bait-restrictions-pdf-publicat", "D"],
+        ["kansas-outdoor-activities-fishing-in-kansas", "D"],
+        ["kansas-where-to-fish-community-fishing-lakes", "D"],
+        ["kansas-where-to-fish-walk-in-fishing-access", "D"],
+        ["kansas-where-we-work-state-fishing-lakes", "D"],
+        ["kentucky-agency-designated-fish-stocking-map-google-my-maps-shell-n", "P"],
+        ["louisiana-agency-designated-louisiana-fishing-guide-and-regulations", "P"],
+        ["louisiana-freshwater-fishing-rules-by-species", "P"],
+        ["louisiana-louisiana-license-fees-and-descriptions", "P"],
+        ["louisiana-louisiana-outdoors-official-online-license-purchasing-no-c", "P"],
+        ["maine-aquatic-invasive-species", "D"],
+        ["maine-baitfish-and-smelt", "D"],
+        ["maine-current-fish-stocking-pdf", "D"],
+        ["maine-moses-fishing-license-purchase", "D"],
+        ["maine-places-to-fish-regions", "D"],
+        ["maine-public-boat-launches-water-access", "D"],
+        ["maine-special-regulations-map", "DP"],
+        ["maryland-freshwater-seasons-sizes-limits", "P"],
+        ["maryland-maryland-angler-public-access-direct-arcgis-application-sh", "P"],
+        ["maryland-official-designated-maryland-fishing-guide", "P"],
+        ["michigan-michigan-dnr-elicense-direct-purchase-portal-transactions", "P"],
+        ["michigan-michigan-fish-stocking-database-direct-arcgis-dashboard-no", "P"],
+        ["minnesota-minnesota-new-electronic-licensing-system-entry-automated", "D"],
+        ["missouri-2026-02-fishing-20summ-202026-508-pdf", "D"],
+        ["missouri-3csr-3csr", "D"],
+        ["missouri-conservation-areas-search", "D"],
+        ["missouri-experience-d1890b4248bd4c91b6275cfad2eea0b3", "DP"],
+        ["missouri-fishing", "D"],
+        ["missouri-fishing-fishing-prospects", "D"],
+        ["missouri-fishing-protect-missouri-fishing", "D"],
+        ["missouri-mobile-apps-mo-fishing", "D"],
+        ["missouri-permits-permit-exemptions", "D"],
+        ["missouri-regulations-live-bait-regulations", "D"],
+        ["missouri-regulations-special-waterbody-regulations", "D"],
+        ["missouri-resource-06", "DP"],
+        ["missouri-seasons-dates", "D"],
+        ["missouri-stories-98dd8d32b4ff4a6ca97d526247dab430", "DP"],
+        ["missouri-trout-trout-areas", "D"],
+        ["missouri-trout-trout-parks", "D"],
+        ["missouri-trout-trout-permits", "D"],
+        ["missouri-trout-trout-special-area-regulations", "D"],
+        ["missouri-trout-winter-trout-fishing-areas", "D"],
+        ["missouri-where-fish-kansas-city-st-louis-urban-fishing", "D"],
+        ["nebraska-go-outdoors-nebraska-official-direct-license-portal", "P"],
+        ["nevada-agency-designated-nevada-fishing-seasons-rules-digital-gui", "P"],
+        ["nevada-fishnv-direct-interactive-waterbody-discovery-tool", "P"],
+        ["nevada-ndow-linked-online-licensing-endpoint", "P"],
+        ["new-hampshire-bait-fish-information", "DP"],
+        ["new-hampshire-bathymetry-maps", "D"],
+        ["new-hampshire-boating-access", "D"],
+        ["new-hampshire-important-laws-rule-changes", "D"],
+        ["new-hampshire-lakes-ponds-special-rules", "DP"],
+        ["new-hampshire-rivers-streams-special-rules", "DP"],
+        ["new-hampshire-stop-aquatic-hitchhikers", "DP"],
+        ["new-jersey-accessible-fishing-sites", "D"],
+        ["new-jersey-aquatic-invasive-species", "D"],
+        ["new-jersey-aspira-license-sales", "DP"],
+        ["new-jersey-fall-trout-stocking-schedule", "D"],
+        ["new-jersey-freshwater-fishing-digest", "D"],
+        ["new-jersey-harmful-algal-bloom-alerts", "D"],
+        ["new-jersey-lake-survey-maps", "D"],
+        ["new-jersey-spring-trout-fishing-information", "D"],
+        ["new-jersey-trout-fishing-access-by-county", "D"],
+        ["new-jersey-trout-stocked-waters-of-new-jersey", "P"],
+        ["new-jersey-user-supplied-arcgis-experience", "P"],
+        ["new-jersey-user-supplied-arcgis-webappviewer", "P"],
+        ["new-mexico-03-2026-2027-fish-rib-online-pdf", "D"],
+        ["new-mexico-activities-boating-2", "D"],
+        ["new-mexico-fishing", "D"],
+        ["new-mexico-fishing-fishing-conditions-trip-planner", "D"],
+        ["new-mexico-fishing-regulations-aquatic-invasive-species", "D"],
+        ["new-mexico-game-fish-bait-dealers", "D"],
+        ["new-mexico-resource-07", "D"],
+        ["new-mexico-surface-water-quality-habs", "D"],
+        ["new-mexico-webappviewer-index-html", "DP"],
+        ["new-york-baitfish-regulations", "D"],
+        ["new-york-boat-launch-sites", "D"],
+        ["new-york-central-new-york-fishing-hotline", "D"],
+        ["new-york-dec-fish-stocking", "D"],
+        ["new-york-decals-online-license-purchase", "DP"],
+        ["new-york-decinfo-locator-direct-recreation-view", "D"],
+        ["new-york-decinfo-trout-stream-fishing-map", "D"],
+        ["new-york-freshwater-fishing-hub", "D"],
+        ["new-york-freshwater-fishing-regulations-guide", "D"],
+        ["new-york-great-lakes-tributaries-regulations", "D"],
+        ["new-york-how-to-protect-your-waters-from-invasive-species", "D"],
+        ["new-york-huntfishny-mobile-app-tackle-box", "D"],
+        ["new-york-lake-erie-and-western-new-york-fishing-hotline", "D"],
+        ["new-york-streams-with-public-fishing-rights", "D"],
+        ["north-carolina-aquatic-nuisance-species", "D"],
+        ["north-carolina-boating-access-area-locator", "DP"],
+        ["north-carolina-community-fishing-program", "D"],
+        ["north-carolina-daily-trout-stockings", "DP"],
+        ["north-carolina-direct-go-outdoors-nc-license-purchase", "DP"],
+        ["north-carolina-fish-attractors-map", "DP"],
+        ["north-carolina-fishing-areas-and-trout-waters-map", "DP"],
+        ["north-carolina-hatcheries-and-stocking-hub", "D"],
+        ["north-carolina-mandatory-recreational-harvest-reporting", "D"],
+        ["north-carolina-official-fishing-agency-hub", "D"],
+        ["north-carolina-official-flipbook", "DP"],
+        ["north-carolina-online-searchable-regulations", "DP"],
+        ["north-carolina-public-mountain-trout-waters-search", "DP"],
+        ["north-carolina-trout-signs-and-fishing-rules", "D"],
+        ["north-carolina-warmwater-stocking-list-by-district", "D"],
+        ["north-carolina-weekly-stocking-schedule", "DP"],
+        ["north-dakota-ans-infested-waters-regulations-web-page", "D"],
+        ["north-dakota-aquatic-nuisance-species-regulations-regulations-web-page", "D"],
+        ["north-dakota-boating-access-esri-viewer-public-access-interactive-map", "DP"],
+        ["north-dakota-boating-access-public-access-web-page", "D"],
+        ["north-dakota-boating-safety-guide-regulations-web-page", "D"],
+        ["north-dakota-common-fish-species-identification-fish-identification-web", "D"],
+        ["north-dakota-fishing-and-boating-hub-general-information-web-page", "D"],
+        ["north-dakota-fishing-virtual-mentor-beginner-information-web-page", "D"],
+        ["north-dakota-ice-fishing-fishing-information-web-page", "D"],
+        ["north-dakota-north-dakota-fishing-waters-where-to-fish-web-page", "D"],
+        ["north-dakota-open-water-fishing-fishing-information-web-page", "D"],
+        ["north-dakota-paddlefish-snagging-season-regulations-web-page", "D"],
+        ["north-dakota-permitted-fishing-tournaments-permits-web-page", "D"],
+        ["north-dakota-purchase-print-license-my-account-licenses-permits-interac", "D"],
+        ["north-dakota-report-a-tagged-fish-reporting-interactive-tool", "D"],
+        ["ohio-aquatic-invasive-species-reporting-aquatic-invasives", "D"],
+        ["ohio-documents-publications-river-stream-fishing-maps", "D"],
+        ["ohio-fish-stocking-database", "D"],
+        ["ohio-fishing-resources-fishing-lake-erie", "D"],
+        ["ohio-fishing-resources-fishing-ohio-river", "D"],
+        ["ohio-fishing-resources-getting-started-fishing", "D"],
+        ["ohio-fishing-resources-trout-stockings", "D"],
+        ["ohio-inland-lakes-fishing-lake-maps", "D"],
+        ["ohio-interactive-ohio-lake-fishing-map-corrected-user-verified", "P"],
+        ["ohio-lake-erie-public-access-locator", "D"],
+        ["ohio-laws-regs-licenses-ohiofishingregs-english", "D"],
+        ["ohio-ohio-coastal-mgmt-program-public-access-guide-pdfs", "D"],
+        ["ohio-wildlife-sport-fishing", "D"],
+        ["oklahoma-2026-2026-27-20oklahoma-20fishing-20and-20hunting-20regula", "D"],
+        ["oklahoma-experience-5ed6dca9c208436fb5b01db5caa9b909", "DP"],
+        ["oklahoma-licensing-customerlookup-aspx", "P"],
+        ["oklahoma-page-page", "DP"],
+        ["oklahoma-regs-aquatic-nuisance-species-ans", "D"],
+        ["oklahoma-regs-general-fishing-regulations", "D"],
+        ["oklahoma-regs-license-fees", "D"],
+        ["oklahoma-regs-method-take", "D"],
+        ["oklahoma-regs-olap-regulations-fishing", "D"],
+        ["oklahoma-regs-paddlefish-regulations", "D"],
+        ["oklahoma-regs-public-fishing-areas-special-regulations", "D"],
+        ["oklahoma-regs-regulation-changes", "D"],
+        ["oklahoma-regs-statewide-daily-size-limits", "D"],
+        ["oklahoma-regs-trout-regulations", "D"],
+        ["oklahoma-resources-trout-information", "D"],
+        ["oklahoma-wheretofish-access", "D"],
+        ["oklahoma-wheretofish-cth", "D"],
+        ["oklahoma-wheretofish-water-elevations", "D"],
+        ["oregon-articles-easy-angling-oregon-introduction", "D"],
+        ["oregon-articles-regulation-updates", "D"],
+        ["oregon-articles-trout-stocking-maps", "D"],
+        ["oregon-articles-warmwater-fishing-oregon-introduction", "D"],
+        ["oregon-articles-watercraft-inspection-stations-oregon", "D"],
+        ["oregon-articles-waterway-access-and-aquatic-invasive-species-perm", "D"],
+        ["oregon-d-viewer", "P"],
+        ["oregon-d-viewer-17", "P"],
+        ["oregon-d-viewer-18", "P"],
+        ["oregon-d-viewer-19", "P"],
+        ["oregon-d-viewer-22", "P"],
+        ["oregon-experience-72308dd6b893451690a14437cde89be8", "P"],
+        ["oregon-fishing-angling-tag-instructions-codes", "DP"],
+        ["oregon-fishing-bag-possession-limits", "DP"],
+        ["oregon-fishing-general-statewide-regulations", "DP"],
+        ["oregon-fishing-license-tag-permit-fees", "DP"],
+        ["oregon-fishing-zones", "D"],
+        ["oregon-oregon-fishing", "DP"],
+        ["oregon-pages-opportunities-and-access-aspx", "D"],
+        ["oregon-recreation-report-fishing-report", "D"],
+        ["oregon-resource-11", "P"],
+        ["oregon-trout-stocking-schedule", "D"],
+        ["rhode-island-dem-designated-trout-stocked-waters-interactive-arcgis-map", "P"],
+        ["south-carolina-go-outdoors-license-portal", "P"],
+        ["south-carolina-official-designated-freshwater-game-fishing-regulations", "P"],
+        ["south-dakota-go-outdoors-south-dakota-official-license-portal-transacti", "P"],
+        ["south-dakota-south-dakota-public-water-access-direct-arcgis-experience", "P"],
+        ["tennessee-go-outdoors-tennessee-current-official-licensing-portal-tr", "P"],
+        ["tennessee-tennessee-statewide-limits-and-regulations", "P"],
+        ["tennessee-twra-designated-fishing-rules-eregulations-edition", "P"],
+        ["vermont-family-friendly-shore-fishing-locations", "D"],
+        ["vermont-fishing-access-areas-directory-and-search-distinct-from-st", "D"],
+        ["vermont-fishing-regulation-changes-including-baitfish-endorsement", "D"],
+        ["vermont-trophy-trout-waters-and-special-restrictions", "D"],
+        ["vermont-using-baitfish-in-vermont-zones-and-restricted-waters", "D"],
+        ["vermont-vermont-fishing-guide-commissioner-message-and-lake-river", "P"],
+        ["vermont-waterbody-specific-online-fishing-regulations-tool-landing", "D"],
+        ["vermont-wild-baitfish-endorsement-test-and-license-update", "D"],
+        ["virginia-official-go-outdoors-virginia-online-fishing-license-purch", "P"],
+        ["west-virginia-wvdnr-direct-electronic-licensing-entry-no-checkout-test", "P"],
+    ]);
+    const legacyEvidenceReviewDue = new Date("2026-11-17T00:00:00");
+
     const urlPattern = /^https:\/\//i;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -1386,7 +1630,227 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
 
     validateUniqueIds(states, "State registry");
     validateUniqueIds(resources, "StateResource registry");
-    validateUniqueIds(notices, "StateNotice registry");
+    if (states.length !== 48) fail("Regulations release scope", `expected 48 contiguous state records, got ${states.length}`);
+    if (resources.length > 618) fail("Regulations release scope", `approved initial release ceiling is 618 resources, got ${resources.length}`);
+    if (resources.some((resource) => resource.url === "https://www.env.nm.gov/surface-water-quality/fish-consumption-advisories/" ||
+        resource.id === "new-mexico-surface-water-quality-fish-consumption-advisories")) {
+        fail("Regulations scope exclusion", "NM-13 fish-consumption-only page must not be published");
+    }
+    // Frozen original IDs from GitHub main 36e5382c, independent of mutable candidate metadata.
+    // The entire pre-existing 180-resource identity set must remain present after a migration.
+    const originalResourceIds = new Set([
+        "alabama-freshwater-regulations",
+        "alabama-freshwater-licenses",
+        "alabama-where-to-fish",
+        "alabama-public-water-stocking",
+        "arizona-licenses-regulations",
+        "arizona-buy-license",
+        "arizona-where-to-fish",
+        "arkansas-fishing-regulations",
+        "arkansas-fishing-licenses",
+        "arkansas-where-to-fish",
+        "california-freshwater-regulations",
+        "california-sport-fishing-licenses",
+        "california-fishing-guide",
+        "california-fish-planting",
+        "colorado-fishing-regulations",
+        "colorado-fishing-licenses",
+        "colorado-where-to-fish",
+        "colorado-fish-stocking",
+        "connecticut-freshwater-regulations",
+        "connecticut-fishing-licenses",
+        "connecticut-where-to-fish",
+        "connecticut-trout-stocking-maps",
+        "delaware-fishing-regulations",
+        "delaware-fishing-licenses",
+        "delaware-public-fishing-ponds",
+        "delaware-freshwater-trout",
+        "florida-freshwater-regulations",
+        "florida-freshwater-licenses",
+        "florida-sites-forecasts",
+        "georgia-fishing-regulations",
+        "georgia-licenses-permits",
+        "georgia-fishing-resources",
+        "georgia-trout-fishing",
+        "idaho-fishing-rules",
+        "idaho-licenses",
+        "idaho-fishing-planner",
+        "idaho-fish-stocking",
+        "illinois-fishing-regulations",
+        "illinois-fishing-licenses",
+        "illinois-fishing-programs",
+        "illinois-ifishillinois",
+        "indiana-fishing-regulations",
+        "indiana-fishing-licenses",
+        "indiana-where-to-fish",
+        "indiana-fish-stocking",
+        "iowa-fishing-regulations",
+        "iowa-fishing-licenses",
+        "iowa-where-to-fish",
+        "iowa-fishing-atlas",
+        "kansas-fishing-regulations",
+        "kansas-fishing-licenses",
+        "kansas-where-to-fish",
+        "kansas-fish-stocking",
+        "kentucky-fishing-regulations",
+        "kentucky-fishing-licenses",
+        "kentucky-where-to-fish",
+        "kentucky-fishing-forecast",
+        "louisiana-freshwater-regulations",
+        "louisiana-fishing-licenses",
+        "louisiana-go-fishing",
+        "maine-fishing-laws",
+        "maine-fishing-licenses",
+        "maine-online-angling-tool",
+        "maine-fish-stocking",
+        "maryland-fishing-regulations",
+        "maryland-fishing-licenses",
+        "maryland-where-to-fish",
+        "maryland-trout-stocking",
+        "massachusetts-freshwater-regulations",
+        "massachusetts-fishing-license",
+        "massachusetts-go-fish-ma",
+        "massachusetts-trout-stocking",
+        "michigan-fishing-regulations",
+        "michigan-fishing-license-information",
+        "michigan-where-to-fish",
+        "michigan-fish-stocking",
+        "minnesota-fishing-regulations",
+        "minnesota-fishing-licenses",
+        "minnesota-lakefinder",
+        "mississippi-fishing-rules-regulations",
+        "mississippi-fishing-license-requirements",
+        "mississippi-public-fishing-lakes",
+        "mississippi-fishing-reports",
+        "missouri-fishing-regulations",
+        "missouri-fishing-permits",
+        "missouri-where-to-fish",
+        "montana-fishing-regulations",
+        "montana-fishing-licenses",
+        "montana-fishmt",
+        "montana-fish-stocking",
+        "nebraska-fishing-guide",
+        "nebraska-fishing-permits",
+        "nebraska-where-to-fish",
+        "nebraska-fishing-guides-reports",
+        "nevada-fishing-rules-regulations",
+        "nevada-apply-buy-fishing",
+        "nevada-fishing-stocking-reports",
+        "new-hampshire-freshwater-regulations",
+        "new-hampshire-fishing-licenses",
+        "new-hampshire-where-to-fish",
+        "new-hampshire-stocking-report",
+        "new-jersey-freshwater-regulations-permits",
+        "new-jersey-buy-license",
+        "new-jersey-where-to-go",
+        "new-jersey-freshwater-stocking",
+        "new-mexico-fishing-rules-information",
+        "new-mexico-fishing-licenses-permits",
+        "new-mexico-water-access-maps",
+        "new-mexico-weekly-fishing-stocking-report",
+        "new-york-freshwater-regulations",
+        "new-york-fishing-license",
+        "new-york-places-to-fish",
+        "north-carolina-fishing-regulations",
+        "north-carolina-fishing-licenses",
+        "north-carolina-where-to-fish",
+        "north-dakota-fishing-regulations",
+        "north-dakota-fishing-licenses",
+        "north-dakota-where-to-fish",
+        "ohio-fishing-regulations",
+        "ohio-fishing-licenses",
+        "ohio-fishing-resources",
+        "ohio-fishing-reports-forecasts",
+        "oklahoma-fishing-regulations",
+        "oklahoma-fishing-licenses",
+        "oklahoma-where-to-fish",
+        "oklahoma-fishing-reports",
+        "oregon-fishing-regulations",
+        "oregon-fishing-license",
+        "oregon-fishing",
+        "pennsylvania-fishing-regulations",
+        "pennsylvania-fishing-license",
+        "pennsylvania-where-to-fish",
+        "pennsylvania-trout-stocking",
+        "rhode-island-freshwater-regulations",
+        "rhode-island-fishing-license",
+        "rhode-island-trout-waters",
+        "south-carolina-fishing-regulations",
+        "south-carolina-fishing-license",
+        "south-carolina-fishing",
+        "south-dakota-fishing-regulations",
+        "south-dakota-fishing-license",
+        "south-dakota-fishing",
+        "tennessee-fishing-regulations",
+        "tennessee-fishing-license",
+        "tennessee-where-to-fish",
+        "texas-freshwater-regulations",
+        "texas-fishing-licenses",
+        "texas-buy-license-online",
+        "texas-where-to-fish",
+        "texas-fishing-reports",
+        "utah-fishing-regulations",
+        "utah-fishing-license",
+        "utah-fishing",
+        "utah-fish-stocking",
+        "vermont-fishing-regulations",
+        "vermont-fishing-license",
+        "vermont-fishing-access",
+        "vermont-fishing-opportunities",
+        "vermont-fish-stocking",
+        "virginia-freshwater-regulations",
+        "virginia-fishing-license",
+        "virginia-fishing",
+        "virginia-fish-stocking",
+        "virginia-fishing-forecasts-reports",
+        "washington-fishing-regulations",
+        "washington-fishing-license",
+        "washington-fish-stocking",
+        "washington-fishing-locations",
+        "west-virginia-fishing-regulations",
+        "west-virginia-fishing-license",
+        "west-virginia-fishing-maps",
+        "west-virginia-fish-stocking",
+        "wisconsin-fishing-regulations",
+        "wisconsin-fishing-license",
+        "wisconsin-fishing-finder",
+        "wisconsin-fish-stocking",
+        "wyoming-fishing-regulations",
+        "wyoming-fishing-license",
+        "wyoming-fishing",
+        "wyoming-fish-stocking"
+    ]);
+    if (originalResourceIds.size !== 180) fail("Regulations canonical IDs", "baseline original-ID list was changed or duplicated");
+    const actualResourceIds = new Set(resources.map((resource) => resource.id));
+    for (const id of originalResourceIds) {
+        if (!actualResourceIds.has(id)) fail("Regulations canonical IDs", `immutable original ID missing: ${id}`);
+    }
+    // Named original first-open access-limited cohort: identity and URL, NOT functional PASS.
+    // A future authoritative source substitution needs a separate approved release decision.
+    const preservedAccessExceptions = new Map([
+        ["louisiana-freshwater-regulations", "https://www.wlf.louisiana.gov/page/recreational-freshwater-finfish-and-crawfish"],
+        ["louisiana-fishing-licenses", "https://www.wlf.louisiana.gov/page/recreational-fishing-licenses-and-permits"],
+        ["louisiana-go-fishing", "https://www.wlf.louisiana.gov/go-fishing"],
+        ["tennessee-where-to-fish", "https://www.tn.gov/content/tn/twra/fishing/where-to-fish.html"],
+        ["vermont-fishing-regulations", "https://vtfishandwildlife.com/fish/fishing-regulations"],
+        ["vermont-fishing-license", "https://vtfishandwildlife.com/licenses-and-lotteries/license-center"],
+        ["vermont-fishing-access", "https://vtfishandwildlife.com/fish/boating-in-vermont/fishing-access-areas-statewide-map"],
+        ["vermont-fishing-opportunities", "https://vtfishandwildlife.com/fish/fishing-opportunities"],
+        ["vermont-fish-stocking", "https://vtfishandwildlife.com/fish/fish-stocking"],
+        ["washington-fishing-regulations", "https://wdfw.wa.gov/fishing/regulations"],
+        ["washington-fishing-license", "https://wdfw.wa.gov/licenses/fishing"],
+        ["washington-fish-stocking", "https://wdfw.wa.gov/fishing/reports"],
+        ["washington-fishing-locations", "https://wdfw.wa.gov/fishing/locations"],
+        ["wyoming-fishing-regulations", "https://wgfd.wyo.gov/Regulations/Fish/Fishing-Regulation"],
+        ["wyoming-fishing-license", "https://wgfd.wyo.gov/licenses-applications"],
+        ["wyoming-fishing", "https://wgfd.wyo.gov/fishing-boating/places-fish-wyoming"]
+    ]);
+    for (const [id, url] of preservedAccessExceptions) {
+        const resource = resources.find((record) => record.id === id);
+        if (!resource || resource.url !== url) {
+            fail("Regulations access exceptions", `original qualified ID or URL changed without approval: ${id}`);
+        }
+    }
     const stateById = indexById(states);
 
 
@@ -1407,7 +1871,29 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
     const duplicateUrls = new Map();
     for (const resource of resources) {
         if (!isPlainObject(resource)) continue;
-        validateExactFieldOrder(resource, resourceFields, "StateResource registry");
+        validateExactFieldOrder(resource, resource.evidenceStatus === "pending"
+            ? [...resourceFields, "evidenceStatus"] : resourceFields, "StateResource registry");
+        const missingDate = resource.verifiedDate === null;
+        const missingDesignation = resource.sourceRelationship === "officially-designated-external" && resource.designationUrl === null;
+        const outstanding = (missingDate ? "D" : "") + (missingDesignation ? "P" : "");
+        const allowed = approvedLegacyPendingEvidence.get(resource.id);
+        if (outstanding) {
+            if (resource.evidenceStatus !== "pending" || !allowed ||
+                (missingDate && !allowed.includes("D")) ||
+                (missingDesignation && !allowed.includes("P"))) {
+                fail("Regulations evidence", `${resource.id}: missing evidence outside the approved one-time pending cohort`);
+            }
+        } else if (resource.evidenceStatus !== undefined) {
+            fail("Regulations evidence", `${resource.id}: resolved evidence must not retain a pending marker`);
+        }
+        if (resource.evidenceStatus === "pending" && resource.status !== "active") {
+            fail("Regulations evidence", `${resource.id}: pending exception requires approved active release status`);
+        }
+        if (Array.isArray(resource.capabilities) && resource.capabilities.includes("fishing-hub") &&
+            (resource.section !== "plan-your-trip" || resource.experienceType !== "web-page" ||
+            !["other-official-resource", "where-to-fish"].includes(resource.primaryCategory))) {
+            fail("Regulations fishing hubs", `${resource.id}: fishing-hub capability violates supported section/experience/category`);
+        }
         if (!stateById.has(resource.stateId)) fail("StateResource relationships", `${resource.id}: orphan stateId ${resource.stateId}`);
         if (!sections.has(resource.section)) fail("StateResource controlled values", `${resource.id}: invalid section ${JSON.stringify(resource.section)}`);
         if (!categories.has(resource.primaryCategory)) fail("StateResource controlled values", `${resource.id}: invalid primaryCategory ${JSON.stringify(resource.primaryCategory)}`);
@@ -1423,9 +1909,9 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
         const hasAuthorityUrl = typeof resource.authorityUrl === "string" && resource.authorityUrl.trim() !== "";
         if (hasAuthorityName !== hasAuthorityUrl) fail("StateResource authority", `${resource.id}: authorityName and authorityUrl must be supplied together`);
         if (hasAuthorityUrl) requireUrl(resource.authorityUrl, `StateResource ${resource.id} authorityUrl`);
-        if (resource.sourceRelationship === "officially-designated-external") requireUrl(resource.designationUrl, `StateResource ${resource.id} designationUrl`);
+        if (resource.sourceRelationship === "officially-designated-external") requireUrl(resource.designationUrl, `StateResource ${resource.id} designationUrl`, !missingDesignation);
         else if (resource.designationUrl !== null) fail("StateResource provenance", `${resource.id}: direct resource must use null designationUrl`);
-        const verified = parseDate(resource.verifiedDate, `StateResource ${resource.id} verifiedDate`);
+        const verified = parseDate(resource.verifiedDate, `StateResource ${resource.id} verifiedDate`, !missingDate);
         if (["active", "temporarily-unavailable"].includes(resource.status) && verified && (today - verified) / 86400000 > 90) fail("Regulations freshness", `${resource.id}: resource verification is older than 90 days`);
 
 
@@ -1437,6 +1923,16 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
     }
 
 
+    // The migration exception expires independently of ordinary 90-day checks.
+    const openPending = resources.filter((resource) => resource.evidenceStatus === "pending");
+    if (openPending.length > 0 && today > legacyEvidenceReviewDue) {
+        fail("Regulations evidence deadline", `${openPending.length} legacy pending resources remain after 2026-11-17`);
+    }
+    if (resources.filter((resource) => Array.isArray(resource.capabilities) &&
+        resource.capabilities.includes("fishing-hub")).length !== 18) {
+        fail("Regulations fishing hubs", "approved baseline requires exactly 18 typed fishing hubs");
+    }
+
     for (const state of states.filter((item) => item.active === true)) {
         const stateResources = (resourcesByState.get(state.id) || []).filter((resource) => resource.status !== "retired");
         const capabilitySet = new Set(stateResources.flatMap((resource) => resource.capabilities));
@@ -1445,29 +1941,7 @@ function validateRegulationsData(buildInfo, states, resources, notices) {
     }
 
 
-    for (const notice of notices) {
-        if (!isPlainObject(notice)) continue;
-        validateExactFieldOrder(notice, noticeFields, "StateNotice registry");
-        if (!stateById.has(notice.stateId)) fail("StateNotice relationships", `${notice.id}: orphan stateId ${notice.stateId}`);
-        requireText(notice.title, `StateNotice ${notice.id} title`);
-        requireText(notice.summary, `StateNotice ${notice.id} summary`);
-        requireUrl(notice.url, `StateNotice ${notice.id} url`);
-        if (!sourceRelationships.has(notice.sourceRelationship)) fail("StateNotice controlled values", `${notice.id}: invalid sourceRelationship ${JSON.stringify(notice.sourceRelationship)}`);
-        const hasAuthorityName = typeof notice.authorityName === "string" && notice.authorityName.trim() !== "";
-        const hasAuthorityUrl = typeof notice.authorityUrl === "string" && notice.authorityUrl.trim() !== "";
-        if (hasAuthorityName !== hasAuthorityUrl) fail("StateNotice authority", `${notice.id}: authorityName and authorityUrl must be supplied together`);
-        if (hasAuthorityUrl) requireUrl(notice.authorityUrl, `StateNotice ${notice.id} authorityUrl`);
-        if (notice.sourceRelationship === "officially-designated-external") requireUrl(notice.designationUrl, `StateNotice ${notice.id} designationUrl`);
-        else if (notice.designationUrl !== null) fail("StateNotice provenance", `${notice.id}: direct notice must use null designationUrl`);
-        parseDate(notice.createdDate, `StateNotice ${notice.id} createdDate`);
-        const verified = parseDate(notice.verifiedDate, `StateNotice ${notice.id} verifiedDate`);
-        const expires = parseDate(notice.expiresDate, `StateNotice ${notice.id} expiresDate`, false);
-        if (typeof notice.active !== "boolean") fail("StateNotice registry", `${notice.id}: active must be Boolean`);
-        if (notice.active === true && verified && (today - verified) / 86400000 > 30) fail("Regulations freshness", `${notice.id}: active notice verification is older than 30 days`);
-        if (notice.active === true && expires && expires < today) fail("Regulations notice expiry", `${notice.id}: known expiry has passed while notice remains active`);
-    }
 }
-
 
 
 function validateFishHabitatMigration(fish, habitats, associations, conditions, correspondences, waters) {
@@ -3980,7 +4454,7 @@ function validateCanonicalData() {
             "KNOT_SEARCH_INTENTS"
         ]
     );
-    const regulationsBindings = loadBindings("data/regulations.js", ["REGULATIONS_DATA_BUILD_INFO", "STATE_DATA", "STATE_RESOURCE_DATA", "STATE_NOTICE_DATA"]);
+    const regulationsBindings = loadBindings("data/regulations.js", ["REGULATIONS_DATA_BUILD_INFO", "STATE_DATA", "STATE_RESOURCE_DATA"]);
 
 
     const categories = requireArray(categoryBindings.FISH_CATEGORY_DATA, "Fish category registry");
@@ -4024,7 +4498,6 @@ function validateCanonicalData() {
     );
     const states = requireArray(regulationsBindings.STATE_DATA, "State registry");
     const stateResources = requireArray(regulationsBindings.STATE_RESOURCE_DATA, "StateResource registry");
-    const stateNotices = requireArray(regulationsBindings.STATE_NOTICE_DATA, "StateNotice registry");
 
 
     validateCanonicalRecords(fish, "Fish registry");
@@ -4048,7 +4521,7 @@ function validateCanonicalData() {
     );
     validateFishProductionData(fish, categories, fishIdentification, fishRigGuidance, rigs, legacyCategoryMap);
     validateFishSpecializedGuidance(fishSpecializedGuidance, fishSafetyGuidance, fish);
-    validateRegulationsData(regulationsBindings.REGULATIONS_DATA_BUILD_INFO, states, stateResources, stateNotices);
+    validateRegulationsData(regulationsBindings.REGULATIONS_DATA_BUILD_INFO, states, stateResources);
     validateConditionsData(conditions, rigs);
     validateFishHabitatMigration(
         fish,
@@ -4317,8 +4790,7 @@ function validateCanonicalData() {
         knots,
         tackle,
         states,
-        stateResources,
-        stateNotices
+        stateResources
     };
 }
 
@@ -6417,7 +6889,6 @@ function validateDocumentationGovernance() {
             docs.set(relativePath, text);
         }
     }
-
 
 
     // D071: the new descriptive Source File Map must reflect real owner files.

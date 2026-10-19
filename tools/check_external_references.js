@@ -57,7 +57,7 @@ function collectRegulationsTargets() {
         targets.push({ source: "data/regulations.js State agencyUrl", url });
     }
     for (const url of extractFieldUrls(regulations, "url")) {
-        targets.push({ source: "data/regulations.js StateResource/StateNotice url", url });
+        targets.push({ source: "data/regulations.js StateResource url", url });
     }
     for (const url of extractFieldUrls(regulations, "designationUrl")) {
         targets.push({ source: "data/regulations.js designationUrl", url });

@@ -2,11 +2,11 @@
 
 
 **Document:** UI_STANDARD.md  
-**Document Revision:** 1.3.39  
+**Document Revision:** 1.3.42  
 **Document Status:** Approved  
 **Role:** Canonical Version 1 site-wide semantic visual, component, navigation, interaction, mobile, and accessibility standard  
 **Decision Baseline:** D015, D020-D022, D030-D032, D035, D042, D046-D048, D050-D052, D061, D063  
-**Last Updated:** 2026-10-08
+**Last Updated:** 2026-10-18
 
 
 # Purpose
@@ -72,6 +72,8 @@ The completed **Rig Guide** at GitHub `main` commit `a63fbd1413499d8389d147310b6
 
 The historical rule that **Fish Guide is the starting baseline** is superseded for current execution. Fish served as the first proving ground, but the reusable contract now lives here. Future work must consume the canonical semantic patterns rather than inherit a page merely because it was built earlier.
 
+This includes **every new or materially revised Guide and Primary Knowledge surface**, not only the Guide-family screens. My Tackle, Settings, User Knowledge, specialized workflows, and other non-Guide pages must be mapped before their UI build/review against the named Visual Pattern Registry entries and the comparison dimensions owned by `V1-DESIGN-AUDIT.md`. Record each visible semantic role, registry match/composition or `NO PATTERN MATCH — OPEN`, justified exception, and responsive/interaction validation target in its approved workstream mapping; a visually similar existing card is not by itself permission to reuse unrelated recommendation, reference, or task semantics. The Matrix compares implementations; this Registry remains the single shared pattern owner.
+
 
 For every new or materially modified surface, and for every existing surface when its workstream or the final site-wide audit reaches it:
 
@@ -134,7 +136,7 @@ The registry is the authority; rendered pages are reference implementations. Whe
 | **Ordered Instruction Steps** | Presents ordered actions the user performs. | Use a clear dedicated step-number treatment, instruction text as the dominant content, aligned wrapped text, and readable vertical rhythm. Preserve one ordered vertical sequence at all widths; do not convert procedures into chips, unrelated per-step cards, or multi-column layouts. Routine dividers between every step are not required. |
 | **Compact Internal Link List** | Presents a compact set of related internal destinations. | Present the canonical referenced text followed closely by an explicit internal action unit such as `View Rig →`, `View Knot →`, `View Knots →`, or `Compare →`. Keep the action slightly padded from the referenced text rather than pushing it to the far edge of the row. The action label + `→` use the same shared accent color as Standard Detail List markers and Ordered Instruction Step numbers. The default compact list has no per-item divider. An explicitly approved **divided-row variant** may use the shared restrained tan separator between complete items when additional scan separation is useful without introducing card/band chrome; current approved uses are Knot **Common Tasks**, **Rigs That Use This Knot**, and Rig Component Reference **Used In** / **Related Components** relationship lists. Separators in this divided variant must be light tan, never the gold/action-accent color. Do not add a trailing separator after the last item. Wrap naturally while keeping each referenced item and its adjacent action coherent. Avoid unrelated pill/button styling unless semantics require it. |
 | **Contextual Recommendation Row** | Recommends one canonical internal entity from the current context and explains why it is useful here. | Fish **Rigs to Start With** is the current visual/reference baseline. Reuse the canonical destination name; provide one clear adjacent internal action such as `View Rig →` or `View Knot →`; include a short evidence-supported/context-owned reason only when it materially helps the choice; use the shared compact bounded row/card treatment rather than a chip/pill. On desktop, keep the established constrained measure of approximately two-thirds of the content width, aligned with the constrained Guide Search measure where applicable; do not stretch recommendation rows merely to fill wide empty space. Do not invent ranking, scores, best badges, availability, legality, personalization, or rationale that the owning guidance does not support. |
-| **Disclosure Group** | Hides/reveals secondary supporting information. | Shared full-row disclosure grammar with `▾` / `▴`, independent keyboard/touch access, correct collapsed layout removal, and focus/viewport preservation when content closes. Compose with **Contained Disclosure Row** when discrete expanders need stronger actionable separation. |
+| **Disclosure Group** | Hides/reveals secondary supporting information. | **All applicable disclosures start collapsed on each fresh page/view entry**, regardless of domain or resource count. Default-open behavior requires a separately approved and documented semantic exception. Use the shared full-row disclosure grammar with the existing collapsed/expanded caret cues, independent keyboard/touch toggles, programmatic expanded state and panel association, collapsed content removed from keyboard focus, and focus/viewport preservation. **Parent** may restore the prior disclosure states as transient return context; **Home** clears that context, and any fresh entry returns to collapsed. Keep primary task information and material safety guidance visibly available outside optional disclosures. Compose with **Contained Disclosure Row** when discrete expanders need stronger actionable separation. |
 | **Contained Disclosure Row** | Presents one discrete secondary/support item as an actionable expander inside a larger section. | Use a neutral bordered/radius surface with the whole row as the interaction target, visible caret, and clear hover/focus/expanded feedback. Do not add a decorative semantic-color rail by default. Separate peer rows with spacing/contained boundaries rather than accidental double dividers. |
 | **Contextual Reference Cue** | Opens exact-term contextual Reference Knowledge without leaving the current task. | Plain referenced text plus immediately adjacent `ⓘ`; every visible `ⓘ` is a functional Reference interaction and opens an applicable contextual popover/surface containing additional information for that exact term. The cue is the Reference target, with invisible enlarged hit area where needed and explicit focus restoration. Do not use decorative/nonfunctional `ⓘ` glyphs. |
 | **Contextual Reference Surface** | Displays the contextual information opened by `ⓘ`. | Shared modal/sheet interaction grammar with one active surface, bounded internal scrolling, appropriate close behavior, background-state preservation, and focus return; content structure remains domain-appropriate. |
@@ -871,45 +873,32 @@ Current production Dashboard **Regulations** is internal navigation to the state
 
 ## State page
 
-
-Use this hierarchy:
-
+The state page uses the user-approved R5 hierarchy, with a readable **approximately two-thirds content measure on desktop/tablet** and a natural full-width single-column layout on phone. The state name is dominant, `Fishing Regulations & Resources` is subordinate, and responsible-agency attribution remains visible near the top.
 
 ```text
 ← Regulations
-
-
-STATE NAME
-Fishing Regulations & Resources
+STATE NAME — Fishing Regulations & Resources
 Official resources from Responsible State Agency
-
-
-[ optional active notice ]
-
-
+Standing generic check-current-official-rules advisory
 BEFORE YOU FISH
-  dynamic official resource cards
-
-
-PLAN YOUR TRIP
-  dynamic official resource cards
+  Fishing Regulations (visible)
+  Licenses & Permits (visible)
+  Material safety/rule-change guidance (visible)
+ADDITIONAL OFFICIAL RESOURCES
+  Additional Rules & Guidance ▾ (initially collapsed)
+    named peer subsections with official resource rows
+  Plan Your Trip ▾ (initially collapsed)
+    Fishing Hubs / Where to Fish / Access / Maps / Stocking / Reports, when present
 ```
 
+- The generic notice is **standing advice**, not a reproduction of agency news, emergency orders, or temporary regulations. A current official notice may receive an optional specific agency link only when direct linking is straightforward and qualified; do not manufacture or replicate notice text.
+- Core statewide fishing regulations, license information, and any material safety/rule-change advisory are visible before disclosure. Secondary rules/trip resources occupy **one contained supporting group** with exactly the applicable independent `Additional Rules & Guidance` and `Plan Your Trip` disclosure rows. Both start collapsed on fresh entry, independent of resource count; their expanded panels contain **named static peer subsections**, not nested disclosures or alternating always-visible resource categories.
+- Resource grouping is derived from explicit canonical `section`, `primaryCategory`, and `capabilities`; `fishing-hub` is a typed resource capability, not a title/label string guess. Empty subsections are omitted; do not create duplicate resource destinations just to populate groups.
+- Official destinations use the approved bounded neutral whole-row external link grammar: resource title followed by a complete action label with adjacent `↗` and optional subordinate description. **Below 640 CSS px, each action is consistently left-aligned on a new line immediately under its title**, even where an inline action might fit. At tablet/desktop widths, title and action may remain adjacent when comfortable. External arrows are never underlined.
+- Retain the R5-approved left-aligned Landing State selector, including the compact mobile-style selector visual at tablet widths. Returning from a state page follows the approved selector/search state behavior; Home clears transient state.
+- PDF and online/interactive tools may both be shown if materially distinct. Subtle type metadata may distinguish PDF, map, tool, report, or license portal. No routine `leaving FCC` confirmation is required. Approved visual layout does not itself establish the current legal validity, completed human verification, or third-party designation evidence of every resource; see `EXTERNAL_REFERENCE_MAINTENANCE.md` for explicitly pending records.
 
-- State name is the primary heading; `Fishing Regulations & Resources` is secondary.
-- Agency attribution is visible near the top.
-- Current notices are optional and appear only when human-curated/active.
-- Resource cards are dynamic; do not render empty categories or fixed placeholder slots.
-- `Fishing Regulations` appears first and `Licenses & Permits` second where applicable.
-- One multi-purpose official tool should normally be represented once with multiple capabilities rather than duplicated into fake peer cards.
-- PDFs and online/interactive tools may both be shown when materially distinct.
-- Subtle delivery metadata may identify PDF, online regulations, interactive tool/map, fishing report, or license portal.
-- Official destinations use the standard external `↗` semantics; do not add a routine “leaving FCC” confirmation.
-- Primary-card emphasis may be refined during Wave 1, but peer-card treatment must remain consistent with the shared card system and D048.
-
-
-The nationwide implementation has validated the selector/search relationship, state-page hierarchy, narrow/mobile selector behavior, external-link affordances, and Regulations-specific Back/Home state behavior. Broader site-wide Parent-context implementation remains governed separately by D051/UX-001.
-
+The approved visual review confirms the R5 page composition and responsiveness; full integrated application behavior, actual deployed mobile, and individual resource-evidence validation retain their separate applicable gates.
 
 # Mobile-First Requirements
 

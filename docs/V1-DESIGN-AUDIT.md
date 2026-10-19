@@ -2,10 +2,10 @@
 
 
 **Document:** V1-DESIGN-AUDIT.md  
-**Document Revision:** 1.0.55  
+**Document Revision:** 1.0.59  
 **Document Status:** Approved  
 **Audit Status:** REQUIRED / PENDING EXECUTION  
-**Last Updated:** 2026-10-08
+**Last Updated:** 2026-10-18
 
 
 # Purpose
@@ -63,6 +63,14 @@ Pattern mapping is composable. For example, one section may be **Peer Subsection
 The end-of-rebuild screenshot comparison remains required as a final cross-Guide verification layer. It does not substitute for page-by-page pattern mapping during the audit/rebuild.
 
 
+### Guide and Primary Knowledge mapping record
+
+Each new or materially changed Guide **and** Primary Knowledge/non-Guide surface, including My Tackle and Settings, must enter its implementation review with an explicit semantic-role comparison against the Registry and this Matrix. Record at minimum: **surface/section or element**, **semantic user task**, **Registry pattern or justified local composition**, **visible/hidden and link/navigation behavior**, **desktop/tablet/mobile and keyboard/touch checks**, and **exception/open finding**. Do not consider a familiar-looking card an automatic semantic match. This comparison is workstream evidence, not a competing UI standard or a separate canonical source.
+
+**FCC 54C-A Regulations R4 review candidate — Registry/Matrix correction:** User rejected the R3 alternating visible resource groups / independent per-category expanders. Use **Section / Subsection Hierarchy + Safety / Warning Block** for always-visible Before You Fish primary Fishing Regulations and Licenses & Permits, plus the standing rule-change advisory. Then use one **Disclosure Group + Contained Disclosure Row** supporting shell with independent **Additional Rules & Guidance** and **Plan Your Trip** rows; both start collapsed on fresh page entry per the Registry. Every secondary resource appears within one of those panels even when its named group has only one resource. Inside expanded panels use **Peer Subsection Group** heading/separator grammar (not nested disclosures), including **Fishing Hubs** under Plan Your Trip. Preserve Option B compact bordered whole-row official task-destination links with adjacent action and external arrow, no underline on the glyph. Landing selector shares the title/intro left axis. The accepted AL/NY/NC/WV hub reclassifications preserve IDs/URLs; derived hub title inference remains an explicitly OPEN data-role hardening task. This local external row treatment is review-only / **NO PATTERN MATCH — OPEN** for site-wide promotion. Verify desktop/tablet/mobile appearance, all 48 states/618 resource IDs/URLs, keyboard/focus, independent default-closed disclosures, Parent/Home semantics and source-integrity exceptions before Final Local. R4 does not change the application-wide link language.
+
+**FCC 54C-A Regulations R5 final visual approval — responsive link rule:** The user approved the R4 disclosed supporting-information hierarchy and requested one final mobile correction, confirmed in R5. For every Regulations external whole-row resource link below 640 CSS px, move the complete external action label + `↗` to a **new left-aligned line immediately beneath the canonical title**, regardless of available inline fit; preserve the supporting description below. Tablet and desktop retain adjacent action when it fits comfortably. This is a **Regulations resource-row behavior**, not an unreviewed site-wide Browse/Source Links rewrite. Fishing Hub placement follows canonical typed capability rather than title heuristics. The approved standing generic advisory and independently initially collapsed secondary disclosures remain in effect.
+
 ## Guide-Family Comparison Matrix
 
 Beginning with FCC 50B-C, Guide-family reconciliation uses one explicit comparison matrix in addition to the Visual Pattern Registry. The **Visual Pattern Registry / shared semantic contract is the authority**; no Guide is automatically the final answer merely because it was built first. The completed Rig Guide at GitHub `main` commit `a63fbd1413499d8389d147310b66ce508d407a6f` is the current validated reference implementation for equivalent shared elements after the FCC 50B audit and Actual-Mobile approval, but it is not a monolithic template. Equivalent semantic roles start from the registry treatment, while Fish, Knots, Technique, Tackle, and later surfaces retain domain-specific information architecture where their semantics differ.
@@ -73,7 +81,7 @@ The comparison matrix must evaluate, where applicable:
 | --- | --- | --- |
 | **Information architecture** | Identity, primary visible task content, About/context grouping, More Help/support grouping, and section order. | Equivalent roles follow a coherent family model without forcing identical field inventories. |
 | **Visual Pattern Registry mapping** | Named pattern or pattern composition for every visible section/element. | Equivalent semantics reuse the canonical pattern unless a documented exception exists. |
-| **Interaction / disclosure** | What remains visible, what expands/collapses, what navigates, and what loads media. | Primary task content is not hidden solely to reduce page length; disclosure semantics remain consistent. |
+| **Interaction / disclosure** | What remains visible, what expands/collapses, what navigates, and what loads media. | Verify **every applicable disclosure starts collapsed on fresh page/view entry** across Guide and non-Guide surfaces, regardless of contained-item count, except a separately approved and documented semantic exception. Confirm independent accessible toggles, collapsed content absent from focus order, Parent return restoring prior transient disclosure states when applicable, Home clearing that context, and required primary task/material safety content remaining visible. |
 | **Text Hierarchy & Semantic Color** | Primary/body text, headings, helper/supporting text, metadata, labels/eyebrows, action text, and semantic-state text. | Text color follows semantic role rather than Guide membership; contrast and non-color semantics remain sufficient. |
 | **Navigation / link language** | Internal `→`, external `↗`, contextual `ⓘ`, and source/reference presentation. | Equivalent navigation uses one shared interaction grammar; links do not become arbitrary buttons/chips. |
 | **Media treatment** | Identification media, instructional media, media-type cues, external fallbacks, and loading behavior. | UI grammar is coherent while `MEDIA_GUIDE.md` retains technical/media ownership. |

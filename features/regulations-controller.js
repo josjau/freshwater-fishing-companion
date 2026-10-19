@@ -33,16 +33,14 @@ function getRegulationStateResources(stateId) {
     );
 }
 
-function getRegulationStateNotices(stateId) {
-    if (typeof STATE_NOTICE_DATA === "undefined") return [];
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return STATE_NOTICE_DATA.filter((notice) => {
-        if (notice.stateId !== stateId || notice.active !== true) return false;
-        if (!notice.expiresDate) return true;
-        const expires = new Date(`${notice.expiresDate}T00:00:00`);
-        return Number.isNaN(expires.getTime()) || expires >= today;
-    });
+function getRegulationOfficialUpdatesResource(resources) {
+    // One qualified official rules-change landing, not a maintained event feed.
+    return resources.find((resource) =>
+        resource.status === "active" &&
+        resource.experienceType === "web-page" &&
+        Array.isArray(resource.capabilities) &&
+        resource.capabilities.includes("official-rule-updates")
+    ) ?? null;
 }
 
 function openRegulationState(stateId) {
@@ -84,7 +82,7 @@ function renderRegulationsStateRoute(appMain) {
     renderRegulationsStateView(appMain, {
         state,
         resources: getRegulationStateResources(state.id),
-        notices: getRegulationStateNotices(state.id),
+        officialUpdatesResource: getRegulationOfficialUpdatesResource(getRegulationStateResources(state.id)),
         onParent: () => showView(ROUTES.REGULATIONS)
     });
 }
@@ -92,7 +90,6 @@ function renderRegulationsStateRoute(appMain) {
 /* ==========================================================
    END REGULATIONS — STATE + ROUTE CONTROLLERS
    ========================================================== */
-
 
 
 /* Explicit owner route contract. Registration is performed once at startup. */
